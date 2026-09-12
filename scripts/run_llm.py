@@ -57,7 +57,23 @@ def main():
                     help="rerun only episodes that did not complete their rounds (those voided during rate limiting)")
     ap.add_argument("--tools", action="store_true",
                     help="the tool ablation: put the screening design table and the GP posterior maximum into the prompt")
+    ap.add_argument("--recovery-days", type=float, default=None,
+                    help="the irreversibility ablation: length of the recovery period a "
+                         "heat-damaged unit enters, in days. Every task ships at 0, which "
+                         "is the setting of every result in the paper's main tables, so a "
+                         "run with this flag is NOT comparable with them -- give it its "
+                         "own --out directory")
     a = ap.parse_args()
+
+    # Modified copies, so the frozen task definitions are left alone.
+    tasks = dict(TASKS)
+    if a.recovery_days is not None:
+        import copy
+        for tn in a.tasks:
+            t = copy.deepcopy(TASKS[tn]); t.recovery_days = float(a.recovery_days)
+            tasks[tn] = t
+        print(f"recovery_days = {a.recovery_days} (the paper's tables are at 0; "
+              f"these episodes are a separate condition)\n")
 
     complete = make_completer(a.model, a.temperature, a.rpm)
     out = ROOT / a.out
@@ -90,11 +106,11 @@ def main():
             # Recall with no experiment: on the same site, first ask what the model
             # recommends with no data. The gap to its post-campaign score is what
             # this model actually gained from experimenting.
-            env0 = SlowLabEnv(TASKS[tn], seed=s)
+            env0 = SlowLabEnv(tasks[tn], seed=s)
             r0 = env0.submit_recommendation(
                 zero_shot_recommendation(env0, complete), a.model + "|zero-shot")
 
-            env = SlowLabEnv(TASKS[tn], seed=s)
+            env = SlowLabEnv(tasks[tn], seed=s)
             ag = LLMAgent(complete=complete, name=a.model, tools=a.tools)
             r = env.submit_recommendation(ag.run(env), a.model,
                                           x_transfer=getattr(ag, "x_transfer", None))
@@ -108,6 +124,11 @@ def main():
                          "wasted_fraction": float(r.wasted_fraction),
                          "transfer_regret": float(r.transfer_regret),
                          "rounds_submitted": r.n_designs,
+                         # Capacity: zero unless the irreversibility dial is on, but it
+                         # has to be on the record either way -- the first run of the
+                         # ablation could not be read from its own episode file without it.
+                         "lost_unit_days": float(r.lost_unit_days),
+                         "unit_days_used": float(r.unit_days_used),
                          "format_failures": ag.format_failures,
                          "infeasible": ag.infeasible_submissions,
                          "trace": [float(v) for v in r.regret_trace],
@@ -118,7 +139,7 @@ def main():
             eta = (time.time() - t_start) / max(n - len(done), 1) * (total - n)
             print(f"[{n}/{total}] {tn} seed={s}  regret {r.simple_regret:.4f} "
                   f"(zero-shot {r0.simple_regret:.4f})  "
-                  f"cash {r.campaign_cash:+8.1f}  rounds {r.n_designs}/{TASKS[tn].n_rounds}  "
+                  f"cash {r.campaign_cash:+8.1f}  rounds {r.n_designs}/{tasks[tn].n_rounds}  "
                   f"format-fail {ag.format_failures}  infeasible {ag.infeasible_submissions}  "
                   f"{dt:.0f}s   ~{eta/60:.0f} min left", flush=True)
 

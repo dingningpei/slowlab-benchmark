@@ -1,0 +1,14 @@
+{
+  "Optimise": {
+    "n": 20,
+    "regret": 0.020293745629125205,
+    "regret_se": 0.003355111511250371,
+    "regret_zero_shot": 0.0312977634527381,
+    "cumulative_regret": 322.7698980607428,
+    "cash": -802.2574911294605,
+    "wasted_fraction": 0.55,
+    "rounds_submitted": 2.95,
+    "format_failures": 0.1,
+    "infeasible": 0.85
+  }
+}

@@ -65,13 +65,25 @@ def main():
         f"{40-len(worse)} below 0-shot, {len(worse)} above ({len(ARMS)*len(CFGS)} cells in total)")
     say("all nine are on Sanity and Optimise",
         f"tasks the above-0-shot cells fall on: {sorted({c for _, c, _, _ in worse})}")
-    hit = [(s, c) for s in SLUGS for c in CFGS
-           if E.get((s, c)) and np.mean([e["regret"] for e in E[(s, c)].values()])
-           <= CV[c]["prior"] * 0]          # can never be <=0; placeholder
+    # The paper says "not one of the forty arms reaches it", so all forty have to be
+    # checked here: an earlier version of this block iterated the twenty bare cells while
+    # reporting against a denominator of forty.
     ceil = [(s, c, np.mean([e["regret"] for e in E[(s, c)].values()]), CV[c]["prior"])
-            for s in SLUGS for c in CFGS if E.get((s, c))]
-    say("no cell on any task reaches R*(∅)",
-        f"{sum(1 for _,_,m,p in ceil if m < p)} / {len(ceil)} cells have R-bar below R*(none)")
+            for s in ARMS for c in CFGS if E.get((s, c))]
+    bare_r = [m/p for s, _, m, p in ceil if "+tools" not in s]
+    tool_r = [m/p for s, _, m, p in ceil if "+tools" in s]
+    say("no cell on any task reaches R*(∅); bare arms sit 1.8x to 23.4x above it",
+        f"{sum(1 for _,_,m,p in ceil if m < p)} / {len(ceil)} cells have R-bar below "
+        f"R*(none); bare {min(bare_r):.1f}x..{max(bare_r):.1f}x, "
+        f"tooled {min(tool_r):.1f}x..{max(tool_r):.1f}x")
+
+    refs = json.loads((ROOT / "results" /
+                       f"reference_table_env{slowlab.ENV_VERSION}.json").read_text())
+    rr = [(d["realised"]/v["prior"], t, a)
+          for t, v in refs["tasks"].items() for a, d in v["agents"].items()]
+    say("the scripted references are closer but also short, at 1.6x to 22.3x",
+        f"{min(rr)[0]:.1f}x ({min(rr)[1]}/{min(rr)[2]}) .. "
+        f"{max(rr)[0]:.1f}x ({max(rr)[1]}/{max(rr)[2]})")
 
     print("=" * 78)
     print("C. Design diagnostics (rank deficiency; too few distinct treatments)")
@@ -83,27 +95,33 @@ def main():
     for slug in list(SLUGS) + [s + "+tools" for s in SLUGS]:
         for c in CFGS:
             few = rd = tot = 0
-            ks = []
+            ks, reps = [], []
             t = TASKS[c]; d = len(t.factors)
             for f in sorted(glob.glob(str(R / f"transcript_{slug}_{c}_s*.json"))):
                 seed = int(re.search(r"_s(\d+)\.json$", f).group(1))
                 env = SlowLabEnv(t, seed=seed)
                 for p, _ in designs_from(f, env):
-                    u = np.unique(np.round(np.atleast_2d(p), 6), axis=0)
+                    p = np.atleast_2d(p)
+                    u = np.unique(np.round(p, 6), axis=0)
                     tot += 1; few += (len(u) < d + 1); ks.append(len(u))
+                    reps.append(len(p) / len(u))
                     rd += (np.linalg.matrix_rank(np.c_[np.ones(len(u)), u]) < d + 1)
-            if tot: diag[(slug, c)] = (100*few/tot, 100*rd/tot, tot, float(np.median(ks)))
+            if tot: diag[(slug, c)] = (100*few/tot, 100*rd/tot, tot, float(np.median(ks)),
+                                       float(np.median(reps)))
     for c in CFGS:
         b = np.mean([diag[(s, c)][1] for s in SLUGS if (s, c) in diag])
         t_ = np.mean([diag[(s+"+tools", c)][1] for s in SLUGS if (s+"+tools", c) in diag])
         fw = np.mean([diag[(s, c)][0] for s in SLUGS if (s, c) in diag])
         md = np.median([diag[(s, c)][3] for s in SLUGS if (s, c) in diag])
+        rp = np.median([diag[(s, c)][4] for s in SLUGS if (s, c) in diag])
         print(f"  {c:9s} rank-deficient bare {b:5.1f}%  tooled {t_:5.1f}%   "
-              f"k < d+1 bare {fw:5.1f}%   median distinct treatments {md:.0f}")
+              f"k < d+1 bare {fw:5.1f}%   median distinct treatments {md:.0f}   "
+              f"median units per treatment {rp:.0f}")
     print()
     say("unaided, 99% rank-deficient on Screen, 92% on Transfer, 54% on Optimise; "
-        "with tools 59% and 64%; k < d+1 in 98% / 87% / 48% of those designs; "
-        "the median design uses two distinct treatments",
+        "with tools 59% and 64%; k < d+1 in 98% / 87% / 50% of those designs; "
+        "the median design uses two distinct treatments, each carrying a median of "
+        "three to twelve units depending on the task",
         "see the table above")
 
     print("=" * 78)
@@ -204,6 +222,28 @@ def main():
             f"{100*ep/tot_ep:.0f}% of {tot_ep} episodes; {worse_cell}/40 cells")
     else:
         say("round-1 regret", "episodes carry no regret_by_round")
+
+    print("=" * 78)
+    print("H. Within-task rank correlations (the two regrets, and c against eta)")
+    # These carry the claim that the measures are not restatements of each other, so
+    # they need a line here like every other number in the section.
+    for c in CFGS:
+        P = CV[c]["prior"]; A = CV[c]["agents"]
+        rows = []
+        for s in SLUGS:
+            es = list(E.get((s, c), {}).values())
+            if not es or s not in A: continue
+            rbar = np.mean([e["regret"] for e in es])
+            cum = np.mean([e["cumulative_regret"] for e in es])
+            rows.append((rbar, cum, 1 - A[s]["R_star"]/P, A[s]["R_star"]/rbar))
+        if len(rows) < 3: continue
+        rbar, cum, cc, eta = map(np.array, zip(*rows))
+        print(f"  {c:9s} rho(R-bar, R_cum) = {stats.spearmanr(rbar, cum).statistic:+.2f}   "
+              f"rho(c, eta) = {stats.spearmanr(cc, eta).statistic:+.2f}   n = {len(rows)}")
+    print()
+    say("R-bar and R_cum rank-correlate at -0.80 on Sanity and -0.60 on Optimise; "
+        "c and eta at +0.80 on Optimise and -0.80 on Transfer",
+        "see the table above")
 
 
 if __name__ == "__main__":

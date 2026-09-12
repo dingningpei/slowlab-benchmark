@@ -1,0 +1,421 @@
+[
+ {
+  "task": "Optimise",
+  "model": "xiaomi/mimo-v2.5",
+  "seed": 0,
+  "regret": 0.007546482109405103,
+  "regret_zero_shot": 0.04834194895708946,
+  "cumulative_regret": 194.46324583467796,
+  "stopped_early_at": null,
+  "cash": -497.83662095317715,
+  "wasted_fraction": 0.5,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 1,
+  "infeasible": 1,
+  "trace": [
+   0.04475142221751999,
+   0.04475142221751999,
+   0.003722477128925844
+  ],
+  "seconds": 177.0
+ },
+ {
+  "task": "Optimise",
+  "model": "xiaomi/mimo-v2.5",
+  "seed": 1,
+  "regret": 0.006834653263829982,
+  "regret_zero_shot": 0.026138959496508393,
+  "cumulative_regret": 423.5338570156045,
+  "stopped_early_at": null,
+  "cash": -673.7841386138979,
+  "wasted_fraction": 0.5,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.026138959496508393,
+   0.11799131715253751,
+   0.026949731999500806
+  ],
+  "seconds": 22.9
+ },
+ {
+  "task": "Optimise",
+  "model": "xiaomi/mimo-v2.5",
+  "seed": 2,
+  "regret": 0.0183619707328274,
+  "regret_zero_shot": 0.017029139272976723,
+  "cumulative_regret": 494.2073264495829,
+  "stopped_early_at": null,
+  "cash": -1039.7685739190938,
+  "wasted_fraction": 0.5,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.0183619707328274,
+   0.0945361128773941,
+   0.0183619707328274
+  ],
+  "seconds": 22.5
+ },
+ {
+  "task": "Optimise",
+  "model": "xiaomi/mimo-v2.5",
+  "seed": 3,
+  "regret": 0.02264816889126625,
+  "regret_zero_shot": 0.027031242825822505,
+  "cumulative_regret": 422.6354421375825,
+  "stopped_early_at": null,
+  "cash": -1293.5595588545293,
+  "wasted_fraction": 0.5,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.026508711283218772,
+   0.08810250202888448,
+   0.02264816889126625
+  ],
+  "seconds": 19.8
+ },
+ {
+  "task": "Optimise",
+  "model": "xiaomi/mimo-v2.5",
+  "seed": 4,
+  "regret": 0.03342594579870041,
+  "regret_zero_shot": 0.005439037944465701,
+  "cumulative_regret": 317.7526644380374,
+  "stopped_early_at": null,
+  "cash": -205.5445795320639,
+  "wasted_fraction": 0.5,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 1,
+  "infeasible": 1,
+  "trace": [
+   0.0475804106916331,
+   0.15150532186026633,
+   0.031798630247922656
+  ],
+  "seconds": 2267.0
+ },
+ {
+  "task": "Optimise",
+  "model": "xiaomi/mimo-v2.5",
+  "seed": 5,
+  "regret": 0.07094139536235927,
+  "regret_zero_shot": 0.07163148606852175,
+  "cumulative_regret": 592.834725599754,
+  "stopped_early_at": null,
+  "cash": -809.516206513941,
+  "wasted_fraction": 0.5,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.07201733412109984,
+   0.12007160854525994,
+   0.07187805643294286
+  ],
+  "seconds": 21.0
+ },
+ {
+  "task": "Optimise",
+  "model": "xiaomi/mimo-v2.5",
+  "seed": 6,
+  "regret": 0.009851871463511228,
+  "regret_zero_shot": 0.057017218446777124,
+  "cumulative_regret": 186.7486109099214,
+  "stopped_early_at": null,
+  "cash": -460.58473643967,
+  "wasted_fraction": 0.5,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 2,
+  "trace": [
+   0.05763315507843955,
+   0.05761453138632677,
+   0.009851871463511228
+  ],
+  "seconds": 28.0
+ },
+ {
+  "task": "Optimise",
+  "model": "xiaomi/mimo-v2.5",
+  "seed": 7,
+  "regret": 0.003589398311781289,
+  "regret_zero_shot": 0.010210743216321289,
+  "cumulative_regret": 252.93975993459577,
+  "stopped_early_at": null,
+  "cash": -1336.0299170065373,
+  "wasted_fraction": 0.5,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 1,
+  "trace": [
+   0.08287698993000348,
+   0.003589398311781289,
+   0.024532824492055155
+  ],
+  "seconds": 28.1
+ },
+ {
+  "task": "Optimise",
+  "model": "xiaomi/mimo-v2.5",
+  "seed": 8,
+  "regret": 0.01314709770964137,
+  "regret_zero_shot": 0.045028162680958106,
+  "cumulative_regret": 250.63704507674757,
+  "stopped_early_at": null,
+  "cash": -791.4960754894715,
+  "wasted_fraction": 0.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 1,
+  "trace": [
+   0.04541975252845404,
+   0.03825120778506891,
+   0.01314709770964137
+  ],
+  "seconds": 24.7
+ },
+ {
+  "task": "Optimise",
+  "model": "xiaomi/mimo-v2.5",
+  "seed": 9,
+  "regret": 0.01061673229564905,
+  "regret_zero_shot": 0.051831372017054525,
+  "cumulative_regret": 320.859224349767,
+  "stopped_early_at": null,
+  "cash": -751.8697912114696,
+  "wasted_fraction": 0.5,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.05214386734737071,
+   0.08476660167108567,
+   0.046328414839578155
+  ],
+  "seconds": 20.3
+ },
+ {
+  "task": "Optimise",
+  "model": "xiaomi/mimo-v2.5",
+  "seed": 10,
+  "regret": 0.021873940788954382,
+  "regret_zero_shot": 0.015461393961135966,
+  "cumulative_regret": 201.68857529617077,
+  "stopped_early_at": null,
+  "cash": -1114.9229797467642,
+  "wasted_fraction": 1.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 3,
+  "trace": [
+   0.027125430175473947,
+   0.027125430175473947
+  ],
+  "seconds": 33.2
+ },
+ {
+  "task": "Optimise",
+  "model": "xiaomi/mimo-v2.5",
+  "seed": 11,
+  "regret": 0.030739085213336,
+  "regret_zero_shot": 0.03509053930842369,
+  "cumulative_regret": 224.51870760958758,
+  "stopped_early_at": null,
+  "cash": -476.07816462890196,
+  "wasted_fraction": 1.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 1,
+  "trace": [
+   0.033417766160475426,
+   0.033417766160475426,
+   0.033417766160475426
+  ],
+  "seconds": 24.9
+ },
+ {
+  "task": "Optimise",
+  "model": "xiaomi/mimo-v2.5",
+  "seed": 12,
+  "regret": 0.019564183479635032,
+  "regret_zero_shot": 0.028498701631452926,
+  "cumulative_regret": 512.5412543825537,
+  "stopped_early_at": null,
+  "cash": -744.7444782284607,
+  "wasted_fraction": 0.5,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.05788150258798041,
+   0.10897609134491673,
+   0.05488000498442223
+  ],
+  "seconds": 19.0
+ },
+ {
+  "task": "Optimise",
+  "model": "xiaomi/mimo-v2.5",
+  "seed": 13,
+  "regret": 0.006894392406179742,
+  "regret_zero_shot": 0.02806234810058436,
+  "cumulative_regret": 223.06578076990874,
+  "stopped_early_at": null,
+  "cash": -637.3830994636306,
+  "wasted_fraction": 0.5,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 1,
+  "trace": [
+   0.04842168563514891,
+   0.008008325698661473,
+   0.008008325698661473
+  ],
+  "seconds": 25.9
+ },
+ {
+  "task": "Optimise",
+  "model": "xiaomi/mimo-v2.5",
+  "seed": 14,
+  "regret": 0.01633542703518362,
+  "regret_zero_shot": 0.008681129894375778,
+  "cumulative_regret": 477.9791361477683,
+  "stopped_early_at": null,
+  "cash": -1564.9795790407445,
+  "wasted_fraction": 0.5,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.016122634999580526,
+   0.04263960454037388,
+   0.008627846561463287
+  ],
+  "seconds": 23.6
+ },
+ {
+  "task": "Optimise",
+  "model": "xiaomi/mimo-v2.5",
+  "seed": 15,
+  "regret": 0.03648292752160029,
+  "regret_zero_shot": 0.017835326509129,
+  "cumulative_regret": 275.15633574688945,
+  "stopped_early_at": null,
+  "cash": -803.4636680125253,
+  "wasted_fraction": 0.5,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 1,
+  "trace": [
+   0.016692544121694436,
+   0.11725482699311901,
+   0.015297042349580625
+  ],
+  "seconds": 23.9
+ },
+ {
+  "task": "Optimise",
+  "model": "xiaomi/mimo-v2.5",
+  "seed": 16,
+  "regret": 0.026821832883194938,
+  "regret_zero_shot": 0.046717186114714704,
+  "cumulative_regret": 190.7129107335707,
+  "stopped_early_at": null,
+  "cash": -426.9728968664606,
+  "wasted_fraction": 0.5,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 3,
+  "trace": [
+   0.026821832883194938,
+   0.042755012519569854,
+   0.026821832883194938
+  ],
+  "seconds": 28.9
+ },
+ {
+  "task": "Optimise",
+  "model": "xiaomi/mimo-v2.5",
+  "seed": 17,
+  "regret": 0.015161404840606352,
+  "regret_zero_shot": 0.02066807911642035,
+  "cumulative_regret": 175.53582688057398,
+  "stopped_early_at": null,
+  "cash": -683.6996872305868,
+  "wasted_fraction": 0.5,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 1,
+  "trace": [
+   0.021416813999389522,
+   0.08592846602152568,
+   0.01743571335249053
+  ],
+  "seconds": 33.0
+ },
+ {
+  "task": "Optimise",
+  "model": "xiaomi/mimo-v2.5",
+  "seed": 18,
+  "regret": 0.017989339797107456,
+  "regret_zero_shot": 0.04164785708749588,
+  "cumulative_regret": 215.38906693628897,
+  "stopped_early_at": null,
+  "cash": -791.2489945192036,
+  "wasted_fraction": 0.5,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 1,
+  "trace": [
+   0.04100795147460262,
+   0.017989339797107456,
+   0.017989339797107456
+  ],
+  "seconds": 23.5
+ },
+ {
+  "task": "Optimise",
+  "model": "xiaomi/mimo-v2.5",
+  "seed": 19,
+  "regret": 0.017048662677734888,
+  "regret_zero_shot": 0.023593396404533964,
+  "cumulative_regret": 502.1984649652729,
+  "stopped_early_at": null,
+  "cash": -941.6660763180798,
+  "wasted_fraction": 1.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.024735658523362417,
+   0.04306354945889078,
+   0.04306354945889078
+  ],
+  "seconds": 20.8
+ }
+]

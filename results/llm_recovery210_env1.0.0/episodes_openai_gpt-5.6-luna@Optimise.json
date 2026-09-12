@@ -1,0 +1,419 @@
+[
+ {
+  "task": "Optimise",
+  "model": "openai/gpt-5.6-luna",
+  "seed": 0,
+  "regret": 0.025851368481345616,
+  "regret_zero_shot": 0.027395395351701324,
+  "cumulative_regret": 614.517059982949,
+  "stopped_early_at": null,
+  "cash": -943.059234871873,
+  "wasted_fraction": 0.5,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 2,
+  "trace": [
+   0.04930875776502694,
+   0.025851368481345616,
+   0.025851368481345616
+  ],
+  "seconds": 18.0
+ },
+ {
+  "task": "Optimise",
+  "model": "openai/gpt-5.6-luna",
+  "seed": 1,
+  "regret": 0.006834653263829982,
+  "regret_zero_shot": 0.026215573132833875,
+  "cumulative_regret": 665.9576972780994,
+  "stopped_early_at": null,
+  "cash": -893.0274343119358,
+  "wasted_fraction": 1.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 2,
+  "trace": [
+   0.026215573132833875,
+   0.11799131715253751,
+   0.11799131715253751
+  ],
+  "seconds": 18.4
+ },
+ {
+  "task": "Optimise",
+  "model": "openai/gpt-5.6-luna",
+  "seed": 2,
+  "regret": 0.03444320225949439,
+  "regret_zero_shot": 0.0034326535049254564,
+  "cumulative_regret": 426.7671666671985,
+  "stopped_early_at": null,
+  "cash": -975.059034251049,
+  "wasted_fraction": 0.5,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 2,
+  "trace": [
+   0.017663443599708034,
+   0.036179739665659474,
+   0.03444320225949439
+  ],
+  "seconds": 18.4
+ },
+ {
+  "task": "Optimise",
+  "model": "openai/gpt-5.6-luna",
+  "seed": 3,
+  "regret": 0.014187422147566853,
+  "regret_zero_shot": 0.008717376253159631,
+  "cumulative_regret": 324.71610456522416,
+  "stopped_early_at": null,
+  "cash": -1185.8381018898651,
+  "wasted_fraction": 0.5,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 2,
+  "trace": [
+   0.026765755398262148,
+   0.01787017433517893,
+   0.01787017433517893
+  ],
+  "seconds": 18.4
+ },
+ {
+  "task": "Optimise",
+  "model": "openai/gpt-5.6-luna",
+  "seed": 4,
+  "regret": 0.012775253306028947,
+  "regret_zero_shot": 0.013776379409898067,
+  "cumulative_regret": 346.0638247025065,
+  "stopped_early_at": null,
+  "cash": -174.87960336413573,
+  "wasted_fraction": 0.5,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 2,
+  "trace": [
+   0.0475804106916331,
+   0.012775253306028947,
+   0.012775253306028947
+  ],
+  "seconds": 19.3
+ },
+ {
+  "task": "Optimise",
+  "model": "openai/gpt-5.6-luna",
+  "seed": 5,
+  "regret": 0.0043479757501799915,
+  "regret_zero_shot": 0.03701167369213611,
+  "cumulative_regret": 362.57386037627754,
+  "stopped_early_at": null,
+  "cash": -610.698652147409,
+  "wasted_fraction": 0.5,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.07201733412109984,
+   0.00913371561755584,
+   0.00913371561755584
+  ],
+  "seconds": 14.2
+ },
+ {
+  "task": "Optimise",
+  "model": "openai/gpt-5.6-luna",
+  "seed": 6,
+  "regret": 0.010048309452351106,
+  "regret_zero_shot": 0.057953553530428914,
+  "cumulative_regret": 467.6170183624567,
+  "stopped_early_at": null,
+  "cash": -890.5860795054805,
+  "wasted_fraction": 0.5,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 1,
+  "trace": [
+   0.057953553530428914,
+   0.1195976831915681,
+   0.057085108771151194
+  ],
+  "seconds": 15.6
+ },
+ {
+  "task": "Optimise",
+  "model": "openai/gpt-5.6-luna",
+  "seed": 7,
+  "regret": 0.021695307969557404,
+  "regret_zero_shot": 0.04917711596864033,
+  "cumulative_regret": 234.73841554950315,
+  "stopped_early_at": null,
+  "cash": -1099.2107948703735,
+  "wasted_fraction": 0.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 2,
+  "trace": [
+   0.04917711596864033,
+   0.045245965954273604,
+   0.003982130116389426
+  ],
+  "seconds": 18.9
+ },
+ {
+  "task": "Optimise",
+  "model": "openai/gpt-5.6-luna",
+  "seed": 8,
+  "regret": 0.019959943742919734,
+  "regret_zero_shot": 0.04541975252845404,
+  "cumulative_regret": 389.7986952496033,
+  "stopped_early_at": null,
+  "cash": -1242.1346986666692,
+  "wasted_fraction": 0.5,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 2,
+  "trace": [
+   0.04541975252845404,
+   0.06641909790010836,
+   0.032024170023699144
+  ],
+  "seconds": 16.9
+ },
+ {
+  "task": "Optimise",
+  "model": "openai/gpt-5.6-luna",
+  "seed": 9,
+  "regret": 0.046328414839578155,
+  "regret_zero_shot": 0.029567507596478984,
+  "cumulative_regret": 111.90884509639638,
+  "stopped_early_at": 2,
+  "cash": -232.92101966567827,
+  "wasted_fraction": NaN,
+  "transfer_regret": NaN,
+  "rounds_submitted": 1,
+  "format_failures": 0,
+  "infeasible": 3,
+  "trace": [
+   0.05214386734737071
+  ],
+  "seconds": 15.9
+ },
+ {
+  "task": "Optimise",
+  "model": "openai/gpt-5.6-luna",
+  "seed": 10,
+  "regret": 0.0019466291867627217,
+  "regret_zero_shot": 0.014419716060708604,
+  "cumulative_regret": 302.547589089968,
+  "stopped_early_at": null,
+  "cash": -1109.7738743371845,
+  "wasted_fraction": 0.5,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 1,
+  "trace": [
+   0.02963856105277768,
+   0.04577905331363491,
+   0.014726553989706292
+  ],
+  "seconds": 15.3
+ },
+ {
+  "task": "Optimise",
+  "model": "openai/gpt-5.6-luna",
+  "seed": 11,
+  "regret": 0.01681157305155205,
+  "regret_zero_shot": 0.018041705885539508,
+  "cumulative_regret": 851.6961921148641,
+  "stopped_early_at": null,
+  "cash": -1312.6882095150672,
+  "wasted_fraction": 0.5,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 1,
+  "trace": [
+   0.03541812930534903,
+   0.01681157305155205,
+   0.01681157305155205
+  ],
+  "seconds": 16.8
+ },
+ {
+  "task": "Optimise",
+  "model": "openai/gpt-5.6-luna",
+  "seed": 12,
+  "regret": 0.0014406555640469748,
+  "regret_zero_shot": 0.05788150258798041,
+  "cumulative_regret": 421.43088959539807,
+  "stopped_early_at": null,
+  "cash": -715.3361006017531,
+  "wasted_fraction": 0.5,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 2,
+  "trace": [
+   0.05787432658780919,
+   0.06292487844436292,
+   0.03030275740823867
+  ],
+  "seconds": 16.9
+ },
+ {
+  "task": "Optimise",
+  "model": "openai/gpt-5.6-luna",
+  "seed": 13,
+  "regret": 0.006894392406179742,
+  "regret_zero_shot": 0.027454630680535885,
+  "cumulative_regret": 223.82696936208848,
+  "stopped_early_at": null,
+  "cash": -560.1992266423246,
+  "wasted_fraction": 0.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 2,
+  "trace": [
+   0.048014279846986765,
+   0.04022489276547357,
+   0.006894392406179742
+  ],
+  "seconds": 20.0
+ },
+ {
+  "task": "Optimise",
+  "model": "openai/gpt-5.6-luna",
+  "seed": 14,
+  "regret": 0.0024972202970972024,
+  "regret_zero_shot": 0.00767574514196781,
+  "cumulative_regret": 289.58881303580415,
+  "stopped_early_at": null,
+  "cash": -1642.002092166839,
+  "wasted_fraction": 0.5,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 1,
+  "trace": [
+   0.016122634999580526,
+   0.032161638839653145,
+   0.0024972202970972024
+  ],
+  "seconds": 15.9
+ },
+ {
+  "task": "Optimise",
+  "model": "openai/gpt-5.6-luna",
+  "seed": 15,
+  "regret": 0.001885701847451765,
+  "regret_zero_shot": 0.0030670986361877317,
+  "cumulative_regret": 508.42922482539456,
+  "stopped_early_at": null,
+  "cash": -1469.9551905560659,
+  "wasted_fraction": 0.5,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 2,
+  "trace": [
+   0.016692544121694436,
+   0.2615970481749879,
+   0.03522894800718451
+  ],
+  "seconds": 20.4
+ },
+ {
+  "task": "Optimise",
+  "model": "openai/gpt-5.6-luna",
+  "seed": 16,
+  "regret": 0.007152965210275031,
+  "regret_zero_shot": 0.04718537264504408,
+  "cumulative_regret": 211.26102095262507,
+  "stopped_early_at": null,
+  "cash": -483.66748573795496,
+  "wasted_fraction": 0.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 4,
+  "trace": [
+   0.04718537264504408,
+   0.007152965210275031
+  ],
+  "seconds": 22.6
+ },
+ {
+  "task": "Optimise",
+  "model": "openai/gpt-5.6-luna",
+  "seed": 17,
+  "regret": 0.00867372959263682,
+  "regret_zero_shot": 0.004834668865226904,
+  "cumulative_regret": 526.5237116061038,
+  "stopped_early_at": null,
+  "cash": -1453.4236401211363,
+  "wasted_fraction": 0.5,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 2,
+  "trace": [
+   0.021416813999389522,
+   0.028603698550106083,
+   0.00867372959263682
+  ],
+  "seconds": 18.8
+ },
+ {
+  "task": "Optimise",
+  "model": "openai/gpt-5.6-luna",
+  "seed": 18,
+  "regret": 0.021117385529253963,
+  "regret_zero_shot": 0.01879723072553549,
+  "cumulative_regret": 368.4850406366921,
+  "stopped_early_at": null,
+  "cash": -1250.832539867979,
+  "wasted_fraction": 0.5,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 3,
+  "trace": [
+   0.04100795147460262,
+   0.059185329356735344,
+   0.021117385529253963
+  ],
+  "seconds": 21.4
+ },
+ {
+  "task": "Optimise",
+  "model": "openai/gpt-5.6-luna",
+  "seed": 19,
+  "regret": 0.008271688600214502,
+  "regret_zero_shot": 0.024735658523362417,
+  "cumulative_regret": 532.311595829218,
+  "stopped_early_at": null,
+  "cash": -1101.2169622742229,
+  "wasted_fraction": 1.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 2,
+  "trace": [
+   0.02396799225990459,
+   0.0735894587993257,
+   0.0735894587993257
+  ],
+  "seconds": 18.1
+ }
+]

@@ -13,13 +13,18 @@ separates a campaign that could not have answered the question from one that cou
 not, and scores an agent against what was achievable rather than against a baseline we
 happened to implement.
 
-Across five models and four tasks, $99\%$ of designs on the six-factor screen cannot
-separate the effects they were commissioned to separate, because most use two distinct
-treatments replicated across the facility: under a hard parallelism cap, precision and
-coverage compete for the same physical units. This is the opposite of the failure we
-expected. Supplying standard tools then drives the two measures apart --- the designs
-improve and the campaigns end worse in sixteen of twenty cells, because the inference
-tool is fitted to the agent's own design, inherits its deficiency, and is deferred to in
-proportion to how wrong it is. Under these conditions an agent cannot afford the cycle it
-would take to find that out.
+Across five models, four tasks and $800$ episodes, no arm reaches the regret a perfect
+reasoner would carry having run no experiment at all, and the campaigns fail at the design
+and at the decision separately. $99\%$ of six-factor screens cannot separate the effects
+they were commissioned to separate, because the median design replicates two distinct
+treatments across the whole facility whatever the task needs: under a hard parallelism cap
+precision and coverage compete for the same physical units, and these agents buy precision.
+This is the opposite of the failure we expected. On the two higher-dimensional tasks the
+recommendations then use a twentieth of what even those designs did support, and in $44\%$
+of episodes the first cycle of data leaves the recommendation worse than the one the model
+gave for free. Supplying standard tools moves the two measures in opposite directions ---
+the designs improve and the campaigns end worse in sixteen of twenty cells, because the
+inference tool is fitted to the agent's own design, inherits its deficiency, and is deferred
+to in proportion to how wrong it is. Under these conditions an agent cannot afford the cycle
+it would take to find that out.
 \end{abstract}

@@ -343,6 +343,170 @@ factors matter and the other half on a response surface around a noisy incumbent
 random search spends everything on coverage. Plackett--Burman was designed for a programme
 with a follow-up; two rounds are not one.
 
+\section{How much of the ceiling any design can remove}
+\label{app:oracle}
+
+\S\ref{sec:results} reports design efficiency without saying what value of it is
+attainable, and a reader is entitled to ask whether a small $c$ measures the agent or the
+task. If no admissible design can push $\mathcal{R}^\star(D)$ far below
+$\mathcal{R}^\star(\varnothing)$, the denominator of \eqref{eq:capture} carries no
+information and a low score says only that the problem is hard.
+
+We answer by searching the admissible set directly
+(\texttt{scripts/oracle\_design.py}). The search reads $P_\Theta$ and the forward model, so
+it is not an agent and its designs are not achievable by one: it is an upper bound on what
+the design half of the score could ever report. The set is discrete and hierarchical ---
+chamber-level factors take one value per chamber --- so a round is a choice of how many
+chambers, how many loops in each, how many distinct chamber-level and loop-level settings,
+and where those settings sit in the factor space. We enumerate that grid over five standard
+point families (maximin, Latin hypercube, two-level corners, three-level grid, uniform),
+check every candidate through the environment's own validator, and score it with the
+cross-validated estimator of \S\ref{sec:estimator}. Being an enumeration over families
+rather than a proof of optimality, the $c_{\max}$ of Table~\ref{tab:oracle} is itself a
+lower bound on the true maximum.
+
+\begin{table}[h]
+\centering\small
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{@{}lccccccc@{}}
+\toprule
+& & \multicolumn{2}{c}{\footnotesize best design found} & \multicolumn{2}{c}{\footnotesize best $c$ achieved} & \multicolumn{2}{c}{\footnotesize median $c$ at} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}\cmidrule(lr){7-8}
+\textbf{Task} & $\mathcal{R}^\star(\varnothing)$ & $c_{\max}$ & $k$ & model & scripted & $k=2$ & $k \ge d{+}1$ \\
+\midrule
+\textsc{Sanity}   & 0.0055 & $31.7\%$ & 3 & $11.5\%$ & $9.2\%$  & $1.4\%$ & $5.3\%$ \\
+\textsc{Screen}   & 0.0044 & $27.8\%$ & 5 & $7.1\%$  & $20.0\%$ & $2.0\%$ & $10.7\%$ \\
+\textsc{Optimise} & 0.0061 & $37.4\%$ & 9 & $18.0\%$ & $5.5\%$  & $9.9\%$ & $15.6\%$ \\
+\textsc{Transfer} & 0.0041 & $26.5\%$ & 8 & $9.2\%$  & $16.8\%$ & $4.6\%$ & $12.5\%$ \\
+\bottomrule
+\end{tabular}
+\caption{What one round of design can buy. $c_{\max}$ is the highest design efficiency
+found over the admissible set, and $k$ the number of distinct treatments the design
+carrying it uses. The next two columns are the best $c$ any language model and any scripted
+strategy reached on that task. The last two are the \emph{median} $c$ over all candidates
+with two distinct treatments and over all candidates with at least $d+1$, which is the
+comparison the diagnosis in \S\ref{sec:results:design} rests on.}
+\label{tab:oracle}
+\end{table}
+
+Three readings. First, \textbf{the ceiling is not approachable}: the best design found
+removes $27\%$ to $37\%$ of $\mathcal{R}^\star(\varnothing)$, so most of the no-data risk
+survives any single round at these budgets. That is a property of the regime rather than of
+the agents --- twelve to twenty-four units against a six-dimensional site distribution
+cannot identify the optimum --- and it is a second reason, beyond the estimator's
+convergence, to read $c$ as a rank rather than as a fraction captured.
+
+Second, \textbf{the headroom over what agents reach is real}. The best $c$ anyone achieves
+is $1.4\times$ to $2.8\times$ below $c_{\max}$ on every task, so the low values in
+Table~\ref{tab:results} are not the measure bottoming out.
+
+Third, \textbf{the width diagnosis survives its own counterexample}. The best design we find
+on \textsc{Screen} uses five distinct treatments over six factors, so it is rank-deficient
+by the criterion of \S\ref{sec:results:design}: a well-placed narrow design can do well.
+But the median tells the other story --- at $k=2$ the median candidate captures $1.4\%$ to
+$9.9\%$ depending on the task, against $5.3\%$ to $15.6\%$ at $k \ge d+1$, and the ordering
+holds on all four. An agent choosing a narrow design is choosing from that distribution
+without being able to see the surface in advance, and the agents' realised $c$ sits close to
+the narrow median rather than to its best case.
+
+\section{Does the ordering replicate?}
+\label{app:stability}
+
+Two tasks have a prize no larger than the noise a full budget leaves behind
+(Table~\ref{tab:tasks}: the ratio is $0.8$ on \textsc{Screen} and $1.0$ on
+\textsc{Transfer}), which invites the objection that any ordering they produce is a coin
+toss. We measure it (\texttt{scripts/rank\_stability.py}). The twenty instances are split
+into two disjoint halves of ten, the five models are ranked on each half by mean realised
+regret, and the two rankings are correlated; every model sees the same sites within a half,
+so the only thing varying is which sites were drawn. Over $4000$ random splits:
+
+\begin{table}[h]
+\centering\small
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Task} & ratio (Table~\ref{tab:tasks}) & $\rho$ between halves & $P(\rho > 0)$ & same winner \\
+\midrule
+\textsc{Screen}   & 0.8 & $-0.28$ & $0.27$ & $0.09$ \\
+\textsc{Transfer} & 1.0 & $+0.09$ & $0.54$ & $0.23$ \\
+\textsc{Sanity}   & 1.3 & $+0.40$ & $0.83$ & $0.42$ \\
+\textsc{Optimise} & 2.2 & $+0.76$ & $1.00$ & $0.12$ \\
+\bottomrule
+\end{tabular}
+\caption{Split-half stability of the five-model ordering by realised regret, bare arms,
+ordered by the ratio of Table~\ref{tab:tasks}. \emph{same winner} is how often the
+best-ranked model agrees between halves.}
+\label{tab:stability}
+\end{table}
+
+The ratio predicts the answer exactly: in Table~\ref{tab:stability} the four tasks fall in
+the same order on both columns. At these sample sizes only \textsc{Optimise} produces a per-model ordering that
+replicates; \textsc{Screen}'s anti-correlates and \textsc{Transfer}'s is indistinguishable
+from zero. The design and decision efficiencies behave the same way ($c$ at $-0.13$,
+$+0.55$, $+0.36$ and $+0.74$ in the same task order), which is expected, since they are
+computed on the same twenty draws.
+
+This bounds what \S\ref{sec:results} may claim. Every finding there that names an
+individual model on \textsc{Screen} or \textsc{Transfer} is under-powered, and we do not
+make one. What the section does claim is of three other kinds, none of which ranks models:
+proportions of submitted designs, which do not involve the outcome at all; within-model
+contrasts paired by site and tested as such, which is how the tool arm is read; and
+statements that hold in every cell rather than in a particular order among them. Raising
+the instance count is the obvious remedy, and the cost is linear in it: twenty sites times
+four tasks times ten arms is already $800$ episodes.
+
+\section{Pricing the irreversibility axis}
+\label{app:irrev}
+
+Three of the four conditions have no dial in this domain: a growing cycle takes as long as
+it takes, plant-to-plant variation is what it is, and a crop grown is a crop sold. The
+fourth has one. Commitment is irreversible throughout --- a submitted design cannot be
+revised and the units it occupies are gone for a cycle --- but beyond commitment the
+environment implements damage: fruit abortion above $T_{\mathrm{CRIT}}$ puts a unit into a
+recovery period graded by how far the threshold was exceeded, so a badly chosen treatment
+costs capacity in the \emph{following} round and not only in its own. The four tasks ship
+with that recovery length set to zero, so every number in the main tables is at zero. This
+appendix turns it up, which is what makes ``the four conditions matter jointly'' a
+measurement rather than a claim about the domain.
+
+It is not dead code for want of triggering: across the reference strategies $55\%$ to
+$60\%$ of committed units exceed the threshold, by $4.3$ to $4.6\,^\circ$C on average.
+
+\paragraph{Scripted references.} Each of the four is run on each
+task at recovery lengths of zero, sixty and two hundred and ten days, twenty instances
+each, identical in every other respect and paired by site
+(\texttt{scripts/} \texttt{recovery\_sweep.py}). The dial bites: at sixty days
+every episode but one of the $320$ loses capacity, and the cell means run from $78$ to
+$1071$ unit-days, $2\%$ to $12\%$ of what the campaign used; at two hundred and ten they run
+from $272$ to $3747$, $8\%$ to $42\%$. Realised regret moves by $-10\%$ to $+20\%$ and
+\emph{not one of the sixteen cells moves by as much as two standard errors of its own
+paired difference}. The two non-zero settings are also indistinguishable from each other,
+in every cell to four digits, because the blocking granularity is a round: both remove the
+unit from exactly one.
+
+\paragraph{Language models.} That measurement has a boundary: none of the four references
+replans around lost capacity,
+since each constructs its design from the task rather than from what the facility can still
+run, so it prices the loss of units to an agent that ignores it. A language model does see
+the shortened \texttt{available\_units} list and can respond, so we ran that arm too
+(\texttt{scripts/recovery\_llm.py}): five models on \textsc{Optimise}, the same twenty
+sites, bare interface, $210$ days against the $0$ of the main tables, one hundred paired
+episodes. The dial reaches the agents --- the rounds they submit shrink by $27\%$ and
+$23\%$ in the second and third rounds, and infeasible submissions per episode rise from
+$0.70$ to $1.22$ as models keep asking for units the facility no longer has. Realised
+regret again does not move: $0.0230$ against $0.0221$, a paired $t$ of $-0.34$ at
+$p = 0.74$, worse in fifty-one of the hundred. Per-model differences run from $-33\%$ to
+$+44\%$ with one at $p = 0.02$, but at a sampling temperature of $0.7$ a rerun at the same
+setting would move a twenty-instance cell by about as much (Appendix~\ref{app:stability}),
+so only the pooled test is worth reading.
+
+Both halves say the same thing, and it refines the claim rather than supporting it. At
+these budgets extra units buy nothing, so losing them costs nothing; what binds is the
+number of cycles and the width of the design, not the number of slots. Irreversibility in
+v1.0 therefore acts through \emph{commitment} --- a design cannot be revised and a cycle is
+spent either way --- and not through the loss of capacity, even when a quarter of the
+facility is withdrawn. A version that wanted capacity loss to bite would have to make
+replication pay first.
+
 \section{Known defects, and why we stopped fixing them}
 \label{app:defects}
 
@@ -419,22 +583,11 @@ register. Separately, replication does not pay at these budgets, so an agent is 
 rewarded for buying precision --- an arithmetic consequence of bounded parallelism rather
 than a bug, but it narrows what the benchmark can distinguish.
 
-\paragraph{A stronger form of irreversibility is implemented and not enabled.} Commitment is irreversible throughout, and \S\ref{sec:regime} shows what it costs an
-agent that the other three conditions do not. Beyond it the environment implements damage: fruit abortion above
-$T_{\mathrm{CRIT}}$ puts a unit into a recovery period graded by how far the threshold was
-exceeded, so that a badly chosen treatment costs capacity in the \emph{following} round and
-not only the units it occupied. All four tasks set the recovery length to zero, with the
-comment ``0 = off (default, keeps existing results unchanged)''---which is the reasoning
-this appendix opens by arguing against, and we record it as such rather than defend it.
-
-It is not dead code for want of triggering. Across the reference strategies, $55\%$ to
-$60\%$ of committed units exceed the threshold, by $4.3$ to $4.6\,^\circ$C on average, so at
-$\texttt{damage\_scale} = 6$ a sixty-day recovery period would take roughly two fifths of
-the facility out of the next round. Enabling it is the first item in the next version. The
-same parameter is also the natural dial for the ablation that would turn ``the four
-conditions matter jointly'' from a claim about the domain into a measurement: running one
-task at recovery lengths of zero, sixty and two hundred and ten days prices irreversibility
-directly, against agents that are otherwise identical.
+\paragraph{A stronger form of irreversibility is implemented and not enabled.} All four
+tasks set the recovery length to zero, with the comment ``0 = off (default, keeps existing
+results unchanged)'' --- which is the reasoning this appendix opens by arguing against, and
+we record it as such rather than defend it. Appendix~\ref{app:irrev} turns it on and
+reports what changes.
 
 \paragraph{Two actions a real grower has and this agent does not.} The action space stops
 at a design and a recommendation, and two of the omissions matter more than the rest.
