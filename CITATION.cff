@@ -2,9 +2,11 @@ cff-version: 1.2.0
 title: "SLOWLAB: a benchmark for scientific agents under slow, costly, irreversible experiments"
 message: "If you use this software, please cite it as below."
 type: software
-version: 0.1.0
-date-released: 2026-08-01
+version: 1.0.0
+date-released: 2026-09-12
 license: MIT
+repository-code: "https://github.com/dingningpei/slowlab-benchmark"
 authors:
-  - family-names: "TODO"
-    given-names: "TODO"
+  - family-names: "Ding"
+    given-names: "Ningpei"
+    email: "dingningpei@gmail.com"
