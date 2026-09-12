@@ -1,0 +1,39 @@
+\begin{table}[t]
+\centering\small
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+\textbf{Model} & 0-shot & $\bar{\mathcal{R}}\downarrow$ & $\mathcal{R}_{\mathrm{cum}}\downarrow$ & $c\uparrow$ & $\eta\uparrow$ \\
+\midrule
+\multicolumn{6}{@{}l}{\textsc{Sanity}\quad\footnotesize $\mathcal{R}^\star(\varnothing) = 0.0055$} \\
+DeepSeek-v4-flash & 0.0375 & \textbf{0.0279(55)} & 258 & 6\% & 18\% \\
+GPT-5.6-luna & 0.0269 & \textbf{0.0131(26)} & 297 & 12\% & 37\% \\
+Qwen3.8-27B & 0.0256 & 0.0419(135) & 239 & 8\% & 12\% \\
+MiMo-v2.5 & 0.0227 & 0.0265(65) & 252 & 11\% & 19\% \\
+GLM-5.3-flash & 0.0182 & 0.0202(72) & 297 & 8\% & 25\% \\
+\addlinespace
+\multicolumn{6}{@{}l}{\textsc{Screen}\quad\footnotesize $\mathcal{R}^\star(\varnothing) = 0.0044$} \\
+DeepSeek-v4-flash & 0.2444 & \textbf{0.1037(195)} & 943 & 5\% & 4\% \\
+GPT-5.6-luna & 0.1628 & \textbf{0.0803(93)} & 845 & 6\% & 5\% \\
+Qwen3.8-27B & 0.2909 & \textbf{0.0893(121)} & 814 & 6\% & 5\% \\
+MiMo-v2.5 & 0.1992 & \textbf{0.0871(86)} & 603 & 7\% & 5\% \\
+GLM-5.3-flash & 0.1865 & \textbf{0.0866(84)} & 717 & 7\% & 5\% \\
+\addlinespace
+\multicolumn{6}{@{}l}{\textsc{Optimise}\quad\footnotesize $\mathcal{R}^\star(\varnothing) = 0.0061$} \\
+DeepSeek-v4-flash & 0.0412 & \textbf{0.0365(41)} & 405 & 6\% & 16\% \\
+GPT-5.6-luna & 0.0248 & \textbf{0.0110(21)} & 450 & 18\% & 45\% \\
+Qwen3.8-27B & 0.0288 & 0.0291(63) & 383 & 8\% & 19\% \\
+MiMo-v2.5 & 0.0259 & 0.0267(51) & 508 & 7\% & 21\% \\
+GLM-5.3-flash & 0.0245 & \textbf{0.0115(20)} & 437 & 14\% & 46\% \\
+\addlinespace
+\multicolumn{6}{@{}l}{\textsc{Transfer}\quad\footnotesize $\mathcal{R}^\star(\varnothing) = 0.0041$} \\
+DeepSeek-v4-flash & 0.2300 & \textbf{0.0758(100)} & 1896 & 7\% & 5\% \\
+GPT-5.6-luna & 0.1635 & \textbf{0.0544(45)} & 1896 & 4\% & 7\% \\
+Qwen3.8-27B & 0.2427 & \textbf{0.0711(132)} & 1822 & 9\% & 5\% \\
+MiMo-v2.5 & 0.2102 & \textbf{0.0778(133)} & 1976 & 9\% & 5\% \\
+GLM-5.3-flash & 0.2022 & \textbf{0.0615(101)} & 2004 & 4\% & 6\% \\
+\bottomrule
+\end{tabular}
+\caption{The four quantities of \S\ref{sec:eval}, for language models without tools, $20$ instances per cell. \emph{0-shot} is the model's own recommendation before it sees any data, and is not one of the four. $\bar{\mathcal{R}}$ \eqref{eq:regret} is realised regret after the full campaign, standard error in the last two places, in bold where it beats that model's own 0-shot; $\mathcal{R}_{\mathrm{cum}}$ \eqref{eq:cumregret} is what the experiments themselves forwent, in the same currency summed over occupied slot-days; $c$ and $\eta$ \eqref{eq:capture} are design and decision efficiency under the cross-validated estimator of \S\ref{sec:estimator}, to be read as ranks. $\eta$ near $100\%$ would mean the recommendation is as good as the design allowed. \textsc{Transfer} is scored at the training prices here so the four tasks are comparable; the post-shock number the task exists for is in \S\ref{sec:results}. No cell reaches $\mathcal{R}^\star(\varnothing)$.}
+\label{tab:results}
+\end{table}

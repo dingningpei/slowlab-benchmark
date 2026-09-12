@@ -1,0 +1,106 @@
+\subsection{Evaluation}
+\label{sec:eval}
+
+Two quantities are reported per episode and never combined. \emph{Realised regret} is read
+from what the campaign did; the \emph{regret a perfect reasoner would still carry} is read
+from what each design could have supported, before its outcome is seen. Neither elicits
+anything from the agent beyond a design and a recommendation.
+
+\subsubsection{Realised regret}
+\label{sec:outcome}
+
+Both quantities of \S\ref{sec:conditions} are made precise here. They are regret against
+the same optimum in the same currency, because the experiment is paid for in the units of
+what it is trying to maximise. The first is \eqref{eq:problem}, elicited after
+\emph{every} round rather than only at $R$, and averaged over instances:
+\begin{equation}
+\bar{\mathcal{R}}(r) \;=\; \mathbb{E}_{\theta \sim P_\Theta}
+\Big[\, f_\theta(x^\star_\theta) - f_\theta(\hat{x}_r) \,\Big],
+\qquad x^\star_\theta \in \arg\max_{x \in \mathcal{X}} f_\theta(x).
+\label{eq:regret}
+\end{equation}
+The second is what the experiments themselves forwent: every occupied slot is run at the
+treatment it was given, so a slot assigned a poor one costs the gap to the optimum for a
+full cycle of length $\Delta$,
+\begin{equation}
+\mathcal{R}_{\mathrm{cum}} \;=\; \Delta \sum_{r=1}^{R} \sum_{u \in \mathcal{U}_r}
+\Big[\, f_\theta(x^\star_\theta) - f_\theta(x_u) \,\Big].
+\label{eq:cumregret}
+\end{equation}
+This is the usual simple-versus-cumulative pair, and the second term is usually dropped in
+benchmark settings because a trial there costs nothing. Here an agent that locates the optimum
+by first running every bad treatment has answered the question and exhausted the facility
+that paid for it. Neither
+implies the other, and in our runs they do order agents differently
+(Appendix~\ref{app:refs}); an agent that runs no experiments forgoes nothing and is judged
+by \eqref{eq:regret} alone.
+
+\subsubsection{Design and decision quality}
+\label{sec:eig}
+
+A campaign can fail in two ways that a single score cannot tell apart: the experiments could
+not have answered the question, or they could and the agent did not read them. Both are
+measured against $\mathcal{R}^\star(D_r)$, the regret still left after a decision-maker who
+reasoned perfectly from this design's outcome,
+\begin{equation}
+\mathcal{R}^\star(D_r) \;=\;
+\underbrace{\mathbb{E}_{p(y \mid D_r)}}_{\text{over outcomes not yet seen}}
+\Big[\, \underbrace{\min_{x \in \mathcal{X}}}_{\text{best recommendation}} \;
+\underbrace{\mathbb{E}_{p(\theta \mid y, D_r)}
+\big[\, f_\theta(x^\star_\theta) - f_\theta(x) \,\big]}_{\text{its expected regret}} \Big].
+\label{eq:eig}
+\end{equation}
+Read it from the inside out. The bracket is the regret \eqref{eq:problem} of recommending
+$x$ at site $\theta$, averaged over the posterior a perfect reasoner would hold after seeing
+$y$, the vector of observations \eqref{eq:obs} that design $D_r$ returns. The $\min$ picks
+the recommendation that posterior supports best. The outer expectation averages over
+outcomes the design has not produced yet, so $\mathcal{R}^\star$ is a property of the design
+alone and can be computed before it is run. No agent can compute it: doing so needs
+$P_\Theta$ and the forward model, which the interface withholds. Written
+$\mathcal{R}^\star(\varnothing)$ for a design that runs nothing, it is the regret of the
+best single recommendation, and so the most any experiment on the task could remove.
+
+From it we form one ratio for what was run and one for what was concluded,
+\begin{equation}
+\underbrace{c(D_r) \;=\; \frac{\mathcal{R}^\star(\varnothing) - \mathcal{R}^\star(D_r)}
+                  {\mathcal{R}^\star(\varnothing)}}_{\text{\emph{design efficiency}}},
+\qquad
+\underbrace{\eta(D_r) \;=\; \frac{\mathcal{R}^\star(D_r)}{\bar{\mathcal{R}}(r)}}
+           _{\text{\emph{decision efficiency}}}.
+\label{eq:capture}
+\end{equation}
+\emph{Design efficiency} $c$ is the fraction of the available risk
+$\mathcal{R}^\star(\varnothing)$ that the experiments removed; it is $0\%$ for a design that
+teaches nothing and $100\%$ for one that identifies the optimum exactly. \emph{Decision
+efficiency} $\eta$ divides what the design made available, $\mathcal{R}^\star(D_r)$, by what
+the agent actually achieved with it, $\bar{\mathcal{R}}(r)$ from \eqref{eq:regret}; it is
+near $100\%$ when the recommendation is as good as the data allowed and near $0\%$ when the
+agent left most of it unused. The \emph{decision} here is the recommendation $\hat{x}_r$
+and nothing else: both terms of $\eta$ are the regret of a point in $\mathcal{X}$, against
+the same optimum, and differ only in who chose it --- the $\min$ inside \eqref{eq:eig}, or
+the agent. Both are reported as percentages, larger is better for both,
+and an agent can fail at either.
+
+Neither is new. $\mathcal{R}^\star(\varnothing)$ and $\mathcal{R}^\star(D)$ are the prior
+and preposterior Bayes risk of the decision problem, so their difference is the expected
+value of sample information \citep{raiffa1961,howard1966}, equivalently a Knowledge Gradient
+\citep{frazier2008kg} for a batch rather than a single point. What is ours is the pairing.
+Unlike information gain about $\theta$ \citep{boxinggym}, \eqref{eq:eig} scores the
+recommendation rather than the parameters, so a design that pins $\theta$ down while
+spending its budget far from the optimum scores low; and since \eqref{eq:eig} contains no
+$\hat{x}_r$, $c$ is a functional of the design and the instance distribution alone while
+$\eta$ carries $\bar{\mathcal{R}}(r)$ in its denominator. The two cannot be restatements of
+each other, and \S\ref{sec:results} shows one intervention moving them in opposite
+directions.
+
+\paragraph{Estimation.}\label{sec:estimator} We discretise $P_\Theta$ into $M$ atoms and score each round's
+design against the prior rather than against the realised history, because conditioning on a
+history collapses the effective atom count below five by the third round. The obvious
+estimator --- the same atoms forming the posterior, choosing the recommendation and grading
+it --- is in-sample selection and is badly optimistic: it reports $c = 97\%$ for a design
+worth $-64\%$ on held-out atoms. We temper the likelihood, choose the temperature by
+leave-one-out over the inference atoms, and grade on a disjoint half.
+Appendix~\ref{app:eig} gives the mechanics, the diagnostics, and what each change is worth.
+What survives estimation is an ordering, so we report $c$ and $\eta$ as ranks and as means
+over dozens of designs, and draw conclusions only from arms compared pairwise at fixed $M$;
+Appendix~\ref{app:eig} says what forces that.

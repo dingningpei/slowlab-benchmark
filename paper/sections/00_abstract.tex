@@ -1,0 +1,25 @@
+\providecommand{\pending}[1]{\textcolor{gray}{\textsc{#1}}}
+\begin{abstract}
+Benchmarks for automated experimental design make experiments instantaneous, free, and
+infinitely repeatable. Real experiments are none of these. We introduce \slowlab, an
+executable benchmark under four conditions that hold at once: feedback is slow, noise is
+irreducible, trials are priced in the objective's own units, and commitments cannot be
+rolled back. An agent runs a greenhouse --- it designs experiments, commits them, waits out
+a growing cycle, and repeats. Ground truth is a published mechanistic crop model, so the
+difficulty is not ours to tune, and everything is denominated in net profit per square metre
+per day. Beside realised regret we report the regret a perfect reasoner would still carry
+given the same design, computed from an instance distribution no agent sees. The gap
+separates a campaign that could not have answered the question from one that could and did
+not, and scores an agent against what was achievable rather than against a baseline we
+happened to implement.
+
+Across five models and four tasks, $99\%$ of designs on the six-factor screen cannot
+separate the effects they were commissioned to separate, because most use two distinct
+treatments replicated across the facility: under a hard parallelism cap, precision and
+coverage compete for the same physical units. This is the opposite of the failure we
+expected. Supplying standard tools then drives the two measures apart --- the designs
+improve and the campaigns end worse in sixteen of twenty cells, because the inference
+tool is fitted to the agent's own design, inherits its deficiency, and is deferred to in
+proportion to how wrong it is. Under these conditions an agent cannot afford the cycle it
+would take to find that out.
+\end{abstract}

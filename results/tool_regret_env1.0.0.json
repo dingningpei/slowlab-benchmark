@@ -1,0 +1,240 @@
+{
+ "cells": [
+  {
+   "model": "deepseek_deepseek-v4-flash",
+   "task": "Optimise",
+   "n": 20,
+   "regret_tool": 0.018311150888034682,
+   "bare": 0.03654074203910099,
+   "tooled": 0.015977591730166003,
+   "tool_disadvantage": -0.4988839890432287,
+   "tool_effect": -0.5627458327729379
+  },
+  {
+   "model": "deepseek_deepseek-v4-flash",
+   "task": "Sanity",
+   "n": 20,
+   "regret_tool": 0.0785104405714253,
+   "bare": 0.027879414012533486,
+   "tooled": 0.03964752664990841,
+   "tool_disadvantage": 1.8160721217501234,
+   "tool_effect": 0.42210760355595855
+  },
+  {
+   "model": "deepseek_deepseek-v4-flash",
+   "task": "Screen",
+   "n": 20,
+   "regret_tool": 0.137850927258297,
+   "bare": 0.10366156371190796,
+   "tooled": 0.13654744617832432,
+   "tool_disadvantage": 0.32981716966383745,
+   "tool_effect": 0.31724277821827457
+  },
+  {
+   "model": "deepseek_deepseek-v4-flash",
+   "task": "Transfer",
+   "n": 20,
+   "regret_tool": 0.09990535590870542,
+   "bare": 0.07580952954182234,
+   "tooled": 0.09540282866958008,
+   "tool_disadvantage": 0.31784693181072937,
+   "tool_effect": 0.25845430312225565
+  },
+  {
+   "model": "openai_gpt-5.6-luna",
+   "task": "Optimise",
+   "n": 20,
+   "regret_tool": 0.016290504009295867,
+   "bare": 0.011048165894336295,
+   "tooled": 0.01693051813095004,
+   "tool_disadvantage": 0.47449849731592025,
+   "tool_effect": 0.5324279425989848
+  },
+  {
+   "model": "openai_gpt-5.6-luna",
+   "task": "Sanity",
+   "n": 20,
+   "regret_tool": 0.05975726992823634,
+   "bare": 0.013099273305347029,
+   "tooled": 0.020070339238189024,
+   "tool_disadvantage": 3.5618767190576786,
+   "tool_effect": 0.5321719587296844
+  },
+  {
+   "model": "openai_gpt-5.6-luna",
+   "task": "Screen",
+   "n": 20,
+   "regret_tool": 0.11993165195515539,
+   "bare": 0.08034712048656144,
+   "tooled": 0.11633879917427659,
+   "tool_disadvantage": 0.49266894978787334,
+   "tool_effect": 0.4479523157738426
+  },
+  {
+   "model": "openai_gpt-5.6-luna",
+   "task": "Transfer",
+   "n": 20,
+   "regret_tool": 0.09652636406159013,
+   "bare": 0.05441367658087234,
+   "tooled": 0.0867022669270729,
+   "tool_disadvantage": 0.7739357111465864,
+   "tool_effect": 0.5933910806084136
+  },
+  {
+   "model": "qwen_qwen3.8-27b",
+   "task": "Optimise",
+   "n": 20,
+   "regret_tool": 0.039150822002225576,
+   "bare": 0.02909809591571475,
+   "tooled": 0.040607406808330714,
+   "tool_disadvantage": 0.34547711010471094,
+   "tool_effect": 0.39553484619590623
+  },
+  {
+   "model": "qwen_qwen3.8-27b",
+   "task": "Sanity",
+   "n": 20,
+   "regret_tool": 0.07579048994533182,
+   "bare": 0.04188447229798732,
+   "tooled": 0.03268086006363884,
+   "tool_disadvantage": 0.8095128286712062,
+   "tool_effect": -0.21973804919563808
+  },
+  {
+   "model": "qwen_qwen3.8-27b",
+   "task": "Screen",
+   "n": 20,
+   "regret_tool": 0.12140910925110908,
+   "bare": 0.08925281210460563,
+   "tooled": 0.1107280365199171,
+   "tool_disadvantage": 0.3602832940301734,
+   "tool_effect": 0.24061117973674803
+  },
+  {
+   "model": "qwen_qwen3.8-27b",
+   "task": "Transfer",
+   "n": 20,
+   "regret_tool": 0.08998733403189771,
+   "bare": 0.07113077912900348,
+   "tooled": 0.08245110868050616,
+   "tool_disadvantage": 0.2650969824004851,
+   "tool_effect": 0.1591481168928576
+  },
+  {
+   "model": "xiaomi_mimo-v2.5",
+   "task": "Optimise",
+   "n": 20,
+   "regret_tool": 0.014850284167563626,
+   "bare": 0.026676849017742345,
+   "tooled": 0.014767627977030504,
+   "tool_disadvantage": -0.44332690275051073,
+   "tool_effect": -0.44642532679894875
+  },
+  {
+   "model": "xiaomi_mimo-v2.5",
+   "task": "Sanity",
+   "n": 20,
+   "regret_tool": 0.06692471239387714,
+   "bare": 0.02648467587868845,
+   "tooled": 0.024003582444205026,
+   "tool_disadvantage": 1.5269220850737222,
+   "tool_effect": -0.0936803397499721
+  },
+  {
+   "model": "xiaomi_mimo-v2.5",
+   "task": "Screen",
+   "n": 20,
+   "regret_tool": 0.1236501432888871,
+   "bare": 0.08712920886456359,
+   "tooled": 0.1208446326488869,
+   "tool_disadvantage": 0.4191583385210442,
+   "tool_effect": 0.38695891106657054
+  },
+  {
+   "model": "xiaomi_mimo-v2.5",
+   "task": "Transfer",
+   "n": 20,
+   "regret_tool": 0.0966392947712186,
+   "bare": 0.0778280256920024,
+   "tooled": 0.09038558751398164,
+   "tool_disadvantage": 0.24170302294009308,
+   "tool_effect": 0.1613501269025466
+  },
+  {
+   "model": "z-ai_glm-5.3-flash",
+   "task": "Optimise",
+   "n": 20,
+   "regret_tool": 0.02110122931981348,
+   "bare": 0.011485530381363279,
+   "tooled": 0.017928834508538626,
+   "tool_disadvantage": 0.8372011234285607,
+   "tool_effect": 0.5609931725600082
+  },
+  {
+   "model": "z-ai_glm-5.3-flash",
+   "task": "Sanity",
+   "n": 20,
+   "regret_tool": 0.0745950497890575,
+   "bare": 0.02018498743662684,
+   "tooled": 0.05452838743670667,
+   "tool_disadvantage": 2.6955707811688017,
+   "tool_effect": 1.7014328152496998
+  },
+  {
+   "model": "z-ai_glm-5.3-flash",
+   "task": "Screen",
+   "n": 20,
+   "regret_tool": 0.1257412262159025,
+   "bare": 0.08657703607217632,
+   "tooled": 0.10861713490558908,
+   "tool_disadvantage": 0.4523623344078947,
+   "tool_effect": 0.25457211095836874
+  },
+  {
+   "model": "z-ai_glm-5.3-flash",
+   "task": "Transfer",
+   "n": 20,
+   "regret_tool": 0.06761497028930204,
+   "bare": 0.06149858860094527,
+   "tooled": 0.06367049961332717,
+   "tool_disadvantage": 0.09945564325134369,
+   "tool_effect": 0.03531643671491537
+  }
+ ],
+ "n_cells": 20,
+ "slope": 0.2917712266795033,
+ "stderr": 0.08791338469623308,
+ "r": 0.6161379957318265,
+ "p": 0.003819004863027479,
+ "sign_predicted": 18,
+ "tool_worse_than_model": 18,
+ "by_task": {
+  "Sanity": 0.07111559252558562,
+  "Screen": 0.1257166115938702,
+  "Optimise": 0.021940798077386647,
+  "Transfer": 0.09013466381254277
+ },
+ "verbatim": {
+  "comparable_turns": 693,
+  "exact": 384,
+  "rate": 0.5541125541125541,
+  "by_task": {
+   "Sanity": {
+    "exact": 71,
+    "comparable": 115
+   },
+   "Screen": {
+    "exact": 60,
+    "comparable": 109
+   },
+   "Optimise": {
+    "exact": 132,
+    "comparable": 247
+   },
+   "Transfer": {
+    "exact": 121,
+    "comparable": 222
+   }
+  }
+ }
+}

@@ -1,0 +1,28 @@
+\begin{table}[t]
+\centering\small
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{@{}lcccccccc@{}}
+\toprule
+ & \multicolumn{2}{c}{\textsc{Sanity}} & \multicolumn{2}{c}{\textsc{Screen}} & \multicolumn{2}{c}{\textsc{Optimise}} & \multicolumn{2}{c}{\textsc{Transfer}} \\
+ & \multicolumn{2}{c}{\footnotesize needs $k\!\ge\!2$} & \multicolumn{2}{c}{\footnotesize needs $k\!\ge\!7$} & \multicolumn{2}{c}{\footnotesize needs $k\!\ge\!3$} & \multicolumn{2}{c}{\footnotesize needs $k\!\ge\!5$} \\[1pt]
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(lr){8-9}
+\textbf{Model} & \textit{bare} & \textit{+tools} & \textit{bare} & \textit{+tools} & \textit{bare} & \textit{+tools} & \textit{bare} & \textit{+tools} \\
+\midrule
+\multicolumn{9}{@{}l}{\textbf{(a)} \% of designs that cannot separate the main effects (rank-deficient)} \\[2pt]
+DeepSeek-v4-flash & 4 & 10 & 100 & 66 & 57 & 54 & 96 & 66 \\
+GPT-5.6-luna & 0 & 0 & 100 & 56 & 9 & 20 & 94 & 71 \\
+Qwen3.8-27B & 9 & 6 & 96 & 47 & 51 & 44 & 81 & 54 \\
+MiMo-v2.5 & 0 & 0 & 100 & 57 & 90 & 57 & 95 & 65 \\
+GLM-5.3-flash & 0 & 6 & 100 & 69 & 64 & 59 & 95 & 66 \\
+\midrule
+\multicolumn{9}{@{}l}{\textbf{(b)} \% of designs with fewer than $d+1$ distinct treatments --- why (a) happens} \\[2pt]
+DeepSeek-v4-flash & 4 & 10 & 100 & 62 & 57 & 54 & 86 & 66 \\
+GPT-5.6-luna & 0 & 0 & 100 & 56 & 5 & 12 & 92 & 71 \\
+Qwen3.8-27B & 9 & 6 & 89 & 45 & 41 & 44 & 68 & 52 \\
+MiMo-v2.5 & 0 & 0 & 100 & 57 & 89 & 54 & 95 & 63 \\
+GLM-5.3-flash & 0 & 6 & 100 & 69 & 59 & 56 & 93 & 63 \\
+\bottomrule
+\end{tabular}
+\caption{What the submitted designs look like. Every cell is a percentage of that model's designs on that task, pooled over every round of all $20$ instances; \emph{bare} is the interface alone and \emph{+tools} the same model with the two tools. \textbf{(a)} A design is rank-deficient when its distinct treatments, stacked beside an intercept column, do not reach rank $d+1$, so the $d$ main effects cannot be estimated separately. \textbf{(b)} The immediate cause, and almost the whole of it: $k$ distinct treatments give rank at most $k$, so a design needs $k \ge d+1$ before replication can buy anything. The threshold is the task's, not a fixed number --- \textsc{Sanity} needs two and \textsc{Screen} seven --- and (b) tracks (a) to within a few points on every task. The screening tool repairs much of (a) on the two higher-dimensional tasks and none of it on \textsc{Sanity}, which has one factor and nothing to screen.}
+\label{tab:diag}
+\end{table}

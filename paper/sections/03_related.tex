@@ -1,0 +1,66 @@
+\section{Related work}
+\label{sec:related}
+
+\paragraph{Experimental design benchmarks.} \citet{boxinggym} is the closest prior work.
+It scores design quality by expected information gain about the parameter vector---the
+Bayesian optimal-experimental-design objective, estimated by nested Monte Carlo. We take
+the same stance, that design quality should be measured from theory rather than from a
+hand-built checklist. We do not take the same quantity. Ours is a decision-theoretic
+one: the Bayes risk a design leaves behind on the \emph{recommendation}, not the entropy it
+removes from the parameters (\S\ref{sec:eig}). A design can pin $\theta$ down tightly and
+spend its budget far from the optimum, which scores well on theirs and badly on ours; their
+task is model discovery and ours is a decision. And the
+regime differs: experiments there are instantaneous, free and unboundedly repeatable, with no
+parallelism constraint and no irreversibility, so the arithmetic behind our main result---a
+replicate and a new treatment competing for the same physical unit---cannot arise.
+
+\paragraph{Optimal experimental design.} The quantity in our second contribution is old.
+Bayesian experimental design begins with \citet{lindley1956} and is surveyed by
+\citet{chaloner1995}; its decision-theoretic branch, which scores a design by the Bayes
+risk it leaves on a \emph{decision} rather than by the entropy it removes from parameters,
+is \citet{raiffa1961} and \citet{howard1966}. The same object appears in Bayesian
+optimisation as the Knowledge Gradient \citep{frazier2008kg}, beside entropy-search
+criteria that target the optimum's location instead \citep{hennig2012,hernandez2014}.
+Estimating any of them is the standing difficulty \citep{rainforth2018}, and
+Appendix~\ref{app:eig} reports how ours failed before it worked. What we contribute is not
+the measure but its use as a benchmark score under conditions --- capped parallelism,
+priced trials, no retries --- in which an agent cannot substitute more queries for a better
+design.
+
+\paragraph{Task validity.} \citet{spade} trains a model to author
+executable environments and solve them in self-play, scoring \emph{task} quality by
+hint-based regret, $r_D(e)=\bar r_A(e\mid h)-\bar r_A(e)$: the gain a solver gets from
+privileged information. This is a lightweight estimate of the minimax-regret objective of
+PAIRED \citep{paired}, with the hint-equipped agent standing in for the antagonist, and it
+separates environments at the learning frontier from those already mastered or intractable.
+A benchmark needs exactly this, since the alternative is to assert that one's tasks are
+well-posed. We report it as a diagnostic rather than adopt it as our score: with four
+hand-built configurations we can price a task directly against what a perfect reasoner
+could extract from it (\S\ref{sec:eig}), whereas hint regret estimates reachability from a
+solver's behaviour, which is what one needs when the environments are generated at scale.
+It earned its place by correcting us. \textsc{Screen} is the task we came closest to
+withdrawing, since its ceiling sits below the noise a full budget leaves
+(Table~\ref{tab:tasks}); it also carries the largest hint gap of the tasks the diagnostic
+scores, $0.27$ against $0.15$--$0.17$. A task can be at the frontier of what a solver can
+do and still be one where instance-tailoring is worth little, and only one of the two
+instruments sees each fact. Note that ``validity'' in that work means executability; the
+word is already claimed in this literature for something other than inferential soundness.
+
+\paragraph{Self-driving laboratories.} \citet{sdlsurvey} survey deployed self-driving
+laboratories and argue that evaluation should ``prioritise decision quality under
+constraints and reproducibility rather than single-number performance in idealised
+settings''. They prescribe the reference agents we adopt---``random and space-filling
+designs, standard BO for short-horizon tasks''---with the aim of providing ``stable
+reference points that reflect decision structure, not to maximise baseline performance''
+(Appendix~\ref{app:refs}). What is missing is an executable environment in which any of it can
+be measured.
+
+\paragraph{Adjacent benchmarks.} ScienceAgentBench, DiscoveryBench and related suites
+\citep{scienceagentbench,discoverybench} evaluate analysis and reproduction of published
+findings, where the data already exist and the agent bears no collection cost. WOFOSTGym and CropGym expose crop simulators
+as RL \emph{control} problems \citep{wofostgym}---the agent sets irrigation over time rather
+than committing to a design and waiting; we reuse the framing but not the task. A
+substantial literature builds autonomous laboratories
+\citep{szymanski2023autonomous,burger2020mobile,coscientist,chemcrow}, surveyed by
+\citet{stach2024sdl} and \citet{abolhasani2023rise}; those systems operate on hour-to-day timescales and report
+constraint-violation behaviour rather than releasing an executable benchmark.

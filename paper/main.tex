@@ -1,0 +1,93 @@
+% ============================================================
+%  SLOWLAB — workshop / conference submission
+%  Compiles directly on Overleaf (pdfLaTeX). Depends on no external .sty file.
+%
+%  To switch to a conference template: replace the \documentclass and geometry
+%  settings below with \usepackage{neurips_2026} (or the relevant template); nothing
+%  in sections/ needs to change.
+% ============================================================
+\documentclass[10pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[expansion=false]{microtype}  % expansion=false only for compatibility with some TeX distributions; can be dropped on Overleaf
+\usepackage{amsmath,amssymb,amsthm}
+\newtheorem{definition}{Definition}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\providecommand{\euro}{\texteuro}
+\usepackage{multirow}
+\usepackage[table]{xcolor}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage[hidelinks]{hyperref}
+\usepackage{url}
+\usepackage{natbib}
+\usepackage{enumitem}
+\usepackage{titlesec}
+% ---- Colours for the code highlighting in Figure 2 (light background, print-friendly;
+% a dark background is too loud inside the body text) ----
+\definecolor{cKw}{RGB}{0,86,160}      % keywords
+\definecolor{cCls}{RGB}{128,64,160}   % class names
+\definecolor{cFn}{RGB}{20,125,85}     % method names
+\definecolor{cStr}{RGB}{170,50,50}    % strings
+\definecolor{cCmt}{RGB}{120,120,120}  % comments
+\newcommand{\pykw}[1]{\textcolor{cKw}{\bfseries #1}}
+\newcommand{\pycls}[1]{\textcolor{cCls}{\bfseries #1}}
+\newcommand{\pyfn}[1]{\textcolor{cFn}{#1}}
+\newcommand{\pystr}[1]{\textcolor{cStr}{#1}}
+\newcommand{\pycmt}[1]{\textcolor{cCmt}{\itshape #1}}
+
+\usepackage{tikz}
+\usetikzlibrary{tikzmark,arrows.meta,calc}
+\usepackage{placeins}
+\renewcommand{\topfraction}{0.92}
+\renewcommand{\textfraction}{0.06}
+\renewcommand{\floatpagefraction}{0.80}
+\setcounter{topnumber}{2}
+\raggedbottom   % allow slack at the foot of a page rather than an overfull vbox
+
+% ---- Note macro: marks unfinished places while drafting; set \draftmode to false
+% before submission ----
+\newif\ifdraftmode\draftmodetrue
+\newcommand{\todo}[1]{\ifdraftmode{\color{red}\textbf{[TODO: #1]}}\fi}
+\newcommand{\pending}[1]{\ifdraftmode{\color{orange}\textbf{[PENDING: #1]}}\fi}
+
+% ---- Notation shorthands ----
+\newcommand{\slowlab}{\textsc{SlowLab}}
+\newcommand{\Pone}{\textbf{P1}}
+\newcommand{\Ptwo}{\textbf{P2}}
+\newcommand{\Pthree}{\textbf{P3}}
+\newcommand{\Pfour}{\textbf{P4}}
+
+\titlespacing*{\section}{0pt}{1.1em}{0.5em}
+\titlespacing*{\subsection}{0pt}{0.8em}{0.35em}
+
+\title{\slowlab: Benchmarking Scientific Agents When Experiments Are\\
+Slow, Noisy, Costly, and Irreversible}
+
+\author{
+  \todo{authors and affiliations}
+}
+\date{}
+
+\begin{document}
+\maketitle
+
+\input{sections/00_abstract}
+\input{sections/01_intro}
+\input{sections/03_related}
+\input{sections/02_regime}
+\input{sections/05_tasks_metrics}
+\input{sections/07_results}
+
+\input{sections/09_conclusion}
+
+\bibliographystyle{plainnat}
+\bibliography{refs}
+
+\appendix
+\input{sections/A_appendix}
+
+\end{document}

@@ -1,0 +1,78 @@
+{
+ "Screen": {
+  "n_sites": 24,
+  "factors": [
+   {
+    "factor": "day_temp",
+    "cost_of_midrange": 0.039268175256378955,
+    "value_of_locating": 0.008521558709367485,
+    "optimum_mean": 0.3571950367492274,
+    "optimum_sd": 0.0482870306984424,
+    "share_of_locating": 0.4964288099339142
+   },
+   {
+    "factor": "night_temp",
+    "cost_of_midrange": 0.0020791896031549595,
+    "value_of_locating": 0.0017830709964925023,
+    "optimum_mean": 0.5180984670617637,
+    "optimum_sd": 0.08594703686722555,
+    "share_of_locating": 0.10387393234097113
+   },
+   {
+    "factor": "co2",
+    "cost_of_midrange": 0.047015720690937936,
+    "value_of_locating": 0.006009186682761605,
+    "optimum_mean": 0.17081057402898395,
+    "optimum_sd": 0.07228957441399249,
+    "share_of_locating": 0.3500689833087464
+   },
+   {
+    "factor": "par",
+    "cost_of_midrange": 0.07981619956794536,
+    "value_of_locating": 1.3164628790291622e-05,
+    "optimum_mean": 0.0001222347818258791,
+    "optimum_sd": 0.0005229223763376077,
+    "share_of_locating": 0.0007669138037389991
+   },
+   {
+    "factor": "density",
+    "cost_of_midrange": 0.0014077093403087673,
+    "value_of_locating": 0.0008538510250012207,
+    "optimum_mean": 0.2815378865281518,
+    "optimum_sd": 0.2816211874088055,
+    "share_of_locating": 0.049741633269070225
+   },
+   {
+    "factor": "lai_max",
+    "cost_of_midrange": 0.0006967689920919885,
+    "value_of_locating": -1.5110515288403151e-05,
+    "optimum_mean": 0.7417531021937798,
+    "optimum_sd": 0.10116438551966168,
+    "share_of_locating": -0.0008802726564406875
+   }
+  ],
+  "total_locating": 0.017165721527124696
+ },
+ "Optimise": {
+  "n_sites": 24,
+  "factors": [
+   {
+    "factor": "day_temp",
+    "cost_of_midrange": 0.03604834669164724,
+    "value_of_locating": 0.005775040029149317,
+    "optimum_mean": 0.36404355790059445,
+    "optimum_sd": 0.04311913470579633,
+    "share_of_locating": 0.8201133697745154
+   },
+   {
+    "factor": "density",
+    "cost_of_midrange": 0.0014915721755099426,
+    "value_of_locating": 0.0012667181496462867,
+    "optimum_mean": 0.3883331817643135,
+    "optimum_sd": 0.3318164401807572,
+    "share_of_locating": 0.1798866302254846
+   }
+  ],
+  "total_locating": 0.007041758178795604
+ }
+}

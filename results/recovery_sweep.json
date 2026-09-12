@@ -1,0 +1,152 @@
+{
+  "0": {
+    "random_spread": {
+      "regret": 0.05555067497417761,
+      "regret_se": 0.006679551385840877,
+      "lost_unit_days": 0.0,
+      "cash": -279.4351856546415,
+      "rejections": 0.0
+    },
+    "classical_doe": {
+      "regret": 0.02362270224376714,
+      "regret_se": 0.004472359005136141,
+      "lost_unit_days": 0.0,
+      "cash": -70.64169597373707,
+      "rejections": 0.0
+    },
+    "gp_ucb_rep1": {
+      "regret": 0.019681097559044756,
+      "regret_se": 0.005212164816567923,
+      "lost_unit_days": 0.0,
+      "cash": -74.64496925586252,
+      "rejections": 0.0
+    },
+    "gp_ucb_rep2": {
+      "regret": 0.025092623945697296,
+      "regret_se": 0.005807863266239951,
+      "lost_unit_days": 0.0,
+      "cash": -104.46365496455905,
+      "rejections": 0.0
+    }
+  },
+  "30": {
+    "random_spread": {
+      "regret": 0.06207853372364284,
+      "regret_se": 0.005605960897998818,
+      "lost_unit_days": 261.5684351422559,
+      "cash": -197.11779207968385,
+      "rejections": 0.0
+    },
+    "classical_doe": {
+      "regret": 0.025035014429074087,
+      "regret_se": 0.0040163177582385225,
+      "lost_unit_days": 99.51973400346508,
+      "cash": -75.39022456255032,
+      "rejections": 0.0
+    },
+    "gp_ucb_rep1": {
+      "regret": 0.020363085250164652,
+      "regret_se": 0.003241697392168304,
+      "lost_unit_days": 129.72713851857264,
+      "cash": -78.9021044872462,
+      "rejections": 0.0
+    },
+    "gp_ucb_rep2": {
+      "regret": 0.025950440826139776,
+      "regret_se": 0.0044030011172626,
+      "lost_unit_days": 133.96310774717364,
+      "cash": -82.30314513677672,
+      "rejections": 0.0
+    }
+  },
+  "60": {
+    "random_spread": {
+      "regret": 0.06207853372364284,
+      "regret_se": 0.005605960897998818,
+      "lost_unit_days": 523.1368702845118,
+      "cash": -197.11779207968385,
+      "rejections": 0.0
+    },
+    "classical_doe": {
+      "regret": 0.025035014429074087,
+      "regret_se": 0.0040163177582385225,
+      "lost_unit_days": 199.03946800693015,
+      "cash": -75.39022456255032,
+      "rejections": 0.0
+    },
+    "gp_ucb_rep1": {
+      "regret": 0.020363085250164652,
+      "regret_se": 0.003241697392168304,
+      "lost_unit_days": 259.4542770371453,
+      "cash": -78.9021044872462,
+      "rejections": 0.0
+    },
+    "gp_ucb_rep2": {
+      "regret": 0.025950440826139776,
+      "regret_se": 0.0044030011172626,
+      "lost_unit_days": 267.9262154943473,
+      "cash": -82.30314513677672,
+      "rejections": 0.0
+    }
+  },
+  "120": {
+    "random_spread": {
+      "regret": 0.06207853372364284,
+      "regret_se": 0.005605960897998818,
+      "lost_unit_days": 1046.2737405690236,
+      "cash": -197.11779207968385,
+      "rejections": 0.0
+    },
+    "classical_doe": {
+      "regret": 0.025035014429074087,
+      "regret_se": 0.0040163177582385225,
+      "lost_unit_days": 398.0789360138603,
+      "cash": -75.39022456255032,
+      "rejections": 0.0
+    },
+    "gp_ucb_rep1": {
+      "regret": 0.020363085250164652,
+      "regret_se": 0.003241697392168304,
+      "lost_unit_days": 518.9085540742906,
+      "cash": -78.9021044872462,
+      "rejections": 0.0
+    },
+    "gp_ucb_rep2": {
+      "regret": 0.025950440826139776,
+      "regret_se": 0.0044030011172626,
+      "lost_unit_days": 535.8524309886946,
+      "cash": -82.30314513677672,
+      "rejections": 0.0
+    }
+  },
+  "240": {
+    "random_spread": {
+      "regret": 0.06241020426265224,
+      "regret_se": 0.005107034137582836,
+      "lost_unit_days": 1881.1480682752838,
+      "cash": -182.55342612918588,
+      "rejections": 0.05
+    },
+    "classical_doe": {
+      "regret": 0.0275437486189399,
+      "regret_se": 0.005769659876073785,
+      "lost_unit_days": 795.5412179908836,
+      "cash": -76.37479241324996,
+      "rejections": 0.0
+    },
+    "gp_ucb_rep1": {
+      "regret": 0.01937144661869499,
+      "regret_se": 0.002806937341602235,
+      "lost_unit_days": 1027.7098043150181,
+      "cash": -92.07235936976062,
+      "rejections": 0.0
+    },
+    "gp_ucb_rep2": {
+      "regret": 0.02918196629121423,
+      "regret_se": 0.005568625338251893,
+      "lost_unit_days": 1043.3618137094384,
+      "cash": -91.29904866731967,
+      "rejections": 0.0
+    }
+  }
+}

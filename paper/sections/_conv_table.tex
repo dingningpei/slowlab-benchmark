@@ -1,0 +1,23 @@
+\begin{table}[h]
+\centering\small
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+& \multicolumn{2}{c}{\textsc{Optimise}} & \multicolumn{2}{c}{\textsc{Screen}} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+\textbf{Design} & $c$ at $M{=}80$ & $M{=}320$ & $c$ at $M{=}80$ & $M{=}320$ \\
+\midrule
+space-filling & $21.7\pm1.3$ & $29.6\pm2.0$ & $0.8\pm0.9$ & $16.5\pm0.8$ \\
+four treatments & $2.2\pm1.6$ & $16.0\pm1.4$ & $0.5\pm1.1$ & $7.8\pm0.8$ \\
+two treatments & $4.4\pm1.5$ & $12.2\pm1.5$ & $12.9\pm0.9$ & $7.8\pm1.1$ \\
+two-level factorial & $-2.0\pm1.8$ & $-0.5\pm2.1$ & $-1.7\pm0.4$ & $3.4\pm1.1$ \\
+corner only & $-1.9\pm1.5$ & $-1.7\pm2.1$ & $0.7\pm0.8$ & $1.5\pm0.8$ \\
+centre only & $-0.4\pm1.6$ & $-1.9\pm1.7$ & $-0.4\pm1.3$ & $-3.1\pm0.5$ \\
+one point & $-2.0\pm1.6$ & $-2.3\pm2.1$ & $-0.7\pm1.1$ & $0.6\pm0.6$ \\
+\midrule
+\multicolumn{5}{@{}l}{$\mathcal{R}^\star(\varnothing)$: \textsc{Optimise} 0.00546 $\to$ 0.00610; \textsc{Screen} 0.00500 $\to$ 0.00443} \\
+\multicolumn{5}{@{}l}{rank correlation of $c$ between the two atom counts: $0.82$ and $0.64$} \\
+\bottomrule
+\end{tabular}
+\caption{Design efficiency at two atom counts under the cross-validated estimator, seven designs chosen to span the range rather than to compete. Each entry is the mean of six independent runs with its standard error; a single run carries a standard deviation of $2$ to $4$ points, which is why the levels reported elsewhere in this paper are always means over dozens of designs. Quadrupling the atom count leaves the two degenerate designs where they were and roughly doubles the best one on \textsc{Optimise}; on \textsc{Screen} it moves the space-filling design from nothing to the top. The estimator is not converged, and the direction of its error at low $M$ is to under-credit good designs, because half of $80$ atoms is too coarse a stand-in for $P_\Theta$ for any design to separate.}
+\label{tab:conv}
+\end{table}

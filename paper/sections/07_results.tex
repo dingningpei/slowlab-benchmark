@@ -1,0 +1,254 @@
+\FloatBarrier
+\section{Experiments}
+\label{sec:llm}
+
+\subsection{Experimental setup}
+\label{sec:setup}
+
+We run five language models --- DeepSeek-v4-flash, GPT-5.6-luna, Qwen3.8-27B, MiMo-v2.5
+and GLM-5.3-flash --- on all four tasks, twice each: once with the interface of
+\S\ref{sec:episode} alone and once with two standard tools added (\S\ref{sec:results}).
+That is $40$ model--task cells and $800$ episodes. Four scripted strategies are run on the
+same instances and reported in Appendix~\ref{app:refs}. All five models are run at one
+sampling temperature under one prompt and come from a single price tier, which is enough to
+show that a habit is not one model's quirk and not enough to characterise the field; the
+prompt is the variable we would vary first, since we fixed one defect in it mid-study that
+cut infeasible submissions roughly fivefold.
+
+Every task is run on the same $20$ instances. A seed draws a site, a parameter vector
+$\theta \sim P_\Theta$ with its own optimum, rather than a noise realisation, so all
+agents face identical problems and every contrast below is paired by site. An agent is a
+single \texttt{run(env)} call with access to nothing beyond the interface of
+\S\ref{sec:episode}: it is not told $P_\Theta$, the forward model, or that a reference
+exists, and regret is computed afterwards by the evaluator from $x^\star_\theta$, which
+no agent can read. Within a task all agents share the facility, budget, factor ranges and
+cycle length; only the strategy varies.
+
+Feasibility checking is free and unlimited for every agent and a rejected design costs no
+budget (\S\ref{sec:checking}). A scripted reference uses that freedom when it is
+written, by never proposing a design the facility cannot run; a language model uses it at
+run time, through the retry loop of \S\ref{sec:harness}.
+
+\subsection{Domain: agriculture}
+\label{sec:domain}
+
+Several domains satisfy the four conditions: microbial evolution, bioprocess scale-up,
+materials ageing, dose-finding trials. SlowLab is built so that adding one requires no
+environment code (\S\ref{sec:interfaces}). We build the first in controlled-environment
+horticulture because the conditions there hold jointly and by nature: a crop occupies its
+greenhouse for the better part of a year, plant-to-plant variation is large, running a
+treatment means growing and selling a crop, and heat stress destroys fruit that cannot be
+recovered. None of this is a dial we set, and a benchmark whose
+delay, noise and cost were independent hyperparameters could be tuned until the desired
+result appeared. Horticulture also supplies the two things a
+domain must bring: a mechanistically modelled response with four decades of published
+parameters, and a priced output, so that both $f_\theta$ and the cost of experimenting
+come from the literature rather than from us.
+
+Appendix~\ref{app:domain} gives the coefficients with their sources, and
+Appendix~\ref{app:defects} names the four that are ours rather than the literature's and
+what each is worth. Filling in \S\ref{sec:env}: $f_\theta$ is the reduced state-variable TOMGRO model
+\citep{jones1999reduced} and $P_\Theta$ its published between-site parameter spread, so a
+seed draws a real site rather than a perturbation we chose. Blocks are climate chambers
+and units are independently plumbed hydroponic loops, which is what puts four of the six
+factors at chamber level and the other two at loop level. The objective is net profit per
+square metre per day, priced with public European coefficients. The same appendix explains
+the choice of a mechanistic rather than a Gaussian-process ground truth and the caveats that
+follow from it.
+
+\subsection{Tasks}
+\label{sec:tasks}
+
+The four are the stages an industrial experimental campaign goes through, and each
+isolates a capability the previous one does not require. They differ in the question asked
+and in the geometry that makes it hard, never in which of the four conditions applies. The variance components, the cycle length,
+the per-unit cost and the commitment structure are identical across all four; only the
+question and the geometry change.
+
+
+\textsc{Sanity} is the control. One factor and sixteen unit-slots make it easy, but its
+variance components are those of the other three, since relaxing a condition on one task
+would contradict the claim that we do not relax them. Any competent closed loop should
+beat random search here, so a method that does not has an interface problem rather than a
+reasoning problem.
+
+\textsc{Screen} tests allocation under scarcity. It varies all six management factors the
+domain exposes on a budget covering one unreplicated sweep, which forces a choice between
+precision and coverage, and two rounds leave no room to iterate out of it. Effect sparsity is not injected: it follows from crop physiology
+and the price list, and one factor is rail-bound because at 2024 European electricity
+prices supplemental light never repays its energy, so recognising that is part of
+screening.
+
+\textsc{Optimise} tests iteration under a control hierarchy. One chamber-level and one
+loop-level factor mean a valid design must be a split-plot, so where an agent puts a
+treatment matters as much as which treatment it is.
+
+\textsc{Transfer} tests whether an agent modelled the mechanism or the surface. Four
+resource factors are optimised at the site's own prices; electricity and gas then both rise
+by a factor of $2.2$ and the agent must recommend again \emph{with no further experiments}.
+The shock size is the 2021--2022 European energy crisis, over which Eurostat's non-household
+gas price reached an all-time high of $0.0867$\,\euro/kWh and non-household electricity
+excluding taxes peaked at $0.1987$\,\euro/kWh, both two to three times their pre-crisis
+level \citep{eurostat_energy_prices}. It falls only on energy: the tomato price,
+transplants, labour and purchased CO$_2$ do not move. Every observation returns a revenue
+rate, an energy cost rate and an other-cost rate alongside their combination, to the
+scripted and language-model interfaces alike, so an agent that modelled the three
+separately can re-solve without running anything and one that modelled only the margin
+cannot.
+
+\input{sections/_tasks_table}
+
+\paragraph{How much each task can reward.} The last two columns of
+Table~\ref{tab:tasks} are the ceiling $\mathcal{R}^\star(\varnothing)$ and its ratio to
+the standard error of the mean response that a full budget can achieve. Only
+\textsc{Optimise} is comfortable, at $2.2$. \textsc{Sanity} sits at $1.3$, and
+\textsc{Screen} and \textsc{Transfer} at $0.8$ and $1.0$: on those two the whole of what
+instance-tailoring could win is at or below what the noise a full budget leaves behind.
+They still rank agents on realised regret, and they are the tasks on which every agent in
+\S\ref{sec:results}, scripted and otherwise, converts a few per cent of what its design
+carried --- the two facts are the same fact. The cause is not noise we chose. It is that
+exposing more factors drives the optimum onto constraints where the remaining factors are
+worth little to locate, which Appendix~\ref{app:defects} traces. We report the ratio and
+read the results in its light; we stopped using it to admit or exclude tasks, because that
+makes the task set a function of the simulator's fine detail.
+
+Four scripted strategies --- random search, a Plackett--Burman screen followed by a
+response surface, and Bayesian optimisation at one and two replicates per treatment --- are
+released with the environment and run on all four tasks in Appendix~\ref{app:refs}. They
+are there so that a reader can see what standard methods do here. They are not the
+comparison this paper draws: the ceiling $\mathcal{R}^\star(\varnothing)$ is, because it
+does not depend on anyone's implementation choices.
+\subsection{Results}
+\label{sec:results}
+
+Five models, four tasks, $20$ instances each, run twice: once with the interface of
+\S\ref{sec:harness} alone and once with two standard tools added --- a screening design
+generator, and a posterior-maximisation routine fitted to whatever observations the agent
+has collected. That is forty model--task cells, every one with its full twenty instances.
+We report the two halves of \S\ref{sec:eval} in turn, realised regret first and design
+and decision quality second, then the two effects that only appear because the benchmark
+elicits a recommendation every round and runs a paired tool arm.
+
+\subsubsection{The benchmark is far from saturated}
+\label{sec:results:outcome}
+
+\input{sections/_results_table}
+
+\paragraph{No arm reaches the ceiling.} $\mathcal{R}^\star(\varnothing)$ is the regret a
+perfect reasoner carries having run \emph{no} experiment at all. Not one of the forty arms
+reaches it. The bare arms sit between $1.8\times$ and $23.4\times$ above it, widest on the
+two tasks with the most factors --- $18$--$23\times$ on \textsc{Screen} and $13$--$19\times$
+on \textsc{Transfer} against $2$--$8\times$ on the two smaller ones --- and the scripted
+references of Appendix~\ref{app:refs} are closer but also short, at $1.6\times$ to
+$13.2\times$. Against the weaker reference of a model's own zero-shot recommendation,
+thirty-one of the forty cells end below it and nine end \emph{above}: two or three growing
+cycles left the model advising something worse than it would have advised for free. All
+nine are on \textsc{Sanity} and \textsc{Optimise}, where the zero-shot recommendation is
+already close enough that noisy data can only move it the wrong way. The benchmark is not
+saturated, and it is least saturated where the design problem is hardest.
+
+\paragraph{The two regrets order agents differently.} Realised regret and cumulative
+regret are not substitutes, which is why \S\ref{sec:outcome} reports both: on
+\textsc{Sanity} and \textsc{Optimise} they rank-correlate at $-0.80$ and $-0.60$ within
+task, so the model with the best final answer is among the most expensive campaigns to
+have got there. An agent judged on the recommendation alone is free to burn the facility
+reaching it.
+
+\paragraph{\textsc{Transfer} costs more after the shock than before it.} The column in
+Table~\ref{tab:results} is priced at the training energy costs so the four tasks are
+comparable. The quantity the task exists for is the one after: electricity and gas rise by
+$2.2$ and the agent must re-solve with no further experiments. Every arm is worse there, by
+factors of $1.06$ to $1.98$, and each tooled arm is worse than its bare twin. Two reference
+agents isolate what is being tested --- identical in algorithm, budget and observations,
+differing only in whether they modelled gross margin or modelled revenue and the two cost
+streams separately, they score identically before the shock and differ by $1.47\times$
+after it ($0.0605$ against $0.0411$, paired $t = 5.5$ over $40$ sites).
+
+\subsubsection{Designs and decisions fail independently}
+\label{sec:results:design}
+
+A campaign can fail because the experiments could not have answered the question, or
+because they could and the agent did not read them. \eqref{eq:capture} separates the two,
+and both are failing here.
+
+\input{sections/_diag_table}
+
+\paragraph{The designs could not have answered the question.} Unaided, $99\%$ of designs on
+\textsc{Screen}, $92\%$ on \textsc{Transfer} and $54\%$ on \textsc{Optimise} are
+rank-deficient over the factors the task varies, so the main effects they were commissioned
+to separate are not estimable at all (Table~\ref{tab:diag}a, the \emph{bare} columns).
+Panel~b gives the cause and nearly all of it: $98\%$, $87\%$ and $50\%$ of those designs
+carry fewer distinct treatments than the task has factors plus one. The habit behind the
+number is the same everywhere --- the median design uses \emph{two} distinct treatments
+replicated across the whole facility, whether the task needs two or seven. These are not
+careless designs. All but four of the $1137$ submitted declare a randomisation seed,
+replication is high, and the allocation respects the control hierarchy; they are designs
+that buy precision with the units coverage needed, and under a hard parallelism cap the two
+draw on the same physical units. An agent that always buys precision is under-powered
+against its own question, which is the opposite of the failure we built the benchmark
+expecting.
+
+\paragraph{The decisions then use a small fraction of what those designs allowed.} Decision
+efficiency is the half of \eqref{eq:capture} that does not blame the design: it divides the
+regret a perfect reasoner would carry \emph{on the design the agent actually submitted} by
+the regret the agent carried. The $\eta$ column of Table~\ref{tab:results} runs from $4\%$
+to $46\%$ over the twenty bare cells, and splits by task rather than by model --- $22\%$ on
+\textsc{Sanity} and $29\%$ on \textsc{Optimise} against $5\%$ on \textsc{Screen} and $6\%$
+on \textsc{Transfer}. On the two higher-dimensional tasks the campaigns leave roughly
+nineteen twentieths of what they bought on the table.
+
+The two failures are not the same failure. Within task, $c$ and $\eta$ rank-correlate at
+$+0.80$ on \textsc{Optimise} and $-0.80$ on \textsc{Transfer}: the model with the best
+design is the one that reads it worst there. A single score would have reported only their
+product, and \S\ref{sec:results:findings} shows an intervention that moves them in opposite
+directions on purpose.
+
+\subsubsection{Standard tools improve the design and damage the answer}
+\label{sec:results:findings}
+
+\input{sections/_tools_table}
+
+This is
+the sharpest evidence we have that the two halves of \eqref{eq:capture} measure different
+things, because it is one intervention applied within a model and paired by instance rather
+than a correlation across agents --- two numbers that moved together would be one number.
+The screening tool works: rank-deficiency falls from $99\%$ to $59\%$ on \textsc{Screen}
+and $92\%$ to $64\%$ on \textsc{Transfer}, and $c$ rises in seven of those ten cells by up
+to $6.5$ points, the other three moving by $-0.5$ to $-0.2$, inside the estimator's noise.
+In the same ten cells $\eta$ falls and realised regret rises, by $4\%$ to $59\%$; over all
+four tasks the tools make $16$ of $20$ pairs worse and four better, six significant at
+paired $p<0.05$ --- four worse and two better, both on \textsc{Optimise}
+(Table~\ref{tab:tools}).
+
+The mechanism is that the inference tool inherits whatever the design can support. It is
+the same routine our Bayesian-optimisation reference uses for its own recommendation, and
+that reference carries $0.0172$, $0.0586$, $0.0120$ and $0.0335$ on the four tasks against
+$0.0711$, $0.1257$, $0.0219$ and $0.0901$ for the identical routine fitted to a language
+model's design. Nothing about the routine changed, only what it was fitted to, and what it
+was fitted to is thinner: on the three multi-factor tasks the reference's campaigns hand it
+$1.8$ to $3.7$ times as many distinct points. Full rank is not sufficiency: the median
+tooled design on \textsc{Screen} is thirteen points over six factors, barely one level a
+factor, and its main effects are estimable long before its surface is. Appendix~\ref{app:refs} rules out the obvious alternative, that our tool is simply
+misconfigured. The models then absorb roughly a third of the tool's disadvantage: regressing
+the tools' effect on how much worse the tool's own proposal is than the model's gives a
+slope of $0.29 \pm 0.09$ at $r = 0.62$, $p = 0.004$, with the sign predicted in eighteen of
+twenty cells. A third is an average over cells, and it hides how literal the deference becomes round by
+round: in $384$ of the $693$ turns where both are visible --- $55\%$, and between $53\%$ and
+$62\%$ on every task --- the recommendation the model states is the tool's proposed point to
+six digits. The models are neither credulous nor immune, and none of them says the tool is
+wrong --- which is the regime's doing rather than the tool's. Detecting a bad tool is
+ordinarily cheap: run its recommendation, see the number, stop using it. Here that costs a
+growing cycle and the agent has at most three, so what the benchmark measures is not whether
+a model can use a tool but whether it can price one it cannot afford to test.
+
+\subsubsection{The first cycle of data often makes the recommendation worse}
+\label{sec:results:trajectory}
+
+Eliciting a recommendation after every round rather than once at the end exposes something the endpoint
+hides. In $44\%$ of episodes the recommendation after the first round is worse than the one
+the same model made with no data at all, and in $24$ of the $40$ cells the mean is worse.
+The split is by task: $68\%$ of \textsc{Optimise} episodes and $54\%$ of \textsc{Sanity},
+against $29\%$ and $26\%$ on \textsc{Screen} and \textsc{Transfer}, where the zero-shot
+recommendation starts far enough from the optimum that one round of almost any data helps.
+Slow feedback costs an agent in proportion to how many cycles it needs, and here the first
+cycle is often spent undoing itself.

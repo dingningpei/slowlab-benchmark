@@ -1,0 +1,29 @@
+\section{Conclusion and future work}
+\label{sec:conclusion}
+
+\slowlab{} asks an agent to do what a grower's agronomist does: design an experiment, commit
+it, wait out a season, and design again. The four conditions are not scored, because in this
+domain they cannot be switched off; what is scored is the experimentation carried out while
+they hold, read both as the regret it realised and as the regret a perfect reasoner would
+still have carried given the same designs.
+
+Run on five models, the instrument says what a single outcome number could not. No arm
+reaches what the instance distribution already allows with no data at all. The designs are
+not sloppy --- they replicate, declare their randomisation and respect the control hierarchy
+--- they are too small, most using two distinct treatments whether the problem has one factor
+or six. And handing the models the method they failed to reconstruct moves the two halves of
+the score in opposite directions, within a model and paired by instance: the screening tool
+repairs the designs and the campaigns end worse, because the inference routine is fitted to
+those designs and inherits what they cannot support. Design quality and decision quality are
+two measurements, and that is the evidence.
+
+\paragraph{Future work.} The measure we would most like to add is a design score conditioned
+on the inference procedure that will actually read the design: \eqref{eq:eig} prices a design
+by what a Bayes-optimal reader could extract, and \S\ref{sec:results} shows the gap between
+that and what the agent's own reader extracts is where the action is. The cheapest missing
+experiment is a second tooled arm whose inference routine is known to be good on these tasks,
+which would separate deference under slow feedback from tool use in general. We release the
+environment, the reference points, the tasks and the harness; Appendix~\ref{app:defects}
+carries the register of what is still wrong with all four, Appendix~\ref{app:eig} what the
+estimator cannot yet do, and Appendix~\ref{app:admit} four task extensions the crop model
+already supports.

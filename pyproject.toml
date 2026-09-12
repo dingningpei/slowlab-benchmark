@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "slowlab"
+version = "0.1.0"
+description = "A benchmark for scientific agents under slow, costly, irreversible experiments"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+dependencies = ["numpy>=1.24"]
+
+[project.optional-dependencies]
+figures = ["matplotlib>=3.7"]
+llm = ["certifi"]        # needed by python.org builds of Python on macOS to verify TLS certificates
+dev = ["pytest>=7.0"]
+
+[project.scripts]
+slowlab-run = "scripts.run_baselines:main"
+
+[tool.setuptools]
+packages = ["slowlab"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# Keep the development environment in line with newer NumPy: deprecation warnings are
+# errors. NumPy 2.x turned float(size-1 array) from a warning into a TypeError; without
+# this setting, problems of that kind only blow up on someone else's machine.
+filterwarnings = ["error::DeprecationWarning"]

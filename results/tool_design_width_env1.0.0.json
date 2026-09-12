@@ -1,0 +1,51 @@
+{
+ "Sanity": {
+  "d": 1,
+  "llm_median": 4.0,
+  "ref_median": 4.0,
+  "ratio": 1.0,
+  "llm_min": 1,
+  "llm_max": 8,
+  "llm_cv": 0.2802320398282819,
+  "n_llm": 100,
+  "reference": "gp_ucb_rep1"
+ },
+ "Screen": {
+  "d": 6,
+  "llm_median": 13.0,
+  "ref_median": 24.0,
+  "ratio": 1.8461538461538463,
+  "llm_min": 3,
+  "llm_max": 25,
+  "llm_cv": 0.31642937761909556,
+  "n_llm": 100,
+  "reference": "gp_ucb_rep1"
+ },
+ "Optimise": {
+  "d": 2,
+  "llm_median": 9.0,
+  "ref_median": 33.5,
+  "ratio": 3.7222222222222223,
+  "llm_min": 2,
+  "llm_max": 22,
+  "llm_cv": 0.3700967340384079,
+  "n_llm": 100,
+  "reference": "gp_ucb_rep1"
+ },
+ "Transfer": {
+  "d": 4,
+  "llm_median": 12.0,
+  "ref_median": 24.0,
+  "ratio": 2.0,
+  "llm_min": 5,
+  "llm_max": 45,
+  "llm_cv": 0.3459028637719908,
+  "n_llm": 100,
+  "reference": "gp_ucb_rep1"
+ },
+ "summary": {
+  "ratio_min": 1.8461538461538463,
+  "ratio_max": 3.7222222222222223,
+  "note": "Sanity excluded from the range: d=1 leaves nothing to spread"
+ }
+}

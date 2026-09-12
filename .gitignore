@@ -1,0 +1,51 @@
+# ── Never commit secrets ────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+*.key
+secrets.*
+
+# ── Python ──────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+.venv/
+venv/
+build/
+dist/
+
+# ── OS cruft ────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── LaTeX build products ────────────────────────────────────────────────
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.bbl
+paper/*.blg
+paper/*.fls
+paper/*.fdb_latexmk
+paper/*.synctex.gz
+paper/*.toc
+
+# ── Run products ────────────────────────────────────────────────────────
+# The summary JSON under results/ IS tracked: every table and figure in the
+# paper is regenerated from it by a script in scripts/, and it is only a few
+# hundred kilobytes.
+#
+# Two things are not tracked, and are published as a GitHub Release asset
+# instead (see README, "Repository layout"):
+#   * the 800 raw LLM transcripts (~21 MB)
+#   * the cached atom sets, which are pickled binaries rebuilt on demand
+#
+# The previous version of this rule read `results/llm/transcript_*.json` and
+# silently matched nothing once the directory was renamed to carry the
+# environment version. Keep the glob wide enough to survive that.
+results/**/transcript_*.json
+results/**/*.pkl
+results/_oracle_cache/
+
+# ── Internal lab notebook, not part of the release ──────────────────────
+CHANGELOG_*.md

@@ -1,0 +1,1612 @@
+[
+ {
+  "task": "Screen",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 0,
+  "regret": 0.057974618939816695,
+  "regret_zero_shot": 0.27929009344893196,
+  "cumulative_regret": 881.1811376757521,
+  "stopped_early_at": null,
+  "cash": -561.4996391047058,
+  "wasted_fraction": 0.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.20585443322530378,
+   0.057974618939816695
+  ],
+  "seconds": 47.5
+ },
+ {
+  "task": "Transfer",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 0,
+  "regret": 0.1344323354975735,
+  "regret_zero_shot": 0.3075916443347919,
+  "cumulative_regret": 3204.4607966344715,
+  "stopped_early_at": null,
+  "cash": -2153.1545931696287,
+  "wasted_fraction": 0.5,
+  "transfer_regret": 0.1480678475383903,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 1,
+  "trace": [
+   0.18118308506939432,
+   0.18118308506939432,
+   0.1344323354975735
+  ],
+  "seconds": 81.5
+ },
+ {
+  "task": "Sanity",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 0,
+  "regret": 0.04780636137978858,
+  "regret_zero_shot": 0.026485263927445726,
+  "cumulative_regret": 395.0284135577705,
+  "stopped_early_at": null,
+  "cash": -608.6098847677134,
+  "wasted_fraction": 1.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 1,
+  "trace": [
+   0.04780636137978858,
+   0.10150175433523931
+  ],
+  "seconds": 20.0
+ },
+ {
+  "task": "Sanity",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 1,
+  "regret": 0.07065355439624699,
+  "regret_zero_shot": 0.001121391212492183,
+  "cumulative_regret": 266.75022084534544,
+  "stopped_early_at": null,
+  "cash": -384.6866773094489,
+  "wasted_fraction": 1.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.02489826371599859,
+   0.02489826371599859
+  ],
+  "seconds": 16.1
+ },
+ {
+  "task": "Sanity",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 2,
+  "regret": 0.0023853505695551613,
+  "regret_zero_shot": 0.0023853505695551613,
+  "cumulative_regret": 187.14835158562198,
+  "stopped_early_at": 1,
+  "cash": -349.13915595218464,
+  "wasted_fraction": NaN,
+  "transfer_regret": NaN,
+  "rounds_submitted": 1,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.0023853505695551613
+  ],
+  "seconds": 9.1
+ },
+ {
+  "task": "Sanity",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 3,
+  "regret": 0.02599958520788731,
+  "regret_zero_shot": 0.0076265051401185335,
+  "cumulative_regret": 87.03775968625246,
+  "stopped_early_at": 1,
+  "cash": -301.9093626723074,
+  "wasted_fraction": NaN,
+  "transfer_regret": NaN,
+  "rounds_submitted": 1,
+  "format_failures": 0,
+  "infeasible": 1,
+  "trace": [
+   0.02599958520788731
+  ],
+  "seconds": 16.0
+ },
+ {
+  "task": "Sanity",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 4,
+  "regret": 0.04416971892926381,
+  "regret_zero_shot": 0.010022699045315029,
+  "cumulative_regret": 340.54917294533675,
+  "stopped_early_at": null,
+  "cash": -270.4293346608211,
+  "wasted_fraction": 1.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.04416971892926381,
+   0.04416971892926381
+  ],
+  "seconds": 16.6
+ },
+ {
+  "task": "Sanity",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 5,
+  "regret": 0.033779257233459384,
+  "regret_zero_shot": 0.06878491766242312,
+  "cumulative_regret": 409.3912722271241,
+  "stopped_early_at": null,
+  "cash": -577.713622469526,
+  "wasted_fraction": 1.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.06878491766242312,
+   0.10024775408050723
+  ],
+  "seconds": 21.7
+ },
+ {
+  "task": "Sanity",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 6,
+  "regret": 0.05819911872983183,
+  "regret_zero_shot": 0.057702200973934636,
+  "cumulative_regret": 225.26787771422926,
+  "stopped_early_at": null,
+  "cash": -415.8386256347068,
+  "wasted_fraction": 1.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.057702200973934636,
+   0.05819911872983183
+  ],
+  "seconds": 16.5
+ },
+ {
+  "task": "Sanity",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 7,
+  "regret": 0.008844738057910723,
+  "regret_zero_shot": 0.06464529072151107,
+  "cumulative_regret": 162.43820909408777,
+  "stopped_early_at": null,
+  "cash": -747.5791306082328,
+  "wasted_fraction": 0.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.04712620159710712,
+   0.008844738057910723
+  ],
+  "seconds": 24.5
+ },
+ {
+  "task": "Sanity",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 8,
+  "regret": 0.013647079469934348,
+  "regret_zero_shot": 0.043832321310786376,
+  "cumulative_regret": 233.25516253327675,
+  "stopped_early_at": null,
+  "cash": -688.9702091124939,
+  "wasted_fraction": 1.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.023690349147540618,
+   0.023690349147540618
+  ],
+  "seconds": 16.0
+ },
+ {
+  "task": "Sanity",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 9,
+  "regret": 0.029200455592123142,
+  "regret_zero_shot": 0.05198713494430139,
+  "cumulative_regret": 262.1058578743462,
+  "stopped_early_at": null,
+  "cash": -580.6831250750571,
+  "wasted_fraction": 0.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 1,
+  "trace": [
+   0.05198713494430139,
+   0.048107578829187134
+  ],
+  "seconds": 19.2
+ },
+ {
+  "task": "Sanity",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 10,
+  "regret": 0.013267840651501966,
+  "regret_zero_shot": 0.028179847714573353,
+  "cumulative_regret": 202.95741304497545,
+  "stopped_early_at": null,
+  "cash": -826.2154298213419,
+  "wasted_fraction": 1.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 1,
+  "trace": [
+   0.013267840651501966,
+   0.013267840651501966
+  ],
+  "seconds": 20.6
+ },
+ {
+  "task": "Sanity",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 11,
+  "regret": 0.2801855768523147,
+  "regret_zero_shot": 0.018358468883572954,
+  "cumulative_regret": 309.2086143061786,
+  "stopped_early_at": 1,
+  "cash": -441.57432273817824,
+  "wasted_fraction": NaN,
+  "transfer_regret": NaN,
+  "rounds_submitted": 1,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.035296438112395565
+  ],
+  "seconds": 7.5
+ },
+ {
+  "task": "Sanity",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 12,
+  "regret": 0.01751158232721637,
+  "regret_zero_shot": 0.028322544803457188,
+  "cumulative_regret": 233.05327271634093,
+  "stopped_early_at": null,
+  "cash": -382.7117430998262,
+  "wasted_fraction": 0.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.05770534575998467,
+   0.01751158232721637
+  ],
+  "seconds": 20.8
+ },
+ {
+  "task": "Sanity",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 13,
+  "regret": 0.02644249716628387,
+  "regret_zero_shot": 0.02644249716628387,
+  "cumulative_regret": 161.0822192715307,
+  "stopped_early_at": null,
+  "cash": -398.6081466861892,
+  "wasted_fraction": 1.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 1,
+  "trace": [
+   0.02644249716628387,
+   0.04264401314181368
+  ],
+  "seconds": 24.6
+ },
+ {
+  "task": "Sanity",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 14,
+  "regret": 0.006288609961315833,
+  "regret_zero_shot": 0.003736618886339471,
+  "cumulative_regret": 286.28063117750463,
+  "stopped_early_at": null,
+  "cash": -981.0805032732079,
+  "wasted_fraction": 0.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.011868811076923308,
+   0.006288609961315833
+  ],
+  "seconds": 13.4
+ },
+ {
+  "task": "Sanity",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 15,
+  "regret": 0.02029033298614749,
+  "regret_zero_shot": 0.0017180151666414956,
+  "cumulative_regret": 219.57030673097822,
+  "stopped_early_at": null,
+  "cash": -742.0145031627736,
+  "wasted_fraction": 1.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 1,
+  "trace": [
+   0.015063143899452291,
+   0.02029033298614749
+  ],
+  "seconds": 26.0
+ },
+ {
+  "task": "Sanity",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 16,
+  "regret": 0.08395621138338984,
+  "regret_zero_shot": 0.024921942315830906,
+  "cumulative_regret": 144.48895612361923,
+  "stopped_early_at": 1,
+  "cash": -282.05278570097784,
+  "wasted_fraction": NaN,
+  "transfer_regret": NaN,
+  "rounds_submitted": 1,
+  "format_failures": 0,
+  "infeasible": 1,
+  "trace": [
+   0.006061610668089842
+  ],
+  "seconds": 13.9
+ },
+ {
+  "task": "Sanity",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 17,
+  "regret": 0.004164505230507987,
+  "regret_zero_shot": 0.004164505230507987,
+  "cumulative_regret": 237.64516019640934,
+  "stopped_early_at": null,
+  "cash": -707.9872118286012,
+  "wasted_fraction": 1.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 1,
+  "trace": [
+   0.004164505230507987,
+   0.004164505230507987
+  ],
+  "seconds": 16.0
+ },
+ {
+  "task": "Sanity",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 18,
+  "regret": 0.04079968769492434,
+  "regret_zero_shot": 0.018493571709960327,
+  "cumulative_regret": 225.15818953086125,
+  "stopped_early_at": null,
+  "cash": -578.4152734624315,
+  "wasted_fraction": 1.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 1,
+  "trace": [
+   0.04079968769492434,
+   0.11101765457929011
+  ],
+  "seconds": 15.4
+ },
+ {
+  "task": "Sanity",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 19,
+  "regret": 0.010097382140142816,
+  "regret_zero_shot": 0.02281302874052582,
+  "cumulative_regret": 182.8928550400493,
+  "stopped_early_at": null,
+  "cash": -480.09346656170885,
+  "wasted_fraction": 0.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 1,
+  "trace": [
+   0.03586773399945503,
+   0.010365967110677984
+  ],
+  "seconds": 16.6
+ },
+ {
+  "task": "Optimise",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 0,
+  "regret": 0.007463039040684169,
+  "regret_zero_shot": 0.028405426322493335,
+  "cumulative_regret": 423.7055277960439,
+  "stopped_early_at": null,
+  "cash": -892.4814581352556,
+  "wasted_fraction": 0.5,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 1,
+  "trace": [
+   0.04930875776502694,
+   0.004487649759512366,
+   0.004487649759512366
+  ],
+  "seconds": 40.3
+ },
+ {
+  "task": "Optimise",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 1,
+  "regret": 0.0018344289175253811,
+  "regret_zero_shot": 0.0016285938331884256,
+  "cumulative_regret": 337.19633698497137,
+  "stopped_early_at": 2,
+  "cash": -536.2527610427154,
+  "wasted_fraction": 1.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 2,
+  "trace": [
+   0.02621390452672223,
+   0.07434084000017546
+  ],
+  "seconds": 34.0
+ },
+ {
+  "task": "Optimise",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 2,
+  "regret": 0.00209808991034334,
+  "regret_zero_shot": 0.057478218846037835,
+  "cumulative_regret": 522.8675011222964,
+  "stopped_early_at": 2,
+  "cash": -1006.617769122981,
+  "wasted_fraction": 1.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.017663443599708034,
+   0.27167589272072695
+  ],
+  "seconds": 25.6
+ },
+ {
+  "task": "Optimise",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 3,
+  "regret": 0.008717376253159631,
+  "regret_zero_shot": 0.008717376253159631,
+  "cumulative_regret": 447.9751232534293,
+  "stopped_early_at": null,
+  "cash": -1747.4703274456429,
+  "wasted_fraction": 0.5,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 2,
+  "infeasible": 1,
+  "trace": [
+   0.02741401898009274,
+   0.14564279717233963,
+   0.007509449627704473
+  ],
+  "seconds": 2030.9
+ },
+ {
+  "task": "Optimise",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 4,
+  "regret": 0.04767722543145058,
+  "regret_zero_shot": 0.012839277819844125,
+  "cumulative_regret": 399.4395388691925,
+  "stopped_early_at": null,
+  "cash": -207.45940325207033,
+  "wasted_fraction": 1.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 1,
+  "infeasible": 1,
+  "trace": [
+   0.04751775127096683,
+   0.04777007190617941,
+   0.04772246537855215
+  ],
+  "seconds": 1008.2
+ },
+ {
+  "task": "Optimise",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 5,
+  "regret": 0.07094139536235927,
+  "regret_zero_shot": 0.07201733412109984,
+  "cumulative_regret": 340.89512271114825,
+  "stopped_early_at": null,
+  "cash": -495.93791043883635,
+  "wasted_fraction": 1.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 1,
+  "infeasible": 2,
+  "trace": [
+   0.07249879879251532,
+   0.07094139536235927
+  ],
+  "seconds": 979.2
+ },
+ {
+  "task": "Optimise",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 6,
+  "regret": 0.11250651231889314,
+  "regret_zero_shot": 0.05877585079625877,
+  "cumulative_regret": 620.6490427440438,
+  "stopped_early_at": 2,
+  "cash": -1011.4532350043364,
+  "wasted_fraction": 1.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.057953553530428914,
+   0.11250651231889314
+  ],
+  "seconds": 25.0
+ },
+ {
+  "task": "Optimise",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 7,
+  "regret": 0.003963645626660323,
+  "regret_zero_shot": 0.03152100405778019,
+  "cumulative_regret": 180.8971495999267,
+  "stopped_early_at": 1,
+  "cash": -624.7565145485273,
+  "wasted_fraction": NaN,
+  "transfer_regret": NaN,
+  "rounds_submitted": 1,
+  "format_failures": 0,
+  "infeasible": 1,
+  "trace": [
+   0.04917711596864033
+  ],
+  "seconds": 22.5
+ },
+ {
+  "task": "Optimise",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 8,
+  "regret": 0.014005799834862803,
+  "regret_zero_shot": 0.02601334758967755,
+  "cumulative_regret": 247.1885990181607,
+  "stopped_early_at": 2,
+  "cash": -842.451475425775,
+  "wasted_fraction": 1.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 2,
+  "trace": [
+   0.01523451068760201,
+   0.019959943742919734
+  ],
+  "seconds": 36.8
+ },
+ {
+  "task": "Optimise",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 9,
+  "regret": 0.028152566089437822,
+  "regret_zero_shot": 0.030015955459090943,
+  "cumulative_regret": 416.3661898911279,
+  "stopped_early_at": null,
+  "cash": -905.4672198244668,
+  "wasted_fraction": 0.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 3,
+  "trace": [
+   0.050105458951186885,
+   0.046445446669772614
+  ],
+  "seconds": 41.5
+ },
+ {
+  "task": "Optimise",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 10,
+  "regret": 0.008163701259497114,
+  "regret_zero_shot": 0.006073791182077126,
+  "cumulative_regret": 760.0256130861069,
+  "stopped_early_at": null,
+  "cash": -2129.6120195424073,
+  "wasted_fraction": 0.5,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.03070483571463803,
+   0.007103853029701096,
+   0.008163701259497114
+  ],
+  "seconds": 42.0
+ },
+ {
+  "task": "Optimise",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 11,
+  "regret": 0.029510288163085208,
+  "regret_zero_shot": 0.036447230193005775,
+  "cumulative_regret": 333.36464764423,
+  "stopped_early_at": 2,
+  "cash": -675.3904414276336,
+  "wasted_fraction": 0.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 1,
+  "trace": [
+   0.03541812930534903,
+   0.029510288163085208
+  ],
+  "seconds": 34.7
+ },
+ {
+  "task": "Optimise",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 12,
+  "regret": 0.055855012176013,
+  "regret_zero_shot": 0.017666537485396754,
+  "cumulative_regret": 303.99123399977873,
+  "stopped_early_at": 2,
+  "cash": -444.60494285057706,
+  "wasted_fraction": 1.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.05788150258798041,
+   0.06331137261432224
+  ],
+  "seconds": 28.6
+ },
+ {
+  "task": "Optimise",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 13,
+  "regret": 0.03578751825450449,
+  "regret_zero_shot": 0.028379973098426672,
+  "cumulative_regret": 416.62154605789345,
+  "stopped_early_at": null,
+  "cash": -902.4846244043739,
+  "wasted_fraction": 0.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.047613697783103565,
+   0.04033226155240857,
+   0.03578751825450449
+  ],
+  "seconds": 25.0
+ },
+ {
+  "task": "Optimise",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 14,
+  "regret": 0.015689199908378804,
+  "regret_zero_shot": 0.017310491966369718,
+  "cumulative_regret": 353.05693656819386,
+  "stopped_early_at": 2,
+  "cash": -1442.4360494178463,
+  "wasted_fraction": 1.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.008983039648683772,
+   0.0536865765961739
+  ],
+  "seconds": 16.5
+ },
+ {
+  "task": "Optimise",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 15,
+  "regret": 0.022189538452979385,
+  "regret_zero_shot": 0.07016304045328739,
+  "cumulative_regret": 337.94767336163693,
+  "stopped_early_at": 2,
+  "cash": -1100.9808041588692,
+  "wasted_fraction": 1.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.017835326509129,
+   0.020068504253034386
+  ],
+  "seconds": 41.0
+ },
+ {
+  "task": "Optimise",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 16,
+  "regret": 0.007860515146312738,
+  "regret_zero_shot": 0.0305572453649543,
+  "cumulative_regret": 186.50889608000665,
+  "stopped_early_at": 2,
+  "cash": -482.7220481456392,
+  "wasted_fraction": 1.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.010637609046745988,
+   0.010637609046745988
+  ],
+  "seconds": 16.4
+ },
+ {
+  "task": "Optimise",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 17,
+  "regret": 0.05117482892192107,
+  "regret_zero_shot": 0.00867372959263682,
+  "cumulative_regret": 530.7901854856483,
+  "stopped_early_at": null,
+  "cash": -1517.3611903132544,
+  "wasted_fraction": 0.5,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.020907411714546936,
+   0.2023101697628317,
+   0.05117482892192107
+  ],
+  "seconds": 29.1
+ },
+ {
+  "task": "Optimise",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 18,
+  "regret": 0.041322574568491865,
+  "regret_zero_shot": 0.01945924559759052,
+  "cumulative_regret": 174.33259479970172,
+  "stopped_early_at": 1,
+  "cash": -430.7903075586889,
+  "wasted_fraction": NaN,
+  "transfer_regret": NaN,
+  "rounds_submitted": 1,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.041322574568491865
+  ],
+  "seconds": 12.3
+ },
+ {
+  "task": "Optimise",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 19,
+  "regret": 0.017048662677734888,
+  "regret_zero_shot": 0.013204928660978929,
+  "cumulative_regret": 322.1803235493979,
+  "stopped_early_at": null,
+  "cash": -979.9355501834411,
+  "wasted_fraction": 0.5,
+  "transfer_regret": NaN,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 2,
+  "trace": [
+   0.024735658523362417,
+   0.017048662677734888,
+   0.017048662677734888
+  ],
+  "seconds": 36.0
+ },
+ {
+  "task": "Screen",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 1,
+  "regret": 0.12236881466553465,
+  "regret_zero_shot": 0.24151884069334303,
+  "cumulative_regret": 674.5427389486615,
+  "stopped_early_at": null,
+  "cash": -422.3314401868681,
+  "wasted_fraction": 1.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 2,
+  "trace": [
+   0.10309203487127463,
+   0.12236881466553465
+  ],
+  "seconds": 67.9
+ },
+ {
+  "task": "Screen",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 2,
+  "regret": 0.07809769100112873,
+  "regret_zero_shot": 0.15180803106794602,
+  "cumulative_regret": 696.4469301926301,
+  "stopped_early_at": null,
+  "cash": -523.5651662361392,
+  "wasted_fraction": 0.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.15353118203049004,
+   0.07809769100112873
+  ],
+  "seconds": 19.7
+ },
+ {
+  "task": "Screen",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 3,
+  "regret": 0.11750275703910931,
+  "regret_zero_shot": 0.3170429987088824,
+  "cumulative_regret": 1093.1081284877837,
+  "stopped_early_at": null,
+  "cash": -989.970147846276,
+  "wasted_fraction": 0.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.1803479435074049,
+   0.11750275703910931
+  ],
+  "seconds": 29.5
+ },
+ {
+  "task": "Screen",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 4,
+  "regret": 0.09448294712634776,
+  "regret_zero_shot": 0.19583781466212635,
+  "cumulative_regret": 752.8312298142032,
+  "stopped_early_at": null,
+  "cash": -323.6649129366777,
+  "wasted_fraction": 0.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.10934470678510302,
+   0.09448294712634776
+  ],
+  "seconds": 39.8
+ },
+ {
+  "task": "Screen",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 5,
+  "regret": 0.16197257786228025,
+  "regret_zero_shot": 0.13562934798594334,
+  "cumulative_regret": 1119.6085234905208,
+  "stopped_early_at": null,
+  "cash": -880.5294570753774,
+  "wasted_fraction": 1.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.12202462601350106,
+   0.16197257786228025
+  ],
+  "seconds": 22.3
+ },
+ {
+  "task": "Screen",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 6,
+  "regret": 0.05380465787234706,
+  "regret_zero_shot": 0.3080864443908202,
+  "cumulative_regret": 597.355234722234,
+  "stopped_early_at": null,
+  "cash": -375.44169930950306,
+  "wasted_fraction": 0.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 1,
+  "trace": [
+   0.16042207921257182,
+   0.05380465787234706
+  ],
+  "seconds": 39.8
+ },
+ {
+  "task": "Screen",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 7,
+  "regret": 0.04654405186636401,
+  "regret_zero_shot": 0.2844643711342193,
+  "cumulative_regret": 848.8290093694268,
+  "stopped_early_at": null,
+  "cash": -1017.9179438200133,
+  "wasted_fraction": 1.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.04654405186636401,
+   0.04654405186636401
+  ],
+  "seconds": 28.8
+ },
+ {
+  "task": "Screen",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 8,
+  "regret": 0.14988657337957761,
+  "regret_zero_shot": 0.38191863432615175,
+  "cumulative_regret": 1016.5925797317146,
+  "stopped_early_at": null,
+  "cash": -991.1298396489904,
+  "wasted_fraction": 0.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.19661057036683674,
+   0.051548627543505
+  ],
+  "seconds": 21.4
+ },
+ {
+  "task": "Screen",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 9,
+  "regret": 0.03644975691072101,
+  "regret_zero_shot": 0.14411577042314813,
+  "cumulative_regret": 744.9345053423594,
+  "stopped_early_at": null,
+  "cash": -728.1127842399925,
+  "wasted_fraction": 0.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.15514416002297962,
+   0.05081442629232019
+  ],
+  "seconds": 20.3
+ },
+ {
+  "task": "Screen",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 10,
+  "regret": 0.029742546657645117,
+  "regret_zero_shot": 0.3960402893542744,
+  "cumulative_regret": 460.05388907982666,
+  "stopped_early_at": null,
+  "cash": -268.6259344853366,
+  "wasted_fraction": 1.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.026063671190284618,
+   0.03630759094223666
+  ],
+  "seconds": 26.7
+ },
+ {
+  "task": "Screen",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 11,
+  "regret": 0.061898536503878325,
+  "regret_zero_shot": 0.29498951150492275,
+  "cumulative_regret": 910.8479679011962,
+  "stopped_early_at": null,
+  "cash": -655.243308582027,
+  "wasted_fraction": 1.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.061898536503878325,
+   0.061898536503878325
+  ],
+  "seconds": 18.3
+ },
+ {
+  "task": "Screen",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 12,
+  "regret": 0.07588650584945085,
+  "regret_zero_shot": 0.23740034518266118,
+  "cumulative_regret": 516.6465638217528,
+  "stopped_early_at": null,
+  "cash": -353.4762259880039,
+  "wasted_fraction": 1.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 1,
+  "trace": [
+   0.07884782348859987,
+   0.07884782348859987
+  ],
+  "seconds": 37.1
+ },
+ {
+  "task": "Screen",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 13,
+  "regret": 0.0335351766923004,
+  "regret_zero_shot": 0.07556398406812842,
+  "cumulative_regret": 323.6048839328181,
+  "stopped_early_at": null,
+  "cash": -387.54176250670616,
+  "wasted_fraction": 1.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 1,
+  "trace": [
+   0.0335351766923004,
+   0.0335351766923004
+  ],
+  "seconds": 56.7
+ },
+ {
+  "task": "Screen",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 14,
+  "regret": 0.2130896931486869,
+  "regret_zero_shot": 0.4210382936766999,
+  "cumulative_regret": 1457.82500846018,
+  "stopped_early_at": null,
+  "cash": -1443.0338513527633,
+  "wasted_fraction": 1.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.2130896931486869,
+   0.2130896931486869
+  ],
+  "seconds": 15.8
+ },
+ {
+  "task": "Screen",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 15,
+  "regret": 0.17106756813398702,
+  "regret_zero_shot": 0.3535487177871648,
+  "cumulative_regret": 1038.862823905611,
+  "stopped_early_at": null,
+  "cash": -867.8700975236927,
+  "wasted_fraction": 0.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.22691176070099964,
+   0.14335926761505996
+  ],
+  "seconds": 17.8
+ },
+ {
+  "task": "Screen",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 16,
+  "regret": 0.02359437905841862,
+  "regret_zero_shot": 0.12416612469102704,
+  "cumulative_regret": 363.61173155323024,
+  "stopped_early_at": null,
+  "cash": -402.7225310928527,
+  "wasted_fraction": 0.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 1,
+  "trace": [
+   0.18666613997290052,
+   0.02359437905841862
+  ],
+  "seconds": 35.4
+ },
+ {
+  "task": "Screen",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 17,
+  "regret": 0.12066795385263385,
+  "regret_zero_shot": 0.4023810445731197,
+  "cumulative_regret": 1303.1336202184448,
+  "stopped_early_at": null,
+  "cash": -1029.9536781756763,
+  "wasted_fraction": 0.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.22760886251175166,
+   0.12066795385263385
+  ],
+  "seconds": 20.1
+ },
+ {
+  "task": "Screen",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 18,
+  "regret": 0.03961564729104182,
+  "regret_zero_shot": 0.27844899640480303,
+  "cumulative_regret": 795.331993487197,
+  "stopped_early_at": null,
+  "cash": -751.5376801364936,
+  "wasted_fraction": 1.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 1,
+  "trace": [
+   0.18294776711005967,
+   0.18294776711005967
+  ],
+  "seconds": 29.4
+ },
+ {
+  "task": "Screen",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 19,
+  "regret": 0.09687378824084258,
+  "regret_zero_shot": 0.7955878092488239,
+  "cumulative_regret": 687.0761719889125,
+  "stopped_early_at": null,
+  "cash": -444.93762383569066,
+  "wasted_fraction": 0.0,
+  "transfer_regret": NaN,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.15582179849945485,
+   0.09687378824084258
+  ],
+  "seconds": 18.0
+ },
+ {
+  "task": "Transfer",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 1,
+  "regret": 0.04957707506608479,
+  "regret_zero_shot": 0.20895782025410356,
+  "cumulative_regret": 1394.627037566126,
+  "stopped_early_at": 2,
+  "cash": -805.691663103621,
+  "wasted_fraction": 0.0,
+  "transfer_regret": 0.0563868175069002,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.12560689147818907,
+   0.051394816316628046
+  ],
+  "seconds": 60.4
+ },
+ {
+  "task": "Transfer",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 2,
+  "regret": 0.059144869639678695,
+  "regret_zero_shot": 0.30469403517245003,
+  "cumulative_regret": 2195.7096869443244,
+  "stopped_early_at": null,
+  "cash": -1790.3742053193312,
+  "wasted_fraction": 0.5,
+  "transfer_regret": 0.04537462558204135,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 1,
+  "trace": [
+   0.1460562402952599,
+   0.059144869639678695,
+   0.059144869639678695
+  ],
+  "seconds": 54.5
+ },
+ {
+  "task": "Transfer",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 3,
+  "regret": 0.027251567806837924,
+  "regret_zero_shot": 0.33908486141512195,
+  "cumulative_regret": 1338.8310350963532,
+  "stopped_early_at": 2,
+  "cash": -1128.2164990039635,
+  "wasted_fraction": 0.0,
+  "transfer_regret": 0.029438166821248637,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.21983209171005968,
+   0.027251567806837924
+  ],
+  "seconds": 22.7
+ },
+ {
+  "task": "Transfer",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 4,
+  "regret": 0.01176647724765656,
+  "regret_zero_shot": 0.12039647561471821,
+  "cumulative_regret": 1514.292159563984,
+  "stopped_early_at": 2,
+  "cash": -724.7210439605308,
+  "wasted_fraction": 0.0,
+  "transfer_regret": 0.02266550817118914,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 3,
+  "trace": [
+   0.10723751203225731,
+   0.04175181156158279
+  ],
+  "seconds": 55.6
+ },
+ {
+  "task": "Transfer",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 5,
+  "regret": 0.05523153636491548,
+  "regret_zero_shot": 0.1651893984501395,
+  "cumulative_regret": 1684.6449718121949,
+  "stopped_early_at": null,
+  "cash": -1021.1284022585536,
+  "wasted_fraction": 0.5,
+  "transfer_regret": 0.07729593691896469,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 1,
+  "trace": [
+   0.16038789382620233,
+   0.05523153636491548,
+   0.05523153636491548
+  ],
+  "seconds": 34.3
+ },
+ {
+  "task": "Transfer",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 6,
+  "regret": 0.15712363242029598,
+  "regret_zero_shot": 0.3997815124156126,
+  "cumulative_regret": 2095.1908482706936,
+  "stopped_early_at": 2,
+  "cash": -1599.475652467621,
+  "wasted_fraction": 1.0,
+  "transfer_regret": 0.3027406762275855,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.18576748355997694,
+   0.18576748355997694
+  ],
+  "seconds": 18.9
+ },
+ {
+  "task": "Transfer",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 7,
+  "regret": 0.06793993984469045,
+  "regret_zero_shot": 0.33034042765192767,
+  "cumulative_regret": 1951.5281032211274,
+  "stopped_early_at": 2,
+  "cash": -2282.230138612001,
+  "wasted_fraction": 1.0,
+  "transfer_regret": 0.12723704092633403,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.16699070038678648,
+   0.17275362965223684
+  ],
+  "seconds": 16.1
+ },
+ {
+  "task": "Transfer",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 8,
+  "regret": 0.2329608459905464,
+  "regret_zero_shot": 0.2144100429846866,
+  "cumulative_regret": 3516.2108288668305,
+  "stopped_early_at": null,
+  "cash": -3370.0631556315434,
+  "wasted_fraction": 0.5,
+  "transfer_regret": 0.2772417100160838,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.19310329693940884,
+   0.2702992686231401,
+   0.2329608459905464
+  ],
+  "seconds": 24.8
+ },
+ {
+  "task": "Transfer",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 9,
+  "regret": 0.01649779956193679,
+  "regret_zero_shot": 0.12836392749947031,
+  "cumulative_regret": 1714.3166064852307,
+  "stopped_early_at": null,
+  "cash": -1648.3914673637105,
+  "wasted_fraction": 0.5,
+  "transfer_regret": 0.009888735986895353,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.15312024716768627,
+   0.01649779956193679,
+   0.01649779956193679
+  ],
+  "seconds": 23.4
+ },
+ {
+  "task": "Transfer",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 10,
+  "regret": 0.05054444655956605,
+  "regret_zero_shot": 0.27064356708807846,
+  "cumulative_regret": 926.9512200603338,
+  "stopped_early_at": null,
+  "cash": -462.9100015267901,
+  "wasted_fraction": 0.5,
+  "transfer_regret": 0.029819867609529063,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 1,
+  "trace": [
+   0.07575961350522106,
+   0.07575961350522106,
+   0.05054444655956605
+  ],
+  "seconds": 38.0
+ },
+ {
+  "task": "Transfer",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 11,
+  "regret": 0.09404385680043957,
+  "regret_zero_shot": 0.14898498376977573,
+  "cumulative_regret": 1934.657014249226,
+  "stopped_early_at": 2,
+  "cash": -1458.3620091191096,
+  "wasted_fraction": 0.0,
+  "transfer_regret": 0.14642140833258782,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 1,
+  "trace": [
+   0.29219400146370217,
+   0.14898498376977573
+  ],
+  "seconds": 30.1
+ },
+ {
+  "task": "Transfer",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 12,
+  "regret": 0.07152478789988884,
+  "regret_zero_shot": 0.2319285101807372,
+  "cumulative_regret": 1174.1094161014205,
+  "stopped_early_at": 2,
+  "cash": -1006.646780063356,
+  "wasted_fraction": 1.0,
+  "transfer_regret": 0.049997814497877435,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.15271478612780784,
+   0.2013693958720855
+  ],
+  "seconds": 19.9
+ },
+ {
+  "task": "Transfer",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 13,
+  "regret": 0.03368644425979146,
+  "regret_zero_shot": 0.09712631471565433,
+  "cumulative_regret": 954.6303747409523,
+  "stopped_early_at": 2,
+  "cash": -1110.4803980767215,
+  "wasted_fraction": 0.0,
+  "transfer_regret": 0.07430368226072065,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.19827351672359764,
+   0.05102050684941609
+  ],
+  "seconds": 17.6
+ },
+ {
+  "task": "Transfer",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 14,
+  "regret": 0.049909634631585834,
+  "regret_zero_shot": 0.47013413773180274,
+  "cumulative_regret": 2576.0073920866353,
+  "stopped_early_at": 2,
+  "cash": -2501.1404114978836,
+  "wasted_fraction": 0.0,
+  "transfer_regret": 0.03791550769287394,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.2391008869784629,
+   0.049909634631585834
+  ],
+  "seconds": 15.2
+ },
+ {
+  "task": "Transfer",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 15,
+  "regret": 0.040036238408578895,
+  "regret_zero_shot": 0.17084071622957953,
+  "cumulative_regret": 2354.1445772911675,
+  "stopped_early_at": null,
+  "cash": -1897.6746832764507,
+  "wasted_fraction": 0.5,
+  "transfer_regret": 0.0979456312478147,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 1,
+  "trace": [
+   0.19633620327852203,
+   0.08733305300405476,
+   0.08733305300405476
+  ],
+  "seconds": 40.0
+ },
+ {
+  "task": "Transfer",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 16,
+  "regret": 0.025764971333737494,
+  "regret_zero_shot": 0.12612602008879079,
+  "cumulative_regret": 705.9107841363412,
+  "stopped_early_at": null,
+  "cash": -901.3837336533907,
+  "wasted_fraction": 0.5,
+  "transfer_regret": 0.05128880441518345,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 1,
+  "trace": [
+   0.11010338107732784,
+   0.025764971333737494,
+   0.025764971333737494
+  ],
+  "seconds": 32.1
+ },
+ {
+  "task": "Transfer",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 17,
+  "regret": 0.04866686857596445,
+  "regret_zero_shot": 0.3680327528714421,
+  "cumulative_regret": 1298.093561959234,
+  "stopped_early_at": 2,
+  "cash": -975.2358542869603,
+  "wasted_fraction": 0.0,
+  "transfer_regret": 0.041587049451750256,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 1,
+  "trace": [
+   0.19076125723943743,
+   0.0857532643649041
+  ],
+  "seconds": 24.7
+ },
+ {
+  "task": "Transfer",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 18,
+  "regret": 0.1747647841254219,
+  "regret_zero_shot": 0.33457032103937706,
+  "cumulative_regret": 2763.281276452576,
+  "stopped_early_at": 2,
+  "cash": -2624.3818917830645,
+  "wasted_fraction": 1.0,
+  "transfer_regret": 0.3678389793725699,
+  "rounds_submitted": 2,
+  "format_failures": 0,
+  "infeasible": 0,
+  "trace": [
+   0.19201643689164347,
+   0.20982163528045933
+  ],
+  "seconds": 17.3
+ },
+ {
+  "task": "Transfer",
+  "model": "qwen/qwen3.8-27b",
+  "seed": 19,
+  "regret": 0.021747470544878675,
+  "regret_zero_shot": 0.1171855468024815,
+  "cumulative_regret": 1135.1827444428045,
+  "stopped_early_at": null,
+  "cash": -562.0793642801364,
+  "wasted_fraction": 0.0,
+  "transfer_regret": 0.009698142764541584,
+  "rounds_submitted": 3,
+  "format_failures": 0,
+  "infeasible": 2,
+  "trace": [
+   0.14716532182748593,
+   0.07583352533493044,
+   0.021747470544878675
+  ],
+  "seconds": 42.2
+ }
+]

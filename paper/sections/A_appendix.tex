@@ -1,0 +1,458 @@
+\section{Admitting a new domain}
+\label{app:admit}
+
+\slowlab{} is a harness for a class of problems rather than for one domain. A domain is
+admissible when it supplies four things.
+
+\emph{The conditions must hold jointly and by nature}, not because the benchmark author chose
+hyperparameters that way (\S\ref{sec:domain}).
+
+\emph{A published forward model} must exist, so that the response surface, its noise
+structure and the location of its optimum are fixed outside the benchmark author's control.
+
+\emph{A cost model in the objective's own units} must be available, so that exploration is
+priced rather than constrained from outside.
+
+\emph{Experimental units must not be interchangeable.} Some structure---blocks, batches,
+chambers, cohorts---must constrain which treatments can be assigned where, because that is
+what makes allocation a decision rather than bookkeeping, and what makes replication compete
+with coverage.
+
+\paragraph{}
+Greenhouse horticulture, the instantiation built here, satisfies all four
+(\S\ref{sec:domain}). Microbial evolution experiments, bioprocess scale-up, materials
+ageing and dose-finding trials meet them with published forward models already in hand. We
+do not claim results transfer across domains---that is the question a multi-domain version
+would exist to answer---only that the harness, the measures and the reference points are
+defined at the level of the class.
+
+\paragraph{Four extensions that need no environment code.} The crop model already contains
+the mechanism each of them tests, so each is a task specification. \emph{Equipment faults}
+give ground-truth attribution: a heater fails in one chamber for $k$ days, the agent sees an
+unexpectedly low yield and an anomalous log, and must name the cause, which is exact because
+we injected it. \emph{Fruit abortion} above $T_{\mathrm{CRIT}}$ already makes irreversibility
+graded rather than binary, from recoverable through partially recoverable to a terminated
+unit. \emph{Between-season parameter drift} within the published between-site spread makes
+conclusions expire on a schedule the data rather than we set. And because the oracle is
+computable in a tenth of a second, a \emph{target profit rate} sorts instances into
+comfortably feasible, feasible only in a narrow region, marginally infeasible and clearly
+infeasible, which tests whether an agent can recognise that it has been asked for something
+impossible. None of these can be built on a surrogate without injecting the abstraction by
+hand.
+
+\section{A worked round}
+\label{app:worked}
+
+Figure~\ref{fig:worked} runs one round of \textsc{Optimise} through in full: one site, one
+twelve-unit budget, two designs that both pass the feasibility check and differ only in how
+the units are allocated. It is the smallest case in which the control hierarchy of
+\S\ref{sec:facility} decides the answer, and the reason the environment scores allocation
+rather than treatment choice alone.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{figures/fig2_worked_example.pdf}
+\caption{One round of the running scenario: same site (\texttt{seed=0}), same twelve-unit
+budget, two designs. All values are produced by the environment; the script is in the
+repository. \textbf{(a)} The intuitive design fills the grid---four temperatures, one per
+chamber, crossed with three densities. It passes \texttt{validate\_design}, but every
+treatment is observed once, so pure-error df is zero and each temperature is confounded
+with one chamber. \textbf{(b)} The split-plot: two temperatures, each replicated across two
+non-adjacent chambers, densities randomised within chamber. Our first attempt used chambers
+0--1 and 2--3 and was rejected by the randomisation check---temperature then correlates
+perfectly with chamber index. \textbf{(c)} Design A's best observation sits at $3.35$ plants\,m$^{-2}$ where the true
+optimum at that temperature is $3.76$; the miss is small, and the point is that with one
+observation per treatment nothing in the data says whether it is small. \textbf{(d)}
+Design B can answer the question it was given: the chamber 0 against chamber 3 gap at
+identical settings is $0.004$ against a density effect of $0.009$, so the effect is
+resolvable above the block noise --- which is a statement design A cannot make either way.
+The figure is regenerated from the frozen environment; an earlier version hard-coded the
+annotations and printed the comparison in (d) with the inequality facing the other way.}
+\label{fig:worked}
+\end{figure}
+
+
+\section{Task specifications}
+\label{app:tasks}
+
+\begin{table}[h]
+\centering\small
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Factor} & \textbf{Range} & \textbf{Control level} & \textbf{Role} \\
+\midrule
+day temperature   & 18--32\,\textdegree C     & chamber & heating/ventilation setpoint \\
+night temperature & 12--22\,\textdegree C     & chamber & setpoint \\
+CO$_2$            & 350--1200\,ppm            & chamber & enrichment \\
+PAR               & 18--32\,mol\,m$^{-2}$d$^{-1}$ & chamber & natural + supplemental \\
+plant density     & 2.2--4.5\,m$^{-2}$        & loop    & planting decision \\
+$\mathrm{LAI}_{\max}$ & 2.0--5.0              & loop    & pruning target \\
+\bottomrule
+\end{tabular}
+\caption{The six management factors. Control level is a physical fact---lamps and heating
+serve a whole chamber, whereas density and the pruning target are set per hydroponic
+loop---and it determines each factor's parallelism ceiling.}
+\end{table}
+
+The noise column of Table~\ref{tab:tasks} is
+\[
+  \sigma_{\mathrm{tot}}/\sqrt{B} \;=\;
+  \sqrt{\mathrm{sd}^2\Big(\tfrac{\tau_{\mathrm{loop}}^2}{B}
+  + \tfrac{\tau_{\mathrm{chamber}}^2}{CR} + \tfrac{\tau_{\mathrm{batch}}^2}{R}\Big)},
+\]
+the standard error of the mean of $B = R \times |\mathcal{U}_r|$ observations spread over
+$C$ chambers and $R$ rounds. Only the first term falls with $B$: a chamber effect is shared
+by every unit in that chamber and a batch effect by every unit in that round, so past a
+point buying more units stops buying precision. That is the width constraint of
+\S\ref{sec:conditions} in arithmetic.
+
+Two quantities a grower does control are declared by the task rather than exposed as
+factors, and the environment refuses to treat either as one. Cycle length is fixed at
+$210$ days: it is monotone over any plausible range, because fruit set does not begin until
+roughly 30--45 days and that establishment period is pure cost, so exposing it would add a
+dimension with the same answer at every site. Leaf removal is fixed at
+$2.25$\,g\,node$^{-1}$ because the reduced model gives defoliation no photosynthetic
+penalty, so its optimum is always at the upper rail. Both are asserted rather than
+silently overridden, so anyone who adds them back gets an error instead of a sweep that
+quietly holds them constant.
+
+\section{The naive corner}
+\label{app:naive}
+Setting every factor to its upper bound yields \emph{negative} profit at every site,
+worse than the site optimum by a factor of $4$ to $52$; setting every factor to its
+midpoint is also negative at most sites, worse by a factor of $1.3$ to $21$. Maximising everything fails because day temperature at its ceiling aborts fruit set
+(eq.~8) while supplemental lighting continues to draw power. We use this rather than
+``every factor has an interior optimum'' as the criterion for a non-trivial search problem.
+
+\section{Reproducibility}
+\label{app:repro}
+All results use seeds $0..N{-}1$; \texttt{SlowLabEnv(task, seed)} is deterministic, and the
+seed selects a sampled site rather than only a noise realisation. Every table and figure in this paper is emitted by a script in \texttt{scripts/} from
+the JSON under \texttt{results/}, and none is hand-edited. The files carry the environment
+version in their names, so a table built from a previous environment cannot be picked up
+silently. Code, task definitions and those scripts are released under the MIT licence at
+\todo{URL}. \todo{datasheet, croissant metadata, hosting}
+
+\section{The $\mathcal{R}^\star$ estimator}
+\label{app:eig}
+
+\paragraph{Observation likelihood.} Because the per-unit draw $\phi_u$ is pushed through the
+forward model, $p(y \mid \theta, x)$ has no pointwise density. We moment-match the per-unit
+response to a Gaussian with variance $s^2(x)$, which makes the covariance of a round's
+$|\mathcal{U}_r|$ observations
+\[
+\Sigma(D_r) \;=\; \operatorname{diag}\!\big(s^2(x_u) + \tau_\gamma^2\big)
+\;+\; \tau_\beta^2\, Z Z^{\!\top} \;+\; \tau_\epsilon^2\, \mathbf{1}\mathbf{1}^{\!\top},
+\]
+with $\tau_\beta, \tau_\gamma, \tau_\epsilon$ the nuisance scales of \S\ref{sec:conditions}
+and $Z \in \{0,1\}^{|\mathcal{U}_r| \times C}$ the block-membership matrix. The allocation
+enters through $Z$, so where a design places its treatments changes
+\eqref{eq:eig}, not only which treatments it chooses.
+
+\paragraph{Three approximations.} \emph{(a)} The Gaussian moment-match above.
+\emph{(b)} $s^2(\cdot)$ is computed once at the nominal parameter vector rather than per
+atom. \emph{(c)} The prior is the $M$-atom mixture rather than the continuous $P_\Theta$.
+We had argued that (c) was benign, on the grounds that the dimension which matters is that
+of $x^\star_\theta$ rather than of $\theta$, and that it is small --- over $150$ instances
+of \textsc{Optimise} the true optima occupy ten grid cells at
+$H\big[p(x^\star_\theta)\big] = 2.05$ nats. That argument is wrong, and the next two
+paragraphs are what it cost. The support of $x^\star_\theta$ being small does not make the
+\emph{likelihood} over atoms well behaved, and it is the likelihood that fails.
+\pending{Moment diagnostics for (a) and (b).}
+
+\paragraph{The in-sample estimator and why we abandoned it.} Our first estimator drew one
+atom set and used it for everything: the posterior weights $w_m(y)$, the minimisation over
+candidate recommendations, and the evaluation of the chosen recommendation. The failure is
+mechanical. $\Sigma(D_r)$ above contains observation noise and block structure and nothing
+for the coarseness of the grid, so with $12$ to $24$ observations the likelihood
+discriminates between atoms far more sharply than the grid spacing warrants. Measured over
+$160$ atoms on \textsc{Optimise}, the mean effective sample size $1/\sum_m w_m^2$ is
+$1.1$, and the candidate that minimises $w^{\!\top}\!D$ is some atom's own optimum in
+$98\%$ of draws. The estimator was therefore answering ``can the data identify which of
+these $160$ sites generated it'' and reporting the answer as though it were ``how much
+decision risk does this design remove''. Held out on atoms that did not generate the data,
+the same designs score $c = -64\%$ where the in-sample number reads $+97\%$: conditioning on
+the design leaves the reasoner worse than the prior-optimal constant, because the posterior
+concentrates on a wrong atom and the recommendation follows it there.
+
+\paragraph{The estimator we report.} Three changes, all in
+\texttt{achievable\_regret\_cv}. The likelihood is raised to the power $1/T$, equivalently
+$\Sigma \to T\Sigma$, which is the minimal way to state that the true site lies between
+atoms. $T$ is selected by leave-one-out over the inference atoms: for each atom $m$, draw
+$y$ from $m$, form the posterior from the others, choose a recommendation, and score it at
+$m$; take the $T$ minimising the average. The evaluation atoms are never touched, so
+selecting $T$ cannot import the bias it removes, and the leave-one-out curve tracks the
+held-out curve closely enough to be used as its proxy. Finally the recommendation is scored
+on the disjoint half. The result is $c$ between $1\%$ and $20\%$ where the in-sample
+estimator read $35\%$ to $78\%$, and the orderings differ: on \textsc{Optimise} the
+in-sample estimator ranked random search first among the reference strategies and the
+repaired one ranks it last.
+
+We tried the obvious cheaper fix first. Fitting the surrogate hyperparameters is not it and
+neither is raising $M$ alone; tempering is what moves the number, and the temperature the
+calibration selects is $3$ to $100$, meaning the effective observation covariance is one to
+two orders of magnitude larger than the noise model alone implies. That is the size of the
+discretisation error, stated in the only units available.
+
+\paragraph{Convergence in the atom count.} Table~\ref{tab:conv} runs seven designs at
+$M = 80$ and $M = 320$ on the two tasks we could afford at both counts, six runs each. The
+designs span the range of $c$ rather than compete: space-filling, a two-level factorial,
+four, two and one distinct treatments, and the two degenerate cases of every unit at a
+corner and every unit at the centre.
+
+The estimator has not converged and the direction of its error is now the opposite of the
+in-sample one. Quadrupling $M$ leaves the degenerate designs where they are and lifts the
+good ones: on \textsc{Screen} the space-filling design goes from $0.8\%$ to $16.5\%$. The
+reason is the split. At $M = 80$ only $40$ atoms carry the posterior, which is too coarse a
+stand-in for $P_\Theta$ for any design to separate, so the measure reports that no design
+helps. Every level we report is therefore a lower bound on what a converged estimator would
+give, which is the conservative direction for claims of the form ``no agent reaches the
+ceiling'' and the awkward one for any claim that a particular agent's design was poor.
+
+Rank correlation between the two counts is $0.82$ on \textsc{Optimise} and $0.64$ on
+\textsc{Screen}. That is lower than the in-sample estimator reported and it is the honest
+number: the in-sample estimator's near-perfect rank stability was itself an artefact, since
+a posterior that always collapses onto one atom is a deterministic function of design
+geometry and therefore stable in $M$ for the wrong reason. A single estimate carries a
+standard deviation of $2$ to $4$ points. Every $c$ in this paper is a mean over dozens of
+designs, where that falls below one point, and the comparisons we draw conclusions from are
+paired at fixed $M$.
+
+\input{sections/_conv_table}
+
+\paragraph{The bound does not survive estimation.} For the exact quantities $c \in [0,1]$
+is a theorem: numerator and denominator start from the same beliefs, so
+$\mathbb{E}[\min] \le \min[\mathbb{E}]$ gives $\mathcal{R}^\star(D_r) \le
+\mathcal{R}^\star(\varnothing)$, and $\mathcal{R}^\star \ge 0$ closes the other end. The
+estimator above is a tempered rule graded out of sample, about which the optimality theorem
+says nothing, and the difference is visible: across the $320$ reference rounds behind
+Table~\ref{tab:refs}, $69$ carry a negative $c$. Averaged over the dozens of rounds that
+make up one cell every value we report is inside $[0,1]$ --- $c$ from $1\%$ to $20\%$,
+$\eta$ from $4\%$ to $56\%$ --- but by margin rather than by proof. For $\eta$ there is
+not even an exact bound to appeal to, since the agent's $\hat{x}_r$ has seen every round
+while the numerator scores each round separately against the prior.
+
+\paragraph{Trajectory and endpoint.} The interim recommendation elicited after each round uses
+the same rule the agent applies at the end, so the last point of a trajectory equals the
+regret of the submitted recommendation. This is asserted by a regression test: an earlier
+version used the best observed point for the trajectory and a posterior maximum for the
+submission, which differed by $47\%$ on \textsc{Optimise}.
+
+\section{The horticultural instantiation}
+\label{app:domain}
+
+\paragraph{Forward model.} $f_\theta$ is the reduced state-variable TOMGRO model
+\citep{jones1999reduced}: five coupled state variables---mainstem nodes, leaf area index,
+above-ground, fruit and mature-fruit dry weight---implemented from its equations (1)--(11)
+with the published least-squares estimates. We deliberately do not sample ground truth from
+a Gaussian-process prior: such a sample has no physical content, its length scale would be
+our choice, and it makes the modelling assumption of GP-based agents exactly correct.
+Fitting our Bayesian-optimisation reference's own surrogate to the mechanistic response
+gives mean absolute error $1.1\times$ the global average in the high-temperature decline and
+$2.2\times$ near the kink where supplemental lighting begins to incur cost---real but mild,
+and the surrogate still locates the optimum. What the mechanistic surface supplies that a
+stationary GP cannot is structure: fruit abortion above $T_\mathrm{CRIT}$ (eq.~8), the
+source of irreversibility, and a source--sink limit taking the \emph{minimum} of two growth
+expressions (eqs.~9--10). $P_\Theta$ follows the same paper's finding that vegetative
+parameters are stable across sites while fruit parameters vary: each seed draws fruit
+parameters across the published between-site spread ($N_{FF}$ varies by $2.2\times$ across
+their three sites). Five of the six factors have optima that move across sites; the sixth,
+supplemental light, sits at the lower rail in every instance because at 2024 European
+electricity prices it never repays its energy.
+
+\paragraph{Facility.} Blocks are climate chambers and units are hydroponic loops. Lamps,
+heating and CO$_2$ enrichment are set per chamber; planting density, pruning target and
+the pruning target is set per loop. Cycle length is fixed at $210$ days for every unit and
+is not a decision (\S\ref{sec:tasks}).
+
+\paragraph{Costs.} Revenue is fruit fresh weight at wholesale price; costs are supplemental
+lighting, heating and CO$_2$ enrichment, computed with standard greenhouse engineering
+relations. Coefficients come from public sources rather than from us, because the
+\emph{Costly} measure is denominated in euros and an uncited coefficient makes its absolute
+value uninterpretable: crop price 1.50~EUR/kg fresh weight, between Dutch (1.57) and Spanish
+(1.35) vine tomato in March 2024 \citep{tomato_prices}; electricity 0.189 and natural gas
+0.0605~EUR/kWh, the EU non-household averages for 2024 \citep{eurostat_energy_prices};
+luminaire efficacy 2.5\,\textmu mol\,J$^{-1}$, the level over half of listed horticultural
+fixtures reach \citep{dlc_qpl}; a cover heat-transfer coefficient of
+4.0\,W\,m$^{-2}$K$^{-1}$, between single glass ($\approx$4.5) and double polyethylene
+(2.9--3.4) \citep{kittas_covers}. The CO$_2$ leakage coefficient yields 14.6\,kg\,m$^{-2}$
+per season, inside the 12--24 range that must be delivered for tomato \citep{ahdb_co2}.
+
+\paragraph{Caveats.} The figures are representative European values, not measurements from
+one facility. Outdoor temperatures correspond to the Mediterranean--subtropical winters of
+TOMGRO's calibration sites rather than to northern Europe, where greenhouses consume
+47--69\,m$^3$ of gas per m$^2$ per year ($\approx$460--670\,kWh) against about 245
+here---a difference of climate rather than of coefficients. And one consequence was not our
+choice: at these prices supplemental lighting is never economical in this climate, so the
+optimum for PAR sits at its lower bound for every site.
+
+\section{Scripted references, and how far they get}
+\label{app:refs}
+
+Four scripted strategies ship with the environment: random search over the factor space; a
+planned campaign, being a Plackett--Burman screen with centre points followed by a response
+surface, replicated and randomised across chambers; and Bayesian optimisation at one and at
+two replicates per treatment. Table~\ref{tab:refs} runs all four on all four tasks, eight
+instances each. They are a reference point, not a baseline we claim to have tuned: each is
+a textbook method implemented straightforwardly, and the numbers below say what such an
+implementation achieves at these budgets, not what the method is capable of.
+
+\input{sections/_reference_table}
+
+\paragraph{What is and is not tuned.} The Bayesian-optimisation reference uses a
+hand-rolled Gaussian-process surrogate whose length scale and observation noise are fixed
+rather than fitted, and the tool arm of \S\ref{sec:results} hands the same routine to a
+language model. We assumed the fixed hyper-parameters were costing it and checked
+(\texttt{scripts/tool\_hyper\_control.py}): refitting length scale and observation noise by
+marginal likelihood on exactly the same observations, holding the recommendation rule and
+everything else constant, changes the regret of the point proposed by $-25\%$ on
+\textsc{Optimise}, $-6\%$ on \textsc{Screen}, $-5\%$ on \textsc{Transfer} and $+32\%$ on
+\textsc{Sanity}: better on three tasks, worse on one, and still several times the regret
+the same routine carries when it chooses its own designs. The fixed hyper-parameters are
+not what limits either. The planned campaign's screen is full
+rank over the factors it varies, which is the only property we checked. Both are released
+so that a reader can improve on them.
+
+\paragraph{The two efficiencies come apart on \textsc{Transfer}.} Random search ranks
+first on design there and last on decision: it spreads its units over the whole space, so
+its observations locate the optimum better than any other strategy's, and it then
+recommends close to the best point it happened to run. Bayesian optimisation is the mirror
+image, concentrating units near the incumbent and converting far more of what that carries.
+On \textsc{Screen} the same pattern holds weakly. It does \emph{not} hold on
+\textsc{Optimise}, where the repaired estimator puts all four strategies between $3\%$ and
+$6\%$ and the task no longer separates designs at all; the in-sample estimator reported
+$39\%$ to $46\%$ there and ranked random search first, and that was an artefact. On
+\textsc{Sanity} the planned campaign leads on both, which is what a control should look
+like. The stronger demonstration that the two measures are not restatements of each other
+is in \S\ref{sec:results}, where one intervention moves them in opposite directions within
+a single model.
+
+\paragraph{Where the ratio is thin, nothing converts.} On \textsc{Screen} all four
+strategies convert between $4\%$ and $6\%$, so the decision column there is close to two
+tied pairs rather than an ordering. This is Table~\ref{tab:tasks}'s ratio of $1.5$
+restated: when the room for tailoring is barely above what a full budget resolves, the
+difference between a good and a bad reading of the data is not detectable.
+
+\paragraph{A screen presumes a campaign these budgets do not pay for.} On \textsc{Screen}
+the planned campaign has the worst realised regret of the four, worse than random search,
+although its screening design is full rank over the six factors it varies, replicated and
+randomised across chambers. At this budget it spends half its units establishing which
+factors matter and the other half on a response surface around a noisy incumbent, while
+random search spends everything on coverage. Plackett--Burman was designed for a programme
+with a follow-up; two rounds are not one.
+
+\section{Known defects, and why we stopped fixing them}
+\label{app:defects}
+
+The environment is frozen at v1.0. This register is complete as far as we know it, and we
+do not intend to fix all of it. A benchmark is a fixed artefact; its value is comparability
+across agents, not correctness of the simulator.
+
+\paragraph{The stopping rule.} \emph{A defect is fixed if it changes a claim the paper
+makes, and recorded if it does not.} We adopted this after the alternative became visible:
+while $\mathcal{R}^\star(\varnothing)$ was being used as an admission test for tasks, every
+correction to the crop or cost model moved the ceiling, which moved the task set, which
+motivated the next correction. That loop does not terminate, because a simulator can always
+be made more nearly right. Reporting ranks rather than levels (\S\ref{sec:estimator}) removes the
+dependence and lets the rule bite.
+
+\paragraph{The rule caught four defects and let three stand.} Four defects changed claims and
+were fixed: a weight $\lambda$ on the cost term, nominally a task-design parameter, which
+set where every optimum sat and pushed four of six factors onto their rails at
+$\lambda=0.25$; a photosynthesis routine that read global nominal parameters instead of the
+site's, so that every site had an identical light and CO$_2$ response and a stated
+limitation about sampling those parameters was a no-op; a heating model that applied
+$A\,U\,\Delta T$, the peak-sizing formula for the coldest night, to all $24$ hours of $210$
+days, overstating a term worth $48\%$ of variable cost; and an objective named net profit
+that omitted harvest labour, grading loss and all fixed costs. One defect was recorded
+instead: the block effects below, which affect only the ratio in Table~\ref{tab:tasks}, and
+that ratio is no longer a gate.
+
+\paragraph{Noise model.} The block scales $\tau_{\mathrm{chamber}}$,
+$\tau_{\mathrm{loop}}$ and $\tau_{\mathrm{batch}}$ multiply the standard deviation of the
+objective over uniformly random points in the whole factor space, a quantity dominated by
+corners no grower would operate in. Improving the ventilation physics left the optimum
+unmoved to three figures and inflated that standard deviation by $71\%$, and with it the
+chamber effect, from $4.4\%$ to $7.9\%$ of revenue at the optimum. A chamber's climate
+uniformity has nothing to do with how bad the worst corner of the design space is; the
+effect should be a temperature offset pushed through the forward model, with a magnitude
+taken from measured greenhouse uniformity. Separately, \texttt{task.noise\_sd} is a declared
+value $1.3$ to $1.9$ times the per-unit standard deviation the simulator actually produces;
+the simulator is right and the declared value is unused except in reporting.
+
+\paragraph{Crop and cost model.} The profit-optimal yield averages
+$28$\,kg\,m$^{-2}$yr$^{-1}$ over sites, range $21$ to $37$, against a commercial
+$50$--$70$, while the model's \emph{maximum attainable} yield is $59$, inside that range:
+the model can grow a commercial crop and does not think it pays. We have not established
+why. Supplemental light is rail-bound at every site, so the entire lighting
+sub-model has zero elasticity on the objective. This is also what lowers the
+\textsc{Screen} ceiling, and it separates two questions a sensitivity analysis conflates:
+over $24$ sites, setting supplemental light mid-range rather than at its optimum costs
+$0.080$, the largest of the six factors, while setting it at the across-site mean optimum
+--- all an experiment could still recover --- costs $0.000$, because its optimum does not
+move. The factors worth an experiment are day temperature and CO$_2$, at $0.0085$ and
+$0.0060$, together $85\%$ of what instance-tailoring can recover there
+(\texttt{scripts/factor\_value.py}). Relatedly, $\mathrm{par}_{\mathrm{ambient}}$ is
+fixed across sites although natural daily light integral is the largest real difference
+between a Dutch and an Almerian greenhouse. A daily-timestep model cannot represent a
+time-varying CO$_2$ enrichment strategy, which is what growers actually run. The
+ventilation capacity is clipped rather than allowed to fail, so overheating above that cap
+is not modelled.
+
+\paragraph{Provenance of coefficients.} Electricity and gas prices, the site-level spreads,
+the LED efficacy range and the cover heat-transfer range are cited. Four numbers are not:
+the tomato price, whose source we can no longer verify and which carries the largest
+elasticity on the objective; the fruit dry-matter fraction, which has no citation at all and
+carries the second largest; the transplant cost, quoted in dollars and used as euros; and
+two labour coefficients whose derivations contain wage and task-share figures that are ours.
+One property limits the damage: the tomato price and the dry-matter fraction scale revenue
+linearly and $\mathcal{R}^\star$ scales with them, so they cancel from every ratio we
+report. $\mathcal{R}^\star(\varnothing)$ is $3.1\%$ of revenue at the optimum on both
+\textsc{Sanity} and \textsc{Optimise}, and adding harvest labour and grading loss left
+that ratio where it was. These coefficients set the euro scale and no conclusion.
+
+\paragraph{Estimator and action space.} The estimator's own defects, and the one we found
+and repaired, are in Appendix~\ref{app:eig}; they are the largest single item in this
+register. Separately, replication does not pay at these budgets, so an agent is never
+rewarded for buying precision --- an arithmetic consequence of bounded parallelism rather
+than a bug, but it narrows what the benchmark can distinguish.
+
+\paragraph{A stronger form of irreversibility is implemented and not enabled.} Commitment is irreversible throughout, and \S\ref{sec:regime} shows what it costs an
+agent that the other three conditions do not. Beyond it the environment implements damage: fruit abortion above
+$T_{\mathrm{CRIT}}$ puts a unit into a recovery period graded by how far the threshold was
+exceeded, so that a badly chosen treatment costs capacity in the \emph{following} round and
+not only the units it occupied. All four tasks set the recovery length to zero, with the
+comment ``0 = off (default, keeps existing results unchanged)''---which is the reasoning
+this appendix opens by arguing against, and we record it as such rather than defend it.
+
+It is not dead code for want of triggering. Across the reference strategies, $55\%$ to
+$60\%$ of committed units exceed the threshold, by $4.3$ to $4.6\,^\circ$C on average, so at
+$\texttt{damage\_scale} = 6$ a sixty-day recovery period would take roughly two fifths of
+the facility out of the next round. Enabling it is the first item in the next version. The
+same parameter is also the natural dial for the ablation that would turn ``the four
+conditions matter jointly'' from a claim about the domain into a measurement: running one
+task at recovery lengths of zero, sixty and two hundred and ten days prices irreversibility
+directly, against agents that are otherwise identical.
+
+\paragraph{Two actions a real grower has and this agent does not.} The action space stops
+at a design and a recommendation, and two of the omissions matter more than the rest.
+
+\emph{Early termination.} A greenhouse is watched continuously---climate at minute
+resolution, crop registration weekly, harvest accumulating from about week ten---so a grower
+who has planted a bad treatment usually knows by week six and pulls it. We have no such
+action: a committed unit runs its full $210$ days. The omission is what makes \S\ref{sec:regime}'s
+two readings of delay, information and action, coincide here; restoring it would separate
+them, and it is the cleanest available trade-off between slowness and irreversibility,
+since salvaging costs part of a season rather than all of it.
+
+\emph{Staggered planting.} Rounds are synchronous: every unit in a round starts and ends
+together. Real trial programmes run a pipeline, starting a new batch every few weeks. Our
+budgets leave half the facility idle on two of the four tasks---$8$ of $16$ unit-slots on
+\textsc{Sanity} and $12$ of $24$ on \textsc{Screen}---for the full $420$ days, which no
+grower would accept. Staggering at a $105$-day offset would run four batches instead of two
+in the same wall-clock. It also poses the harder question: with only partial information
+from batch one, what do you plant in batch two? That is where slow feedback actually bites,
+and it is the first thing we would add.
+
+An agent also cannot choose what to measure, when to measure it, or how many plants to grow
+per unit.

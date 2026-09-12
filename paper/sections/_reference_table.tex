@@ -1,0 +1,36 @@
+\begin{table}[t]
+\centering\small
+\begin{tabular}{@{}llcccccc@{}}
+\toprule
+\textbf{Task} & \textbf{Strategy} & $\bar{\mathcal{R}}(R)\downarrow$ & $\mathcal{R}_{\mathrm{cum}}\downarrow$ & $c\uparrow$ & $\eta\uparrow$ & design & decision \\
+ & & final answer & campaign cost & & & rank & rank \\
+\midrule
+\multicolumn{8}{@{}l}{\textsc{Sanity} \quad \small $\mathcal{R}^\star(\varnothing)=0.0055$} \\
+& Random search & 0.0417(119) & 345 & 1\% & 13\% & 3 & 4 \\
+& Planned campaign & 0.0089(33) & 140 & 9\% & 56\% & 1 & 1 \\
+& Bayesian opt.\ (1 rep) & 0.0172(73) & 289 & 1\% & 32\% & 3 & 3 \\
+& Bayesian opt.\ (2 rep) & 0.0128(49) & 288 & 5\% & 41\% & 2 & 2 \\
+\addlinespace
+\multicolumn{8}{@{}l}{\textsc{Screen} \quad \small $\mathcal{R}^\star(\varnothing)=0.0044$} \\
+& Random search & 0.0585(92) & 1061 & 20\% & 6\% & 1 & 1 \\
+& Planned campaign & 0.0989(84) & 972 & 5\% & 4\% & 4 & 3 \\
+& Bayesian opt.\ (1 rep) & 0.0586(183) & 799 & 16\% & 6\% & 2 & 1 \\
+& Bayesian opt.\ (2 rep) & 0.0785(188) & 844 & 12\% & 5\% & 3 & 2 \\
+\addlinespace
+\multicolumn{8}{@{}l}{\textsc{Optimise} \quad \small $\mathcal{R}^\star(\varnothing)=0.0061$} \\
+& Random search & 0.0258(82) & 709 & 3\% & 23\% & 3 & 4 \\
+& Planned campaign & 0.0251(98) & 510 & 3\% & 24\% & 3 & 3 \\
+& Bayesian opt.\ (1 rep) & 0.0120(37) & 496 & 6\% & 48\% & 1 & 2 \\
+& Bayesian opt.\ (2 rep) & 0.0107(37) & 540 & 5\% & 54\% & 2 & 1 \\
+\addlinespace
+\multicolumn{8}{@{}l}{\textsc{Transfer} \quad \small $\mathcal{R}^\star(\varnothing)=0.0041$} \\
+& Random search & 0.0706(51) & 2404 & 17\% & 5\% & 1 & 4 \\
+& Planned campaign & 0.0653(81) & 1592 & 8\% & 6\% & 4 & 3 \\
+& Bayesian opt.\ (1 rep) & 0.0335(36) & 1418 & 13\% & 11\% & 3 & 1 \\
+& Bayesian opt.\ (2 rep) & 0.0534(152) & 1644 & 15\% & 7\% & 2 & 2 \\
+\addlinespace
+\bottomrule
+\end{tabular}
+\caption{Reference strategies, environment v1.0.0, eight instances per task. $\bar{\mathcal{R}}(R)$ is the regret of the final recommendation, with its standard error in the last two places; $\mathcal{R}_{\mathrm{cum}}$ is the profit the campaign forwent, in \euro\,per square metre summed over committed unit-days. $c$ is design efficiency against the $\mathcal{R}^\star(\varnothing)$ printed above each block. Rank $1$ is best and tied values share a rank; decision rank orders $\eta$, whose levels are in Appendix~\ref{app:eig}. We draw conclusions from the ranks rather than the levels, for the reason given in \S\ref{sec:estimator}.}
+\label{tab:refs}
+\end{table}

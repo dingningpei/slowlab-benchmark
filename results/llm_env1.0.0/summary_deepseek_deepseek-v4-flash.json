@@ -1,0 +1,50 @@
+{
+  "Sanity": {
+    "n": 20,
+    "regret": 0.027879414012533486,
+    "regret_se": 0.005455382516919599,
+    "regret_zero_shot": 0.03748179117328773,
+    "cumulative_regret": 258.2102556871579,
+    "cash": -580.2663233780498,
+    "wasted_fraction": 0.6842105263157895,
+    "rounds_submitted": 1.95,
+    "format_failures": 0.0,
+    "infeasible": 0.35
+  },
+  "Optimise": {
+    "n": 20,
+    "regret": 0.03654074203910099,
+    "regret_se": 0.0040976790715118805,
+    "regret_zero_shot": 0.04116863771484156,
+    "cumulative_regret": 405.0124744561945,
+    "cash": -962.1218181559683,
+    "wasted_fraction": 0.575,
+    "rounds_submitted": 2.95,
+    "format_failures": 0.0,
+    "infeasible": 0.5
+  },
+  "Screen": {
+    "n": 20,
+    "regret": 0.10366156371190796,
+    "regret_se": 0.019524066010825063,
+    "regret_zero_shot": 0.2444285038276582,
+    "cumulative_regret": 942.8647096770034,
+    "cash": -806.1662473941776,
+    "wasted_fraction": 0.25,
+    "rounds_submitted": 2.0,
+    "format_failures": 0.0,
+    "infeasible": 0.1
+  },
+  "Transfer": {
+    "n": 20,
+    "regret": 0.07580952954182234,
+    "regret_se": 0.009959868184915,
+    "regret_zero_shot": 0.22999133925838686,
+    "cumulative_regret": 1895.9395294451697,
+    "cash": -1560.472651868637,
+    "wasted_fraction": 0.3888888888888889,
+    "rounds_submitted": 2.5,
+    "format_failures": 0.0,
+    "infeasible": 0.05
+  }
+}

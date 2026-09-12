@@ -1,0 +1,321 @@
+\section{\slowlab}
+\label{sec:regime}
+\label{sec:env}
+
+\subsection{Regime and problem formulation}
+\label{sec:conditions}
+\label{sec:formulation}
+
+\slowlab{} targets sequential experimental design under four conditions that hold jointly.
+\textbf{Slow}: what can be learnt per unit of calendar time is bounded by feedback latency
+\emph{and} by a hard ceiling on how many trials run concurrently---a facility with a
+thousand chambers and a four-month cycle is not slow in the sense that binds. That ceiling
+is \emph{tiered}, because some factors are set for a whole block of units and others per
+unit, so replication and coverage compete for the same physical resource.
+\textbf{Noisy}: a single unit does not settle a question, which is what turns replication,
+blocking and allocation into decisions rather than formalities. \textbf{Costly}: a trial
+consumes resources measured in the objective's own units, so exploration is priced rather
+than free. \textbf{Irreversible}: a submitted design cannot be rolled back---no branch, no
+checkpoint, no revert---so the only remedy for a bad design is a new one in a later cycle,
+and the units it occupied are gone. Table~\ref{tab:landscape} places existing evaluation
+environments against these conditions. We instantiate the regime in controlled-environment
+agriculture (\S\ref{sec:domain}).
+
+\begin{table}[t]
+\centering\footnotesize
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{@{}llccc@{}}
+\toprule
+& & \textbf{Agent / design} & \textbf{Chemistry \& materials} & \textbf{\slowlab} \\
+& & {\scriptsize BoxingGym} & {\scriptsize A-Lab, Coscientist} & {\scriptsize (this work)} \\
+\midrule
+\multirow{2}{*}{\textbf{Slow}}
+  & feedback latency        & seconds--minutes & hours--days & \textbf{210 days} \\
+  & parallel width          & unbounded & high (96/384-well) & \textbf{hard-capped, tiered} \\
+\addlinespace[2pt]
+\textbf{Noisy}
+  & signal-to-noise         & deterministic & high & \textbf{low (plant-to-plant)} \\
+\addlinespace[2pt]
+\multirow{2}{*}{\textbf{Costly}}
+  & cost of one trial       & $\approx 0$ & reagents, instrument time & \textbf{a crop, priced in the objective} \\
+  & cost of a retry         & $\approx 0$ & low--moderate & \textbf{one growing season} \\
+\addlinespace[2pt]
+\textbf{Irreversible}
+  & can a design be undone? & fully (reset) & largely (re-run) & \textbf{no} \\
+\bottomrule
+\end{tabular}
+\caption{Evaluation environments against the four conditions of \S\ref{sec:regime}. Each row
+is one measurable property of the condition naming it. The closest prior benchmark differs
+on every row.}
+\label{tab:landscape}
+\end{table}
+
+\paragraph{Problem formulation.} An instance is a parameter vector $\theta \sim P_\Theta$,
+unknown to the agent, determining a response $f_\theta : \mathcal{X} \to \mathbb{R}$ on a
+factor space $\mathcal{X} \subseteq \mathbb{R}^{d}$ and measured in the objective's own
+units. Over $R$ rounds the agent commits a \emph{design} $D_r \in \mathcal{D}$ --- a finite
+set of treatments in $\mathcal{X}$ together with their assignment to the physical trial
+slots $\mathcal{U}_r$ --- and states a recommendation $\hat{x}_r \in \mathcal{X}$. The
+admissible set $\mathcal{D}$ belongs to the facility rather than to the task;
+\S\ref{sec:facility} gives it for our instantiation. Its one structural role here is that it
+is not all finite multisets: an agent cannot buy precision and coverage with the same slots.
+
+Committing holds $\mathcal{U}_r$ for a cycle of length $\Delta$, after which each slot
+returns one observation
+\begin{equation}
+  y_u \;=\; f_\theta\!\left(x_u;\, \phi_u\right) \;+\; \varepsilon_u,
+  \qquad \varepsilon \sim \mathcal{N}\!\big(0, \Sigma(D_r)\big),
+  \label{eq:obs}
+\end{equation}
+where $x_u$ is the treatment assigned to slot $u$ and $\phi_u$ an independent per-slot draw
+of the response model's own parameters. Two features of \eqref{eq:obs} carry \textbf{noisy}.
+Drawing $\phi$ per slot rather than adding a scalar error makes the variance heteroscedastic
+in $x$ and structured by the mechanism; and $\Sigma(D_r)$ is not diagonal, so \emph{where} a
+treatment is placed changes what the round can resolve, not only which treatments were
+chosen. Appendix~\ref{app:eig} gives $\Sigma$ for our instantiation.
+
+The other three conditions restrict the action. Writing $\mathcal{F}_r = \sigma\big(\{\,y_u
+: u \in \mathcal{U}_1 \cup \cdots \cup \mathcal{U}_{r-1}\,\}\big)$ for everything returned
+before round $r$, and $\mathcal{A}_r$ for the entire action set available at round $r$,
+\begin{equation}
+  D_r,\ \hat{x}_r \ \text{ are } \mathcal{F}_r\text{-measurable},
+  \qquad\qquad
+  \mathcal{A}_r \;=\; \big\{(D_r,\ \hat{x}_r)\big\}.
+  \label{eq:action}
+\end{equation}
+The first is \textbf{slow} stated as measurability rather than as sensor deprivation:
+information about a committed slot may well exist before its cycle ends, but no action is
+available on it, and Appendix~\ref{app:defects} names the two actions that would separate
+the two readings. The second is \textbf{irreversible}: the action set contains commit and
+recommend and nothing else, from which it follows that no operation shrinks $\mathcal{F}_r$,
+releases a slot early, or refunds one already committed. \textbf{Costly} is carried not by a
+constraint but by the objective, which prices a trial in the units it is trying to maximise,
+so that a campaign has a cost beside the quality of its answer (\S\ref{sec:eval}).
+
+\paragraph{The problem.} Given $\mathcal{F}_r$ and nothing else, the agent chooses
+$D_1, \dots, D_R$ and finally commits to $\hat{x}_R$. It is judged on how far that
+recommendation falls short of the instance's own optimum,
+\begin{equation}
+  \mathcal{R} \;=\; f_\theta(x^\star_\theta) - f_\theta(\hat{x}_R),
+  \qquad x^\star_\theta \in \arg\max_{x \in \mathcal{X}} f_\theta(x),
+  \label{eq:problem}
+\end{equation}
+and, separately, on what the campaign spent reaching it: every slot it committed is charged
+the same shortfall, at the treatment that slot was given, for a full cycle
+\eqref{eq:cumregret}. Neither quantity
+is observable to the agent --- $\theta$, $f_\theta$ and $x^\star_\theta$ are all withheld ---
+and neither can be estimated from $\mathcal{F}_r$ without the design that generated it.
+
+The two pull against each other, and the constraints are what stop the usual resolution.
+Reducing \eqref{eq:problem} calls for slots spent on treatments the agent expects to be
+poor, since those are the ones that discriminate; that is exactly what the second charge
+penalises. In an environment where a trial is a function call, the tension is nominal: try
+something, look, retract it. Here \eqref{eq:action} removes retraction, \eqref{eq:obs}
+means one slot does not settle whether a treatment was poor, and $\mathcal{D}$ means the
+slots spent discriminating are slots not spent confirming. A campaign therefore occupies
+the facility for $R\Delta$ and consists of $R$ ordered, unrepeatable commitments, each made
+before the information that would have justified it exists. \S\ref{sec:eval} states both
+quantities precisely and what they are read against; Appendix~\ref{app:worked} works one
+round through in full.
+
+\subsection{The environment}
+\label{sec:environment}
+
+\slowlab{} is a harness: the components below are defined over a domain rather than within
+one, and \S\ref{sec:domain} supplies the first domain that fills them in;
+Figure~\ref{fig:overview} on page~\pageref{fig:overview} is the loop this
+subsection specifies.
+
+
+\subsubsection{Interaction protocol}
+\label{sec:episode}
+
+Figure~\ref{fig:protocol} is the whole interface. \texttt{validate\_design} is free
+and unlimited; \texttt{submit\_design} commits the named slots for one cycle;
+\texttt{advance} runs the cycle and returns one value per slot; the interim
+recommendation records what the agent would advise if the campaign stopped there,
+which supplies the regret trajectory. Budget is accounted in slot-cycles. The
+recommendation is elicited, never consumed: it costs no budget, returns nothing, and
+enters no later design --- an agent that revises it every round is not penalised for
+having been wrong earlier. Design and recommendation are separate submissions, which is
+what allows an agent to run a good campaign and then answer badly, and \S\ref{sec:eig} to
+score the two apart.
+
+\begin{figure}[t]
+\centering
+\footnotesize
+\setlength{\fboxsep}{5pt}
+%
+\begin{minipage}[t]{0.225\linewidth}
+\fbox{\begin{minipage}[t][45mm][t]{\dimexpr\linewidth-2\fboxsep-2\fboxrule}
+\centering\textbf{\slowlab{} API}\par\vspace{3pt}
+\raggedright\ttfamily\scriptsize
+\pykw{class} \pycls{SlowLabEnv}:\\
+\hspace*{1em}\pyfn{validate\_design}\\
+\hspace*{1em}\pyfn{submit\_design}\\
+\hspace*{1em}\pyfn{advance}\\
+\hspace*{1em}\pyfn{observations}\\
+\hspace*{1em}\pyfn{submit\_recommendation}\\[4pt]
+\pykw{class} \pycls{Design}:\\
+\hspace*{1em}treatments\\
+\hspace*{1em}allocation\\
+\hspace*{1em}randomization\_seed\\[4pt]
+\pykw{class} \pycls{Task}:\\
+\hspace*{1em}factors, lev(\,$\cdot$\,)\\
+\hspace*{1em}R, |U\_r|, $\Delta$
+\end{minipage}}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.335\linewidth}
+\fcolorbox{black}{blue!4}{\begin{minipage}[t][45mm][t]{\dimexpr\linewidth-2\fboxsep-2\fboxrule}
+\centering\textbf{One campaign}\par\vspace{3pt}
+\raggedright\ttfamily\scriptsize
+\tikzmark{a}env = \pycls{SlowLabEnv}(task, seed)\\[2pt]
+\pykw{for} r \pykw{in} \pykw{range}(R):\\
+\hspace*{1em}\tikzmark{b}D = agent.\pyfn{design}(env)\\
+\hspace*{1em}\tikzmark{c}env.\pyfn{validate\_design}(D)\\
+\hspace*{1em}\tikzmark{d}env.\pyfn{submit\_design}(D)\\
+\hspace*{1em}\tikzmark{e}env.\pyfn{observations}() $\rightarrow$ []\\
+\hspace*{1em}\tikzmark{f}env.\pyfn{advance}()\\
+\hspace*{1em}\tikzmark{g}x\_r = agent.\pyfn{recommend}(env)\\[2pt]
+\tikzmark{h}env.\pyfn{submit\_recommendation}(x\_R)\tikzmark{edge}
+\end{minipage}}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.385\linewidth}
+\fbox{\begin{minipage}[t][45mm][t]{\dimexpr\linewidth-2\fboxsep-2\fboxrule}
+\centering\textbf{What the environment does}\par\vspace{3pt}
+\raggedright\scriptsize
+\tikzmark{A}the seed draws a \emph{site} $\theta\sim P_\Theta$, not a noise realisation\\[2.5pt]
+\tikzmark{C}free and unlimited; feasibility only, and a rejection costs no budget\\[2.5pt]
+\tikzmark{D}\textbf{the irreversible step}: $|\mathcal{U}_r|$ slots held for a full cycle\\[2.5pt]
+\tikzmark{E}nothing is visible until the cycle ends\\[2.5pt]
+\tikzmark{F}a cycle of length $\Delta$ passes; one value per committed slot\\[2.5pt]
+\tikzmark{G}the interim recommendation, giving the regret trajectory\\[2.5pt]
+\tikzmark{H}ends the episode; returns $\bar{\mathcal{R}}$ and $\mathcal{R}_{\mathrm{cum}}$
+\end{minipage}}
+\end{minipage}
+%
+\begin{tikzpicture}[overlay, remember picture,
+   >={Stealth[length=3.2pt]}, thin, gray!70]
+  \foreach \src/\dst in {a/A, c/C, d/D, e/E, f/F, g/G, h/H}
+    \draw[->] let \p1=(pic cs:\src), \p2=(pic cs:edge), \p3=(pic cs:\dst) in
+      (\x2+3pt, \y1+1.2pt) -- (\x3-2.5pt, \y3+1.2pt);
+\end{tikzpicture}
+\caption{\textbf{The interaction protocol.} \emph{(left)} What an agent touches: an
+environment exposing five calls, a \texttt{Design} naming treatments and assigning them to
+named slots, and a \texttt{Task} fixing the factors, their control levels, the number of
+rounds, the width cap and the cycle length. \emph{(centre)} One campaign. \emph{(right)}
+What each call costs. Checking is free and a rejection carries a code and a detail, so an
+agent may revise without penalty; committing is the step that cannot be undone. Between
+\texttt{submit\_design} and \texttt{advance} the observation list stays empty --- a
+regression test guards it --- which is \eqref{eq:action} in code.}
+\label{fig:protocol}
+\end{figure}
+
+\subsubsection{Action space}
+\label{sec:action}
+
+A submission is a \texttt{Design}: named treatments, each a full vector of factor values; an
+allocation mapping treatments to specific units; and a declared randomisation seed. The
+agent chooses \emph{what} to test, \emph{how many units} each treatment receives, and
+\emph{which} units those are---replication and allocation are decisions rather than
+defaults. It does not choose what to measure, when to measure, or whether to intervene
+mid-cycle; a submitted design runs to completion.
+
+\subsubsection{Facility and control levels}
+\label{sec:facility}
+
+A facility is $C$ blocks of $L$ units. Every factor carries a \emph{control level}: a
+\textsc{block}-level factor takes one value for a whole block, a \textsc{unit}-level factor
+is set per unit. The level is a physical property of the apparatus, not a modelling choice,
+and a design assigning two different block-level values inside one block describes an
+experiment that cannot be performed.
+
+Two consequences follow, and we learned both by implementation. With $k$ block-level
+factors, the number of distinct block-level \emph{combinations}---not levels per
+factor---bounds the number of whole-plot treatments by $C$. And if a combination occupies
+exactly one block, its effect is confounded with that block's, and unit-level replicates
+cannot be spread. A valid design is therefore a \textbf{split-plot}: block-level factors as
+whole plots replicated across at least two blocks, unit-level factors as subplots. This
+structure is what makes allocation a decision, and it is absent from any environment in
+which an experiment is a function call.
+
+\subsubsection{Forward model and instances}
+\label{sec:world}
+
+The environment takes a published forward model $f_\theta$ mapping a factor vector to a mean
+response, and a parameter distribution $P_\Theta$ describing how that model's coefficients
+vary across sites in the literature. A seed selects an \emph{instance} by drawing
+$\theta \sim P_\Theta$: a different problem, not the same problem observed again. The
+response surface and the location of its optimum are therefore fixed by the published model
+rather than by us.
+
+Within an instance, each unit receives its own draw of the model's parameters rather than an
+additive noise term. Unit-to-unit variation \emph{is} parameter variation, and modelling it
+this way yields heteroscedastic, temporally correlated variability without further
+assumptions. The nuisance effects of \S\ref{sec:conditions} are what an allocation must avoid
+confounding with.
+
+\subsubsection{Objective and cost}
+\label{sec:costmodel}
+
+The objective is a rate: revenue per unit area per unit time, less the full cost of the
+resources the treatment consumed, $f_\theta(x) = \big(\text{revenue}(x) -
+\text{cost}(x)\big) / \Delta$. Pricing is not decoration. Under a pure-yield objective a
+forward model is typically monotone in its resource inputs, so their optima sit on the
+boundary and those dimensions are trivial; charging for them is what produces interior
+optima. Expressing the cost in the objective's own units is also what makes the
+\emph{Costly} measure interpretable: a campaign's expenditure is directly comparable to
+what it was trying to maximise.
+
+The costs enter at weight one, and this is enforced rather than chosen. An earlier version
+carried a multiplier $\lambda$ on the cost term, declared as a task-design parameter. It
+was not one: it set where every optimum sat, and at $\lambda = 0.25$ it pushed four of six
+factors onto their rails. The environment now raises if $\lambda \neq 1$
+(Appendix~\ref{app:defects}). What \textsc{Transfer} moves mid-episode is a price in the
+cost model, not a weight on it, so the objective stays the profit a grower would actually
+bank in both halves of that task.
+
+\subsubsection{Feasibility checking}
+\label{sec:checking}
+
+\texttt{validate\_design} checks \emph{mechanical} feasibility only---control levels, unit
+conflicts, budget, factor ranges---and is free and unlimited; rejections cost no budget but
+are counted. The design measure of \S\ref{sec:eig} is computed at scoring time and
+cannot be called by the agent. Separating the two has a purpose: because feasibility is
+free to check, a design that passes it yet is scientifically poor is unambiguously a
+reasoning error rather than an interface error. Anything requiring a statistical
+assumption---assumed variances, power targets---belongs to the tool layer, an experimental
+condition to be ablated (Appendix~\ref{app:refs}), not a free service of the environment.
+
+\subsubsection{Language-model interface}
+\label{sec:harness}
+
+A language model reaches the same interface through a harness that serialises the round. It
+receives the facility layout and unit naming, the budget and rounds remaining, each factor's
+range and control level, the hierarchy constraint, every observation so far with the settings
+that produced it, the currently available units, and a JSON schema; it returns treatments, an
+allocation, a randomisation seed, and the recommendation it would give if the campaign stopped
+now, which supplies the trajectory in \eqref{eq:regret}.
+
+The prompt states constraints and never gives advice: the words replication, randomisation,
+blocking, split-plot, pure error and confounding do not appear, since those name the
+capability under test, and a regression test enforces their absence. Failures are counted
+separately---a reply that will not parse from a design that is mechanically infeasible---both
+fed back verbatim and retried up to three times, and neither consuming budget, consistent with
+\texttt{validate\_design} being free. ``Cannot emit valid JSON'' and ``cannot design an
+experiment'' are therefore different numbers. Exhausting the retries forfeits that round and
+the campaign continues, so one unparseable reply is not as costly as a failed campaign.
+
+\subsubsection{Configuration and extension}
+\label{sec:interfaces}
+
+Configurations are declarative: factors and their control levels, facility shape, rounds,
+per-round width, variance components, cost weight. Adding one requires no environment code.
+Agents implement a single \texttt{run(env)} method and are registered by name; the reference
+strategies of Appendix~\ref{app:refs} and the harness above use the same interface, and the
+harness needs only a callable mapping a message list to a string, so no vendor SDK is
+required. A new domain supplies $f_\theta$, $P_\Theta$, a cost function in the
+objective's units, and a facility whose units are not interchangeable
+(Appendix~\ref{app:admit}).
