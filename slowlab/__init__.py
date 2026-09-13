@@ -12,7 +12,8 @@ from .tomgro import TomgroModel, TomgroParams
 from .economics import EconomicModel, TomgroProfitModel, sample_site_econ
 from .world import ManagedTomgro, MANAGEMENT_FACTORS, sample_instance_params
 from .tasks import TASKS, Task
-from .env import SlowLabEnv, EpisodeResult, Measurement, Observation, RecommendationUpdate
+from .env import (SlowLabEnv, EpisodeResult, Measurement, Observation,
+                  RecommendationUpdate, VisibleEvent)
 
 # ── Environment version ─────────────────────────────────────
 # Version 2 adds persistent within-cycle state and timestamped measurements. See
@@ -37,5 +38,5 @@ __all__ = ["FactorSpec", "Facility", "Unit", "Design", "Rejection", "RejectCode"
            "EconomicModel", "TomgroProfitModel", "ManagedTomgro",
            "MANAGEMENT_FACTORS", "sample_instance_params", "TASKS", "Task",
            "SlowLabEnv", "EpisodeResult", "Measurement", "Observation",
-           "RecommendationUpdate",
+           "RecommendationUpdate", "VisibleEvent",
            "sample_site_econ", "ENV_VERSION"]

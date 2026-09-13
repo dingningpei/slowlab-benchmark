@@ -63,6 +63,19 @@ class RecommendationUpdate:
     point: tuple[float, ...]
 
 
+@dataclass(frozen=True)
+class VisibleEvent:
+    """One fact available to every reader at a particular simulation time."""
+
+    seq: int
+    kind: str
+    round: int
+    day: int
+    absolute_day: float
+    design_id: int | None
+    payload: dict
+
+
 @dataclass
 class _ActiveRun:
     """Private execution state for the one design currently in the facility."""
@@ -164,6 +177,7 @@ class SlowLabEnv:
         self._measurements: list[Measurement] = []
         self._measurement_cache: dict[tuple[int, int, str, str], Measurement] = {}
         self._recommendation_updates: list[RecommendationUpdate] = []
+        self._history: list[VisibleEvent] = []
         self._reports: list[ValidityReport] = []
         self._rejections: list[str] = []
         self.calib = CalibrationReport()
@@ -212,6 +226,9 @@ class SlowLabEnv:
         self._recommendation_updates.append(RecommendationUpdate(
             round=self.round, day=int(day), absolute_day=float(self.clock),
             point=tuple(float(v) for v in x)))
+        self._emit_visible("recommended", design_id=(
+            self._active.design_id if hasattr(self, "_active") else None),
+            payload={"point": [float(v) for v in x]}, day=int(day))
 
     def available_units(self) -> list[str]:
         """Units currently available -- those inside a heat-damage recovery period
@@ -240,15 +257,62 @@ class SlowLabEnv:
     def recommendation_updates(self) -> list[RecommendationUpdate]:
         return list(self._recommendation_updates)
 
+    def history(self, through_day: float | None = None) -> list[VisibleEvent]:
+        """Return the common, ordered information set visible to all readers.
+
+        ``through_day`` is an absolute simulation day and is useful for an
+        evaluator reconstructing an earlier information set. Future events are
+        never returned. Payloads are copied so callers cannot mutate history.
+        """
+        limit = self.clock if through_day is None else min(float(through_day), self.clock)
+        return [copy.deepcopy(event) for event in self._history
+                if event.absolute_day <= limit + 1e-9]
+
+    def _emit_visible(self, kind: str, *, design_id: int | None, payload: dict,
+                      day: int | None = None, absolute_day: float | None = None) -> None:
+        relative_day = (self._active.state.day if day is None and hasattr(self, "_active")
+                        else (0 if day is None else int(day)))
+        self._history.append(VisibleEvent(
+            seq=len(self._history), kind=kind, round=self.round,
+            day=int(relative_day),
+            absolute_day=float(self.clock if absolute_day is None else absolute_day),
+            design_id=design_id, payload=copy.deepcopy(payload)))
+
     def as_arrays(self):
-        """Completed observations as (X, y), where X is the factor vector of each observation's treatment."""
+        """Visible completed history as ``(X, margin)``.
+
+        Scripted readers deliberately consume the same public event history as
+        LLMs and evaluators instead of reading private simulator collections.
+        """
         X, y = [], []
-        for o in self._obs:
-            d = self._designs[o.design_id]
-            X.append([d.treatments[o.treatment][f.name] for f in self.task.factors])
-            y.append(o.value)
+        designs = {e.design_id: e.payload for e in self.history()
+                   if e.kind == "submitted"}
+        for event in self.history():
+            if event.kind != "completed":
+                continue
+            d = designs[event.design_id]
+            treatment = event.payload["treatment"]
+            X.append([d["treatments"][treatment][f.name] for f in self.task.factors])
+            y.append(event.payload["value"])
         return (np.array(X).reshape(-1, self.task.d), np.array(y)) if X else \
                (np.zeros((0, self.task.d)), np.zeros(0))
+
+    def component_arrays(self):
+        """Visible completed history as factor rows and public response fields."""
+        designs = {e.design_id: e.payload for e in self.history()
+                   if e.kind == "submitted"}
+        X, fields = [], {name: [] for name in (
+            "value", "rev_rate", "cost_rate", "energy_cost_rate", "other_cost_rate")}
+        for event in self.history():
+            if event.kind != "completed":
+                continue
+            d = designs[event.design_id]
+            treatment = event.payload["treatment"]
+            X.append([d["treatments"][treatment][f.name] for f in self.task.factors])
+            for name in fields:
+                fields[name].append(event.payload[name])
+        return (np.asarray(X, float).reshape(-1, self.task.d),
+                {name: np.asarray(values, float) for name, values in fields.items()})
 
     def validate_design(self, design: Design) -> Rejection:
         """Mechanical feasibility only. Free, unlimited, and contains no statistical judgement."""
@@ -310,6 +374,11 @@ class SlowLabEnv:
         self._designs.append(design)
         self._reports.append(score_validity(design, self.facility, self.task))
         self._pending = did
+        self._emit_visible("submitted", design_id=did, payload={
+            "treatments": copy.deepcopy(design.treatments),
+            "allocation": copy.deepcopy(design.allocation),
+            "randomization_seed": design.randomization_seed,
+        })
         return did
 
     def forfeit_round(self) -> None:
@@ -324,6 +393,10 @@ class SlowLabEnv:
             raise RuntimeError("a running crop cannot be forfeited; early termination is not implemented")
         if hasattr(self, "_pending"):
             del self._pending
+        self._emit_visible(
+            "forfeited", design_id=None, payload={"reason": "no executable design"},
+            day=self.task.duration_days,
+            absolute_day=self.clock + float(self.task.duration_days))
         self.round += 1
         self.clock += float(self.task.duration_days)
 
@@ -417,6 +490,12 @@ class SlowLabEnv:
                             energy_cost_rate=energy_rate,
                             other_cost_rate=other_rate)
             out.append(o); self._obs.append(o)
+            self._emit_visible("completed", design_id=did, payload={
+                "treatment": tid, "unit_id": u, "value": o.value,
+                "rev_rate": o.rev_rate, "cost_rate": o.cost_rate,
+                "energy_cost_rate": o.energy_cost_rate,
+                "other_cost_rate": o.other_cost_rate,
+            }, day=self.task.duration_days)
             self._occupied.add(u)
             # Process measure: score the *pre-registered* interval forecasts. The
             # forecasts were locked in at submit_design and the observations are
@@ -514,6 +593,11 @@ class SlowLabEnv:
                     value=value, unit=spec["unit"], method=spec["method"], cost=0.0)
                 self._measurement_cache[key] = m
                 self._measurements.append(m)
+                self._emit_visible("measured", design_id=active.design_id, payload={
+                    "treatment": tid, "unit_id": unit_id, "modality": modality,
+                    "value": value, "unit": spec["unit"], "method": spec["method"],
+                    "cost": 0.0, "available": True,
+                }, day=day)
             result.append(self._measurement_cache[key])
         return result
 

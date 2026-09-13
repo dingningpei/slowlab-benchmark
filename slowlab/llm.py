@@ -39,6 +39,17 @@ spend costs nothing.
 Answer with a single JSON object and nothing else."""
 
 
+SYSTEM_V2 = """You are an agronomist running experiments in a real greenhouse.
+
+You submit a fixed design for each crop cycle. While that cycle is running you
+may choose integer days to enter the facility and read supported sensors and
+ledgers. Final gross margin is unavailable until the cycle ends, and observing
+does not change treatments already submitted. The facility remains occupied
+throughout the cycle.
+
+Answer with a single JSON object and nothing else."""
+
+
 def _facility_text(env) -> str:
     t, f = env.task, env.facility
     lines = [
@@ -80,26 +91,42 @@ def _observations_text(env) -> str:
     claim was false for the LLM interface.** Both sides now see the same
     observation object.
     """
-    obs = env.observations()
-    if not obs:
-        return "OBSERVATIONS SO FAR: none (this is round 1)."
+    history = env.history()
+    completed = [e for e in history if e.kind == "completed"]
+    measured = [e for e in history if e.kind == "measured"]
+    if not completed and not measured:
+        return "VISIBLE OBSERVATIONS SO FAR: none."
+    designs = {e.design_id: e.payload for e in history if e.kind == "submitted"}
+    sections = []
+    if measured:
+        rows = ["WITHIN-CYCLE MEASUREMENTS SO FAR:"]
+        for event in measured:
+            p = event.payload
+            rows.append(
+                f"  absolute day {event.absolute_day:g}  round {event.round + 1} "
+                f"day {event.day}  {p['unit_id']}  {p['modality']} "
+                f"= {p['value']:.5g} {p['unit']}  ({p['method']})")
+        sections.append("\n".join(rows))
+    if not completed:
+        sections.append("TERMINAL OBSERVATIONS SO FAR: none; the running crop has not finished.")
+        return "\n\n".join(sections)
     rows = ["OBSERVATIONS SO FAR. All rates are per m2 per day, in EUR.",
             "gross margin = revenue - energy cost - other cost.",
             "  energy cost is electricity + gas; other cost is CO2, transplants, labour.",
             ""]
-    for o in obs:
-        d = env._designs[o.design_id]
-        fv = d.treatments[o.treatment]
+    for event in completed:
+        p = event.payload
+        d = designs[event.design_id]
+        fv = d["treatments"][p["treatment"]]
         setting = ", ".join(
             f"{g.name}={g.denorm(fv[g.name]):.4g}" for g in env.task.factors)
-        parts = ""
-        if o.rev_rate == o.rev_rate:            # not NaN
-            parts = (f"  [revenue {o.rev_rate:+.4f}"
-                     f"  energy {o.energy_cost_rate:+.4f}"
-                     f"  other {o.other_cost_rate:+.4f}]")
-        rows.append(f"  round {o.design_id + 1}  {o.unit_id}  {setting}"
-                    f"  -> margin {o.value:+.4f}{parts}")
-    return "\n".join(rows)
+        parts = (f"  [revenue {p['rev_rate']:+.4f}"
+                 f"  energy {p['energy_cost_rate']:+.4f}"
+                 f"  other {p['other_cost_rate']:+.4f}]")
+        rows.append(f"  round {event.round + 1}  {p['unit_id']}  {setting}"
+                    f"  -> margin {p['value']:+.4f}{parts}")
+    sections.append("\n".join(rows))
+    return "\n\n".join(sections)
 
 
 FINAL_ASK = """All rounds are finished and every observation is above. No further
@@ -237,6 +264,10 @@ class LLMAgent:
     format_failures: int = 0
     infeasible_submissions: int = 0
     tools: bool = False          # the tool ablation: put standard tools' output into the prompt
+    max_observation_times: int = 4
+
+    def _system_prompt(self) -> str:
+        return SYSTEM
 
     def _ask(self, env, feedback: str | None) -> dict:
         user = "\n\n".join([
@@ -249,11 +280,17 @@ class LLMAgent:
             _schema_text(env),
         ] + ([f"YOUR PREVIOUS REPLY WAS REJECTED: {feedback}\nFix it and reply again."]
              if feedback else []))
-        msgs = [{"role": "system", "content": SYSTEM},
+        msgs = [{"role": "system", "content": self._system_prompt()},
                 {"role": "user", "content": user}]
         reply = self.complete(msgs)
         self.transcript.append({"user": user, "assistant": reply})
         return _extract_json(reply)
+
+    def _execute_submitted_round(self, env, best):
+        """Terminal-only control arm: reveal nothing until the crop finishes."""
+        env.advance()
+        env.interim_recommendation(best)
+        return best
 
     def run(self, env):
         best = np.full(env.task.d, 0.5)
@@ -290,8 +327,7 @@ class LLMAgent:
                             best = _to_point(env, blob["current_best"])
                         except Exception:
                             pass
-                    env.advance()
-                    env.interim_recommendation(best)
+                    best = self._execute_submitted_round(env, best)
                     submitted = True
                     break
                 self.infeasible_submissions += 1
@@ -307,7 +343,7 @@ class LLMAgent:
         # once more, the last round's data would be paid for and never used.
         for _ in range(self.max_retries):
             try:
-                msgs = [{"role": "system", "content": SYSTEM},
+                msgs = [{"role": "system", "content": self._system_prompt()},
                         {"role": "user", "content": _final_prompt(env)}]
                 reply = self.complete(msgs)
                 self.transcript.append({"user": msgs[-1]["content"],
@@ -327,7 +363,7 @@ class LLMAgent:
         if getattr(env.task, "transfer_energy_shock", None) is not None:
             for _ in range(self.max_retries):
                 try:
-                    msgs = [{"role": "system", "content": SYSTEM},
+                    msgs = [{"role": "system", "content": self._system_prompt()},
                             {"role": "user", "content": _transfer_prompt(env)}]
                     reply = self.complete(msgs)
                     self.transcript.append({"user": msgs[-1]["content"],
@@ -337,6 +373,88 @@ class LLMAgent:
                     break
                 except Exception:
                     self.format_failures += 1
+        return best
+
+
+class WithinCycleLLMAgent(LLMAgent):
+    """Version 2 LLM protocol with agent-chosen within-cycle observation days."""
+
+    def _system_prompt(self) -> str:
+        return SYSTEM_V2
+
+    def _cycle_prompt(self, env, visits_left: int) -> str:
+        active = env._active
+        modalities = list(env._MEASUREMENT_SPECS)
+        modalities.extend(f"setpoint:{f.name}" for f in env.task.factors)
+        names = [f.name for f in env.task.factors]
+        return "\n\n".join([
+            _facility_text(env),
+            _observations_text(env),
+            f"RUNNING ROUND: {env.round + 1}; current crop day {active.state.day} "
+            f"of {env.task.duration_days}. Observation times remaining: {visits_left}.",
+            "SUPPORTED MODALITIES: " + ", ".join(modalities),
+            f'''Choose the next action. To inspect, choose an integer day strictly after
+the current day and before day {env.task.duration_days}. Reading a cached record
+again returns the same value. Use null for units to inspect every running unit.
+
+{{
+  "action": "observe",
+  "day": <integer>,
+  "modalities": ["canopy_lai"],
+  "units": null,
+  "current_best": {{{", ".join(f'"{n}": <number>' for n in names)}}}
+}}
+
+To wait for the terminal result instead, reply with action "finish" and
+current_best. Finishing does not cancel or modify the treatment.''',
+        ])
+
+    def _execute_submitted_round(self, env, best):
+        # Starting at day zero fixes the batch and plant draws before the first
+        # choice of observation time. Measurement randomness uses a separate
+        # deterministic stream and cannot alter this biological path.
+        env.advance_to(0)
+        visits = 0
+        while visits < self.max_observation_times:
+            accepted = False
+            for _ in range(self.max_retries):
+                user = self._cycle_prompt(env, self.max_observation_times - visits)
+                msgs = [{"role": "system", "content": self._system_prompt()},
+                        {"role": "user", "content": user}]
+                reply = self.complete(msgs)
+                self.transcript.append({"user": user, "assistant": reply})
+                try:
+                    blob = _extract_json(reply)
+                    action = str(blob.get("action", "")).lower()
+                    if action == "finish":
+                        if "current_best" in blob:
+                            best = _to_point(env, blob["current_best"])
+                            env.interim_recommendation(best)
+                        env.advance()
+                        return best
+                    if action != "observe":
+                        raise ValueError("action must be 'observe' or 'finish'")
+                    day = int(blob["day"])
+                    if not (env._active.state.day < day < env.task.duration_days):
+                        raise ValueError("observation day must be after the current day and before terminal day")
+                    modalities = list(blob.get("modalities") or [])
+                    if not modalities:
+                        raise ValueError("at least one modality is required")
+                    units = blob.get("units")
+                    if "current_best" in blob:
+                        best = _to_point(env, blob["current_best"])
+                        env.interim_recommendation(best)
+                    env.advance_to(day)
+                    for modality in modalities:
+                        env.observe(units=units, modality=str(modality))
+                    visits += 1
+                    accepted = True
+                    break
+                except Exception:
+                    self.format_failures += 1
+            if not accepted:
+                break
+        env.advance()
         return best
 
 

@@ -137,3 +137,22 @@ def test_completed_fields_are_algebraically_consistent():
             observation.energy_cost_rate + observation.other_cost_rate)
         assert observation.value == pytest.approx(
             observation.rev_rate - observation.energy_cost_rate - observation.other_cost_rate)
+
+
+def test_common_history_is_ordered_copied_and_censored_at_current_time():
+    env = SlowLabEnv(TASKS["T3"], seed=23)
+    env.submit_design(_design(env))
+    assert [e.kind for e in env.history()] == ["submitted"]
+    env.advance_to(50)
+    env.observe(units=[_design(env).unit_ids[0]], modality="canopy_lai")
+    at_50 = env.history()
+    assert [e.kind for e in at_50] == ["submitted", "measured"]
+    assert [e.seq for e in at_50] == list(range(len(at_50)))
+    at_50[-1].payload["value"] = -999
+    assert env.history()[-1].payload["value"] != -999
+
+    env.advance()
+    assert len(env.history(through_day=50)) == 2
+    completed = [e for e in env.history() if e.kind == "completed"]
+    assert len(completed) == len(env.observations())
+    assert all(e.absolute_day == env.task.duration_days for e in completed)

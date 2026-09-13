@@ -4,7 +4,7 @@ import numpy as np
 import pytest
 
 from slowlab import SlowLabEnv, TASKS
-from slowlab.llm import LLMAgent, scripted_completer, _extract_json
+from slowlab.llm import LLMAgent, WithinCycleLLMAgent, scripted_completer, _extract_json
 
 
 def test_json_extraction_survives_fences_and_prose():
@@ -164,3 +164,50 @@ def test_tools_flag_changes_the_prompt():
     a1.run(env2)
     assert "TOOL 1" not in a0.transcript[0]["user"]
     assert "TOOL 1" in a1.transcript[0]["user"]
+
+
+def test_within_cycle_llm_selects_observation_time_and_sees_measurement():
+    base = scripted_completer()
+
+    def visiting_completer(messages):
+        text = messages[-1]["content"]
+        if "RUNNING ROUND" not in text:
+            return base(messages)
+        if "current crop day 0 " in text:
+            return json.dumps({
+                "action": "observe", "day": 60,
+                "modalities": ["canopy_lai", "energy_cost_to_date"],
+                "units": ["c0l0"],
+                "current_best": {"day_temp": 24.0, "density": 3.0},
+            })
+        assert "canopy_lai" in text and "absolute day" in text
+        return json.dumps({
+            "action": "finish",
+            "current_best": {"day_temp": 24.0, "density": 3.0},
+        })
+
+    env = SlowLabEnv(TASKS["T3"], seed=0)
+    # Avoid disk work in this protocol test; oracle correctness is tested elsewhere.
+    env.truth._oracle = (np.full(env.task.d, 0.5), 0.0)
+    agent = WithinCycleLLMAgent(complete=visiting_completer)
+    agent.run(env)
+    measured = [event for event in env.history() if event.kind == "measured"]
+    assert len(measured) == 2 * env.task.n_rounds
+    assert all(event.day == 60 for event in measured)
+    assert len(env.observations()) > 0
+
+
+def test_scripted_arrays_and_component_reader_use_only_visible_history():
+    from slowlab.design import Design
+    env = SlowLabEnv(TASKS["T3"], seed=4)
+    treatments = {"a": {f.name: 0.5 for f in env.task.factors}}
+    allocation = {"a": [u.id for u in env.facility.units if u.chamber == 0][:2]}
+    design = Design(treatments, allocation, randomization_seed=1)
+    env.submit_design(design)
+    env.advance_to(100)
+    X, y = env.as_arrays()
+    Xc, fields = env.component_arrays()
+    assert X.shape == (0, env.task.d) and y.size == 0
+    assert Xc.shape == (0, env.task.d) and all(v.size == 0 for v in fields.values())
+    env.advance()
+    assert len(env.as_arrays()[1]) == len(env.observations())
