@@ -23,7 +23,7 @@ change this back.
     python scripts/rescore_cv.py --only Sanity
 """
 from __future__ import annotations
-import sys, json, glob, pathlib, re, argparse, pickle, time
+import sys, json, glob, pathlib, re, argparse, pickle, time, os
 import numpy as np
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -41,14 +41,19 @@ from eig_of_llm import designs_from
 CFGS = ("Sanity", "Screen", "Optimise", "Transfer")
 REFS = ("random_spread", "classical_doe", "gp_ucb_rep1", "gp_ucb_rep2")
 LLM_DIR = f"llm_env{slowlab.ENV_VERSION}"
+TRANSCRIPT_DIR = pathlib.Path(os.environ.get(
+    "SLOWLAB_TRANSCRIPT_DIR", ROOT / "results" / LLM_DIR))
+CACHE_DIR = pathlib.Path(os.environ.get(
+    "SLOWLAB_CACHE_DIR", ROOT / "results"))
 M = 320
 
 
 def atoms_at(cfg, M=M, nbins=12):
-    fp = ROOT / "results" / f"_atoms_{cfg}_M{M}_b{nbins}_env{slowlab.ENV_VERSION}.pkl"
+    fp = CACHE_DIR / f"_atoms_{cfg}_M{M}_b{nbins}_env{slowlab.ENV_VERSION}.pkl"
     if fp.exists():
         return pickle.loads(fp.read_bytes())
     a = build_atoms(TASKS[cfg], M=M, nbins=nbins, seed0=10_000)
+    fp.parent.mkdir(parents=True, exist_ok=True)
     fp.write_bytes(pickle.dumps(a))
     return a
 
@@ -56,18 +61,19 @@ def atoms_at(cfg, M=M, nbins=12):
 def collect(cfg, seeds):
     """All designs to be scored for one task: [(key, pts, blocks), ...].
 
-    Reference strategies are run once per seed; LLM transcripts are parsed
-    directly, with no model rerun.
+    Reference strategies are run once per seed. Transcript filenames identify
+    episodes, while designs are loaded only from matching completed events;
+    no model is rerun.
     """
     t = TASKS[cfg]
     out = []
-    srcs = sorted(glob.glob(str(ROOT / "results" / LLM_DIR /
-                                f"transcript_*_{cfg}_s*.json")))
+    srcs = sorted(glob.glob(str(
+        TRANSCRIPT_DIR / f"transcript_*_{cfg}_s*.json")))
     if not srcs:
         # A hard-coded old pattern once matched zero files silently (the old
         # directory name contained "@") -- the same class of bug as classical_doe's
         # screening round being silently rejected. Raise when nothing matches.
-        raise SystemExit(f"{cfg}: no transcript matched under results/{LLM_DIR}/")
+        raise SystemExit(f"{cfg}: no transcript matched under {TRANSCRIPT_DIR}/")
     for f in srcs:
         name = pathlib.Path(f).name
         seed = int(re.search(r"_s(\d+)\.json$", f).group(1))
@@ -86,7 +92,9 @@ def collect(cfg, seeds):
 
 
 def main(seeds=8, n_outer=300, only=None, out=None):
-    out = out or f"results/achievable_cv_env{slowlab.ENV_VERSION}_M{M}.json"
+    out = out or (
+        f"results/achievable_cv_completed_events_"
+        f"env{slowlab.ENV_VERSION}_M{M}.json")
     fp = ROOT / out
     res = json.loads(fp.read_text()) if fp.exists() else {}
 
@@ -95,6 +103,7 @@ def main(seeds=8, n_outer=300, only=None, out=None):
         env0 = SlowLabEnv(t, seed=0); sd = env0.truth.response_sd
         taus = (t.tau_chamber * sd, t.tau_loop * sd, t.tau_batch * sd)
         slot = res.setdefault(cfg, {"M": M, "n_outer": n_outer,
+                                    "design_source": "completed_events",
                                     "estimator": "cv", "prior": None,
                                     "raw": {}, "T": {}})
         items = collect(cfg, seeds)

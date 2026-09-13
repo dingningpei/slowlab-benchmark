@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""Extract the designs a model actually submitted from its transcripts and compute
-their EIG/H.
+"""Compute EIG/H from designs with accepted and completed execution events.
 
 This answers the fork that matters most:
   * low EIG with poor regret -- the design carried no information
@@ -15,7 +14,7 @@ alive, so this script:
 Call it repeatedly until it prints ALL DONE.
 """
 from __future__ import annotations
-import sys, json, glob, pathlib, re, argparse, pickle, time
+import sys, json, glob, pathlib, re, argparse, pickle, time, os
 import numpy as np
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -25,44 +24,40 @@ from slowlab import SlowLabEnv, TASKS
 # The LLM results directory carries the environment version, so transcripts from
 # an old environment cannot be picked up silently.
 LLM_DIR = f"llm_env{slowlab.ENV_VERSION}"
-from slowlab.llm import _extract_json
+TRANSCRIPT_DIR = pathlib.Path(os.environ.get(
+    "SLOWLAB_TRANSCRIPT_DIR", ROOT / "results" / LLM_DIR))
+CACHE_DIR = pathlib.Path(os.environ.get(
+    "SLOWLAB_CACHE_DIR", ROOT / "results"))
+from slowlab.eventlog import design_arrays_from_events
 from slowlab.eig import build_atoms, eig_of_design
 
 CFGS = ("Sanity", "Screen", "Optimise", "Transfer")
 
 
+def event_path_for(path):
+    """Resolve a transcript identity to its recovered event file.
+
+    ``SLOWLAB_EVENT_DIR`` may point at a private recovery directory. Missing
+    events are fatal so a scoring run cannot silently fall back to transcripts.
+    """
+    source = pathlib.Path(path)
+    if source.name.startswith("events_"):
+        candidate = source
+    elif source.name.startswith("transcript_"):
+        directory = pathlib.Path(os.environ.get("SLOWLAB_EVENT_DIR", source.parent))
+        candidate = directory / source.name.replace("transcript_", "events_", 1)
+    else:
+        raise ValueError(f"not a transcript or event path: {source}")
+    if not candidate.exists():
+        raise FileNotFoundError(
+            f"completed-event source missing: {candidate}; run "
+            "scripts/recover_execution_events.py first")
+    return candidate
+
+
 def designs_from(path, env):
-    """transcript -> [(pts, blocks)]. Skips the final recommendation and the no-experiment questions."""
-    names = [f.name for f in env.task.factors]
-    out = []
-    for turn in json.loads(pathlib.Path(path).read_text()):
-        try:
-            b = _extract_json(turn["assistant"])
-        except Exception:
-            continue
-        if "treatments" not in b or "allocation" not in b:
-            continue
-        pts, blk = [], []
-        for tid, uids in b["allocation"].items():
-            t = b["treatments"].get(tid)
-            if not t:
-                continue
-            v, ok = [], True
-            for j, n in enumerate(names):
-                f = env.task.factors[j]
-                try:
-                    v.append((float(t[n]) - f.low) / (f.high - f.low))
-                except Exception:
-                    ok = False; break
-            if not ok:
-                continue
-            for u in (uids if isinstance(uids, list) else [uids]):
-                m = re.match(r"c(\d+)l(\d+)", str(u))
-                if m and str(u) in env.facility._by_id:
-                    pts.append(v); blk.append(int(m.group(1)))
-        if pts:
-            out.append((np.clip(np.asarray(pts, float), 0, 1), np.asarray(blk, int)))
-    return out
+    """Return only accepted designs with a matching completed event."""
+    return design_arrays_from_events(event_path_for(path), env)
 
 
 def atoms_for(cfg, M, nbins):
@@ -74,7 +69,7 @@ def atoms_for(cfg, M, nbins):
     in results/ were silently reused.
     """
     import slowlab
-    cache = (ROOT / "results" /
+    cache = (CACHE_DIR /
              f"_atoms_{cfg}_M{M}_b{nbins}_env{slowlab.ENV_VERSION}.pkl")
     if cache.exists():
         return pickle.loads(cache.read_bytes())
@@ -82,11 +77,13 @@ def atoms_for(cfg, M, nbins):
     env0 = SlowLabEnv(t, seed=0)
     a = build_atoms(t, M=M, nbins=nbins,
                     plants_per_unit=env0.facility.plants_per_unit(3.25))
+    cache.parent.mkdir(parents=True, exist_ok=True)
     cache.write_bytes(pickle.dumps(a))
     return a
 
 
-def main(M=80, n_outer=40, nbins=12, out="results/eig_llm.json",
+def main(M=80, n_outer=40, nbins=12,
+         out="results/eig_llm_completed_events.json",
          only=None, models=None, budget=140.0):
     fp = ROOT / out
     res = json.loads(fp.read_text()) if fp.exists() else {}
@@ -96,12 +93,15 @@ def main(M=80, n_outer=40, nbins=12, out="results/eig_llm.json",
         t = TASKS[cfg]
         sd = SlowLabEnv(t, seed=0).truth.response_sd
         taus = (t.tau_chamber * sd, t.tau_loop * sd, t.tau_batch * sd)
-        slot = res.setdefault(cfg, {"H_prior": None, "raw": {}})
+        slot = res.setdefault(cfg, {"H_prior": None, "raw": {},
+                                    "design_source": "completed_events"})
         atoms = None
-        for f in sorted(glob.glob(str(ROOT / "results" / LLM_DIR /
-                                      f"transcript_*@{cfg}_{cfg}_s*.json"))):
+        for f in sorted(glob.glob(str(
+                TRANSCRIPT_DIR / f"transcript_*_{cfg}_s*.json"))):
             name = pathlib.Path(f).name
-            model = re.search(r"transcript_(.+?)@", name).group(1)
+            model = re.match(
+                rf"transcript_(.+)_{re.escape(cfg)}_s\d+\.json$", name
+            ).group(1)
             if models and model not in models:
                 continue
             if name in slot["raw"]:                    # already computed
@@ -125,7 +125,9 @@ def main(M=80, n_outer=40, nbins=12, out="results/eig_llm.json",
         H = slot.get("H_prior")
         agg = {}
         for name, vals in slot.get("raw", {}).items():
-            m = re.search(r"transcript_(.+?)@", name).group(1)
+            m = re.match(
+                rf"transcript_(.+)_{re.escape(cfg)}_s\d+\.json$", name
+            ).group(1)
             agg.setdefault(m, []).extend(vals)
         slot["models"] = {m: {"eig": float(np.mean(v)), "n": len(v),
                               "frac": float(np.mean(v) / H) if H else None}

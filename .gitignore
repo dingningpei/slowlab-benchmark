@@ -44,8 +44,10 @@ paper/*.toc
 # silently matched nothing once the directory was renamed to carry the
 # environment version. Keep the glob wide enough to survive that.
 results/**/transcript_*.json
+results/**/events_*.json
 results/**/*.pkl
 results/_oracle_cache/
 
 # ── Internal lab notebook, not part of the release ──────────────────────
 CHANGELOG_*.md
+/output/reviews/
