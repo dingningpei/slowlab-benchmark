@@ -188,13 +188,15 @@ class ManagedTomgro:
     """
 
     def __init__(self, seed: int = 0, econ: EconomicModel | None = None,
+                 params: TomgroParams | None = None,
                  factors: list[FactorSpec] | None = None,
                  cycle_days: float = DEFAULT_CYCLE_DAYS):
         self.seed = seed
         self.cycle_days = float(cycle_days)
         self.factors = factors or MANAGEMENT_FACTORS
         self.d = len(self.factors)
-        self.params = sample_instance_params(seed)
+        self.params = sample_instance_params(seed) if params is None else params
+        self._oracle_cacheable = params is None
         # A site is a place: climate and prices vary with the seed rather than
         # being shared by every site. Passing econ overrides this (used by scan
         # scripts and unit tests).
@@ -389,6 +391,10 @@ class ManagedTomgro:
 
     def oracle(self, n_sample: int = 6000, seed: int = 0):
         if self._oracle is None:
+            if not self._oracle_cacheable:
+                self._oracle = _maximise(
+                    self, self.d, np.random.default_rng(seed), n_sample=n_sample)
+                return self._oracle
             fp = _oracle_disk(_oracle_key(self.seed, self.factors,
                                           self.cycle_days,
                                           self.econ.energy_shock))

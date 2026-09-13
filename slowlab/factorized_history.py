@@ -4,6 +4,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 import numpy as np
 
+from .crop_posterior import (CROP_MODALITIES, CropPosterior,
+                             sample_crop_posterior)
 from .economic_posterior import (ECONOMIC_MODALITIES, EconomicPosterior,
                                  sample_economic_posterior)
 from .eig import AtomSet
@@ -22,6 +24,7 @@ class FactorizedHistoryPosterior:
     economic_marginal: np.ndarray
     records: tuple
     economic_posterior: EconomicPosterior
+    crop_posterior: CropPosterior
 
     @property
     def effective_sample_size(self):
@@ -37,9 +40,11 @@ class FactorizedHistoryPosterior:
 
 
 def factorized_history_posterior(
-        events, task, *, crop_seeds, n_economic_particles=96,
-        n_economic_product=32, economic_seed=0, likelihood_seed=0,
-        n_mc_plant=64, mcmc_steps=5):
+        events, task, *, n_crop_particles=96, n_crop_product=32,
+        crop_seed=0, crop_likelihood_seed=0,
+        n_economic_particles=96, n_economic_product=32,
+        economic_seed=0, likelihood_seed=0, n_mc_plant=64,
+        mcmc_steps=5):
     """Condition a crop-by-economics product approximation on visible history.
 
     Cost-only fields first update the continuous economic coordinates by SMC.
@@ -48,29 +53,35 @@ def factorized_history_posterior(
     physiology. Revenue can still couple crop yield and price in the second
     update, while canopy and harvested mass update crop physiology.
     """
-    crop_seeds = tuple(int(seed) for seed in crop_seeds)
-    if not crop_seeds:
-        raise ValueError("crop_seeds must not be empty")
+    if not 1 <= n_crop_product <= n_crop_particles:
+        raise ValueError("n_crop_product must be between 1 and n_crop_particles")
     if not 1 <= n_economic_product <= n_economic_particles:
         raise ValueError("n_economic_product must be between 1 and n_economic_particles")
     events = list(events)
     econ_post = sample_economic_posterior(
         events, task, n_particles=n_economic_particles, seed=economic_seed,
         mcmc_steps=mcmc_steps)
+    crop_post = sample_crop_posterior(
+        events, task, n_particles=n_crop_particles, seed=crop_seed,
+        n_mc_plant=n_mc_plant, likelihood_seed=crop_likelihood_seed,
+        mcmc_steps=mcmc_steps)
 
     rng = np.random.default_rng(economic_seed + 8_191)
-    chosen = rng.choice(
-        n_economic_particles, size=n_economic_product, replace=False,
+    chosen_economic = rng.choice(
+        n_economic_particles, size=n_economic_product, replace=True,
         p=econ_post.weights)
-    econ_models = [econ_post.models[index] for index in chosen]
-    econ_prior = econ_post.weights[chosen]
-    econ_prior = econ_prior / econ_prior.sum()
+    chosen_crop = rng.choice(
+        n_crop_particles, size=n_crop_product, replace=True,
+        p=crop_post.weights)
+    econ_models = [econ_post.models[index] for index in chosen_economic]
+    crop_params = [crop_post.parameters[index] for index in chosen_crop]
 
     worlds, crop_indices, economic_indices = [], [], []
-    for crop_index, crop_seed in enumerate(crop_seeds):
+    for crop_index, params in enumerate(crop_params):
         for economic_index, econ in enumerate(econ_models):
             worlds.append(ManagedTomgro(
-                seed=crop_seed, econ=econ, factors=task.factors,
+                seed=1_000_000 + crop_index, econ=econ, params=params,
+                factors=task.factors,
                 cycle_days=task.cycle_days))
             crop_indices.append(crop_index)
             economic_indices.append(economic_index)
@@ -85,10 +96,9 @@ def factorized_history_posterior(
         atoms, events, task, n_mc_plant=n_mc_plant, seed=likelihood_seed)
     retained = np.asarray([
         index for index, record in enumerate(records)
-        if record.modality not in ECONOMIC_MODALITIES], int)
-    prior = np.asarray([
-        econ_prior[economic_index] / len(crop_seeds)
-        for economic_index in economic_indices], float)
+        if (record.modality not in ECONOMIC_MODALITIES
+            and record.modality not in CROP_MODALITIES)], int)
+    prior = np.full(len(worlds), 1.0 / len(worlds))
     if len(retained):
         weights = posterior_weights_from_moments(
             y[retained], means[:, retained],
@@ -96,11 +106,11 @@ def factorized_history_posterior(
     else:
         weights = prior / prior.sum()
     crop_marginal = np.bincount(
-        crop_indices, weights=weights, minlength=len(crop_seeds))
+        crop_indices, weights=weights, minlength=n_crop_product)
     economic_marginal = np.bincount(
         economic_indices, weights=weights, minlength=n_economic_product)
     return FactorizedHistoryPosterior(
         atoms=atoms, weights=weights, crop_indices=crop_indices,
         economic_indices=economic_indices, crop_marginal=crop_marginal,
         economic_marginal=economic_marginal, records=tuple(records),
-        economic_posterior=econ_post)
+        economic_posterior=econ_post, crop_posterior=crop_post)

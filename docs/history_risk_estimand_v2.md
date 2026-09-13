@@ -84,12 +84,14 @@ economic update is calibrated separately before it is combined with crop
 particles; the existing full-risk result remains exploratory until that product
 posterior passes end-to-end calibration.
 
-The first crop-by-economics product implementation intentionally exposes both
-marginal ESS values. On the Sanity calibration, the continuous economic update
-passes while the discrete crop marginal still collapses after canopy, harvest
-and revenue evidence. The product posterior is therefore diagnostic scaffolding,
-not yet the reportable evaluator. A continuous crop update or a demonstrated
-held-out approximation bound is required next.
+The first crop-by-economics product implementation exposed both marginal ESS
+values and showed that a discrete crop marginal collapsed. Replacing it with
+the continuous crop update removes that collapse. Terminal revenue is then the
+only field used to couple independently updated crop and economic factors, so
+cost, canopy and harvested-mass records are each counted once. The current
+product still remains diagnostic scaffolding: independent runs pass joint and
+marginal ESS checks but miss the response-curve RMSE threshold, so a convergence
+and held-out approximation bound is still required.
 
 The crop prior is now also represented by its original ten continuous latent
 coordinates: four standard-normal vegetative perturbations and six bounded

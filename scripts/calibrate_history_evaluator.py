@@ -300,26 +300,44 @@ def factorized_product_calibration():
     """Locate residual collapse after cost evidence is factorised."""
     task, history = sanity_history()
     runs = []
+    curves = []
+    grid = np.linspace(0.0, 1.0, 501)[:, None]
     for seed in (0, 1):
         posterior = factorized_history_posterior(
-            history, task, crop_seeds=range(10_000, 10_008),
+            history, task, n_crop_particles=96, n_crop_product=16,
+            crop_seed=seed, crop_likelihood_seed=991,
             n_economic_particles=96, n_economic_product=16,
             economic_seed=seed, likelihood_seed=20 + seed,
             n_mc_plant=16, mcmc_steps=4)
+        curve = posterior.weights @ posterior.atoms.mean_response(grid)
+        curves.append(curve)
         runs.append({
             "seed": seed,
             "joint_ess": posterior.effective_sample_size,
             "crop_marginal_ess": posterior.crop_effective_sample_size,
             "economic_marginal_ess": posterior.economic_effective_sample_size,
             "max_crop_weight": float(posterior.crop_marginal.max()),
+            "bayes_action": float(grid[int(np.argmax(curve)), 0]),
         })
-    passed = all(run["crop_marginal_ess"] >= 2.0 for run in runs)
+    curve_rmse = float(np.sqrt(np.mean((curves[0] - curves[1]) ** 2)))
+    passed = (all(run["crop_marginal_ess"] >= 2.0
+                  and run["economic_marginal_ess"] >= 2.0
+                  and run["joint_ess"] >= 4.0 for run in runs)
+              and curve_rmse <= 0.005)
+    flags = []
+    if any(run["crop_marginal_ess"] < 2.0 for run in runs):
+        flags.append("crop_particle_collapse")
+    if any(run["economic_marginal_ess"] < 2.0 for run in runs):
+        flags.append("economic_particle_collapse")
+    if curve_rmse > 0.005:
+        flags.append("between_run_response_instability")
     return {
         "status": "passed" if passed else "failed",
         "runs": runs,
-        "failure_flags": ([] if passed else ["crop_particle_collapse"]),
-        "note": ("Cost evidence is updated continuously before the product. "
-                 "Failure here identifies the remaining discrete crop-prior approximation."),
+        "between_run_response_curve_rmse": curve_rmse,
+        "failure_flags": flags,
+        "note": ("Cost and crop-only evidence are updated continuously before "
+                 "terminal revenue couples the two posterior factors."),
     }
 
 

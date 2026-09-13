@@ -25,17 +25,17 @@ def _history(cost_only):
 def test_cost_evidence_preserves_independent_crop_prior():
     task, history = _history(cost_only=True)
     posterior = factorized_history_posterior(
-        history, task, crop_seeds=(100, 101, 102),
+        history, task, n_crop_particles=24, n_crop_product=8,
         n_economic_particles=32, n_economic_product=8,
         n_mc_plant=4, mcmc_steps=2)
     np.testing.assert_allclose(
-        posterior.crop_marginal, np.full(3, 1 / 3), atol=1e-12)
+        posterior.crop_marginal, np.full(8, 1 / 8), atol=1e-12)
 
 
 def test_non_cost_records_update_product_with_finite_normalised_weights():
     task, history = _history(cost_only=False)
     posterior = factorized_history_posterior(
-        history, task, crop_seeds=(100, 101, 102),
+        history, task, n_crop_particles=24, n_crop_product=8,
         n_economic_particles=32, n_economic_product=8,
         n_mc_plant=4, mcmc_steps=2)
     assert np.isfinite(posterior.weights).all()
