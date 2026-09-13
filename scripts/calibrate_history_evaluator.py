@@ -15,6 +15,8 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from slowlab.design import Design
+from slowlab.crop_posterior import (crop_history_moments,
+                                    sample_crop_posterior)
 from slowlab.economic_posterior import (economic_history_moments,
                                         sample_economic_posterior)
 from slowlab.eig import AtomSet
@@ -251,6 +253,49 @@ def economic_smc_calibration(n_particles=128):
     }
 
 
+def crop_smc_calibration(n_particles=128):
+    """Check continuous crop updating on three independent SMC runs."""
+    task, history = sanity_history()
+    runs = []
+    posterior_means = []
+    for seed in (0, 1, 2):
+        posterior = sample_crop_posterior(
+            history, task, n_particles=n_particles, seed=seed,
+            n_mc_plant=16, likelihood_seed=991, mcmc_steps=5)
+        y, means, covariances, _ = crop_history_moments(
+            posterior.latent_coordinates, history, task,
+            n_mc_plant=16, seed=991)
+        predictive = posterior.weights @ means
+        predictive_variance = (posterior.weights @ (
+            np.diagonal(covariances, axis1=1, axis2=2) + means ** 2)
+            - predictive ** 2)
+        standardised = ((y - predictive)
+                        / np.sqrt(np.maximum(predictive_variance, 1e-20)))
+        posterior_means.append(predictive)
+        runs.append({
+            "seed": seed, "n_particles": n_particles,
+            "n_stages": posterior.n_stages,
+            "final_stage_acceptance": posterior.acceptance_rates[-1],
+            "n_unique_particles": int(np.unique(
+                np.round(posterior.latent_coordinates, 8), axis=0).shape[0]),
+            "max_absolute_standardised_residual": float(
+                np.max(np.abs(standardised))),
+        })
+    posterior_means = np.asarray(posterior_means)
+    between_run_max_range = float(np.max(np.ptp(posterior_means, axis=0)))
+    passed = (all(run["n_unique_particles"] >= n_particles // 2
+                  and run["max_absolute_standardised_residual"] <= 3.0
+                  for run in runs)
+              and between_run_max_range <= 0.25)
+    return {
+        "status": "passed" if passed else "failed",
+        "runs": runs,
+        "between_run_max_predictive_range": between_run_max_range,
+        "note": ("This calibrates canopy and harvested-mass updating. Revenue "
+                 "coupling is tested in the product posterior separately."),
+    }
+
+
 def factorized_product_calibration():
     """Locate residual collapse after cost evidence is factorised."""
     task, history = sanity_history()
@@ -285,6 +330,7 @@ def main():
     args = parser.parse_args()
     result = {"toy": gaussian_toy(), "sanity": sanity_calibration(args.atoms),
               "economic_smc": economic_smc_calibration(),
+              "crop_smc": crop_smc_calibration(),
               "factorized_product": factorized_product_calibration()}
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")

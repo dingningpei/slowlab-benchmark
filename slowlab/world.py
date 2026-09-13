@@ -92,22 +92,45 @@ _FRUIT_SPREAD = {
 }
 # Vegetative parameters are stable across sites, so only perturb them slightly (VC14's +/-10%)
 _VEG_STABLE = ("beta", "Nb", "delta", "Nm")
+CROP_LATENT_DIMENSION = len(_VEG_STABLE) + len(_FRUIT_SPREAD) + 1
+
+
+def crop_params_from_latent(latent, veg_cv: float = 0.06) -> TomgroParams:
+    """Map four standard normals and six unit uniforms to one crop site."""
+    latent = np.asarray(latent, float).ravel()
+    if len(latent) != CROP_LATENT_DIMENSION:
+        raise ValueError(
+            f"crop latent coordinate must contain {CROP_LATENT_DIMENSION} values")
+    uniforms = latent[len(_VEG_STABLE):]
+    if np.any((uniforms < 0.0) | (uniforms > 1.0)):
+        raise ValueError("the final six crop coordinates must lie in [0, 1]")
+    base = TomgroParams.from_j99("Gainesville")
+    values = dict(base.values)
+    for key, z in zip(_VEG_STABLE, latent[:len(_VEG_STABLE)]):
+        if key in values:
+            values[key] = float(values[key] * np.exp(float(z) * veg_cv))
+    offset = len(_VEG_STABLE)
+    for index, (key, (lo, hi)) in enumerate(_FRUIT_SPREAD.items()):
+        values[key] = float(lo + uniforms[index] * (hi - lo))
+    lo, hi = TP.VC14_NOMINAL["E"][1:3]
+    values["E"] = float(lo + uniforms[-1] * (hi - lo))
+    return TomgroParams(
+        values=values, intervals=TP.perturbation_intervals("VC14"),
+        provenance="j99", site="continuous-posterior",
+        source=("parameter distribution from the J99 three-site spread plus "
+                "VC14 +/-10% intervals"))
 
 
 def sample_instance_params(seed: int, veg_cv: float = 0.06) -> TomgroParams:
     """Draw one site: vegetative parameters perturbed slightly, fruit parameters drawn across the between-site spread."""
     rng = np.random.default_rng(20_000 + seed)
-    base = TomgroParams.from_j99("Gainesville")
-    v = dict(base.values)
-    for k in _VEG_STABLE:
-        if k in v:
-            v[k] = float(v[k] * np.exp(rng.normal(0, veg_cv)))
-    for k, (lo, hi) in _FRUIT_SPREAD.items():
-        v[k] = float(rng.uniform(lo, hi))
-    v["E"] = float(rng.uniform(*TP.VC14_NOMINAL["E"][1:3]))
-    return TomgroParams(values=v, intervals=TP.perturbation_intervals("VC14"),
-                        provenance="j99", site=f"sampled#{seed}",
-                        source="parameter distribution from the J99 three-site spread plus VC14 +/-10% intervals")
+    latent = np.concatenate([
+        rng.normal(size=len(_VEG_STABLE)),
+        rng.random(len(_FRUIT_SPREAD) + 1),
+    ])
+    params = crop_params_from_latent(latent, veg_cv=veg_cv)
+    params.site = f"sampled#{seed}"
+    return params
 
 
 

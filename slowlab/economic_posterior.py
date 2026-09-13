@@ -163,6 +163,10 @@ def sample_economic_posterior(events, task, *, n_particles=256, seed=0,
         z = np.log(weights) + delta * loglik
         z -= z.max(); weights = np.exp(z); weights /= weights.sum()
 
+        stages += 1
+        if beta >= 1.0 - 1e-12:
+            break
+
         indices = _systematic_resample(weights, rng)
         particles, loglik = particles[indices], loglik[indices]
         weights.fill(1.0 / n_particles)
@@ -180,7 +184,6 @@ def sample_economic_posterior(events, task, *, n_particles=256, seed=0,
         elif rate > 0.4:
             step *= 1.35
         step = float(np.clip(step, 1e-5, 0.35))
-        stages += 1
         if stages >= max_stages:
             raise RuntimeError(f"economic posterior SMC did not reach beta=1 after {max_stages} stages")
 

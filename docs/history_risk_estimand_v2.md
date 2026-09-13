@@ -91,6 +91,14 @@ and revenue evidence. The product posterior is therefore diagnostic scaffolding,
 not yet the reportable evaluator. A continuous crop update or a demonstrated
 held-out approximation bound is required next.
 
+The crop prior is now also represented by its original ten continuous latent
+coordinates: four standard-normal vegetative perturbations and six bounded
+fruit/efficiency coordinates. Its annealed SMC likelihood batches all proposed
+sites through TOMGRO and uses common standardised plant draws, so identical
+parameters receive identical likelihoods. This crop-only update is calibrated
+on canopy and harvested-mass records before revenue is allowed to couple it to
+the economic posterior.
+
 The old `R*(D)` remains a prior design-geometry diagnostic. It must not be called
 `b(H)` because it does not condition on the realised full history, and the old
 efficiency ratio must not be described as the fraction of acquired information
