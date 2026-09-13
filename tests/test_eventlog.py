@@ -7,6 +7,7 @@ from slowlab import TASKS
 from slowlab.eventlog import (
     completed_design_payloads,
     design_arrays_from_events,
+    design_arrays_from_environment,
     executed_designs,
     reconcile_format_failures,
     recover_transcript,
@@ -108,3 +109,21 @@ def test_event_loader_excludes_accepted_design_without_completion(tmp_path):
         TASKS["Sanity"], seed=0))
     assert len(designs) == 1
     assert designs[0][0].shape == (2, 1)
+
+
+def test_scripted_design_loader_requires_environment_completion():
+    import slowlab
+    from slowlab.design import Design
+
+    env = slowlab.SlowLabEnv(TASKS["Sanity"], seed=0)
+    design = Design(
+        treatments={"A": {"day_temp": 0.5}},
+        allocation={"A": ["c0l0"]},
+    )
+    assert isinstance(env.submit_design(design), int)
+    assert design_arrays_from_environment(env) == []
+
+    env.advance()
+    arrays = design_arrays_from_environment(env)
+    assert len(arrays) == 1
+    assert arrays[0][0].shape == (1, 1)

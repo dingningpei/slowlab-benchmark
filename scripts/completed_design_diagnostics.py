@@ -21,30 +21,25 @@ from slowlab.llm import _extract_json
 TASK_PATTERN = "Sanity|Screen|Optimise|Transfer"
 
 
-def compute(event_dir: pathlib.Path) -> dict:
-    raw = defaultdict(lambda: defaultdict(list))
-    for path in sorted(event_dir.glob("events_*.json")):
-        match = re.fullmatch(
-            rf"events_(.+)_({TASK_PATTERN})_s(\d+)\.json", path.name)
-        if not match:
-            continue
-        arm, task_name, seed = match.groups()
-        task = TASKS[task_name]
-        env = SlowLabEnv(task, seed=int(seed))
-        for points, _blocks in design_arrays_from_events(path, env):
-            unique = np.unique(np.round(points, 12), axis=0)
-            rank = np.linalg.matrix_rank(
-                np.column_stack([np.ones(len(unique)), unique]))
-            raw[(arm, task_name)]["distinct"].append(len(unique))
-            raw[(arm, task_name)]["units"].append(len(points))
-            raw[(arm, task_name)]["rank_deficient"].append(
-                rank < task.d + 1)
-            raw[(arm, task_name)]["insufficient_distinct"].append(
-                len(unique) < task.d + 1)
-            raw[(arm, task_name)]["replication_fraction"].append(
-                1 - len(unique) / len(points))
-            raw[(arm, task_name)]["width"].append(
-                np.ptp(unique, axis=0).tolist())
+def _add(raw, arm, task_name, arrays):
+    task = TASKS[task_name]
+    for points, _blocks in arrays:
+        unique = np.unique(np.round(points, 12), axis=0)
+        rank = np.linalg.matrix_rank(
+            np.column_stack([np.ones(len(unique)), unique]))
+        raw[(arm, task_name)]["distinct"].append(len(unique))
+        raw[(arm, task_name)]["units"].append(len(points))
+        raw[(arm, task_name)]["rank_deficient"].append(
+            rank < task.d + 1)
+        raw[(arm, task_name)]["insufficient_distinct"].append(
+            len(unique) < task.d + 1)
+        raw[(arm, task_name)]["replication_fraction"].append(
+            1 - len(unique) / len(points))
+        raw[(arm, task_name)]["width"].append(
+            np.ptp(unique, axis=0).tolist())
+
+
+def _rows(raw):
     rows = []
     for (arm, task_name), values in sorted(raw.items()):
         width = np.asarray(values["width"], float)
@@ -60,7 +55,20 @@ def compute(event_dir: pathlib.Path) -> dict:
                 np.median(values["replication_fraction"])),
             "mean_normalized_width": width.mean(axis=0).tolist(),
         })
-    return {"design_source": "accepted_and_completed_events", "rows": rows}
+    return rows
+
+
+def compute(event_dir: pathlib.Path) -> dict:
+    raw = defaultdict(lambda: defaultdict(list))
+    for path in sorted(event_dir.glob("events_*.json")):
+        match = re.fullmatch(
+            rf"events_(.+)_({TASK_PATTERN})_s(\d+)\.json", path.name)
+        if not match:
+            continue
+        arm, task_name, seed = match.groups()
+        env = SlowLabEnv(TASKS[task_name], seed=int(seed))
+        _add(raw, arm, task_name, design_arrays_from_events(path, env))
+    return {"design_source": "accepted_and_completed_events", "rows": _rows(raw)}
 
 
 def legacy_arrays(path: pathlib.Path, env):
@@ -96,6 +104,20 @@ def legacy_arrays(path: pathlib.Path, env):
     return out
 
 
+def compute_legacy(transcript_dir: pathlib.Path) -> list[dict]:
+    """Reproduce v1 geometry solely to quantify the correction."""
+    raw = defaultdict(lambda: defaultdict(list))
+    for path in sorted(transcript_dir.glob("transcript_*.json")):
+        match = re.fullmatch(
+            rf"transcript_(.+)_({TASK_PATTERN})_s(\d+)\.json", path.name)
+        if not match:
+            continue
+        arm, task_name, seed = match.groups()
+        env = SlowLabEnv(TASKS[task_name], seed=int(seed))
+        _add(raw, arm, task_name, legacy_arrays(path, env))
+    return _rows(raw)
+
+
 def markdown(report: dict) -> str:
     lines = [
         "# Completed-event design diagnostics",
@@ -121,16 +143,9 @@ def main() -> None:
     args = parser.parse_args()
     report = compute(args.events)
     if args.transcripts:
-        old_count = 0
-        for path in sorted(args.transcripts.glob("transcript_*.json")):
-            match = re.fullmatch(
-                rf"transcript_(.+)_({TASK_PATTERN})_s(\d+)\.json", path.name)
-            if not match:
-                continue
-            _arm, task_name, seed = match.groups()
-            old_count += len(legacy_arrays(
-                path, SlowLabEnv(TASKS[task_name], seed=int(seed))))
-        report["legacy_transcript_design_count"] = old_count
+        report["legacy_rows"] = compute_legacy(args.transcripts)
+        report["legacy_transcript_design_count"] = sum(
+            row["n_designs"] for row in report["legacy_rows"])
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(report, indent=2, allow_nan=False))
     args.out.with_suffix(".md").write_text(markdown(report))

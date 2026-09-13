@@ -18,7 +18,11 @@ sys.path.insert(0, str(ROOT))
 
 import slowlab
 from slowlab import TASKS
-from slowlab.eventlog import reconcile_format_failures, recover_transcript
+from slowlab.eventlog import (
+    EVENT_SCHEMA_VERSION,
+    reconcile_format_failures,
+    recover_transcript,
+)
 
 
 def _read_json(path: pathlib.Path):
@@ -61,7 +65,8 @@ def recover_directory(source: pathlib.Path, output: pathlib.Path) -> dict:
                 continue
 
             result = recover_transcript(
-                TASKS[task_name], seed, _read_json(transcript_file))
+                TASKS[task_name], seed, _read_json(transcript_file),
+                model=tag, episode_id=f"{tag}/{task_name}/s{seed}")
             inferred_parse_failures += reconcile_format_failures(
                 result, int(episode.get("format_failures", 0)))
             recovered += 1
@@ -98,7 +103,7 @@ def recover_directory(source: pathlib.Path, output: pathlib.Path) -> dict:
                     "episode": f"{tag}/{task_name}/s{seed}", "problems": bad})
 
     summary = {
-        "event_schema_version": "1.0",
+        "event_schema_version": EVENT_SCHEMA_VERSION,
         "environment_version": slowlab.ENV_VERSION,
         "source": str(source.resolve()),
         "output": str(output.resolve()),

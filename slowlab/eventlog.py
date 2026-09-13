@@ -20,16 +20,23 @@ from .env import Observation, SlowLabEnv
 from .llm import _extract_json, _to_design, _to_point
 
 
-EVENT_SCHEMA_VERSION = "1.0"
+EVENT_SCHEMA_VERSION = "1.1"
 
 
 @dataclass(frozen=True)
 class ExecutionEvent:
     """One ordered fact in an episode's execution history."""
 
+    episode_id: str
+    task: str
+    model: str
+    site_seed: int
     seq: int
     kind: str
     round: int
+    timestamp: str | None = None
+    status: str | None = None
+    reason: str | None = None
     attempt: int | None = None
     design_id: int | None = None
     payload: dict[str, Any] = field(default_factory=dict)
@@ -41,6 +48,8 @@ class ExecutionEvent:
 @dataclass
 class RecoveryResult:
     schema_version: str
+    episode_id: str
+    model: str
     task: str
     seed: int
     events: list[ExecutionEvent]
@@ -50,6 +59,8 @@ class RecoveryResult:
     def to_dict(self) -> dict[str, Any]:
         return {
             "schema_version": self.schema_version,
+            "episode_id": self.episode_id,
+            "model": self.model,
             "task": self.task,
             "seed": self.seed,
             "counts": dict(self.counts),
@@ -106,6 +117,8 @@ def recover_transcript(
     transcript: Iterable[dict[str, str]],
     *,
     max_retries: int = 3,
+    model: str = "unknown",
+    episode_id: str | None = None,
 ) -> RecoveryResult:
     """Replay one v1 transcript into explicit execution events.
 
@@ -121,14 +134,18 @@ def recover_transcript(
     attempts = 0
     best = np.full(task.d, 0.5)
     stopped = False
+    episode_id = episode_id or f"{model}/{task.name}/s{seed}"
 
     def emit(kind: str, *, attempt=None, design_id=None, payload=None,
              round_index=None) -> None:
+        value = payload or {}
         counts[kind] = counts.get(kind, 0) + 1
         events.append(ExecutionEvent(
-            seq=len(events), kind=kind,
+            episode_id=episode_id, task=str(task.name), model=str(model),
+            site_seed=int(seed), seq=len(events), kind=kind,
             round=int(env.round if round_index is None else round_index), attempt=attempt,
-            design_id=design_id, payload=payload or {}))
+            design_id=design_id, status=kind,
+            reason=value.get("reason") or value.get("detail"), payload=value))
 
     def fail_attempt(kind: str, detail: str, raw_reply: str) -> None:
         nonlocal attempts
@@ -231,6 +248,7 @@ def recover_transcript(
 
     return RecoveryResult(
         schema_version=EVENT_SCHEMA_VERSION,
+        episode_id=episode_id, model=str(model),
         task=str(task.name), seed=int(seed), events=events,
         counts=counts, errors=errors)
 
@@ -275,9 +293,15 @@ def design_arrays_from_events(path: str | pathlib.Path, env):
     """Load ``(points, chamber_blocks)`` from completed execution events only."""
 
     document = json.loads(pathlib.Path(path).read_text())
+    return design_arrays_from_payloads(completed_design_payloads(document), env)
+
+
+def design_arrays_from_payloads(designs: Iterable[dict[str, Any]], env):
+    """Convert normalized completed-design payloads into scoring arrays."""
+
     names = [factor.name for factor in env.task.factors]
     out = []
-    for design in completed_design_payloads(document):
+    for design in designs:
         points: list[list[float]] = []
         blocks: list[int] = []
         for treatment_id, units in design["allocation"].items():
@@ -295,6 +319,22 @@ def design_arrays_from_events(path: str | pathlib.Path, env):
     return out
 
 
+def design_arrays_from_environment(env):
+    """Use the same completed-design contract for scripted agents.
+
+    A submitted design is included only when the environment has produced at
+    least one observation carrying its design id. This excludes pending designs
+    and makes reference-policy scoring consistent with recovered LLM events.
+    """
+
+    completed = {int(observation.design_id) for observation in env.observations()}
+    payloads = [
+        _design_payload(design) for design_id, design in enumerate(env._designs)
+        if design_id in completed
+    ]
+    return design_arrays_from_payloads(payloads, env)
+
+
 def reconcile_format_failures(result: RecoveryResult, expected: int) -> int:
     """Record v1 failures counted in a summary but absent from its transcript.
 
@@ -309,9 +349,15 @@ def reconcile_format_failures(result: RecoveryResult, expected: int) -> int:
     last_round = result.events[-1].round if result.events else 0
     for _ in range(missing):
         result.events.append(ExecutionEvent(
+            episode_id=result.episode_id,
+            task=result.task,
+            model=result.model,
+            site_seed=result.seed,
             seq=len(result.events),
             kind="parse_failed",
             round=last_round,
+            status="parse_failed",
+            reason="failure counted by v1; assistant response was not persisted",
             payload={
                 "inferred": True,
                 "source": "episode_summary.format_failures",

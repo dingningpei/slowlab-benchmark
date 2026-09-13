@@ -90,13 +90,16 @@ def main() -> None:
     parser.add_argument("--results", required=True, type=pathlib.Path)
     parser.add_argument("--out", required=True, type=pathlib.Path)
     parser.add_argument("--source-worktree", required=True, type=pathlib.Path)
+    parser.add_argument("--commit", required=True,
+                        help="frozen v1 commit or full revision")
     args = parser.parse_args()
     llm = args.results / "llm_env1.0.0"
     key_files = [
         ROOT / "slowlab/env.py", ROOT / "slowlab/tasks.py",
         ROOT / "slowlab/llm.py", ROOT / "slowlab/eig.py",
         ROOT / "slowlab/achievable.py", ROOT / "scripts/rescore_cv.py",
-        ROOT / "scripts/make_llm_tables.py", ROOT / "paper/main.tex",
+        ROOT / "scripts/make_llm_tables.py",
+        ROOT / "scripts/make_fig_efficiency.py", ROOT / "paper/main.tex",
     ]
     versions = {}
     for package in ("numpy", "scipy", "pytest", "matplotlib"):
@@ -104,7 +107,7 @@ def main() -> None:
             versions[package] = importlib.metadata.version(package)
         except importlib.metadata.PackageNotFoundError:
             versions[package] = None
-    commit = git("rev-parse", "HEAD")
+    commit = git("rev-parse", args.commit)
     source_diff = git("diff", "--binary", cwd=args.source_worktree)
     snapshot = {
         "git_commit": commit,
@@ -129,6 +132,10 @@ def main() -> None:
         "episode_summaries": {
             "count": len(list(llm.glob("episodes_*.json"))),
             "tree_sha256": tree_digest(list(llm.glob("episodes_*.json"))),
+        },
+        "atom_sets": {
+            "count": len(list(args.results.glob("_atoms_*.pkl"))),
+            "tree_sha256": tree_digest(list(args.results.glob("_atoms_*.pkl"))),
         },
         "immutability_rule": "Do not overwrite artifacts bearing env1.0.0.",
     }

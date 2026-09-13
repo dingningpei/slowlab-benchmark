@@ -15,6 +15,7 @@ dependencies = ["numpy>=1.24"]
 figures = ["matplotlib>=3.7"]
 llm = ["certifi"]        # needed by python.org builds of Python on macOS to verify TLS certificates
 dev = ["pytest>=7.0"]
+analysis = ["scipy>=1.10", "matplotlib>=3.7"]
 
 [project.scripts]
 slowlab-run = "scripts.run_baselines:main"

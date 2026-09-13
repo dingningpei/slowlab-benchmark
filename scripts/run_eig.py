@@ -23,6 +23,7 @@ sys.path.insert(0, str(ROOT))
 from slowlab import SlowLabEnv, TASKS
 from slowlab.registry import make_agent
 from slowlab.eig import build_atoms, eig_of_design
+from slowlab.eventlog import design_arrays_from_environment
 sys.path.insert(0, str(ROOT / "scripts"))
 from eig_of_llm import atoms_for   # shares the atom set with the model side; M must match
 
@@ -31,18 +32,7 @@ CFGS = ("Sanity", "Screen", "Optimise", "Transfer")
 
 
 def designs_of(env):
-    names = [f.name for f in env.task.factors]
-    out = []
-    for d in env._designs:
-        pts, blk = [], []
-        for tid, uids in d.allocation.items():
-            v = [d.treatments[tid][n] for n in names]
-            for u in uids:
-                if u in env.facility._by_id:
-                    pts.append(v); blk.append(env.facility.get(u).chamber)
-        if pts:
-            out.append((np.asarray(pts, float), np.asarray(blk, int)))
-    return out
+    return design_arrays_from_environment(env)
 
 
 def main(seeds=8, M=80, n_outer=40, nbins=12, out="results/eig.json", cfgs=None):

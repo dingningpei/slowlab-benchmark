@@ -1,4 +1,5 @@
 numpy>=1.24
+scipy>=1.10        # statistical analyses and corrected paired comparisons
 matplotlib>=3.7    # figures
 pytest>=7.0        # tests
 certifi            # TLS certificates for python.org builds of Python on macOS (optional, but safer)
