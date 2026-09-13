@@ -19,6 +19,7 @@ from slowlab.economic_posterior import (economic_history_moments,
                                         sample_economic_posterior)
 from slowlab.eig import AtomSet
 from slowlab.env import SlowLabEnv
+from slowlab.factorized_history import factorized_history_posterior
 from slowlab.history_likelihood import (atom_history_moments,
                                         posterior_weights_from_moments,
                                         posterior_weights_full_history)
@@ -250,13 +251,41 @@ def economic_smc_calibration(n_particles=128):
     }
 
 
+def factorized_product_calibration():
+    """Locate residual collapse after cost evidence is factorised."""
+    task, history = sanity_history()
+    runs = []
+    for seed in (0, 1):
+        posterior = factorized_history_posterior(
+            history, task, crop_seeds=range(10_000, 10_008),
+            n_economic_particles=96, n_economic_product=16,
+            economic_seed=seed, likelihood_seed=20 + seed,
+            n_mc_plant=16, mcmc_steps=4)
+        runs.append({
+            "seed": seed,
+            "joint_ess": posterior.effective_sample_size,
+            "crop_marginal_ess": posterior.crop_effective_sample_size,
+            "economic_marginal_ess": posterior.economic_effective_sample_size,
+            "max_crop_weight": float(posterior.crop_marginal.max()),
+        })
+    passed = all(run["crop_marginal_ess"] >= 2.0 for run in runs)
+    return {
+        "status": "passed" if passed else "failed",
+        "runs": runs,
+        "failure_flags": ([] if passed else ["crop_particle_collapse"]),
+        "note": ("Cost evidence is updated continuously before the product. "
+                 "Failure here identifies the remaining discrete crop-prior approximation."),
+    }
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=pathlib.Path, required=True)
     parser.add_argument("--atoms", type=int, default=16)
     args = parser.parse_args()
     result = {"toy": gaussian_toy(), "sanity": sanity_calibration(args.atoms),
-              "economic_smc": economic_smc_calibration()}
+              "economic_smc": economic_smc_calibration(),
+              "factorized_product": factorized_product_calibration()}
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps(result, indent=2))

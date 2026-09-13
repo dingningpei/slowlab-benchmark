@@ -518,7 +518,7 @@ class SlowLabEnv:
             pred = d.predictions.get(tid)
             if pred is not None:
                 lo, _pt, hi = pred
-                self.calib.add(val, float(lo), float(hi), rnd=self.round)
+                self.calib.add(o.value, float(lo), float(hi), rnd=self.round)
         self.round += 1
         del self._pending
         del self._active

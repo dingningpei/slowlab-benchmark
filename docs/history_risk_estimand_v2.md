@@ -84,6 +84,13 @@ economic update is calibrated separately before it is combined with crop
 particles; the existing full-risk result remains exploratory until that product
 posterior passes end-to-end calibration.
 
+The first crop-by-economics product implementation intentionally exposes both
+marginal ESS values. On the Sanity calibration, the continuous economic update
+passes while the discrete crop marginal still collapses after canopy, harvest
+and revenue evidence. The product posterior is therefore diagnostic scaffolding,
+not yet the reportable evaluator. A continuous crop update or a demonstrated
+held-out approximation bound is required next.
+
 The old `R*(D)` remains a prior design-geometry diagnostic. It must not be called
 `b(H)` because it does not condition on the realised full history, and the old
 efficiency ratio must not be described as the fraction of acquired information
