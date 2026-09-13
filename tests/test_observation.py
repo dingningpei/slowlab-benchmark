@@ -137,6 +137,12 @@ def test_completed_fields_are_algebraically_consistent():
             observation.energy_cost_rate + observation.other_cost_rate)
         assert observation.value == pytest.approx(
             observation.rev_rate - observation.energy_cost_rate - observation.other_cost_rate)
+        assert observation.rev_rate == round(
+            observation.rev_rate, env.TERMINAL_RATE_DECIMALS)
+        assert observation.energy_cost_rate == round(
+            observation.energy_cost_rate, env.TERMINAL_RATE_DECIMALS)
+        assert observation.other_cost_rate == round(
+            observation.other_cost_rate, env.TERMINAL_RATE_DECIMALS)
 
 
 def test_common_history_is_ordered_copied_and_censored_at_current_time():

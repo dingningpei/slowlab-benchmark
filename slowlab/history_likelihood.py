@@ -157,6 +157,15 @@ def atom_history_moments(atoms, events, task, *, n_mc_plant=64, seed=0):
                     S[i, j] += (task.tau_loop * scale) ** 2
                 if ri.design_id == rj.design_id:
                     S[i, j] += (task.tau_batch * scale) ** 2
+        # Completed rates are displayed accounting records. Treat their last
+        # reported digit as an interval rather than an exact equality on the
+        # continuous site parameters. Margin is omitted from the independent
+        # basis, so the three retained components receive independent rounding
+        # variances here.
+        terminal_resolution = 10.0 ** (-SlowLabEnv.TERMINAL_RATE_DECIMALS)
+        for i, record in enumerate(records):
+            if record.kind == "completed":
+                S[i, i] += terminal_resolution ** 2 / 12.0
         # Exact ledger fields can make S singular. Jitter is numerical only and
         # far below displayed precision; duplicate exact readings were removed.
         covariances[m] = S + 1e-12 * np.eye(n)

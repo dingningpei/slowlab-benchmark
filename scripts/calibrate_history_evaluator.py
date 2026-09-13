@@ -15,6 +15,8 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from slowlab.design import Design
+from slowlab.economic_posterior import (economic_history_moments,
+                                        sample_economic_posterior)
 from slowlab.eig import AtomSet
 from slowlab.env import SlowLabEnv
 from slowlab.history_likelihood import (atom_history_moments,
@@ -200,12 +202,61 @@ def sanity_calibration(M=16):
     return result
 
 
+def economic_smc_calibration(n_particles=128):
+    """Check the continuous economic update on independent SMC runs."""
+    task, history = sanity_history()
+    runs = []
+    posterior_means = []
+    for seed in (0, 1, 2):
+        posterior = sample_economic_posterior(
+            history, task, n_particles=n_particles, seed=seed, mcmc_steps=5)
+        y, means, covariances, records = economic_history_moments(
+            posterior.unit_coordinates, history, task)
+        predictive = posterior.weights @ means
+        predictive_variance = (posterior.weights @ (
+            np.diagonal(covariances, axis1=1, axis2=2) + means ** 2)
+            - predictive ** 2)
+        standardised_residual = ((y - predictive)
+                                 / np.sqrt(np.maximum(predictive_variance, 1e-20)))
+        terminal = np.asarray([record.kind == "completed" for record in records])
+        posterior_means.append(predictive)
+        runs.append({
+            "seed": seed, "n_particles": n_particles,
+            "n_stages": posterior.n_stages,
+            "min_acceptance": float(min(posterior.acceptance_rates)),
+            "median_acceptance": float(np.median(posterior.acceptance_rates)),
+            "n_unique_particles": int(np.unique(
+                np.round(posterior.unit_coordinates, 8), axis=0).shape[0]),
+            "max_terminal_absolute_error": float(
+                np.max(np.abs(predictive[terminal] - y[terminal]))),
+            "max_interim_absolute_error": float(
+                np.max(np.abs(predictive[~terminal] - y[~terminal]))),
+            "max_absolute_standardised_residual": float(
+                np.max(np.abs(standardised_residual))),
+        })
+    posterior_means = np.asarray(posterior_means)
+    between_run_max_range = float(np.max(np.ptp(posterior_means, axis=0)))
+    passed = (all(run["n_unique_particles"] >= n_particles // 2
+                  and run["max_terminal_absolute_error"] <= 5e-5
+                  and run["max_absolute_standardised_residual"] <= 3.0
+                  for run in runs)
+              and between_run_max_range <= 0.05)
+    return {
+        "status": "passed" if passed else "failed",
+        "runs": runs,
+        "between_run_max_predictive_range": between_run_max_range,
+        "note": ("This validates only the economic posterior update. Full risk "
+                 "calibration still requires its product with crop particles."),
+    }
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=pathlib.Path, required=True)
     parser.add_argument("--atoms", type=int, default=16)
     args = parser.parse_args()
-    result = {"toy": gaussian_toy(), "sanity": sanity_calibration(args.atoms)}
+    result = {"toy": gaussian_toy(), "sanity": sanity_calibration(args.atoms),
+              "economic_smc": economic_smc_calibration()}
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps(result, indent=2))

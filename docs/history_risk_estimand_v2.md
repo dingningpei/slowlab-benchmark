@@ -73,6 +73,17 @@ actual scopes. It reports its Monte Carlo size and seed. Until Phase 2.5
 calibration estimates numerical error across independent seeds, the result
 carries the failure flag `mc_error_not_estimated` and is exploratory.
 
+Calibration found that a finite list of joint crop/economic prior atoms is an
+invalid numerical approximation once rounded terminal cost records are
+observed: the economic likelihood is narrow enough that all posterior mass can
+land on one prior atom. Crop and site economics are independent in the stated
+generative prior, so the replacement evaluator first updates the six continuous
+economic coordinates with annealed sequential Monte Carlo. Cost observations
+therefore refine economic particles without discarding crop diversity. This
+economic update is calibrated separately before it is combined with crop
+particles; the existing full-risk result remains exploratory until that product
+posterior passes end-to-end calibration.
+
 The old `R*(D)` remains a prior design-geometry diagnostic. It must not be called
 `b(H)` because it does not condition on the realised full history, and the old
 efficiency ratio must not be described as the fraction of acquired information

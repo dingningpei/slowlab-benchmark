@@ -13,8 +13,11 @@ advances yields the same terminal values.
 The public terminal component fields were made algebraically consistent.
 Chamber, loop and batch nuisance effects are assigned to observed revenue, so
 `value = rev_rate - energy_cost_rate - other_cost_rate` and component
-reconstruction cannot remove those effects. This preserves the v1 primary
-margin value while changing the previously cleaner `rev_rate` field.
+reconstruction cannot remove those effects. Revenue, energy and other-cost rates
+are accounting records reported to four decimal places in EUR/(m2 day); total
+cost and margin are recomputed from those displayed components so both public
+identities remain exact. The resolution is about EUR 0.02/m2 over a 210-day crop
+and is included in the evaluator likelihood.
 
 Version 1 transcripts remain the terminal-only comparison arm. They cannot be
 treated as v2 closed-loop runs because their agents never received measurements

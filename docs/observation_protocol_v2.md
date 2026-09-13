@@ -45,4 +45,7 @@ Consequently every public terminal record obeys
 `cost_rate = energy_cost_rate + other_cost_rate` and
 `value = rev_rate - energy_cost_rate - other_cost_rate`. This prevents the
 component fields from reconstructing a nuisance-free margin unavailable through
-the primary response.
+the primary response. The three independent terminal rates are accounting
+records rounded to four decimal places in EUR/(m2 day). Derived total cost and
+margin are recomputed afterward, and the evaluator includes the corresponding
+rounding interval in its observation model.

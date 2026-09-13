@@ -157,6 +157,12 @@ def _churn(trace) -> tuple[float, float, float]:
 
 
 class SlowLabEnv:
+    # Terminal rates are accounting records, not infinitely precise real
+    # numbers. Four decimals in EUR/(m2.d) corresponds to roughly two cents per
+    # square metre over a 210-day crop. Components are rounded first and the
+    # derived totals are then recomputed, preserving the public identities.
+    TERMINAL_RATE_DECIMALS = 4
+
     def __init__(self, task, seed: int = 0):
         self.task = copy.deepcopy(task)
         self.seed = seed
@@ -477,22 +483,22 @@ class SlowLabEnv:
         cut = active.cuts
         comp = {k: np.array([v[cut[i]:cut[i + 1]].mean() for i in range(len(active.rows))])
                 for k, v in comp_all.items()}
-        base = comp["profit"]
-
         out = []
         for k, (tid, u) in enumerate(active.rows):
             c = self.facility.get(u).chamber
             nuisance = float(self.chamber_eff[c] + self.loop_eff[u] + active.batch_effect)
-            val = float(base[k] + nuisance)
             # Nuisance effects are yield/revenue effects.  Reporting them only in
             # ``value`` made the public fields algebraically inconsistent and let
             # an agent reconstruct a cleaner target by subtracting components.
-            rev_rate = float(comp["rev_rate"][k] + nuisance)
-            energy_rate = float(comp["energy_cost_rate"][k])
-            other_rate = float(comp["other_cost_rate"][k])
-            o = Observation(did, tid, u, val,
+            decimals = self.TERMINAL_RATE_DECIMALS
+            rev_rate = round(float(comp["rev_rate"][k] + nuisance), decimals)
+            energy_rate = round(float(comp["energy_cost_rate"][k]), decimals)
+            other_rate = round(float(comp["other_cost_rate"][k]), decimals)
+            cost_rate = energy_rate + other_rate
+            value = rev_rate - cost_rate
+            o = Observation(did, tid, u, value,
                             rev_rate=rev_rate,
-                            cost_rate=energy_rate + other_rate,
+                            cost_rate=cost_rate,
                             energy_cost_rate=energy_rate,
                             other_cost_rate=other_rate)
             out.append(o); self._obs.append(o)
@@ -506,7 +512,7 @@ class SlowLabEnv:
             # Process measure: score the *pre-registered* interval forecasts. The
             # forecasts were locked in at submit_design and the observations are
             # only revealed here, which matches P1's information ordering.
-            self._cash += val * float(self.task.duration_days)
+            self._cash += o.value * float(self.task.duration_days)
             self._settle_damage(d, tid, u)
             self.calib.n_units += 1
             pred = d.predictions.get(tid)
