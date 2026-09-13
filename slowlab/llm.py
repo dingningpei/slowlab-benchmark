@@ -105,7 +105,7 @@ def _observations_text(env) -> str:
             rows.append(
                 f"  absolute day {event.absolute_day:g}  round {event.round + 1} "
                 f"day {event.day}  {p['unit_id']}  {p['modality']} "
-                f"= {p['value']:.5g} {p['unit']}  ({p['method']})")
+                f"= {p['value']!r} {p['unit']}  ({p['method']})")
         sections.append("\n".join(rows))
     if not completed:
         sections.append("TERMINAL OBSERVATIONS SO FAR: none; the running crop has not finished.")
@@ -120,11 +120,11 @@ def _observations_text(env) -> str:
         fv = d["treatments"][p["treatment"]]
         setting = ", ".join(
             f"{g.name}={g.denorm(fv[g.name]):.4g}" for g in env.task.factors)
-        parts = (f"  [revenue {p['rev_rate']:+.4f}"
-                 f"  energy {p['energy_cost_rate']:+.4f}"
-                 f"  other {p['other_cost_rate']:+.4f}]")
+        parts = (f"  [revenue {p['rev_rate']!r}"
+                 f"  energy {p['energy_cost_rate']!r}"
+                 f"  other {p['other_cost_rate']!r}]")
         rows.append(f"  round {event.round + 1}  {p['unit_id']}  {setting}"
-                    f"  -> margin {p['value']:+.4f}{parts}")
+                    f"  -> margin {p['value']!r}{parts}")
     sections.append("\n".join(rows))
     return "\n\n".join(sections)
 
@@ -350,6 +350,7 @@ class LLMAgent:
                                         "assistant": reply})
                 blob = _extract_json(reply)
                 best = _to_point(env, blob["recommendation"])
+                env.record_recommendation(best, phase="final")
                 break
             except Exception:
                 self.format_failures += 1

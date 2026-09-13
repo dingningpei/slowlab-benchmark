@@ -13,15 +13,17 @@ so inspecting the facility cannot change crop growth or final outcomes.
 
 `observe(units, modality)` currently exposes read-only records:
 
-| Modality | Unit | Method | Persistent unit bias SD | Per-day record SD | Availability |
-|---|---|---|---:|---:|---|
-| `setpoint:<factor>` | physical factor unit | environment sensor | 0 | 0 | day 0 onward |
-| `canopy_lai` | m2 leaf / m2 ground | non-destructive canopy estimate | 3% | 2% | day 0 onward |
-| `harvested_fresh_mass` | kg / m2 | harvest ledger | 1.5% | 1% | day 0 onward |
-| `energy_cost_to_date` | EUR / m2 | utility meter | 0.3% | 0.2% | day 0 onward |
-| `other_cost_to_date` | EUR / m2 | cost ledger | 0 | 0 | day 0 onward |
+| Modality | Unit | Method | Persistent unit bias SD | Per-day record SD | Resolution | Availability |
+|---|---|---|---:|---:|---:|---|
+| `setpoint:<factor>` | physical factor unit | environment sensor | 0 | 0 | 0.01 | day 0 onward |
+| `canopy_lai` | m2 leaf / m2 ground | non-destructive canopy estimate | 3% | 2% | 0.001 | day 0 onward |
+| `harvested_fresh_mass` | kg / m2 | harvest ledger | 1.5% | 1% | 0.001 | day 0 onward |
+| `energy_cost_to_date` | EUR / m2 | utility meter | 0.3% | 0.2% | 0.0001 | day 0 onward |
+| `other_cost_to_date` | EUR / m2 | cost ledger | 0 | 0 | 0.0001 | day 0 onward |
 
-Percentage errors are multiplicative and records are clipped at zero. A bias is
+Percentage errors are multiplicative, records are clipped at zero, and the
+result is rounded to the listed sensor resolution. Quantisation variance is
+included in the evaluator likelihood. A bias is
 shared by all dates for one unit and modality. The smaller record error varies
 by day. Re-reading the same `(design, day, unit, modality)` returns the cached
 record and creates no independent sample. Every new record has `kind=measured`,

@@ -41,6 +41,16 @@ This conditions on all earlier evidence. It must not restart from the prior each
 round. A realised decrease `b(H_before) - b(H_after)` is a useful trajectory
 diagnostic but is not the conditional expected value above.
 
+`conditional_design_value_full_history` evaluates this expectation by sampling
+the new record vector from each atom's Gaussian conditional distribution given
+the existing history, including covariance shared across the boundary.
+`evaluate_history_trajectory` applies the same action set to every visible
+recommendation and reports `b(H_t)`, agent posterior risk, excess risk, and the
+conditional value of records acquired since the preceding recommendation. If a
+measurement schedule was itself chosen after earlier within-cycle values, the
+reported value is for that realised acquisition set; evaluating the adaptive
+selection policy would require integrating over its branching decisions.
+
 `history-risk-0.1-terminal` handles completed margin records jointly. Its
 covariance contains persistent chamber and loop effects, round-specific batch
 effects and unit observation variance. It deliberately raises

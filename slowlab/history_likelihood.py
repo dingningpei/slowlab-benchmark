@@ -141,6 +141,8 @@ def atom_history_moments(atoms, events, task, *, n_mc_plant=64, seed=0):
                 S[i, j] += spec["bias_sd"] ** 2 * second_moment
                 if i == j:
                     S[i, i] += spec["record_sd"] ** 2 * second_moment
+                    resolution = 10.0 ** (-int(spec["decimals"]))
+                    S[i, i] += resolution ** 2 / 12.0
 
         scale = world.response_sd
         for i, ri in enumerate(records):
@@ -169,8 +171,22 @@ def posterior_weights_full_history(atoms, events, task, *, prior=None,
                else np.asarray(prior, float).copy())
     if len(y) == 0:
         return weights / weights.sum(), records
-    log_likelihood = np.empty(atoms.M)
-    for m in range(atoms.M):
+    return posterior_weights_from_moments(
+        y, means, covariances, prior=weights, temperature=temperature), records
+
+
+def posterior_weights_from_moments(y, means, covariances, *, prior=None,
+                                   temperature=1.0):
+    """Posterior weights for an already constructed atom-specific Gaussian."""
+    y, means, covariances = (np.asarray(y, float), np.asarray(means, float),
+                             np.asarray(covariances, float))
+    M = len(means)
+    weights = (np.full(M, 1.0 / M) if prior is None
+               else np.asarray(prior, float).copy())
+    if len(y) == 0:
+        return weights / weights.sum()
+    log_likelihood = np.empty(M)
+    for m in range(M):
         S = covariances[m]
         sign, logdet = np.linalg.slogdet(S)
         if sign <= 0:
@@ -180,4 +196,4 @@ def posterior_weights_full_history(atoms, events, task, *, prior=None,
                              / float(temperature))
     z = log_likelihood - log_likelihood.max()
     weights *= np.exp(z)
-    return weights / weights.sum(), records
+    return weights / weights.sum()

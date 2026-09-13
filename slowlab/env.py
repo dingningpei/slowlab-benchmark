@@ -61,6 +61,7 @@ class RecommendationUpdate:
     day: int
     absolute_day: float
     point: tuple[float, ...]
+    phase: str = "interim"
 
 
 @dataclass(frozen=True)
@@ -222,13 +223,18 @@ class SlowLabEnv:
         x = np.clip(np.asarray(x, float).ravel(), 0, 1)
         _, best = self.truth.oracle()
         self._trace.append(best - float(self.truth(x.reshape(1, -1))[0]))
+        self.record_recommendation(x, phase="interim")
+
+    def record_recommendation(self, x, *, phase="final") -> None:
+        """Add a visible recommendation without changing the legacy score trace."""
+        x = np.clip(np.asarray(x, float).ravel(), 0, 1)
         day = self._active.state.day if hasattr(self, "_active") else 0
         self._recommendation_updates.append(RecommendationUpdate(
             round=self.round, day=int(day), absolute_day=float(self.clock),
-            point=tuple(float(v) for v in x)))
+            point=tuple(float(v) for v in x), phase=str(phase)))
         self._emit_visible("recommended", design_id=(
             self._active.design_id if hasattr(self, "_active") else None),
-            payload={"point": [float(v) for v in x]}, day=int(day))
+            payload={"point": [float(v) for v in x], "phase": str(phase)}, day=int(day))
 
     def available_units(self) -> list[str]:
         """Units currently available -- those inside a heat-damage recovery period
@@ -519,10 +525,10 @@ class SlowLabEnv:
     _MEASUREMENT_SPECS = {
         # bias_sd is persistent within unit/modality; record_sd is specific to a
         # day.  Relative noise is used for cumulative nonnegative quantities.
-        "canopy_lai": {"unit": "m2_leaf/m2_ground", "method": "non_destructive_canopy", "bias_sd": .03, "record_sd": .02},
-        "harvested_fresh_mass": {"unit": "kg/m2", "method": "harvest_ledger", "bias_sd": .015, "record_sd": .01},
-        "energy_cost_to_date": {"unit": "EUR/m2", "method": "utility_meter", "bias_sd": .003, "record_sd": .002},
-        "other_cost_to_date": {"unit": "EUR/m2", "method": "cost_ledger", "bias_sd": 0.0, "record_sd": 0.0},
+        "canopy_lai": {"unit": "m2_leaf/m2_ground", "method": "non_destructive_canopy", "bias_sd": .03, "record_sd": .02, "decimals": 3},
+        "harvested_fresh_mass": {"unit": "kg/m2", "method": "harvest_ledger", "bias_sd": .015, "record_sd": .01, "decimals": 3},
+        "energy_cost_to_date": {"unit": "EUR/m2", "method": "utility_meter", "bias_sd": .003, "record_sd": .002, "decimals": 4},
+        "other_cost_to_date": {"unit": "EUR/m2", "method": "cost_ledger", "bias_sd": 0.0, "record_sd": 0.0, "decimals": 4},
     }
 
     def _stable_normal(self, *parts) -> float:
@@ -549,7 +555,7 @@ class SlowLabEnv:
                             "lai_max": "m2_leaf/m2_ground"}
             spec = {"unit": factor_units.get(factor_name, "factor_unit"),
                     "method": "environment_sensor",
-                    "bias_sd": 0.0, "record_sd": 0.0}
+                    "bias_sd": 0.0, "record_sd": 0.0, "decimals": 2}
         else:
             if modality not in self._MEASUREMENT_SPECS:
                 raise ValueError(f"unsupported modality {modality!r}")
@@ -584,7 +590,8 @@ class SlowLabEnv:
                 i = row_index[unit_id]
                 bias = spec["bias_sd"] * self._stable_normal(active.design_id, unit_id, modality, "bias")
                 error = spec["record_sd"] * self._stable_normal(active.design_id, unit_id, modality, day)
-                value = float(max(0.0, truth[i] * (1.0 + bias + error)))
+                value = round(float(max(0.0, truth[i] * (1.0 + bias + error))),
+                              int(spec["decimals"]))
                 tid = active.rows[i][0]
                 m = Measurement(
                     design_id=active.design_id, treatment=tid, unit_id=unit_id,

@@ -6,7 +6,9 @@ from slowlab.design import Design
 from slowlab.eig import AtomSet
 from slowlab.env import SlowLabEnv
 from slowlab.history_likelihood import atom_history_moments, posterior_weights_full_history
-from slowlab.history_risk import decompose_full_history_risk
+from slowlab.history_risk import (conditional_design_value_full_history,
+                                  decompose_full_history_risk,
+                                  evaluate_history_trajectory)
 from slowlab.tasks import TASKS
 from slowlab.world import ManagedTomgro
 
@@ -53,3 +55,18 @@ def test_full_history_likelihood_covers_measurements_and_terminal_components():
     assert result.n_observations == len(records)
     assert result.likelihood_seed == 3 and result.n_mc_plant == 8
     assert "mc_error_not_estimated" in result.failure_flags
+
+    before = env.history()[:1]       # submitted design, no outcome records yet
+    value = conditional_design_value_full_history(
+        atoms, before, env.history(), task, cand=np.array([[0.2], [0.5], [0.8]]),
+        n_mc_plant=8, likelihood_seed=3, n_outer=80, simulation_seed=4)
+    assert value.n_existing_records == 0
+    assert value.n_new_records == len(records)
+    assert np.isfinite(value.conditional_value) and value.mc_error >= 0
+
+    env.record_recommendation([0.5], phase="final")
+    trajectory = evaluate_history_trajectory(
+        atoms, env.history(), task, cand=np.array([[0.2], [0.5], [0.8]]),
+        n_mc_plant=8, likelihood_seed=3, n_outer=30, simulation_seed=4)
+    assert len(trajectory) == 1 and trajectory[0].phase == "final"
+    assert trajectory[0].posterior_excess_risk >= 0
