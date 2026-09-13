@@ -51,6 +51,11 @@ measurement schedule was itself chosen after earlier within-cycle values, the
 reported value is for that realised acquisition set; evaluating the adaptive
 selection policy would require integrating over its branching decisions.
 
+Whenever the evaluated candidate set contains a response above a cached oracle
+value, the evaluator raises that atom's `best` value to the observed candidate
+maximum before constructing regret. This incorporates a stronger feasible lower
+bound on the true maximum. It does not clip negative regrets after scoring.
+
 `history-risk-0.1-terminal` handles completed margin records jointly. Its
 covariance contains persistent chamber and loop effects, round-specific batch
 effects and unit observation variance. It deliberately raises

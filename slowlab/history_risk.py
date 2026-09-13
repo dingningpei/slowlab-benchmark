@@ -157,7 +157,8 @@ def decompose_history_risk(atoms, events, task, agent_point, *,
         cand = candidate_set(atoms, rng=np.random.default_rng(candidate_seed))
     cand = np.vstack([np.asarray(cand, float), agent_point])
     F = response_table(atoms, cand)
-    best = np.asarray([world.oracle()[1] for world in atoms.worlds], float)
+    best = np.maximum(np.asarray([world.oracle()[1] for world in atoms.worlds], float),
+                      F.max(axis=1))
     regret = best[:, None] - F
     prior = np.full(atoms.M, 1.0 / atoms.M)
     weights = posterior_weights_history(
@@ -188,7 +189,8 @@ def decompose_full_history_risk(atoms, events, task, agent_point, *, cand=None,
         cand = candidate_set(atoms, rng=np.random.default_rng(candidate_seed))
     cand = np.vstack([np.asarray(cand, float), agent_point])
     response = response_table(atoms, cand)
-    best = np.asarray([world.oracle()[1] for world in atoms.worlds], float)
+    best = np.maximum(np.asarray([world.oracle()[1] for world in atoms.worlds], float),
+                      response.max(axis=1))
     regret = best[:, None] - response
     prior = np.full(atoms.M, 1.0 / atoms.M)
     weights, records = posterior_weights_full_history(
@@ -241,7 +243,8 @@ def conditional_design_value_full_history(
         cand = candidate_set(atoms, rng=np.random.default_rng(candidate_seed))
     cand = np.asarray(cand, float)
     response = response_table(atoms, cand)
-    best = np.asarray([world.oracle()[1] for world in atoms.worlds], float)
+    best = np.maximum(np.asarray([world.oracle()[1] for world in atoms.worlds], float),
+                      response.max(axis=1))
     regret = best[:, None] - response
     prior = np.full(atoms.M, 1.0 / atoms.M)
     y_old = y[:n_old]

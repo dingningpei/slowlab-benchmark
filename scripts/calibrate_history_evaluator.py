@@ -17,7 +17,9 @@ sys.path.insert(0, str(ROOT))
 from slowlab.design import Design
 from slowlab.eig import AtomSet
 from slowlab.env import SlowLabEnv
-from slowlab.history_likelihood import posterior_weights_from_moments, posterior_weights_full_history
+from slowlab.history_likelihood import (atom_history_moments,
+                                        posterior_weights_from_moments,
+                                        posterior_weights_full_history)
 from slowlab.history_risk import conditional_design_value_full_history
 from slowlab.tasks import TASKS
 from slowlab.world import ManagedTomgro
@@ -95,7 +97,8 @@ def sanity_calibration(M=16):
     grid = np.linspace(0, 1, 2001)[:, None]
     response = atoms.mean_response(grid)
     reference_curve = reference @ response
-    best = np.array([world.oracle()[1] for world in atoms.worlds])
+    best = np.maximum(np.array([world.oracle()[1] for world in atoms.worlds]),
+                      response.max(axis=1))
     regret = best[:, None] - response
 
     plant_mc = []
@@ -117,6 +120,28 @@ def sanity_calibration(M=16):
             atoms, history, task, n_mc_plant=128, seed=0, temperature=value)
         temperature.append({"temperature": value, "ess": _ess(weights),
                             "max_weight": float(weights.max())})
+
+    y_diag, means_diag, cov_diag, records_diag = atom_history_moments(
+        atoms, history, task, n_mc_plant=128, seed=0)
+    groups = {
+        "within_cycle": [i for i, r in enumerate(records_diag) if r.kind == "measured"],
+        "terminal_revenue": [i for i, r in enumerate(records_diag)
+                             if r.modality == "terminal_revenue_rate"],
+        "terminal_costs": [i for i, r in enumerate(records_diag)
+                           if r.modality in {"terminal_energy_cost_rate", "terminal_other_cost_rate"}],
+        "all_fields": list(range(len(records_diag))),
+    }
+    field_ablation = {}
+    for name, indices in groups.items():
+        idx = np.asarray(indices, int)
+        items = []
+        for value in (1.0, 100.0, 10_000.0, 1_000_000.0, 100_000_000.0):
+            weights = posterior_weights_from_moments(
+                y_diag[idx], means_diag[:, idx], cov_diag[:, idx[:, None], idx],
+                temperature=value)
+            items.append({"temperature": value, "ess": _ess(weights),
+                          "max_weight": float(weights.max())})
+        field_ablation[name] = items
 
     atom_count = []
     for count in (4, 8, M):
@@ -157,6 +182,7 @@ def sanity_calibration(M=16):
         "M_reference": M, "n_mc_reference": 512, "likelihood_seed_reference": 999,
         "reference_ess": _ess(reference), "reference_max_weight": float(reference.max()),
         "plant_mc": plant_mc, "temperature": temperature,
+        "field_ablation": field_ablation,
         "atom_count": atom_count, "candidate_resolution": candidate_resolution,
         "atom_split": split, "outer_mc": outer_mc,
     }
