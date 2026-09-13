@@ -5,6 +5,7 @@ scientific correctness -- the latter is the capability under test.
 """
 from __future__ import annotations
 import copy
+import hashlib
 import numpy as np
 from dataclasses import dataclass, field
 
@@ -31,6 +32,48 @@ class Observation:
     # price change without running anything an agent must model all *three*
     # components separately; learning only the value, or only a merged cost, is
     # not enough.
+
+
+@dataclass(frozen=True)
+class Measurement:
+    """One agent-visible, timestamped record from a running crop cycle."""
+
+    design_id: int
+    treatment: str
+    unit_id: str
+    round: int
+    day: int
+    absolute_day: float
+    modality: str
+    value: float
+    unit: str
+    method: str
+    cost: float = 0.0
+    kind: str = "measured"
+    available: bool = True
+
+
+@dataclass(frozen=True)
+class RecommendationUpdate:
+    """A recommendation made with the history available at one decision time."""
+
+    round: int
+    day: int
+    absolute_day: float
+    point: tuple[float, ...]
+
+
+@dataclass
+class _ActiveRun:
+    """Private execution state for the one design currently in the facility."""
+
+    design_id: int
+    start_clock: float
+    rows: list[tuple[str, str]]
+    plant_counts: list[int]
+    cuts: np.ndarray
+    state: ManagedTomgro.State
+    batch_effect: float
 
 
 @dataclass
@@ -118,6 +161,9 @@ class SlowLabEnv:
         self.round = 0
         self._designs: list[Design] = []
         self._obs: list[Observation] = []
+        self._measurements: list[Measurement] = []
+        self._measurement_cache: dict[tuple[int, int, str, str], Measurement] = {}
+        self._recommendation_updates: list[RecommendationUpdate] = []
         self._reports: list[ValidityReport] = []
         self._rejections: list[str] = []
         self.calib = CalibrationReport()
@@ -150,8 +196,10 @@ class SlowLabEnv:
         return self.task.n_rounds - self.round
 
     def interim_recommendation(self, x) -> None:
-        """Record, at the end of each round, what the agent would recommend if it
-        stopped now. Does not end the episode and does not consume budget.
+        """Record what the agent recommends with the currently visible history.
+
+        This may be called more than once within a round. It does not change the
+        submitted treatment, advance time or consume experimental resources.
 
         This is where the Irreversible axis is read: one round is one irrevocable
         commitment, and we want to know what that commitment bought. It asks for
@@ -160,6 +208,10 @@ class SlowLabEnv:
         x = np.clip(np.asarray(x, float).ravel(), 0, 1)
         _, best = self.truth.oracle()
         self._trace.append(best - float(self.truth(x.reshape(1, -1))[0]))
+        day = self._active.state.day if hasattr(self, "_active") else 0
+        self._recommendation_updates.append(RecommendationUpdate(
+            round=self.round, day=int(day), absolute_day=float(self.clock),
+            point=tuple(float(v) for v in x)))
 
     def available_units(self) -> list[str]:
         """Units currently available -- those inside a heat-damage recovery period
@@ -169,11 +221,24 @@ class SlowLabEnv:
         "irreversible" degrades into "one mistake and you are out", which measures
         fragility rather than adaptation.
         """
+        occupied = set()
+        if hasattr(self, "_active"):
+            occupied.update(u for _, u in self._active.rows)
+        elif hasattr(self, "_pending"):
+            occupied.update(self._designs[self._pending].unit_ids)
         return [u.id for u in self.facility.units
-                if self._available_at.get(u.id, 0.0) <= self.clock + 1e-9]
+                if u.id not in occupied
+                and self._available_at.get(u.id, 0.0) <= self.clock + 1e-9]
 
     def observations(self) -> list[Observation]:
         return list(self._obs)
+
+    def measurements(self) -> list[Measurement]:
+        """All measurements created so far, in acquisition order."""
+        return list(self._measurements)
+
+    def recommendation_updates(self) -> list[RecommendationUpdate]:
+        return list(self._recommendation_updates)
 
     def as_arrays(self):
         """Completed observations as (X, y), where X is the factor vector of each observation's treatment."""
@@ -235,6 +300,8 @@ class SlowLabEnv:
             return Rejection(RejectCode.SCHEMA, "the episode has ended")
         if self.rounds_left <= 0:
             return Rejection(RejectCode.BUDGET_EXCEEDED, "no rounds left")
+        if hasattr(self, "_pending") or hasattr(self, "_active"):
+            return Rejection(RejectCode.SCHEMA, "a design is already running in this round")
         rej = self.validate_design(design)
         if not rej:
             self._rejections.append(rej.code)      # a rejection costs no budget but is counted
@@ -253,25 +320,27 @@ class SlowLabEnv:
         penalty is the wrong severity: a grower who ruins one planting loses that
         season, not every season that remains.
         """
+        if hasattr(self, "_active"):
+            raise RuntimeError("a running crop cannot be forfeited; early termination is not implemented")
         if hasattr(self, "_pending"):
             del self._pending
         self.round += 1
         self.clock += float(self.task.duration_days)
 
-    def advance(self) -> list[Observation]:
-        """Advance to the next event: run the submitted design to completion and return its observations."""
+    def _start_pending(self) -> _ActiveRun | None:
+        """Instantiate plants once and retain their state for the whole round."""
+        if hasattr(self, "_active"):
+            return self._active
         if not hasattr(self, "_pending"):
-            return []
+            return None
         did = self._pending
-        del self._pending
         d = self._designs[did]
         batch_eff = self.rng.normal(0, self.task.tau_batch * self.truth.response_sd)
-
-        # Flatten into a per-unit table and simulate once, vectorised
         rows = [(tid, u) for tid, uids in d.allocation.items() for u in uids]
         if not rows:
+            del self._pending
             self.round += 1
-            return []
+            return None
         X = np.array([[d.treatments[tid][f.name] for f in self.task.factors]
                       for tid, _ in rows])
         # Plant-to-plant variation is per-plant parameter perturbation rather than
@@ -286,21 +355,67 @@ class SlowLabEnv:
                    d.treatments[tid][dens_name] if dens_name else 3.0) for tid, _ in rows]
         big = np.repeat(X, n_p, axis=0)
         pp = self.truth.sample_plant_params(len(big), self.rng, self.task.plant_cv)
-        comp_all = self.truth(big, plant_params=pp, components=True)
         cut = np.cumsum([0] + list(n_p))
-        comp = {k: np.array([v[cut[i]:cut[i + 1]].mean() for i in range(len(rows))])
+        self._active = _ActiveRun(
+            design_id=did, start_clock=float(self.clock), rows=rows,
+            plant_counts=n_p, cuts=cut,
+            state=self.truth.start(big, plant_params=pp), batch_effect=float(batch_eff))
+        return self._active
+
+    @staticmethod
+    def _unit_means(values, active: _ActiveRun) -> np.ndarray:
+        values = np.asarray(values, float)
+        return np.array([
+            values[active.cuts[i]:active.cuts[i + 1]].mean()
+            for i in range(len(active.rows))])
+
+    def advance_to(self, day: int) -> list[Observation]:
+        """Advance the running round to a relative integer day.
+
+        Days are the simulator's native resolution.  Moving to the terminal day
+        completes the round; earlier calls leave final observations unavailable.
+        """
+        active = self._start_pending()
+        if active is None:
+            return []
+        day = int(day)
+        if day < active.state.day:
+            raise ValueError(f"cannot move round backwards from day {active.state.day} to {day}")
+        if day > self.task.duration_days:
+            raise ValueError(
+                f"day {day} exceeds round duration {self.task.duration_days}")
+        self.truth.advance_state(active.state, day)
+        self.clock = active.start_clock + float(day)
+        if day < self.task.duration_days:
+            return []
+        return self._complete_active()
+
+    def _complete_active(self) -> list[Observation]:
+        active = self._active
+        did = active.design_id
+        d = self._designs[did]
+        comp_all = self.truth.components(active.state, final=True)
+        cut = active.cuts
+        comp = {k: np.array([v[cut[i]:cut[i + 1]].mean() for i in range(len(active.rows))])
                 for k, v in comp_all.items()}
         base = comp["profit"]
 
         out = []
-        for k, (tid, u) in enumerate(rows):
+        for k, (tid, u) in enumerate(active.rows):
             c = self.facility.get(u).chamber
-            val = float(base[k] + self.chamber_eff[c] + self.loop_eff[u] + batch_eff)
+            nuisance = float(self.chamber_eff[c] + self.loop_eff[u] + active.batch_effect)
+            val = float(base[k] + nuisance)
+            # Nuisance effects are yield/revenue effects.  Reporting them only in
+            # ``value`` made the public fields algebraically inconsistent and let
+            # an agent reconstruct a cleaner target by subtracting components.
+            rev_rate = float(comp["rev_rate"][k] + nuisance)
+            energy_rate = float(comp["energy_cost_rate"][k])
+            other_rate = float(comp["other_cost_rate"][k])
             o = Observation(did, tid, u, val,
-                            rev_rate=float(comp["rev_rate"][k]),
-                            cost_rate=float(comp["cost_rate"][k]),
-                            energy_cost_rate=float(comp["energy_cost_rate"][k]),
-                            other_cost_rate=float(comp["other_cost_rate"][k]))
+                            rev_rate=rev_rate,
+                            cost_rate=energy_rate + other_rate,
+                            energy_cost_rate=energy_rate,
+                            other_cost_rate=other_rate)
             out.append(o); self._obs.append(o)
             self._occupied.add(u)
             # Process measure: score the *pre-registered* interval forecasts. The
@@ -313,9 +428,94 @@ class SlowLabEnv:
             if pred is not None:
                 lo, _pt, hi = pred
                 self.calib.add(val, float(lo), float(hi), rnd=self.round)
-        self.clock += float(self.task.duration_days)
         self.round += 1
+        del self._pending
+        del self._active
         return out
+
+    def advance(self) -> list[Observation]:
+        """Run the submitted design to completion (the v1 terminal-only API)."""
+        return self.advance_to(self.task.duration_days)
+
+    _MEASUREMENT_SPECS = {
+        # bias_sd is persistent within unit/modality; record_sd is specific to a
+        # day.  Relative noise is used for cumulative nonnegative quantities.
+        "canopy_lai": {"unit": "m2_leaf/m2_ground", "method": "non_destructive_canopy", "bias_sd": .03, "record_sd": .02},
+        "harvested_fresh_mass": {"unit": "kg/m2", "method": "harvest_ledger", "bias_sd": .015, "record_sd": .01},
+        "energy_cost_to_date": {"unit": "EUR/m2", "method": "utility_meter", "bias_sd": .003, "record_sd": .002},
+        "other_cost_to_date": {"unit": "EUR/m2", "method": "cost_ledger", "bias_sd": 0.0, "record_sd": 0.0},
+    }
+
+    def _stable_normal(self, *parts) -> float:
+        raw = "|".join(map(str, (self.seed,) + parts)).encode()
+        seed = int.from_bytes(hashlib.sha256(raw).digest()[:8], "big")
+        return float(np.random.default_rng(seed).normal())
+
+    def observe(self, units=None, modality: str = "canopy_lai") -> list[Measurement]:
+        """Read a supported measurement at the current day of a running round.
+
+        Re-reading the same unit, modality and day returns the cached record.  It
+        therefore cannot manufacture independent samples by repeated calls.
+        """
+        active = self._start_pending()
+        if active is None:
+            raise RuntimeError("there is no running design to observe")
+        if modality.startswith("setpoint:"):
+            factor_name = modality.split(":", 1)[1]
+            factor = next((f for f in self.task.factors if f.name == factor_name), None)
+            if factor is None:
+                raise ValueError(f"unknown setpoint {factor_name!r}")
+            factor_units = {"day_temp": "degC", "night_temp": "degC", "co2": "ppm",
+                            "par": "mol_PAR/(m2*d)", "density": "plants/m2",
+                            "lai_max": "m2_leaf/m2_ground"}
+            spec = {"unit": factor_units.get(factor_name, "factor_unit"),
+                    "method": "environment_sensor",
+                    "bias_sd": 0.0, "record_sd": 0.0}
+        else:
+            if modality not in self._MEASUREMENT_SPECS:
+                raise ValueError(f"unsupported modality {modality!r}")
+            spec = self._MEASUREMENT_SPECS[modality]
+
+        requested = list(units) if units is not None else [u for _, u in active.rows]
+        row_index = {u: i for i, (_, u) in enumerate(active.rows)}
+        unknown = [u for u in requested if u not in row_index]
+        if unknown:
+            raise ValueError(f"units are not in the running design: {unknown}")
+
+        day = active.state.day
+        if modality == "canopy_lai":
+            truth = self._unit_means(active.state.LAI, active)
+        elif modality == "harvested_fresh_mass":
+            wm = self._unit_means(active.state.WM, active)
+            truth = np.asarray(self.truth.econ.marketable_kg(wm), float)
+        elif modality in {"energy_cost_to_date", "other_cost_to_date"}:
+            comp = self.truth.components(active.state)
+            truth = self._unit_means(comp[modality], active)
+        else:  # exact treatment setpoint in physical units
+            factor_name = modality.split(":", 1)[1]
+            factor = next(f for f in self.task.factors if f.name == factor_name)
+            truth = np.array([
+                factor.denorm(self._designs[active.design_id].treatments[tid][factor_name])
+                for tid, _ in active.rows], float)
+
+        result = []
+        for unit_id in requested:
+            key = (active.design_id, day, unit_id, modality)
+            if key not in self._measurement_cache:
+                i = row_index[unit_id]
+                bias = spec["bias_sd"] * self._stable_normal(active.design_id, unit_id, modality, "bias")
+                error = spec["record_sd"] * self._stable_normal(active.design_id, unit_id, modality, day)
+                value = float(max(0.0, truth[i] * (1.0 + bias + error)))
+                tid = active.rows[i][0]
+                m = Measurement(
+                    design_id=active.design_id, treatment=tid, unit_id=unit_id,
+                    round=self.round, day=day,
+                    absolute_day=active.start_clock + day, modality=modality,
+                    value=value, unit=spec["unit"], method=spec["method"], cost=0.0)
+                self._measurement_cache[key] = m
+                self._measurements.append(m)
+            result.append(self._measurement_cache[key])
+        return result
 
     def _settle_damage(self, design, tid, unit_id):
         """Settle heat damage: units above TCRIT + margin enter a recovery period,
@@ -340,7 +540,8 @@ class SlowLabEnv:
         if excess <= 0:
             return
         days = rd * min(1.0, excess / max(self.task.damage_scale, 1e-9))
-        end = self.clock + float(self.task.duration_days)
+        end = (self._active.start_clock + float(self.task.duration_days)
+               if hasattr(self, "_active") else self.clock + float(self.task.duration_days))
         self._available_at[unit_id] = max(self._available_at[unit_id], end + days)
         self.lost_unit_days += days
 

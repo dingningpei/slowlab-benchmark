@@ -1,4 +1,4 @@
-"""The environment freeze guard -- v1.0, 2026-09-10. See ENVIRONMENT_v1.0.md.
+"""The environment freeze guard -- v2.0. See ENVIRONMENT_v2.0.md.
 
 These tests **do not check that the environment is correct.** They check that it
 **has not changed.**
@@ -26,7 +26,7 @@ TOL = 1e-9
 
 
 def test_env_version_pinned():
-    assert slowlab.ENV_VERSION == "1.0.0", (
+    assert slowlab.ENV_VERSION == "2.0.0", (
         "The environment version changed. If ground truth really did change that is "
         "correct -- but update the fingerprints in this file too, and record in "
         "ENVIRONMENT_v1.0.md what changed, why, and which results are invalidated.")
