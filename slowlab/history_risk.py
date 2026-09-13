@@ -1,10 +1,8 @@
 """Risk quantities conditioned on one common, timestamped visible history.
 
-This module is the terminal-observation foundation for the v2 evaluator. It
-uses the complete joint covariance across rounds, including persistent chamber
-and loop effects. Within-cycle measurements are rejected until their
-time-correlated biological likelihood is calibrated; silently treating them as
-independent terminal observations would recreate the problem Phase 2 fixes.
+The terminal-only estimator uses the complete joint covariance across rounds,
+including persistent chamber and loop effects. The full-field estimator also
+uses the joint biological and measurement likelihood in history_likelihood.
 """
 from __future__ import annotations
 
@@ -13,6 +11,7 @@ from dataclasses import dataclass
 import numpy as np
 
 from .achievable import candidate_set, response_table
+from .history_likelihood import posterior_weights_full_history
 
 
 ESTIMATOR_VERSION = "history-risk-0.1-terminal"
@@ -45,6 +44,10 @@ class RiskDecomposition:
     bayes_action: np.ndarray
     posterior_weights: np.ndarray
     temperature: float
+    likelihood_seed: int | None = None
+    n_mc_plant: int | None = None
+    mc_error: float = float("nan")
+    failure_flags: tuple[str, ...] = ()
 
 
 def terminal_history(events, task, *, reject_measurements=True) -> HistoryTable:
@@ -140,3 +143,34 @@ def decompose_history_risk(atoms, events, task, agent_point, *,
         bayes_risk=bayes_risk, agent_posterior_risk=agent_risk,
         posterior_excess_risk=float(excess), bayes_action=cand[bayes_index].copy(),
         posterior_weights=weights.copy(), temperature=float(temperature))
+
+
+def decompose_full_history_risk(atoms, events, task, agent_point, *, cand=None,
+                                temperature=1.0, candidate_seed=0,
+                                n_mc_plant=64, likelihood_seed=0):
+    """Risk decomposition using every independent visible numeric field."""
+    events = list(events)
+    agent_point = np.asarray(agent_point, float).reshape(1, -1)
+    if cand is None:
+        cand = candidate_set(atoms, rng=np.random.default_rng(candidate_seed))
+    cand = np.vstack([np.asarray(cand, float), agent_point])
+    response = response_table(atoms, cand)
+    best = np.asarray([world.oracle()[1] for world in atoms.worlds], float)
+    regret = best[:, None] - response
+    prior = np.full(atoms.M, 1.0 / atoms.M)
+    weights, records = posterior_weights_full_history(
+        atoms, events, task, prior=prior, temperature=temperature,
+        n_mc_plant=n_mc_plant, seed=likelihood_seed)
+    risks = weights @ regret
+    bayes_index = int(np.argmin(risks))
+    excess = float(risks[-1] - risks[bayes_index])
+    if excess < -1e-10:
+        raise ArithmeticError(f"posterior excess risk is negative: {excess}")
+    return RiskDecomposition(
+        estimator_version="history-risk-0.2-full-fields",
+        n_observations=len(records), prior_bayes_risk=float(np.min(prior @ regret)),
+        bayes_risk=float(risks[bayes_index]), agent_posterior_risk=float(risks[-1]),
+        posterior_excess_risk=excess, bayes_action=cand[bayes_index].copy(),
+        posterior_weights=weights.copy(), temperature=float(temperature),
+        likelihood_seed=int(likelihood_seed), n_mc_plant=int(n_mc_plant),
+        failure_flags=("mc_error_not_estimated",))

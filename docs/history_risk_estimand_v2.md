@@ -41,13 +41,22 @@ This conditions on all earlier evidence. It must not restart from the prior each
 round. A realised decrease `b(H_before) - b(H_after)` is a useful trajectory
 diagnostic but is not the conditional expected value above.
 
-The present `history-risk-0.1-terminal` implementation handles completed margin
-records jointly. Its covariance contains persistent chamber and loop effects,
-round-specific batch effects and unit observation variance. It deliberately
-raises `IncompleteLikelihoodError` when `H_t` contains within-cycle
-measurements. The next evaluator version must add joint modality means,
-persistent measurement bias, per-day record error and biological temporal
-covariance before v2 measurement histories can be scored.
+`history-risk-0.1-terminal` handles completed margin records jointly. Its
+covariance contains persistent chamber and loop effects, round-specific batch
+effects and unit observation variance. It deliberately raises
+`IncompleteLikelihoodError` if it is accidentally called on within-cycle data.
+
+`history-risk-0.2-full-fields` handles the independent basis of all visible
+numeric fields: terminal revenue, energy cost and other cost, plus every
+within-cycle modality. Margin itself is omitted from the likelihood because it
+is the exact linear combination of the three terminal components. Duplicate
+exact ledger values are also removed. The likelihood estimates plant-level
+cross-time and cross-modality covariance by parameter-perturbation Monte Carlo,
+divides it by the unit's plant count, and adds persistent measurement bias,
+per-day record error, chamber, loop and batch covariance according to their
+actual scopes. It reports its Monte Carlo size and seed. Until Phase 2.5
+calibration estimates numerical error across independent seeds, the result
+carries the failure flag `mc_error_not_estimated` and is exploratory.
 
 The old `R*(D)` remains a prior design-geometry diagnostic. It must not be called
 `b(H)` because it does not condition on the realised full history, and the old
