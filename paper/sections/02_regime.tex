@@ -132,9 +132,10 @@ subsection specifies.
 
 Figure~\ref{fig:protocol} is the whole interface. \texttt{validate\_design} is free
 and unlimited; \texttt{submit\_design} commits the named slots for one cycle;
-\texttt{advance} runs the cycle and returns one value per slot; the interim
-recommendation records what the agent would advise if the campaign stopped there,
-which supplies the regret trajectory. Budget is accounted in slot-cycles. The
+\texttt{advance\_to(day)} moves the simulation clock without resampling the crop, and
+\texttt{observe} returns only measurements available on that day. Terminal outcomes are
+released when the cycle completes. An interim recommendation records what the agent would
+advise from the history currently visible. Budget is accounted in slot-cycles. The
 recommendation is elicited, never consumed: it costs no budget, returns nothing, and
 enters no later design --- an agent that revises it every round is not penalised for
 having been wrong earlier. Design and recommendation are separate submissions, which is
@@ -153,7 +154,8 @@ score the two apart.
 \pykw{class} \pycls{SlowLabEnv}:\\
 \hspace*{1em}\pyfn{validate\_design}\\
 \hspace*{1em}\pyfn{submit\_design}\\
-\hspace*{1em}\pyfn{advance}\\
+\hspace*{1em}\pyfn{advance\_to}\\
+\hspace*{1em}\pyfn{observe}\\
 \hspace*{1em}\pyfn{observations}\\
 \hspace*{1em}\pyfn{submit\_recommendation}\\[4pt]
 \pykw{class} \pycls{Design}:\\
@@ -175,9 +177,10 @@ score the two apart.
 \hspace*{1em}\tikzmark{b}D = agent.\pyfn{design}(env)\\
 \hspace*{1em}\tikzmark{c}env.\pyfn{validate\_design}(D)\\
 \hspace*{1em}\tikzmark{d}env.\pyfn{submit\_design}(D)\\
-\hspace*{1em}\tikzmark{e}env.\pyfn{observations}() $\rightarrow$ []\\
-\hspace*{1em}\tikzmark{f}env.\pyfn{advance}()\\
-\hspace*{1em}\tikzmark{g}x\_r = agent.\pyfn{recommend}(env)\\[2pt]
+\hspace*{1em}\tikzmark{e}env.\pyfn{advance\_to}(day)\\
+\hspace*{1em}\tikzmark{f}env.\pyfn{observe}(units, modality)\\
+\hspace*{1em}\tikzmark{g}x\_t = agent.\pyfn{recommend}(env)\\
+\hspace*{1em}env.\pyfn{advance\_to}($\Delta$)\\[2pt]
 \tikzmark{h}env.\pyfn{submit\_recommendation}(x\_R)\tikzmark{edge}
 \end{minipage}}
 \end{minipage}
@@ -189,9 +192,9 @@ score the two apart.
 \tikzmark{A}the seed draws a \emph{site} $\theta\sim P_\Theta$, not a noise realisation\\[2.5pt]
 \tikzmark{C}free and unlimited; feasibility only, and a rejection costs no budget\\[2.5pt]
 \tikzmark{D}\textbf{the irreversible step}: $|\mathcal{U}_r|$ slots held for a full cycle\\[2.5pt]
-\tikzmark{E}nothing is visible until the cycle ends\\[2.5pt]
-\tikzmark{F}a cycle of length $\Delta$ passes; one value per committed slot\\[2.5pt]
-\tikzmark{G}the interim recommendation, giving the regret trajectory\\[2.5pt]
+\tikzmark{E}advance the clock; future state and outcome remain hidden\\[2.5pt]
+\tikzmark{F}return a cached, time-appropriate measurement\\[2.5pt]
+\tikzmark{G}update the recommendation from the visible history\\[2.5pt]
 \tikzmark{H}ends the episode; returns $\bar{\mathcal{R}}$ and $\mathcal{R}_{\mathrm{cum}}$
 \end{minipage}}
 \end{minipage}
@@ -202,14 +205,12 @@ score the two apart.
     \draw[->] let \p1=(pic cs:\src), \p2=(pic cs:edge), \p3=(pic cs:\dst) in
       (\x2+3pt, \y1+1.2pt) -- (\x3-2.5pt, \y3+1.2pt);
 \end{tikzpicture}
-\caption{\textbf{The interaction protocol.} \emph{(left)} What an agent touches: an
-environment exposing five calls, a \texttt{Design} naming treatments and assigning them to
-named slots, and a \texttt{Task} fixing the factors, their control levels, the number of
-rounds, the width cap and the cycle length. \emph{(centre)} One campaign. \emph{(right)}
-What each call costs. Checking is free and a rejection carries a code and a detail, so an
-agent may revise without penalty; committing is the step that cannot be undone. Between
-\texttt{submit\_design} and \texttt{advance} the observation list stays empty --- a
-regression test guards it --- which is \eqref{eq:action} in code.}
+\caption{\textbf{The Version~2 interaction protocol.} \emph{(left)} The design,
+clock, measurement and recommendation calls available to an agent. \emph{(centre)} A
+campaign may contain several inspection times within one committed cycle. \emph{(right)}
+Committing occupies the units and cannot be undone; advancing exposes no future state;
+observing reads the cached measurement for the requested day rather than drawing another
+independent sample. Terminal outcomes remain hidden until $\Delta$.}
 \label{fig:protocol}
 \end{figure}
 
@@ -220,8 +221,10 @@ A submission is a \texttt{Design}: named treatments, each a full vector of facto
 allocation mapping treatments to specific units; and a declared randomisation seed. The
 agent chooses \emph{what} to test, \emph{how many units} each treatment receives, and
 \emph{which} units those are---replication and allocation are decisions rather than
-defaults. It does not choose what to measure, when to measure, or whether to intervene
-mid-cycle; a submitted design runs to completion.
+defaults. It may choose an observation day, modality and subset of units from the measurement
+channels implemented by the task. Version~2 initially exposes cached sensor measurements
+without a separate measurement charge. It cannot change treatment, terminate, clear or
+replant a unit mid-cycle; a submitted design runs to completion.
 
 \subsubsection{Facility and control levels}
 \label{sec:facility}
@@ -294,10 +297,11 @@ condition to be ablated (Appendix~\ref{app:refs}), not a free service of the env
 
 A language model reaches the same interface through a harness that serialises the round. It
 receives the facility layout and unit naming, the budget and rounds remaining, each factor's
-range and control level, the hierarchy constraint, every observation so far with the settings
-that produced it, the currently available units, and a JSON schema; it returns treatments, an
-allocation, a randomisation seed, and the recommendation it would give if the campaign stopped
-now, which supplies the trajectory in \eqref{eq:regret}.
+range and control level, the hierarchy constraint, every time-stamped observation so far with the settings
+that produced it, the current simulated day, the currently available units, and a JSON
+schema. During an active cycle it may request a later observation day and measurement
+channel or finish the cycle; it can update its recommendation from the resulting visible
+history without changing the committed treatment.
 
 The prompt states constraints and never gives advice: the words replication, randomisation,
 blocking, split-plot, pure error and confounding do not appear, since those name the

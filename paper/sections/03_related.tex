@@ -38,12 +38,10 @@ well-posed. We report it as a diagnostic rather than adopt it as our score: with
 hand-built configurations we can price a task directly against what a perfect reasoner
 could extract from it (\S\ref{sec:eig}), whereas hint regret estimates reachability from a
 solver's behaviour, which is what one needs when the environments are generated at scale.
-It earned its place by correcting us. \textsc{Screen} is the task we came closest to
-withdrawing, since its ceiling sits below the noise a full budget leaves
-(Table~\ref{tab:tasks}); it also carries the largest hint gap of the tasks the diagnostic
-scores, $0.27$ against $0.15$--$0.17$. A task can be at the frontier of what a solver can
-do and still be one where instance-tailoring is worth little, and only one of the two
-instruments sees each fact. Note that ``validity'' in that work means executability; the
+It earned its place by exposing that task reachability and inferential validity are
+separate questions. The Version~1 comparison to our own ceiling estimator is now archival:
+Phase~2 found that estimator miscalibrated, so Version~2 will revisit task-scale claims only
+after corrected closed-loop runs. Note that ``validity'' in that work means executability; the
 word is already claimed in this literature for something other than inferential soundness.
 
 \paragraph{Self-driving laboratories.} \citet{sdlsurvey} survey deployed self-driving

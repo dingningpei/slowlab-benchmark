@@ -5,15 +5,13 @@
 \subsection{Experimental setup}
 \label{sec:setup}
 
-We run five language models --- DeepSeek-v4-flash, GPT-5.6-luna, Qwen3.8-27B, MiMo-v2.5
-and GLM-5.3-flash --- on all four tasks, twice each: once with the interface of
-\S\ref{sec:episode} alone and once with two standard tools added (\S\ref{sec:results}).
-That is $40$ model--task cells and $800$ episodes. Four scripted strategies are run on the
-same instances and reported in Appendix~\ref{app:refs}. All five models are run at one
-sampling temperature under one prompt and come from a single price tier, which is enough to
-show that a habit is not one model's quirk and not enough to characterise the field; the
-prompt is the variable we would vary first, since we fixed one defect in it mid-study that
-cut infeasible submissions roughly fivefold.
+The Version~1 archive contains five language models, four tasks, paired bare and
+tooled interfaces, and $800$ episodes. Phase~2 uses these runs only to audit execution and
+observation defects. They are not treated as corrected Version~2 evidence because the
+density and observation fixes would have changed the feedback and hence later designs.
+Four scripted strategies remain available as implementation references in
+Appendix~\ref{app:refs}; the confirmatory model and tool comparisons will be rerun after the
+Version~2 protocol is frozen.
 
 Every task is run on the same $20$ instances. A seed draws a site, a parameter vector
 $\theta \sim P_\Theta$ with its own optimum, rather than a noise realisation, so all
@@ -96,34 +94,12 @@ scripted and language-model interfaces alike, so an agent that modelled the thre
 separately can re-solve without running anything and one that modelled only the margin
 cannot.
 
-\input{sections/_tasks_table}
+\paragraph{Version~1 task-scale diagnostics.} The original task table and its
+$\mathcal{R}^\star(\varnothing)$-based interpretation are omitted from the compiled
+Version~2 manuscript. They used the withdrawn estimator and observations affected by the
+density bug. Task budgets and factor definitions remain fixed; quantitative task scales
+will be regenerated with corrected closed-loop runs.
 
-\paragraph{How much each task can reward.} The last two columns of
-Table~\ref{tab:tasks} are the ceiling $\mathcal{R}^\star(\varnothing)$ and its ratio to
-the standard error of the mean response that a full budget can achieve. Only
-\textsc{Optimise} is comfortable, at $2.2$. \textsc{Sanity} sits at $1.3$, and
-\textsc{Screen} and \textsc{Transfer} at $0.8$ and $1.0$: on those two the whole of what
-instance-tailoring could win is at or below what the noise a full budget leaves behind.
-They are the tasks on which every agent in
-\S\ref{sec:results}, scripted and otherwise, converts a few per cent of what its design
-carried --- the two facts are the same fact --- and, at twenty instances, the tasks whose
-five-model ordering does not survive resampling the sites: split-half rank correlation runs
-in the same order as this column, from $-0.28$ on \textsc{Screen} to $+0.76$ on
-\textsc{Optimise} (Appendix~\ref{app:stability}). What each task supports is therefore
-different, and \S\ref{sec:results} reads the two low-ratio tasks only through proportions of
-submitted designs and through within-model paired contrasts, never through a leaderboard
-position. The cause is not noise we chose. It is that
-exposing more factors drives the optimum onto constraints where the remaining factors are
-worth little to locate, which Appendix~\ref{app:defects} traces. We report the ratio and
-read the results in its light; we stopped using it to admit or exclude tasks, because that
-makes the task set a function of the simulator's fine detail.
-
-Four scripted strategies --- random search, a Plackett--Burman screen followed by a
-response surface, and Bayesian optimisation at one and two replicates per treatment --- are
-released with the environment and run on all four tasks in Appendix~\ref{app:refs}. They
-are there so that a reader can see what standard methods do here. They are not the
-comparison this paper draws: the ceiling $\mathcal{R}^\star(\varnothing)$ is, because it
-does not depend on anyone's implementation choices.
 \subsection{Results}
 \label{sec:results}
 
@@ -135,8 +111,22 @@ We report the two halves of \S\ref{sec:eval} in turn, realised regret first and 
 and decision quality second, then the two effects that only appear because the benchmark
 elicits a recommendation every round and runs a paired tool arm.
 
-\subsubsection{The benchmark is far from saturated}
+\subsubsection{Version 1 results are archival}
 \label{sec:results:outcome}
+
+\textbf{Phase~2 status.} The quantitative Version~1 results below are archival.
+Phase~2 found a component-information bypass, collapse of the joint-atom history
+evaluator, and a normalised-density error that under-counted plants and overstated
+unit noise in \textsc{Screen}, \textsc{Optimise} and \textsc{Transfer}. Correcting
+the environment changes the observations that drive later closed-loop designs, so
+the old trajectories cannot be repaired by rescoring. Version~2 therefore withdraws
+claims about saturation, $c$, $\eta$, independent design and reader failures, tool
+effects, transfer gains and trajectory improvement until corrected runs exist. The
+structural count of distinct treatments remains a description of the archived
+transcripts. The obsolete result text is retained below, but excluded from the
+compiled Version~2 manuscript.
+
+\iffalse
 
 \input{sections/_results_table}
 
@@ -174,91 +164,27 @@ differing only in whether they modelled gross margin or modelled revenue and the
 streams separately, they score identically before the shock and differ by $1.47\times$
 after it ($0.0605$ against $0.0411$, paired $t = 5.5$ over $40$ sites).
 
-\subsubsection{Designs and decisions fail independently}
+\subsubsection{Version 1 mechanism claims are withdrawn}
 \label{sec:results:design}
 
-A campaign can fail because the experiments could not have answered the question, or
-because they could and the agent did not read them. \eqref{eq:capture} separates the two,
-and both are failing here.
+The Version~1 tables reported $c$ and $\eta$ as design and decision efficiencies. Phase~2
+found that this interpretation is not supported. The estimator compared a prior,
+preposterior design score with a recommendation conditioned on realised history; its finite
+joint atom posterior collapsed, and the component fields exposed a cleaner reconstruction
+of margin than the primary response. In addition, normalised density was passed to the
+plant-count calculation as though it were plants per square metre, systematically
+under-counting plants and overstating unit noise on every task containing density.
+Consequently the $c$, $\eta$, ceiling and tool-mechanism columns in the Version~1 result,
+diagnostic and tool tables are archival diagnostics rather than evidence for independent
+design and reader failures.
 
-\input{sections/_diag_table}
-
-\paragraph{The designs could not have answered the question.} Unaided, $99\%$ of designs on
-\textsc{Screen}, $92\%$ on \textsc{Transfer} and $54\%$ on \textsc{Optimise} are
-rank-deficient over the factors the task varies, so the main effects they were commissioned
-to separate are not estimable at all (Table~\ref{tab:diag}a, the \emph{bare} columns).
-Panel~b gives the cause and nearly all of it: $98\%$, $87\%$ and $50\%$ of those designs
-carry fewer distinct treatments than the task has factors plus one. The habit behind the
-number is the same everywhere --- the median design uses \emph{two} distinct treatments
-replicated across the whole facility, whether the task needs two or seven. These are not
-careless designs. All but four of the $1137$ submitted declare a randomisation seed, each
-distinct treatment carries a median of three to twelve units depending on the task, and the
-allocation respects the control hierarchy; they are designs
-that buy precision with the units coverage needed, and under a hard parallelism cap the two
-draw on the same physical units. An agent that always buys precision is under-powered
-against its own question, which is the opposite of the failure we built the benchmark
-expecting. Appendix~\ref{app:oracle} separates this from the alternative reading, that a
-low $c$ simply means the task is hard: searching the admissible set with knowledge of
-$P_\Theta$ and the forward model finds designs reaching $c$ of $27\%$ to $37\%$, so the
-best any agent reaches here is $1.4\times$ to $2.8\times$ short of what one round can buy.
-The same search puts the median narrow design well below the median wide one on every task,
-which is the form the width diagnosis actually takes: a well-placed pair of treatments can
-do well, and a typical one does not.
-
-\paragraph{The decisions then use a small fraction of what those designs allowed.} Decision
-efficiency is the half of \eqref{eq:capture} that does not blame the design: it divides the
-regret a perfect reasoner would carry \emph{on the design the agent actually submitted} by
-the regret the agent carried. The $\eta$ column of Table~\ref{tab:results} runs from $4\%$
-to $46\%$ over the twenty bare cells, and splits by task rather than by model --- $22\%$ on
-\textsc{Sanity} and $29\%$ on \textsc{Optimise} against $5\%$ on \textsc{Screen} and $6\%$
-on \textsc{Transfer}. On the two higher-dimensional tasks the campaigns leave roughly
-nineteen twentieths of what they bought on the table.
-
-The two failures are not the same failure. Within task, $c$ and $\eta$ rank-correlate at
-$+0.80$ on \textsc{Optimise}, which is the one task whose five-model ordering survives
-resampling the twenty sites (Appendix~\ref{app:stability}); the two orderings come apart on
-\textsc{Transfer} as well, but there neither is reproducible and we do not read it. A single
-score would have reported only their product, and \S\ref{sec:results:findings} shows an
-intervention that moves them in opposite directions within a model and paired by instance,
-which is the evidence that does not depend on any ordering at all.
-
-\subsubsection{Standard tools improve the design and damage the answer}
-\label{sec:results:findings}
-
-\input{sections/_tools_table}
-
-This is
-the sharpest evidence we have that the two halves of \eqref{eq:capture} measure different
-things, because it is one intervention applied within a model and paired by instance rather
-than a correlation across agents --- two numbers that moved together would be one number.
-The screening tool works: rank-deficiency falls from $99\%$ to $59\%$ on \textsc{Screen}
-and $92\%$ to $64\%$ on \textsc{Transfer}, and $c$ rises in seven of those ten cells by up
-to $6.5$ points, the other three moving by $-0.5$ to $-0.2$, inside the estimator's noise.
-In the same ten cells $\eta$ falls and realised regret rises, by $4\%$ to $59\%$; over all
-four tasks the tools make $16$ of $20$ pairs worse and four better, six significant at
-paired $p<0.05$ --- four worse and two better, both on \textsc{Optimise}
-(Table~\ref{tab:tools}).
-
-The mechanism is that the inference tool inherits whatever the design can support. It is
-the same routine our Bayesian-optimisation reference uses for its own recommendation, and
-that reference carries $0.0172$, $0.0586$, $0.0120$ and $0.0335$ on the four tasks against
-$0.0711$, $0.1257$, $0.0219$ and $0.0901$ for the identical routine fitted to a language
-model's design. Nothing about the routine changed, only what it was fitted to, and what it
-was fitted to is thinner: on the three multi-factor tasks the reference's campaigns hand it
-$1.8$ to $3.7$ times as many distinct points. Full rank is not sufficiency: the median
-tooled design on \textsc{Screen} is thirteen points over six factors, barely one level a
-factor, and its main effects are estimable long before its surface is. Appendix~\ref{app:refs} rules out the obvious alternative, that our tool is simply
-misconfigured. The models then absorb roughly a third of the tool's disadvantage: regressing
-the tools' effect on how much worse the tool's own proposal is than the model's gives a
-slope of $0.29 \pm 0.09$ at $r = 0.62$, $p = 0.004$, with the sign predicted in eighteen of
-twenty cells. A third is an average over cells, and it hides how literal the deference becomes round by
-round: in $384$ of the $693$ turns where both are visible --- $55\%$, and between $53\%$ and
-$62\%$ on every task --- the recommendation the model states is the tool's proposed point to
-six digits. The models are neither credulous nor immune, and none of them says the tool is
-wrong --- which is the regime's doing rather than the tool's. Detecting a bad tool is
-ordinarily cheap: run its recommendation, see the number, stop using it. Here that costs a
-growing cycle and the agent has at most three, so what the benchmark measures is not whether
-a model can use a tool but whether it can price one it cannot afford to test.
+Version~2 replaces those ratios with $b(H_t)$ and $g(H_t,\hat x_t)$ from
+\S\ref{sec:eig}, computed from the same visible history. Continuous crop and economic
+posteriors remove the atom-collapse failure on the Sanity calibration, and independent
+posterior samples select and evaluate the recommendation. Corrected closed-loop runs are
+still required for every model arm. We therefore make no quantitative claim here that
+standard tools improve design while damaging the answer, or that the two failures are
+independent. Those hypotheses remain targets for the Version~2 intervention study.
 
 \subsubsection{The first cycle of data often makes the recommendation worse}
 \label{sec:results:trajectory}
@@ -271,3 +197,4 @@ against $29\%$ and $26\%$ on \textsc{Screen} and \textsc{Transfer}, where the ze
 recommendation starts far enough from the optimum that one round of almost any data helps.
 Slow feedback costs an agent in proportion to how many cycles it needs, and here the first
 cycle is often spent undoing itself.
+\fi

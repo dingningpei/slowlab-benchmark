@@ -105,21 +105,16 @@ forwent, in the same currency, summed over occupied slot-days. An agent that fin
 optimum by first running every bad treatment has answered the question and exhausted the
 facility that paid for it.
 
-The other two come from $\mathcal{R}^\star(D)$, the regret a *perfect reasoner* would
-still carry given design $D$ — the prior and preposterior Bayes risk of the decision
-problem, computed from an instance distribution no agent can see:
+Version 2 conditions both diagnostic quantities on the same timestamped visible history
+$H_t$. The remaining Bayes risk is
+$b(H_t)=\min_x\mathbb{E}[R(\theta,x)\mid H_t]$; the agent's posterior excess risk is
+$g(H_t,\hat x_t)=\mathbb{E}[R(\theta,\hat x_t)\mid H_t]-b(H_t)\geq0$.
+Crop and economic parameters use separately calibrated continuous posteriors, terminal
+revenue couples them, and independent posterior samples select and evaluate the action.
 
-**Design efficiency** $c = [\mathcal{R}^\star(\varnothing) - \mathcal{R}^\star(D)] /
-\mathcal{R}^\star(\varnothing)$ — the fraction of the available risk the experiments
-removed. 0% for a design that teaches nothing, 100% for one that identifies the optimum.
-
-**Decision efficiency** $\eta = \mathcal{R}^\star(D) / \bar{\mathcal{R}}$ — what the
-design made available, over what the agent got from it. Near 100% when the recommendation
-is as good as the data allowed.
-
-The pair separates a campaign that *could not* have answered the question from one that
-could and did not. Both are reported as ranks: the *level* of $\mathcal{R}^\star$ holds
-only 0.81–0.92 between M = 80 and M = 320 atoms, while the rank correlation is 0.96–0.97.
+The Version 1 ratios $c$ and $\eta$ are withdrawn. In particular, $\eta$ cannot be read as
+the fraction of acquired information used, and their correlation, opposite movement, or
+product does not establish independent design and reader failures.
 
 ---
 
@@ -129,31 +124,16 @@ Five models — DeepSeek-v4-flash, GPT-5.6-luna, Qwen3.8-27B, MiMo-v2.5, GLM-5.3
 on all four tasks, twice each (bare and with two standard tools): 40 cells, 800 episodes,
 20 instances per cell.
 
-- **The benchmark is far from saturated.** No arm reaches
-  $\mathcal{R}^\star(\varnothing)$, the ceiling a perfect reasoner carries having run
-  nothing at all. Bare arms sit 1.8× to 23.4× above it, widest where the design problem
-  is hardest.
-- **The designs could not have answered the question.** Unaided, 99% of designs on Screen,
-  92% on Transfer and 54% on Optimise are rank-deficient over the factors the task varies.
-  The median design uses **two** distinct treatments replicated across the facility,
-  whether the task needs two or seven. These are not careless designs — they declare a
-  randomisation seed, replicate heavily and respect the control hierarchy. They buy
-  precision with the units coverage needed.
-- **Decisions then use a small fraction of what those designs allowed.** $\eta$ runs from
-  4% to 46%, splitting by task rather than by model.
-- **The two failures are independent.** Within task, $c$ and $\eta$ rank-correlate at
-  +0.80 on Optimise and −0.80 on Transfer. A single score would have reported only their
-  product.
-- **Standard tools improve the design and damage the answer.** Adding a screening-design
-  generator and a GP posterior-maximisation routine cuts rank-deficiency from 99% to 59%
-  on Screen — and makes 16 of 20 pairs worse on realised regret. The inference tool
-  inherits whatever the design supports: the same routine carries 0.0172 on its own
-  reference campaign and 0.0711 fitted to a model's design on Sanity. Models defer to it
-  in proportion to how wrong it is, and in 55% of turns the recommendation they state is
-  the tool's proposed point to six digits.
-- **The first cycle of data often makes the recommendation worse.** In 44% of episodes the
-  recommendation after round 1 is worse than the one the same model made with no data at
-  all.
+- **The Version 1 result tables are archival.** They cannot support claims about
+  saturation, task ordering or tool effects after the Phase 2 corrections.
+- **One structural transcript observation survives.** Many archived designs use few
+  distinct treatments. Its effect on corrected outcomes still requires new runs.
+- **Version 1 mechanism claims require new runs.** A component-information bypass, a
+  collapsed joint-atom evaluator and a normalised-density plant-count error invalidate the
+  reported $c/\eta$ and tool-mechanism interpretations. Corrected Version 2 closed-loop
+  runs are required before those hypotheses can be tested again.
+- **Version 2 adds within-cycle observation.** New closed-loop runs must let agents choose
+  when and what to observe; terminal-only transcripts cannot be upgraded post hoc.
 
 Full tables, with standard errors and the paired tests, are in the paper.
 
@@ -162,7 +142,7 @@ Full tables, with standard errors and the paired tests, are in the paper.
 ## Repository layout
 
 ```
-slowlab/        the environment (frozen at v1.0.0)
+slowlab/        the Version 2 environment and evaluators
   env.py          episode loop, commitment, timing, feasibility
   tasks.py        the four tasks
   world.py        P_Theta: a seed draws a site (climate, prices, crop parameters)

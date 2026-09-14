@@ -88,10 +88,11 @@ The first crop-by-economics product implementation exposed both marginal ESS
 values and showed that a discrete crop marginal collapsed. Replacing it with
 the continuous crop update removes that collapse. Terminal revenue is then the
 only field used to couple independently updated crop and economic factors, so
-cost, canopy and harvested-mass records are each counted once. The current
-product still remains diagnostic scaffolding: independent runs pass joint and
-marginal ESS checks but miss the response-curve RMSE threshold, so a convergence
-and held-out approximation bound is still required.
+cost, canopy and harvested-mass records are each counted once. At 32 by 32
+product samples, independent Sanity runs pass the response-curve threshold
+(RMSE 0.00445 EUR/(m2 day), Bayes actions 0.304 and 0.306). This establishes the
+low-dimensional calibration case, not convergence on the higher-dimensional
+tasks.
 
 The crop prior is now also represented by its original ten continuous latent
 coordinates: four standard-normal vegetative perturbations and six bounded
@@ -105,3 +106,11 @@ The old `R*(D)` remains a prior design-geometry diagnostic. It must not be calle
 `b(H)` because it does not condition on the realised full history, and the old
 efficiency ratio must not be described as the fraction of acquired information
 the agent used.
+
+`history-risk-0.3-factorized-heldout` selects a Bayes action on one continuous
+posterior sample and grades it and the agent point on a separately seeded
+posterior sample. Its best-per-world value comes from a disjoint finite candidate
+set and is therefore a feasible lower bound, reported with the
+`finite_best_lower_bound` flag. Posterior excess risk and the held-out selection
+gap are nonnegative by construction; absolute Bayes risk remains conditional on
+that finite numerical bound.
