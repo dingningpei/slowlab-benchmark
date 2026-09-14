@@ -9,20 +9,26 @@ what is already done, so a Ctrl-C or a dropped connection does not mean starting
 over.
 """
 from __future__ import annotations
-import argparse, json, pathlib, sys, time
+import argparse, hashlib, inspect, json, pathlib, sys, time
 import numpy as np
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from slowlab import SlowLabEnv, TASKS
 from slowlab.llm import LLMAgent, WithinCycleLLMAgent, zero_shot_recommendation, scripted_completer
+from slowlab import llm as llm_module
 
 
-def make_completer(model: str, temperature: float = 0.7, rpm: float = 0.0):
+def make_completer(model: str, temperature: float = 0.7, rpm: float = 0.0,
+                   max_tokens: int = 4096, reasoning_effort: str | None = None,
+                   generation_seed: int | None = None):
     """fake uses the built-in stub model; anything else goes to an OpenAI-compatible endpoint (DeepSeek / OpenAI / Qwen ...)."""
     if model == "fake":
         return scripted_completer()
     from slowlab.providers import openai_compatible
-    return openai_compatible(model, temperature=temperature, rpm=rpm)
+    return openai_compatible(model, temperature=temperature, rpm=rpm,
+                             max_tokens=max_tokens,
+                             reasoning_effort=reasoning_effort,
+                             generation_seed=generation_seed)
 
 
 def load_done(path: pathlib.Path, drop_incomplete: bool = False) -> dict:
@@ -52,6 +58,13 @@ def main():
                     help="first site seed; use a fresh range for confirmatory runs")
     ap.add_argument("--out", default="results/llm")
     ap.add_argument("--temperature", type=float, default=0.7)
+    ap.add_argument("--generation-seed", type=int, default=None,
+                    help="provider-side sampling seed, distinct from the site seed")
+    ap.add_argument("--max-tokens", type=int, default=4096)
+    ap.add_argument("--reasoning-effort", choices=["low", "medium", "high"],
+                    default=None)
+    ap.add_argument("--prompt-variant", choices=["standard", "constraint_checklist"],
+                    default="standard")
     ap.add_argument("--rpm", type=float, default=0.0,
                     help="maximum calls per minute (0 = unlimited). With multiple processes, set this to total quota / number of processes")
     ap.add_argument("--fresh", action="store_true", help="ignore existing results and rerun from scratch")
@@ -81,7 +94,8 @@ def main():
         print(f"recovery_days = {a.recovery_days} (the paper's tables are at 0; "
               f"these episodes are a separate condition)\n")
 
-    complete = make_completer(a.model, a.temperature, a.rpm)
+    complete = make_completer(a.model, a.temperature, a.rpm, a.max_tokens,
+                              a.reasoning_effort, a.generation_seed)
     out = ROOT / a.out
     out.mkdir(parents=True, exist_ok=True)
     # When running a subset of tasks, the task name goes into the filename so all
@@ -90,6 +104,12 @@ def main():
     tool_mode = a.tool_mode or ("both" if a.tools else "bare")
     suffix = "" if tool_mode == "bare" else f"+{tool_mode}-tool"
     tag = a.model.replace("/", "_") + suffix + ("+within-cycle" if a.within_cycle else "")
+    if a.generation_seed is not None:
+        tag += f"+gseed{a.generation_seed}"
+    if a.reasoning_effort:
+        tag += f"+reasoning-{a.reasoning_effort}"
+    if a.prompt_variant != "standard":
+        tag += f"+prompt-{a.prompt_variant}"
     if len(a.tasks) < 4:
         tag += "@" + "-".join(a.tasks)
     ep_path = out / f"episodes_{tag}.json"
@@ -101,6 +121,13 @@ def main():
         print(f"{len(done)} episodes already present, skipping them{extra} (--fresh forces a full rerun)\n")
 
     rows = list(done.values())
+    protocol_material = "\n".join([
+        llm_module.SYSTEM, llm_module.SYSTEM_V2, llm_module.CONSTRAINT_CHECKLIST,
+        inspect.getsource(LLMAgent._ask),
+        inspect.getsource(WithinCycleLLMAgent._cycle_prompt),
+        inspect.getsource(llm_module.tool_text), tool_mode, a.prompt_variant,
+    ])
+    prompt_protocol_hash = hashlib.sha256(protocol_material.encode()).hexdigest()
     total = len(a.tasks) * a.seeds
     n = 0
     t_start = time.time()
@@ -111,6 +138,7 @@ def main():
             if key in done:
                 continue
             t0 = time.time()
+            call_start = len(getattr(complete, "call_records", []))
             # Recall with no experiment: on the same site, first ask what the model
             # recommends with no data. The gap to its post-campaign score is what
             # this model actually gained from experimenting.
@@ -121,7 +149,8 @@ def main():
             env = SlowLabEnv(tasks[tn], seed=s)
             agent_class = WithinCycleLLMAgent if a.within_cycle else LLMAgent
             ag = agent_class(complete=complete, name=a.model,
-                             tools=a.tools, tool_mode=tool_mode)
+                             tools=a.tools, tool_mode=tool_mode,
+                             prompt_variant=a.prompt_variant)
             r = env.submit_recommendation(ag.run(env), a.model,
                                           x_transfer=getattr(ag, "x_transfer", None))
             dt = time.time() - t0
@@ -143,6 +172,16 @@ def main():
                          "infeasible": ag.infeasible_submissions,
                          "tool_mode": tool_mode,
                          "tool_use_records": ag.tool_use_records,
+                         "generation_seed": a.generation_seed,
+                         "temperature": a.temperature,
+                         "max_tokens": a.max_tokens,
+                         "reasoning_effort": a.reasoning_effort,
+                         "prompt_variant": a.prompt_variant,
+                         "api_calls": getattr(complete, "call_records", [])[call_start:],
+                         "prompt_protocol_hash": prompt_protocol_hash,
+                         "episode_prompt_hash": hashlib.sha256(json.dumps(
+                             [turn["user"] for turn in ag.transcript],
+                             ensure_ascii=False, separators=(",", ":")).encode()).hexdigest(),
                          "trace": [float(v) for v in r.regret_trace],
                          "seconds": round(dt, 1)})
             ep_path.write_text(json.dumps(rows, indent=1))          # saved after every episode

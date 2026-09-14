@@ -82,6 +82,8 @@ def openai_compatible(model: str, *, base_url: str | None = None,
                       api_key: str | None = None, temperature: float = 0.7,
                       max_tokens: int = 4096, timeout: float = 90.0,
                       max_attempts: int = 5, reasoning_cap: int = 1024,
+                      reasoning_effort: str | None = None,
+                      generation_seed: int | None = None,
                       rpm: float = 0.0) -> callable:
     """Returns a complete(messages) -> str, retrying network and rate-limit errors with exponential backoff."""
     load_dotenv()                      # allows the key to live in .env
@@ -110,11 +112,15 @@ def openai_compatible(model: str, *, base_url: str | None = None,
     # "Reasoning is mandatory for this endpoint"), so we fall back to capping it
     # rather than disabling it, which still bounds the cost. The downgrade happens
     # once and holds for the rest of the run.
-    mode = {"reasoning": {"enabled": False}} if "openrouter" in url else {}
+    mode = ({"reasoning": {"effort": reasoning_effort}}
+            if reasoning_effort else
+            {"reasoning": {"enabled": False}} if "openrouter" in url else {})
 
     def _body(messages):
         d = {"model": model, "messages": messages,
              "temperature": temperature, "max_tokens": max_tokens}
+        if generation_seed is not None:
+            d["seed"] = int(generation_seed)
         d.update(mode)
         return json.dumps(d).encode()
 
@@ -138,7 +144,21 @@ def openai_compatible(model: str, *, base_url: str | None = None,
             try:
                 with urllib.request.urlopen(req, timeout=timeout, context=_CTX) as r:
                     payload = json.loads(r.read())
-                msg = payload["choices"][0]["message"]
+                choice = payload["choices"][0]
+                msg = choice["message"]
+                complete.call_records.append({
+                    "requested_model": model,
+                    "actual_model": payload.get("model"),
+                    "provider": payload.get("provider"),
+                    "created": payload.get("created"),
+                    "finish_reason": choice.get("finish_reason"),
+                    "usage": payload.get("usage"),
+                    "attempt": attempt + 1,
+                    "generation_seed": generation_seed,
+                    "temperature": temperature,
+                    "max_tokens": max_tokens,
+                    "reasoning_effort": reasoning_effort,
+                })
                 txt = msg.get("content") or ""
                 if not txt.strip():                # some models fill only the reasoning field
                     txt = msg.get("reasoning") or ""
@@ -187,4 +207,5 @@ def openai_compatible(model: str, *, base_url: str | None = None,
                 time.sleep(2.0 * (2 ** attempt))
         raise SystemExit(f"still failing after {max_attempts} attempts: {last}")
 
+    complete.call_records = []
     return complete

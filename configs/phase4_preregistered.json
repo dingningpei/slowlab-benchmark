@@ -1,0 +1,104 @@
+{
+  "protocol_id": "slowlab-v2-phase4-confirmatory-2026-09-13",
+  "status": "frozen_before_confirmatory_execution",
+  "environment": "SlowLab V2 incremental-observation environment",
+  "primary_estimand": "paired difference in final simple regret, tool condition minus bare, averaged over generation seeds within site",
+  "primary_metric": "final_simple_regret",
+  "secondary_metrics": [
+    "cumulative_regret",
+    "campaign_cash",
+    "completed_rounds",
+    "infeasible_submissions",
+    "tool_geometric_adoption",
+    "format_failures"
+  ],
+  "models": {
+    "standard": {
+      "requested_id": "openai/gpt-5.6-luna",
+      "temperature": 0.0,
+      "max_tokens": 4096,
+      "reasoning_effort": null
+    },
+    "strong_reasoning": {
+      "requested_id": "openai/gpt-6-astra",
+      "temperature": 0.0,
+      "max_tokens": 4096,
+      "reasoning_effort": "medium"
+    }
+  },
+  "primary_matrix": {
+    "task": "T3",
+    "model": "standard",
+    "tool_modes": ["bare", "design", "inference", "both"],
+    "site_seeds": {"start": 6000, "count": 56},
+    "generation_seeds": [1701, 1702],
+    "prompt_variant": "standard"
+  },
+  "secondary_matrices": [
+    {
+      "name": "strong_model_replication",
+      "task": "T3",
+      "model": "strong_reasoning",
+      "tool_modes": ["bare", "inference"],
+      "site_seeds": {"start": 6200, "count": 24},
+      "generation_seeds": [3701, 3702],
+      "prompt_variant": "standard"
+    },
+    {
+      "name": "task_heterogeneity",
+      "tasks": ["T1", "T4"],
+      "model": "standard",
+      "tool_modes": ["bare", "inference"],
+      "site_seeds": {"start": 6400, "count": 24},
+      "generation_seeds": [5701, 5702],
+      "prompt_variant": "standard"
+    },
+    {
+      "name": "within_cycle_feedback",
+      "task": "T3",
+      "model": "standard",
+      "conditions": ["terminal_only", "within_cycle"],
+      "tool_mode": "bare",
+      "site_seeds": {"start": 6600, "count": 24},
+      "generation_seeds": [6701, 6702],
+      "prompt_variant": "standard"
+    }
+  ],
+  "exploratory_matrix": {
+    "name": "constraint_prompt_variant",
+    "task": "T3",
+    "model": "standard",
+    "tool_modes": ["bare", "inference"],
+    "site_seeds": {"start": 6800, "count": 12},
+    "generation_seeds": [7701, 7702],
+    "prompt_variants": ["standard", "constraint_checklist"]
+  },
+  "analysis": {
+    "statistical_unit": "site",
+    "within_site_replicate": "provider generation seed",
+    "primary_contrasts": [
+      "inference_minus_bare",
+      "design_minus_bare",
+      "both_minus_bare"
+    ],
+    "primary_multiplicity": "Holm family-wise correction across three contrasts",
+    "secondary_multiplicity": "Benjamini-Hochberg FDR within each named secondary family",
+    "confidence_intervals": "site-cluster bootstrap, 10000 resamples, percentile 95% interval",
+    "missing_episode_rule": "retry transport/rate failures with the same site and generation seed; keep model format failures and infeasible designs; report unresolved missing cells and do not impute",
+    "stopping_rule": "no efficacy stopping; execution may pause for budget or service availability without inspecting condition effects",
+    "evaluator_uncertainty": "rerun key history-risk estimates with three independent evaluator seeds and combine between-site and Monte Carlo variance"
+  },
+  "precision_basis": {
+    "source": "Phase 1 corrected paired tool contrasts",
+    "planning_sd_quantile": 0.75,
+    "target_95ci_half_width": 0.018,
+    "primary_site_count": 56
+  },
+  "reserved_test_sites": {
+    "confirmatory_ranges": [[6000, 6055], [6200, 6223], [6400, 6423], [6600, 6623], [6800, 6811]],
+    "never_used_for_debugging_or_tuning_before_freeze": true
+  },
+  "prompt_hash_policy": "record protocol-template SHA256 and episode realized-prompt SHA256",
+  "api_metadata_policy": "record requested and actual model id, provider, created timestamp, temperature, generation seed, max tokens, reasoning effort, usage, retry attempt and finish reason",
+  "exploratory_results_do_not_enter_primary_family": true
+}

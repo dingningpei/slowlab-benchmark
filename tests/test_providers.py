@@ -69,3 +69,35 @@ def test_mandatory_reasoning_endpoint_falls_back_to_a_cap(monkeypatch):
     assert calls[1]["reasoning"] == {"max_tokens": 777}
     f([{"role": "user", "content": "hi"}])
     assert calls[2]["reasoning"] == {"max_tokens": 777}     # no longer retries with it disabled
+
+
+def test_generation_seed_reasoning_and_response_metadata_are_recorded(monkeypatch):
+    import json
+    import slowlab.providers as P
+
+    bodies = []
+
+    class _Resp:
+        def read(self):
+            return json.dumps({
+                "model": "actual/model", "provider": "test-provider", "created": 123,
+                "usage": {"prompt_tokens": 4, "completion_tokens": 2},
+                "choices": [{"finish_reason": "stop", "message": {"content": "ok"}}],
+            }).encode()
+        def __enter__(self): return self
+        def __exit__(self, *args): pass
+
+    def fake(req, timeout=None, context=None):
+        bodies.append(json.loads(req.data.decode()))
+        return _Resp()
+
+    monkeypatch.setattr(P.urllib.request, "urlopen", fake)
+    monkeypatch.setenv("OPENROUTER_API_KEY", "sk-test")
+    complete = P.openai_compatible(
+        "openai/gpt-test", generation_seed=1701, reasoning_effort="medium",
+        temperature=0.0, max_tokens=321)
+    assert complete([{"role": "user", "content": "hi"}]) == "ok"
+    assert bodies[0]["seed"] == 1701
+    assert bodies[0]["reasoning"] == {"effort": "medium"}
+    assert complete.call_records[0]["actual_model"] == "actual/model"
+    assert complete.call_records[0]["usage"]["completion_tokens"] == 2

@@ -267,6 +267,7 @@ class LLMAgent:
     tool_mode: str | None = None # bare / design / inference / both
     tool_use_records: list = field(default_factory=list)
     max_observation_times: int = 4
+    prompt_variant: str = "standard"
 
     def effective_tool_mode(self) -> str:
         mode = self.tool_mode or ("both" if self.tools else "bare")
@@ -275,7 +276,11 @@ class LLMAgent:
         return mode
 
     def _system_prompt(self) -> str:
-        return SYSTEM
+        if self.prompt_variant == "standard":
+            return SYSTEM
+        if self.prompt_variant == "constraint_checklist":
+            return SYSTEM + "\n\n" + CONSTRAINT_CHECKLIST
+        raise ValueError(f"unknown prompt variant {self.prompt_variant!r}")
 
     def _ask(self, env, feedback: str | None) -> dict:
         user = "\n\n".join([
@@ -429,7 +434,11 @@ class WithinCycleLLMAgent(LLMAgent):
     """Version 2 LLM protocol with agent-chosen within-cycle observation days."""
 
     def _system_prompt(self) -> str:
-        return SYSTEM_V2
+        if self.prompt_variant == "standard":
+            return SYSTEM_V2
+        if self.prompt_variant == "constraint_checklist":
+            return SYSTEM_V2 + "\n\n" + CONSTRAINT_CHECKLIST
+        raise ValueError(f"unknown prompt variant {self.prompt_variant!r}")
 
     def _cycle_prompt(self, env, visits_left: int) -> str:
         active = env._active
@@ -586,6 +595,11 @@ already know about this crop. Reply with JSON and nothing else:
 TOOLS_HEADER = """You have output from the following standard tools. Use it, adapt it, or ignore it.
 {body}
 """
+
+CONSTRAINT_CHECKLIST = """Before submitting a design, explicitly verify internally that
+every unit is allocated at most once, the allocation stays within the round cap,
+all values are within bounds, and every chamber-level factor is constant inside
+each chamber. Return the requested JSON only; do not print the checklist."""
 
 
 def tool_artifacts(env) -> dict:

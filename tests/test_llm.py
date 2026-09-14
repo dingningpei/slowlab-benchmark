@@ -239,3 +239,13 @@ def test_four_tool_modes_are_factorial_and_record_adoption():
     assert "TOOL 1" in first_prompts["design"] and "TOOL 2" not in first_prompts["design"]
     assert "TOOL 1" not in first_prompts["inference"] and "TOOL 2" in first_prompts["inference"]
     assert "TOOL 1" in first_prompts["both"] and "TOOL 2" in first_prompts["both"]
+
+
+def test_constraint_checklist_is_a_small_prespecified_prompt_variant():
+    from slowlab.llm import CONSTRAINT_CHECKLIST, LLMAgent, WithinCycleLLMAgent
+    standard = LLMAgent(complete=lambda _: "")._system_prompt()
+    variant = LLMAgent(
+        complete=lambda _: "", prompt_variant="constraint_checklist")._system_prompt()
+    assert variant == standard + "\n\n" + CONSTRAINT_CHECKLIST
+    assert CONSTRAINT_CHECKLIST in WithinCycleLLMAgent(
+        complete=lambda _: "", prompt_variant="constraint_checklist")._system_prompt()
