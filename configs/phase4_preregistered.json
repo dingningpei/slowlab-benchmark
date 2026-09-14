@@ -1,8 +1,8 @@
 {
-  "protocol_id": "slowlab-v2-phase4-confirmatory-2026-09-13-a1",
-  "status": "frozen_amendment_before_confirmatory_execution",
-  "amends": "slowlab-v2-phase4-confirmatory-2026-09-13",
-  "amendment_reason": "User rejected GPT-6 Astra cost before any confirmatory episode was produced; replaced it with the GPT-5.6 flagship at one fifth of Astra token prices.",
+  "protocol_id": "slowlab-v2-phase4-confirmatory-2026-09-13-a2",
+  "status": "frozen_execution_amendment",
+  "amends": "slowlab-v2-phase4-confirmatory-2026-09-13-a1",
+  "amendment_reason": "After the first 56-episode bare cell, remove the runner's redo-incomplete flag because incomplete rounds caused by model stopping or infeasible designs are outcomes under the already frozen missing-data rule, not transport failures. No completed row is removed or rerun.",
   "environment": "SlowLab V2 incremental-observation environment",
   "primary_estimand": "paired difference in final simple regret, tool condition minus bare, averaged over generation seeds within site",
   "primary_metric": "final_simple_regret",

@@ -1,7 +1,8 @@
 # Phase 4 preregistered analysis plan
 
-Protocol `slowlab-v2-phase4-confirmatory-2026-09-13-a1` is frozen before any site
-in the declared ranges is executed. The machine-readable source of truth is
+Protocol `slowlab-v2-phase4-confirmatory-2026-09-13-a2` governs the current run. Its
+base protocol and cost amendment were frozen before any declared site was executed;
+the execution-only a2 amendment is documented below. The machine-readable source of truth is
 `configs/phase4_preregistered.json`. Changes after the first confirmatory API
 call require a new protocol id and are reported as amendments; existing results
 remain under the original id.
@@ -72,3 +73,13 @@ for this decision, Sol charged 0.000002 per input token and 0.00001 per output
 token, one fifth of Astra's 0.00001 and 0.00005. All tasks, seeds, hypotheses,
 metrics, and analysis rules remain unchanged. The original manifest is retained
 and amendment a1 receives a new manifest before execution.
+
+## Amendment a2
+
+After the first 56-episode bare cell completed, the execution log showed that
+some models voluntarily stopped or exhausted retries on infeasible designs. The
+frozen missing-data rule already defines these as observed model outcomes. The
+generic runner had nevertheless passed `--redo-incomplete`, which would rerun
+such outcomes if a later process resumed. Amendment a2 removes that flag before
+any resume occurs. All 56 existing rows are retained unchanged; hypotheses,
+conditions, seeds, prompts, metrics, and analysis code are unchanged.

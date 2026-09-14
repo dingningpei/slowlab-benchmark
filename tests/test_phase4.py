@@ -24,6 +24,7 @@ def test_frozen_runner_expands_every_primary_generation_seed_and_mode(tmp_path):
         "1701", "1702"}
     assert {text.split("--tool-mode ")[1].split()[0] for text in texts} == {
         "bare", "design", "inference", "both"}
+    assert all("--redo-incomplete" not in text for text in texts)
 
 
 def test_cost_amendment_uses_sol_for_strong_model(tmp_path):

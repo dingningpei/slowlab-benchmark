@@ -54,7 +54,7 @@ def commands(config, selection, out_root):
                             "--seed-start", str(sites["start"]),
                             "--generation-seed", str(generation_seed),
                             "--tool-mode", mode, "--prompt-variant", variant,
-                            "--out", str(destination), "--redo-incomplete"]
+                            "--out", str(destination)]
                     if within:
                         cmd.append("--within-cycle")
                     yield name, cmd
@@ -73,7 +73,8 @@ def main():
     config = json.loads(args.config.read_text())
     if config.get("status") not in {
             "frozen_before_confirmatory_execution",
-            "frozen_amendment_before_confirmatory_execution"}:
+            "frozen_amendment_before_confirmatory_execution",
+            "frozen_execution_amendment"}:
         raise SystemExit("refusing to execute a protocol that is not frozen")
     for name, cmd in commands(config, args.matrix, args.out_root):
         print(name, " ".join(cmd), flush=True)
