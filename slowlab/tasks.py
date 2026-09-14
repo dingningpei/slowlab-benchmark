@@ -10,7 +10,7 @@ Three differences from the earlier GP version:
     no longer injected by hand
 """
 from __future__ import annotations
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 
 from .world import MANAGEMENT_FACTORS
 
@@ -70,10 +70,14 @@ class Task:
     recovery_days: float = 0.0        # 0 disables it (the default, which keeps existing results unchanged)
     damage_margin: float = 2.0        # degrees above TCRIT before damage counts
     damage_scale: float = 6.0         # further degrees to reach the full recovery period
+    shared_control: bool = True       # false only in the Phase 3 hierarchy counterfactual
 
     @property
     def factors(self):
-        return _pick(*self.factor_names)
+        factors = _pick(*self.factor_names)
+        if not self.shared_control:
+            factors = [replace(factor, control_level="loop") for factor in factors]
+        return factors
 
     @property
     def d(self) -> int:

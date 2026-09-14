@@ -178,6 +178,10 @@ class ConstraintAwareBatchBOAgent:
     def recommend(self, env):
         return self.reader.recommend(env)
 
+    def complete_round(self, env):
+        """Observation-policy hook; the terminal arm simply waits for completion."""
+        env.advance()
+
     def run(self, env):
         task = env.task
         rng = np.random.default_rng(env.seed + 3103)
@@ -230,10 +234,58 @@ class ConstraintAwareBatchBOAgent:
             if not isinstance(accepted, int):
                 break
             self.replication_history.append(reps)
-            env.advance()
+            self.complete_round(env)
             env.interim_recommendation(self.recommend(env))
         self.probes = block_aware_probe_intervals(env, self.reader)
         return self.recommend(env)
+
+
+class ScheduledObservationBatchBOAgent(ConstraintAwareBatchBOAgent):
+    """Same BO policy with two cost-matched within-cycle canopy visits.
+
+    ``active=False`` visits days 70 and 140.  ``active=True`` uses the day-70
+    canopy spread to bring the second visit forward to day 105 when treatments
+    already separate.  Measurements update the interim recommendation, while
+    the next design still uses the same completed-history reader.
+    """
+
+    name = "within_cycle_batch_bo"
+
+    def __init__(self, active=False, **kwargs):
+        super().__init__(**kwargs)
+        self.active_observation = bool(active)
+        self.visit_records = []
+
+    @staticmethod
+    def _point_for_treatment(env, treatment):
+        design = env._designs[env._active.design_id]
+        return np.asarray([design.treatments[treatment][factor.name]
+                           for factor in env.task.factors], float)
+
+    def _visit(self, env, day):
+        env.advance_to(day)
+        measurements = env.observe(modality="canopy_lai")
+        by_treatment = {}
+        for measurement in measurements:
+            by_treatment.setdefault(measurement.treatment, []).append(measurement.value)
+        means = {key: float(np.mean(values)) for key, values in by_treatment.items()}
+        best = max(means, key=means.get)
+        env.interim_recommendation(self._point_for_treatment(env, best))
+        values = np.asarray(list(means.values()), float)
+        separation = ((values.max() - values.min()) / max(abs(values.mean()), 1e-9)
+                      if len(values) > 1 else 0.0)
+        self.visit_records.append({"round": int(env.round), "day": int(day),
+                                   "separation": float(separation),
+                                   "n_measurements": len(measurements),
+                                   "cost": float(sum(m.cost for m in measurements)),
+                                   "treatment_means": means})
+        return separation
+
+    def complete_round(self, env):
+        separation = self._visit(env, 70)
+        second_day = 105 if self.active_observation and separation >= 0.10 else 140
+        self._visit(env, second_day)
+        env.advance()
 
 
 class PriorOptimalFixedAgent:
