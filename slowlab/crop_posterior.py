@@ -102,7 +102,10 @@ def crop_history_moments(latent_coordinates, events, task, *,
                 samples_by_record[index] = samples
                 means[:, index] = samples.mean(axis=1)
 
-        density = treatment.get("density", 3.0)
+        density_factor = next(
+            (factor for factor in task.factors if factor.name == "density"), None)
+        density = (density_factor.denorm(treatment["density"])
+                   if density_factor is not None else 3.0)
         n_plants = facility.plants_per_unit(density)
         for i in indices:
             ai = samples_by_record[i] - means[:, i, None]

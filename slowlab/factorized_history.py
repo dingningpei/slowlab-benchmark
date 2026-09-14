@@ -11,7 +11,7 @@ from .economic_posterior import (ECONOMIC_MODALITIES, EconomicPosterior,
 from .eig import AtomSet
 from .history_likelihood import (atom_history_moments,
                                  posterior_weights_from_moments)
-from .world import ManagedTomgro
+from .world import MANAGEMENT_FACTORS, ManagedTomgro
 
 
 @dataclass
@@ -25,6 +25,8 @@ class FactorizedHistoryPosterior:
     records: tuple
     economic_posterior: EconomicPosterior
     crop_posterior: CropPosterior
+    crop_parameters: tuple
+    economic_models: tuple
 
     @property
     def effective_sample_size(self):
@@ -37,6 +39,41 @@ class FactorizedHistoryPosterior:
     @property
     def economic_effective_sample_size(self):
         return float(1.0 / np.sum(self.economic_marginal ** 2))
+
+    def mean_response(self, points):
+        """Posterior-world responses without repeating crop simulation per economy."""
+        points = np.atleast_2d(np.asarray(points, float))
+        template = ManagedTomgro(
+            seed=0, params=self.crop_parameters[0],
+            econ=self.economic_models[0], factors=self.atoms.worlds[0].factors,
+            cycle_days=self.atoms.worlds[0].cycle_days)
+        physical = template._split(points)
+        for factor in MANAGEMENT_FACTORS:
+            physical.setdefault(factor.name, np.full(len(points), factor.denorm(0.5)))
+        days = np.full(len(points), template.cycle_days)
+
+        marketable_rate = []
+        for params in self.crop_parameters:
+            crop_world = ManagedTomgro(
+                seed=0, params=params, econ=self.economic_models[0],
+                factors=template.factors, cycle_days=template.cycle_days)
+            state = crop_world.start(points)
+            crop_world.advance_state(state, int(state.end.max()))
+            kg = crop_world.econ.marketable_kg(state.WM_final)
+            marketable_rate.append(np.asarray(kg, float) / days)
+        marketable_rate = np.asarray(marketable_rate)
+
+        output = np.empty((len(self.crop_parameters),
+                           len(self.economic_models), len(points)))
+        for index, econ in enumerate(self.economic_models):
+            cost = (econ.energy_cost(
+                physical["day_temp"], physical["night_temp"], physical["par"])
+                + econ.other_cost(
+                    physical["co2"], physical["day_temp"],
+                    physical["night_temp"], physical["density"], days))
+            coefficient = econ.price_per_kg_fw - econ.harvest_labour_per_kg
+            output[:, index, :] = marketable_rate * coefficient - cost
+        return output.reshape(len(self.atoms.worlds), len(points))
 
 
 def factorized_history_posterior(
@@ -113,4 +150,5 @@ def factorized_history_posterior(
         atoms=atoms, weights=weights, crop_indices=crop_indices,
         economic_indices=economic_indices, crop_marginal=crop_marginal,
         economic_marginal=economic_marginal, records=tuple(records),
-        economic_posterior=econ_post, crop_posterior=crop_post)
+        economic_posterior=econ_post, crop_posterior=crop_post,
+        crop_parameters=tuple(crop_params), economic_models=tuple(econ_models))

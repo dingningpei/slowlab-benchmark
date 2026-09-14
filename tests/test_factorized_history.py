@@ -42,3 +42,7 @@ def test_non_cost_records_update_product_with_finite_normalised_weights():
     assert np.isclose(posterior.weights.sum(), 1.0)
     assert np.isclose(posterior.crop_marginal.sum(), 1.0)
     assert np.isclose(posterior.economic_marginal.sum(), 1.0)
+    points = np.array([[0.2], [0.8]])
+    np.testing.assert_allclose(
+        posterior.mean_response(points),
+        posterior.atoms.mean_response(points), rtol=1e-12, atol=1e-12)

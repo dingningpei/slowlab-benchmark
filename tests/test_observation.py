@@ -145,6 +145,19 @@ def test_completed_fields_are_algebraically_consistent():
             observation.other_cost_rate, env.TERMINAL_RATE_DECIMALS)
 
 
+def test_normalised_density_is_converted_before_counting_plants():
+    env = SlowLabEnv(TASKS["T3"], seed=13)
+    design = _design(env)
+    env.submit_design(design)
+    active = env._start_pending()
+    density_factor = next(f for f in env.task.factors if f.name == "density")
+    expected = [env.facility.plants_per_unit(
+        density_factor.denorm(design.treatments[tid]["density"]))
+        for tid, _ in active.rows]
+    assert active.plant_counts == expected
+    assert min(active.plant_counts) >= round(density_factor.low * 12)
+
+
 def test_common_history_is_ordered_copied_and_censored_at_current_time():
     env = SlowLabEnv(TASKS["T3"], seed=23)
     env.submit_design(_design(env))

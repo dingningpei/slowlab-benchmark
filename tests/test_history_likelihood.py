@@ -1,6 +1,7 @@
 import copy
 
 import numpy as np
+import pytest
 
 from slowlab.design import Design
 from slowlab.eig import AtomSet
@@ -70,3 +71,29 @@ def test_full_history_likelihood_covers_measurements_and_terminal_components():
         n_mc_plant=8, likelihood_seed=3, n_outer=30, simulation_seed=4)
     assert len(trajectory) == 1 and trajectory[0].phase == "final"
     assert trajectory[0].posterior_excess_risk >= 0
+
+
+def test_terminal_nuisance_covariance_uses_each_sites_response_scale():
+    task = copy.deepcopy(TASKS["Sanity"])
+    task.plant_cv = 0.0
+    task.tau_chamber, task.tau_loop, task.tau_batch = 0.03, 0.02, 0.01
+    env = SlowLabEnv(task, seed=4)
+    env.submit_design(Design(
+        {"a": {"day_temp": .5}}, {"a": ["c0l0"]}, randomization_seed=1))
+    env.advance()
+    worlds = [ManagedTomgro(seed=seed, factors=task.factors,
+                            cycle_days=task.cycle_days)
+              for seed in (101, 109)]
+    atoms = AtomSet(worlds, np.array([[.5], [.5]]), np.zeros(2, int),
+                    n_cells=1, nbins=2, task_name=task.name)
+    _, _, covariances, records = atom_history_moments(
+        atoms, env.history(), task, n_mc_plant=2)
+    revenue_index = next(i for i, record in enumerate(records)
+                         if record.modality == "terminal_revenue_rate")
+    resolution_variance = 10.0 ** (-2 * env.TERMINAL_RATE_DECIMALS) / 12.0
+    tau2 = task.tau_chamber ** 2 + task.tau_loop ** 2 + task.tau_batch ** 2
+    for world, covariance in zip(worlds, covariances):
+        expected = tau2 * world.response_sd ** 2 + resolution_variance + 1e-12
+        assert covariance[revenue_index, revenue_index] == pytest.approx(
+            expected, rel=1e-7)
+    assert worlds[0].response_sd != pytest.approx(worlds[1].response_sd)

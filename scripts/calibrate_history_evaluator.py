@@ -304,12 +304,12 @@ def factorized_product_calibration():
     grid = np.linspace(0.0, 1.0, 501)[:, None]
     for seed in (0, 1):
         posterior = factorized_history_posterior(
-            history, task, n_crop_particles=96, n_crop_product=16,
+            history, task, n_crop_particles=128, n_crop_product=32,
             crop_seed=seed, crop_likelihood_seed=991,
-            n_economic_particles=96, n_economic_product=16,
+            n_economic_particles=128, n_economic_product=32,
             economic_seed=seed, likelihood_seed=20 + seed,
             n_mc_plant=16, mcmc_steps=4)
-        curve = posterior.weights @ posterior.atoms.mean_response(grid)
+        curve = posterior.weights @ posterior.mean_response(grid)
         curves.append(curve)
         runs.append({
             "seed": seed,

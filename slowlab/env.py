@@ -435,9 +435,12 @@ class SlowLabEnv:
         # *One unit is the whole stand on one loop* and the observation is their
         # mean, so each unit draws n_p plants and averages them; n_p follows from
         # that unit's density and the loop area.
-        dens_name = "density" if "density" in {f.name for f in self.task.factors} else None
+        density_factor = next(
+            (factor for factor in self.task.factors if factor.name == "density"), None)
         n_p = [self.facility.plants_per_unit(
-                   d.treatments[tid][dens_name] if dens_name else 3.0) for tid, _ in rows]
+                   density_factor.denorm(d.treatments[tid]["density"])
+                   if density_factor is not None else 3.0)
+               for tid, _ in rows]
         big = np.repeat(X, n_p, axis=0)
         pp = self.truth.sample_plant_params(len(big), self.rng, self.task.plant_cv)
         cut = np.cumsum([0] + list(n_p))

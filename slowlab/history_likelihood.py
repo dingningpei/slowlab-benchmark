@@ -122,7 +122,11 @@ def atom_history_moments(atoms, events, task, *, n_mc_plant=64, seed=0):
                         continue
                     a = samples[(records[i].day, records[i].modality)]
                     b = samples[(records[j].day, records[j].modality)]
-                    density = treatment.get("density", 3.0)
+                    density_factor = next(
+                        (factor for factor in task.factors
+                         if factor.name == "density"), None)
+                    density = (density_factor.denorm(treatment["density"])
+                               if density_factor is not None else 3.0)
                     n_plants = facility.plants_per_unit(density)
                     biological[i, j] = float(np.cov(a, b, ddof=1)[0, 1] / n_plants)
 
