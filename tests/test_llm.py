@@ -211,3 +211,25 @@ def test_scripted_arrays_and_component_reader_use_only_visible_history():
     assert Xc.shape == (0, env.task.d) and all(v.size == 0 for v in fields.values())
     env.advance()
     assert len(env.as_arrays()[1]) == len(env.observations())
+
+
+def test_four_tool_modes_are_factorial_and_record_adoption():
+    from slowlab import SlowLabEnv, TASKS
+    from slowlab.llm import LLMAgent, scripted_completer
+    first_prompts = {}
+    for mode in ("bare", "design", "inference", "both"):
+        env = SlowLabEnv(TASKS["T3"], seed=11)
+        env.truth._oracle = (np.full(env.task.d, 0.5), 0.0)
+        agent = LLMAgent(complete=scripted_completer(), tool_mode=mode)
+        agent.run(env)
+        first_prompts[mode] = agent.transcript[0]["user"]
+        if mode == "bare":
+            assert agent.tool_use_records == []
+        else:
+            assert len(agent.tool_use_records) == env.task.n_rounds
+            assert all(record["delivery"] == "passive_prompt_output"
+                       for record in agent.tool_use_records)
+    assert "TOOL 1" not in first_prompts["bare"] and "TOOL 2" not in first_prompts["bare"]
+    assert "TOOL 1" in first_prompts["design"] and "TOOL 2" not in first_prompts["design"]
+    assert "TOOL 1" not in first_prompts["inference"] and "TOOL 2" in first_prompts["inference"]
+    assert "TOOL 1" in first_prompts["both"] and "TOOL 2" in first_prompts["both"]

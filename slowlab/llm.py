@@ -263,8 +263,16 @@ class LLMAgent:
     transcript: list = field(default_factory=list)
     format_failures: int = 0
     infeasible_submissions: int = 0
-    tools: bool = False          # the tool ablation: put standard tools' output into the prompt
+    tools: bool = False          # backwards-compatible alias for tool_mode="both"
+    tool_mode: str | None = None # bare / design / inference / both
+    tool_use_records: list = field(default_factory=list)
     max_observation_times: int = 4
+
+    def effective_tool_mode(self) -> str:
+        mode = self.tool_mode or ("both" if self.tools else "bare")
+        if mode not in {"bare", "design", "inference", "both"}:
+            raise ValueError(f"unknown tool mode {mode!r}")
+        return mode
 
     def _system_prompt(self) -> str:
         return SYSTEM
@@ -273,7 +281,8 @@ class LLMAgent:
         user = "\n\n".join([
             _facility_text(env),
             _observations_text(env),
-        ] + ([tool_text(env)] if self.tools else []) + [
+        ] + ([tool_text(env, self.effective_tool_mode())]
+             if self.effective_tool_mode() != "bare" else []) + [
             f"ROUNDS REMAINING: {env.rounds_left}",
             f"UNITS YOU MAY DRAW FROM (choose at most {env.task.units_per_round}): "
             + ", ".join(env.available_units()),
@@ -285,6 +294,43 @@ class LLMAgent:
         reply = self.complete(msgs)
         self.transcript.append({"user": user, "assistant": reply})
         return _extract_json(reply)
+
+    def _record_tool_use(self, env, design, blob) -> None:
+        mode = self.effective_tool_mode()
+        if mode == "bare":
+            return
+        artifacts = tool_artifacts(env)
+        names = [factor.name for factor in env.task.factors]
+        proposed = np.asarray([[values[name] for name in names]
+                               for values in design.treatments.values()], float)
+        suggested_design = artifacts.get("design")
+        design_distance = None
+        if suggested_design is not None and len(proposed):
+            suggested = np.asarray([[values[name] for name in names]
+                                    for tid, values in suggested_design.treatments.items()
+                                    if tid in suggested_design.allocation], float)
+            if len(suggested):
+                distances = np.sqrt(((proposed[:, None] - suggested[None, :]) ** 2).sum(-1))
+                design_distance = float(0.5 * (distances.min(1).mean() +
+                                               distances.min(0).mean()))
+        recommendation_distance = None
+        if artifacts.get("inference") is not None and "current_best" in blob:
+            try:
+                current = _to_point(env, blob["current_best"])
+                recommendation_distance = float(np.linalg.norm(
+                    current - artifacts["inference"]) / np.sqrt(env.task.d))
+            except Exception:
+                pass
+        self.tool_use_records.append({
+            "round": int(env.round), "mode": mode,
+            "delivery": "passive_prompt_output", "invoked_by_model": False,
+            "design_distance": design_distance,
+            "design_adopted": (None if design_distance is None else design_distance <= 0.10),
+            "recommendation_distance": recommendation_distance,
+            "inference_adopted": (None if recommendation_distance is None
+                                  else recommendation_distance <= 0.05),
+            "reasoning": str(blob.get("reasoning", ""))[:800],
+        })
 
     def _execute_submitted_round(self, env, best):
         """Terminal-only control arm: reveal nothing until the crop finishes."""
@@ -316,6 +362,7 @@ class LLMAgent:
                         self.x_transfer = best
                         return best
                     design = _to_design(env, blob)
+                    self._record_tool_use(env, design, blob)
                 except Exception as exc:                    # format or parse failure
                     self.format_failures += 1
                     feedback = f"could not parse your reply ({exc})"
@@ -535,49 +582,72 @@ already know about this crop. Reply with JSON and nothing else:
 # We expected something similar, and "tools were supplied and did not help" is
 # itself a reportable result.
 
-TOOLS_HEADER = """You also have the output of two standard tools, already run on this
-problem. Use them, adapt them, or ignore them.
-
-TOOL 1 - screening design (Plackett-Burman with replicated centre points), a ready-to-run
-allocation for this facility:
-{design}
-
-TOOL 2 - Gaussian-process fit to every observation so far; its posterior maximum is at:
-{gp}
+TOOLS_HEADER = """You have output from the following standard tools. Use it, adapt it, or ignore it.
+{body}
 """
 
 
-def tool_text(env) -> str:
-    """The two tools' output, assembled into a block that can go into the prompt."""
-    import numpy as np
+def tool_artifacts(env) -> dict:
+    """Return normalized tool outputs so adoption can be measured geometrically."""
     from .agents import _pb12, respect_hierarchy, chamber_safe_allocation, _gp_posterior_max
     rng = np.random.default_rng(0)
     t, names = env.task, [f.name for f in env.task.factors]
+    design = None
     try:
-        P = _pb12()[:, :t.d] * 0.25 + 0.5      # +/-1 -> 0.25 / 0.75 within the normalised range
+        P = _pb12()[:, :t.d] * 0.25 + 0.5
         P = respect_hierarchy(P, t, env.facility, rng)
         tids = [f"t{i}" for i in range(len(P))]
-        trt = {tid: {n: float(P[i][j]) for j, n in enumerate(names)}
-               for i, tid in enumerate(tids)}
-        alloc = chamber_safe_allocation(tids, 1, env.facility, rng, trt, t,
-                                        avail=env.available_units())
-        lines = []
-        for tid, uids in alloc.items():
-            vals = ", ".join(f"{n}={t.factors[j].low + trt[tid][n] * (t.factors[j].high - t.factors[j].low):.1f}"
-                             for j, n in enumerate(names))
-            lines.append(f"  {tid}: {vals}  -> units {list(uids)}")
-        design = "\n".join(lines) if lines else "  (facility too small for this design)"
-    except Exception as exc:
-        design = f"  (unavailable: {exc})"
+        treatments = {tid: {name: float(P[i][j]) for j, name in enumerate(names)}
+                      for i, tid in enumerate(tids)}
+        allocation = chamber_safe_allocation(
+            tids, 1, env.facility, rng, treatments, t, avail=env.available_units())
+        design = Design(treatments, allocation, randomization_seed=0,
+                        question="supplied screening tool")
+    except Exception:
+        design = None
     X, y = env.as_arrays()
-    if len(y):
-        x = _gp_posterior_max(env)
-        gp = "  " + ", ".join(
-            f"{n}={t.factors[j].low + x[j] * (t.factors[j].high - t.factors[j].low):.1f}"
-            for j, n in enumerate(names))
-    else:
-        gp = "  (no observations yet)"
-    return TOOLS_HEADER.format(design=design, gp=gp)
+    inference = _gp_posterior_max(env) if len(y) else None
+    return {"design": design, "inference": inference}
+
+
+def design_tool_text(env, artifact=None) -> str:
+    artifact = artifact if artifact is not None else tool_artifacts(env)["design"]
+    if artifact is None:
+        return "TOOL 1 - screening design: unavailable for this facility."
+    t, names = env.task, [f.name for f in env.task.factors]
+    lines = []
+    for tid, units in artifact.allocation.items():
+        values = artifact.treatments[tid]
+        setting = ", ".join(
+            f"{name}={t.factors[j].denorm(values[name]):.1f}"
+            for j, name in enumerate(names))
+        lines.append(f"  {tid}: {setting}  -> units {list(units)}")
+    return ("TOOL 1 - screening design (Plackett-Burman), ready to run:\n" +
+            ("\n".join(lines) if lines else "  unavailable"))
+
+
+def inference_tool_text(env, artifact=None) -> str:
+    artifact = artifact if artifact is not None else tool_artifacts(env)["inference"]
+    if artifact is None:
+        return "TOOL 2 - Gaussian-process posterior maximum: unavailable before observations."
+    t = env.task
+    point = ", ".join(
+        f"{factor.name}={factor.denorm(artifact[j]):.1f}"
+        for j, factor in enumerate(t.factors))
+    return "TOOL 2 - Gaussian-process posterior maximum from visible observations:\n  " + point
+
+
+def tool_text(env, mode="both") -> str:
+    """Render design-only, inference-only or combined passive tool output."""
+    if mode not in {"design", "inference", "both"}:
+        raise ValueError(f"tool_text needs design, inference or both; got {mode!r}")
+    artifacts = tool_artifacts(env)
+    parts = []
+    if mode in {"design", "both"}:
+        parts.append(design_tool_text(env, artifacts["design"]))
+    if mode in {"inference", "both"}:
+        parts.append(inference_tool_text(env, artifacts["inference"]))
+    return TOOLS_HEADER.format(body="\n\n".join(parts))
 
 
 def zero_shot_recommendation(env, complete, max_retries: int = 3):

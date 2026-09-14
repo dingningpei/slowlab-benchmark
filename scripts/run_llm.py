@@ -14,7 +14,7 @@ import numpy as np
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from slowlab import SlowLabEnv, TASKS
-from slowlab.llm import LLMAgent, zero_shot_recommendation, scripted_completer
+from slowlab.llm import LLMAgent, WithinCycleLLMAgent, zero_shot_recommendation, scripted_completer
 
 
 def make_completer(model: str, temperature: float = 0.7, rpm: float = 0.0):
@@ -48,6 +48,8 @@ def main():
     ap.add_argument("--model", default="fake")
     ap.add_argument("--tasks", nargs="+", default=["Optimise"])
     ap.add_argument("--seeds", type=int, default=20)
+    ap.add_argument("--seed-start", type=int, default=0,
+                    help="first site seed; use a fresh range for confirmatory runs")
     ap.add_argument("--out", default="results/llm")
     ap.add_argument("--temperature", type=float, default=0.7)
     ap.add_argument("--rpm", type=float, default=0.0,
@@ -56,7 +58,11 @@ def main():
     ap.add_argument("--redo-incomplete", action="store_true",
                     help="rerun only episodes that did not complete their rounds (those voided during rate limiting)")
     ap.add_argument("--tools", action="store_true",
-                    help="the tool ablation: put the screening design table and the GP posterior maximum into the prompt")
+                    help="backwards-compatible alias for --tool-mode both")
+    ap.add_argument("--tool-mode", choices=["bare", "design", "inference", "both"],
+                    default=None, help="Phase 3 factorial tool condition")
+    ap.add_argument("--within-cycle", action="store_true",
+                    help="allow the model to choose within-cycle observation times")
     ap.add_argument("--recovery-days", type=float, default=None,
                     help="the irreversibility ablation: length of the recovery period a "
                          "heat-damaged unit enters, in days. Every task ships at 0, which "
@@ -81,7 +87,9 @@ def main():
     # When running a subset of tasks, the task name goes into the filename so all
     # four can run in parallel without overwriting each other; make_tables merges
     # them back by model name.
-    tag = a.model.replace("/", "_") + ("+tools" if a.tools else "")
+    tool_mode = a.tool_mode or ("both" if a.tools else "bare")
+    suffix = "" if tool_mode == "bare" else f"+{tool_mode}-tool"
+    tag = a.model.replace("/", "_") + suffix + ("+within-cycle" if a.within_cycle else "")
     if len(a.tasks) < 4:
         tag += "@" + "-".join(a.tasks)
     ep_path = out / f"episodes_{tag}.json"
@@ -97,7 +105,7 @@ def main():
     n = 0
     t_start = time.time()
     for tn in a.tasks:
-        for s in range(a.seeds):
+        for s in range(a.seed_start, a.seed_start + a.seeds):
             n += 1
             key = f"{tn}|{s}"
             if key in done:
@@ -111,7 +119,9 @@ def main():
                 zero_shot_recommendation(env0, complete), a.model + "|zero-shot")
 
             env = SlowLabEnv(tasks[tn], seed=s)
-            ag = LLMAgent(complete=complete, name=a.model, tools=a.tools)
+            agent_class = WithinCycleLLMAgent if a.within_cycle else LLMAgent
+            ag = agent_class(complete=complete, name=a.model,
+                             tools=a.tools, tool_mode=tool_mode)
             r = env.submit_recommendation(ag.run(env), a.model,
                                           x_transfer=getattr(ag, "x_transfer", None))
             dt = time.time() - t0
@@ -131,6 +141,8 @@ def main():
                          "unit_days_used": float(r.unit_days_used),
                          "format_failures": ag.format_failures,
                          "infeasible": ag.infeasible_submissions,
+                         "tool_mode": tool_mode,
+                         "tool_use_records": ag.tool_use_records,
                          "trace": [float(v) for v in r.regret_trace],
                          "seconds": round(dt, 1)})
             ep_path.write_text(json.dumps(rows, indent=1))          # saved after every episode
