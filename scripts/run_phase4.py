@@ -71,7 +71,9 @@ def main():
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
     config = json.loads(args.config.read_text())
-    if config.get("status") != "frozen_before_confirmatory_execution":
+    if config.get("status") not in {
+            "frozen_before_confirmatory_execution",
+            "frozen_amendment_before_confirmatory_execution"}:
         raise SystemExit("refusing to execute a protocol that is not frozen")
     for name, cmd in commands(config, args.matrix, args.out_root):
         print(name, " ".join(cmd), flush=True)

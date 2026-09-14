@@ -1,6 +1,6 @@
 # Phase 4 preregistered analysis plan
 
-Protocol `slowlab-v2-phase4-confirmatory-2026-09-13` is frozen before any site
+Protocol `slowlab-v2-phase4-confirmatory-2026-09-13-a1` is frozen before any site
 in the declared ranges is executed. The machine-readable source of truth is
 `configs/phase4_preregistered.json`. Changes after the first confirmatory API
 call require a new protocol id and are reported as amendments; existing results
@@ -21,7 +21,7 @@ site-cluster bootstrap 95% interval, raw p value, and Holm-adjusted p value.
 Final simple regret is the sole primary metric.
 
 Secondary analyses test the inference contrast with the stronger
-`openai/gpt-6-astra` model, test T1/T4 heterogeneity with the standard model, and
+`openai/gpt-5.6-sol` flagship model, test T1/T4 heterogeneity with the standard model, and
 compare terminal-only with within-cycle feedback. Benjamini-Hochberg correction
 is applied within each named secondary family. A small constraint-checklist
 prompt study is exploratory and cannot support a primary claim.
@@ -62,3 +62,13 @@ independent sites, multiplicity control, task/model heterogeneity reporting, and
 relevant sensitivity analysis can enter the title, abstract, or contribution
 list. Exploratory prompt results and two-site Phase 3 pilots remain labeled as
 hypothesis-generating evidence.
+
+## Amendment a1
+
+Before any confirmatory episode was produced, the user rejected the cost of
+GPT-6 Astra. The strong-model condition was changed to `openai/gpt-5.6-sol`
+with medium reasoning and the same 4096-token cap. At the price snapshot used
+for this decision, Sol charged 0.000002 per input token and 0.00001 per output
+token, one fifth of Astra's 0.00001 and 0.00005. All tasks, seeds, hypotheses,
+metrics, and analysis rules remain unchanged. The original manifest is retained
+and amendment a1 receives a new manifest before execution.

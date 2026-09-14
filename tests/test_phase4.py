@@ -26,6 +26,13 @@ def test_frozen_runner_expands_every_primary_generation_seed_and_mode(tmp_path):
         "bare", "design", "inference", "both"}
 
 
+def test_cost_amendment_uses_sol_for_strong_model(tmp_path):
+    expanded = list(commands(config(), "secondary:strong_model_replication", tmp_path))
+    assert len(expanded) == 4
+    assert all("--model openai/gpt-5.6-sol" in " ".join(command)
+               for _, command in expanded)
+
+
 def test_primary_analysis_averages_generation_seeds_within_site():
     rows = []
     for site in [10, 11]:
