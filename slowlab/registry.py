@@ -24,7 +24,9 @@ register("gp_ucb_components")(lambda: TransferAgent("components"))
 
 
 register("split_plot_doe")(DoEAgent)
-register("constraint_aware_batch_bo")(ConstraintAwareBatchBOAgent)
+register("constraint_aware_batch_bo")(
+    lambda: ConstraintAwareBatchBOAgent(fixed_replicates=1))
+register("adaptive_replication_bo")(ConstraintAwareBatchBOAgent)
 register("component_reconstruction")(lambda: TransferAgent("components"))
 register("prior_optimal_fixed")(PriorOptimalFixedAgent)
 register("site_oracle")(SiteOracleAgent)
@@ -48,4 +50,5 @@ def describe(name: str) -> dict:
         "protocol_version": BASELINE_PROTOCOL_VERSION,
         "privileged": bool(getattr(agent, "privileged", False)),
         "privilege_reason": getattr(agent, "privilege_reason", None),
+        "experimental": bool(getattr(agent, "experimental", False)),
     }

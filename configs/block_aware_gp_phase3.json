@@ -1,0 +1,53 @@
+{
+  "protocol_version": "phase3-block-reader-calibration-0.2",
+  "selected_on_tasks": [
+    "T1",
+    "T3"
+  ],
+  "selection_metric": "per-task mean normalised recommendation regret",
+  "validation_seeds": [
+    200,
+    201,
+    202,
+    203,
+    204,
+    205,
+    206,
+    207
+  ],
+  "heldout_test_seeds": [
+    1200,
+    1201,
+    1202,
+    1203,
+    1204,
+    1205,
+    1206,
+    1207,
+    1208,
+    1209,
+    1210,
+    1211
+  ],
+  "task_parameters": {
+    "T1": {
+      "length_scale": 0.45,
+      "chamber_multiplier": 0.5,
+      "batch_multiplier": 1.0,
+      "uncertainty_multiplier": 4.537642483607798
+    },
+    "T3": {
+      "length_scale": 0.28,
+      "chamber_multiplier": 2.0,
+      "batch_multiplier": 1.0,
+      "uncertainty_multiplier": 1.994665850597401
+    }
+  },
+  "calibration_status": "calibrated_but_not_stronger",
+  "heldout_summary": {
+    "mean": -0.011244218722199481,
+    "se": 0.009494384727927536,
+    "fraction_block_aware_better": 0.375,
+    "n": 24
+  }
+}

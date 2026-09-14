@@ -103,14 +103,22 @@ class BlockAwareReader:
     name = "block_aware_gp"
     privileged = False
 
+    def __init__(self, length_scale=0.28, chamber_multiplier=1.0,
+                 batch_multiplier=1.0, uncertainty_multiplier=1.0):
+        self.length_scale = float(length_scale)
+        self.chamber_multiplier = float(chamber_multiplier)
+        self.batch_multiplier = float(batch_multiplier)
+        self.uncertainty_multiplier = float(uncertainty_multiplier)
+
     def fit_history(self, env):
         X, y, chambers, batches, noise = completed_history_arrays(env)
         if not len(y):
             self.model = None
             return self
         self.model = BlockAwareGP(
-            chamber_scale=env.task.tau_chamber,
-            batch_scale=env.task.tau_batch,
+            length_scale=self.length_scale,
+            chamber_scale=self.chamber_multiplier * env.task.tau_chamber,
+            batch_scale=self.batch_multiplier * env.task.tau_batch,
         ).fit(X, y, chambers, batches, noise)
         return self
 
@@ -123,15 +131,21 @@ class BlockAwareReader:
         mean, _ = self.model.predict(candidates)
         return np.asarray(candidates[int(np.argmax(mean))], float)
 
+    def predict_observation(self, points):
+        if self.model is None:
+            raise RuntimeError("fit_history must be called before prediction")
+        mean, sd = self.model.predict_observation(points)
+        return mean, self.uncertainty_multiplier * sd
 
-def block_aware_probe_intervals(env):
+
+def block_aware_probe_intervals(env, reader=None):
     """Population-response intervals from the same block-aware final reader."""
-    reader = BlockAwareReader().fit_history(env)
+    reader = (reader or BlockAwareReader()).fit_history(env)
     probes = env.probe_set()
     if reader.model is None:
         intervals = _preds_empirical([f"p{i}" for i in range(len(probes))], np.zeros(0))
         return np.asarray([intervals[f"p{i}"] for i in range(len(probes))], float)
-    mean, sd = reader.model.predict_observation(probes)
+    mean, sd = reader.predict_observation(probes)
     return np.column_stack([mean - 1.959964 * sd, mean, mean + 1.959964 * sd])
 
 
@@ -141,13 +155,20 @@ class ConstraintAwareBatchBOAgent:
     name = "constraint_aware_batch_bo"
     privileged = False
 
-    def __init__(self, beta=1.8, max_replicates=4):
+    def __init__(self, beta=1.8, max_replicates=4, fixed_replicates=None,
+                 reader=None):
         self.beta = float(beta)
         self.max_replicates = int(max_replicates)
+        self.fixed_replicates = (None if fixed_replicates is None
+                                 else int(fixed_replicates))
+        self.experimental = self.fixed_replicates is None
         self.replication_history = []
-        self.reader = BlockAwareReader()
+        self.reader = reader or BlockAwareReader()
 
     def replication_count(self, task):
+        if self.fixed_replicates is not None:
+            return int(np.clip(self.fixed_replicates, 1,
+                               min(self.max_replicates, task.n_chambers)))
         # Approximate units needed for a two-sided 95% interval narrower than the
         # task's minimum effect.  The public noise regime drives the choice.
         relative_noise = np.sqrt(task.plant_cv ** 2 + task.tau_loop ** 2)
@@ -169,8 +190,9 @@ class ConstraintAwareBatchBOAgent:
                 model = None
             else:
                 model = BlockAwareGP(
-                    chamber_scale=task.tau_chamber,
-                    batch_scale=task.tau_batch,
+                    length_scale=self.reader.length_scale,
+                    chamber_scale=self.reader.chamber_multiplier * task.tau_chamber,
+                    batch_scale=self.reader.batch_multiplier * task.tau_batch,
                 ).fit(X, y, chambers, batches, noise)
                 candidates = _cands(task.d, 2500, rng)
                 mean, variance = model.predict(candidates)
@@ -197,6 +219,7 @@ class ConstraintAwareBatchBOAgent:
                 predictions = _preds_empirical(treatment_ids, y)
             else:
                 mean, sd = model.predict_observation(points)
+                sd = self.reader.uncertainty_multiplier * sd
                 predictions = {tid: (float(m - 1.959964 * s), float(m),
                                      float(m + 1.959964 * s))
                                for tid, m, s in zip(treatment_ids, mean, sd)}
@@ -209,7 +232,7 @@ class ConstraintAwareBatchBOAgent:
             self.replication_history.append(reps)
             env.advance()
             env.interim_recommendation(self.recommend(env))
-        self.probes = block_aware_probe_intervals(env)
+        self.probes = block_aware_probe_intervals(env, self.reader)
         return self.recommend(env)
 
 
