@@ -8,6 +8,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from analyze_phase4 import paired_family
+from analyze_phase4_secondary import adjust_bh, paired_condition_contrast
 from run_phase4 import commands
 
 
@@ -49,4 +50,27 @@ def test_primary_analysis_averages_generation_seeds_within_site():
     contrast = result["contrasts"]["inference_minus_bare"]
     assert contrast["n_sites"] == 2
     assert np.isclose(contrast["mean"], 2.0)
+    assert result["missing_cells"] == []
+
+
+def test_secondary_analysis_uses_benjamini_hochberg_with_monotone_adjustment():
+    adjusted = adjust_bh([("a", 0.01), ("b", 0.04), ("c", 0.03)])
+    assert np.isclose(adjusted["a"], 0.03)
+    assert np.isclose(adjusted["b"], 0.04)
+    assert np.isclose(adjusted["c"], 0.04)
+
+
+def test_feedback_analysis_pairs_generation_seeds_then_clusters_by_site():
+    rows = []
+    for site, effect in [(10, -1.0), (11, 3.0)]:
+        for generation_seed in [1, 2]:
+            for condition, regret in [("terminal_only", 5.0),
+                                      ("within_cycle", 5.0 + effect)]:
+                rows.append({"task": "T3", "model": "m", "seed": site,
+                             "generation_seed": generation_seed,
+                             "analysis_condition": condition, "regret": regret})
+    result = paired_condition_contrast(
+        rows, "T3", "m", "terminal_only", "within_cycle", [10, 11], [1, 2])
+    assert result["contrast"]["n_sites"] == 2
+    assert np.isclose(result["contrast"]["mean"], 1.0)
     assert result["missing_cells"] == []
