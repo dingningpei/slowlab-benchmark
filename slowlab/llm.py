@@ -303,7 +303,7 @@ class LLMAgent:
         names = [factor.name for factor in env.task.factors]
         proposed = np.asarray([[values[name] for name in names]
                                for values in design.treatments.values()], float)
-        suggested_design = artifacts.get("design")
+        suggested_design = artifacts.get("design") if mode in {"design", "both"} else None
         design_distance = None
         if suggested_design is not None and len(proposed):
             suggested = np.asarray([[values[name] for name in names]
@@ -314,7 +314,8 @@ class LLMAgent:
                 design_distance = float(0.5 * (distances.min(1).mean() +
                                                distances.min(0).mean()))
         recommendation_distance = None
-        if artifacts.get("inference") is not None and "current_best" in blob:
+        if (mode in {"inference", "both"} and
+                artifacts.get("inference") is not None and "current_best" in blob):
             try:
                 current = _to_point(env, blob["current_best"])
                 recommendation_distance = float(np.linalg.norm(

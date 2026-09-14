@@ -229,6 +229,12 @@ def test_four_tool_modes_are_factorial_and_record_adoption():
             assert len(agent.tool_use_records) == env.task.n_rounds
             assert all(record["delivery"] == "passive_prompt_output"
                        for record in agent.tool_use_records)
+            if mode == "design":
+                assert all(record["recommendation_distance"] is None
+                           for record in agent.tool_use_records)
+            if mode == "inference":
+                assert all(record["design_distance"] is None
+                           for record in agent.tool_use_records)
     assert "TOOL 1" not in first_prompts["bare"] and "TOOL 2" not in first_prompts["bare"]
     assert "TOOL 1" in first_prompts["design"] and "TOOL 2" not in first_prompts["design"]
     assert "TOOL 1" not in first_prompts["inference"] and "TOOL 2" in first_prompts["inference"]

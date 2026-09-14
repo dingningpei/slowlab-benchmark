@@ -64,3 +64,34 @@ All block-aware fits retain chamber, batch, heteroscedastic observation-noise,
 and cross-round design identifiers from the actual history. Phase 4 should expand
 selection and evaluation sites before treating any chosen configuration as a
 benchmark winner.
+
+## Representative LLM mechanism pilot
+
+After explicit approval to send simulated prompts and histories to OpenRouter,
+`openai/gpt-5.6-luna` was run on T3 seeds 5000--5001. All eight tool-factorial
+episodes completed all three rounds. Mean regret was 0.00462 for bare, 0.01280
+for design-only, 0.00276 for inference-only, and 0.00516 for both. These are
+mechanism-locating pilots with two sites, not model-effect estimates.
+
+The tools were supplied passively, so there was no model-initiated tool call.
+Geometric behavior showed design adoption in 2/7 eligible design-only records
+and 2/9 combined-tool records. The inference recommendation was adopted in 7/8
+inference-only and 7/7 combined-tool records. The observed pathway is therefore
+primarily inference deference rather than copying the supplied experimental
+design. Exact decimal equality is not used in this classification.
+
+In fixed-history T3 replay on seeds 4100--4101, the LLM reader mean regret was
+0.02771 versus 0.01326 for ordinary GP, 0.01327 for component GP, and 0.01472
+for block-aware GP. The full cross includes LLM, random, split-plot DOE, and
+batch-BO designs. Its design-effect range was 0.02573, reader-effect range
+0.01445, and interaction RMS 0.00553. The LLM design was the weakest design
+source across all readers, while the LLM reader was especially weak on the
+random-spread history; more sites are required before generalizing either
+interaction.
+
+The within-cycle LLM made 22 observation actions across six completed rounds,
+using canopy most often and choosing days from 30 through 209. Its mean regret
+was 0.00908 versus 0.00462 for the separate terminal-only run. OpenRouter varied
+responses even at temperature zero, including the zero-shot controls, so this is
+not a deterministic paired estimate. It establishes that the interface is used
+and changes trajectories; it does not establish benefit.
