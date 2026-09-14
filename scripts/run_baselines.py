@@ -9,16 +9,19 @@ import numpy as np
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
 from slowlab import SlowLabEnv, TASKS
-from slowlab.registry import make_agent, available
+from slowlab.registry import describe, make_agent, available
 
 
 def run_episode(task_name: str, agent_name: str, seed: int) -> dict:
     env = SlowLabEnv(TASKS[task_name], seed=seed)
     agent = make_agent(agent_name)
+    specification = describe(agent_name)
     x = agent.run(env)
     r = env.submit_recommendation(x, agent_name, probes=getattr(agent, "probes", None))
     return {
         "task": task_name, "agent": agent_name, "seed": seed,
+        "protocol_version": specification["protocol_version"],
+        "privileged": specification["privileged"],
         "simple_regret": r.simple_regret,          # Outcome
         "campaign_cash": r.campaign_cash,
         "cumulative_regret": r.cumulative_regret,  # Outcome
@@ -42,7 +45,7 @@ def main():
     # The four reference points. The rep2 / transfer pair is a *result*, not a scale
     # marker, and is not run here.
     ap.add_argument("--agents", nargs="+",
-                    default=["random_spread", "classical_doe", "gp_ucb_rep1"])
+                    default=["random_spread", "split_plot_doe", "constraint_aware_batch_bo"])
     ap.add_argument("--out", type=str, default="results")
     args = ap.parse_args()
 
