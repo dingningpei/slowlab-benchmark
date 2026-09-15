@@ -13,8 +13,10 @@ from run_phase4 import commands
 from phase4_noise_sensitivity import perturbed_task, AGENT_FOR_CONDITION
 from phase4_price_sensitivity import sweep as price_sweep, _perturbed_env
 from phase4_factor_range_sensitivity import widened
+from phase4_site_distribution_sensitivity import widened_spread
 from slowlab import SlowLabEnv, TASKS
 from slowlab.world import MANAGEMENT_FACTORS
+from slowlab.economics import SITE_ECON_SPREAD
 
 
 def config():
@@ -130,3 +132,13 @@ def test_widened_factor_range_restores_bounds_after_the_context_manager_exits():
         assert not np.isclose(spec.low, old_low) or not np.isclose(spec.high, old_high)
     assert np.isclose(spec.low, old_low)
     assert np.isclose(spec.high, old_high)
+
+
+def test_widened_spread_keeps_the_center_fixed_and_restores_after_exit():
+    old_lo, old_hi = SITE_ECON_SPREAD["price_per_kg_fw"]
+    old_center = (old_lo + old_hi) / 2
+    with widened_spread("price_per_kg_fw", 2.0):
+        lo, hi = SITE_ECON_SPREAD["price_per_kg_fw"]
+        assert np.isclose(hi - lo, (old_hi - old_lo) * 2)
+        assert np.isclose((lo + hi) / 2, old_center)
+    assert SITE_ECON_SPREAD["price_per_kg_fw"] == (old_lo, old_hi)
