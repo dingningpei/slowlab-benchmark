@@ -67,6 +67,11 @@ def widened_spread(field, half_width_mult):
 
 def run_episode(task, agent_name, seed):
     env = SlowLabEnv(task, seed=seed)
+    # SITE_ECON_SPREAD changes the site's sampled economic model, but the oracle
+    # disk key contains only seed, factor bounds, cycle length and energy shock.
+    # Reusing it across width multipliers can compare a perturbed recommendation
+    # with an optimum from a different distribution width.
+    env.truth._oracle_cacheable = False
     agent = make_agent(agent_name)
     x = agent.run(env)
     r = env.submit_recommendation(x, agent_name, probes=getattr(agent, "probes", None))
@@ -118,11 +123,14 @@ def main():
                 for m in HALF_WIDTH_MULTIPLIERS}
 
     report = {
-        "purpose": "scripted-baseline proxy checking whether the frozen "
+        "purpose": "scripted-strategy check of whether the frozen "
                    "price_per_kg_fw site-distribution width -- explicitly flagged "
                    "in economics.py as the weakest-sourced spread -- understates "
                    "between-site heterogeneity relevant to Phase 4's precision plan; "
-                   "NOT a replay of the actual LLM transcripts",
+                   "not a replay or robustness test of the actual LLM conditions",
+        "interpretation_limit": ("Each label maps to a different scripted algorithm; "
+                                 "only the bare-strategy SD is used as a rough environment "
+                                 "diagnostic, not as a re-estimate of the LLM paired SD."),
         "task": "Optimise (T3)",
         "n_seeds": len(seeds),
         "seed_range": [SEED_START, SEED_START + args.seeds - 1],

@@ -138,9 +138,12 @@ def main():
     task = TASKS["Optimise"]
 
     report = {
-        "purpose": "scripted-baseline proxy for Phase 4 tool-effect and task-difficulty "
-                   "robustness under perturbed factor ranges; NOT a replay of the actual "
-                   "LLM transcripts",
+        "purpose": "scripted-strategy ranking and task geometry under perturbed factor "
+                   "ranges; this tests environment behavior, not robustness of the "
+                   "Phase 4 LLM tool-condition effect",
+        "interpretation_limit": ("Each label maps to a different scripted algorithm, so "
+                                 "these contrasts cannot be interpreted as bare/design/"
+                                 "inference/both interventions on one LLM."),
         "task": "Optimise (T3)",
         "n_seeds": len(seeds),
         "seed_range": [SEED_START, SEED_START + args.seeds - 1],

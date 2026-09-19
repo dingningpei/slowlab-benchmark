@@ -130,9 +130,12 @@ def main():
         direction_stable[condition] = len(signs) == 1
 
     report = {
-        "purpose": "scripted-baseline proxy for Phase 4 tool-effect robustness under "
-                   "perturbed (unsourced) noise-layer parameters; NOT a replay of the "
-                   "actual LLM transcripts",
+        "purpose": "scripted-strategy ranking under perturbed (unsourced) noise-layer "
+                   "parameters; this tests environment behavior, not robustness of the "
+                   "Phase 4 LLM tool-condition effect",
+        "interpretation_limit": ("Each label maps to a different scripted algorithm, so "
+                                 "these contrasts cannot be interpreted as bare/design/"
+                                 "inference/both interventions on one LLM."),
         "task": "Optimise (T3)",
         "base_params": {"plant_cv": TASKS["Optimise"].plant_cv,
                         "tau_chamber": TASKS["Optimise"].tau_chamber,

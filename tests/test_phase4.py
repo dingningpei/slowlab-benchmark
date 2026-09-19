@@ -13,7 +13,7 @@ from run_phase4 import commands
 from phase4_noise_sensitivity import perturbed_task, AGENT_FOR_CONDITION
 from phase4_price_sensitivity import sweep as price_sweep, _perturbed_env
 from phase4_factor_range_sensitivity import widened
-from phase4_site_distribution_sensitivity import widened_spread
+from phase4_site_distribution_sensitivity import widened_spread, run_episode as run_distribution_episode
 from slowlab import SlowLabEnv, TASKS
 from slowlab.world import MANAGEMENT_FACTORS
 from slowlab.economics import SITE_ECON_SPREAD
@@ -142,3 +142,19 @@ def test_widened_spread_keeps_the_center_fixed_and_restores_after_exit():
         assert np.isclose(hi - lo, (old_hi - old_lo) * 2)
         assert np.isclose((lo + hi) / 2, old_center)
     assert SITE_ECON_SPREAD["price_per_kg_fw"] == (old_lo, old_hi)
+
+
+def test_site_distribution_sweep_does_not_reuse_an_oracle_from_another_width(monkeypatch):
+    seen = []
+
+    class Agent:
+        probes = None
+
+        def run(self, env):
+            seen.append(env.truth._oracle_cacheable)
+            return np.full(env.task.d, 0.5)
+
+    monkeypatch.setattr("phase4_site_distribution_sensitivity.make_agent",
+                        lambda _: Agent())
+    run_distribution_episode(TASKS["Optimise"], "bare", 987654)
+    assert seen == [False]
