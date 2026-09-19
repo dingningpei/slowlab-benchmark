@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import concurrent.futures
 import json
 import pathlib
 import subprocess
@@ -45,15 +46,33 @@ def main():
                         default=pathlib.Path("/Users/dingningpei/Desktop/slowlab/output/reviews"
                                              "/phase4_noise_robustness"))
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--jobs", type=int, default=None,
+                        help="parallel independent cells; defaults to frozen config")
     args = parser.parse_args()
     config = json.loads(args.config.read_text())
-    if config.get("status") != "frozen_before_sensitivity_execution":
+    if config.get("status") not in {
+            "frozen_before_sensitivity_execution", "frozen_execution_amendment"}:
         raise SystemExit("refusing to run an unfrozen noise-sensitivity protocol")
-    for multiplier, mode, generation_seed, command in commands(config, args.out_root):
+    cells = list(commands(config, args.out_root))
+    for multiplier, mode, generation_seed, command in cells:
         print(f"noise={multiplier:g} mode={mode} gseed={generation_seed}", flush=True)
         print(" ".join(command), flush=True)
-        if not args.dry_run:
-            subprocess.run(command, cwd=ROOT, check=True)
+    if args.dry_run:
+        return
+    jobs = args.jobs or int(config.get("execution", {}).get("max_parallel_cells", 1))
+    if jobs < 1:
+        raise SystemExit("--jobs must be positive")
+
+    def execute(cell):
+        multiplier, mode, generation_seed, command = cell
+        print(f"START noise={multiplier:g} mode={mode} gseed={generation_seed}", flush=True)
+        subprocess.run(command, cwd=ROOT, check=True)
+        print(f"DONE noise={multiplier:g} mode={mode} gseed={generation_seed}", flush=True)
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=jobs) as pool:
+        futures = [pool.submit(execute, cell) for cell in cells]
+        for future in concurrent.futures.as_completed(futures):
+            future.result()
 
 
 if __name__ == "__main__":

@@ -1,6 +1,8 @@
 {
-  "protocol_id": "slowlab-v2-phase4-noise-robustness-2026-09-19-a1",
-  "status": "frozen_before_sensitivity_execution",
+  "protocol_id": "slowlab-v2-phase4-noise-robustness-2026-09-19-a2",
+  "status": "frozen_execution_amendment",
+  "amends": "slowlab-v2-phase4-noise-robustness-2026-09-19-a1",
+  "amendment_reason": "After two completed episodes and without inspecting condition effects, replace sequential cell scheduling with at most three parallel cells to reduce wall-clock time. The matrix, prompts, seeds, model, per-cell files, estimands, and analysis are unchanged; completed identities are resumed rather than rerun.",
   "analysis_family": "prospective_post_primary_sensitivity_extension",
   "frozen_at": "2026-09-19",
   "motivation": "Fixed-policy rescoring cannot test observation-noise robustness because final simple regret uses the response mean. This extension reruns the same LLM conditions so changed noise can affect observations and decisions.",
@@ -34,5 +36,6 @@
     "historical_luna_cost_per_episode_usd": 0.0036129204910714287,
     "estimated_total_usd": 1.3873614685714286,
     "model_choice_reason": "Luna is the frozen primary model; Sol would cost about nineteen times more per historical episode."
-  }
+  },
+  "execution": {"max_parallel_cells": 3, "resume_completed_identities": true}
 }

@@ -257,6 +257,7 @@ def test_frozen_noise_runner_expands_all_cells(tmp_path):
     assert all("--seeds 16 --seed-start 9400" in text for text in texts)
     assert {text.split("--noise-multiplier ")[1].split()[0] for text in texts} == {
         "0.5", "1.0", "2.0"}
+    assert cfg["execution"]["max_parallel_cells"] == 3
 
 
 def test_noise_analysis_pairs_generation_seeds_and_computes_interaction(tmp_path):
