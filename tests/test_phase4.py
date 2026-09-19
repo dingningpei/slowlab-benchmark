@@ -18,6 +18,9 @@ from phase4_fixed_policy_sensitivity import (
     _final_recommendation, _site_latent, add_holm_adjustment, canonical_scenario,
     factor_width, paired_summary, physiological_params,
 )
+from run_llm import noise_scaled_task
+from run_phase4_noise_robustness import commands as noise_commands
+from analyze_phase4_noise_robustness import analyze as analyze_noise
 from slowlab import SlowLabEnv, TASKS
 from slowlab.world import MANAGEMENT_FACTORS
 from slowlab.economics import SITE_ECON_SPREAD
@@ -233,3 +236,51 @@ def test_fixed_policy_holm_family_counts_equivalent_scenarios_once():
     assert audit["n_tests"] == 2
     assert np.isclose(results["a"]["baseline"]["paired_contrasts"]
                       ["design_minus_bare"]["p_holm_post_hoc_sensitivity_family"], 0.02)
+
+
+def test_llm_noise_multiplier_changes_only_noise_fields():
+    base = TASKS["Optimise"]
+    changed = noise_scaled_task(base, 2.0)
+    for field in ("plant_cv", "tau_chamber", "tau_loop", "tau_batch"):
+        assert np.isclose(getattr(changed, field), 2.0 * getattr(base, field))
+    assert changed.factor_names == base.factor_names
+    assert changed.n_rounds == base.n_rounds
+    assert changed.units_per_round == base.units_per_round
+    assert changed.cycle_days == base.cycle_days
+
+
+def test_frozen_noise_runner_expands_all_cells(tmp_path):
+    cfg = json.loads((ROOT / "configs" / "phase4_noise_robustness.json").read_text())
+    expanded = list(noise_commands(cfg, tmp_path))
+    assert len(expanded) == 24
+    texts = [" ".join(item[-1]) for item in expanded]
+    assert all("--seeds 16 --seed-start 9400" in text for text in texts)
+    assert {text.split("--noise-multiplier ")[1].split()[0] for text in texts} == {
+        "0.5", "1.0", "2.0"}
+
+
+def test_noise_analysis_pairs_generation_seeds_and_computes_interaction(tmp_path):
+    cfg = {
+        "protocol_id": "test", "analysis_family": "test",
+        "noise_multipliers": [0.5, 1.0, 2.0],
+        "tool_modes": ["bare", "design", "inference", "both"],
+        "site_seeds": {"start": 10, "count": 2}, "generation_seeds": [1, 2],
+    }
+    rows = []
+    for mult in cfg["noise_multipliers"]:
+        for site in (10, 11):
+            for gseed in (1, 2):
+                for mode in cfg["tool_modes"]:
+                    effect = 0.0 if mode == "bare" else mult
+                    rows.append({"task": "T3", "model": "m", "tool_mode": mode,
+                                 "seed": site, "generation_seed": gseed,
+                                 "noise_multiplier": mult, "regret": 5.0 + effect})
+    folder = tmp_path / "noise" / "cell"
+    folder.mkdir(parents=True)
+    (folder / "episodes_test.json").write_text(json.dumps(rows))
+    result = analyze_noise(cfg, tmp_path)
+    assert not result["missing_cells"]
+    assert result["n_episode_rows"] == 48
+    assert np.isclose(result["primary_high_noise"]["inference_minus_bare"]["mean"], 2.0)
+    assert np.isclose(result["secondary"]
+                      ["noise_2.0_minus_1.0:inference_minus_bare"]["mean"], 1.0)

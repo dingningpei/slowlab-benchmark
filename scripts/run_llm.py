@@ -9,13 +9,23 @@ what is already done, so a Ctrl-C or a dropped connection does not mean starting
 over.
 """
 from __future__ import annotations
-import argparse, hashlib, inspect, json, pathlib, sys, time
+import argparse, copy, hashlib, inspect, json, pathlib, sys, time
 import numpy as np
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from slowlab import SlowLabEnv, TASKS
 from slowlab.llm import LLMAgent, WithinCycleLLMAgent, zero_shot_recommendation, scripted_completer
 from slowlab import llm as llm_module
+
+
+def noise_scaled_task(task, multiplier: float):
+    """Return an isolated task copy with only observation-noise scales changed."""
+    if multiplier <= 0:
+        raise ValueError("noise multiplier must be positive")
+    changed = copy.deepcopy(task)
+    for field in ("plant_cv", "tau_chamber", "tau_loop", "tau_batch"):
+        setattr(changed, field, float(getattr(changed, field)) * float(multiplier))
+    return changed
 
 
 def make_completer(model: str, temperature: float = 0.7, rpm: float = 0.0,
@@ -82,14 +92,20 @@ def main():
                          "is the setting of every result in the paper's main tables, so a "
                          "run with this flag is NOT comparable with them -- give it its "
                          "own --out directory")
+    ap.add_argument("--noise-multiplier", type=float, default=1.0,
+                    help="scale plant/chamber/loop/batch noise only; use a separate output directory")
     a = ap.parse_args()
 
     # Modified copies, so the frozen task definitions are left alone.
     tasks = dict(TASKS)
-    if a.recovery_days is not None:
-        import copy
+    if a.noise_multiplier != 1.0:
         for tn in a.tasks:
-            t = copy.deepcopy(TASKS[tn]); t.recovery_days = float(a.recovery_days)
+            tasks[tn] = noise_scaled_task(TASKS[tn], a.noise_multiplier)
+        print(f"noise_multiplier = {a.noise_multiplier} (all four noise layers; "
+              "response mean and action space unchanged)\n")
+    if a.recovery_days is not None:
+        for tn in a.tasks:
+            t = copy.deepcopy(tasks[tn]); t.recovery_days = float(a.recovery_days)
             tasks[tn] = t
         print(f"recovery_days = {a.recovery_days} (the paper's tables are at 0; "
               f"these episodes are a separate condition)\n")
@@ -108,6 +124,8 @@ def main():
         tag += f"+gseed{a.generation_seed}"
     if a.reasoning_effort:
         tag += f"+reasoning-{a.reasoning_effort}"
+    if a.noise_multiplier != 1.0:
+        tag += f"+noise-{a.noise_multiplier:g}"
     if a.prompt_variant != "standard":
         tag += f"+prompt-{a.prompt_variant}"
     if len(a.tasks) < 4:
@@ -176,6 +194,7 @@ def main():
                          "temperature": a.temperature,
                          "max_tokens": a.max_tokens,
                          "reasoning_effort": a.reasoning_effort,
+                         "noise_multiplier": float(a.noise_multiplier),
                          "prompt_variant": a.prompt_variant,
                          "api_calls": getattr(complete, "call_records", [])[call_start:],
                          "prompt_protocol_hash": prompt_protocol_hash,

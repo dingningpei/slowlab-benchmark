@@ -1,0 +1,38 @@
+{
+  "protocol_id": "slowlab-v2-phase4-noise-robustness-2026-09-19-a1",
+  "status": "frozen_before_sensitivity_execution",
+  "analysis_family": "prospective_post_primary_sensitivity_extension",
+  "frozen_at": "2026-09-19",
+  "motivation": "Fixed-policy rescoring cannot test observation-noise robustness because final simple regret uses the response mean. This extension reruns the same LLM conditions so changed noise can affect observations and decisions.",
+  "model": {
+    "requested_id": "openai/gpt-5.6-luna",
+    "temperature": 0.0,
+    "max_tokens": 4096,
+    "reasoning_effort": null
+  },
+  "task": "T3",
+  "tool_modes": ["bare", "design", "inference", "both"],
+  "noise_multipliers": [0.5, 1.0, 2.0],
+  "noise_fields_scaled": ["plant_cv", "tau_chamber", "tau_loop", "tau_batch"],
+  "site_seeds": {"start": 9400, "count": 16},
+  "generation_seeds": [9701, 9702],
+  "prompt_variant": "standard",
+  "primary_estimand": "at noise multiplier 2.0, paired site-level final-simple-regret difference for each tool mode minus bare, after averaging provider generation seeds within site",
+  "primary_multiplicity": "Holm family-wise correction across the three tool-minus-bare contrasts at noise multiplier 2.0",
+  "secondary_estimands": [
+    "tool-minus-bare contrasts at multipliers 0.5 and 1.0",
+    "difference in each tool-minus-bare contrast between multiplier 2.0 and multiplier 1.0"
+  ],
+  "secondary_multiplicity": "Benjamini-Hochberg FDR across all named secondary contrasts",
+  "confidence_intervals": "site bootstrap with 10000 resamples and percentile 95% intervals",
+  "missing_episode_rule": "retry transport and rate failures with the same identity; retain model format failures, infeasible designs, stopping, and forfeited rounds; do not impute unresolved cells",
+  "stopping_rule": "no efficacy stopping and no inspection of condition effects during execution",
+  "site_status": "fresh range not used by Phase 4 confirmatory matrices or scripted sensitivity sweeps",
+  "precision_note": "Sixteen paired sites target a CI much narrower than the original 0.018 material-effect threshold under the primary observed paired SD, while containing API cost.",
+  "cost_plan": {
+    "episode_count": 384,
+    "historical_luna_cost_per_episode_usd": 0.0036129204910714287,
+    "estimated_total_usd": 1.3873614685714286,
+    "model_choice_reason": "Luna is the frozen primary model; Sol would cost about nineteen times more per historical episode."
+  }
+}
