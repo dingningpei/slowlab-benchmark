@@ -77,6 +77,8 @@ def main():
                     default="standard")
     ap.add_argument("--rpm", type=float, default=0.0,
                     help="maximum calls per minute (0 = unlimited). With multiple processes, set this to total quota / number of processes")
+    ap.add_argument("--quiet-effects", action="store_true",
+                    help="show execution progress without printing outcome values; useful before a frozen matrix is complete")
     ap.add_argument("--fresh", action="store_true", help="ignore existing results and rerun from scratch")
     ap.add_argument("--redo-incomplete", action="store_true",
                     help="rerun only episodes that did not complete their rounds (those voided during rate limiting)")
@@ -207,11 +209,17 @@ def main():
             (out / f"transcript_{tag}_{tn}_s{s}.json").write_text(
                 json.dumps(ag.transcript, indent=1, ensure_ascii=False))
             eta = (time.time() - t_start) / max(n - len(done), 1) * (total - n)
-            print(f"[{n}/{total}] {tn} seed={s}  regret {r.simple_regret:.4f} "
-                  f"(zero-shot {r0.simple_regret:.4f})  "
-                  f"cash {r.campaign_cash:+8.1f}  rounds {r.n_designs}/{tasks[tn].n_rounds}  "
-                  f"format-fail {ag.format_failures}  infeasible {ag.infeasible_submissions}  "
-                  f"{dt:.0f}s   ~{eta/60:.0f} min left", flush=True)
+            if a.quiet_effects:
+                print(f"[{n}/{total}] {tn} seed={s} completed  "
+                      f"rounds {r.n_designs}/{tasks[tn].n_rounds}  "
+                      f"format-fail {ag.format_failures}  infeasible {ag.infeasible_submissions}  "
+                      f"{dt:.0f}s   ~{eta/60:.0f} min left", flush=True)
+            else:
+                print(f"[{n}/{total}] {tn} seed={s}  regret {r.simple_regret:.4f} "
+                      f"(zero-shot {r0.simple_regret:.4f})  "
+                      f"cash {r.campaign_cash:+8.1f}  rounds {r.n_designs}/{tasks[tn].n_rounds}  "
+                      f"format-fail {ag.format_failures}  infeasible {ag.infeasible_submissions}  "
+                      f"{dt:.0f}s   ~{eta/60:.0f} min left", flush=True)
 
     summary = {}
     for tn in a.tasks:
@@ -235,22 +243,23 @@ def main():
         }
     (out / f"summary_{tag}.json").write_text(json.dumps(summary, indent=2))
 
-    print("\n" + "=" * 78)
-    print(f"{'task':<12}{'zero-shot':>11}{'R(R)':>17}{'R_cum':>10}"
-          f"{'rounds':>10}{'format':>8}{'infeas':>8}")
-    for tn, d in summary.items():
-        zs = d.get("regret_zero_shot")
-        rc = d.get("cumulative_regret")
-        print(f"{tn:<12}{(f'{zs:.4f}' if zs is not None else '--'):>11}"
-              f"{d['regret']:>10.4f}±{d['regret_se']:.4f}"
-              f"{(f'{rc:.1f}' if rc is not None else '--'):>10}"
-              f"{d['rounds_submitted']:>6.1f}/{TASKS[tn].n_rounds}"
-              f"{d['format_failures']:>7.1f}{d['infeasible']:>8.1f}")
-    gains = [(d["regret_zero_shot"] / d["regret"]) for d in summary.values()
-             if d.get("regret_zero_shot") and d.get("regret")]
-    if gains:
-        print(f"\nimprovement factor from experimenting (zero-shot / R(R)): "
-              f"{', '.join(f'{g:.1f}x' for g in gains)}")
+    if not a.quiet_effects:
+        print("\n" + "=" * 78)
+        print(f"{'task':<12}{'zero-shot':>11}{'R(R)':>17}{'R_cum':>10}"
+              f"{'rounds':>10}{'format':>8}{'infeas':>8}")
+        for tn, d in summary.items():
+            zs = d.get("regret_zero_shot")
+            rc = d.get("cumulative_regret")
+            print(f"{tn:<12}{(f'{zs:.4f}' if zs is not None else '--'):>11}"
+                  f"{d['regret']:>10.4f}±{d['regret_se']:.4f}"
+                  f"{(f'{rc:.1f}' if rc is not None else '--'):>10}"
+                  f"{d['rounds_submitted']:>6.1f}/{TASKS[tn].n_rounds}"
+                  f"{d['format_failures']:>7.1f}{d['infeasible']:>8.1f}")
+        gains = [(d["regret_zero_shot"] / d["regret"]) for d in summary.values()
+                 if d.get("regret_zero_shot") and d.get("regret")]
+        if gains:
+            print(f"\nimprovement factor from experimenting (zero-shot / R(R)): "
+                  f"{', '.join(f'{g:.1f}x' for g in gains)}")
     print(f"\nresults written to {out}/summary_{tag}.json (full transcript per episode included)")
 
 

@@ -1,0 +1,92 @@
+{
+  "protocol_id": "slowlab-v2-phase5-model-extension-2026-09-20-a1",
+  "status": "frozen_before_post_primary_execution",
+  "environment": "SlowLab V2 incremental-observation environment",
+  "purpose": "Compare Luna, DeepSeek, and Qwen on identical fresh Optimise sites after the original Phase 4 analysis was frozen.",
+  "primary_metric": "final_simple_regret",
+  "secondary_metrics": [
+    "cumulative_regret",
+    "campaign_cash",
+    "completed_rounds",
+    "infeasible_submissions",
+    "tool_geometric_adoption",
+    "format_failures"
+  ],
+  "models": {
+    "luna": {
+      "requested_id": "openai/gpt-5.6-luna",
+      "temperature": 0.0,
+      "max_tokens": 4096,
+      "reasoning_effort": null
+    },
+    "deepseek": {
+      "requested_id": "deepseek/deepseek-v4-flash-0731",
+      "temperature": 0.0,
+      "max_tokens": 4096,
+      "reasoning_effort": "low"
+    },
+    "qwen": {
+      "requested_id": "qwen/qwen3.8-27b",
+      "temperature": 0.0,
+      "max_tokens": 4096,
+      "reasoning_effort": "low"
+    }
+  },
+  "secondary_matrices": [
+    {
+      "name": "model_anchor_luna",
+      "task": "T3",
+      "model": "luna",
+      "tool_modes": ["bare", "inference"],
+      "site_seeds": {"start": 7100, "count": 24},
+      "generation_seeds": [9701, 9702],
+      "prompt_variant": "standard"
+    },
+    {
+      "name": "model_anchor_deepseek",
+      "task": "T3",
+      "model": "deepseek",
+      "tool_modes": ["bare", "inference"],
+      "site_seeds": {"start": 7100, "count": 24},
+      "generation_seeds": [9701, 9702],
+      "prompt_variant": "standard"
+    },
+    {
+      "name": "model_anchor_qwen",
+      "task": "T3",
+      "model": "qwen",
+      "tool_modes": ["bare", "inference"],
+      "site_seeds": {"start": 7100, "count": 24},
+      "generation_seeds": [9701, 9702],
+      "prompt_variant": "standard"
+    }
+  ],
+  "analysis": {
+    "statistical_unit": "site",
+    "within_site_replicate": "provider generation seed",
+    "tool_estimands": "Within each model, inference minus bare final simple regret on Optimise",
+    "model_estimands": "Pairwise model differences within tool mode on identical Optimise sites",
+    "confidence_intervals": "site-cluster bootstrap, 10000 resamples, percentile 95% interval",
+    "multiplicity": "Two prespecified BH families: three within-model inference-minus-bare contrasts; six pairwise model contrasts split by bare and inference mode",
+    "missing_episode_rule": "retry transport/rate failures with the same identity; retain format failures, infeasible designs, and model early stopping; report missing cells without imputation",
+    "stopping_rule": "no efficacy stopping; pauses may depend only on spend, rate limits, or service availability"
+  },
+  "reserved_test_sites": {
+    "ranges": [[7100, 7123]],
+    "never_used_for_debugging_or_tuning_before_freeze": true
+  },
+  "execution_size": {
+    "model_anchor_episodes": 288,
+    "total_episodes": 288
+  },
+  "cost_plan_usd": {
+    "basis": "Existing Phase 4 token usage and OpenRouter list prices checked 2026-09-19",
+    "deepseek_expected": 0.1,
+    "qwen_expected": 2.0,
+    "luna_expected": 0.5,
+    "total_expected": 2.6,
+    "hard_pause_before": 4.0
+  },
+  "prompt_hash_policy": "record protocol-template SHA256 and realized-prompt SHA256 per episode",
+  "api_metadata_policy": "record requested and actual model, provider, timestamp, generation seed, usage, cost, retry attempt, and finish reason"
+}

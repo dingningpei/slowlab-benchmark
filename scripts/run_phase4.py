@@ -74,7 +74,8 @@ def main():
     if config.get("status") not in {
             "frozen_before_confirmatory_execution",
             "frozen_amendment_before_confirmatory_execution",
-            "frozen_execution_amendment"}:
+            "frozen_execution_amendment",
+            "frozen_before_post_primary_execution"}:
         raise SystemExit("refusing to execute a protocol that is not frozen")
     for name, cmd in commands(config, args.matrix, args.out_root):
         print(name, " ".join(cmd), flush=True)
