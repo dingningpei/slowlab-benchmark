@@ -1,5 +1,8 @@
-"""The four tasks -- Sanity, Screen, Optimise, Transfer -- defined over the mechanistic
-TOMGRO world.
+"""Three core tasks and one experimental configuration over the mechanistic TOMGRO world.
+
+The Version 2.1 benchmark suite contains Sanity, Optimise, and Transfer. Screen remains
+addressable for archival analyses and future task development, but it is not a core task:
+its current endpoint is operating regret rather than a direct measure of factor screening.
 
 Three differences from the earlier GP version:
   * factors are *real management decisions* in real units (C / ppm / mol /
@@ -166,13 +169,18 @@ TASKS["T4"] = Task("T4", ("day_temp", "night_temp", "co2", "par"),
                    train_energy_shock=None, transfer_energy_shock=2.2)
 
 
-# ── Readable aliases. The paper uses only these names; T1-T4 survive as code
-# keys for backwards compatibility. The names are the four standard stages of an
-# industrial experimental campaign, so a reader need not learn a private code. ──
+# ── Readable aliases. T1--T4 survive as code keys for backwards compatibility. ──
 LABEL = {"T1": "Sanity", "T2": "Screen", "T3": "Optimise", "T4": "Transfer"}
+CORE_TASK_KEYS = ("T1", "T3", "T4")
+CORE_TASK_NAMES = tuple(LABEL[key] for key in CORE_TASK_KEYS)
+EXPERIMENTAL_TASK_KEYS = ("T2",)
+EXPERIMENTAL_TASK_NAMES = tuple(LABEL[key] for key in EXPERIMENTAL_TASK_KEYS)
 _OLD = {"sanity-1f": "T1", "screen-8f": "T2", "core-2f": "T3", "shift-4f": "T4"}
 for _k, _v in LABEL.items():
     TASKS[_v] = TASKS[_k]
     TASKS[_v.lower()] = TASKS[_k]
 for _old, _k in _OLD.items():          # backwards compatibility for old scripts and result files
     TASKS[_old] = TASKS[_k]
+
+CORE_TASKS = {name: TASKS[name] for name in CORE_TASK_NAMES}
+EXPERIMENTAL_TASKS = {name: TASKS[name] for name in EXPERIMENTAL_TASK_NAMES}

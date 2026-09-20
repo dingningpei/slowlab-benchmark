@@ -25,6 +25,11 @@ higher-dimensional calibration. Its finite candidate search also supplies a feas
 bound on the world optimum. We consequently base primary comparisons on realized regret and
 restrict posterior-risk decompositions to effects larger than measured evaluator error.
 
+The experimental \textsc{Screen} configuration is not yet a screening benchmark. It asks
+for an operating recommendation and scores final regret, without eliciting factor rankings,
+effect directions, calibrated confidence or top-$k$ selections. We therefore exclude it
+from the core suite and defer screening claims until those outputs and direct metrics exist.
+
 Finally, the Phase~3 scripted reference rows and Phase~4 LLM rows use independent held-out
 site ranges. They provide common-scale descriptive anchors, but they are not paired
 model-versus-baseline tests. Direct superiority claims require a jointly randomized matrix

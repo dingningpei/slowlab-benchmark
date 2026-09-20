@@ -26,3 +26,15 @@ new execution traces under environment version 2.0.0.
 
 The exact visible modalities, units and measurement errors are specified in
 `docs/observation_protocol_v2.md`.
+
+## Version 2.1 task status
+
+The formal benchmark suite contains **Sanity**, **Optimise**, and **Transfer**. The
+**Screen** configuration remains executable for archival analyses and future task
+development, but it is experimental and excluded from Version 2.1 model comparisons. Its
+current final-regret endpoint scores high-dimensional operating optimisation rather than
+factor screening. A future Screen task must elicit factor rankings, effect directions and
+confidence, then score rank, sign and top-k selection quality directly. This reporting
+change does not alter environment ground truth, so the environment version remains 2.0.0.
+The complete scope and future screening-output contract are in
+`docs/task_scope_v2_1.md`.

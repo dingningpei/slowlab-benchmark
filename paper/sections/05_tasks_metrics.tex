@@ -17,14 +17,14 @@ ranges, prices, observation noise and facility size.
 \subsection{Tasks}
 \label{sec:tasks}
 
-Four tasks vary the decision geometry while retaining the same crop-cycle duration,
+Three core tasks vary the decision geometry while retaining the same crop-cycle duration,
 commitment rule and economic objective. \textsc{Sanity} is a one-factor interface and
-evaluator check. \textsc{Screen} allocates a sparse two-round budget across all six factors.
-\textsc{Optimise} varies one chamber-level and one loop-level factor, so a feasible batch is
-a split-plot allocation rather than an unordered list of points. \textsc{Transfer} optimizes
-four resource factors and then asks for a new recommendation after electricity and gas
-prices rise by $2.2\times$, without allowing another experiment. Table~\ref{tab:tasks-v2}
-states the resource structure directly; we do not reuse the Version~1 task-difficulty ratios.
+evaluator check. \textsc{Optimise} varies one chamber-level and one loop-level factor, so a
+feasible batch is a split-plot allocation rather than an unordered list of points.
+\textsc{Transfer} optimizes four resource factors and then asks for a new recommendation
+after electricity and gas prices rise by $2.2\times$, without allowing another experiment.
+Table~\ref{tab:tasks-v2} states the resource structure directly; we do not reuse the
+Version~1 task-difficulty ratios.
 
 \begin{table}[t]
 \centering\small
@@ -33,15 +33,21 @@ states the resource structure directly; we do not reuse the Version~1 task-diffi
 Task & factors & rounds & units/round & unit-days & decision tested \\
 \midrule
 Sanity & 1 & 2 & 8  & 3,360  & interface / calibration \\
-Screen & 6 & 2 & 12 & 5,040  & scarce allocation \\
 Optimise & 2 & 3 & 12 & 7,560  & split-plot iteration \\
 Transfer & 4 & 3 & 24 & 15,120 & post-shock recommendation \\
 \bottomrule
 \end{tabular}
-\caption{Version~2 tasks. Unit-days are the physical capacity committed by one campaign;
-factor ranges and control levels are given in Appendix~\ref{app:tasks}.}
+\caption{Version~2.1 core tasks. Unit-days are the physical capacity committed by one
+campaign; factor ranges and control levels are given in Appendix~\ref{app:tasks}.}
 \label{tab:tasks-v2}
 \end{table}
+
+The implementation retains an experimental six-factor \textsc{Screen} configuration for
+archival analyses and future task development, but it is excluded from the core suite and
+Version~2.1 model claims. Its current endpoint is final operating regret, which scores
+high-dimensional optimisation rather than factor screening. A valid future task must elicit
+factor ranks, effect directions and confidence, and score rank, sign and top-$k$ selection
+quality directly.
 
 \subsection{Evaluation}
 \label{sec:eval}

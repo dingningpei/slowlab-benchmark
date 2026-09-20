@@ -19,8 +19,9 @@ time-appropriate measurements while the crop develops, and recommends operating
 conditions. Ground truth uses the reduced state-variable TOMGRO crop model (Jones, Kenig
 and Vallejos, 1999) with an explicit greenhouse cost model. The published model provides
 traceability; task budgets, ranges, facility shape and observation channels remain benchmark
-choices. The environment, package and paper are aligned at **v2.0.0**. Version 1 remains an
-audit artifact described in [`ENVIRONMENT_v1.0.md`](ENVIRONMENT_v1.0.md).
+choices. The frozen environment and package remain at **v2.0.0**; the Version 2.1 reporting scope
+uses the same environment and does not change ground truth. Version 1 remains an audit
+artifact described in [`ENVIRONMENT_v1.0.md`](ENVIRONMENT_v1.0.md).
 
 ---
 
@@ -29,7 +30,7 @@ audit artifact described in [`ENVIRONMENT_v1.0.md`](ENVIRONMENT_v1.0.md).
 ```bash
 pip install -r requirements.txt
 python3 -m pytest -q
-python3 scripts/run_baselines.py           # the four scripted reference strategies
+python3 scripts/run_baselines.py           # the three scripted reference strategies
 ```
 
 An episode, in full:
@@ -70,17 +71,14 @@ To run language models, see [`RUNNING.md`](RUNNING.md).
 
 ---
 
-## The four tasks
+## Core tasks
 
-Each is a stage an industrial campaign goes through, and each isolates a capability the
-previous one does not need. The variance components, cycle length, per-unit cost and
-commitment structure are identical across all four; only the question and the geometry
-change.
+The formal Version 2.1 suite contains three tasks. They share the same variance components,
+cycle length, per-unit cost and commitment structure; each tests a distinct decision.
 
 | Task | What the agent must do | Factors | Facility | rounds × units | days |
 |---|---|---|---|---|---|
-| **Sanity** | close the loop at all | 1 (day temperature) | 4 × 4 | 2 × 8 | 420 |
-| **Screen** | find which factors matter | 6 (management) | 8 × 3 | 2 × 12 | 420 |
+| **Sanity** | close the loop and calibrate the evaluator | 1 (day temperature) | 4 × 4 | 2 × 8 | 420 |
 | **Optimise** | find the optimum, respecting the facility | 2 (mixed level) | 4 × 3 | 3 × 12 | 630 |
 | **Transfer** | survive an energy price shock | 4 (resource) | 8 × 3 | 3 × 24 | 630 |
 
@@ -89,6 +87,13 @@ factor, so a valid design has to be a split-plot. In **Transfer**, electricity a
 both rise by a factor of 2.2 after the campaign ends and the agent must recommend again
 **with no further experiments** — an agent that modelled revenue and the two cost streams
 separately can re-solve; one that modelled only the margin cannot.
+
+**Screen** remains available in `TASKS` as an experimental configuration for archival and
+future development, but it is excluded from the core suite and Version 2.1 model claims.
+Its current endpoint is final operating regret, which does not directly measure screening.
+A future task must elicit factor ranks, effect directions and confidence, and score rank,
+sign and top-k selection quality directly. The status and redesign contract are recorded in
+[`docs/task_scope_v2_1.md`](docs/task_scope_v2_1.md).
 
 ---
 
@@ -144,7 +149,7 @@ The compact numerical source for the paper is
 ```
 slowlab/        the Version 2 environment and evaluators
   env.py          episode loop, commitment, timing, feasibility
-  tasks.py        the four tasks
+  tasks.py        three core tasks plus the experimental Screen configuration
   world.py        P_Theta: a seed draws a site (climate, prices, crop parameters)
   tomgro.py       reduced state-variable TOMGRO
   economics.py    greenhouse gross-margin model
@@ -167,7 +172,7 @@ results/        summary JSON per model and task
 | Script | What it produces |
 |---|---|
 | `run_llm.py`, `run_all_llm.sh` | the language-model episodes |
-| `run_baselines.py` | the four scripted reference strategies |
+| `run_baselines.py` | the three scripted reference strategies |
 | `run_achievable.py`, `rescore_cv.py` | $\mathcal{R}^\star(D)$ under the cross-validated estimator |
 | `build_phase5_paper_artifacts.py` | compact Version 2 summary and the three main result tables |
 | `reproduce_phase5_paper.py` | raw frozen events → analyses → tables → figures → checked PDF |

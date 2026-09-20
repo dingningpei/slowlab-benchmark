@@ -8,7 +8,7 @@ import argparse, json, csv, sys, pathlib
 import numpy as np
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
-from slowlab import SlowLabEnv, TASKS
+from slowlab import CORE_TASK_KEYS, SlowLabEnv, TASKS
 from slowlab.registry import describe, make_agent, available
 
 
@@ -41,8 +41,9 @@ def run_episode(task_name: str, agent_name: str, seed: int) -> dict:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--seeds", type=int, default=30)
-    ap.add_argument("--tasks", nargs="+", default=["T1", "T2", "T3", "T4"])
-    # The four reference points. The rep2 / transfer pair is a *result*, not a scale
+    ap.add_argument("--tasks", nargs="+", default=list(CORE_TASK_KEYS),
+                    help="core tasks by default; pass Screen explicitly for experimental runs")
+    # The three deployable reference policies. The rep2 / transfer pair is a *result*, not a scale
     # marker, and is not run here.
     ap.add_argument("--agents", nargs="+",
                     default=["random_spread", "split_plot_doe", "constraint_aware_batch_bo"])

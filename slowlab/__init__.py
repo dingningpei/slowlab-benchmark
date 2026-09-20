@@ -11,7 +11,9 @@ from .validity import score_validity, ValidityReport
 from .tomgro import TomgroModel, TomgroParams
 from .economics import EconomicModel, TomgroProfitModel, sample_site_econ
 from .world import ManagedTomgro, MANAGEMENT_FACTORS, sample_instance_params
-from .tasks import TASKS, Task
+from .tasks import (CORE_TASK_KEYS, CORE_TASK_NAMES, CORE_TASKS,
+                    EXPERIMENTAL_TASK_KEYS, EXPERIMENTAL_TASK_NAMES,
+                    EXPERIMENTAL_TASKS, TASKS, Task)
 from .env import (SlowLabEnv, EpisodeResult, Measurement, Observation,
                   RecommendationUpdate, VisibleEvent)
 
@@ -37,6 +39,8 @@ __all__ = ["FactorSpec", "Facility", "Unit", "Design", "Rejection", "RejectCode"
            "score_validity", "ValidityReport", "TomgroModel", "TomgroParams",
            "EconomicModel", "TomgroProfitModel", "ManagedTomgro",
            "MANAGEMENT_FACTORS", "sample_instance_params", "TASKS", "Task",
+           "CORE_TASK_KEYS", "CORE_TASK_NAMES", "CORE_TASKS",
+           "EXPERIMENTAL_TASK_KEYS", "EXPERIMENTAL_TASK_NAMES", "EXPERIMENTAL_TASKS",
            "SlowLabEnv", "EpisodeResult", "Measurement", "Observation",
            "RecommendationUpdate", "VisibleEvent",
            "sample_site_econ", "ENV_VERSION"]

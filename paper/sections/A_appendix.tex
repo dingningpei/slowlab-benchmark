@@ -400,8 +400,9 @@ register. Separately, replication does not pay at these budgets, so an agent is 
 rewarded for buying precision --- an arithmetic consequence of bounded parallelism rather
 than a bug, but it narrows what the benchmark can distinguish.
 
-\paragraph{A stronger form of irreversibility is implemented and not enabled.} All four
-tasks set the recovery length to zero. The code path exists, but the Version~2 experiment
+\paragraph{A stronger form of irreversibility is implemented and not enabled.} All three
+core tasks and the experimental \textsc{Screen} configuration set the recovery length to
+zero. The code path exists, but the Version~2 experiment
 matrix does not evaluate recovery delays, so no claim depends on that stronger mechanism.
 
 \paragraph{Two actions a real grower has and this agent does not.} The action space stops
@@ -417,8 +418,9 @@ since salvaging costs part of a season rather than all of it.
 
 \emph{Staggered planting.} Rounds are synchronous: every unit in a round starts and ends
 together. Real trial programmes run a pipeline, starting a new batch every few weeks. Our
-budgets leave half the facility idle on two of the four tasks---$8$ of $16$ unit-slots on
-\textsc{Sanity} and $12$ of $24$ on \textsc{Screen}---for the full $420$ days, which no
+budgets leave half the facility idle on \textsc{Sanity} and on the experimental
+\textsc{Screen} configuration---$8$ of $16$ and $12$ of $24$ unit-slots,
+respectively---for the full $420$ days, which no
 grower would accept. Staggering at a $105$-day offset would run four batches instead of two
 in the same wall-clock. It also poses the harder question: with only partial information
 from batch one, what do you plant in batch two? That is where slow feedback actually bites,

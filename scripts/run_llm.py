@@ -116,9 +116,8 @@ def main():
                               a.reasoning_effort, a.generation_seed)
     out = ROOT / a.out
     out.mkdir(parents=True, exist_ok=True)
-    # When running a subset of tasks, the task name goes into the filename so all
-    # four can run in parallel without overwriting each other; make_tables merges
-    # them back by model name.
+    # When running a task subset, the task names go into the filename so parallel
+    # runs cannot overwrite each other; downstream analysis merges them by model.
     tool_mode = a.tool_mode or ("both" if a.tools else "bare")
     suffix = "" if tool_mode == "bare" else f"+{tool_mode}-tool"
     tag = a.model.replace("/", "_") + suffix + ("+within-cycle" if a.within_cycle else "")
