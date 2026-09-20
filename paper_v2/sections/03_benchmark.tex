@@ -1,0 +1,50 @@
+\section{Benchmark instantiation}
+\label{sec:benchmark}
+
+\subsection{World and facility}
+A site seed fixes crop parameters, climate, input prices, and output prices. The forward
+model combines reduced TOMGRO physiology with an explicit greenhouse gross-margin model.
+Climate chambers are whole plots and independently plumbed hydroponic loops are subplots.
+Temperature, photoperiod, lighting, and carbon dioxide are chamber-level controls; density
+and pruning are loop-level controls. Observations retain plant, loop, chamber, batch,
+measurement, and reporting-resolution variation at their actual scopes.
+
+Each submission names treatments, assigns every treatment to physical units, and supplies a
+randomisation seed. Mechanical validation is free and checks capacity, factor bounds, and
+control hierarchy. It does not certify statistical quality. Rejected submissions consume no
+experimental budget but remain recorded as agent failures.
+
+\subsection{Core tasks}
+Table~\ref{tab:tasks} summarises the Version~2 core suite. Its three tasks share the same objective and commitment rule, but differ in the decision being tested rather than serving as nominal difficulty levels.
+
+\begin{table}[t]
+\centering\small
+\begin{tabular}{@{}lrrrrl@{}}
+\toprule
+Task & factors & rounds & units/round & unit-days & decision tested \\
+\midrule
+Sanity   & 1 & 2 & 8  & 3,360  & interface and calibration \\
+Optimise & 2 & 3 & 12 & 7,560  & split-plot iteration \\
+Transfer & 4 & 3 & 24 & 15,120 & post-shock recommendation \\
+\bottomrule
+\end{tabular}
+\caption{Core Version~2 tasks. Unit-days are committed physical capacity.}
+\label{tab:tasks}
+\end{table}
+
+\textsc{Sanity} is a one-factor closed-loop and evaluator check. \textsc{Optimise} varies
+one chamber-level and one loop-level factor, making allocation and block structure
+unavoidable. \textsc{Transfer} varies four resource factors; after the campaign, electricity
+and gas prices rise by $2.2\times$ and the agent must recommend again without new trials.
+
+The implementation retains an experimental six-factor \textsc{Screen} configuration, but
+we exclude it from the core suite and empirical claims. Its present endpoint is operating
+regret, which measures scarce high-dimensional optimisation rather than the stated
+screening construct. A valid future version should elicit factor ranks, signs, and
+uncertainty and score them directly.
+
+\subsection{Observation timing}
+The agent may advance simulation time and request registered modalities from selected units.
+Only records whose timestamps have passed are returned. Inspection can update the current
+recommendation and, before the next round, its next design. In the synchronous action space
+it cannot alter the running treatment, release a unit, or create a replacement batch.

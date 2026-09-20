@@ -51,3 +51,14 @@ results/_oracle_cache/
 # ── Internal lab notebook, not part of the release ──────────────────────
 CHANGELOG_*.md
 /output/reviews/
+
+# ── Clean Version 2 manuscript build products ─────────────────────────
+paper_v2/*.aux
+paper_v2/*.log
+paper_v2/*.out
+paper_v2/*.bbl
+paper_v2/*.blg
+paper_v2/*.fls
+paper_v2/*.fdb_latexmk
+paper_v2/*.synctex.gz
+paper_v2/*.toc

@@ -1,0 +1,41 @@
+\documentclass[10pt]{article}
+\usepackage[letterpaper,margin=0.78in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\microtypesetup{expansion=false}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs,tabularx,array,multirow}
+\usepackage{graphicx,xcolor}
+\usepackage{caption,subcaption}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[colorlinks=true,allcolors=blue!55!black]{hyperref}
+\usepackage{enumitem}
+\usepackage{placeins}
+\usepackage{titlesec}
+
+\newcommand{\slowlab}{\textsc{SlowLab}}
+\newcommand{\Rfinal}{\mathcal{R}_{\mathrm{final}}}
+\newcommand{\Rcum}{\mathcal{R}_{\mathrm{cum}}}
+\title{\slowlab: Separating Experimental Allocation, Evidence Use, and\\
+Recommendation under Slow and Irreversible Feedback}
+\author{Anonymous Authors}
+\date{}
+
+\begin{document}
+\maketitle
+\input{sections/00_abstract}
+\input{sections/01_intro}
+\input{sections/02_framework}
+\input{sections/03_benchmark}
+\input{sections/04_evaluation}
+\input{sections/05_experiments}
+\input{sections/06_results}
+\input{sections/07_related}
+\input{sections/08_limitations}
+\input{sections/09_conclusion}
+\bibliographystyle{plainnat}
+\bibliography{refs}
+\appendix
+\input{sections/A_appendix}
+\end{document}

@@ -1,0 +1,34 @@
+\section{Experimental design}
+\label{sec:experiments}
+
+\subsection{Fixed-history role separation}
+We first create completed histories using random spread, split-plot DOE, and
+constraint-aware batch Bayesian optimisation. Ordinary, block-aware, and component-aware GP
+readers receive copies of each accepted history and produce recommendations without changing
+any design or observation. Crossing design source with reader makes row differences
+allocation effects, column differences evidence-use effects, and residuals interactions.
+Privileged readers are labelled as diagnostics and never treated as deployable baselines.
+
+\subsection{Frozen closed-loop study}
+The primary matrix runs Luna on \textsc{Optimise} with bare, design-aid, inference-aid, and
+combined interfaces: 56 sites, two provider generation seeds per site, and 448 episodes.
+Prespecified secondary matrices add a 24-site Sol bare-versus-inference replication, Luna
+task heterogeneity on \textsc{Sanity} and \textsc{Transfer}, within-cycle versus
+terminal-only access, and a prompt variant, for 928 frozen episodes. A separately frozen
+adaptive extension reruns the four Luna interfaces on 16 fresh sites at $0.5\times$,
+$1\times$, and $2\times$ observation noise, adding 384 episodes.
+
+Sites are statistical units; provider generations are within-site replicates. We average
+generation seeds within site before forming paired differences and use 10,000 site-bootstrap
+resamples for percentile 95\% intervals. The primary tool family uses Holm correction;
+prespecified secondary families use Benjamini--Hochberg correction. Transport failures may
+be retried with the same identity. Format failures, infeasible submissions, and model early
+stopping remain outcomes.
+
+\subsection{Post-primary model extension}
+A frozen prospective extension compares Luna, DeepSeek V4 Flash 0731, and Qwen 3.8 27B on
+the same 24 fresh \textsc{Optimise} sites. Each model runs bare and inference-aid conditions
+with two provider generation seeds, for 288 episodes. This extension was specified after the
+original Phase~4 analysis and will be reported as post-primary evidence. It estimates three
+within-model tool contrasts and same-site pairwise model contrasts; it does not alter the
+original primary family.

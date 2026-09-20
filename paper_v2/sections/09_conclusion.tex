@@ -1,0 +1,16 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+\slowlab{} evaluates an agent as the operator of a resource-limited experimental campaign.
+The design policy determines what evidence can exist, the history reader determines how that
+evidence becomes a recommendation, and the evaluator measures both without leaking hidden
+truth into the episode. This separation turns a vague failure to ``reason scientifically''
+into testable allocation, evidence-use, and recommendation questions.
+
+The current experiments support a narrower conclusion than the Version~1 mechanism story.
+Allocation and reading are empirically separable but task dependent. Standard design and
+inference aids do not reliably improve endpoint regret in the tested primary conditions; a
+fresh high-noise extension preserves that null result, and one lower-noise condition shows
+harm. Within-cycle access changes behaviour without improving the final recommendation in
+the current synchronous action space. The next decisive tests are matched cross-model
+comparisons and action spaces in which interim evidence can change physical capacity.

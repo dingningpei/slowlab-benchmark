@@ -1,0 +1,55 @@
+\section{Results}
+\label{sec:results}
+
+\subsection{Allocation and reading are separable and task dependent}
+Across held-out fixed histories, the overall range across scripted design sources is
+$0.01718$ regret, the range across deployable readers is $0.00619$, and the design--reader
+interaction RMS is $0.00209$. This aggregate does not define a universal ordering. The
+design range is largest on \textsc{Transfer} ($0.04727$), whereas on \textsc{Sanity} the
+reader range exceeds the design range. A block-aware reader also fails to improve over the
+ordinary GP on its independent calibration set (paired normalised-regret improvement
+$-0.0112$, SE $0.0095$, 24 pairs). Structural readers therefore serve as diagnostics rather than assumed stronger baselines. Table~\ref{tab:phase4-main} places these fixed-history reference points beside the closed-loop results without testing across independently sampled sites.
+
+\input{generated/phase4_main_table}
+
+\subsection{Standard aids do not reliably reduce final regret}
+For Luna on the 56 primary sites, the design-aid difference is $+0.00016$ (95\% CI
+$[-0.00299,0.00321]$), inference aid is $-0.00196$ ($[-0.00520,0.00133]$), and both aids
+are $-0.00023$ ($[-0.00365,0.00326]$). None is significant after Holm correction. Sol has
+lower descriptive regret on its independent sites, but its inference aid also fails to
+improve its bare arm: $+0.00053$ ($[-0.00055,0.00173]$), adjusted $p=0.381$. Because the
+original Luna and Sol matrices use different sites, their absolute levels are descriptive,
+not a paired model ranking.
+
+Table~\ref{tab:phase4-secondary} reports the prespecified secondary and noise-robustness families. The aids were used: inference recommendations were adopted frequently, while geometric design adoption was lower. The null effects therefore do not reduce to complete tool
+avoidance. They show that the tested delivery format did not reliably convert adoption into
+lower endpoint regret.
+
+\input{generated/phase4_secondary_table}
+
+Within-cycle access changes model behaviour and API use, but its paired final-regret
+difference is $+0.00768$ (95\% CI $[-0.00041,0.01662]$, adjusted $p=0.085$). Under the
+synchronous action space, interim evidence can update a recommendation but has no guaranteed
+path to modify running capacity. Testing its operational value requires early termination,
+staggered release, or treatment modification.
+
+\subsection{Noise robustness and transfer}
+At twice the registered observation noise, all three Luna tool-minus-bare intervals cross
+zero. At half noise, the design aid increases regret by $0.01133$ (95\% CI
+$[0.00530,0.01842]$, adjusted $p=0.0096$). Other half-noise and one-noise tool contrasts,
+and the registered noise interactions, are not significant. The supported conclusion is
+therefore bounded: the tested aids show no reliable benefit, and one lower-noise condition
+shows harm.
+
+\input{generated/phase4_transfer_table}
+
+Table~\ref{tab:transfer-v2} separates pre-shock and post-shock regret. After the held-out $2.2\times$ energy-price shock, the inference-aid arm has higher regret
+than bare by $0.0452$, with a descriptive paired site-bootstrap interval
+$[0.0200,0.0781]$. This contrast was not a registered inferential family and motivates a
+targeted replication rather than a confirmatory tool claim.
+
+\subsection{Evaluator scope}
+On \textsc{Sanity}, independent $32\times32$ crop--economics product posteriors agree to
+response-curve RMSE $0.00445$ and select nearly identical Bayes actions. This check does not
+establish equal error in higher dimensions. We therefore use exact realised regret for the
+claims above and restrict $b(H_t)$ and $g(H_t,\hat x_t)$ to calibrated mechanism analyses.
