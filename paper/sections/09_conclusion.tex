@@ -1,29 +1,22 @@
-\section{Conclusion and future work}
+\section{Conclusion}
 \label{sec:conclusion}
 
-\slowlab{} turns experimental design into a sequential decision problem with physical
-capacity, delayed terminal outcomes, correlated measurements, economic costs and
-irreversible commitments. Version~2 adds a distinction that the original environment
-missed: a slow experiment can still be inspected while it runs. An agent can use
-measurements available at time $t$, while future yield, future profit and latent simulator
-state remain hidden and committed treatments remain fixed.
+\slowlab{} evaluates an agent as the operator of a resource-limited experimental campaign:
+it must allocate treatments to a tiered facility, interpret time-stamped evidence and issue
+a final recommendation while poor experiments incur economic loss. Version~2 makes
+within-cycle observation explicit and evaluates designs and recommendations against the
+same visible history.
 
-The Phase~2 audit changes the evidential status of the original study. The finite-atom
-estimator did not support the claimed design--decision decomposition, component fields
-created an information bypass, and normalised density was used as a physical plant density.
-Because the resulting observations affected later choices, the old closed-loop trajectories
-cannot be repaired by rescoring. Claims about saturation, independent design and reader
-failures, tool effects, transfer gains and first-cycle deterioration are therefore
-withdrawn. The archived runs remain useful for interface and executed-design diagnostics.
+The experiments give a narrower and better-supported result than the Version~1 mechanism
+story. Fixed-history replay shows that allocation and reading are empirically separable but
+task dependent. In 928 frozen-protocol episodes, standard design and inference aids do not
+reliably reduce final regret for the tested Luna and Sol conditions. A fresh 384-episode
+noise extension reproduces that conclusion at twice the observation noise and finds a
+harmful design-aid effect at half noise. Within-cycle access is used by the agent but does
+not significantly improve the final recommendation under a synchronous action space.
 
-The replacement estimand conditions every comparison on the same visible history. A
-continuous crop--economics posterior passes the one-factor Sanity calibration and supports
-held-out estimates of Bayes risk and recommendation excess risk, with an explicit lower-bound
-flag when the best action is searched over a finite set. Its present calibration does not
-justify precise efficiency claims on the higher-dimensional tasks.
-
-\paragraph{Future work.} The next experiments should first regenerate closed-loop data under
-the corrected density and observation model. They should then cross designs and readers,
-separate design and inference tools, and compare terminal-only feedback with scheduled and
-agent-selected interim inspection at matched resource and measurement budgets. Only effects
-that replicate on held-out sites should return to the abstract and conclusion.
+These findings motivate benchmarks that expose the resource and timing choices through
+which better reasoning can affect an experiment. The next decisive extensions are matched
+scripted-and-model comparisons on the same sites, a calibrated higher-dimensional history
+evaluator, and asynchronous actions whose use of interim evidence can change physical
+capacity rather than only an interim recommendation.

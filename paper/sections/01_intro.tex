@@ -8,22 +8,17 @@ that such agents will accelerate discovery in domains where experiments are the 
 Whether that claim holds is an empirical question, and answering it requires evaluating
 agents under the conditions that make experimentation a bottleneck in the first place.
 
-Existing evaluations do not. In the benchmarks available for automated experimental design,
-an experiment is a function call: it returns immediately, costs nothing, and may be repeated
-without limit \citep{boxinggym}. Under those conditions the strategy that wins is the one
-that queries most, and a poor decision is corrected by making another. Neither property
-survives contact with a laboratory. A commercial tomato crop occupies its greenhouse for
-seven months and more; a synthesis run consumes reagents and instrument time; a cohort study, once enrolled, cannot be
-re-enrolled. In these settings the binding constraint is not the agent's throughput of ideas
-but the fact that each idea must be paid for in time and material, and that a design once
-committed cannot be revised. An agent optimised against free, instantaneous, repeatable
-experiments is being selected on a proxy from which the operative difficulty has been
-removed, and we currently have no executable environment in which to find out whether that
-selection transfers.
-
-The gap is recognised in the domain literature, which asks for exactly the properties an
-idealised environment cannot expose---cost-aware performance, constraint-violation behaviour,
-reproducibility (\S\ref{sec:related})---and lacks an environment in which to measure them.
+Existing evaluations cover important parts of this loop. BoxingGym limits an agent to ten
+sequential queries and scores information gain and prediction; Olympus and Summit provide
+executable optimization surfaces derived from chemistry; Minerva studies noisy parallel
+batches under laboratory constraints; and budgeted and delayed-feedback Bayesian
+optimization formalize cost or latency \citep{boxinggym,olympus,summit,minerva,
+astudillo2021budgeted,verma2022delayed}. What remains difficult to measure is the combined
+decision: allocating treatments to a tiered physical facility, interpreting the resulting
+history, and issuing an operating recommendation while the experiments themselves incur
+opportunity cost. A commercial tomato crop makes this combination concrete. It occupies a
+greenhouse for seven months, block-level climate controls restrict which treatments can run
+together, and a committed treatment cannot be revised after later evidence arrives.
 
 \paragraph{\slowlab.} We introduce an executable benchmark for experimental design under
 four conditions that hold at once. Feedback is \textbf{slow}: a cycle is $210$ days, and
@@ -33,17 +28,17 @@ the same physical resource. Observations are \textbf{noisy} enough that one unit
 settle a question. Experimentation is \textbf{costly} in the objective's own units, since
 testing a management regime means growing a crop under it and selling whatever results. And
 a submitted design is \textbf{irreversible}: no branch, no checkpoint, no revert. Each
-condition alone is familiar. Together they withdraw the recourse every existing benchmark
-assumes, because an agent can neither buy precision and coverage from the same units nor
+condition alone is familiar. Together they withdraw common forms of recourse, because an
+agent can neither buy precision and coverage from the same units nor
 find out which it needed before the season ends.
 
-The conditions define a class rather than a domain --- microbial evolution, bioprocess
-scale-up, materials ageing and dose-finding trials satisfy them too, and
-Appendix~\ref{app:admit} states what a domain must supply to be admitted. We instantiate
-the first in controlled-environment horticulture, where a published mechanistic crop model
-\citep{jones1999reduced} coupled to an explicit economic one puts the difficulty outside
-our control and every quantity in one currency, net profit per square metre per day
-(\S\ref{sec:domain}). The agent's action is a \emph{design}: which factor settings to test,
+We validate this regime in controlled-environment horticulture. A published mechanistic
+crop model \citep{jones1999reduced} supplies a traceable physiological basis, and an explicit
+economic model puts recommendations and experimental opportunity cost in one currency,
+net profit per square metre per day (\S\ref{sec:domain}). The published model does not make
+benchmark difficulty author-independent: factor ranges, facility size, task budgets and
+observation channels remain design choices and are reported as such. The agent's action is
+a \emph{design}: which factor settings to test,
 on how many units, and which physical units those are. Lamps and heating serve a whole
 chamber while planting density and the pruning target are set per hydroponic loop, so an
 allocation that varies temperature between two loops of one chamber describes an experiment
@@ -67,18 +62,20 @@ agent.}
 
 Overall, our work makes the following contributions:
 \begin{enumerate}[leftmargin=1.5em,itemsep=3pt,topsep=3pt]
-  \item We introduce \slowlab, a framework for experimental design under slow, noisy,
-    costly and irreversible trials. Its action space enforces block-level controls, finite
-    capacity and economic accounting, while its Version~2 protocol exposes only
-    time-appropriate measurements during an active experiment.
+  \item We formulate agent evaluation as three coupled capabilities in a resource-limited
+    batch campaign: allocating treatments to feasible physical units, using the evidence
+    revealed by the executed campaign, and issuing a final recommendation. The greenhouse
+    instantiation enforces split-plot controls, finite capacity, economic accounting and
+    time-appropriate inspection during a committed crop cycle.
 
-  \item We define a common-history risk decomposition. The Bayes risk $b(H_t)$, agent risk,
-    posterior excess $g(H_t,\hat x_t)$ and conditional value of a new design all condition
-    on the same time-stamped observations. Continuous crop and economic posteriors and
-    held-out evaluation avoid the finite-atom and in-sample failures found in Version~1.
+  \item We define a common-history diagnostic. Bayes risk $b(H_t)$, recommendation risk and
+    posterior excess $g(H_t,\hat x_t)$ condition on exactly the time-stamped history visible
+    to the agent. Independent action-selection and evaluation samples prevent the evaluator
+    from grading its own fitted action in sample.
 
-  \item We release the original 800 episodes as an audit corpus and document why their
-    earlier mechanism claims do not survive. Correcting the observation model changes the
-    feedback that generated later designs, so Version~2 treats the old numerical findings
-    as hypotheses for new closed-loop experiments rather than as confirmed results.
+  \item We separate design from history reading by replaying multiple readers on fixed
+    executed histories, then test design and inference aids in a frozen, site-paired
+    protocol. On the tested Luna and Sol conditions the aids do not reliably reduce final
+    regret; the result survives a fresh twice-noise Luna extension, while the lower-noise
+    secondary condition identifies a harmful design-aid effect.
 \end{enumerate}

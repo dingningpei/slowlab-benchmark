@@ -3,27 +3,24 @@
 **A benchmark for experimental-design agents when experiments are slow, noisy, expensive
 and irreversible.**
 
-Benchmarks for automated experimental design make experiments instantaneous, free and
-infinitely repeatable. Real experiments are none of these. SlowLab is an executable
-environment in which four conditions hold *at once*:
+SlowLab is an executable benchmark for agents that allocate treatments, inspect evidence
+and make operating recommendations in a resource-limited experimental campaign. Its current
+controlled-environment horticulture domain combines four conditions:
 
 | Condition | How it appears here |
 |---|---|
 | **Slow** | a trial is a growing cycle. A task gives an agent two or three of them, for 420–630 simulated days in total. |
 | **Noisy** | plant-to-plant, loop-to-loop, chamber-to-chamber and batch-to-batch variance, none of it removable by asking again. |
 | **Costly** | a trial is priced in the objective's own units — running a bad treatment *is* the loss. |
-| **Irreversible** | a submitted design is committed; a heat-damaged unit is out for the rounds it takes to recover. |
+| **Irreversible** | a submitted treatment cannot be changed or cancelled during its 210-day crop cycle. |
 
-An agent runs a greenhouse. It designs an experiment, commits it, waits out the cycle,
-sees the outcome, and repeats. Ground truth is the reduced state-variable TOMGRO crop
-model (Jones, Kenig & Vallejos 1999) with a European greenhouse cost model, so the
-difficulty is a property of the domain rather than a set of dials we tuned, and everything
-— the objective, the price of experimenting, and both regrets — is denominated in net
-margin per square metre per day.
-
-The environment is **frozen at v1.0.0**. Its known defects are published rather than all
-fixed, in [`ENVIRONMENT_v1.0.md`](ENVIRONMENT_v1.0.md); a benchmark's value is
-comparability across agents, not correctness of the simulator.
+An agent designs a feasible split-plot experiment, commits named units, may inspect
+time-appropriate measurements while the crop develops, and recommends operating
+conditions. Ground truth uses the reduced state-variable TOMGRO crop model (Jones, Kenig
+and Vallejos, 1999) with an explicit greenhouse cost model. The published model provides
+traceability; task budgets, ranges, facility shape and observation channels remain benchmark
+choices. The environment, package and paper are aligned at **v2.0.0**. Version 1 remains an
+audit artifact described in [`ENVIRONMENT_v1.0.md`](ENVIRONMENT_v1.0.md).
 
 ---
 
@@ -31,7 +28,7 @@ comparability across agents, not correctness of the simulator.
 
 ```bash
 pip install -r requirements.txt
-python3 -m pytest -q                       # 92 passed
+python3 -m pytest -q
 python3 scripts/run_baselines.py           # the four scripted reference strategies
 ```
 
@@ -51,7 +48,9 @@ while env.rounds_left:
         randomization_seed=1,
     )
     r = env.submit_design(d)                  # a falsy Rejection, or the round index
-    obs = env.advance()                       # one growing cycle passes
+    env.advance_to(105)                       # partial time passes
+    obs = env.observe(modality="canopy_lai") # currently available records only
+    env.advance_to(210)                       # terminal outcomes become available
     env.interim_recommendation(x_now)         # scored every round, costs nothing
 
 res = env.submit_recommendation(x_final)
@@ -120,22 +119,23 @@ product does not establish independent design and reader failures.
 
 ## Headline results
 
-Five models — DeepSeek-v4-flash, GPT-5.6-luna, Qwen3.8-27B, MiMo-v2.5, GLM-5.3-flash —
-on all four tasks, twice each (bare and with two standard tools): 40 cells, 800 episodes,
-20 instances per cell.
+The frozen Version 2 study contains 928 episodes; a separately frozen adaptive-noise
+extension contains 384 more. Sites are the statistical units and provider generation seeds
+are within-site replicates.
 
-- **The Version 1 result tables are archival.** They cannot support claims about
-  saturation, task ordering or tool effects after the Phase 2 corrections.
-- **One structural transcript observation survives.** Many archived designs use few
-  distinct treatments. Its effect on corrected outcomes still requires new runs.
-- **Version 1 mechanism claims require new runs.** A component-information bypass, a
-  collapsed joint-atom evaluator and a normalised-density plant-count error invalidate the
-  reported $c/\eta$ and tool-mechanism interpretations. Corrected Version 2 closed-loop
-  runs are required before those hypotheses can be tested again.
-- **Version 2 adds within-cycle observation.** New closed-loop runs must let agents choose
-  when and what to observe; terminal-only transcripts cannot be upgraded post hoc.
+- On 56 paired Optimise sites, Luna's design, inference and combined aids do not
+  significantly change final simple regret after Holm correction.
+- On 24 independent sites, Sol has lower descriptive regret than Luna, but its inference aid
+  does not improve its paired bare arm.
+- A fresh 16-site extension reproduces the tool null result at twice the observation noise.
+  A prespecified secondary analysis finds that the design aid is harmful at half noise.
+- Within-cycle observation changes behavior but does not significantly improve final regret
+  in the current synchronous action space.
+- Fixed-history replay shows that design source and history reader are separable effects,
+  with their relative sizes changing by task.
 
-Full tables, with standard errors and the paired tests, are in the paper.
+The compact numerical source for the paper is
+[`results/phase5_paper_summary_env2.0.0.json`](results/phase5_paper_summary_env2.0.0.json).
 
 ---
 
@@ -150,14 +150,14 @@ slowlab/        the Version 2 environment and evaluators
   economics.py    greenhouse gross-margin model
   facility.py     chambers and loops; the control hierarchy
   design.py       the submitted design and rejection semantics
-  achievable.py   R*(D): the regret a design supports
-  eig.py          the estimator behind it
+  history_risk.py common-history Bayes-risk evaluator
+  eventlog.py     timestamped execution records
   agents.py       four scripted reference strategies
   llm.py          the language-model harness (prompt, retry loop, tools)
   providers.py    chat APIs over urllib; no SDK required
 
 scripts/        every number in the paper has a script here
-tests/          92 tests, including test_frozen.py, which fails if ground truth moves
+tests/          regression, protocol and claim-verification tests
 paper/          the LaTeX source
 results/        summary JSON per model and task
 ```
@@ -169,15 +169,23 @@ results/        summary JSON per model and task
 | `run_llm.py`, `run_all_llm.sh` | the language-model episodes |
 | `run_baselines.py` | the four scripted reference strategies |
 | `run_achievable.py`, `rescore_cv.py` | $\mathcal{R}^\star(D)$ under the cross-validated estimator |
-| `make_tasks_table.py`, `make_llm_tables.py`, `make_reference_table.py`, `make_diag_table.py` | Tables 2–5 |
-| `verify_results_claims.py` | re-derives every number in the results section, printing `paper: X / now: Y` |
+| `build_phase5_paper_artifacts.py` | compact Version 2 summary and the three main result tables |
+| `reproduce_phase5_paper.py` | raw frozen events → analyses → tables → figures → checked PDF |
+| `verify_results_claims.py` | verifies the Phase 5 paper summary and manuscript claims |
 | `tool_regret.py`, `tool_design_width.py`, `tool_hyper_control.py` | the three legs of the tool analysis |
 | `factor_value.py` | the cost of setting a factor wrongly, against the value of locating it |
 | `rstar_convergence.py`, `eig_rank_stability.py` | why the estimator is read as ranks |
 | `check_crossrefs.py` | orphan labels, dangling refs, duplicates |
 
-Transcripts for all 800 episodes and the atom-set pickles are published as a GitHub
-Release asset rather than committed here.
+The public v1.0.0 release contains the archived 800 Version 1 transcripts. Version 2 raw
+episodes are kept outside Git and are packaged separately for anonymous review; private
+notes under `output/reviews/` are never part of the repository artifact.
+
+With that frozen Version 2 bundle unpacked locally, the complete paper build is one command:
+
+```bash
+python3 scripts/reproduce_phase5_paper.py --analysis-dir /path/to/slowlab-v2-frozen
+```
 
 ---
 

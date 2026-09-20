@@ -1,14 +1,31 @@
-%% This section was merged into 5 Conclusion and future work on 2026-09-11; main.tex
-%% no longer \inputs it.
-%%
-%% Where the content went:
-%%   agent-dependent design measure / a clean tool arm  -> 5 Future work
-%%   the estimator does not converge                    -> Appendix "The R* estimator"
-%%   replication does not pay, limits of the action space -> Appendix "Known defects"
-%%   extending beyond the four tasks                    -> Appendix "Admitting a new domain"
-%%   five models / one temperature / one prompt         -> 4.1 Experimental setup
-%%   more factors lower the ceiling + the factor-value numbers -> 4.3 "What matters and
-%%                                                       what is worth measuring"
-%%
-%% Kept as an empty shell rather than deleted, so that neither the git history nor
-%% check_crossrefs.py is confused.
+\section{Limitations}
+\label{sec:limitations}
+
+The empirical scope is one simulated greenhouse-tomato domain. The mechanistic crop model
+improves traceability, but the economic coefficients, site distribution, factor ranges,
+facility layout and observation channels are benchmark choices. Results do not establish
+the same tool effects in chemistry, materials, biology, field agriculture or a physical
+greenhouse.
+
+The model study covers Luna and a smaller Sol replication through one provider interface,
+one base prompt family and passive tool delivery. Provider outputs varied at temperature
+zero, which is why the protocol treats generation seeds as within-site replicates. A null
+effect for these aids does not show that statistical tools cannot help an agent; it bounds
+the tested implementation and delivery mechanism.
+
+Within-cycle observations are consequential only through the recommendation during the
+current synchronous protocol. Units cannot be released, treatments cannot be modified, and
+the next batch begins after terminal outcomes are available. The experiment therefore tests
+whether inspection changes reasoning and endpoint recommendations, not the value of early
+stopping, asynchronous replacement or adaptive treatment. Those actions require explicit
+cleanup time, residual value and staggered-capacity semantics.
+
+The common-history evaluator has a strong one-factor calibration but incomplete
+higher-dimensional calibration. Its finite candidate search also supplies a feasible lower
+bound on the world optimum. We consequently base primary comparisons on realized regret and
+restrict posterior-risk decompositions to effects larger than measured evaluator error.
+
+Finally, the Phase~3 scripted reference rows and Phase~4 LLM rows use independent held-out
+site ranges. They provide common-scale descriptive anchors, but they are not paired
+model-versus-baseline tests. Direct superiority claims require a jointly randomized matrix
+on the same sites.

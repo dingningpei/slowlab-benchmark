@@ -1,3 +1,48 @@
+\section{Tasks and evaluation}
+\label{sec:tasks-eval}
+
+\subsection{Controlled-environment horticulture}
+\label{sec:domain}
+
+The current benchmark contains one validated domain. Its response model is the reduced
+state-variable TOMGRO model \citep{jones1999reduced}; a site seed draws crop and economic
+parameters and fixes the corresponding response surface. Climate chambers are blocks and
+independently plumbed hydroponic loops are units. Temperature, photoperiod, lamp intensity
+and carbon-dioxide enrichment are chamber-level controls; planting density and the pruning
+target are loop-level controls. The objective is net profit per square metre per day. This
+construction makes the simulator traceable to a published crop model, while Appendix
+\ref{app:domain} records the additional choices made for parameter distributions, factor
+ranges, prices, observation noise and facility size.
+
+\subsection{Tasks}
+\label{sec:tasks}
+
+Four tasks vary the decision geometry while retaining the same crop-cycle duration,
+commitment rule and economic objective. \textsc{Sanity} is a one-factor interface and
+evaluator check. \textsc{Screen} allocates a sparse two-round budget across all six factors.
+\textsc{Optimise} varies one chamber-level and one loop-level factor, so a feasible batch is
+a split-plot allocation rather than an unordered list of points. \textsc{Transfer} optimizes
+four resource factors and then asks for a new recommendation after electricity and gas
+prices rise by $2.2\times$, without allowing another experiment. Table~\ref{tab:tasks-v2}
+states the resource structure directly; we do not reuse the Version~1 task-difficulty ratios.
+
+\begin{table}[t]
+\centering\small
+\begin{tabular}{@{}lrrrrl@{}}
+\toprule
+Task & factors & rounds & units/round & unit-days & decision tested \\
+\midrule
+Sanity & 1 & 2 & 8  & 3,360  & interface / calibration \\
+Screen & 6 & 2 & 12 & 5,040  & scarce allocation \\
+Optimise & 2 & 3 & 12 & 7,560  & split-plot iteration \\
+Transfer & 4 & 3 & 24 & 15,120 & post-shock recommendation \\
+\bottomrule
+\end{tabular}
+\caption{Version~2 tasks. Unit-days are the physical capacity committed by one campaign;
+factor ranges and control levels are given in Appendix~\ref{app:tasks}.}
+\label{tab:tasks-v2}
+\end{table}
+
 \subsection{Evaluation}
 \label{sec:eval}
 
@@ -59,7 +104,8 @@ minimisation rather than from clipping.  The conditional value of a newly commit
 $D$ is $v(D\mid H)=b(H)-\mathbb E[b(H,D,Y_D)\mid H,D]$; it conditions on earlier evidence
 instead of restarting from the prior each round.
 
-The Version~1 ratios called design efficiency $c$ and decision efficiency $\eta$ are
+The quantities in \eqref{eq:capture} replace the Version~1 ratios called design efficiency
+$c$ and decision efficiency $\eta$, which are
 withdrawn.  Their numerators were prior, preposterior design scores while their denominators
 used realised recommendations, so $\eta$ was not a fraction of acquired information.  A
 correlation between $c$ and $\eta$, movement in opposite directions, or their product does

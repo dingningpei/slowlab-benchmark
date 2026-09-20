@@ -1,200 +1,122 @@
 \FloatBarrier
 \section{Experiments}
 \label{sec:llm}
-
-\subsection{Experimental setup}
-\label{sec:setup}
-
-The Version~1 archive contains five language models, four tasks, paired bare and
-tooled interfaces, and $800$ episodes. Phase~2 uses these runs only to audit execution and
-observation defects. They are not treated as corrected Version~2 evidence because the
-density and observation fixes would have changed the feedback and hence later designs.
-Four scripted strategies remain available as implementation references in
-Appendix~\ref{app:refs}; the confirmatory model and tool comparisons will be rerun after the
-Version~2 protocol is frozen.
-
-Every task is run on the same $20$ instances. A seed draws a site, a parameter vector
-$\theta \sim P_\Theta$ with its own optimum, rather than a noise realisation, so all
-agents face identical problems and every contrast below is paired by site. An agent is a
-single \texttt{run(env)} call with access to nothing beyond the interface of
-\S\ref{sec:episode}: it is not told $P_\Theta$, the forward model, or that a reference
-exists, and regret is computed afterwards by the evaluator from $x^\star_\theta$, which
-no agent can read. Within a task all agents share the facility, budget, factor ranges and
-cycle length; only the strategy varies.
-
-Feasibility checking is free and unlimited for every agent and a rejected design costs no
-budget (\S\ref{sec:checking}). A scripted reference uses that freedom when it is
-written, by never proposing a design the facility cannot run; a language model uses it at
-run time, through the retry loop of \S\ref{sec:harness}.
-
-\subsection{Domain: agriculture}
-\label{sec:domain}
-
-Several domains satisfy the four conditions: microbial evolution, bioprocess scale-up,
-materials ageing, dose-finding trials. SlowLab is built so that adding one requires no
-environment code (\S\ref{sec:interfaces}). We build the first in controlled-environment
-horticulture because the conditions there hold jointly and by nature: a crop occupies its
-greenhouse for the better part of a year, plant-to-plant variation is large, running a
-treatment means growing and selling a crop, and heat stress destroys fruit that cannot be
-recovered. None of this is a dial we set, and a benchmark whose
-delay, noise and cost were independent hyperparameters could be tuned until the desired
-result appeared. Horticulture also supplies the two things a
-domain must bring: a mechanistically modelled response with four decades of published
-parameters, and a priced output, so that both $f_\theta$ and the cost of experimenting
-come from the literature rather than from us.
-
-Appendix~\ref{app:domain} gives the coefficients with their sources, and
-Appendix~\ref{app:defects} names the four that are ours rather than the literature's and
-what each is worth. Filling in \S\ref{sec:env}: $f_\theta$ is the reduced state-variable TOMGRO model
-\citep{jones1999reduced} and $P_\Theta$ its published between-site parameter spread, so a
-seed draws a real site rather than a perturbation we chose. Blocks are climate chambers
-and units are independently plumbed hydroponic loops, which is what puts four of the six
-factors at chamber level and the other two at loop level. The objective is net profit per
-square metre per day, priced with public European coefficients. The same appendix explains
-the choice of a mechanistic rather than a Gaussian-process ground truth and the caveats that
-follow from it.
-
-\subsection{Tasks}
-\label{sec:tasks}
-
-The four are the stages an industrial experimental campaign goes through, and each
-isolates a capability the previous one does not require. They differ in the question asked
-and in the geometry that makes it hard, never in which of the four conditions applies. The variance components, the cycle length,
-the per-unit cost and the commitment structure are identical across all four; only the
-question and the geometry change.
-
-
-\textsc{Sanity} is the control. One factor and sixteen unit-slots make it easy, but its
-variance components are those of the other three, since relaxing a condition on one task
-would contradict the claim that we do not relax them. Any competent closed loop should
-beat random search here, so a method that does not has an interface problem rather than a
-reasoning problem.
-
-\textsc{Screen} tests allocation under scarcity. It varies all six management factors the
-domain exposes on a budget covering one unreplicated sweep, which forces a choice between
-precision and coverage, and two rounds leave no room to iterate out of it. Effect sparsity is not injected: it follows from crop physiology
-and the price list, and one factor is rail-bound because at 2024 European electricity
-prices supplemental light never repays its energy, so recognising that is part of
-screening.
-
-\textsc{Optimise} tests iteration under a control hierarchy. One chamber-level and one
-loop-level factor mean a valid design must be a split-plot, so where an agent puts a
-treatment matters as much as which treatment it is.
-
-\textsc{Transfer} tests whether an agent modelled the mechanism or the surface. Four
-resource factors are optimised at the site's own prices; electricity and gas then both rise
-by a factor of $2.2$ and the agent must recommend again \emph{with no further experiments}.
-The shock size is the 2021--2022 European energy crisis, over which Eurostat's non-household
-gas price reached an all-time high of $0.0867$\,\euro/kWh and non-household electricity
-excluding taxes peaked at $0.1987$\,\euro/kWh, both two to three times their pre-crisis
-level \citep{eurostat_energy_prices}. It falls only on energy: the tomato price,
-transplants, labour and purchased CO$_2$ do not move. Every observation returns a revenue
-rate, an energy cost rate and an other-cost rate alongside their combination, to the
-scripted and language-model interfaces alike, so an agent that modelled the three
-separately can re-solve without running anything and one that modelled only the margin
-cannot.
-
-\paragraph{Version~1 task-scale diagnostics.} The original task table and its
-$\mathcal{R}^\star(\varnothing)$-based interpretation are omitted from the compiled
-Version~2 manuscript. They used the withdrawn estimator and observations affected by the
-density bug. Task budgets and factor definitions remain fixed; quantitative task scales
-will be regenerated with corrected closed-loop runs.
-
-\subsection{Results}
 \label{sec:results}
 
-Five models, four tasks, $20$ instances each, run twice: once with the interface of
-\S\ref{sec:harness} alone and once with two standard tools added --- a screening design
-generator, and a posterior-maximisation routine fitted to whatever observations the agent
-has collected. That is forty model--task cells, every one with its full twenty instances.
-We report the two halves of \S\ref{sec:eval} in turn, realised regret first and design
-and decision quality second, then the two effects that only appear because the benchmark
-elicits a recommendation every round and runs a paired tool arm.
+\subsection{Protocol}
+\label{sec:setup}
 
-\subsubsection{Version 1 results are archival}
-\label{sec:results:outcome}
+We report three evidence layers. First, fixed-history replay crosses scripted design
+policies with ordinary, block-aware and component-aware GP readers. Each reader receives a
+copy of the same accepted and completed history, so changing the reader cannot change the
+evidence it reads. Second, the frozen Phase~4 protocol runs closed-loop model agents on
+reserved sites. Its primary matrix crosses Luna with bare, design-aid, inference-aid and
+combined interfaces on \textsc{Optimise}: 56 sites, two provider generation seeds and 448
+episodes. Prespecified secondary matrices add 96 Sol episodes, 192 Luna episodes on
+\textsc{Sanity} and \textsc{Transfer}, 96 Luna episodes comparing terminal-only and
+within-cycle access, and 96 prompt-variant episodes, for 928 total. Third, after the primary
+analysis was frozen, a separately registered robustness extension reruns all four Luna
+interfaces on 16 fresh sites, two provider generations and noise multipliers
+$0.5,1,2$, for 384 further episodes.
 
-\textbf{Phase~2 status.} The quantitative Version~1 results below are archival.
-Phase~2 found a component-information bypass, collapse of the joint-atom history
-evaluator, and a normalised-density error that under-counted plants and overstated
-unit noise in \textsc{Screen}, \textsc{Optimise} and \textsc{Transfer}. Correcting
-the environment changes the observations that drive later closed-loop designs, so
-the old trajectories cannot be repaired by rescoring. Version~2 therefore withdraws
-claims about saturation, $c$, $\eta$, independent design and reader failures, tool
-effects, transfer gains and trajectory improvement until corrected runs exist. The
-structural count of distinct treatments remains a description of the archived
-transcripts. The obsolete result text is retained below, but excluded from the
-compiled Version~2 manuscript.
+A site, rather than an API completion, is the inferential unit. We average the two provider
+generations within each site, form paired differences, and use a 10,000-resample site
+bootstrap for percentile 95\% intervals. The primary three tool-minus-bare comparisons use
+Holm family-wise correction. Named secondary families use Benjamini--Hochberg adjustment.
+Model-format failures, infeasible submissions and early stopping remain outcomes; only
+transport failures are retried with the same identity. Across the 928-episode frozen run
+there are no missing or duplicate cells. Appendix~\ref{app:phase4-protocol} gives hashes,
+site ranges, API metadata and the distinction between confirmatory, secondary and
+post-primary analyses.
 
-\iffalse
+\subsection{Fixed histories separate allocation from evidence use}
 
-\input{sections/_results_table}
+On held-out Phase~3 sites, the range across scripted design sources is $0.01718$ regret,
+the range across deployable readers is $0.00619$, and the design--reader interaction RMS is
+$0.00209$. The relative size is task dependent: the design range is largest on
+\textsc{Transfer} ($0.04727$), whereas on \textsc{Sanity} the reader range exceeds the
+design range. This supports treating allocation and history reading as separate capabilities;
+it does not support a universal claim that one dominates. The block-aware reader also fails
+to beat the ordinary GP on its independent calibration set (paired normalized-regret
+improvement $-0.0112$, SE $0.0095$, 24 pairs), so we retain it as a structural diagnostic
+rather than designate it a stronger baseline. Figure~\ref{fig:phase5-mechanisms} places the
+executed design, reader crossing, feedback contrast and evaluator check on one scale-aware
+mechanism summary.
 
-\paragraph{No arm reaches the ceiling.} $\mathcal{R}^\star(\varnothing)$ is the regret a
-perfect reasoner carries having run \emph{no} experiment at all. Not one of the forty arms
-reaches it. The bare arms sit between $1.8\times$ and $23.4\times$ above it, widest on the
-two tasks with the most factors --- $18$--$23\times$ on \textsc{Screen} and $13$--$19\times$
-on \textsc{Transfer} against $2$--$8\times$ on the two smaller ones --- and the scripted
-references of Appendix~\ref{app:refs} are closer but also short, at $1.6\times$ to
-$22.3\times$. Against the weaker reference of a model's own zero-shot recommendation,
-thirty-one of the forty cells end below it and nine end \emph{above}: two or three growing
-cycles left the model advising something worse than it would have advised for free. All
-nine are on \textsc{Sanity} and \textsc{Optimise}, where the zero-shot recommendation is
-already close enough that noisy data can only move it the wrong way. The benchmark is not
-saturated, and it is least saturated where the design problem is hardest.
-$\mathcal{R}^\star(\varnothing)$ is a ceiling rather than a target: no design we can find
-removes more than a third of it in one round (Appendix~\ref{app:oracle}), which is why the
-gap to it is read as a scale and the comparisons that follow are made between arms.
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/fig3_phase5_mechanisms.pdf}
+\caption{Mechanism checks behind the endpoint comparisons. (A) Mean realized regret of
+three executed scripted design sources, averaging deployable readers and tasks. (B) The
+fixed-history design--reader crossing; each cell averages 24 task--site histories, so rows
+change allocation while columns change only evidence use. (C) The registered paired effect
+of within-cycle access; positive is worse. (D) Two independent factorized evaluator runs
+select nearly identical Bayes actions; the annotation reports response-curve disagreement.}
+\label{fig:phase5-mechanisms}
+\end{figure*}
 
-\paragraph{The two regrets order agents differently.} Realised regret and cumulative
-regret are not substitutes, which is why \S\ref{sec:outcome} reports both: on
-\textsc{Sanity} and \textsc{Optimise}, the two tasks whose orderings are stable enough to
-read (Appendix~\ref{app:stability}), they rank-correlate at $-0.80$ and $-0.60$ within
-task, so the model with the best final answer is among the most expensive campaigns to
-have got there. An agent judged on the recommendation alone is free to burn the facility
-reaching it.
+\input{sections/_phase4_main_table}
 
-\paragraph{\textsc{Transfer} costs more after the shock than before it.} The column in
-Table~\ref{tab:results} is priced at the training energy costs so the four tasks are
-comparable. The quantity the task exists for is the one after: electricity and gas rise by
-$2.2$ and the agent must re-solve with no further experiments. Every arm is worse there, by
-factors of $1.06$ to $1.98$, and each tooled arm is worse than its bare twin. Two reference
-agents isolate what is being tested --- identical in algorithm, budget and observations,
-differing only in whether they modelled gross margin or modelled revenue and the two cost
-streams separately, they score identically before the shock and differ by $1.47\times$
-after it ($0.0605$ against $0.0411$, paired $t = 5.5$ over $40$ sites).
+\subsection{Standard aids do not reliably reduce final regret}
 
-\subsubsection{Version 1 mechanism claims are withdrawn}
-\label{sec:results:design}
+Table~\ref{tab:phase4-main} contains the preregistered primary comparisons. For Luna, the
+design-aid difference is $+0.00016$ (95\% CI $[-0.00299,0.00321]$), inference aid is
+$-0.00196$ ($[-0.00520,0.00133]$), and both aids are $-0.00023$
+($[-0.00365,0.00326]$). None is significant after Holm correction. Sol reaches lower
+absolute regret than Luna on its independently sampled sites, but its inference aid also
+does not improve the bare arm: $+0.00053$ ($[-0.00055,0.00173]$), adjusted $p=0.381$.
+Absolute model levels are descriptive because the two models use different reserved sites;
+the registered inference concerns each paired aid contrast.
 
-The Version~1 tables reported $c$ and $\eta$ as design and decision efficiencies. Phase~2
-found that this interpretation is not supported. The estimator compared a prior,
-preposterior design score with a recommendation conditioned on realised history; its finite
-joint atom posterior collapsed, and the component fields exposed a cleaner reconstruction
-of margin than the primary response. In addition, normalised density was passed to the
-plant-count calculation as though it were plants per square metre, systematically
-under-counting plants and overstating unit noise on every task containing density.
-Consequently the $c$, $\eta$, ceiling and tool-mechanism columns in the Version~1 result,
-diagnostic and tool tables are archival diagnostics rather than evidence for independent
-design and reader failures.
+The tools were available and often followed. In the Luna primary matrix, the geometric
+adoption rate is $0.33$ for design-only and $0.31$ with both aids; inference recommendations
+are adopted at rates $0.88$ and $0.94$. The null effects therefore do not arise from complete
+non-use. They show that these particular tools, delivery format and agents do not reliably
+convert adoption into lower endpoint regret.
 
-Version~2 replaces those ratios with $b(H_t)$ and $g(H_t,\hat x_t)$ from
-\S\ref{sec:eig}, computed from the same visible history. Continuous crop and economic
-posteriors remove the atom-collapse failure on the Sanity calibration, and independent
-posterior samples select and evaluate the recommendation. Corrected closed-loop runs are
-still required for every model arm. We therefore make no quantitative claim here that
-standard tools improve design while damaging the answer, or that the two failures are
-independent. Those hypotheses remain targets for the Version~2 intervention study.
+\input{sections/_phase4_secondary_table}
 
-\subsubsection{The first cycle of data often makes the recommendation worse}
-\label{sec:results:trajectory}
+Task and feedback extensions in Table~\ref{tab:phase4-secondary} remain uncertain. The
+inference-aid point estimate is slightly favorable on \textsc{Sanity} and unfavorable on
+\textsc{Transfer}; both intervals cross zero after the prespecified correction. Allowing
+Luna to inspect time-appropriate within-cycle measurements changes its actions and increases
+API use, but the final-regret difference against terminal-only access is $+0.00768$
+($[-0.00041,0.01662]$, adjusted $p=0.085$). Under the present synchronous action space,
+committed treatments cannot change and the next batch receives terminal outcomes anyway.
+Interim observation can therefore update an interim recommendation, but it has no guaranteed
+path to improve the next design. Testing value from inspection requires a consequential
+action such as staggered release, early termination or treatment modification.
 
-Eliciting a recommendation after every round rather than once at the end exposes something the endpoint
-hides. In $44\%$ of episodes the recommendation after the first round is worse than the one
-the same model made with no data at all, and in $24$ of the $40$ cells the mean is worse.
-The split is by task: $68\%$ of \textsc{Optimise} episodes and $54\%$ of \textsc{Sanity},
-against $29\%$ and $26\%$ on \textsc{Screen} and \textsc{Transfer}, where the zero-shot
-recommendation starts far enough from the optimum that one round of almost any data helps.
-Slow feedback costs an agent in proportion to how many cycles it needs, and here the first
-cycle is often spent undoing itself.
-\fi
+\subsection{Robustness changes the conclusion only at lower noise}
+
+The fresh adaptive extension asks whether observation noise changes later designs and
+recommendations, which fixed-policy rescoring cannot test. At twice the registered noise,
+all three tool-minus-bare intervals cross zero (Table~\ref{tab:phase4-secondary}), matching
+the primary conclusion. The prespecified secondary family gives a different result at half
+noise: design aid increases regret by $0.01133$ (95\% CI $[0.00530,0.01842]$, adjusted
+$p=0.0096$). Inference-only and combined aids at half noise, all one-noise contrasts, and
+the registered $2\times$ versus $1\times$ interactions are not significant. We therefore
+report a bounded conclusion: the tested tools show no reliable improvement, and one
+lower-noise condition shows harm; the evidence does not establish a universal direction
+across models, domains or tool implementations.
+
+\subsection{Transfer is evaluated after the price shock}
+
+\input{sections/_phase4_transfer_table}
+
+Table~\ref{tab:transfer-v2} reports the endpoint the task is designed to test. Both arms
+receive the energy-price shock only after completing their experimental campaign and must
+recommend again without new trials. The inference-aid arm has higher post-shock regret by
+$0.0452$ on average, with a descriptive paired site-bootstrap interval
+$[0.0200,0.0781]$. This contrast was not a registered inferential family, so it is evidence
+for a targeted replication rather than a confirmatory tool-effect claim.
+
+\subsection{Evaluator scope}
+
+The common-history evaluator is calibrated on \textsc{Sanity}: independent $32\times32$
+crop--economics product posteriors agree to response-curve RMSE $0.00445$, and action
+selection and evaluation use disjoint posterior draws. That check does not establish the
+same error in the higher-dimensional tasks. For this reason, the primary model and tool
+claims above use realized final regret, which is computed directly from the hidden site,
+while $b(H_t)$ and $g(H_t,\hat x_t)$ are used as mechanism diagnostics only where their
+between-run error is smaller than the effect being interpreted.

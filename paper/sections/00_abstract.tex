@@ -1,27 +1,18 @@
-\providecommand{\pending}[1]{\textcolor{gray}{\textsc{#1}}}
 \begin{abstract}
-Benchmarks for automated experimental design often make experiments immediate, free, and
-repeatable. Real campaigns can instead combine delayed outcomes, irreducible noise,
-resource costs, and commitments that cannot be rolled back. We introduce \slowlab, an
-executable greenhouse benchmark in which agents allocate physically constrained units,
-observe a crop while it develops, and recommend operating conditions under an economic
-objective. Version~2 separates interim measurements from terminal outcomes: agents may
-inspect currently measurable canopy, harvest, environment, and incurred-cost records, while
-future yield and profit remain unavailable until they occur.
-
-We also replace the Version~1 design and decision efficiency ratios with a common-history
-risk decomposition. Given the exact time-stamped history visible to an agent, $b(H_t)$ is
-the Bayes-optimal posterior risk and $g(H_t,\hat x_t)$ is the recommendation's nonnegative
-posterior excess risk. A continuous crop--economics posterior is updated by the joint
-observation model; independent posterior samples are used for action selection and held-out
-evaluation. On the one-factor Sanity calibration, independent $32\times32$ product
-posteriors agree to response-curve RMSE $0.00445$. This calibration does not yet establish
-accuracy on the higher-dimensional tasks.
-
-An audit of the original 800 episodes found a component-information bypass, collapse of the
-finite-atom evaluator, and a density-normalisation error that changed observation noise.
-Those faults invalidate the published mechanism and tool-effect interpretations and cannot
-be repaired by endpoint rescoring because observations drive later designs. We therefore
-retain the Version~1 runs as an auditable archive and defer empirical claims about agent
-failures to corrected Version~2 closed-loop experiments.
+Scientific-agent benchmarks rarely test whether an agent can allocate a fixed set of
+physical units, use evidence that arrives during long-running trials, and commit to a
+final operating recommendation whose experimental cost is paid in the objective itself.
+We introduce \slowlab, an executable controlled-environment horticulture benchmark with
+split-plot controls, capped parallel capacity, correlated noise, irreversible 210-day
+crop cycles, time-appropriate interim observations, and separate design and
+recommendation actions.  We evaluate final and cumulative regret and use a
+common-history Bayes-risk decomposition to diagnose what an executed design supports
+and how much excess risk remains in the agent's recommendation; independent posterior
+samples avoid in-sample action selection, and the calibrated one-factor case has
+response-curve RMSE $0.00445$.  Across 928 episodes under a frozen protocol, neither
+design nor inference aids significantly changed final regret for Luna on 56 paired
+sites, and an inference aid did not improve Sol on 24 further sites; a fresh 384-episode
+extension found the same null result at twice the observation noise, while a prespecified
+secondary analysis found that the design aid increased regret at half noise
+($\Delta=0.0113$, 95\% CI $[0.0053,0.0184]$, adjusted $p=0.0096$).
 \end{abstract}

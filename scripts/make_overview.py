@@ -8,8 +8,8 @@ This version fixes two problems with the old figure:
     draft that intended to score each of the four conditions -- and directly
     contradicts the paper's statement that we do not score the conditions.
 
-The palette is Okabe-Ito and colour-blind safe; the middle band is deliberately
-achromatic, because nothing happens there.
+The palette is Okabe-Ito and colour-blind safe.  Version 2 exposes timestamped
+measurements during a committed cycle while keeping the treatment immutable.
 
 Note: the figure shipped in paper/figures/fig0_overview.pdf is a hand-drawn version
 of this same diagram. Running this script overwrites it with the matplotlib version.
@@ -76,7 +76,7 @@ def main(out="paper/figures/fig0_overview.pdf"):
 
     # ── Band 2: commit and wait ───────────────────────────
     # *Not a processing step.* Commitment is a property of the edge that hands the
-    # design to the world: wait one cycle, unobservable throughout, irrevocable. So
+    # design to the world: wait one cycle, observable at registered times, irrevocable. So
     # it is drawn as a shaded band the arrow passes through, not a box, and not two
     # arrow segments -- in the code, a design that passes validate goes straight
     # into truth().
@@ -86,8 +86,8 @@ def main(out="paper/figures/fig0_overview.pdf"):
     ax.add_patch(Rectangle((0.44, yB), 5.66, hB, facecolor=WAIT_L,
                            edgecolor="none", zorder=1))
     ax.text(0.62, yB + .29, "one growing cycle $\\;\\cdot\\;$ 210 days $\\;\\cdot\\;$ "
-            "nothing is observable", fontsize=T - .6, color=INK, ha="left")
-    ax.text(0.62, yB + .12, "units stay occupied; the design cannot be recalled",
+            "registered interim views", fontsize=T - .6, color=INK, ha="left")
+    ax.text(0.62, yB + .12, "units stay occupied; treatments cannot be recalled",
             fontsize=S - .9, color=MUT, ha="left")
 
     # ── Band 3: the world and the observations ────────────
@@ -131,8 +131,8 @@ def main(out="paper/figures/fig0_overview.pdf"):
             color=INK, ha="center")
     rows = [("$\\bar{\\mathcal{R}}(r)$", "realised regret,", "read every round"),
             ("$\\mathcal{R}_{\\mathrm{cum}}$", "the profit those", "experiments forwent"),
-            ("$c(D_r)$", "design efficiency:", "what the design allowed"),
-            ("$\\eta_r$", "decision efficiency:", "how much was realised")]
+            ("$b(H_t)$", "Bayes risk after", "the visible history"),
+            ("$g(H_t,\\hat x_t)$", "excess risk of", "the recommendation")]
     for i, (sym, a, b) in enumerate(rows):
         y = 2.28 - i * .52
         ax.text(7.44, y, sym, fontsize=T + .6, color=SCORE, va="center")
