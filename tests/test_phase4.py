@@ -285,3 +285,6 @@ def test_noise_analysis_pairs_generation_seeds_and_computes_interaction(tmp_path
     assert np.isclose(result["primary_high_noise"]["inference_minus_bare"]["mean"], 2.0)
     assert np.isclose(result["secondary"]
                       ["noise_2.0_minus_1.0:inference_minus_bare"]["mean"], 1.0)
+    assert result["execution_audit"]["successful_api_calls"] == 0
+    assert (result["execution_audit"]["by_noise_and_mode"]["2.0"]["both"]
+            ["episodes"] == 4)

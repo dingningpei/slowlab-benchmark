@@ -57,6 +57,44 @@ def summary(values):
     }
 
 
+def execution_audit(rows, multipliers, modes):
+    calls = [call for row in rows for call in row.get("api_calls", [])]
+    cells = {}
+    for multiplier in multipliers:
+        cells[str(multiplier)] = {}
+        for mode in modes:
+            selected = [row for row in rows
+                        if float(row.get("noise_multiplier", 1.0)) == float(multiplier)
+                        and row.get("tool_mode") == mode]
+            cells[str(multiplier)][mode] = {
+                "episodes": len(selected),
+                "format_failures": sum(int(row.get("format_failures", 0))
+                                       for row in selected),
+                "infeasible_submissions": sum(int(row.get("infeasible", 0))
+                                              for row in selected),
+                "episodes_below_round_cap": sum(
+                    int(row.get("rounds_submitted", 0)) < 3 for row in selected),
+                "recorded_cost_usd": sum(
+                    float((call.get("usage") or {}).get("cost") or 0.0)
+                    for row in selected for call in row.get("api_calls", [])),
+            }
+    return {
+        "successful_api_calls": len(calls),
+        "actual_models": sorted({call.get("actual_model") for call in calls
+                                  if call.get("actual_model")}),
+        "providers": sorted({call.get("provider") for call in calls
+                             if call.get("provider")}),
+        "max_successful_call_attempt": max(
+            (int(call.get("attempt", 1)) for call in calls), default=None),
+        "recorded_cost_usd": sum(
+            float((call.get("usage") or {}).get("cost") or 0.0) for call in calls),
+        "note": ("Recorded cost covers successful calls attached to completed episodes. "
+                 "The manual scheduler interruption may have left one in-flight call "
+                 "outside an episode record."),
+        "by_noise_and_mode": cells,
+    }
+
+
 def analyze(config: dict, root: pathlib.Path) -> dict:
     rows = load_rows(root)
     sites = list(range(config["site_seeds"]["start"],
@@ -102,6 +140,8 @@ def analyze(config: dict, root: pathlib.Path) -> dict:
                                   * len(sites) * len(gseeds)),
         "duplicate_identities": len(identities) - len(set(identities)),
         "missing_cells": missing,
+        "execution_audit": execution_audit(
+            rows, config["noise_multipliers"], modes),
         "primary_high_noise": primary,
         "secondary": secondary,
         "contrasts_by_multiplier": by_multiplier,
