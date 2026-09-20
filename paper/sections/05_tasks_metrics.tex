@@ -46,10 +46,14 @@ factor ranges and control levels are given in Appendix~\ref{app:tasks}.}
 \subsection{Evaluation}
 \label{sec:eval}
 
-Two quantities are reported per episode and never combined. \emph{Realised regret} is read
-from what the campaign did; the \emph{regret a perfect reasoner would still carry} is read
-from what each design could have supported, before its outcome is seen. Neither elicits
-anything from the agent beyond a design and a recommendation.
+Following the information boundary of \S\ref{sec:roles}, evaluation has two layers. The
+\emph{outcome evaluator} uses the hidden site to score what the campaign did: recommendation
+regret and the opportunity cost of its executed experiments. These exact simulator outcomes
+support the primary comparisons. The \emph{common-history evaluator} is a calibrated
+benchmark-side diagnostic: it conditions on the same $H_t$ visible to the reader, while
+using the known instance distribution and forward model to ask what that history could have
+supported. It never supplies a posterior, action or score to the agent. The layers are
+reported separately and never combined.
 
 \subsubsection{Realised regret}
 \label{sec:outcome}
@@ -83,7 +87,8 @@ by \eqref{eq:regret} alone.
 \subsubsection{Risk conditioned on the visible history}
 \label{sec:eig}
 
-Version~2 evaluates design and recommendation against the same information set.  Let
+The common-history evaluator compares design support and recommendation quality against the
+same information set. Let
 $H_t$ contain every submitted design, completed result, within-cycle measurement and
 recommendation visible by simulation time $t$, and define
 $R(\theta,x)=f_\theta(x^\star_\theta)-f_\theta(x)$.  The Bayes risk remaining after that

@@ -37,12 +37,15 @@ crop model \citep{jones1999reduced} supplies a traceable physiological basis, an
 economic model puts recommendations and experimental opportunity cost in one currency,
 net profit per square metre per day (\S\ref{sec:domain}). The published model does not make
 benchmark difficulty author-independent: factor ranges, facility size, task budgets and
-observation channels remain design choices and are reported as such. The agent's action is
-a \emph{design}: which factor settings to test,
+observation channels remain design choices and are reported as such. We distinguish three
+roles throughout. A \emph{design policy} chooses which factor settings to test,
 on how many units, and which physical units those are. Lamps and heating serve a whole
 chamber while planting density and the pruning target are set per hydroponic loop, so an
 allocation that varies temperature between two loops of one chamber describes an experiment
-that cannot be performed. Having committed, the agent may inspect measurements that are physically available as the
+that cannot be performed. A \emph{history reader} turns the time-stamped evidence into a
+recommendation. In a closed-loop LLM these two roles live in the same model, but we separate
+them experimentally. The benchmark-side \emph{evaluator} scores their outputs using hidden
+truth and never returns that information to the agent. Having committed, the agent may inspect measurements that are physically available as the
 crop develops, but it cannot observe future yield or profit, revise the submitted treatment,
 or release occupied capacity. After two or three cycles it must recommend. Figure~\ref{fig:overview}
 shows the campaign loop.
@@ -50,13 +53,13 @@ shows the campaign loop.
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{figures/fig0_overview.pdf}
-\caption{\textbf{Campaign overview.} A seed draws a latent site from a published
-between-site spread. The agent submits a mechanically feasible design, committed units
-remain occupied for the crop cycle, and a time-stamped history accumulates as measurements
-become available. Interim inspection updates the agent's beliefs and recommendation but
-does not alter committed treatments. Terminal yield and profit enter the history only when
-they occur. Version~2 scores each recommendation against the same history visible to the
-agent.}
+\caption{\textbf{Roles and information flow.} The design policy commits treatments and
+physical units; the history reader maps only the time-stamped visible history to a
+recommendation. One closed-loop agent may implement both roles. The evaluator belongs to
+the benchmark: it receives the recommendation and hidden truth to compute exact outcomes,
+and uses the same visible history for diagnostic risks. It never supplies hidden information
+to the agent. Interim observations can update the reader and the next design, but cannot
+alter committed treatments or release occupied capacity.}
 \label{fig:overview}
 \end{figure}
 

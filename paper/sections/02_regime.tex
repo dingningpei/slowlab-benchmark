@@ -78,6 +78,22 @@ the same shortfall, at the treatment that slot was given, for a full cycle
 is observable to the agent --- $\theta$, $f_\theta$ and $x^\star_\theta$ are all withheld ---
 and neither can be estimated from $\mathcal{F}_r$ without the design that generated it.
 
+\paragraph{Three roles and their information boundary.}\label{sec:roles}
+We use role names rather than requiring three software modules. The \emph{design policy}
+maps the visible history and remaining resources to $D_r$; it determines what evidence can
+exist. The \emph{history reader} maps that same visible history to beliefs and
+$\hat{x}_r$; it determines how acquired evidence is used. A closed-loop agent normally
+implements both. We separate them only for diagnosis: copying one accepted, completed
+history to several readers changes evidence use without changing the evidence, while
+holding the reader fixed across histories changes what the designs made observable.
+
+The \emph{evaluator} is benchmark-side. It receives submitted designs and recommendations
+and may access $\theta$, $f_\theta$, $P_\Theta$ and the forward model to compute exact
+outcomes or calibrated diagnostic quantities. None of those privileged objects enters the
+agent's history, and evaluator output is not fed back during an episode. Thus a design aid
+can change $D_r$, an inference aid can change the reader's interpretation and
+$\hat{x}_r$, and neither aid is an evaluator.
+
 The two pull against each other, and the constraints are what stop the usual resolution.
 Reducing \eqref{eq:problem} calls for slots spent on treatments the agent expects to be
 poor, since those are the ones that discriminate; that is exactly what the second charge
@@ -89,3 +105,4 @@ the facility for $R\Delta$ and consists of $R$ ordered, unrepeatable commitments
 before the information that would have justified it exists. \S\ref{sec:eval} states both
 quantities precisely and what they are read against; Appendix~\ref{app:worked} works one
 round through in full.
+\FloatBarrier

@@ -7,7 +7,8 @@
 \label{sec:setup}
 
 We report three evidence layers. First, fixed-history replay crosses scripted design
-policies with ordinary, block-aware and component-aware GP readers. Each reader receives a
+policies with ordinary, block-aware and component-aware GP readers, where a reader is
+operationally the mapping from a completed visible history to a recommendation. Each reader receives a
 copy of the same accepted and completed history, so changing the reader cannot change the
 evidence it reads. Second, the frozen Phase~4 protocol runs closed-loop model agents on
 reserved sites. Its primary matrix crosses Luna with bare, design-aid, inference-aid and
