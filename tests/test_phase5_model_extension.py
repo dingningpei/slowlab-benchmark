@@ -34,3 +34,17 @@ def test_phase5_model_extension_is_frozen_optimise_only_and_has_288_identities()
         "model_anchor_episodes": 288,
         "total_episodes": 288,
     }
+
+
+def test_phase5_analysis_manifest_locks_script_and_multiplicity():
+    manifest = json.loads(
+        (ROOT / "configs" / "phase5_model_extension_analysis.json").read_text()
+    )
+    assert manifest["status"] == "frozen_before_post_primary_execution"
+    assert manifest["parent_protocol_sha256"] == FROZEN_SHA256
+    script = ROOT / manifest["analysis_script"]
+    assert hashlib.sha256(script.read_bytes()).hexdigest() == manifest["analysis_script_sha256"]
+    assert manifest["statistical_unit"] == "site"
+    assert [family["members"] for family in manifest["multiplicity_families"]] == [3, 6]
+    assert all(family["adjustment"] == "Benjamini-Hochberg"
+               for family in manifest["multiplicity_families"])
