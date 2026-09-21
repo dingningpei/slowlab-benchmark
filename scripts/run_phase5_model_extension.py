@@ -14,13 +14,31 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUT = Path("/Users/dingningpei/Desktop/slowlab/output/reviews/phase5_model_extension")
 
 
-def rows_and_cost(root: Path) -> tuple[int, float]:
+def rows_and_cost(root: Path, config: dict | None = None) -> tuple[int, float]:
+    rates = ((config or {}).get("cost_plan_usd", {})
+             .get("direct_model_peak_rates_per_million", {}))
     rows, cost = 0, 0.0
     for path in root.rglob("episodes_*.json") if root.exists() else []:
         data = json.loads(path.read_text())
         rows += len(data)
-        cost += sum(float((call.get("usage") or {}).get("cost") or 0.0)
-                    for row in data for call in row.get("api_calls", []))
+        for row in data:
+            for call in row.get("api_calls", []):
+                usage = call.get("usage") or {}
+                explicit = usage.get("cost")
+                if explicit is None:
+                    explicit = usage.get("cost_usd")
+                if explicit is not None:
+                    cost += float(explicit)
+                    continue
+                model = call.get("requested_model") or call.get("actual_model")
+                rate = rates.get(model)
+                if rate:
+                    # Direct DeepSeek does not return dollar cost. Use peak input
+                    # cache-miss and output rates for a conservative hard-cap check.
+                    prompt = usage.get("prompt_tokens", usage.get("input_tokens", 0))
+                    completion = usage.get("completion_tokens", usage.get("output_tokens", 0))
+                    cost += (float(prompt or 0) * float(rate["input_cache_miss"])
+                             + float(completion or 0) * float(rate["output"])) / 1_000_000
     return rows, cost
 
 
@@ -56,7 +74,7 @@ def main() -> None:
         for _, cmd in commands(config, f"secondary:{name}", args.out_root):
             run_number += 1
             cmd.append("--quiet-effects")
-            rows, current_cost = rows_and_cost(args.out_root)
+            rows, current_cost = rows_and_cost(args.out_root, config)
             cost = prior_cost + current_cost
             if cost >= cap:
                 raise SystemExit(f"hard cost pause: ${cost:.4f} >= ${cap:.2f}")
@@ -65,14 +83,14 @@ def main() -> None:
             print(" ".join(map(str, cmd)) if args.dry_run else "effect values remain hidden", flush=True)
             if not args.dry_run:
                 subprocess.run(cmd, cwd=ROOT, check=True)
-                rows, current_cost = rows_and_cost(args.out_root)
+                rows, current_cost = rows_and_cost(args.out_root, config)
                 cost = prior_cost + current_cost
                 print(f"[{run_number}] complete; rows={rows}, total recorded spend=${cost:.4f}",
                       flush=True)
                 if cost >= cap:
                     raise SystemExit(f"hard cost pause after command: ${cost:.4f} >= ${cap:.2f}")
 
-    rows, current_cost = rows_and_cost(args.out_root)
+    rows, current_cost = rows_and_cost(args.out_root, config)
     cost = prior_cost + current_cost
     print(f"execution complete: rows={rows}, total recorded spend=${cost:.4f}, protocol={digest}")
 

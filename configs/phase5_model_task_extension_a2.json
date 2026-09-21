@@ -126,7 +126,16 @@
     "hard_pause_before": 4.0,
     "prior_recorded_spend": 0.419938676,
     "prior_valid_luna_spend": 0.31977693,
-    "excluded_deepseek_openrouter_pilot_spend": 0.100161746
+    "excluded_deepseek_openrouter_pilot_spend": 0.100161746,
+    "direct_model_peak_rates_per_million": {
+      "deepseek-flash": {
+        "input_cache_miss": 0.3,
+        "output": 1.2,
+        "currency": "USD",
+        "policy": "conservative peak-rate upper bound; cache hits intentionally priced as misses"
+      }
+    },
+    "direct_price_source": "https://api-docs.deepseek.com/quick_start/pricing/ checked 2026-09-20"
   },
   "prompt_hash_policy": "record protocol-template SHA256 and realized-prompt SHA256 per episode",
   "api_metadata_policy": "record requested and actual model, provider, timestamp, generation seed, usage, cost, retry attempt, and finish reason",
