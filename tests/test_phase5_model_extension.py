@@ -124,3 +124,22 @@ def test_phase5_a3_disables_hidden_reasoning_and_locks_json_adapter():
     assert cfg["models"]["luna"]["json_mode"] is False
     assert cfg["models"]["qwen"]["json_mode"] is False
     assert cfg["cost_plan_usd"]["prior_recorded_spend"] == 0.686
+
+
+def test_phase5_a3_analysis_inherits_frozen_rules_before_effect_analysis():
+    manifest = json.loads(
+        (ROOT / "configs" / "phase5_model_extension_analysis_a3.json").read_text()
+    )
+    assert manifest["status"] == "frozen_before_post_primary_execution"
+    assert manifest["parent_protocol_id"].endswith("-a3")
+    assert manifest["parent_protocol_sha256"] == A3_FROZEN_SHA256
+    assert manifest["inherits"]["analysis_id"].endswith("-a1")
+    assert manifest["statistical_unit"] == "site"
+    assert manifest["confidence_intervals"] == {
+        "method": "site bootstrap percentile interval",
+        "resamples": 10000,
+        "seed": 20260920,
+        "level": 0.95,
+    }
+    script = ROOT / manifest["analysis_script"]
+    assert hashlib.sha256(script.read_bytes()).hexdigest() == manifest["analysis_script_sha256"]
