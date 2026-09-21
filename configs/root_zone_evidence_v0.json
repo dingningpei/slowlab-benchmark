@@ -1,0 +1,54 @@
+{
+  "status": "evidence_review_not_frozen",
+  "mass_balance": {
+    "source": "Massa et al. (2011)",
+    "doi": "10.1016/j.envsoft.2011.01.004",
+    "crop_system": "greenhouse tomato in rockwool, semi-closed and open soilless culture",
+    "time_resolution": "daily in source model",
+    "validated_experiments": [2005, 2007],
+    "reported_solution_volume_l_m2": {
+      "substrate": 10.0,
+      "mixing_tank": 6.0,
+      "total": 16.0
+    },
+    "ec_relation": "EC = 0.19 + 0.095 * CAT, where CAT is charge-weighted Ca, K, Mg and Na concentration in mol/m3",
+    "important_assumptions": [
+      "solution volumes remain approximately constant through replenishment and over-irrigation",
+      "substrate and tank/drain concentrations are treated as approximately equal",
+      "crop uptake concentration is stage dependent",
+      "the tested salinity range did not materially change leaf area, transpiration or nutrient uptake in that study"
+    ]
+  },
+  "fresh_yield_ec_response": {
+    "source": "Li, Stanghellini and Challa (2001)",
+    "doi": "10.1016/S0304-4238(00)00190-4",
+    "source_document": "Li (2000), Analysis of greenhouse tomato production in relation to salinity and shoot environment",
+    "crop_system": "mature greenhouse tomato in rockwool",
+    "root_zone_ec_tested_ds_m": [2.1, 9.3],
+    "transpiration_regimes": {
+      "high": "Dutch commercial-practice climate control",
+      "low": "targeted at 65% of high potential transpiration"
+    },
+    "total_fresh_production_efficiency_g_per_mj_par": {
+      "high": {"intercept": 33.03, "ec_slope": -1.26, "r_squared": 0.94},
+      "low": {"intercept": 34.69, "ec_slope": -1.08, "r_squared": 0.92}
+    },
+    "marketable_fresh_production_efficiency_g_per_mj_par": {
+      "high": {"intercept": 33.39, "ec_slope": -1.54, "r_squared": 0.93},
+      "low": {"intercept": 34.25, "ec_slope": -1.08, "r_squared": 0.95}
+    },
+    "fruit_dry_matter_percent": {"intercept": 4.60, "ec_slope": 0.19},
+    "limits": [
+      "the two source transpiration regimes do not identify an arbitrary continuous response surface",
+      "cultivar and season differ from AGC 2019",
+      "mean campaign root-zone EC was used; this does not identify instantaneous EC stress",
+      "NaCl and concentrated nutrients at equal EC were not equivalent for marketable fresh yield",
+      "these curves must remain an external validity/sensitivity component until a transfer rule is preregistered"
+    ]
+  },
+  "agc_observed_ranges": {
+    "feed_ec_ds_m": [2.9, 5.1],
+    "slab_ec_ds_m_after_sentinel_filter": [3.2, 8.6],
+    "slab_water_content_pct_after_sentinel_filter": [48.5, 99.5]
+  }
+}
