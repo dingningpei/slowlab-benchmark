@@ -125,8 +125,9 @@ product does not establish independent design and reader failures.
 ## Headline results
 
 The frozen Version 2 study contains 928 episodes; a separately frozen adaptive-noise
-extension contains 384 more. Sites are the statistical units and provider generation seeds
-are within-site replicates.
+extension contains 384 more. A prospective post-primary Version 2.1 extension adds 288
+same-site Optimise episodes across Luna, DeepSeek V4.1 Flash, and Qwen 3.8 27B. Sites are
+the statistical units and provider generation seeds are within-site replicates.
 
 - On 56 paired Optimise sites, Luna's design, inference and combined aids do not
   significantly change final simple regret after Holm correction.
@@ -138,9 +139,13 @@ are within-site replicates.
   in the current synchronous action space.
 - Fixed-history replay shows that design source and history reader are separable effects,
   with their relative sizes changing by task.
+- In the 288-episode same-site model extension, the inference aid leaves Luna unchanged,
+  is directionally favorable but uncertain for DeepSeek, and significantly lowers Qwen
+  final regret by 0.0146 after BH correction. Qwen's bare-arm gap is absent under inference.
 
-The compact numerical source for the paper is
-[`results/phase5_paper_summary_env2.0.0.json`](results/phase5_paper_summary_env2.0.0.json).
+The compact numerical sources for the paper are
+[`results/phase5_paper_summary_env2.0.0.json`](results/phase5_paper_summary_env2.0.0.json)
+and [`results/phase5_model_extension_summary_env2.1.0.json`](results/phase5_model_extension_summary_env2.1.0.json).
 
 ---
 
@@ -175,6 +180,7 @@ results/        summary JSON per model and task
 | `run_baselines.py` | the three scripted reference strategies |
 | `run_achievable.py`, `rescore_cv.py` | $\mathcal{R}^\star(D)$ under the cross-validated estimator |
 | `build_phase5_paper_artifacts.py` | compact Version 2 summary and the three main result tables |
+| `build_phase5_model_extension_artifacts.py` | aggregate Version 2.1 model-extension summary and table |
 | `reproduce_phase5_paper.py` | raw frozen events → analyses → tables → figures → checked PDF |
 | `verify_results_claims.py` | verifies the Phase 5 paper summary and manuscript claims |
 | `tool_regret.py`, `tool_design_width.py`, `tool_hyper_control.py` | the three legs of the tool analysis |
@@ -191,6 +197,10 @@ With that frozen Version 2 bundle unpacked locally, the complete paper build is 
 ```bash
 python3 scripts/reproduce_phase5_paper.py --analysis-dir /path/to/slowlab-v2-frozen
 ```
+
+The frozen bundle must include `phase5_model_extension_combined_a3/` and
+`phase5_model_extension_a3/` alongside the Phase 3/4 inputs. The first contains the
+combined 288 formal episodes; the second supplies the A3 DeepSeek/Qwen cost audit.
 
 ---
 

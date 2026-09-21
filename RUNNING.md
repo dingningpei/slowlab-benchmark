@@ -11,6 +11,7 @@ python3 -m pytest -q
 
 ```
 OPENROUTER_API_KEY=sk-or-...
+DEEPSEEK_API_KEY=sk-...
 ```
 
 A model name containing `/` is routed through OpenRouter; one without it goes to the
@@ -57,6 +58,20 @@ not overwrite the bare arm.
 python3 scripts/run_llm.py --model z-ai/glm-5.3-flash \
     --tasks Sanity Optimise Transfer --seeds 20 --tools
 ```
+
+## Frozen Version 2.1 model extension
+
+The registered A3 protocol is in `configs/phase5_model_task_extension_a3.json`. It runs
+bare and inference-aid conditions on the same Optimise sites. Luna and Qwen use OpenRouter;
+DeepSeek V4.1 Flash uses the direct endpoint and native JSON mode:
+
+```bash
+python3 scripts/run_llm.py --model deepseek-flash --json-mode \
+    --tasks Optimise --seeds 24 --fresh
+```
+
+Provider-hidden reasoning is disabled for every formal A3 condition. Do not combine an
+ad-hoc sweep with the registered matrix or use intermediate effects as a stopping rule.
 
 ## Producing the tables
 

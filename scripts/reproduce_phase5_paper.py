@@ -44,6 +44,16 @@ def main() -> None:
         "--out", str(build / "phase4_noise_robustness_analysis.json"))
     run(PYTHON, "-B", "scripts/build_phase5_paper_artifacts.py",
         "--analysis-dir", str(build), "--raw-dir", str(raw))
+
+    model_analysis = build / "phase5_model_extension_analysis.json"
+    run(PYTHON, "-B", "scripts/analyze_phase5_model_extension.py",
+        "--config", str(ROOT / "configs" / "phase5_model_task_extension_a3.json"),
+        "--root", str(raw / "phase5_model_extension_combined_a3"),
+        "--out", str(model_analysis))
+    run(PYTHON, "-B", "scripts/build_phase5_model_extension_artifacts.py",
+        "--analysis", str(model_analysis),
+        "--execution-root", str(raw / "phase5_model_extension_a3"))
+
     run(PYTHON, "-B", "scripts/make_overview.py")
     run(PYTHON, "-B", "scripts/make_phase5_mechanism_figure.py",
         "--analysis-dir", str(raw))

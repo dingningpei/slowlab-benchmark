@@ -5,14 +5,15 @@ final operating recommendation whose experimental cost is paid in the objective 
 We introduce \slowlab, an executable controlled-environment horticulture benchmark with
 split-plot controls, capped parallel capacity, correlated noise, irreversible 210-day
 crop cycles, time-appropriate interim observations, and separate design and
-recommendation actions.  We evaluate final and cumulative regret and use a
-common-history Bayes-risk decomposition to diagnose what an executed design supports
-and how much excess risk remains in the agent's recommendation; independent posterior
-samples avoid in-sample action selection, and the calibrated one-factor case has
-response-curve RMSE $0.00445$.  Across 928 episodes under a frozen protocol, neither
-design nor inference aids significantly changed final regret for Luna on 56 paired
-sites, and an inference aid did not improve Sol on 24 further sites; a fresh 384-episode
-extension found the same null result at twice the observation noise, while a prespecified
-secondary analysis found that the design aid increased regret at half noise
-($\Delta=0.0113$, 95\% CI $[0.0053,0.0184]$, adjusted $p=0.0096$).
+recommendation actions. We evaluate final and cumulative regret and use a common-history
+Bayes-risk decomposition to separate what an executed design supports from how a reader
+uses that evidence. Across 928 episodes under a frozen protocol, neither design nor
+inference aids significantly changed final regret for Luna on 56 paired sites, and an
+inference aid did not improve Sol on 24 further sites. A fresh 384-episode extension found
+the same null result at twice the observation noise and a harmful design-aid effect at half
+noise ($\Delta=0.0113$, 95\% CI $[0.0053,0.0184]$, adjusted $p=0.0096$). In a prospective
+post-primary 288-episode same-site extension, the inference aid showed no detectable change for Luna, was
+directionally favorable but uncertain for DeepSeek V4.1 Flash, and reduced Qwen 3.8 27B
+final regret by $0.0146$ (95\% CI $[0.0091,0.0201]$; BH $p<0.001$), showing that tool value
+is model dependent under the tested interfaces.
 \end{abstract}

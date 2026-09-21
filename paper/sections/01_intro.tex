@@ -77,8 +77,9 @@ Overall, our work makes the following contributions:
     from grading its own fitted action in sample.
 
   \item We separate design from history reading by replaying multiple readers on fixed
-    executed histories, then test design and inference aids in a frozen, site-paired
-    protocol. On the tested Luna and Sol conditions the aids do not reliably reduce final
-    regret; the result survives a fresh twice-noise Luna extension, while the lower-noise
-    secondary condition identifies a harmful design-aid effect.
+    executed histories, then test design and inference aids in frozen, site-paired
+    protocols. The primary Luna and independent-site Sol results show no reliable final-
+    regret improvement. A prospective same-site extension finds heterogeneous effects:
+    inference is null for Luna, uncertain for DeepSeek V4.1 Flash, and beneficial for Qwen
+    3.8 27B under the tested interfaces.
 \end{enumerate}

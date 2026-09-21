@@ -6,29 +6,32 @@
 \subsection{Protocol}
 \label{sec:setup}
 
-We report three evidence layers. First, fixed-history replay crosses scripted design
-policies with ordinary, block-aware and component-aware GP readers, where a reader is
-operationally the mapping from a completed visible history to a recommendation. Each reader receives a
-copy of the same accepted and completed history, so changing the reader cannot change the
-evidence it reads. Second, the frozen Phase~4 protocol runs closed-loop model agents on
-reserved sites. Its primary matrix crosses Luna with bare, design-aid, inference-aid and
-combined interfaces on \textsc{Optimise}: 56 sites, two provider generation seeds and 448
-episodes. Prespecified secondary matrices add 96 Sol episodes, 192 Luna episodes on
-\textsc{Sanity} and \textsc{Transfer}, 96 Luna episodes comparing terminal-only and
-within-cycle access, and 96 prompt-variant episodes, for 928 total. Third, after the primary
-analysis was frozen, a separately registered robustness extension reruns all four Luna
-interfaces on 16 fresh sites, two provider generations and noise multipliers
-$0.5,1,2$, for 384 further episodes.
+We report four evidence layers. First, fixed-history replay crosses scripted design
+policies with ordinary, block-aware and component-aware GP readers, where a reader maps a
+completed visible history to a recommendation. Each reader receives a copy of the same
+accepted and completed history, so changing the reader cannot change the evidence it reads.
+Second, the frozen Phase~4 protocol runs closed-loop model agents on reserved sites. Its
+primary matrix crosses Luna with bare, design-aid, inference-aid and combined interfaces on
+\textsc{Optimise}: 56 sites, two provider generation seeds and 448 episodes. Prespecified
+secondary matrices add 96 Sol episodes, 192 Luna episodes on \textsc{Sanity} and
+\textsc{Transfer}, 96 Luna episodes comparing terminal-only and within-cycle access, and 96
+prompt-variant episodes, for 928 total. Third, after the primary analysis was frozen, a
+separately registered robustness extension reruns all four Luna interfaces on 16 fresh
+sites, two provider generations and noise multipliers $0.5,1,2$, for 384 further episodes.
+Fourth, a prospective post-primary model extension crosses Luna, DeepSeek V4.1 Flash and
+Qwen 3.8 27B with bare and inference-aid interfaces on the same 24 \textsc{Optimise} sites
+and two generation seeds, for 288 episodes.
 
 A site, rather than an API completion, is the inferential unit. We average the two provider
 generations within each site, form paired differences, and use a 10,000-resample site
 bootstrap for percentile 95\% intervals. The primary three tool-minus-bare comparisons use
-Holm family-wise correction. Named secondary families use Benjamini--Hochberg adjustment.
-Model-format failures, infeasible submissions and early stopping remain outcomes; only
-transport failures are retried with the same identity. Across the 928-episode frozen run
-there are no missing or duplicate cells. Appendix~\ref{app:phase4-protocol} gives hashes,
-site ranges, API metadata and the distinction between confirmatory, secondary and
-post-primary analyses.
+Holm family-wise correction. Named secondary families use Benjamini--Hochberg adjustment;
+the model extension separately adjusts its three within-model contrasts and six same-arm
+model contrasts. Model-format failures, infeasible submissions and early stopping remain
+outcomes; only transport failures are retried with the same identity. The 928-episode run
+and 288-episode extension both have no missing or duplicate cells. Appendix~
+\ref{app:phase4-protocol} gives hashes, site ranges, API metadata and the distinction
+between confirmatory, secondary and post-primary analyses.
 
 \subsection{Fixed histories separate allocation from evidence use}
 
@@ -47,12 +50,13 @@ mechanism summary.
 \begin{figure*}[t]
 \centering
 \includegraphics[width=\textwidth]{figures/fig3_phase5_mechanisms.pdf}
-\caption{Mechanism checks behind the endpoint comparisons. (A) Mean realized regret of
-three executed scripted design sources, averaging deployable readers and tasks. (B) The
-fixed-history design--reader crossing; each cell averages 24 task--site histories, so rows
-change allocation while columns change only evidence use. (C) The registered paired effect
-of within-cycle access; positive is worse. (D) Two independent factorized evaluator runs
-select nearly identical Bayes actions; the annotation reports response-curve disagreement.}
+\caption{Mechanism checks behind the endpoint comparisons. (A--C) Fixed-history
+design--reader crossings for \textsc{Sanity}, \textsc{Optimise} and \textsc{Transfer}; rows
+change the executed scripted design and columns change only evidence use. Each cell averages
+eight held-out sites. Color scales are independent across panels and the annotations give
+mean realized regret. (D) Registered paired effect of within-cycle access; positive is
+worse. (E) Two independent factorized evaluator runs select nearly identical Bayes actions;
+the annotation reports response-curve disagreement.}
 \label{fig:phase5-mechanisms}
 \end{figure*}
 
@@ -74,6 +78,28 @@ adoption rate is $0.33$ for design-only and $0.31$ with both aids; inference rec
 are adopted at rates $0.88$ and $0.94$. The null effects therefore do not arise from complete
 non-use. They show that these particular tools, delivery format and agents do not reliably
 convert adoption into lower endpoint regret.
+
+\subsection{Inference-aid value is model dependent}
+
+\input{sections/_phase5_model_extension_table}
+
+Table~\ref{tab:phase5-model-extension} reports the prospective extension, which changes
+the interpretation of the earlier nulls. On the same 24
+sites, inference minus bare final regret is $-0.00010$ for Luna (95\% CI
+$[-0.00647,0.00646]$, BH $p=0.975$), $-0.00306$ for DeepSeek V4.1 Flash
+($[-0.00698,0.00070]$, BH $p=0.186$), and $-0.01456$ for Qwen 3.8 27B
+($[-0.02005,-0.00914]$, BH $p<0.001$). Thus the aid produces a clear endpoint improvement
+for Qwen, a directionally favorable but uncertain estimate for DeepSeek, and no detectable
+change for Luna under these interfaces.
+
+Qwen's bare regret exceeds both Luna's and DeepSeek's after adjustment, whereas none of the
+three pairwise model contrasts is significant under the inference interface. This pattern
+does not rank the base models: it shows that the measured bare-model gap is absent when the
+same inference aid is supplied. Cumulative regret also falls within every model (site-
+bootstrap 95\% intervals exclude zero), but this secondary endpoint mixes experimental
+allocations with stopping behavior. Inference recommendations are adopted on $0.87$, $0.66$
+and $0.48$ of eligible rounds for Luna, DeepSeek and Qwen, respectively, so adoption rate
+alone does not explain the endpoint effect.
 
 \input{sections/_phase4_secondary_table}
 

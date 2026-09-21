@@ -34,29 +34,30 @@ def main() -> None:
     design_labels = ["Batch BO", "Random", "Split-plot"]
     readers = ["ordinary_gp", "block_aware_gp", "component_gp"]
     reader_labels = ["Ordinary", "Block", "Component"]
-    cells = replay["overall_effects"]["cell_means"]
-    matrix = np.array([[cells[f"{d}|{r}"] for r in readers] for d in designs])
+    fig = plt.figure(figsize=(8.6, 5.4), constrained_layout=True)
+    grid = fig.add_gridspec(2, 3, height_ratios=[1.15, .85])
+    tasks = [("T1", "Sanity"), ("T3", "Optimise"), ("T4", "Transfer")]
+    for column, (task, task_label) in enumerate(tasks):
+        ax = fig.add_subplot(grid[0, column])
+        cells = replay["effects_by_task"][task]["cell_means"]
+        matrix = np.array([[cells[f"{d}|{r}"] for r in readers] for d in designs])
+        image = ax.imshow(matrix, cmap="YlGnBu", aspect="auto",
+                          vmin=float(matrix.min()), vmax=float(matrix.max()))
+        midpoint = float((matrix.min() + matrix.max()) / 2)
+        for i in range(3):
+            for j in range(3):
+                ax.text(j, i, f"{matrix[i, j]:.3f}", ha="center", va="center",
+                        color="white" if matrix[i, j] > midpoint else "black", fontsize=6.5)
+        ax.set_xticks(range(3), reader_labels, rotation=32, ha="right", fontsize=8)
+        if column == 0:
+            ax.set_yticks(range(3), design_labels)
+        else:
+            ax.set_yticks(range(3), [])
+        panel = chr(ord("A") + column)
+        ax.set_title(f"{panel}  {task_label}", loc="left",
+                     fontweight="bold", fontsize=10)
 
-    fig, axes = plt.subplots(2, 2, figsize=(7.2, 5.4), constrained_layout=True)
-    ax = axes[0, 0]
-    means = [replay["overall_effects"]["design_means"][d] for d in designs]
-    ax.bar(design_labels, means, color=["#0072B2", "#56B4E9", "#E69F00"])
-    ax.set_ylabel("Mean final regret")
-    ax.set_title("A  Executed designs", loc="left", fontweight="bold")
-    ax.tick_params(axis="x", rotation=18)
-
-    ax = axes[0, 1]
-    image = ax.imshow(matrix, cmap="YlGnBu", aspect="auto")
-    for i in range(3):
-        for j in range(3):
-            ax.text(j, i, f"{matrix[i, j]:.3f}", ha="center", va="center",
-                    color="white" if matrix[i, j] > 0.036 else "black", fontsize=8)
-    ax.set_xticks(range(3), reader_labels)
-    ax.set_yticks(range(3), design_labels)
-    ax.set_title("B  Design × reader", loc="left", fontweight="bold")
-    fig.colorbar(image, ax=ax, fraction=.045, pad=.03, label="Final regret")
-
-    ax = axes[1, 0]
+    ax = fig.add_subplot(grid[1, :2])
     effect = summary["within_cycle"]
     lo, hi = effect["ci95"]
     ax.errorbar([effect["mean"]], [0],
@@ -65,9 +66,9 @@ def main() -> None:
     ax.axvline(0, color="#777777", lw=1, ls="--")
     ax.set_yticks([0], ["Within-cycle − terminal"])
     ax.set_xlabel("Paired change in final regret (95% CI)")
-    ax.set_title("C  Feedback mechanism", loc="left", fontweight="bold")
+    ax.set_title("D  Feedback mechanism", loc="left", fontweight="bold")
 
-    ax = axes[1, 1]
+    ax = fig.add_subplot(grid[1, 2])
     product = calibration["factorized_product"]
     runs = product["runs"]
     actions = [row["bayes_action"] for row in runs]
@@ -76,10 +77,10 @@ def main() -> None:
     ax.set_xticks([0, 1], ["Run 1", "Run 2"])
     ax.set_ylabel("Bayes action")
     ax.set_ylim(min(actions) - .004, max(actions) + .004)
-    ax.text(.5, min(actions) - .0028,
-            f"response-curve RMSE = {product['between_run_response_curve_rmse']:.5f}",
-            ha="center", fontsize=8)
-    ax.set_title("D  Evaluator calibration", loc="left", fontweight="bold")
+    ax.text(.5, .05,
+            f"curve RMSE\n= {product['between_run_response_curve_rmse']:.5f}",
+            transform=ax.transAxes, ha="center", va="bottom", fontsize=7.5)
+    ax.set_title("E  Evaluator calibration", loc="left", fontweight="bold")
 
     args.out.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(args.out, bbox_inches="tight")
