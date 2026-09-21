@@ -6,6 +6,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "configs" / "phase5_model_task_extension.json"
 FROZEN_SHA256 = "1de54d9063d5c10ba9147885ced59f60d9fb62023a4afff61293b2c67536249e"
+A2_CONFIG = ROOT / "configs" / "phase5_model_task_extension_a2.json"
+A2_FROZEN_SHA256 = "0362edcbe7790ff168ec7165df5c18c87a2b5eebef3480ae6118d19e1a57a062"
 
 
 def test_phase5_model_extension_is_frozen_optimise_only_and_has_288_identities():
@@ -48,3 +50,23 @@ def test_phase5_analysis_manifest_locks_script_and_multiplicity():
     assert [family["members"] for family in manifest["multiplicity_families"]] == [3, 6]
     assert all(family["adjustment"] == "Benjamini-Hochberg"
                for family in manifest["multiplicity_families"])
+
+
+def test_phase5_a2_amendment_uses_direct_deepseek_and_accounts_for_prior_spend():
+    raw = A2_CONFIG.read_bytes()
+    assert hashlib.sha256(raw).hexdigest() == A2_FROZEN_SHA256
+    cfg = json.loads(raw)
+    assert cfg["status"] == "frozen_before_post_primary_execution"
+    assert cfg["amends"]["protocol_id"] == cfg["protocol_id"].replace("a2", "a1")
+    assert cfg["amends"]["unchanged_completed_cells"] == {"model_anchor_luna": 96}
+    assert cfg["amends"]["excluded_pilot"]["episodes"] == 22
+    assert cfg["models"]["deepseek"] == {
+        "requested_id": "deepseek-flash",
+        "reported_version": "DeepSeek-V4.1-Flash",
+        "provider_route": "DeepSeek direct API",
+        "temperature": 0.0,
+        "max_tokens": 4096,
+        "reasoning_effort": "low",
+    }
+    assert cfg["cost_plan_usd"]["prior_recorded_spend"] == 0.419938676
+    assert cfg["cost_plan_usd"]["hard_pause_before"] == 4.0

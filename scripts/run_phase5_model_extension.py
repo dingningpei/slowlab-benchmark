@@ -50,27 +50,31 @@ def main() -> None:
 
     names = args.matrix or [item["name"] for item in config["secondary_matrices"]]
     cap = float(config["cost_plan_usd"]["hard_pause_before"])
+    prior_cost = float(config["cost_plan_usd"].get("prior_recorded_spend", 0.0))
     run_number = 0
     for name in names:
         for _, cmd in commands(config, f"secondary:{name}", args.out_root):
             run_number += 1
             cmd.append("--quiet-effects")
-            rows, cost = rows_and_cost(args.out_root)
+            rows, current_cost = rows_and_cost(args.out_root)
+            cost = prior_cost + current_cost
             if cost >= cap:
                 raise SystemExit(f"hard cost pause: ${cost:.4f} >= ${cap:.2f}")
             print(f"\n[{run_number}] {name}: starting command; completed rows={rows}, "
-                  f"recorded cost=${cost:.4f}", flush=True)
+                  f"total recorded spend=${cost:.4f}", flush=True)
             print(" ".join(map(str, cmd)) if args.dry_run else "effect values remain hidden", flush=True)
             if not args.dry_run:
                 subprocess.run(cmd, cwd=ROOT, check=True)
-                rows, cost = rows_and_cost(args.out_root)
-                print(f"[{run_number}] complete; rows={rows}, recorded cost=${cost:.4f}",
+                rows, current_cost = rows_and_cost(args.out_root)
+                cost = prior_cost + current_cost
+                print(f"[{run_number}] complete; rows={rows}, total recorded spend=${cost:.4f}",
                       flush=True)
                 if cost >= cap:
                     raise SystemExit(f"hard cost pause after command: ${cost:.4f} >= ${cap:.2f}")
 
-    rows, cost = rows_and_cost(args.out_root)
-    print(f"execution complete: rows={rows}, recorded cost=${cost:.4f}, protocol={digest}")
+    rows, current_cost = rows_and_cost(args.out_root)
+    cost = prior_cost + current_cost
+    print(f"execution complete: rows={rows}, total recorded spend=${cost:.4f}, protocol={digest}")
 
 
 if __name__ == "__main__":
