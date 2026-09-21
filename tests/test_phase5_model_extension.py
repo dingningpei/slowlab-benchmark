@@ -8,6 +8,8 @@ CONFIG = ROOT / "configs" / "phase5_model_task_extension.json"
 FROZEN_SHA256 = "1de54d9063d5c10ba9147885ced59f60d9fb62023a4afff61293b2c67536249e"
 A2_CONFIG = ROOT / "configs" / "phase5_model_task_extension_a2.json"
 A2_FROZEN_SHA256 = "af66534b5d975b0eee4e071b6c7ba09c8bf0f70c4541964c723ca10f81e60dd5"
+A3_CONFIG = ROOT / "configs" / "phase5_model_task_extension_a3.json"
+A3_FROZEN_SHA256 = "5bc0d1ffbf1f4b25103d324031a613b54c7fe4caf80eebdf150f6092bf085299"
 
 
 def test_phase5_model_extension_is_frozen_optimise_only_and_has_288_identities():
@@ -105,3 +107,20 @@ def test_phase5_runner_prices_direct_usage_conservatively(tmp_path, monkeypatch)
         }
     }
     assert rows_and_cost(tmp_path, cfg) == (1, 1.75)
+
+
+def test_phase5_a3_disables_hidden_reasoning_and_locks_json_adapter():
+    raw = A3_CONFIG.read_bytes()
+    assert hashlib.sha256(raw).hexdigest() == A3_FROZEN_SHA256
+    cfg = json.loads(raw)
+    assert cfg["amends"]["protocol_id"].endswith("-a2")
+    assert cfg["amends"]["outcome_blinding"].startswith("No regret")
+    assert cfg["amends"]["excluded_pilots"] == [
+        {"protocol": "a1", "route": "OpenRouter multi-provider", "episodes": 22},
+        {"protocol": "a2", "route": "DeepSeek direct low-thinking", "episodes": 4},
+    ]
+    assert all(model["reasoning_effort"] is None for model in cfg["models"].values())
+    assert cfg["models"]["deepseek"]["json_mode"] is True
+    assert cfg["models"]["luna"]["json_mode"] is False
+    assert cfg["models"]["qwen"]["json_mode"] is False
+    assert cfg["cost_plan_usd"]["prior_recorded_spend"] == 0.686

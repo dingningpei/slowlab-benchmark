@@ -84,6 +84,7 @@ def openai_compatible(model: str, *, base_url: str | None = None,
                       max_attempts: int = 5, reasoning_cap: int = 1024,
                       reasoning_effort: str | None = None,
                       generation_seed: int | None = None,
+                      json_mode: bool = False,
                       rpm: float = 0.0) -> callable:
     """Returns a complete(messages) -> str, retrying network and rate-limit errors with exponential backoff."""
     load_dotenv()                      # allows the key to live in .env
@@ -112,15 +113,27 @@ def openai_compatible(model: str, *, base_url: str | None = None,
     # "Reasoning is mandatory for this endpoint"), so we fall back to capping it
     # rather than disabling it, which still bounds the cost. The downgrade happens
     # once and holds for the rest of the run.
-    mode = ({"reasoning": {"effort": reasoning_effort}}
-            if reasoning_effort else
-            {"reasoning": {"enabled": False}} if "openrouter" in url else {})
+    if "api.deepseek.com" in url:
+        # DeepSeek's OpenAI Chat Completions schema uses a top-level
+        # reasoning_effort plus a thinking toggle. A Responses/OpenRouter-style
+        # `reasoning` object is accepted but ignored, leaving the default high
+        # thinking mode enabled and potentially consuming the full output budget.
+        mode = ({"thinking": {"type": "enabled"},
+                 "reasoning_effort": reasoning_effort}
+                if reasoning_effort else
+                {"thinking": {"type": "disabled"}})
+    else:
+        mode = ({"reasoning": {"effort": reasoning_effort}}
+                if reasoning_effort else
+                {"reasoning": {"enabled": False}} if "openrouter" in url else {})
 
     def _body(messages):
         d = {"model": model, "messages": messages,
              "temperature": temperature, "max_tokens": max_tokens}
         if generation_seed is not None:
             d["seed"] = int(generation_seed)
+        if json_mode:
+            d["response_format"] = {"type": "json_object"}
         d.update(mode)
         return json.dumps(d).encode()
 
@@ -158,6 +171,7 @@ def openai_compatible(model: str, *, base_url: str | None = None,
                     "temperature": temperature,
                     "max_tokens": max_tokens,
                     "reasoning_effort": reasoning_effort,
+                    "json_mode": json_mode,
                 })
                 txt = msg.get("content") or ""
                 if not txt.strip():                # some models fill only the reasoning field

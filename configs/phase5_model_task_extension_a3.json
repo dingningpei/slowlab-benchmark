@@ -1,0 +1,190 @@
+{
+  "protocol_id": "slowlab-v2-phase5-model-extension-2026-09-20-a3",
+  "status": "frozen_before_post_primary_execution",
+  "environment": "SlowLab V2 incremental-observation environment",
+  "purpose": "Compare Luna, DeepSeek V4.1 Flash, and Qwen on identical fresh Optimise sites with provider-hidden reasoning disabled; A3 reuses the completed unchanged Luna cells and executes DeepSeek direct plus Qwen prospectively.",
+  "primary_metric": "final_simple_regret",
+  "secondary_metrics": [
+    "cumulative_regret",
+    "campaign_cash",
+    "completed_rounds",
+    "infeasible_submissions",
+    "tool_geometric_adoption",
+    "format_failures"
+  ],
+  "models": {
+    "luna": {
+      "requested_id": "openai/gpt-5.6-luna",
+      "temperature": 0.0,
+      "max_tokens": 4096,
+      "reasoning_effort": null,
+      "provider_route": "OpenRouter",
+      "json_mode": false
+    },
+    "deepseek": {
+      "requested_id": "deepseek-flash",
+      "reported_version": "DeepSeek-V4.1-Flash",
+      "provider_route": "DeepSeek direct API",
+      "temperature": 0.0,
+      "max_tokens": 4096,
+      "reasoning_effort": null,
+      "json_mode": true
+    },
+    "qwen": {
+      "requested_id": "qwen/qwen3.8-27b",
+      "temperature": 0.0,
+      "max_tokens": 4096,
+      "reasoning_effort": null,
+      "provider_route": "OpenRouter",
+      "json_mode": false
+    }
+  },
+  "secondary_matrices": [
+    {
+      "name": "model_anchor_luna",
+      "task": "T3",
+      "model": "luna",
+      "tool_modes": [
+        "bare",
+        "inference"
+      ],
+      "site_seeds": {
+        "start": 7100,
+        "count": 24
+      },
+      "generation_seeds": [
+        9701,
+        9702
+      ],
+      "prompt_variant": "standard"
+    },
+    {
+      "name": "model_anchor_deepseek",
+      "task": "T3",
+      "model": "deepseek",
+      "tool_modes": [
+        "bare",
+        "inference"
+      ],
+      "site_seeds": {
+        "start": 7100,
+        "count": 24
+      },
+      "generation_seeds": [
+        9701,
+        9702
+      ],
+      "prompt_variant": "standard"
+    },
+    {
+      "name": "model_anchor_qwen",
+      "task": "T3",
+      "model": "qwen",
+      "tool_modes": [
+        "bare",
+        "inference"
+      ],
+      "site_seeds": {
+        "start": 7100,
+        "count": 24
+      },
+      "generation_seeds": [
+        9701,
+        9702
+      ],
+      "prompt_variant": "standard"
+    }
+  ],
+  "analysis": {
+    "statistical_unit": "site",
+    "within_site_replicate": "provider generation seed",
+    "tool_estimands": "Within each model, inference minus bare final simple regret on Optimise",
+    "model_estimands": "Pairwise model differences within tool mode on identical Optimise sites",
+    "confidence_intervals": "site-cluster bootstrap, 10000 resamples, percentile 95% interval",
+    "multiplicity": "Two prespecified BH families: three within-model inference-minus-bare contrasts; six pairwise model contrasts split by bare and inference mode",
+    "missing_episode_rule": "retry transport/rate failures with the same identity; retain format failures, infeasible designs, and model early stopping; report missing cells without imputation",
+    "stopping_rule": "no efficacy stopping; pauses may depend only on spend, rate limits, or service availability"
+  },
+  "reserved_test_sites": {
+    "ranges": [
+      [
+        7100,
+        7123
+      ]
+    ],
+    "never_used_for_debugging_or_tuning_before_freeze": true
+  },
+  "execution_size": {
+    "model_anchor_episodes": 288,
+    "total_episodes": 288,
+    "reused_completed_episodes_from_a1": 96,
+    "remaining_authorized_episodes_after_amendment": 192
+  },
+  "cost_plan_usd": {
+    "basis": "A1 recorded spend plus direct DeepSeek and OpenRouter Qwen execution; hard pause remains total spend across protocols.",
+    "deepseek_expected": 0.1,
+    "qwen_expected": 2.0,
+    "luna_expected": 0.5,
+    "total_expected": 2.6,
+    "hard_pause_before": 4.0,
+    "prior_recorded_spend": 0.686,
+    "prior_valid_luna_spend": 0.31977693,
+    "excluded_deepseek_openrouter_pilot_spend": 0.100161746,
+    "direct_model_peak_rates_per_million": {
+      "deepseek-flash": {
+        "input_cache_miss": 0.3,
+        "output": 1.2,
+        "currency": "USD",
+        "policy": "conservative peak-rate upper bound; cache hits intentionally priced as misses"
+      }
+    },
+    "direct_price_source": "https://api-docs.deepseek.com/quick_start/pricing/ checked 2026-09-20",
+    "prior_spend_accounting": {
+      "a1_luna_valid": 0.31977693,
+      "a1_deepseek_openrouter_excluded": 0.100161746,
+      "a2_deepseek_direct_excluded_peak_upper_bound": 0.1902663,
+      "saved_nonreserved_diagnostics_peak_upper_bound": 0.0748344,
+      "unsaved_diagnostic_reserve": 0.000960624
+    }
+  },
+  "prompt_hash_policy": "record protocol-template SHA256 and realized-prompt SHA256 per episode",
+  "api_metadata_policy": "record requested and actual model, provider, timestamp, generation seed, usage, cost, retry attempt, and finish reason",
+  "amends": {
+    "protocol_id": "slowlab-v2-phase5-model-extension-2026-09-20-a2",
+    "reason": "Operational diagnostics showed DeepSeek native low thinking could exhaust the 4096-token output budget before emitting content. Provider-hidden reasoning is disabled for all remaining models to match the already completed Luna setting; DeepSeek uses its native JSON-object response mode.",
+    "outcome_blinding": "No regret or condition effects were inspected before this amendment.",
+    "unchanged_completed_cells": {
+      "model_anchor_luna": 96
+    },
+    "excluded_pilots": [
+      {
+        "protocol": "a1",
+        "route": "OpenRouter multi-provider",
+        "episodes": 22
+      },
+      {
+        "protocol": "a2",
+        "route": "DeepSeek direct low-thinking",
+        "episodes": 4
+      }
+    ],
+    "nonreserved_diagnostics": [
+      {
+        "site_seed": 7999,
+        "setting": "default-high-thinking-json",
+        "episodes": 1
+      },
+      {
+        "site_seed": 7998,
+        "setting": "native-low-thinking-json",
+        "episodes": 1
+      },
+      {
+        "site_seed": 7997,
+        "setting": "non-thinking-json",
+        "episodes": 1,
+        "result": "3/3 rounds, zero format failures"
+      }
+    ]
+  }
+}

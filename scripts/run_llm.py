@@ -30,7 +30,8 @@ def noise_scaled_task(task, multiplier: float):
 
 def make_completer(model: str, temperature: float = 0.7, rpm: float = 0.0,
                    max_tokens: int = 4096, reasoning_effort: str | None = None,
-                   generation_seed: int | None = None):
+                   generation_seed: int | None = None,
+                   json_mode: bool = False):
     """fake uses the built-in stub model; anything else goes to an OpenAI-compatible endpoint (DeepSeek / OpenAI / Qwen ...)."""
     if model == "fake":
         return scripted_completer()
@@ -38,7 +39,8 @@ def make_completer(model: str, temperature: float = 0.7, rpm: float = 0.0,
     return openai_compatible(model, temperature=temperature, rpm=rpm,
                              max_tokens=max_tokens,
                              reasoning_effort=reasoning_effort,
-                             generation_seed=generation_seed)
+                             generation_seed=generation_seed,
+                             json_mode=json_mode)
 
 
 def load_done(path: pathlib.Path, drop_incomplete: bool = False) -> dict:
@@ -73,6 +75,8 @@ def main():
     ap.add_argument("--max-tokens", type=int, default=4096)
     ap.add_argument("--reasoning-effort", choices=["low", "medium", "high"],
                     default=None)
+    ap.add_argument("--json-mode", action="store_true",
+                    help="request the provider's native JSON-object response mode")
     ap.add_argument("--prompt-variant", choices=["standard", "constraint_checklist"],
                     default="standard")
     ap.add_argument("--rpm", type=float, default=0.0,
@@ -113,7 +117,7 @@ def main():
               f"these episodes are a separate condition)\n")
 
     complete = make_completer(a.model, a.temperature, a.rpm, a.max_tokens,
-                              a.reasoning_effort, a.generation_seed)
+                              a.reasoning_effort, a.generation_seed, a.json_mode)
     out = ROOT / a.out
     out.mkdir(parents=True, exist_ok=True)
     # When running a task subset, the task names go into the filename so parallel
@@ -125,6 +129,8 @@ def main():
         tag += f"+gseed{a.generation_seed}"
     if a.reasoning_effort:
         tag += f"+reasoning-{a.reasoning_effort}"
+    if a.json_mode:
+        tag += "+json-mode"
     if a.noise_multiplier != 1.0:
         tag += f"+noise-{a.noise_multiplier:g}"
     if a.prompt_variant != "standard":
@@ -145,6 +151,7 @@ def main():
         inspect.getsource(LLMAgent._ask),
         inspect.getsource(WithinCycleLLMAgent._cycle_prompt),
         inspect.getsource(llm_module.tool_text), tool_mode, a.prompt_variant,
+        f"json_mode={a.json_mode}",
     ])
     prompt_protocol_hash = hashlib.sha256(protocol_material.encode()).hexdigest()
     total = len(a.tasks) * a.seeds

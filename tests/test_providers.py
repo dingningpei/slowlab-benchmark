@@ -95,9 +95,41 @@ def test_generation_seed_reasoning_and_response_metadata_are_recorded(monkeypatc
     monkeypatch.setenv("OPENROUTER_API_KEY", "sk-test")
     complete = P.openai_compatible(
         "openai/gpt-test", generation_seed=1701, reasoning_effort="medium",
-        temperature=0.0, max_tokens=321)
+        temperature=0.0, max_tokens=321, json_mode=True)
     assert complete([{"role": "user", "content": "hi"}]) == "ok"
     assert bodies[0]["seed"] == 1701
     assert bodies[0]["reasoning"] == {"effort": "medium"}
+    assert bodies[0]["response_format"] == {"type": "json_object"}
     assert complete.call_records[0]["actual_model"] == "actual/model"
     assert complete.call_records[0]["usage"]["completion_tokens"] == 2
+    assert complete.call_records[0]["json_mode"] is True
+
+
+def test_deepseek_chat_completions_uses_native_thinking_fields(monkeypatch):
+    import json
+    import slowlab.providers as P
+
+    bodies = []
+
+    class _Resp:
+        def read(self):
+            return json.dumps({
+                "model": "deepseek-flash", "usage": {},
+                "choices": [{"finish_reason": "stop", "message": {"content": "{}"}}],
+            }).encode()
+        def __enter__(self): return self
+        def __exit__(self, *args): pass
+
+    def fake(req, timeout=None, context=None):
+        bodies.append(json.loads(req.data.decode()))
+        return _Resp()
+
+    monkeypatch.setattr(P.urllib.request, "urlopen", fake)
+    monkeypatch.setenv("DEEPSEEK_API_KEY", "sk-test")
+    P.openai_compatible("deepseek-flash", reasoning_effort="low")([])
+    P.openai_compatible("deepseek-flash")([])
+    assert bodies[0]["thinking"] == {"type": "enabled"}
+    assert bodies[0]["reasoning_effort"] == "low"
+    assert "reasoning" not in bodies[0]
+    assert bodies[1]["thinking"] == {"type": "disabled"}
+    assert "reasoning_effort" not in bodies[1]

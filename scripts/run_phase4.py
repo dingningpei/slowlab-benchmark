@@ -17,6 +17,8 @@ def model_args(config, key):
             "--max-tokens", str(model["max_tokens"])]
     if model.get("reasoning_effort"):
         args += ["--reasoning-effort", model["reasoning_effort"]]
+    if model.get("json_mode"):
+        args.append("--json-mode")
     return args
 
 
