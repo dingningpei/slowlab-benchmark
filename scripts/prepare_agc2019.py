@@ -27,6 +27,7 @@ def main() -> None:
             "events": details["irrigation"]["positive_events"],
             "counter_resets": details["irrigation"]["counter_resets"],
             "rejected_root_values": details["root_zone"]["rejected_values"],
+            "rejected_climate_values": details["climate"]["rejected_values"],
             "mean_daily_irrigation_difference_l_m2": details[
                 "daily_irrigation_mean_abs_difference_l_m2"
             ],

@@ -46,6 +46,60 @@
       "these curves must remain an external validity/sensitivity component until a transfer rule is preregistered"
     ]
   },
+  "irrigation_policy_reference": {
+    "source": "Saha, Papadopoulos, Hao and Khosla (2008)",
+    "doi": "10.21273/HORTSCI.43.2.484",
+    "crop_system": "beefsteak greenhouse tomato in rockwool, spring-summer 2005",
+    "design": "randomized complete block, eight plots per treatment, four plants per plot",
+    "treatments": {
+      "T1": "irrigate at slab WC <=70% or slab EC >=1.4x seasonal feed EC",
+      "T2": "irrigate at slab WC <=70% or slab EC >=1.7x seasonal feed EC",
+      "T3": "irrigate at slab WC <=80% or slab EC >=1.4x seasonal feed EC",
+      "T4": "irrigate at slab WC <=80% or slab EC >=1.7x seasonal feed EC",
+      "T5": "irrigate after >=700 g combined plant-plus-slab weight loss",
+      "T6": "irrigate after >=500 g combined plant-plus-slab weight loss"
+    },
+    "observed_seasonal_mean_slab_wc_pct": {
+      "70_pct_trigger_group": [75.0, 85.0],
+      "80_pct_trigger_group": [85.0, 95.0]
+    },
+    "reported_policy_ranking": "T1, T2 and T6 had the strongest early and total marketable-yield pattern; T3, T4 and T5 were weaker",
+    "mechanistic_interpretation": "both excessive wetness with reduced root-zone oxygen and excessive dry-down can reduce performance",
+    "use": "external policy-ranking and plausible-operating-envelope check only",
+    "limits": [
+      "water-content and EC triggers jointly determine four treatments, so they do not identify a continuous causal WC response",
+      "one instrumented plot controlled all eight replicate plots within each treatment",
+      "gas exchange was measured on one date and cannot identify dynamic stress parameters",
+      "thresholds are irrigation triggers rather than maintained slab-water-content setpoints",
+      "cultivar, season and greenhouse differ from AGC 2019"
+    ]
+  },
+  "acute_drought_reference": {
+    "source": "Dutta et al. (2025)",
+    "doi": "10.1016/j.agwat.2025.109535",
+    "licence": "CC BY 4.0",
+    "crop_system": "approximately one-year-old high-wire tomato in rockwool at Bleiswijk",
+    "intervention": "one three-plant slab had drip irrigation removed for 48 hours; one slab continued irrigation",
+    "observed_response": {
+      "slab_water_content_m3_m3": "approximately 0.4 to sensor floor 0.0 in 28 hours",
+      "stomatal_conductance_change_vs_control_pct": {
+        "day_1": -17,
+        "day_2": -62,
+        "first_recovery_day": -68,
+        "second_recovery_day": -32
+      },
+      "sap_flow": "limited separation during the 48-hour treatment",
+      "yield": "not measured as a treatment outcome"
+    },
+    "use": "external acute-stress timing and sensor-observation check only",
+    "limits": [
+      "one treated slab and one control slab; plant or leaf counts do not constitute independent treatment replicates",
+      "stopping fertigation also stopped nutrient delivery",
+      "near-complete dry-down is more severe than normal management",
+      "no identified crop-yield response or general dynamic conductance-versus-WC curve",
+      "stomatal response and stem recovery occurred on different timescales"
+    ]
+  },
   "agc_observed_ranges": {
     "feed_ec_ds_m": [2.9, 5.1],
     "slab_ec_ds_m_after_sentinel_filter": [3.2, 8.6],
