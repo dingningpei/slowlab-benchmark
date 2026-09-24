@@ -1,0 +1,22 @@
+{
+  "candidate_id": "facility-analogue-v0-hps-led-pipe-tracking",
+  "status": "calibration diagnostic seed; not validated",
+  "holdout_start": "2020-04-01",
+  "solver": "LSODA",
+  "initial_lai": 3.0,
+  "sla_m2_per_mg_ch2o": 0.0000266,
+  "facility_parameters": {
+    "aFlr": 96.0, "aCov": 144.4, "aRoof": 28.8,
+    "hAir": 5.7, "hGh": 6.2, "hVent": 0.87,
+    "cDgh": 0.35, "cLeakage": 0.00003,
+    "useBlScr": 1.0, "tauRfPar": 0.5,
+    "tauThScrPar": 0.75, "tauBlScrPar": 0.02,
+    "pBoil": 17280.0, "pBoilGro": 2880.0,
+    "epsGroPipe": 0.88, "phiExtCo2": 400.0
+  },
+  "calibration_parameters": {
+    "railTrackTau": 300.0,
+    "growTrackTau": 300.0
+  },
+  "claim_boundary": "Known capacities and areas are mixed with analogue geometry and uncalibrated aggregate parameters. This candidate can be scored only on calibration sequences."
+}
