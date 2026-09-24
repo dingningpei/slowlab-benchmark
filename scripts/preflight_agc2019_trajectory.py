@@ -91,6 +91,27 @@ def excel_serials(path: Path, start: date, end: date) -> list[float]:
     return serials
 
 
+def led_hps_interlock_audit(path: Path, start: date, end: date) -> dict[str, int]:
+    """Separate LED blanks during HPS-off from blanks with HPS running."""
+    result = Counter()
+    with path.open(newline="", encoding="utf-8-sig") as handle:
+        for row in csv.DictReader(handle):
+            serial = number(row.get("%time"))
+            if serial is None or not start <= excel_datetime(serial).date() < end:
+                continue
+            hps = number(row.get("AssimLight"))
+            led = number(row.get("int_white_vip"))
+            if hps is None:
+                result["hps_unknown"] += 1
+            elif hps == 0:
+                result["led_blank_hps_off" if led is None else "led_reported_hps_off"] += 1
+            else:
+                result["led_blank_hps_on" if led is None else "led_reported_hps_on"] += 1
+    return {key: result[key] for key in (
+        "hps_unknown", "led_blank_hps_off", "led_reported_hps_off",
+        "led_blank_hps_on", "led_reported_hps_on")}
+
+
 def build(source: Path, clean: Path, manifest_path: Path,
           compartment: str, day: date) -> dict:
     if compartment not in COMPARTMENTS:
@@ -124,6 +145,8 @@ def build(source: Path, clean: Path, manifest_path: Path,
     weather_times = excel_serials(source / "Weather" / "Weather.csv", day, end)
     climate_times = excel_serials(source / compartment / "GreenhouseClimate.csv", day, end)
     exact_clock_match = weather_times == climate_times and len(set(weather_times)) == len(weather_times)
+    led_interlock = led_hps_interlock_audit(
+        source / compartment / "GreenhouseClimate.csv", day, end)
     result = {
         "status": "input_preflight_only",
         "compartment": compartment, "source_clock_day": day.isoformat(),
@@ -139,6 +162,7 @@ def build(source: Path, clean: Path, manifest_path: Path,
         "missing_action_samples": {
             field: actions["rows"] - actions["valid"][field] for field in ACTION_FIELDS
         },
+        "led_hps_interlock": led_interlock,
         "prediction_errors": {field: None for field in (
             "temperature", "relative_humidity", "co2", "resources", "harvest")},
         "replay_gates": {
