@@ -1,3 +1,4 @@
+import math
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -6,9 +7,26 @@ import pytest
 from slowlab.greenlight_adapter import (
     assert_greenlight_solution_complete,
     greenlight_canopy_water_demand,
+    greenlight_initial_climate_override,
     integrate_canopy_water_demand,
     read_greenlight_series,
 )
+
+
+def test_observed_climate_initials_use_greenlight_state_units():
+    state = greenlight_initial_climate_override(20.4, 80.8, 569)
+    temp = float(state["tAir"]["init"])
+    vapour_pressure = float(state["vpAir"]["init"])
+    co2_density = float(state["co2Air"]["init"])
+    saturation_pressure = 610.78 * math.exp(17.2694 * temp / (temp + 238.3))
+    assert 100 * vapour_pressure / saturation_pressure == pytest.approx(80.8)
+    assert (8.3144598e6 * (temp + 273.15) * 1e-6 * co2_density
+            / (101325 * 44.01e-3)) == pytest.approx(569)
+
+
+def test_unphysical_observed_climate_cannot_initialize_greenlight():
+    with pytest.raises(ValueError, match="physical ranges"):
+        greenlight_initial_climate_override(20, 101, 569)
 
 
 def test_partial_solver_result_fails_even_if_output_file_was_written():

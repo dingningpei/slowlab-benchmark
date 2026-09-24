@@ -23,6 +23,31 @@ class CanopyWaterDemand:
     canopy_condensation_l_m2: float
 
 
+def greenlight_initial_climate_override(
+    air_temperature_c: float, relative_humidity_pct: float, co2_ppm: float
+) -> dict[str, dict[str, str]]:
+    """Convert observed main-compartment climate to GreenLight state initials.
+
+    Uses the Katzin-2021 model's satVp and co2dens2ppm definitions. This only
+    initializes observed air states; unobserved canopy, screen, top-air and crop
+    states still require separate treatment before a trajectory is validated.
+    """
+    temp = float(air_temperature_c)
+    rh = float(relative_humidity_pct)
+    co2 = float(co2_ppm)
+    if not all(math.isfinite(value) for value in (temp, rh, co2)):
+        raise ValueError("initial climate values must be finite")
+    if temp <= -100 or not 0 <= rh <= 100 or co2 < 0:
+        raise ValueError("initial climate values are outside physical ranges")
+    vapour_pressure_pa = rh / 100 * 610.78 * math.exp(17.2694 * temp / (temp + 238.3))
+    co2_density_mg_m3 = co2 * 101325 * 44.01e-3 / (8.3144598 * (temp + 273.15))
+    return {
+        "tAir": {"init": repr(temp)},
+        "vpAir": {"init": repr(vapour_pressure_pa)},
+        "co2Air": {"init": repr(co2_density_mg_m3)},
+    }
+
+
 def assert_greenlight_solution_complete(solution: object, expected_end_seconds: float) -> None:
     """Fail closed on GreenLight's partial solve_ivp result.
 
