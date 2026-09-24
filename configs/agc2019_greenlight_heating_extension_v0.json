@@ -1,0 +1,47 @@
+{
+  "Info": {
+    "About": "Calibration-only bounded tracking of observed positive AGC pipe temperatures",
+    "Status": "diagnostic aggregate actuator model; tracking times require calibration",
+    "Semantics": "positive source values are temperature targets; zero is an off/status flag; no source value is treated as heat power"
+  },
+  "AGC pipe tracking heat inputs": {
+    "hBoilPipe": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "pipeLowActive * min(railPipePeak, max(0, capPipe/railTrackTau * (pipeLowTarget-tPipe)))",
+      "description": "Capacity-bounded heat input used to track positive observed rail-pipe temperature"
+    },
+    "hBoilGroPipe": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "pipeGrowActive * min(growPipePeak, max(0, capGroPipe/growTrackTau * (pipeGrowTarget-tGroPipe)))",
+      "description": "Capacity-bounded heat input used to track positive observed grow-pipe temperature"
+    }
+  },
+  "AGC pipe tracking parameters": {
+    "railPipePeak": {
+      "unit": "W m**-2",
+      "type": "const",
+      "definition": "180",
+      "description": "Published AGC rail-pipe peak capacity"
+    },
+    "growPipePeak": {
+      "unit": "W m**-2",
+      "type": "const",
+      "definition": "30",
+      "description": "Published AGC grow-pipe peak capacity"
+    },
+    "railTrackTau": {
+      "unit": "s",
+      "type": "const",
+      "definition": "300",
+      "description": "Diagnostic rail-pipe tracking time; calibration parameter"
+    },
+    "growTrackTau": {
+      "unit": "s",
+      "type": "const",
+      "definition": "300",
+      "description": "Diagnostic grow-pipe tracking time; calibration parameter"
+    }
+  }
+}

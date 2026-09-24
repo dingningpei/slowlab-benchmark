@@ -83,3 +83,18 @@ def test_changed_greenlight_unit_fails_closed(tmp_path: Path):
     )
     with pytest.raises(ValueError, match="unit changed"):
         greenlight_canopy_water_demand(path)
+
+
+def test_pipe_initials_use_positive_observation_and_never_zero_off_code():
+    from slowlab.greenlight_adapter import greenlight_initial_pipe_override
+    assert greenlight_initial_pipe_override(20, 45.9, 0) == {
+        "tPipe": {"init": "45.9"}, "tGroPipe": {"init": "20.0"}}
+
+
+def test_pipe_initials_reject_negative_or_nonfinite_codes():
+    from slowlab.greenlight_adapter import greenlight_initial_pipe_override
+    import pytest
+    with pytest.raises(ValueError):
+        greenlight_initial_pipe_override(20, -1, 0)
+    with pytest.raises(ValueError):
+        greenlight_initial_pipe_override(float("nan"), 40, 0)

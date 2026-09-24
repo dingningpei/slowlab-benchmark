@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Export source-grounded AGC climate drivers for GreenLight calibration.
 
-Pipe temperatures are intentionally excluded: zero is an off/status code and
-the observed positive temperature is not a heating-power input.
+Positive pipe temperatures are exported as tracking targets, while zero is exported
+as an off/status flag.  Neither value is treated as measured heating power.
 """
 from __future__ import annotations
 
@@ -23,7 +23,8 @@ from slowlab.agc_lighting import LED_FIELDS, agc_toplight_flux  # noqa: E402
 
 FIELDS = ("Time", "uBlScr", "uThScr", "uRoof", "mcExtAir",
           "qHpsProcessed", "qLedProcessed", "ledParPhotonFlux",
-          "ledFarRedPhotonFlux")
+          "ledFarRedPhotonFlux", "pipeLowTarget", "pipeLowActive",
+          "pipeGrowTarget", "pipeGrowActive")
 
 
 def digest(path: Path) -> str:
@@ -49,6 +50,10 @@ def build(trace: Path, out: Path) -> dict:
                        ("BlackScr", "EnScr", "VentLee", "Ventwind", "AssimLight")}
             if any(not 0 <= value <= 100 for value in bounded.values()):
                 raise ValueError(f"out-of-range control on row {row_number}")
+            pipe_low = number(row, "PipeLow")
+            pipe_grow = number(row, "PipeGrow")
+            if min(pipe_low, pipe_grow) < 0:
+                raise ValueError(f"negative pipe code on row {row_number}")
             dose = number(row, "co2_dos")
             if dose < 0:
                 raise ValueError(f"negative CO2 dose on row {row_number}")
@@ -68,6 +73,10 @@ def build(trace: Path, out: Path) -> dict:
                 "qLedProcessed": light.processed_led_power_w_m2,
                 "ledParPhotonFlux": light.led_par_photon_flux_umol_m2_s,
                 "ledFarRedPhotonFlux": light.led_far_red_photon_flux_umol_m2_s,
+                "pipeLowTarget": pipe_low if pipe_low > 0 else 0.0,
+                "pipeLowActive": float(pipe_low > 0),
+                "pipeGrowTarget": pipe_grow if pipe_grow > 0 else 0.0,
+                "pipeGrowActive": float(pipe_grow > 0),
             })
     if len(written) < 2 or any(b["Time"] <= a["Time"] for a, b in zip(written, written[1:])):
         raise ValueError("control trace needs strictly increasing time rows")
@@ -77,22 +86,25 @@ def build(trace: Path, out: Path) -> dict:
         "Observed energy-screen closure proxy", "Mean two-window opening proxy",
         "Processed CO2 dose under calibration accounting unit hypothesis",
         "Official-ledger HPS electrical input", "Official-ledger ELIXIA electrical input",
-        "ELIXIA PAR photon flux", "ELIXIA far-red photon flux")))
+        "ELIXIA PAR photon flux", "ELIXIA far-red photon flux",
+        "Observed positive rail-pipe temperature target", "Rail-pipe active flag",
+        "Observed positive grow-pipe temperature target", "Grow-pipe active flag")))
     units = dict(zip(FIELDS, ("s", "-", "-", "-", "mg m**-2 s**-1",
                               "W m**-2", "W m**-2", "umol m**-2 s**-1",
-                              "umol m**-2 s**-1")))
+                              "umol m**-2 s**-1", "°C", "-", "°C", "-")))
     with out.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=FIELDS)
         writer.writeheader(); writer.writerow(descriptions); writer.writerow(units); writer.writerows(written)
     return {
         "status": "calibration_driver_with_explicit_proxies",
         "rows": len(written), "trace_sha256": digest(trace), "output_sha256": digest(out),
-        "excluded_observed_fields": ["PipeLow", "PipeGrow"],
+        "pipe_fields_exported_as_temperature_targets_not_power": ["PipeLow", "PipeGrow"],
         "caveats": [
             "uRoof is the arithmetic mean opening fraction, not a measured air-exchange rate",
             "CO2 conversion follows the calibration accounting hypothesis and is not independent flow metering",
             "screen positions are closure proxies; product heat-transfer parameters remain to be calibrated",
-            "lighting power coefficients are same-source processing values, not independent electricity metering"
+            "lighting power coefficients are same-source processing values, not independent electricity metering",
+            "positive pipe values are temperature targets and zero values are off/status flags; neither is heat power"
         ],
     }
 
