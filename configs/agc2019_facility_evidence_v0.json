@@ -25,6 +25,14 @@
     "energy_screen_transmission": 0.75,
     "blackout_screen_transmission": 0.02
   },
+  "processed_electricity_coefficients_w_m2_from_official_readme": {
+    "hps": 81.0,
+    "led_blue": 7.27,
+    "led_red": 25.3,
+    "led_far_red": 6.23,
+    "led_white": 22.72,
+    "area_denominator": "not explicitly resolved against 96 m2 floor, 76.8 m2 paper crop area, and 62.5 m2 ReadMe growing area"
+  },
   "greenlight_default_gap_audit": "scripts/audit_agc2019_greenlight_parameters.py",
   "unresolved_for_greenlight": [
     "cover and side-wall surface areas",
