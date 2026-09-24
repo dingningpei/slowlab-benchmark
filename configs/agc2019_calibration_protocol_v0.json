@@ -1,0 +1,52 @@
+{
+  "protocol_id": "agc2019-climate-calibration-v0",
+  "status": "frozen before parameter-grid outcomes were generated",
+  "holdout_start": "2020-04-01",
+  "holdout_policy": "No outcome or trajectory at or after holdout_start may be read until one candidate is frozen.",
+  "search_sequences": [
+    "AICU:2020-03-05:4d",
+    "Automatoes:2020-03-05:4d",
+    "Digilog:2020-03-05:4d",
+    "IUACAAS:2020-03-05:4d",
+    "Reference:2020-03-05:4d",
+    "TheAutomators:2020-03-05:4d"
+  ],
+  "search_sequence_reason": "Same four calendar days across all six compartments, selected without inspecting grid outcomes; balances weather while preserving policy variation.",
+  "stage_1": {
+    "parameter": "cDgh",
+    "interpretation": "effective total roof-vent discharge coefficient including the documented insect net",
+    "values": [0.15, 0.20, 0.25, 0.30, 0.35],
+    "fixed_cLeakage": 0.00003,
+    "source_bounds": "Fernandez et al. 2016, Sensors 16:690, DOI 10.3390/s16050690, reports screened total discharge coefficients 0.148 to 0.374; AGC reports insect-netted roof vents."
+  },
+  "stage_2_if_needed": {
+    "condition": "The stage-1 winner fails the full calibration matrix.",
+    "parameters": {
+      "cLeakage": [0.00001, 0.00003, 0.00006],
+      "railTrackTau": [150.0, 300.0, 600.0]
+    },
+    "rule": "Evaluate the 3 by 3 grid around the frozen stage-1 cDgh winner on the same search sequences, then run exactly one selected candidate on all calibration sequences."
+  },
+  "fixed_quantities": [
+    "published floor and roof-vent areas",
+    "published HPS, LED, rail-pipe, grow-pipe, and CO2 capacities",
+    "observed weather and actions",
+    "initial LAI 3 because the official crop file does not measure LAI",
+    "GreenLight crop and lamp physics"
+  ],
+  "eligibility": {
+    "solver_completion_fraction": 1.0,
+    "sampled_physical_violations": 0
+  },
+  "selection_objective": {
+    "primary": "minimize the maximum RMSE divided by its frozen gate across tAir, rhIn, and co2InPpm, evaluated for pooled data and every compartment",
+    "tie_breaker": "minimize the mean pooled normalized RMSE across the three channels",
+    "frozen_rmse_gates": {
+      "tAir": 2.04,
+      "rhIn": 8.5,
+      "co2InPpm": 361.0
+    }
+  },
+  "full_calibration_check": "The selected candidate must be run on all 21 sequences (50 days) and reported pooled, by compartment, and by sequence before any holdout access.",
+  "claim_boundary": "Calibration success does not establish holdout validity. A single candidate must be frozen before the holdout is opened."
+}
