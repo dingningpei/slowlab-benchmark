@@ -10,6 +10,7 @@ from slowlab.greenhouse_data import (
     clean_root_zone,
     excel_datetime,
     reconstruct_irrigation_events,
+    reconstruct_pump_minutes,
     water_balance_audit,
 )
 
@@ -67,6 +68,24 @@ def test_agc_initial_partial_counter_cycle_can_be_discarded():
     )
     assert [event.delivered_l_m2 for event in events] == pytest.approx([0.1, 0.3])
     assert audit["initial_partial_cycle_rows"] == 2
+
+
+def test_raw_pump_minutes_are_reconstructed_without_litres_conversion():
+    rows = [
+        {"%time": "43815.0", "water_sup": "37", "Cum_irr": "3.7"},
+        {"%time": "43815.01", "water_sup": "39", "Cum_irr": "3.9"},
+        {"%time": "43815.0243056", "water_sup": "1", "Cum_irr": "0.1"},
+        {"%time": "43815.03", "water_sup": "4", "Cum_irr": "0.4"},
+        {"%time": "43815.04", "water_sup": "3", "Cum_irr": "0.3"},
+        {"%time": "43815.05", "water_sup": "5", "Cum_irr": "0.5"},
+    ]
+    events, audit = reconstruct_pump_minutes(
+        rows, "Reference", discard_initial_partial_cycle=True
+    )
+    assert [event.pump_minutes for event in events] == pytest.approx([1, 3, 1])
+    assert audit["counter_resets"] == 1
+    assert audit["counter_corrections"] == 1
+    assert events[0].flag == "counter_reset"
 
 
 def test_short_missing_counter_block_does_not_erase_accumulated_delivery():

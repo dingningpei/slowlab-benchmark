@@ -1,0 +1,26 @@
+{
+  "version": 0,
+  "status": "source-grounded draft; not a runnable action contract",
+  "source": "AGC 2019 official ReadMe and Hemming et al. 2020, Sensors 20(22):6430, section 2.2",
+  "irrigation_interval": {
+    "requested_source_field": "water_sup_intervals_sp_min",
+    "realised_source_field": "water_sup_intervals_vip_min",
+    "unit": "minutes between irrigation turns",
+    "remote_setpoint": true,
+    "execution_delay": "not yet calibrated"
+  },
+  "pump_on_time": {
+    "observed_source_field": "water_sup",
+    "unit": "cumulative minutes per source day",
+    "direct_single_shot_duration_control_documented": false,
+    "physical_litres_per_minute": "not independently calibrated"
+  },
+  "feed_ec": {
+    "observed_source_field": "irr_EC in biweekly LabAnalysis",
+    "direct_five_minute_remote_actuator": false,
+    "mechanism": "team request implemented through staff and central fertigation system",
+    "request_delay": "not yet identified",
+    "instantaneous_changes_allowed": false
+  },
+  "interpretation": "Historical control rights and available observations are distinct from new benchmark capabilities; no unverified direct action is enabled."
+}

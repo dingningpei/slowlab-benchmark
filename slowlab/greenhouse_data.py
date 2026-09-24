@@ -40,6 +40,18 @@ class IrrigationEvent:
 
 
 @dataclass(frozen=True)
+class PumpMinuteEvent:
+    """Recorded pump-on time, before the source's litres conversion."""
+
+    compartment: str
+    timestamp: str
+    excel_time: float
+    pump_minutes: float
+    cumulative_minutes: float
+    flag: str = ""
+
+
+@dataclass(frozen=True)
 class RootZoneRecord:
     compartment: str
     timestamp: str
@@ -224,6 +236,86 @@ def reconstruct_irrigation_events(
     return events, counts
 
 
+def reconstruct_pump_minutes(
+    rows: Iterable[dict[str, str]],
+    compartment: str,
+    *,
+    event_limit_minutes: float = 10.0,
+    discard_initial_partial_cycle: bool = False,
+) -> tuple[list[PumpMinuteEvent], dict[str, int]]:
+    """Recover positive increments of raw ``water_sup`` pump-on minutes.
+
+    This counter has the same observed daily reset times as ``Cum_irr``, but
+    its increments are independently retained; no litres conversion is made.
+    """
+    events: list[PumpMinuteEvent] = []
+    counts = {
+        "rows": 0, "missing_time": 0, "missing_counter": 0,
+        "resumed_after_missing": 0, "counter_resets": 0,
+        "counter_corrections": 0, "initial_partial_cycle_rows": 0,
+        "large_increment": 0, "positive_events": 0,
+    }
+    previous_cumulative: float | None = None
+    missing_since_valid = False
+    initial_cycle_complete = not discard_initial_partial_cycle
+
+    for raw in rows:
+        counts["rows"] += 1
+        serial = _number(raw.get("%time", raw.get("%Time")))
+        cumulative = _number(raw.get("water_sup", raw.get("Water_sup")))
+        if serial is None:
+            counts["missing_time"] += 1
+            continue
+        if cumulative is None or cumulative < 0:
+            counts["missing_counter"] += 1
+            missing_since_valid = previous_cumulative is not None
+            continue
+
+        flag = ""
+        if previous_cumulative is None:
+            increment, flag = 0.0, "left_truncated_counter"
+        else:
+            increment = cumulative - previous_cumulative
+            if increment < -1e-9:
+                hour = (serial % 1.0) * 24.0
+                scheduled = min(
+                    abs(hour - reset)
+                    for reset in AGC_COUNTER_RESET_HOURS_EXCEL_CLOCK
+                ) <= AGC_COUNTER_RESET_TOLERANCE_HOURS
+                if scheduled:
+                    counts["counter_resets"] += 1
+                    initial_cycle_complete = True
+                    increment, flag = cumulative, "counter_reset"
+                else:
+                    counts["counter_corrections"] += 1
+                    increment, flag = 0.0, "counter_correction"
+            elif increment < 0:
+                increment = 0.0
+
+        if not initial_cycle_complete:
+            counts["initial_partial_cycle_rows"] += 1
+            increment = 0.0
+        if increment > event_limit_minutes:
+            counts["large_increment"] += 1
+            flag = ";".join(filter(None, (flag, "large_increment")))
+        if increment > 1e-9:
+            counts["positive_events"] += 1
+            events.append(PumpMinuteEvent(
+                compartment=compartment,
+                timestamp=timestamp_text(serial),
+                excel_time=serial,
+                pump_minutes=increment,
+                cumulative_minutes=cumulative,
+                flag=flag,
+            ))
+        if missing_since_valid:
+            counts["resumed_after_missing"] += 1
+            missing_since_valid = False
+        if flag != "counter_correction":
+            previous_cumulative = cumulative
+    return events, counts
+
+
 def clean_root_zone(
     rows: Iterable[dict[str, str]], compartment: str
 ) -> tuple[list[RootZoneRecord], dict[str, object]]:
@@ -403,7 +495,7 @@ def prepare_agc2019(source: Path, destination: Path) -> dict:
     destination.mkdir(parents=True, exist_ok=True)
     audit: dict = {
         "source": str(source.resolve()),
-        "cleaning_version": 2,
+        "cleaning_version": 3,
         "compartments": {},
         "source_files": {},
     }
@@ -424,6 +516,9 @@ def prepare_agc2019(source: Path, destination: Path) -> dict:
         events, event_audit = reconstruct_irrigation_events(
             iter_csv(climate), compartment, discard_initial_partial_cycle=True
         )
+        pump_events, pump_audit = reconstruct_pump_minutes(
+            iter_csv(climate), compartment, discard_initial_partial_cycle=True
+        )
         climate_rows, climate_audit = clean_climate_observations(
             iter_csv(climate), compartment
         )
@@ -435,6 +530,7 @@ def prepare_agc2019(source: Path, destination: Path) -> dict:
         balance = water_balance_audit(events, resources_by_day)
         out = destination / compartment
         write_dataclasses(out / "irrigation_events.csv", events)
+        write_dataclasses(out / "pump_minutes_events.csv", pump_events)
         write_dataclasses(out / "climate_observations.csv", climate_rows)
         write_dataclasses(out / "root_zone.csv", roots)
         write_dataclasses(out / "production_dates.csv", production_dates)
@@ -443,6 +539,7 @@ def prepare_agc2019(source: Path, destination: Path) -> dict:
                       if row["difference_l_m2"] is not None]
         audit["compartments"][compartment] = {
             "irrigation": event_audit,
+            "pump_minutes": pump_audit,
             "climate": climate_audit,
             "root_zone": root_audit,
             "production_dates": production_audit,

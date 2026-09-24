@@ -20,7 +20,10 @@ ROOT_OBSERVATION_END_EXCLUSIVE = "2020-05-26T09:40:00"
 SOURCE_FILES = (
     "GreenhouseClimate.csv", "GrodanSens.csv", "Resources.csv", "Production.csv"
 )
-CLEAN_FILES = ("root_zone.csv", "climate_observations.csv", "irrigation_events.csv")
+CLEAN_FILES = (
+    "root_zone.csv", "climate_observations.csv", "irrigation_events.csv",
+    "pump_minutes_events.csv",
+)
 OFFICIAL_ARCHIVE_MD5 = "2a0c7f3332881caef54ca8f4dc60c9a3"
 OBSERVATION_FIELDS = {
     "root_zone.csv": (

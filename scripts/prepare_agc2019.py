@@ -25,6 +25,7 @@ def main() -> None:
     summary = {
         name: {
             "events": details["irrigation"]["positive_events"],
+            "pump_minute_events": details["pump_minutes"]["positive_events"],
             "counter_resets": details["irrigation"]["counter_resets"],
             "rejected_root_values": details["root_zone"]["rejected_values"],
             "rejected_climate_values": details["climate"]["rejected_values"],
