@@ -7,7 +7,7 @@ model error is read while constructing this matrix.
 from __future__ import annotations
 
 import argparse
-from datetime import date
+from datetime import date, timedelta
 import hashlib
 import json
 from pathlib import Path
@@ -40,6 +40,28 @@ def selected_identities(coverage: dict) -> list[tuple[str, date]]:
     if len(identities) != len(set(identities)):
         raise ValueError("duplicate calibration identity")
     return identities
+
+
+
+def consecutive_sequences(records: list[dict]) -> list[dict]:
+    grouped: dict[str, list[dict]] = {}
+    for record in records:
+        grouped.setdefault(record["compartment"], []).append(record)
+    sequences = []
+    for compartment, items in sorted(grouped.items()):
+        items.sort(key=lambda item: item["day"])
+        current = []
+        for item in items:
+            if current and date.fromisoformat(item["day"]) != date.fromisoformat(current[-1]["day"]) + timedelta(days=1):
+                sequences.append({"compartment": compartment, "days": current})
+                current = []
+            current.append(item)
+        if current:
+            sequences.append({"compartment": compartment, "days": current})
+    for index, sequence in enumerate(sequences):
+        sequence["sequence_id"] = f"{sequence['compartment']}:{sequence['days'][0]['day']}:{len(sequence['days'])}d"
+        sequence["day_count"] = len(sequence["days"])
+    return sequences
 
 
 def prepare(source: Path, manifest_path: Path, coverage_path: Path, out: Path,
@@ -76,9 +98,12 @@ def prepare(source: Path, manifest_path: Path, coverage_path: Path, out: Path,
             "trace": {"path": str(trace), "sha256": trace_audit["export_sha256"]},
             "driver": {"path": str(driver), "sha256": driver_audit["output_sha256"]},
         })
+    sequences = consecutive_sequences(records)
     return {
         "status": "calibration_inputs_only_no_outcomes_read",
         "identities": records,
+        "continuous_sequences": sequences,
+        "sequence_count": len(sequences),
         "identity_count": len(records),
         "distinct_weather_days": len(weather_files),
         "holdout_start_not_read": manifest["holdout_start"],
@@ -106,6 +131,7 @@ def main() -> None:
     args.matrix.parent.mkdir(parents=True, exist_ok=True)
     args.matrix.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
     print(json.dumps({"identity_count": result["identity_count"],
+                      "sequence_count": result["sequence_count"],
                       "distinct_weather_days": result["distinct_weather_days"]}, indent=2))
 
 

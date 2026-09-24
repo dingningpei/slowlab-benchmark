@@ -39,6 +39,21 @@ def interpolate(times: list[float], values: list[float], point: float) -> float:
     return values[index - 1] + fraction * (values[index] - values[index - 1])
 
 
+def error_metrics(model: list[float], actual: list[float]) -> dict[str, float]:
+    if len(model) != len(actual) or not model:
+        raise ValueError("metric series must have equal non-zero length")
+    errors = [m - o for m, o in zip(model, actual)]
+    deltas = [(model[i] - model[i-1]) - (actual[i] - actual[i-1])
+              for i in range(1, len(model))]
+    return {
+        "mae": sum(abs(error) for error in errors) / len(errors),
+        "rmse": math.sqrt(sum(error * error for error in errors) / len(errors)),
+        "bias": sum(errors) / len(errors),
+        "hourly_change_rmse": (math.sqrt(sum(error * error for error in deltas) / len(deltas))
+                               if deltas else math.nan),
+    }
+
+
 def audit(simulation: Path, observations: Path, day: date, solver_audit: Path,
           method: str | None = None) -> dict:
     if not CALIBRATION_START <= day <= CALIBRATION_END:
@@ -86,10 +101,8 @@ def audit(simulation: Path, observations: Path, day: date, solver_audit: Path,
                   for t in sim_times]
         if any(not math.isfinite(value) for value in model + actual):
             raise ValueError(f"non-finite value in {sim_name} comparison")
-        errors = [m - o for m, o in zip(model, actual)]
         metrics[sim_name] = {
-            "mae": sum(abs(error) for error in errors) / len(errors),
-            "bias": sum(errors) / len(errors),
+            **error_metrics(model, actual),
             "initial_model": model[0],
             "initial_observed": actual[0],
             "model_min": min(model),

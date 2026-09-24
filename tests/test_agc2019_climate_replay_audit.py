@@ -39,3 +39,12 @@ def test_holdout_climate_is_not_inspected(tmp_path):
     with pytest.raises(ValueError, match="calibration dates"):
         audit(tmp_path / "missing.csv", tmp_path / "missing2.csv",
               date(2020, 4, 1), tmp_path / "missing3.json")
+
+
+def test_error_metrics_reports_level_and_hourly_dynamics():
+    from scripts.audit_agc2019_climate_replay import error_metrics
+    result = error_metrics([1, 3, 2], [1, 2, 3])
+    assert result["mae"] == pytest.approx(2 / 3)
+    assert result["rmse"] == pytest.approx((2 / 3) ** .5)
+    assert result["bias"] == 0
+    assert result["hourly_change_rmse"] == pytest.approx((5 / 2) ** .5)
