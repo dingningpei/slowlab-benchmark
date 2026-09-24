@@ -1,6 +1,6 @@
 import pytest
 
-from scripts.audit_agc2019_replay_coverage import classify
+from scripts.audit_agc2019_replay_coverage import classify, longest_consecutive_run
 
 
 def complete_day():
@@ -43,3 +43,10 @@ def test_outcome_missingness_is_reported_but_not_used_to_select_input_days():
     assert result["climate_observation_invalid_rows_not_used_for_input_eligibility"] == 1
     weather.pop()
     assert not classify(weather, climate)["input_eligible"]
+
+
+def test_longest_complete_run_does_not_bridge_missing_days():
+    assert longest_consecutive_run([
+        "2020-01-26", "2020-03-05", "2020-03-06", "2020-03-07", "2020-03-08",
+        "2020-03-14",
+    ]) == 4

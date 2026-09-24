@@ -54,6 +54,18 @@ def calibration_rows(path: Path, start: date, stop: date) -> dict[date, list[tup
     return result
 
 
+def longest_consecutive_run(day_texts: list[str]) -> int:
+    longest = 0
+    current_run = 0
+    previous = None
+    for day_text in day_texts:
+        current = date.fromisoformat(day_text)
+        current_run = current_run + 1 if previous and current == previous + timedelta(days=1) else 1
+        longest = max(longest, current_run)
+        previous = current
+    return longest
+
+
 def classify(weather: list[tuple[float, dict[str, str]]],
              climate: list[tuple[float, dict[str, str]]]) -> dict:
     weather_times = [stamp for stamp, _ in weather]
@@ -195,11 +207,13 @@ def audit(source: Path, manifest_path: Path) -> dict:
                 if climate.get(next_day):
                     climate_day.append(climate[next_day][0])
             details[compartment][day.isoformat()] = classify(weather_day, climate_day)
+        eligible_dates = [day for day, item in details[compartment].items()
+                          if item["input_eligible"]]
         summary[compartment] = {
             "calibration_days": len(days),
-            "input_eligible_days": sum(item["input_eligible"] for item in details[compartment].values()),
-            "input_eligible_dates": [day for day, item in details[compartment].items()
-                                     if item["input_eligible"]],
+            "input_eligible_days": len(eligible_dates),
+            "input_eligible_dates": eligible_dates,
+            "longest_consecutive_input_eligible_days": longest_consecutive_run(eligible_dates),
             "days_with_unknown_led_while_hps_on": sum(
                 item["led_unknown_while_hps_on_rows"] > 0
                 for item in details[compartment].values()),
