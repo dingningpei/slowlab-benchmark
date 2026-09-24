@@ -23,6 +23,11 @@ if str(ROOT) not in sys.path:
 from slowlab.greenhouse_data import COMPARTMENTS, excel_datetime  # noqa: E402
 
 CAP_KG_M2_H = 0.015  # Hemming et al. 2020: 15 g m^-2 h^-1.
+FLOOR_AREA_M2 = 96
+PAPER_CROP_AREA_M2 = 76.8
+README_GROWING_AREA_M2 = 62.5
+CAP_FLOOR_IF_PAPER_CROP_BASIS = CAP_KG_M2_H * PAPER_CROP_AREA_M2 / FLOOR_AREA_M2
+CAP_FLOOR_IF_README_GROWING_BASIS = CAP_KG_M2_H * README_GROWING_AREA_M2 / FLOOR_AREA_M2
 
 
 def digest(path: Path) -> str:
@@ -39,6 +44,9 @@ def audit_file(path: Path, start: date, end: date) -> dict:
     missing = 0
     negative = 0
     above = []
+    above_paper_crop_basis = 0
+    above_readme_growing_basis = 0
+    max_valid_rate = 0.0
     daily = defaultdict(lambda: {"samples": 0, "above_cap": 0,
                                   "max_kg_m2_h": 0.0,
                                   "excess_kg_m2": 0.0})
@@ -62,6 +70,9 @@ def audit_file(path: Path, start: date, end: date) -> dict:
                 negative += 1
                 continue
             valid += 1
+            max_valid_rate = max(max_valid_rate, value)
+            above_paper_crop_basis += value > CAP_FLOOR_IF_PAPER_CROP_BASIS + 1e-12
+            above_readme_growing_basis += value > CAP_FLOOR_IF_README_GROWING_BASIS + 1e-12
             day = stamp.date().isoformat()
             daily[day]["samples"] += 1
             daily[day]["max_kg_m2_h"] = max(daily[day]["max_kg_m2_h"], value)
@@ -77,6 +88,9 @@ def audit_file(path: Path, start: date, end: date) -> dict:
         "samples": samples, "valid_nonnegative_samples": valid,
         "missing_or_nonfinite_samples": missing, "negative_samples": negative,
         "above_capacity_samples": len(above),
+        "max_valid_rate_kg_m2_h": max_valid_rate,
+        "above_floor_equivalent_if_paper_crop_basis": above_paper_crop_basis,
+        "above_floor_equivalent_if_readme_growing_basis": above_readme_growing_basis,
         "above_capacity_fraction_of_valid": len(above) / valid if valid else None,
         "days_with_above_capacity": {day: data for day, data in daily.items()
                                      if data["above_cap"]},
@@ -105,6 +119,11 @@ def main() -> None:
         "status": "calibration_only_capacity_plausibility_audit",
         "unit_hypothesis": "kg/m2/hour, based on same-source daily CO2 ledger",
         "published_capacity_kg_m2_h": CAP_KG_M2_H,
+        "unverified_area_denominator_hypotheses": {
+            "floor_equivalent_if_paper_crop_area_76_8_m2": CAP_FLOOR_IF_PAPER_CROP_BASIS,
+            "floor_equivalent_if_readme_growing_area_62_5_m2": CAP_FLOOR_IF_README_GROWING_BASIS,
+            "note": "Neither source proves which area denominator the published cap or processed co2_dos uses. These are comparisons only, not conversions applied to data.",
+        },
         "period_start_inclusive": start.isoformat(),
         "period_end_exclusive": end.isoformat(),
         "compartments": compartments,
