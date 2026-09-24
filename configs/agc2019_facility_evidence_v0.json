@@ -20,6 +20,12 @@
   "blackout_screen_product": "OBSCURA 9950 FR W",
   "fogging_max_g_m2_h": 330,
   "co2_supply_max_g_m2_h": 15,
+  "processed_par_coefficients_from_official_readme_not_independent_measurements": {
+    "cover_transmission": 0.5,
+    "energy_screen_transmission": 0.75,
+    "blackout_screen_transmission": 0.02
+  },
+  "greenlight_default_gap_audit": "scripts/audit_agc2019_greenlight_parameters.py",
   "unresolved_for_greenlight": [
     "cover and side-wall surface areas",
     "greenhouse and lower-air volumes/heights",
