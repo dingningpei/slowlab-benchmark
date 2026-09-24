@@ -14,6 +14,7 @@
   "led_max_total_umol_m2_s": 109,
   "led_max_far_red_umol_m2_s": 12,
   "led_requires_hps_power": true,
+  "lighting_geometry_status": "The paper identifies six HPS fixtures and eight Elixia multispectrum LED fixtures but does not report a GreenLight-compatible top-lamp/interlight geometry or fixture heat partition. Do not map the LEDs to GreenLight interlighting solely because a second lamp channel is available.",
   "rail_pipe_peak_w_m2": 180,
   "grow_pipe_peak_w_m2": 30,
   "energy_screen_product": "LUXOUS 1547 D FR",
@@ -40,7 +41,7 @@
     "pipe geometry and thermal capacities",
     "insect-net ventilation resistance and two-window mapping",
     "screen optical and thermal coefficients",
-    "HPS and LED electrical-to-radiative conversion by floor/crop area",
+    "HPS and LED placement, electrical-to-radiative conversion, fixture heat partition, and floor/crop area denominator",
     "irrigation pump flow and relevant area denominator",
     "crop initial state and cultivar response parameters"
   ],

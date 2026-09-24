@@ -89,11 +89,12 @@ def build(model: Path, weather: Path) -> dict:
             "separate leeward/windward vent fractions to GreenLight uRoof mapping",
             "screen infrared/convective coefficients and time-varying closure semantics",
             "heating pipe physical capacity versus boiler power and zero-valued pipe-temperature readings",
-            "HPS/LED electrical-to-radiative conversion and LED realised photon output",
+            "HPS/LED placement, electrical-to-radiative conversion, fixture heat partition, and LED realised photon output",
             "CO2 dosing area denominator and above-nominal processed-rate observations",
         ],
         "interpretation": (
             "Published PAR coefficients are processing assumptions, not independent optical measurements. "
+            "The AGC paper does not establish that its second LED fixture set has GreenLight's interlighting geometry. "
             "The default parameter vector is not a validated AGC facility override."
         ),
     }
