@@ -1,0 +1,264 @@
+{
+  "Info": {
+    "About": "Diagnostic GreenLight extension adding ELIXIA as a second overhead light source",
+    "Status": "structure implemented; AGC thermal parameters uncalibrated; calibration-period use only",
+    "Topology": "HPS and LED are separate overhead sources; GreenLight interlighting is not used",
+    "Parameter provenance": "initial LED thermal seeds mirror Katzin-2021 LED toplights and are not AGC measurements"
+  },
+  "AGC overhead LED state and receiver overrides": {
+    "tCovIn": {
+      "unit": "\u00b0C",
+      "type": "state",
+      "definition": "(1/capCovIn) * (hTopCovIn + lTopCovIn + rCanCovIn + rFlrCovIn + rPipeCovIn + rThScrCovIn - hCovInCovE + rBlScrCovIn + rLampCovIn + rIntLampCovIn + rLedCovIn)",
+      "description": "Internal cover temperature with overhead LED longwave exchange",
+      "init": "16.5"
+    },
+    "tBlScr": {
+      "unit": "\u00b0C",
+      "type": "state",
+      "definition": "(1/capBlScr) * (hAirBlScr + lAirBlScr + rCanBlScr + rFlrBlScr + rPipeBlScr - hBlScrTop - rBlScrCovIn - rBlScrSky - rBlScrThScr + rLampBlScr + rIntLampBlScr + rLedBlScr)",
+      "description": "Blackout-screen temperature with overhead LED exchange",
+      "init": "16.5"
+    },
+    "tThScr": {
+      "unit": "\u00b0C",
+      "type": "state",
+      "definition": "(1/capThScr) * (hAirThScr + lAirThScr + rCanThScr + rFlrThScr + rPipeThScr - hThScrTop - rThScrCovIn - rThScrSky + rBlScrThScr + rLampThScr + rIntLampThScr + rLedThScr)",
+      "description": "Thermal-screen temperature with overhead LED exchange",
+      "init": "16.5"
+    },
+    "tAir": {
+      "unit": "\u00b0C",
+      "type": "state",
+      "definition": "(1/capAir) * (hCanAir + hPadAir - hAirMech + hPipeAir + hPasAir + hBlowAir + rGlobSunAir - hAirFlr - hAirThScr - hAirOut - hAirTop - hAirOutPad - lAirFog - hAirBlScr + hLampAir + rLampAir + hGroPipeAir + hIntLampAir + rIntLampAir + hLedAir + rLedAir)",
+      "description": "Main-air temperature with overhead LED convection and shortwave absorption",
+      "init": "16.5"
+    },
+    "tCan": {
+      "unit": "\u00b0C",
+      "type": "state",
+      "definition": "(1/capCan) * (rParSunCan + rNirSunCan + rPipeCan - hCanAir - lCanAir - rCanCovIn - rCanFlr - rCanSky - rCanThScr - rCanBlScr + rParLampCan + rNirLampCan + rFirLampCan + rGroPipeCan + rParIntLampCan + rNirIntLampCan + rFirIntLampCan + rParLedCan + rNirLedCan + rFirLedCan)",
+      "description": "Canopy temperature with overhead LED radiation",
+      "init": "20.5"
+    },
+    "tPipe": {
+      "unit": "\u00b0C",
+      "type": "state",
+      "definition": "1 / capPipe * (hBoilPipe + hIndPipe + hGeoPipe - rPipeSky - rPipeCovIn - rPipeCan - rPipeFlr - rPipeThScr - hPipeAir - rPipeBlScr + rLampPipe + rIntLampPipe + rLedPipe + hBufHotPipe)",
+      "description": "Rail-pipe temperature with overhead LED exchange",
+      "init": "16.5"
+    },
+    "tFlr": {
+      "unit": "\u00b0C",
+      "type": "state",
+      "definition": "(1/capFlr) * (hAirFlr + rParSunFlr + rNirSunFlr + rCanFlr + rPipeFlr - hFlrSo1 - rFlrCovIn - rFlrSky - rFlrThScr - rFlrBlScr + rParLampFlr + rNirLampFlr + rFirLampFlr + rParIntLampFlr + rNirIntLampFlr + rFirIntLampFlr + rParLedFlr + rNirLedFlr + rFirLedFlr)",
+      "description": "Floor temperature with overhead LED radiation",
+      "init": "16.5"
+    },
+    "tLed": {
+      "unit": "\u00b0C",
+      "type": "state",
+      "definition": "(1/capLed) * (qLedProcessed - rLedSky - rLedCovIn - rLedThScr - rLedBlScr - hLedAir - rParLedCan - rNirLedCan - rFirLedCan - rLedPipe - rParLedFlr - rNirLedFlr - rFirLedFlr - rLedAir - hLedCool)",
+      "description": "Effective temperature of the overhead ELIXIA fixture layer",
+      "init": "16.5"
+    }
+  },
+  "AGC observed lighting inputs and shortwave exchanges": {
+    "qLampIn": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "qHpsProcessed",
+      "description": "HPS electrical input from the explicit AGC accounting driver"
+    },
+    "rParGhLed": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "ledParPhotonFlux / zetaLedPar",
+      "description": "Effective LED PAR above the canopy"
+    },
+    "rNirGhLed": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "etaLedNir * qLedProcessed",
+      "description": "Effective non-PAR shortwave LED radiation"
+    },
+    "rParLedCanDown": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "rParGhLed * (1-rhoCanPar) * (1-exp(-k1Par*lai))",
+      "description": "LED PAR directly absorbed by canopy"
+    },
+    "rParLedFlrCanUp": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "rParGhLed * exp(-k1Par*lai) * rhoFlrPar * (1-rhoCanPar) * (1-exp(-k2Par*lai))",
+      "description": "Floor-reflected LED PAR absorbed by canopy"
+    },
+    "rParLedCan": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "rParLedCanDown + rParLedFlrCanUp",
+      "description": "Total LED PAR absorbed by canopy"
+    },
+    "rNirLedCan": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "rNirGhLed * (1-rhoCanNir) * (1-exp(-kNir*lai))",
+      "description": "LED non-PAR shortwave absorbed by canopy"
+    },
+    "rParLedFlr": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "rParGhLed * (1-rhoFlrPar) * exp(-k1Par*lai)",
+      "description": "LED PAR absorbed by floor"
+    },
+    "rNirLedFlr": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "rNirGhLed * (1-rhoFlrNir) * exp(-kNir*lai)",
+      "description": "LED non-PAR shortwave absorbed by floor"
+    },
+    "rLedAir": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "rParGhLed + rNirGhLed - rParLedCan - rNirLedCan - rParLedFlr - rNirLedFlr",
+      "description": "LED shortwave absorbed by greenhouse air"
+    },
+    "parLedCan": {
+      "unit": "\u00b5mol m**-2 s**-1",
+      "type": "aux",
+      "definition": "ledParPhotonFlux * (rParLedCan / max(1e-9, rParGhLed))",
+      "description": "LED PAR photons absorbed by canopy"
+    },
+    "rParCan": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "rParSunCan + rParGhLamp + rParGhIntLamp + rParGhLed",
+      "description": "Total PAR above and outside canopy including overhead LED"
+    },
+    "rCanLed": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "rParGhLed + rNirGhLed",
+      "description": "Shortwave radiation above canopy from overhead LED"
+    },
+    "rCan": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "rCanSun + rCanLamp + rCanIntLamp + rCanLed",
+      "description": "Global radiation above canopy including overhead LED"
+    },
+    "parCan": {
+      "unit": "\u00b5mol m**-2 s**-1",
+      "type": "aux",
+      "definition": "parJtoUmolSun*rParSunCan + zetaLampPar*rParLampCan + zetaIntLampPar*rParIntLampCan + parLedCan",
+      "description": "Total canopy-absorbed PAR photons including overhead LED"
+    }
+  },
+  "AGC overhead LED longwave and convection": {
+    "rLedSky": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "fir(aLed,epsLedTop,epsSky,tauCovFir*tauThScrFirU*tauBlScrFirU,tLed,tSky)",
+      "description": "LED-to-sky FIR"
+    },
+    "rLedCovIn": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "fir(aLed,epsLedTop,epsCovFir,tauThScrFirU*tauBlScrFirU,tLed,tCovIn)",
+      "description": "LED-to-cover FIR"
+    },
+    "rLedThScr": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "fir(aLed,epsLedTop,epsThScrFir,uThScr*tauBlScrFirU,tLed,tThScr)",
+      "description": "LED-to-thermal-screen FIR"
+    },
+    "rLedBlScr": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "fir(aLed,epsLedTop,epsBlScrFir,uBlScr,tLed,tBlScr)",
+      "description": "LED-to-blackout-screen FIR"
+    },
+    "rFirLedCan": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "fir(aLed,epsLedBottom,epsCan,aCan,tLed,tCan)",
+      "description": "LED-to-canopy FIR"
+    },
+    "rLedPipe": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "fir(aLed,epsLedBottom,epsPipe,tauIntLampFir*0.49*pi*lPipe*phiPipeE*exp(-kFir*lai),tLed,tPipe)",
+      "description": "LED-to-rail-pipe FIR"
+    },
+    "rFirLedFlr": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "fir(aLed,epsLedBottom,epsFlr,tauIntLampFir*(1-0.49*pi*lPipe*phiPipeE)*exp(-kFir*lai),tLed,tFlr)",
+      "description": "LED-to-floor FIR"
+    },
+    "hLedAir": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "sensible(cHecLedAir,tLed,tAir)",
+      "description": "LED convection to main air"
+    },
+    "hLedCool": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "etaLedCool*qLedProcessed",
+      "description": "LED heat actively removed from greenhouse"
+    }
+  },
+  "Uncalibrated AGC overhead LED parameter seeds": {
+    "zetaLedPar": {
+      "unit": "\u00b5mol J**-1",
+      "type": "const",
+      "definition": "5.4",
+      "description": "Effective LED PAR photons per joule of PAR; calibration seed"
+    },
+    "etaLedNir": {
+      "unit": "-",
+      "type": "const",
+      "definition": "0.02",
+      "description": "Non-PAR shortwave fraction; calibration seed"
+    },
+    "capLed": {
+      "unit": "J K**-1 m**-2",
+      "type": "const",
+      "definition": "10",
+      "description": "Effective LED fixture heat capacity; calibration seed"
+    },
+    "cHecLedAir": {
+      "unit": "W m**-2 K**-1",
+      "type": "const",
+      "definition": "2.3",
+      "description": "LED-air heat exchange; calibration seed"
+    },
+    "aLed": {
+      "unit": "m**2 m**-2",
+      "type": "const",
+      "definition": "0.02",
+      "description": "Effective overhead LED area; calibration seed"
+    },
+    "epsLedTop": {
+      "unit": "-",
+      "type": "const",
+      "definition": "0.1",
+      "description": "Top-side LED emissivity; calibration seed"
+    },
+    "epsLedBottom": {
+      "unit": "-",
+      "type": "const",
+      "definition": "0.9",
+      "description": "Bottom-side LED emissivity; calibration seed"
+    },
+    "etaLedCool": {
+      "unit": "-",
+      "type": "const",
+      "definition": "0",
+      "description": "Fraction of LED input actively removed; calibration seed"
+    }
+  }
+}
