@@ -1,12 +1,24 @@
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 
 from slowlab.greenlight_adapter import (
+    assert_greenlight_solution_complete,
     greenlight_canopy_water_demand,
     integrate_canopy_water_demand,
     read_greenlight_series,
 )
+
+
+def test_partial_solver_result_fails_even_if_output_file_was_written():
+    assert_greenlight_solution_complete(SimpleNamespace(success=True, t=[0, 86400]), 86400)
+    with pytest.raises(ValueError, match="solver failed"):
+        assert_greenlight_solution_complete(
+            SimpleNamespace(success=False, t=[0, 16263], message="step size too small"), 86400)
+    with pytest.raises(ValueError, match="stopped"):
+        assert_greenlight_solution_complete(
+            SimpleNamespace(success=True, t=[0, 16263]), 86400)
 
 
 def test_interval_start_integration_converts_kg_per_m2_to_litres_per_m2():

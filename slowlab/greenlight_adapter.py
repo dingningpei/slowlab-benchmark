@@ -23,6 +23,21 @@ class CanopyWaterDemand:
     canopy_condensation_l_m2: float
 
 
+def assert_greenlight_solution_complete(solution: object, expected_end_seconds: float) -> None:
+    """Fail closed on GreenLight's partial solve_ivp result.
+
+    GreenLight can write a CSV and return from ``run()`` after an ODE failure,
+    so file existence or process exit status alone is not a completion check.
+    """
+    if not getattr(solution, "success", False):
+        raise ValueError(f"GreenLight solver failed: {getattr(solution, 'message', 'unknown error')}")
+    times = getattr(solution, "t", ())
+    if len(times) < 2 or not math.isfinite(float(times[-1])):
+        raise ValueError("GreenLight solver returned no finite endpoint")
+    if abs(float(times[-1]) - expected_end_seconds) > 1e-6:
+        raise ValueError(f"GreenLight stopped at {times[-1]}, expected {expected_end_seconds}")
+
+
 def read_greenlight_series(path: Path, variable: str) -> GreenLightSeries:
     """Read a GreenLight CSV while respecting its description and unit rows."""
     with path.open(newline="", encoding="utf-8-sig") as handle:
