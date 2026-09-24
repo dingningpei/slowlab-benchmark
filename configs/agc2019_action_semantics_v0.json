@@ -43,5 +43,14 @@
     "evidence": "sum(co2_dos)/12 matches same-source daily CO2_cons kg/m2/day over 107 complete calibration days per compartment; this is not independent flow validation",
     "physical_injection_capacity_g_m2_h": 15
   },
+  "heating_pipes": {
+    "rail_observed_field": "PipeLow",
+    "grow_observed_field": "PipeGrow",
+    "readme_unit": "degrees C, pipe temperature",
+    "zero_working_interpretation": "off/status code rather than literal measured 0 C",
+    "zero_evidence": "Calibration-only audit of six compartments: 0/nonzero transitions imply median 30-40 C jumps within one five-minute sample while greenhouse air is stable within 1 C in at least 95% of transitions.",
+    "audit_script": "scripts/audit_agc2019_pipe_zero.py",
+    "greenlight_mapping": "unresolved: do not inject zero as tPipe or tGroPipe; heating power is not directly observed"
+  },
   "interpretation": "Historical control rights and available observations are distinct from new benchmark capabilities; no unverified direct action is enabled."
 }

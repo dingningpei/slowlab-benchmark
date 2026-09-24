@@ -51,7 +51,7 @@ def build(model: Path, weather: Path) -> dict:
     sim = GreenLight(
         base_path=str(model.parent),
         input_prompt=[str(model), str(weather)],
-        output_path="/private/tmp/agc2019_parameter_audit_unused.csv",
+        output_path=str(weather.parent / "agc2019_parameter_audit_unused.csv"),
     )
     sim.load()
     defaults = {}
