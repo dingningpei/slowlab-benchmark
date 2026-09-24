@@ -18,7 +18,8 @@ HOLDOUT_START = "2020-04-01"
 # sample marks an unambiguous exclusive boundary without rounding away data.
 ROOT_OBSERVATION_END_EXCLUSIVE = "2020-05-26T09:40:00"
 SOURCE_FILES = (
-    "GreenhouseClimate.csv", "GrodanSens.csv", "Resources.csv", "Production.csv"
+    "GreenhouseClimate.csv", "GrodanSens.csv", "Resources.csv", "Production.csv",
+    "CropParameters.csv",
 )
 CLEAN_FILES = (
     "root_zone.csv", "climate_observations.csv", "irrigation_events.csv",

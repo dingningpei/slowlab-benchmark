@@ -19,6 +19,7 @@ PARAMETERS = (
     "useBlScr", "thetaLampMax", "thetaIntLampMax", "pBoil",
     "pBoilGro", "phiExtCo2", "lPipe", "lGroPipe",
 )
+INITIAL_STATES = ("cBuf", "cLeaf", "cStem", "cFruit", "tCanSum", "tCan24")
 
 
 def sha256(path: Path) -> str:
@@ -59,11 +60,21 @@ def build(model: Path, weather: Path) -> dict:
         expression = sim.consts.get(key)
         defaults[key] = {"definition": expression,
                          "numeric_value_if_literal": number(expression) if expression else None}
+    initials = {}
+    for key in INITIAL_STATES:
+        expression = sim.init.get(key)
+        initials[key] = {"definition": expression,
+                         "numeric_value_if_literal": number(expression) if expression else None}
+    sla = number(sim.consts.get("sla", ""))
+    c_leaf = initials["cLeaf"]["numeric_value_if_literal"]
+    default_lai = sla * c_leaf if sla is not None and c_leaf is not None else None
     return {
         "status": "default_parameter_gap_only_no_simulation",
         "model_sha256": sha256(model),
         "weather_sha256": sha256(weather),
         "loaded_defaults": defaults,
+        "loaded_crop_initials": initials,
+        "derived_default_initial_lai": default_lai,
         "agc_published": {
             "aFlr_m2": 96,
             "aRoof_opening_max_m2": 0.3 * 96,
@@ -91,9 +102,11 @@ def build(model: Path, weather: Path) -> dict:
             "heating pipe physical capacity versus boiler power and zero-valued pipe-temperature readings",
             "HPS/LED placement, electrical-to-radiative conversion, fixture heat partition, and LED realised photon output",
             "CO2 dosing area denominator and above-nominal processed-rate observations",
+            "crop biomass, LAI, carbohydrate buffer, fruit load, temperature sum, and canopy history at replay start",
         ],
         "interpretation": (
             "Published PAR coefficients are processing assumptions, not independent optical measurements. "
+            "A mid-season daily replay must not restart from GreenLight's default crop initials. "
             "The AGC paper does not establish that its second LED fixture set has GreenLight's interlighting geometry. "
             "The default parameter vector is not a validated AGC facility override."
         ),
