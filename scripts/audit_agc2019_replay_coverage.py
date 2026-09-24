@@ -10,14 +10,20 @@ import hashlib
 import json
 import math
 from pathlib import Path
+import sys
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from slowlab.agc_lighting import LED_FIELDS, LED_LEDGER_W_M2  # noqa: E402
 
 
 WEATHER = ("Tout", "Rhout", "Windsp", "Pyrgeo", "Iglob")
 ACTUATORS = ("VentLee", "Ventwind", "EnScr", "BlackScr", "AssimLight",
              "PipeLow", "PipeGrow")
-LED = ("int_blue_vip", "int_red_vip", "int_farred_vip", "int_white_vip")
-LED_PROCESSED_W_M2 = {"int_blue_vip": 7.27, "int_red_vip": 25.3,
-                      "int_farred_vip": 6.23, "int_white_vip": 22.72}
+LED = LED_FIELDS
+LED_PROCESSED_W_M2 = LED_LEDGER_W_M2
 OBSERVATIONS = ("Tair", "Rhair", "CO2air")
 EXCEL_EPOCH = date(1899, 12, 30)
 

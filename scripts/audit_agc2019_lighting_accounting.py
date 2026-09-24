@@ -21,11 +21,11 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from slowlab.agc_lighting import HPS_LEDGER_W_M2, LED_LEDGER_W_M2  # noqa: E402
 from slowlab.greenhouse_data import COMPARTMENTS, excel_datetime  # noqa: E402
 
-HPS_W_M2 = 81.0
-LED_W_M2 = {"int_blue_vip": 7.27, "int_red_vip": 25.3,
-             "int_farred_vip": 6.23, "int_white_vip": 22.72}
+HPS_W_M2 = HPS_LEDGER_W_M2
+LED_W_M2 = LED_LEDGER_W_M2
 
 
 def digest(path: Path) -> str:
