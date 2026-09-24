@@ -22,5 +22,26 @@
     "request_delay": "not yet identified",
     "instantaneous_changes_allowed": false
   },
+  "screens": {
+    "energy_observed_field": "EnScr",
+    "blackout_observed_field": "BlackScr",
+    "source_unit": "percent position, 0 to 100",
+    "working_polarity": "larger value means more closed",
+    "polarity_evidence": "Calibration-only internal check: when external PAR >100 and the other screen <10, high blackout position has much lower processed natural PAR than low position; high energy position reduces processed natural PAR from about 0.50 to about 0.38 of outdoor PAR. Tot_PAR is itself calculated using screen position, so this checks coding semantics, not independent optical transmission.",
+    "greenlight_closure_proxy": "observed percentage divided by 100; formal use still needs actual product optical/thermal properties"
+  },
+  "lighting": {
+    "hps_observed_field": "AssimLight",
+    "led_realised_fields": ["int_blue_vip", "int_red_vip", "int_farred_vip", "int_white_vip"],
+    "hardware_interlock": "LED lamps only powered when HPS lamps are on",
+    "blank_led_vip": "unknown unless physical HPS-off interlock applies; VIP is not measured photon output"
+  },
+  "co2_dosing": {
+    "processed_source_field": "co2_dos",
+    "readme_unit": "kg/ha/hour",
+    "calibration_accounting_hypothesis": "kg/m2/hour",
+    "evidence": "sum(co2_dos)/12 matches same-source daily CO2_cons kg/m2/day over 107 complete calibration days per compartment; this is not independent flow validation",
+    "physical_injection_capacity_g_m2_h": 15
+  },
   "interpretation": "Historical control rights and available observations are distinct from new benchmark capabilities; no unverified direct action is enabled."
 }
