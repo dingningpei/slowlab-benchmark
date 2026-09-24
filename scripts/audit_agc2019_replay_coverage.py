@@ -58,24 +58,30 @@ def classify(weather: list[tuple[float, dict[str, str]]],
              climate: list[tuple[float, dict[str, str]]]) -> dict:
     weather_times = [stamp for stamp, _ in weather]
     climate_times = [stamp for stamp, _ in climate]
-    aligned = (len(weather_times) == len(climate_times) == 288
+    aligned = (len(weather_times) == len(climate_times) == 289
                and weather_times == climate_times
                and all(0 < b - a <= 360 / 86400 + 1e-8
                        for a, b in zip(weather_times, weather_times[1:])))
     weather_bad = 0
+    weather_any_bad = False
     weather_bad_fields = {field: 0 for field in WEATHER}
-    for _, row in weather:
+    for row_index, (_, row) in enumerate(weather):
         values = {field: number(row, field) for field in WEATHER}
         invalid = {field for field, value in values.items()
                    if value is None or (field == "Rhout" and not 0 <= value <= 100)
                    or (field in ("Windsp", "Iglob") and value < 0)}
-        weather_bad += bool(invalid)
-        for field in invalid:
-            weather_bad_fields[field] += 1
+        weather_any_bad |= bool(invalid)
+        if row_index < 288:
+            weather_bad += bool(invalid)
+            for field in invalid:
+                weather_bad_fields[field] += 1
     actuator_bad = 0
+    actuator_any_bad = False
     actuator_bad_fields = {field: 0 for field in ACTUATORS}
     co2_bad = 0
+    co2_any_bad = False
     led_ambiguous = 0
+    led_any_ambiguous = False
     led_unknown_run = 0
     led_unknown_max_run = 0
     led_unknown_runs = 0
@@ -85,35 +91,43 @@ def classify(weather: list[tuple[float, dict[str, str]]],
     led_missing_while_hps_off = {field: 0 for field in LED}
     climate_observation_bad = 0
     observation_bad_fields = {field: 0 for field in OBSERVATIONS}
-    for _, row in climate:
+    for row_index, (_, row) in enumerate(climate):
+        core_row = row_index < 288
         actuators = {field: number(row, field) for field in ACTUATORS}
         invalid = {field for field, value in actuators.items()
                    if value is None or
                    (field in ("VentLee", "Ventwind", "EnScr", "BlackScr", "AssimLight")
                     and not 0 <= value <= 100) or
                    (field in ("PipeLow", "PipeGrow") and value < 0)}
-        actuator_bad += bool(invalid)
-        for field in invalid:
-            actuator_bad_fields[field] += 1
+        actuator_any_bad |= bool(invalid)
+        if core_row:
+            actuator_bad += bool(invalid)
+            for field in invalid:
+                actuator_bad_fields[field] += 1
         co2 = number(row, "co2_dos")
-        co2_bad += co2 is None or co2 < 0
+        bad_co2 = co2 is None or co2 < 0
+        co2_any_bad |= bad_co2
+        if core_row:
+            co2_bad += bad_co2
         hps = number(row, "AssimLight")
         led_values = {field: number(row, field) for field in LED}
         unknown = {field for field, value in led_values.items()
                    if value is None or not 0 <= value <= 1000}
         if hps is not None and hps > 0:
-            led_ambiguous += bool(unknown)
-            for field in unknown:
-                led_ambiguous_fields[field] += 1
-            for field, value in led_values.items():
-                if field in unknown:
-                    led_unknown_upper_energy_kwh_m2 += LED_PROCESSED_W_M2[field] / 12000
-                else:
-                    led_known_energy_kwh_m2 += LED_PROCESSED_W_M2[field] * value / 1000 / 12000
-        elif hps == 0:
+            led_any_ambiguous |= bool(unknown)
+            if core_row:
+                led_ambiguous += bool(unknown)
+                for field in unknown:
+                    led_ambiguous_fields[field] += 1
+                for field, value in led_values.items():
+                    if field in unknown:
+                        led_unknown_upper_energy_kwh_m2 += LED_PROCESSED_W_M2[field] / 12000
+                    else:
+                        led_known_energy_kwh_m2 += LED_PROCESSED_W_M2[field] * value / 1000 / 12000
+        elif hps == 0 and core_row:
             for field in unknown:
                 led_missing_while_hps_off[field] += 1
-        if hps is not None and hps > 0 and unknown:
+        if core_row and hps is not None and hps > 0 and unknown:
             if led_unknown_run == 0:
                 led_unknown_runs += 1
             led_unknown_run += 1
@@ -124,10 +138,12 @@ def classify(weather: list[tuple[float, dict[str, str]]],
         invalid = {field for field, value in outcomes.items()
                    if value is None or (field == "Rhair" and not 0 <= value <= 100)
                    or (field == "CO2air" and value < 0)}
-        climate_observation_bad += bool(invalid)
-        for field in invalid:
-            observation_bad_fields[field] += 1
-    eligible = (aligned and weather_bad == actuator_bad == co2_bad == led_ambiguous == 0)
+        if core_row:
+            climate_observation_bad += bool(invalid)
+            for field in invalid:
+                observation_bad_fields[field] += 1
+    eligible = (aligned and not weather_any_bad and not actuator_any_bad
+                and not co2_any_bad and not led_any_ambiguous)
     return {
         "weather_rows": len(weather), "climate_rows": len(climate),
         "exact_288_grid_alignment": aligned,
@@ -165,8 +181,20 @@ def audit(source: Path, manifest_path: Path) -> dict:
         if digest(path) != entry["source_sha256"]["GreenhouseClimate.csv"]:
             raise ValueError(f"climate hash differs from frozen manifest: {compartment}")
         climate = calibration_rows(path, start, stop)
-        details[compartment] = {day.isoformat(): classify(weather.get(day, []), climate.get(day, []))
-                                for day in days}
+        details[compartment] = {}
+        for day in days:
+            # GreenLight interpolation needs the next-midnight endpoint. The
+            # final calibration day remains ineligible because its endpoint is
+            # the first holdout record, whose values must not be inspected.
+            next_day = day + timedelta(days=1)
+            weather_day = list(weather.get(day, []))
+            climate_day = list(climate.get(day, []))
+            if next_day < stop:
+                if weather.get(next_day):
+                    weather_day.append(weather[next_day][0])
+                if climate.get(next_day):
+                    climate_day.append(climate[next_day][0])
+            details[compartment][day.isoformat()] = classify(weather_day, climate_day)
         summary[compartment] = {
             "calibration_days": len(days),
             "input_eligible_days": sum(item["input_eligible"] for item in details[compartment].values()),
@@ -196,7 +224,7 @@ def audit(source: Path, manifest_path: Path) -> dict:
         "source_archive_md5": manifest["source_archive_md5"],
         "manifest_sha256": digest(manifest_path),
         "calibration_start": start.isoformat(), "holdout_start": stop.isoformat(),
-        "eligibility_rule": "288 exactly aligned 5-minute weather/control rows; all required weather, observed actuator, processed CO2 dose, and LED VIP values while HPS is on must be present and in basic ranges. Climate outcome values and model errors are never used for input eligibility.",
+        "eligibility_rule": "289 exactly aligned 5-minute weather/control endpoints from day midnight through next midnight; all required weather, observed actuator, processed CO2 dose, and LED VIP values while HPS is on must be present and in basic ranges. The last calibration day is ineligible because its next-midnight endpoint belongs to holdout and is not inspected. Climate outcome values and model errors are never used for input eligibility.",
         "led_off_semantics": "Missing LED VIP while HPS is off is tracked as structural/non-required under the documented interlock; it is not imputed as a measured zero.",
         "led_energy_caveat": "Energy bounds use official ReadMe's processed W/m2 coefficients and five-minute sampling, not an independent meter or photon/heat measurement. Unknown VIP values are bounded 0..1000 only while HPS is on. Entirely missing source rows are not included.",
         "summary": summary, "daily": details,

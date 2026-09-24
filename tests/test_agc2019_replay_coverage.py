@@ -6,7 +6,7 @@ from scripts.audit_agc2019_replay_coverage import classify
 def complete_day():
     weather = []
     climate = []
-    for index in range(288):
+    for index in range(289):
         time = 43815 + index / 288
         weather.append((time, {"Tout": "8", "Rhout": "80", "Windsp": "2",
                                "Pyrgeo": "-70", "Iglob": "0"}))
