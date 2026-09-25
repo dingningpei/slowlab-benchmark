@@ -1,0 +1,232 @@
+{
+  "candidate_id": "floor-normalized-lighting-v5-cdgh-0.15",
+  "protocol_id": "agc2019-pipe-state-feedforward-v7",
+  "status": "pooled gate passed, strict per-compartment calibration gate failed; holdout remains unopened",
+  "sequence_count": 21,
+  "sample_count": 1200,
+  "gates": {
+    "tAir": 2.04,
+    "rhIn": 8.5,
+    "co2InPpm": 361.0
+  },
+  "per_group": {
+    "AICU": {
+      "samples": 144,
+      "sequence_count": 3,
+      "solver_completion_fraction": 1.0,
+      "sampled_physical_violations": 0,
+      "bias": {
+        "tAir": 0.08390637324780661,
+        "rhIn": -0.43628215419400107,
+        "co2InPpm": 182.76734098418495
+      },
+      "mae": {
+        "tAir": 1.0514332881581672,
+        "rhIn": 2.490940383195359,
+        "co2InPpm": 219.272377965607
+      },
+      "rmse": {
+        "tAir": 1.3896364088144564,
+        "rhIn": 3.3917997340462964,
+        "co2InPpm": 346.6062995383669
+      },
+      "hourly_change_rmse": {
+        "tAir": 0.9436728094479532,
+        "rhIn": 3.4494370476625558,
+        "co2InPpm": 129.07037268549823
+      },
+      "passes_all_gates": true
+    },
+    "Automatoes": {
+      "samples": 192,
+      "sequence_count": 4,
+      "solver_completion_fraction": 1.0,
+      "sampled_physical_violations": 0,
+      "bias": {
+        "tAir": -1.7205876467748442,
+        "rhIn": -0.34355933494497126,
+        "co2InPpm": 124.49640794402012
+      },
+      "mae": {
+        "tAir": 1.9196674550639863,
+        "rhIn": 3.242668911430606,
+        "co2InPpm": 193.43527025413934
+      },
+      "rmse": {
+        "tAir": 2.251605429811943,
+        "rhIn": 4.053190896720292,
+        "co2InPpm": 329.6961936746027
+      },
+      "hourly_change_rmse": {
+        "tAir": 1.1831065195031476,
+        "rhIn": 2.9896880737126175,
+        "co2InPpm": 141.43523434376218
+      },
+      "passes_all_gates": false
+    },
+    "Digilog": {
+      "samples": 192,
+      "sequence_count": 3,
+      "solver_completion_fraction": 1.0,
+      "sampled_physical_violations": 0,
+      "bias": {
+        "tAir": -1.3223358810516814,
+        "rhIn": 3.21634416419704,
+        "co2InPpm": 103.70757119869585
+      },
+      "mae": {
+        "tAir": 1.6869437726770886,
+        "rhIn": 4.560851197268071,
+        "co2InPpm": 140.98075912279714
+      },
+      "rmse": {
+        "tAir": 2.199965012578593,
+        "rhIn": 6.02346714789288,
+        "co2InPpm": 220.74226694590593
+      },
+      "hourly_change_rmse": {
+        "tAir": 1.099567984932577,
+        "rhIn": 3.743187678288498,
+        "co2InPpm": 81.49478126866575
+      },
+      "passes_all_gates": false
+    },
+    "IUACAAS": {
+      "samples": 192,
+      "sequence_count": 3,
+      "solver_completion_fraction": 1.0,
+      "sampled_physical_violations": 0,
+      "bias": {
+        "tAir": -1.7004482707254056,
+        "rhIn": -2.0379852806935514,
+        "co2InPpm": -61.09747362339351
+      },
+      "mae": {
+        "tAir": 2.0340241212092915,
+        "rhIn": 3.8904296739076507,
+        "co2InPpm": 111.30256490007586
+      },
+      "rmse": {
+        "tAir": 2.4167881648851677,
+        "rhIn": 4.908913787645408,
+        "co2InPpm": 134.2154696807459
+      },
+      "hourly_change_rmse": {
+        "tAir": 1.0458558766098054,
+        "rhIn": 4.514967518753828,
+        "co2InPpm": 58.31891824555094
+      },
+      "passes_all_gates": false
+    },
+    "Reference": {
+      "samples": 264,
+      "sequence_count": 4,
+      "solver_completion_fraction": 1.0,
+      "sampled_physical_violations": 0,
+      "bias": {
+        "tAir": -1.1241279314911905,
+        "rhIn": -2.747314753046885,
+        "co2InPpm": 75.57743494941816
+      },
+      "mae": {
+        "tAir": 1.7404478179149443,
+        "rhIn": 3.9926347870782903,
+        "co2InPpm": 141.1134702675957
+      },
+      "rmse": {
+        "tAir": 2.063564904919702,
+        "rhIn": 4.905634207653573,
+        "co2InPpm": 224.59336501145984
+      },
+      "hourly_change_rmse": {
+        "tAir": 1.181869861554477,
+        "rhIn": 3.0736975924310075,
+        "co2InPpm": 129.07223951357741
+      },
+      "passes_all_gates": false
+    },
+    "TheAutomators": {
+      "samples": 216,
+      "sequence_count": 4,
+      "solver_completion_fraction": 1.0,
+      "sampled_physical_violations": 0,
+      "bias": {
+        "tAir": -0.22673500621100967,
+        "rhIn": 0.08036512974776706,
+        "co2InPpm": 132.48242573971655
+      },
+      "mae": {
+        "tAir": 1.2811912984447504,
+        "rhIn": 3.041372188661254,
+        "co2InPpm": 176.84497777319746
+      },
+      "rmse": {
+        "tAir": 1.5854028053402527,
+        "rhIn": 3.9940399170001917,
+        "co2InPpm": 251.28568907649836
+      },
+      "hourly_change_rmse": {
+        "tAir": 0.9313755170495689,
+        "rhIn": 2.9489338949060153,
+        "co2InPpm": 138.9485522025383
+      },
+      "passes_all_gates": true
+    },
+    "pooled": {
+      "samples": 1200,
+      "sequence_count": 21,
+      "solver_completion_fraction": 1.0,
+      "sampled_physical_violations": 0,
+      "bias": {
+        "tAir": -1.0369911690246159,
+        "rhIn": -0.508729453049634,
+        "co2InPpm": 89.14299412321476
+      },
+      "mae": {
+        "tAir": 1.6421866040723816,
+        "rhIn": 3.595771458316705,
+        "co2InPpm": 160.5047198982414
+      },
+      "rmse": {
+        "tAir": 2.0349587744732447,
+        "rhIn": 4.672854209425277,
+        "co2InPpm": 254.85306282253353
+      },
+      "hourly_change_rmse": {
+        "tAir": 1.078366812052215,
+        "rhIn": 3.465446427214369,
+        "co2InPpm": 118.056925494504
+      },
+      "passes_all_gates": true
+    }
+  },
+  "capacity_audit": {
+    "maximum_implied_active_rail_pipe_demand_w_m2": 117.99,
+    "maximum_implied_active_grow_pipe_demand_w_m2": 29.296,
+    "maximum_bounded_rail_tracking_input_w_m2": 180.0,
+    "maximum_bounded_grow_tracking_input_w_m2": 30.0,
+    "published_rail_limit_w_m2": 180.0,
+    "published_grow_limit_w_m2": 30.0,
+    "passes": true
+  },
+  "active_internal_pipe_tracking": {
+    "rail_bias_c": -0.306,
+    "rail_rmse_c": 2.186,
+    "grow_bias_c": -0.864,
+    "grow_rmse_c": 3.326
+  },
+  "decision": {
+    "pooled_gate": "pass",
+    "strict_every_compartment_gate": "fail",
+    "failing_temperature_compartments": [
+      "Automatoes",
+      "Digilog",
+      "IUACAAS",
+      "Reference"
+    ],
+    "holdout_access": "prohibited",
+    "next_step": "Stop outcome-driven scalar tuning. Resolve missing compartment geometry, thermal mass, ventilation mapping, screen properties, and crop initial state from independent evidence, or narrow the validation claim."
+  },
+  "claim_boundary": "The pooled result supports only a calibration-period, observed-action climate-replay result at the published GreenLight error scale. It does not establish per-compartment validation, holdout validity, or counterfactual actuator fidelity.",
+  "result_sha256": "70e964902ac8377ea9aece78f2ed923430d0658ef8ffd24f8ed4cf4f5758a205"
+}
