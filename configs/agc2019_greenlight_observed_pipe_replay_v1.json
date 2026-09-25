@@ -1,0 +1,134 @@
+{
+  "Info": {
+    "About": "Condition AGC historical replay on observed positive process pipe temperatures",
+    "Status": "trajectory-replay boundary condition with bounded loss-compensated state continuity; not a counterfactual actuator model",
+    "Semantics": "PipeLow and PipeGrow are raw process temperatures distinct from *_min_sp/vip setpoints. Positive values drive heat exchange directly; zero/off codes retain the dynamic pipe state.",
+    "State continuity correction": "During active replay, internal pipe-state input includes the implied heat loss plus proportional tracking; this prevents an artificially cold state at transition to off-coded intervals."
+  },
+  "Observed pipe replay temperatures": {
+    "tPipeReplay": {
+      "unit": "\u00b0C",
+      "type": "aux",
+      "definition": "ifElse(pipeLowActive, pipeLowObserved, tPipe)",
+      "description": "Observed rail-pipe process temperature when active; propagated state otherwise"
+    },
+    "tGroPipeReplay": {
+      "unit": "\u00b0C",
+      "type": "aux",
+      "definition": "ifElse(pipeGrowActive, pipeGrowObserved, tGroPipe)",
+      "description": "Observed grow-pipe process temperature when active; propagated state otherwise"
+    }
+  },
+  "Internal pipe state tracking": {
+    "hBoilPipe": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "pipeLowActive * min(railPipePeak, max(0, hObservedRailPipeDemand + capPipe/railTrackTau * (pipeLowObserved-tPipe)))",
+      "description": "Capacity-bounded heat-loss feed-forward plus proportional tracking, used only for internal-state continuity into off-coded intervals"
+    },
+    "hBoilGroPipe": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "pipeGrowActive * min(growPipePeak, max(0, hObservedGrowPipeDemand + capGroPipe/growTrackTau * (pipeGrowObserved-tGroPipe)))",
+      "description": "Capacity-bounded heat-loss feed-forward plus proportional tracking, used only for internal-state continuity into off-coded intervals"
+    },
+    "railPipePeak": {
+      "unit": "W m**-2",
+      "type": "const",
+      "definition": "180"
+    },
+    "growPipePeak": {
+      "unit": "W m**-2",
+      "type": "const",
+      "definition": "30"
+    },
+    "railTrackTau": {
+      "unit": "s",
+      "type": "const",
+      "definition": "300"
+    },
+    "growTrackTau": {
+      "unit": "s",
+      "type": "const",
+      "definition": "300"
+    }
+  },
+  "Observed rail-pipe heat exchange": {
+    "rPipeCovIn": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "fir(aPipe, epsPipe, epsCovFir, tauIntLampFir * tauLampFir * tauThScrFirU * tauBlScrFirU * 0.49 * exp(-kFir * lai), tPipeReplay, tCovIn)"
+    },
+    "rPipeSky": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "fir(aPipe, epsPipe, epsSky, tauIntLampFir * tauLampFir * tauCovFir * tauThScrFirU * tauBlScrFirU * 0.49 * exp(-kFir * lai), tPipeReplay, tSky)"
+    },
+    "rPipeThScr": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "fir(aPipe, epsPipe, epsThScrFir, tauIntLampFir * tauLampFir * uThScr * tauBlScrFirU * 0.49 * exp(-kFir * lai), tPipeReplay, tThScr)"
+    },
+    "rPipeBlScr": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "fir(aPipe, epsPipe, epsBlScrFir, tauIntLampFir * tauLampFir * uBlScr * 0.49 * exp(-kFir * lai), tPipeReplay, tBlScr)"
+    },
+    "rPipeFlr": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "fir(aPipe, epsPipe, epsFlr, 0.49, tPipeReplay, tFlr)"
+    },
+    "rPipeCan": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "fir(aPipe, epsPipe, epsCan, 0.49*(1-exp(-kFir*lai)), tPipeReplay, tCan)"
+    },
+    "hPipeAir": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "sensible(1.99 * pi * phiPipeE * lPipe * (abs(tPipeReplay - tAir))**0.32, tPipeReplay, tAir)"
+    },
+    "rLampPipe": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "fir(aLamp, epsLampBottom, epsPipe, tauIntLampFir * 0.49 * pi * lPipe * phiPipeE * exp(-kFir * lai), tLamp, tPipeReplay)"
+    },
+    "rIntLampPipe": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "fir(aIntLamp, epsIntLamp, epsPipe, 0.49 * pi * lPipe * phiPipeE * (1-fIntLampCanDown), tIntLamp, tPipeReplay)"
+    },
+    "rLedPipe": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "fir(aLed,epsLedBottom,epsPipe,tauIntLampFir*0.49*pi*lPipe*phiPipeE*exp(-kFir*lai),tLed,tPipeReplay)"
+    }
+  },
+  "Observed grow-pipe heat exchange": {
+    "rGroPipeCan": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "fir(aGroPipe, epsGroPipe, epsCan, 1, tGroPipeReplay, tCan)"
+    },
+    "hGroPipeAir": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "sensible(1.99 * pi * phiGroPipeE * lGroPipe * (abs(tGroPipeReplay - tAir))**0.32, tGroPipeReplay, tAir)"
+    }
+  },
+  "Observed replay capacity audit": {
+    "hObservedRailPipeDemand": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "rPipeSky + rPipeCovIn + rPipeCan + rPipeFlr + rPipeThScr + hPipeAir + rPipeBlScr - rLampPipe - rIntLampPipe - rLedPipe",
+      "description": "Implied rail-pipe heat needed to sustain the observed process temperature; compare with railPipePeak"
+    },
+    "hObservedGrowPipeDemand": {
+      "unit": "W m**-2",
+      "type": "aux",
+      "definition": "rGroPipeCan + hGroPipeAir",
+      "description": "Implied grow-pipe heat needed to sustain the observed process temperature; compare with growPipePeak"
+    }
+  }
+}
