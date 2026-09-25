@@ -72,8 +72,14 @@ def source_day_rows(path: Path, day: date) -> list[dict[str, str]]:
 def build(source: Path, weather: Path, manifest_path: Path,
           compartment: str, day: date, out: Path, *, period: str = "calibration") -> dict:
     manifest = json.loads(manifest_path.read_text())
-    calibration_start=date.fromisoformat(manifest["calibration_start"]); holdout_start=date.fromisoformat(manifest["holdout_start"]); source_end=date.fromisoformat(manifest["root_observation_end_exclusive_source_clock"][:10])
-    allowed = (calibration_start <= day < holdout_start if period == "calibration" else holdout_start <= day < source_end if period == "holdout" else False)
+    calibration_start=date.fromisoformat(manifest["calibration_start"]); holdout_start=date.fromisoformat(manifest["holdout_start"])
+    if period == "calibration":
+        allowed = calibration_start <= day < holdout_start
+    elif period == "holdout":
+        source_end=date.fromisoformat(manifest["root_observation_end_exclusive_source_clock"][:10])
+        allowed = holdout_start <= day < source_end
+    else:
+        allowed = False
     if not allowed:
         raise ValueError(f"control export day outside explicit {period} period")
     if compartment not in manifest["compartments"]:
