@@ -1,0 +1,82 @@
+{
+  "candidate_id": "observed-pipe-capacity-v3-cdgh-0.20",
+  "decision": "Do not access holdout. Retain the independently fixed 0.8 lighting area conversion, restore calibration of cDgh under that corrected heat load, and scale lGroPipe downward using capacity only.",
+  "gates": {
+    "co2InPpm": 361.0,
+    "rhIn": 8.5,
+    "tAir": 2.04
+  },
+  "lighting_extension": "configs/agc2019_greenlight_overhead_led_extension_v1.json",
+  "maximum_implied_demands_w_m2": {
+    "grow": 30.395001304494297,
+    "rail": 118.22322015394975
+  },
+  "per_group": {
+    "AICU": {
+      "passes_all_gates": true,
+      "rmse": {
+        "co2InPpm": 301.0502834300648,
+        "rhIn": 3.3871900196960705,
+        "tAir": 1.3748488160459866
+      }
+    },
+    "Automatoes": {
+      "passes_all_gates": false,
+      "rmse": {
+        "co2InPpm": 303.6287182722295,
+        "rhIn": 4.1536123912526275,
+        "tAir": 2.550407821052482
+      }
+    },
+    "Digilog": {
+      "passes_all_gates": false,
+      "rmse": {
+        "co2InPpm": 196.15332221094434,
+        "rhIn": 5.908410923350379,
+        "tAir": 2.4251994721787415
+      }
+    },
+    "IUACAAS": {
+      "passes_all_gates": false,
+      "rmse": {
+        "co2InPpm": 149.51914286348327,
+        "rhIn": 5.048552577670382,
+        "tAir": 2.7817174418964923
+      }
+    },
+    "Reference": {
+      "passes_all_gates": false,
+      "rmse": {
+        "co2InPpm": 212.22430330438064,
+        "rhIn": 5.00136917559302,
+        "tAir": 2.300750668322935
+      }
+    },
+    "TheAutomators": {
+      "passes_all_gates": true,
+      "rmse": {
+        "co2InPpm": 232.70654636707232,
+        "rhIn": 3.954442783926075,
+        "tAir": 1.7307431414917844
+      }
+    },
+    "pooled": {
+      "passes_all_gates": false,
+      "rmse": {
+        "co2InPpm": 234.55359136518632,
+        "rhIn": 4.703031184712802,
+        "tAir": 2.2694558277027634
+      }
+    }
+  },
+  "physical_violations": {
+    "co2InPpm": 0,
+    "rhIn": 0,
+    "tAir": 0
+  },
+  "result_sha256": "cad83001b2f037551d6d0d6e0c64e450ea820dbaf6d59b6da854485c571f03d5",
+  "sample_count": 1200,
+  "sequence_count": 21,
+  "solver_completion_fraction": 1.0,
+  "status": "failed frozen full-calibration gate and grow-pipe capacity eligibility; holdout remains unopened"
+}
