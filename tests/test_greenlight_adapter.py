@@ -6,6 +6,7 @@ import pytest
 
 from slowlab.greenlight_adapter import (
     assert_greenlight_solution_complete,
+    greenlight_boundary_temperature_override,
     greenlight_canopy_water_demand,
     greenlight_initial_climate_override,
     integrate_canopy_water_demand,
@@ -23,6 +24,20 @@ def test_observed_climate_initials_use_greenlight_state_units():
     assert (8.3144598e6 * (temp + 273.15) * 1e-6 * co2_density
             / (101325 * 44.01e-3)) == pytest.approx(569)
 
+
+
+def test_boundary_temperature_initials_follow_observed_entry_conditions():
+    state = greenlight_boundary_temperature_override(20.0, 8.0)
+    for name in ("tCan", "tTop", "tThScr", "tBlScr", "tFlr", "tLamp", "tIntLamp", "tLed"):
+        assert float(state[name]["init"]) == 20.0
+    assert float(state["tCovE"]["init"]) == 8.0
+    assert float(state["tCovIn"]["init"]) == 14.0
+    assert not any(name.startswith("tSo") for name in state)
+
+
+def test_boundary_temperature_initials_reject_nonfinite_values():
+    with pytest.raises(ValueError, match="finite"):
+        greenlight_boundary_temperature_override(20.0, math.nan)
 
 def test_unphysical_observed_climate_cannot_initialize_greenlight():
     with pytest.raises(ValueError, match="physical ranges"):

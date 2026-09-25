@@ -13,7 +13,8 @@ ROOT=Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path: sys.path.insert(0,str(ROOT))
 from scripts.audit_agc2019_climate_replay import error_metrics, interpolate  # noqa: E402
 from slowlab.greenlight_adapter import (assert_greenlight_solution_complete,
-    greenlight_initial_climate_override, greenlight_initial_pipe_override)  # noqa: E402
+    greenlight_boundary_temperature_override, greenlight_initial_climate_override,
+    greenlight_initial_pipe_override)  # noqa: E402
 
 
 def first_numeric_row(path: Path) -> dict[str,str]:
@@ -93,13 +94,16 @@ def run_one(record: dict, candidate: dict, observations_root: Path, definitions:
     obs_path=observations_root/record["compartment"]/("climate_observations.csv")
     observed=observed_start(obs_path,start_day.isoformat()+"T00:00:00")
     control=Path(record["controls"]["path"]); first=first_numeric_row(control)
+    weather=Path(record["weather"]["path"]); first_weather=first_numeric_row(weather)
     initials=greenlight_initial_climate_override(observed["air_temperature_c"],observed["relative_humidity_pct"],observed["co2_ppm"])
+    initials.update(greenlight_boundary_temperature_override(
+        observed["air_temperature_c"], float(first_weather["tOut"])))
     initials.update(greenlight_initial_pipe_override(observed["air_temperature_c"],float(first["pipeLowObserved"]),float(first["pipeGrowObserved"])))
     initials["cLeaf"]={"init":repr(float(candidate["initial_lai"])/float(candidate["sla_m2_per_mg_ch2o"]))}
     params={**candidate["facility_parameters"],**candidate["calibration_parameters"]}
     override={"Parameters":{"AGC calibration candidate":{k:{"type":"const","definition":repr(float(v))} for k,v in params.items()}},"Initial state":initials,"options":{"t_end":repr(days*86400),"solver":candidate["solver"]}}
     safe=record["sequence_id"].replace(":","_"); output=out_dir/f"{safe}.csv";output.parent.mkdir(parents=True,exist_ok=True)
-    sim=GreenLight(base_path=str(definitions.resolve()),input_prompt=[str((definitions/'main_katzin_2021.json').resolve()),str((definitions/'lamp_hps_katzin_2020.json').resolve()),str(led_extension.resolve()),str(pipe_extension.resolve()),str(Path(record["weather"]["path"]).resolve()),str(Path(record["controls"]["path"]).resolve()),override],output_path=str(output))
+    sim=GreenLight(base_path=str(definitions.resolve()),input_prompt=[str((definitions/'main_katzin_2021.json').resolve()),str((definitions/'lamp_hps_katzin_2020.json').resolve()),str(led_extension.resolve()),str(pipe_extension.resolve()),str(weather.resolve()),str(Path(record["controls"]["path"]).resolve()),override],output_path=str(output))
     with open(os.devnull,"w") as sink,contextlib.redirect_stdout(sink):sim.run()
     assert_greenlight_solution_complete(sim.states_sol,days*86400)
     metrics=sequence_metrics(output,obs_path,start_day,days)

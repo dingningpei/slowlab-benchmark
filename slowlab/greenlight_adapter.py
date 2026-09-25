@@ -48,6 +48,35 @@ def greenlight_initial_climate_override(
     }
 
 
+def greenlight_boundary_temperature_override(
+    indoor_air_temperature_c: float, outdoor_air_temperature_c: float
+) -> dict[str, dict[str, str]]:
+    """Initialize fast thermal states from observed entry boundaries.
+
+    Short historical replay segments cannot inherit latent thermal states from
+    an earlier simulation.  Indoor-adjacent states therefore start at the
+    observed indoor-air temperature, the exterior cover starts at observed
+    outdoor air, and the interior cover starts at their midpoint.  Soil and
+    crop-carbon states are intentionally not inferred here.
+    """
+    indoor = float(indoor_air_temperature_c)
+    outdoor = float(outdoor_air_temperature_c)
+    if not math.isfinite(indoor) or not math.isfinite(outdoor):
+        raise ValueError("boundary temperatures must be finite")
+    if indoor <= -100 or outdoor <= -100:
+        raise ValueError("boundary temperatures are outside physical ranges")
+    result = {
+        name: {"init": repr(indoor)}
+        for name in (
+            "tCan", "tTop", "tThScr", "tBlScr", "tFlr", "tLamp",
+            "tIntLamp", "tLed",
+        )
+    }
+    result["tCovE"] = {"init": repr(outdoor)}
+    result["tCovIn"] = {"init": repr(0.5 * (indoor + outdoor))}
+    return result
+
+
 def assert_greenlight_solution_complete(solution: object, expected_end_seconds: float) -> None:
     """Fail closed on GreenLight's partial solve_ivp result.
 
