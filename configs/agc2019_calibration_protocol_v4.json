@@ -1,0 +1,28 @@
+{
+  "protocol_id": "agc2019-floor-normalized-lighting-v4",
+  "status": "frozen before v4 trajectory outcomes",
+  "holdout_start": "2020-04-01",
+  "holdout_policy": "No outcome or trajectory at or after holdout_start may be read until one final candidate passes the full calibration gate and is frozen.",
+  "predecessor_result": "v3 failed the full calibration temperature gate; pooled 2.145 C versus 2.04 C, with every compartment above 2.04 C.",
+  "source_correction": {
+    "paper_floor_area_m2": 96.0,
+    "paper_crop_growing_area_m2": 76.8,
+    "fixed_growing_to_floor_area_ratio": 0.8,
+    "application": [
+      "HPS electrical input to floor-normalized GreenLight balance",
+      "LED electrical input to floor-normalized GreenLight balance",
+      "LED photon input to floor-normalized GreenLight balance"
+    ],
+    "reason": "Published light capacity and official electricity coefficients are consistent with crop-growing-area normalization, while GreenLight balances are normalized by greenhouse floor area.",
+    "selection": "fixed from published geometry; no lighting scale is selected using climate RMSE."
+  },
+  "candidate": "Reuse the frozen v3 cDgh=0.20, lPipe=1.3375, lGroPipe=0.57 candidate without refitting.",
+  "calibration_check": "Run the same 21 pre-holdout continuous sequences and apply configs/agc2019_climate_validation_gate_v0.json pooled and to every compartment.",
+  "eligibility": {
+    "solver_completion_fraction": 1.0,
+    "sampled_physical_violations": 0,
+    "maximum_implied_active_rail_pipe_demand_w_m2": 180.0,
+    "maximum_implied_active_grow_pipe_demand_w_m2": 30.0
+  },
+  "outcome_rule": "If the complete calibration gate fails, do not read holdout and do not tune the 0.8 source ratio."
+}
