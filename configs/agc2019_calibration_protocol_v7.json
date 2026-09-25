@@ -1,0 +1,26 @@
+{
+  "protocol_id": "agc2019-pipe-state-feedforward-v7",
+  "status": "frozen before v7 trajectory outcomes",
+  "holdout_start": "2020-04-01",
+  "holdout_policy": "No outcome or trajectory at or after holdout_start may be read until the full calibration gate passes and a final candidate is frozen.",
+  "predecessor_result": "v6 pooled temperature RMSE was 2.049 C and four compartments failed; errors were concentrated at night and while lights were off.",
+  "candidate": "Reuse the frozen v5 physical parameters, v1 floor-normalized lighting, and v6 boundary initialization without refitting.",
+  "fixed_pipe_state_correction": {
+    "active_replay": "Observed positive process pipe temperatures continue to determine all active heat exchange.",
+    "internal_tracking": "For state continuity, bounded boiler input equals the observed-temperature heat-loss demand plus the existing proportional correction.",
+    "rail_definition": "pipeLowActive * min(180, max(0, hObservedRailPipeDemand + capPipe/railTrackTau*(pipeLowObserved-tPipe)))",
+    "grow_definition": "pipeGrowActive * min(30, max(0, hObservedGrowPipeDemand + capGroPipe/growTrackTau*(pipeGrowObserved-tGroPipe)))",
+    "off_intervals": "Boiler input remains zero and replay uses the propagated internal pipe state.",
+    "selection": "No coefficient is selected from climate outcomes; existing 300 s tracking constants and published capacity limits remain fixed."
+  },
+  "calibration_check": "Run the same 21 pre-holdout sequences and apply the frozen gate pooled and to every compartment.",
+  "eligibility": {
+    "solver_completion_fraction": 1.0,
+    "sampled_physical_violations": 0,
+    "maximum_implied_active_rail_pipe_demand_w_m2": 180.0,
+    "maximum_implied_active_grow_pipe_demand_w_m2": 30.0,
+    "maximum_bounded_rail_tracking_input_w_m2": 180.0,
+    "maximum_bounded_grow_tracking_input_w_m2": 30.0
+  },
+  "outcome_rule": "If the full calibration gate fails, do not access holdout and do not tune the feed-forward term."
+}

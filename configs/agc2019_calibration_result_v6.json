@@ -1,0 +1,134 @@
+{
+  "candidate_id": "floor-normalized-lighting-v5-cdgh-0.15",
+  "gates": {
+    "co2InPpm": 361.0,
+    "rhIn": 8.5,
+    "tAir": 2.04
+  },
+  "implementation_diagnosis": "The proportional internal pipe tracker omitted feed-forward heat loss. It therefore equilibrated below the observed active pipe temperature and handed an artificially cold state to off-coded intervals.",
+  "maximum_implied_demands_w_m2": {
+    "grow": 29.298887981575383,
+    "rail": 117.95945954990425
+  },
+  "next_step_boundary": "Do not access holdout. Add only the missing heat-loss feed-forward to bounded internal pipe-state tracking.",
+  "per_group": {
+    "AICU": {
+      "bias": {
+        "co2InPpm": 182.84925274638374,
+        "rhIn": -0.4019192890176342,
+        "tAir": 0.049907650548559834
+      },
+      "passes_all_gates": true,
+      "rmse": {
+        "co2InPpm": 346.76565981614175,
+        "rhIn": 3.3905601384896835,
+        "tAir": 1.3812549995294932
+      }
+    },
+    "Automatoes": {
+      "bias": {
+        "co2InPpm": 124.60348914369467,
+        "rhIn": -0.3148692235475039,
+        "tAir": -1.748059238573952
+      },
+      "passes_all_gates": false,
+      "rmse": {
+        "co2InPpm": 329.7883465485938,
+        "rhIn": 4.059037052792697,
+        "tAir": 2.268948149140312
+      }
+    },
+    "Digilog": {
+      "bias": {
+        "co2InPpm": 103.72721108385848,
+        "rhIn": 3.221947721386023,
+        "tAir": -1.3291070081935101
+      },
+      "passes_all_gates": false,
+      "rmse": {
+        "co2InPpm": 220.7637899258322,
+        "rhIn": 6.023087186916131,
+        "tAir": 2.2013114455926814
+      }
+    },
+    "IUACAAS": {
+      "bias": {
+        "co2InPpm": -60.99318902056618,
+        "rhIn": -1.9799449340294413,
+        "tAir": -1.7445328304383887
+      },
+      "passes_all_gates": false,
+      "rmse": {
+        "co2InPpm": 134.18583590188237,
+        "rhIn": 4.902256064282194,
+        "tAir": 2.4525557518986982
+      }
+    },
+    "Reference": {
+      "bias": {
+        "co2InPpm": 75.6158545574781,
+        "rhIn": -2.715477246495662,
+        "tAir": -1.1372927133439645
+      },
+      "passes_all_gates": false,
+      "rmse": {
+        "co2InPpm": 224.59378245718347,
+        "rhIn": 4.893005666529374,
+        "tAir": 2.0751411930728465
+      }
+    },
+    "TheAutomators": {
+      "bias": {
+        "co2InPpm": 132.55525854550538,
+        "rhIn": 0.09034562327776847,
+        "tAir": -0.23688046902040974
+      },
+      "passes_all_gates": true,
+      "rmse": {
+        "co2InPpm": 251.34825457571745,
+        "rhIn": 4.007346954197196,
+        "tAir": 1.5968387242930073
+      }
+    },
+    "pooled": {
+      "bias": {
+        "co2InPpm": 89.21134666352012,
+        "rhIn": -0.481031726511711,
+        "tAir": -1.058325815646455
+      },
+      "passes_all_gates": false,
+      "rmse": {
+        "co2InPpm": 254.90982033339662,
+        "rhIn": 4.671499134995356,
+        "tAir": 2.048589652074228
+      }
+    }
+  },
+  "residual_diagnosis": {
+    "active_internal_pipe_tracking": {
+      "grow_bias_c": -2.019,
+      "grow_rmse_c": 3.668,
+      "rail_bias_c": -1.435,
+      "rail_rmse_c": 2.563
+    },
+    "day": {
+      "n": 448,
+      "tAir_bias_c": -0.111,
+      "tAir_rmse_c": 1.748
+    },
+    "lights_off": {
+      "n": 332,
+      "tAir_bias_c": -2.153,
+      "tAir_rmse_c": 2.572
+    },
+    "night": {
+      "n": 752,
+      "tAir_bias_c": -1.623,
+      "tAir_rmse_c": 2.208
+    }
+  },
+  "result_sha256": "0297662f656902ba0752477eb1497aa6a3aabd401218fcdc59775fca0f639c0a",
+  "sample_count": 1200,
+  "sequence_count": 21,
+  "status": "failed frozen full-calibration temperature gate; holdout remains unopened"
+}
