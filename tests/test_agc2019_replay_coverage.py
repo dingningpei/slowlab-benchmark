@@ -50,3 +50,13 @@ def test_longest_complete_run_does_not_bridge_missing_days():
         "2020-01-26", "2020-03-05", "2020-03-06", "2020-03-07", "2020-03-08",
         "2020-03-14",
     ]) == 4
+
+
+def test_holdout_input_mode_does_not_access_outcomes():
+    weather, climate = complete_day()
+    for row in climate:
+        row[1].pop("Tair"); row[1].pop("Rhair"); row[1].pop("CO2air")
+    result=classify(weather,climate,inspect_observations=False)
+    assert result["input_eligible"]
+    assert result["climate_observation_audit_skipped"]
+    assert result["climate_observation_invalid_rows_not_used_for_input_eligibility"] is None

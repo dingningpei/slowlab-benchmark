@@ -73,7 +73,8 @@ def longest_consecutive_run(day_texts: list[str]) -> int:
 
 
 def classify(weather: list[tuple[float, dict[str, str]]],
-             climate: list[tuple[float, dict[str, str]]]) -> dict:
+             climate: list[tuple[float, dict[str, str]]], *,
+             inspect_observations: bool = True) -> dict:
     weather_times = [stamp for stamp, _ in weather]
     climate_times = [stamp for stamp, _ in climate]
     aligned = (len(weather_times) == len(climate_times) == 289
@@ -152,14 +153,15 @@ def classify(weather: list[tuple[float, dict[str, str]]],
             led_unknown_max_run = max(led_unknown_max_run, led_unknown_run)
         else:
             led_unknown_run = 0
-        outcomes = {field: number(row, field) for field in OBSERVATIONS}
-        invalid = {field for field, value in outcomes.items()
-                   if value is None or (field == "Rhair" and not 0 <= value <= 100)
-                   or (field == "CO2air" and value < 0)}
-        if core_row:
-            climate_observation_bad += bool(invalid)
-            for field in invalid:
-                observation_bad_fields[field] += 1
+        if inspect_observations:
+            outcomes = {field: number(row, field) for field in OBSERVATIONS}
+            invalid = {field for field, value in outcomes.items()
+                       if value is None or (field == "Rhair" and not 0 <= value <= 100)
+                       or (field == "CO2air" and value < 0)}
+            if core_row:
+                climate_observation_bad += bool(invalid)
+                for field in invalid:
+                    observation_bad_fields[field] += 1
     eligible = (aligned and not weather_any_bad and not actuator_any_bad
                 and not co2_any_bad and not led_any_ambiguous)
     return {
@@ -177,8 +179,9 @@ def classify(weather: list[tuple[float, dict[str, str]]],
         "led_unknown_processing_energy_upper_kwh_m2": led_unknown_upper_energy_kwh_m2,
         "led_unknown_while_hps_on_by_field": led_ambiguous_fields,
         "led_missing_while_hps_off_by_field": led_missing_while_hps_off,
-        "climate_observation_invalid_rows_not_used_for_input_eligibility": climate_observation_bad,
-        "climate_observation_invalid_by_field_not_used_for_input_eligibility": observation_bad_fields,
+        "climate_observation_audit_skipped": not inspect_observations,
+        "climate_observation_invalid_rows_not_used_for_input_eligibility": climate_observation_bad if inspect_observations else None,
+        "climate_observation_invalid_by_field_not_used_for_input_eligibility": observation_bad_fields if inspect_observations else None,
         "input_eligible": eligible,
     }
 
