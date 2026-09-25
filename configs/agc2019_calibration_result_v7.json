@@ -228,5 +228,29 @@
     "next_step": "Stop outcome-driven scalar tuning. Resolve missing compartment geometry, thermal mass, ventilation mapping, screen properties, and crop initial state from independent evidence, or narrow the validation claim."
   },
   "claim_boundary": "The pooled result supports only a calibration-period, observed-action climate-replay result at the published GreenLight error scale. It does not establish per-compartment validation, holdout validity, or counterfactual actuator fidelity.",
-  "result_sha256": "70e964902ac8377ea9aece78f2ed923430d0658ef8ffd24f8ed4cf4f5758a205"
+  "result_sha256": "70e964902ac8377ea9aece78f2ed923430d0658ef8ffd24f8ed4cf4f5758a205",
+  "residual_context_diagnostic": {
+    "pooled_lights_on": {
+      "samples": 868,
+      "tAir_bias_c": -0.62,
+      "tAir_rmse_c": 1.802
+    },
+    "pooled_lights_off": {
+      "samples": 332,
+      "tAir_bias_c": -2.127,
+      "tAir_rmse_c": 2.545
+    },
+    "after_first_24h_per_sequence": {
+      "pooled_tAir_rmse_c": 1.858,
+      "per_compartment_tAir_rmse_c": {
+        "AICU": 1.289,
+        "Automatoes": 2.145,
+        "Digilog": 1.891,
+        "IUACAAS": 2.108,
+        "Reference": 1.939,
+        "TheAutomators": 1.439
+      }
+    },
+    "scoring_boundary": "Diagnostic only. The frozen full-sequence metrics above remain the decision metrics."
+  }
 }

@@ -36,14 +36,36 @@
   },
   "greenlight_default_gap_audit": "scripts/audit_agc2019_greenlight_parameters.py",
   "unresolved_for_greenlight": [
-    "cover and side-wall surface areas",
-    "greenhouse and lower-air volumes/heights",
-    "pipe geometry and thermal capacities",
-    "insect-net ventilation resistance and two-window mapping",
-    "screen optical and thermal coefficients",
+    "2019 roof slope, cover area, and greenhouse/lower-air heights (the later same-facility footprint is 10 x 9.6 m)",
+    "thermal coupling to the south exterior facade, east/west corridors, and north neighboring compartment",
+    "structure, floor, and pipe thermal capacities",
+    "compartment orientation/pressure coefficients beyond the reported south facade, insect-net resistance, and two-window mapping",
+    "screen optical, leakage, and thermal coefficients",
     "HPS and LED placement, electrical-to-radiative conversion, fixture heat partition, and floor/crop area denominator",
     "irrigation pump flow and relevant area denominator",
     "crop initial state and cultivar response parameters"
   ],
-  "safety_note": "Do not copy these fields individually over GreenLight's default 40000 m2 facility and claim a calibrated AGC replay."
+  "safety_note": "Do not copy these fields individually over GreenLight's default 40000 m2 facility and claim a calibrated AGC replay.",
+  "compartment_identity_2019": {
+    "source": "Hemming et al., Sensors 2020, 20(22):6430, https://doi.org/10.3390/s20226430",
+    "mapping": {
+      "TheAutomators": "301",
+      "AICU": "302",
+      "Reference": "303",
+      "IUACAAS": "304",
+      "Digilog": "305",
+      "Automatoes": "306"
+    }
+  },
+  "later_same_facility_footprint_evidence": {
+    "source": "WUR Report WPR-1329, Licht en groei: duurzaam sturen met licht I, https://edepot.wur.nl/661490",
+    "reported_floor_dimensions_m": [
+      10.0,
+      9.6
+    ],
+    "reported_floor_area_m2": 96.0,
+    "gutter_count_including_edge_gutters": 7,
+    "boundary_topology": "one exterior facade on the south, corridors on east and west, and a neighboring compartment on the north",
+    "use_boundary": "This later report is strong evidence for the footprint and block topology of WUR Bleiswijk 96 m2 compartments, but it does not establish that 2019 heights, materials, corridor climate, or thermal properties were unchanged."
+  }
 }

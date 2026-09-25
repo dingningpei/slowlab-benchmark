@@ -54,11 +54,11 @@
     "root-zone measurements, crop observations, resource use, production, and quality"
   ],
   "not_identified_by_public_archive_or_paper": [
-    "compartment-specific cover and side-wall surface areas",
-    "greenhouse volume and lower/upper air-zone heights",
+    "2019 roof slope, cover area, and greenhouse/lower-air heights",
+    "corridor and neighboring-compartment boundary temperatures and thermal coupling",
     "structure and floor thermal masses",
     "pipe geometry and thermal capacities",
-    "compartment orientation, pressure coefficients, insect-net resistance, and mapping of windward/leeward openings to GreenLight ventilation",
+    "pressure coefficients, insect-net resistance, and mapping of windward/leeward openings to GreenLight ventilation",
     "screen optical, leakage, and thermal exchange coefficients",
     "lamp placement and electrical-to-radiative/convective heat partition",
     "unambiguous area denominator across the paper and official ReadMe",
@@ -88,5 +88,44 @@
       "a digital twin of the AGC compartments"
     ],
     "evidence_needed_to_resume_strict_gate": "independent compartment drawings/specifications or measured system-identification data that determine the missing physical parameters before holdout access"
+  },
+  "compartment_identity_2019": {
+    "TheAutomators": "301",
+    "AICU": "302",
+    "Reference": "303",
+    "IUACAAS": "304",
+    "Digilog": "305",
+    "Automatoes": "306"
+  },
+  "later_same_facility_footprint_evidence": {
+    "source": "WUR Report WPR-1329, https://edepot.wur.nl/661490",
+    "facts": [
+      "96 m2 equals 10 x 9.6 m",
+      "seven gutters including edge gutters",
+      "south exterior facade",
+      "east and west corridors",
+      "north neighboring compartment"
+    ],
+    "temporal_limit": "Published for a later experiment at the same facility; it constrains the footprint/topology but cannot certify unchanged 2019 heights, materials, or thermal conditions."
+  },
+  "residual_context_diagnostic": {
+    "pooled_tAir_rmse_c": {
+      "all_samples": 2.0349587744732447,
+      "after_first_24h_within_each_sequence": 1.858
+    },
+    "pooled_tAir_by_lighting": {
+      "lights_on": {
+        "samples": 868,
+        "bias_c": -0.62,
+        "rmse_c": 1.802
+      },
+      "lights_off": {
+        "samples": 332,
+        "bias_c": -2.127,
+        "rmse_c": 2.545
+      }
+    },
+    "interpretation": "Short-sequence state initialization contributes to error, but does not explain all failures: after the first 24 h Automatoes remains at 2.145 C and IUACAAS at 2.108 C. The larger lights-off cold error is consistent with unidentified storage and boundary heat exchange.",
+    "scoring_boundary": "This is diagnosis only. First-day observations remain in the frozen gate; no post-hoc warm-up exclusion is used to claim a pass."
   }
 }
