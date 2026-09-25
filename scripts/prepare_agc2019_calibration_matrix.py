@@ -65,7 +65,7 @@ def consecutive_sequences(records: list[dict]) -> list[dict]:
 
 
 def prepare(source: Path, manifest_path: Path, coverage_path: Path, out: Path,
-            assumptions: WeatherAssumptions) -> dict:
+            assumptions: WeatherAssumptions, *, period: str = "calibration") -> dict:
     manifest = json.loads(manifest_path.read_text())
     coverage = json.loads(coverage_path.read_text())
     if coverage["holdout_start"] != manifest["holdout_start"]:
@@ -90,7 +90,7 @@ def prepare(source: Path, manifest_path: Path, coverage_path: Path, out: Path,
         trace = directory / f"{day_text}_trace.csv"
         driver = directory / f"{day_text}_greenlight.csv"
         trace_audit = build_trace(source / compartment / "GreenhouseClimate.csv",
-                                  weather_source, manifest_path, compartment, day, trace)
+                                  weather_source, manifest_path, compartment, day, trace, period=period)
         driver_audit = build_driver(trace, driver)
         records.append({
             "compartment": compartment, "day": day_text,

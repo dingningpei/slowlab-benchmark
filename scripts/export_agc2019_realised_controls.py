@@ -70,10 +70,12 @@ def source_day_rows(path: Path, day: date) -> list[dict[str, str]]:
 
 
 def build(source: Path, weather: Path, manifest_path: Path,
-          compartment: str, day: date, out: Path) -> dict:
+          compartment: str, day: date, out: Path, *, period: str = "calibration") -> dict:
     manifest = json.loads(manifest_path.read_text())
-    if not date.fromisoformat(manifest["calibration_start"]) <= day < date.fromisoformat(manifest["holdout_start"]):
-        raise ValueError("control export restricted to frozen calibration period")
+    calibration_start=date.fromisoformat(manifest["calibration_start"]); holdout_start=date.fromisoformat(manifest["holdout_start"]); source_end=date.fromisoformat(manifest["root_observation_end_exclusive_source_clock"][:10])
+    allowed = (calibration_start <= day < holdout_start if period == "calibration" else holdout_start <= day < source_end if period == "holdout" else False)
+    if not allowed:
+        raise ValueError(f"control export day outside explicit {period} period")
     if compartment not in manifest["compartments"]:
         raise ValueError("unknown AGC compartment")
     if digest(source) != manifest["compartments"][compartment]["source_sha256"]["GreenhouseClimate.csv"]:

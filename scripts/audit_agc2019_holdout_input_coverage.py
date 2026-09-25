@@ -4,6 +4,10 @@ from __future__ import annotations
 import argparse, json
 from datetime import date, timedelta
 from pathlib import Path
+import sys
+
+ROOT=Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path: sys.path.insert(0,str(ROOT))
 from scripts.audit_agc2019_replay_coverage import (calibration_rows, classify, digest, longest_consecutive_run)
 
 def audit(source: Path, manifest_path: Path) -> dict:
