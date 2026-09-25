@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Export source-grounded AGC climate drivers for GreenLight calibration.
 
-Positive pipe temperatures are exported as tracking targets, while zero is exported
-as an off/status flag.  Neither value is treated as measured heating power.
+Positive pipe temperatures are exported as observed process temperatures, while
+zero is exported as an off/status flag. Neither value is heating power.
 """
 from __future__ import annotations
 
@@ -23,8 +23,8 @@ from slowlab.agc_lighting import LED_FIELDS, agc_toplight_flux  # noqa: E402
 
 FIELDS = ("Time", "uBlScr", "uThScr", "uRoof", "mcExtAir",
           "qHpsProcessed", "qLedProcessed", "ledParPhotonFlux",
-          "ledFarRedPhotonFlux", "pipeLowTarget", "pipeLowActive",
-          "pipeGrowTarget", "pipeGrowActive")
+          "ledFarRedPhotonFlux", "pipeLowObserved", "pipeLowActive",
+          "pipeGrowObserved", "pipeGrowActive")
 
 
 def digest(path: Path) -> str:
@@ -73,9 +73,9 @@ def build(trace: Path, out: Path) -> dict:
                 "qLedProcessed": light.processed_led_power_w_m2,
                 "ledParPhotonFlux": light.led_par_photon_flux_umol_m2_s,
                 "ledFarRedPhotonFlux": light.led_far_red_photon_flux_umol_m2_s,
-                "pipeLowTarget": pipe_low if pipe_low > 0 else 0.0,
+                "pipeLowObserved": pipe_low if pipe_low > 0 else 0.0,
                 "pipeLowActive": float(pipe_low > 0),
-                "pipeGrowTarget": pipe_grow if pipe_grow > 0 else 0.0,
+                "pipeGrowObserved": pipe_grow if pipe_grow > 0 else 0.0,
                 "pipeGrowActive": float(pipe_grow > 0),
             })
     if len(written) < 2 or any(b["Time"] <= a["Time"] for a, b in zip(written, written[1:])):
@@ -87,8 +87,8 @@ def build(trace: Path, out: Path) -> dict:
         "Processed CO2 dose under calibration accounting unit hypothesis",
         "Official-ledger HPS electrical input", "Official-ledger ELIXIA electrical input",
         "ELIXIA PAR photon flux", "ELIXIA far-red photon flux",
-        "Observed positive rail-pipe temperature target", "Rail-pipe active flag",
-        "Observed positive grow-pipe temperature target", "Grow-pipe active flag")))
+        "Observed positive rail-pipe process temperature", "Rail-pipe active flag",
+        "Observed positive grow-pipe process temperature", "Grow-pipe active flag")))
     units = dict(zip(FIELDS, ("s", "-", "-", "-", "mg m**-2 s**-1",
                               "W m**-2", "W m**-2", "umol m**-2 s**-1",
                               "umol m**-2 s**-1", "°C", "-", "°C", "-")))
@@ -98,13 +98,13 @@ def build(trace: Path, out: Path) -> dict:
     return {
         "status": "calibration_driver_with_explicit_proxies",
         "rows": len(written), "trace_sha256": digest(trace), "output_sha256": digest(out),
-        "pipe_fields_exported_as_temperature_targets_not_power": ["PipeLow", "PipeGrow"],
+        "pipe_fields_exported_as_observed_temperatures_not_power": ["PipeLow", "PipeGrow"],
         "caveats": [
             "uRoof is the arithmetic mean opening fraction, not a measured air-exchange rate",
             "CO2 conversion follows the calibration accounting hypothesis and is not independent flow metering",
             "screen positions are closure proxies; product heat-transfer parameters remain to be calibrated",
             "lighting power coefficients are same-source processing values, not independent electricity metering",
-            "positive pipe values are temperature targets and zero values are off/status flags; neither is heat power"
+            "positive PipeLow/PipeGrow values are observed process temperatures; zero values are off/status flags; neither is heat power"
         ],
     }
 

@@ -85,7 +85,7 @@ def aggregate(results: list[dict]) -> dict:
 
 
 def run_one(record: dict, candidate: dict, observations_root: Path, definitions: Path,
-            led_extension: Path, heating_extension: Path, out_dir: Path) -> dict:
+            led_extension: Path, pipe_extension: Path, out_dir: Path) -> dict:
     from greenlight import GreenLight
     start_day=date.fromisoformat(record["start_day"]); days=int(record["day_count"])
     if start_day+timedelta(days=days)>date.fromisoformat(candidate["holdout_start"]):
@@ -94,12 +94,12 @@ def run_one(record: dict, candidate: dict, observations_root: Path, definitions:
     observed=observed_start(obs_path,start_day.isoformat()+"T00:00:00")
     control=Path(record["controls"]["path"]); first=first_numeric_row(control)
     initials=greenlight_initial_climate_override(observed["air_temperature_c"],observed["relative_humidity_pct"],observed["co2_ppm"])
-    initials.update(greenlight_initial_pipe_override(observed["air_temperature_c"],float(first["pipeLowTarget"]),float(first["pipeGrowTarget"])))
+    initials.update(greenlight_initial_pipe_override(observed["air_temperature_c"],float(first["pipeLowObserved"]),float(first["pipeGrowObserved"])))
     initials["cLeaf"]={"init":repr(float(candidate["initial_lai"])/float(candidate["sla_m2_per_mg_ch2o"]))}
     params={**candidate["facility_parameters"],**candidate["calibration_parameters"]}
     override={"Parameters":{"AGC calibration candidate":{k:{"type":"const","definition":repr(float(v))} for k,v in params.items()}},"Initial state":initials,"options":{"t_end":repr(days*86400),"solver":candidate["solver"]}}
     safe=record["sequence_id"].replace(":","_"); output=out_dir/f"{safe}.csv";output.parent.mkdir(parents=True,exist_ok=True)
-    sim=GreenLight(base_path=str(definitions.resolve()),input_prompt=[str((definitions/'main_katzin_2021.json').resolve()),str((definitions/'lamp_hps_katzin_2020.json').resolve()),str(led_extension.resolve()),str(heating_extension.resolve()),str(Path(record["weather"]["path"]).resolve()),str(Path(record["controls"]["path"]).resolve()),override],output_path=str(output))
+    sim=GreenLight(base_path=str(definitions.resolve()),input_prompt=[str((definitions/'main_katzin_2021.json').resolve()),str((definitions/'lamp_hps_katzin_2020.json').resolve()),str(led_extension.resolve()),str(pipe_extension.resolve()),str(Path(record["weather"]["path"]).resolve()),str(Path(record["controls"]["path"]).resolve()),override],output_path=str(output))
     with open(os.devnull,"w") as sink,contextlib.redirect_stdout(sink):sim.run()
     assert_greenlight_solution_complete(sim.states_sol,days*86400)
     metrics=sequence_metrics(output,obs_path,start_day,days)
@@ -107,12 +107,12 @@ def run_one(record: dict, candidate: dict, observations_root: Path, definitions:
 
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument("--sequences",required=True,type=Path);p.add_argument("--candidate",required=True,type=Path);p.add_argument("--observations-root",required=True,type=Path);p.add_argument("--definitions",required=True,type=Path);p.add_argument("--led-extension",required=True,type=Path);p.add_argument("--heating-extension",required=True,type=Path);p.add_argument("--out-dir",required=True,type=Path);p.add_argument("--out",required=True,type=Path);p.add_argument("--limit",type=int);p.add_argument("--workers",type=int,default=1);a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument("--sequences",required=True,type=Path);p.add_argument("--candidate",required=True,type=Path);p.add_argument("--observations-root",required=True,type=Path);p.add_argument("--definitions",required=True,type=Path);p.add_argument("--led-extension",required=True,type=Path);p.add_argument("--pipe-extension",required=True,type=Path);p.add_argument("--out-dir",required=True,type=Path);p.add_argument("--out",required=True,type=Path);p.add_argument("--limit",type=int);p.add_argument("--workers",type=int,default=1);a=p.parse_args()
     seq=json.loads(a.sequences.read_text());candidate=json.loads(a.candidate.read_text());records=seq["sequences"][:a.limit]
     if a.workers < 1: raise ValueError("workers must be positive")
     task=partial(run_one,candidate=candidate,observations_root=a.observations_root,
                  definitions=a.definitions,led_extension=a.led_extension,
-                 heating_extension=a.heating_extension,out_dir=a.out_dir)
+                 pipe_extension=a.pipe_extension,out_dir=a.out_dir)
     if a.workers == 1: results=[task(x) for x in records]
     else:
         with ProcessPoolExecutor(max_workers=a.workers) as pool: results=list(pool.map(task,records))

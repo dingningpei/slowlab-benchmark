@@ -47,10 +47,12 @@
     "rail_observed_field": "PipeLow",
     "grow_observed_field": "PipeGrow",
     "readme_unit": "degrees C, pipe temperature",
+    "source_role": "GreenhouseClimate raw process temperature; distinct from t_rail_min_sp/vip and t_grow_min_sp/vip setpoint fields",
     "zero_working_interpretation": "off/status code rather than literal measured 0 C",
     "zero_evidence": "Calibration-only audit of six compartments: 0/nonzero transitions imply median 30-40 C jumps within one five-minute sample while greenhouse air is stable within 1 C in at least 95% of transitions.",
     "audit_script": "scripts/audit_agc2019_pipe_zero.py",
-    "greenlight_mapping": "unresolved: do not inject zero as tPipe or tGroPipe; heating power is not directly observed"
+    "greenlight_mapping": "During positive observations, condition replay heat exchange on the observed process temperature. During zero/off codes, propagate the pipe state. Never inject zero as a physical temperature; heating power remains unobserved.",
+    "counterfactual_boundary": "Observed-pipe replay validates historical climate trajectories only. Counterfactual control requires a separately validated boiler/pipe actuator model."
   },
   "interpretation": "Historical control rights and available observations are distinct from new benchmark capabilities; no unverified direct action is enabled."
 }

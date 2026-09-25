@@ -163,18 +163,18 @@ def greenlight_canopy_water_demand(
 
 
 def greenlight_initial_pipe_override(
-    air_temperature_c: float, rail_pipe_code_c: float, grow_pipe_code_c: float
+    air_temperature_c: float, rail_pipe_observed_c: float, grow_pipe_observed_c: float
 ) -> dict[str, dict[str, str]]:
     """Initialize pipe states without interpreting an off code as physical 0 C.
 
-    A positive source value is the observed pipe-temperature target.  At a
+    A positive source value is the observed process pipe temperature. At a
     trajectory boundary where the source code is zero, pipe temperature is
     unobserved and is initialized at air temperature for a cold-start
     diagnostic.  Continuous runs must propagate the pipe state instead.
     """
     air = float(air_temperature_c)
-    rail = float(rail_pipe_code_c)
-    grow = float(grow_pipe_code_c)
+    rail = float(rail_pipe_observed_c)
+    grow = float(grow_pipe_observed_c)
     if not all(math.isfinite(value) for value in (air, rail, grow)):
         raise ValueError("initial pipe inputs must be finite")
     if air <= -100 or rail < 0 or grow < 0:
