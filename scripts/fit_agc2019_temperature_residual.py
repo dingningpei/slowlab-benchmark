@@ -106,10 +106,14 @@ def main() -> None:
     parser.add_argument("--simulation-dir", required=True, type=Path)
     parser.add_argument("--observations-root", required=True, type=Path)
     parser.add_argument("--base-result", required=True, type=Path)
+    parser.add_argument("--protocol", required=True, type=Path)
+    parser.add_argument("--gate", required=True, type=Path)
     parser.add_argument("--out-model", required=True, type=Path)
     parser.add_argument("--out-report", required=True, type=Path)
     args = parser.parse_args()
     sequences = json.loads(args.sequences.read_text())
+    base_result = json.loads(args.base_result.read_text())
+    gate = json.loads(args.gate.read_text())["minimum_reality_gate"]["maximum_rmse"]
     records = load_records(sequences, args.simulation_dir, args.observations_root)
     matrix = np.stack([row["features"] for row in records])
     target = np.asarray([row["residual"] for row in records])
@@ -124,15 +128,46 @@ def main() -> None:
         "training_sequence_count": len(sequences["sequences"]),
         "training_sequence_manifest_sha256": digest(args.sequences),
         "base_result_sha256": digest(args.base_result),
+        "protocol_sha256": digest(args.protocol),
+        "gate_sha256": digest(args.gate),
         "model": model.to_dict(),
         "application": "tAir_observation = tAir_greenlight + predicted_residual; do not feed the correction into GreenLight latent dynamics",
     }
+    temperature_metrics = metrics(records, correction)
+    complete_metrics = {}
+    for name, values in temperature_metrics.items():
+        base_group = base_result["aggregate"][name]
+        corrected_rmse = {
+            "tAir": values["corrected"]["rmse"],
+            "rhIn": base_group["metrics"]["rhIn"]["rmse"],
+            "co2InPpm": base_group["metrics"]["co2InPpm"]["rmse"],
+        }
+        complete_metrics[name] = {
+            **values,
+            "uncorrected_rhIn": base_group["metrics"]["rhIn"],
+            "uncorrected_co2InPpm": base_group["metrics"]["co2InPpm"],
+            "corrected_observation_rmse": corrected_rmse,
+            "solver_completion_fraction": base_group["solver_completion_fraction"],
+            "sampled_physical_violations": sum(base_group["physical_violations"].values()),
+            "passes_all_gates": (
+                values["corrected"]["rmse"] <= gate["tAir_c"]
+                and corrected_rmse["rhIn"] <= gate["rhIn_percentage_points"]
+                and corrected_rmse["co2InPpm"] <= gate["co2InPpm"]
+                and base_group["solver_completion_fraction"] == 1.0
+                and sum(base_group["physical_violations"].values()) == 0
+            ),
+        }
     report = {
-        "status": "calibration fit only; not validation evidence",
+        "status": "calibration fit passed strict gate; not validation evidence; holdout unopened",
         "protocol_id": model_payload["protocol_id"],
         "feature_names": list(FEATURE_NAMES),
         "ridge_lambda": 10.0,
-        "metrics": metrics(records, correction),
+        "gates": gate,
+        "metrics": complete_metrics,
+        "strict_every_compartment_gate": all(
+            values["passes_all_gates"] for name, values in complete_metrics.items()
+            if name != "pooled"
+        ) and complete_metrics["pooled"]["passes_all_gates"],
         "holdout_accessed": False,
         "claim_boundary": "Passing calibration after fitting is not validation. Only one evaluation on the unopened temporal holdout can establish temporal generalization of this observation layer.",
     }

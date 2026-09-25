@@ -1,0 +1,277 @@
+{
+  "claim_boundary": "Passing calibration after fitting is not validation. Only one evaluation on the unopened temporal holdout can establish temporal generalization of this observation layer.",
+  "feature_names": [
+    "tAir",
+    "tOut",
+    "iGlob",
+    "wind",
+    "uBlScr",
+    "uThScr",
+    "uRoof",
+    "qHpsProcessed",
+    "qLedProcessed",
+    "tPipe",
+    "pipeLowActive",
+    "tGroPipe",
+    "pipeGrowActive",
+    "hour_sin",
+    "hour_cos"
+  ],
+  "gates": {
+    "co2InPpm": 361,
+    "rhIn_percentage_points": 8.5,
+    "tAir_c": 2.04
+  },
+  "holdout_accessed": false,
+  "metrics": {
+    "AICU": {
+      "base": {
+        "bias": 0.08390637324780663,
+        "hourly_change_rmse": 0.9431761528806966,
+        "mae": 1.0514332881581672,
+        "rmse": 1.3896364088144564
+      },
+      "corrected": {
+        "bias": 0.30688222506375773,
+        "hourly_change_rmse": 0.6700996568345368,
+        "mae": 0.6381699385129315,
+        "rmse": 0.8175473833304316
+      },
+      "corrected_observation_rmse": {
+        "co2InPpm": 346.6062995383669,
+        "rhIn": 3.3917997340462964,
+        "tAir": 0.8175473833304316
+      },
+      "passes_all_gates": true,
+      "sampled_physical_violations": 0,
+      "samples": 144,
+      "solver_completion_fraction": 1.0,
+      "uncorrected_co2InPpm": {
+        "bias": 182.76734098418495,
+        "hourly_change_rmse": 129.07037268549823,
+        "mae": 219.272377965607,
+        "rmse": 346.6062995383669
+      },
+      "uncorrected_rhIn": {
+        "bias": -0.43628215419400107,
+        "hourly_change_rmse": 3.4494370476625558,
+        "mae": 2.490940383195359,
+        "rmse": 3.3917997340462964
+      }
+    },
+    "Automatoes": {
+      "base": {
+        "bias": -1.7205876467748442,
+        "hourly_change_rmse": 1.1984948572087142,
+        "mae": 1.9196674550639863,
+        "rmse": 2.251605429811943
+      },
+      "corrected": {
+        "bias": -0.5460383237875576,
+        "hourly_change_rmse": 0.8667957857113124,
+        "mae": 0.8969754873688945,
+        "rmse": 1.1966234058467418
+      },
+      "corrected_observation_rmse": {
+        "co2InPpm": 329.6961936746027,
+        "rhIn": 4.053190896720292,
+        "tAir": 1.1966234058467418
+      },
+      "passes_all_gates": true,
+      "sampled_physical_violations": 0,
+      "samples": 192,
+      "solver_completion_fraction": 1.0,
+      "uncorrected_co2InPpm": {
+        "bias": 124.49640794402012,
+        "hourly_change_rmse": 141.43523434376218,
+        "mae": 193.43527025413934,
+        "rmse": 329.6961936746027
+      },
+      "uncorrected_rhIn": {
+        "bias": -0.34355933494497126,
+        "hourly_change_rmse": 2.9896880737126175,
+        "mae": 3.242668911430606,
+        "rmse": 4.053190896720292
+      }
+    },
+    "Digilog": {
+      "base": {
+        "bias": -1.3223358810516814,
+        "hourly_change_rmse": 1.1301255303927467,
+        "mae": 1.6869437726770886,
+        "rmse": 2.199965012578593
+      },
+      "corrected": {
+        "bias": 0.4870927235057762,
+        "hourly_change_rmse": 0.7395337516609027,
+        "mae": 0.8057445535078531,
+        "rmse": 1.0431440438648192
+      },
+      "corrected_observation_rmse": {
+        "co2InPpm": 220.74226694590593,
+        "rhIn": 6.02346714789288,
+        "tAir": 1.0431440438648192
+      },
+      "passes_all_gates": true,
+      "sampled_physical_violations": 0,
+      "samples": 192,
+      "solver_completion_fraction": 1.0,
+      "uncorrected_co2InPpm": {
+        "bias": 103.70757119869585,
+        "hourly_change_rmse": 81.49478126866575,
+        "mae": 140.98075912279714,
+        "rmse": 220.74226694590593
+      },
+      "uncorrected_rhIn": {
+        "bias": 3.21634416419704,
+        "hourly_change_rmse": 3.743187678288498,
+        "mae": 4.560851197268071,
+        "rmse": 6.02346714789288
+      }
+    },
+    "IUACAAS": {
+      "base": {
+        "bias": -1.7004482707254056,
+        "hourly_change_rmse": 1.0669798315054848,
+        "mae": 2.0340241212092915,
+        "rmse": 2.4167881648851677
+      },
+      "corrected": {
+        "bias": -0.23411901549400702,
+        "hourly_change_rmse": 0.6205465391730672,
+        "mae": 0.616988000684192,
+        "rmse": 0.8267717054228274
+      },
+      "corrected_observation_rmse": {
+        "co2InPpm": 134.2154696807459,
+        "rhIn": 4.908913787645408,
+        "tAir": 0.8267717054228274
+      },
+      "passes_all_gates": true,
+      "sampled_physical_violations": 0,
+      "samples": 192,
+      "solver_completion_fraction": 1.0,
+      "uncorrected_co2InPpm": {
+        "bias": -61.09747362339351,
+        "hourly_change_rmse": 58.31891824555094,
+        "mae": 111.30256490007586,
+        "rmse": 134.2154696807459
+      },
+      "uncorrected_rhIn": {
+        "bias": -2.0379852806935514,
+        "hourly_change_rmse": 4.514967518753828,
+        "mae": 3.8904296739076507,
+        "rmse": 4.908913787645408
+      }
+    },
+    "Reference": {
+      "base": {
+        "bias": -1.1241279314911905,
+        "hourly_change_rmse": 1.1778007975218017,
+        "mae": 1.7404478179149443,
+        "rmse": 2.063564904919702
+      },
+      "corrected": {
+        "bias": -0.5041425432355536,
+        "hourly_change_rmse": 0.8518836792337736,
+        "mae": 1.0172549659218837,
+        "rmse": 1.2107347038151057
+      },
+      "corrected_observation_rmse": {
+        "co2InPpm": 224.59336501145984,
+        "rhIn": 4.905634207653573,
+        "tAir": 1.2107347038151057
+      },
+      "passes_all_gates": true,
+      "sampled_physical_violations": 0,
+      "samples": 264,
+      "solver_completion_fraction": 1.0,
+      "uncorrected_co2InPpm": {
+        "bias": 75.57743494941816,
+        "hourly_change_rmse": 129.07223951357741,
+        "mae": 141.1134702675957,
+        "rmse": 224.59336501145984
+      },
+      "uncorrected_rhIn": {
+        "bias": -2.747314753046885,
+        "hourly_change_rmse": 3.0736975924310075,
+        "mae": 3.9926347870782903,
+        "rmse": 4.905634207653573
+      }
+    },
+    "TheAutomators": {
+      "base": {
+        "bias": -0.22673500621100967,
+        "hourly_change_rmse": 0.934148699950585,
+        "mae": 1.2811912984447504,
+        "rmse": 1.5854028053402525
+      },
+      "corrected": {
+        "bias": 0.6720879501572082,
+        "hourly_change_rmse": 0.5809667480637942,
+        "mae": 0.81824304394803,
+        "rmse": 1.0126116238612772
+      },
+      "corrected_observation_rmse": {
+        "co2InPpm": 251.28568907649836,
+        "rhIn": 3.9940399170001917,
+        "tAir": 1.0126116238612772
+      },
+      "passes_all_gates": true,
+      "sampled_physical_violations": 0,
+      "samples": 216,
+      "solver_completion_fraction": 1.0,
+      "uncorrected_co2InPpm": {
+        "bias": 132.48242573971655,
+        "hourly_change_rmse": 138.9485522025383,
+        "mae": 176.84497777319746,
+        "rmse": 251.28568907649836
+      },
+      "uncorrected_rhIn": {
+        "bias": 0.08036512974776706,
+        "hourly_change_rmse": 2.9489338949060153,
+        "mae": 3.041372188661254,
+        "rmse": 3.9940399170001917
+      }
+    },
+    "pooled": {
+      "base": {
+        "bias": -1.0369911690246159,
+        "hourly_change_rmse": 1.0958687793472424,
+        "mae": 1.6421866040723816,
+        "rmse": 2.0349587744732447
+      },
+      "corrected": {
+        "bias": 4.781360492719007e-16,
+        "hourly_change_rmse": 0.7407337071768747,
+        "mae": 0.8188135196847619,
+        "rmse": 1.0487351906050215
+      },
+      "corrected_observation_rmse": {
+        "co2InPpm": 254.85306282253353,
+        "rhIn": 4.672854209425277,
+        "tAir": 1.0487351906050215
+      },
+      "passes_all_gates": true,
+      "sampled_physical_violations": 0,
+      "samples": 1200,
+      "solver_completion_fraction": 1.0,
+      "uncorrected_co2InPpm": {
+        "bias": 89.14299412321476,
+        "hourly_change_rmse": 118.056925494504,
+        "mae": 160.5047198982414,
+        "rmse": 254.85306282253353
+      },
+      "uncorrected_rhIn": {
+        "bias": -0.508729453049634,
+        "hourly_change_rmse": 3.465446427214369,
+        "mae": 3.595771458316705,
+        "rmse": 4.672854209425277
+      }
+    }
+  },
+  "protocol_id": "agc2019-greenlight-temperature-residual-v8",
+  "ridge_lambda": 10.0,
+  "status": "calibration fit passed strict gate; not validation evidence; holdout unopened",
+  "strict_every_compartment_gate": true
+}
