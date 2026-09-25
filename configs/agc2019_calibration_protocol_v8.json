@@ -1,0 +1,32 @@
+{
+  "protocol_id": "agc2019-greenlight-temperature-residual-v8",
+  "status": "frozen before full-calibration fit and before holdout access",
+  "holdout_start": "2020-04-01",
+  "motivation": "The v7 physical replay passes the pooled three-channel gate but has a lights-off cold residual and fails temperature in four compartments. Public data identify the 10 x 9.6 m footprint and mixed exterior/corridor/neighbor boundaries but not the thermal coupling needed for a unique mechanistic correction.",
+  "development_disclosure": "The model class was chosen after inspecting v7 calibration residuals. A one-time early-to-late calibration diagnostic showed feasibility, so neither that diagnostic nor the full calibration fit is confirmatory validation.",
+  "base_model": "Frozen v7 GreenLight replay with v5 physical parameters, floor-normalized lighting, boundary initialization, and bounded loss-compensated pipe-state tracking.",
+  "correction_scope": {
+    "output": "air-temperature observation only",
+    "definition": "tAir_observation = tAir_greenlight + predicted_residual",
+    "not_corrected": ["relative humidity", "CO2", "latent GreenLight states", "crop dynamics", "energy use"],
+    "feedback": "The correction is not fed back into GreenLight latent dynamics."
+  },
+  "model": {
+    "type": "standardized ridge regression",
+    "ridge_lambda": 10.0,
+    "identity_features": false,
+    "feature_order": [
+      "tAir", "tOut", "iGlob", "wind", "uBlScr", "uThScr", "uRoof",
+      "qHpsProcessed", "qLedProcessed", "tPipe", "pipeLowActive",
+      "tGroPipe", "pipeGrowActive", "hour_sin", "hour_cos"
+    ],
+    "standardization": "calibration mean and population standard deviation; constant columns use scale 1",
+    "target": "observed air temperature minus v7 GreenLight air temperature",
+    "fit_data": "all 1,200 hourly samples in the 21 frozen pre-holdout calibration sequences",
+    "selection": "No feature, regularization, or model-class search after this freeze."
+  },
+  "calibration_reporting": "Report corrected and uncorrected metrics pooled and by compartment. Calibration fit is an implementation check, not validation evidence.",
+  "holdout_rule": "After coefficients and their hashes are frozen, evaluate exactly once on every input-eligible holdout sequence. Do not refit, change features, alter lambda, add compartment identity, or change the gate after reading holdout outcomes.",
+  "holdout_gate": "Apply configs/agc2019_climate_validation_gate_v0.json to corrected tAir and uncorrected rhIn/co2InPpm, pooled and for every compartment, with 100% solver completion and zero sampled physical violations.",
+  "claim_boundary": "A pass establishes temporal generalization of a hybrid GreenLight plus statistical air-temperature observation layer under observed actions in these AGC compartments. It does not validate latent crop dynamics, energy counterfactuals, or a fully mechanistic digital twin."
+}
