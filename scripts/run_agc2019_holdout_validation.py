@@ -40,7 +40,7 @@ def run_one(record,candidate,model,observations_root,definitions,led_extension,p
 def main():
  p=argparse.ArgumentParser();
  for name in ('sequences','candidate','model','execution','observations-root','definitions','led-extension','pipe-extension','out-dir','out'):p.add_argument('--'+name,required=True,type=Path)
- p.add_argument('--workers',type=int,default=1);a=p.parse_args();execution=json.loads(a.execution.read_text());seq=json.loads(a.sequences.read_text());candidate=json.loads(a.candidate.read_text());payload=json.loads(a.model.read_text());model=TemperatureResidualModel.from_dict(payload['model'])
+ p.add_argument('--workers',type=int,default=1);a=p.parse_args();execution=json.loads(a.execution.read_text());seq=json.loads(a.sequences.read_text());candidate_payload=json.loads(a.candidate.read_text());candidate=candidate_payload.get('candidate',candidate_payload);payload=json.loads(a.model.read_text());model=TemperatureResidualModel.from_dict(payload['model'])
  if digest(a.sequences)!=execution['sequence_manifest_sha256'] or digest(a.model)!=execution['temperature_residual_model_sha256']:raise ValueError('frozen artifact hash mismatch')
  identities=[(x['compartment'],x['start_day'],x['day_count']) for x in seq['sequences']]
  if identities!=[tuple(x) for x in execution['sequences']]:raise ValueError('frozen sequence identities mismatch')
