@@ -1,0 +1,22 @@
+{
+  "execution_id": "agc2019-v8-temporal-holdout-v0",
+  "status": "frozen before holdout outcome access",
+  "period_start": "2020-04-01",
+  "period_end_exclusive": "2020-05-26",
+  "identity_selection": "input completeness only; climate outcome fields uninspected",
+  "input_coverage_sha256": "bca41d62cf8070de27c356220f7273a598db1d36b78f03ef76e9775d22f0e6a3",
+  "input_matrix_sha256": "0cf0d1af86a2ae17debfbb64101436ceefc477fdc91ae5d78cf816edd2486586",
+  "sequence_manifest_sha256": "65c74444ac97a354d3bf563ea4c923e5a2fff5db7bc1a06d13418e88dd6e450a",
+  "temperature_residual_model_sha256": "731963491233c400b0e5aa598f4c62996826a0c163aabdc4e748cc1dc1ca6016",
+  "temperature_residual_protocol_sha256": "2e329d5b730cc27caa1b88b37c8d7c731afc58be091a2fca072aaf67f1310dd5",
+  "identity_count": 137,
+  "sequence_count": 8,
+  "sequences": [
+    ["AICU", "2020-05-04", 1], ["AICU", "2020-05-06", 20],
+    ["Automatoes", "2020-05-08", 1], ["Automatoes", "2020-05-10", 16],
+    ["Digilog", "2020-05-15", 11], ["IUACAAS", "2020-04-20", 36],
+    ["Reference", "2020-04-21", 35], ["TheAutomators", "2020-05-09", 17]
+  ],
+  "gate": "configs/agc2019_climate_validation_gate_v0.json; corrected tAir, raw rhIn and co2InPpm, pooled and every compartment",
+  "one_shot_rule": "Run all eight sequences once. Do not change identities, coefficients, features, lambda, physical parameters, or thresholds after outcomes are read."
+}
