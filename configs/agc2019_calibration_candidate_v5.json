@@ -1,0 +1,82 @@
+{
+  "audit_hashes": {
+    "lighting_extension_sha256": "eb55e2e686eee250922733306b3d079ad8d2f16d92f8bcdb3693b4cc11549cd3",
+    "pipe_extension_sha256": "a74873a5fe5635bfb4e569521655c54d8e3f86c39357f419b32c66fada34c85e",
+    "protocol_sha256": "d7f7a746fdabc834e333f453b53995f268ac34b359595a03b1b9123cd5c76c2d",
+    "search_sequence_manifest_sha256": "a121b3a3cef46a066d9f8f85f1884fa449e1aaefcf41d9d546c2740d4b62540f"
+  },
+  "candidate": {
+    "calibration_parameters": {
+      "growTrackTau": 300.0,
+      "railTrackTau": 300.0
+    },
+    "candidate_id": "floor-normalized-lighting-v5-cdgh-0.15",
+    "claim_boundary": "Known capacities and areas are mixed with analogue geometry and uncalibrated aggregate parameters. This candidate can be scored only on calibration sequences.",
+    "facility_parameters": {
+      "aCov": 144.4,
+      "aFlr": 96.0,
+      "aRoof": 28.8,
+      "cDgh": 0.15,
+      "cLeakage": 3e-05,
+      "epsGroPipe": 0.88,
+      "hAir": 5.7,
+      "hGh": 6.2,
+      "hVent": 0.87,
+      "lGroPipe": 0.56,
+      "lPipe": 1.3375,
+      "pBoil": 17280.0,
+      "pBoilGro": 2880.0,
+      "phiExtCo2": 400.0,
+      "tauBlScrPar": 0.02,
+      "tauRfPar": 0.5,
+      "tauThScrPar": 0.75,
+      "useBlScr": 1.0
+    },
+    "holdout_start": "2020-04-01",
+    "initial_lai": 3.0,
+    "sla_m2_per_mg_ch2o": 2.66e-05,
+    "solver": "LSODA",
+    "status": "frozen v5 calibration candidate; no holdout access"
+  },
+  "protocol_id": "agc2019-floor-normalized-lighting-recalibration-v5",
+  "search_evidence": [
+    {
+      "cDgh": 0.15,
+      "candidate_sha256": "47416d48432368319645570d853af64b3f6e4e7c36765badd728ac92a7145286",
+      "eligible": true,
+      "maximum_grow_demand_w_m2": 29.303696940760858,
+      "maximum_rail_demand_w_m2": 103.23497398413261,
+      "objective": 1.1149830050752583,
+      "result_sha256": "20e77951faa420a7708dc185f4ee2e936701b77866438c5e1115f2a77fe4272c",
+      "worst_group": "IUACAAS",
+      "worst_rmse": 2.2745653303535267,
+      "worst_variable": "tAir"
+    },
+    {
+      "cDgh": 0.2,
+      "candidate_sha256": "e325fd6291c689bc94b5f6b60179c1bd1e18848345e9799d091f9cd346707c21",
+      "eligible": true,
+      "maximum_grow_demand_w_m2": 29.879499488983907,
+      "maximum_rail_demand_w_m2": 105.07498930380476,
+      "objective": 1.268359265408995,
+      "result_sha256": "c1b9299f191233e4ccac6d937891a00fcaaf07f4f54593ebbb62b84743e45619",
+      "worst_group": "IUACAAS",
+      "worst_rmse": 2.5874529014343497,
+      "worst_variable": "tAir"
+    },
+    {
+      "cDgh": 0.25,
+      "candidate_sha256": "0f7b89f647a00b86cb5f38bc0c0506524e16d72dfddbbfde5ec578a5f3f3bf38",
+      "eligible": false,
+      "maximum_grow_demand_w_m2": 30.3918043244161,
+      "maximum_rail_demand_w_m2": 106.71341568890955,
+      "objective": 1.4345419996883289,
+      "result_sha256": "0fe1ccd79b6a0bfec4f2eccfe076d2de3dc3b7e0275419fb79cf02cfaa5fcbaf",
+      "worst_group": "IUACAAS",
+      "worst_rmse": 2.926465679364191,
+      "worst_variable": "tAir"
+    }
+  ],
+  "selection_rule": "minimum eligible maximum normalized RMSE across pooled and every compartment",
+  "selection_status": "frozen selected candidate; full calibration not yet evaluated; holdout not accessed"
+}
