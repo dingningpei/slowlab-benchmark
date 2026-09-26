@@ -1,0 +1,53 @@
+{
+  "audit_id": "agc2023-pretrial-input-schema-v0",
+  "status": "frozen before indoor climate outcome values are opened for v9 development",
+  "source": {
+    "doi": "10.4121/e1ee9de9-6ce9-4502-a37c-34b5b1372bed",
+    "archive_sha256": "b972e2dad7f57dd9f4fc87d838befd30e9f7897ac032fc0a3107c34431e04ee8",
+    "archive_size_mib": 4.03,
+    "downloaded_components": ["ClimateTimeseries.xlsx", "CropMeasurements.xlsx", "DestructiveHarvest.xlsx"],
+    "excluded_large_components": [
+      "4.29 GiB canopy-camera archive",
+      "7.11 GiB single-plant-camera archive"
+    ]
+  },
+  "data_role": "v9 development only; never prospective validation",
+  "workbook_hashes": {
+    "ClimateTimeseries.xlsx": "8cd91c6014b81cd2591f2d6bed8c8f2b4af4f9b1288d1b3994a0acbc63ddd1ba",
+    "CropMeasurements.xlsx": "9769565fa86c17bc00577e6801c3f40b18d1969c68c728c38362ff10593ee10e",
+    "DestructiveHarvest.xlsx": "78e0a28fdee730b241b21c5b61a2762ff06a171d42b065f0e7426eb86caa677c"
+  },
+  "climate_table": {
+    "sheet": "weather_climate",
+    "rows_including_header": 18722,
+    "columns": 24,
+    "outcome_values_accessed_before_this_freeze": false,
+    "weather_inputs": ["tout", "rhout", "iglob", "windsp", "rain", "parout", "pyrgeo", "co2out"],
+    "realised_equipment_states": ["scr_enrg", "scr_blck", "ligth_on", "vent_lee", "vent_wind", "t_rail"],
+    "indoor_outcomes_reserved_for_development_after_freeze": ["t_air", "rh", "co2"],
+    "treatment_observations": ["part1", "par2", "par3", "par4"],
+    "header_notes": [
+      "The sheet spells the lighting field ligth_on.",
+      "The first PAR treatment header is part1 while the Info sheet calls it par1.",
+      "The Info sheet calls the energy-screen field scr_enr while the table header is scr_enrg."
+    ]
+  },
+  "crop_workbooks": {
+    "CropMeasurements.xlsx": "weekly non-destructive plant height, leaf dimensions, leaf counts, flowering/fruit set and colour by light treatment and replicate",
+    "DestructiveHarvest.xlsx": "four destructive harvests plus leaf-area correction and combined crop records"
+  },
+  "development_uses_supported": [
+    "temperature and RH replay development under measured weather and realised equipment states",
+    "rail-pipe, ventilation, screen and lighting response diagnostics",
+    "dwarf-tomato crop-state and light-treatment calibration",
+    "LAI/transpiration proxy construction from destructive and non-destructive crop measurements"
+  ],
+  "not_supported_by_this_archive_alone": [
+    "CO2 actuator response because no dosing/actuation input is exposed",
+    "fogging response because no realised fogging state or water rate is exposed",
+    "multi-compartment generalisation because the pre-trial climate table represents one compartment",
+    "prospective validation because this dataset is assigned to development",
+    "arbitrary counterfactual control"
+  ],
+  "next_action": "After this artifact is committed, open the 2023 indoor climate and crop outcomes for v9 development diagnostics. Keep every AGC 2024 indoor outcome closed."
+}
