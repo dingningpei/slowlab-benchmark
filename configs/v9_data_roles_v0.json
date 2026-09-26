@@ -1,0 +1,38 @@
+{
+  "protocol_id": "slowlab-v9-data-roles-v0",
+  "status": "frozen before AGC 2023 archive access and before AGC 2024 indoor-outcome access",
+  "compute_policy": {
+    "default_workers": 1,
+    "blas_threads": 1,
+    "execution_priority": "low",
+    "large_download_rule": "report name, purpose, size, destination and smaller alternative; require explicit user approval before download",
+    "heavy_run_rule": "run a short smoke test first and report expected load before sustained simulation"
+  },
+  "datasets": {
+    "greenlight_original_evaluation": {
+      "doi": "10.4121/78968e1b-eaea-4f37-89f9-2b98ba3ed865",
+      "role": "implementation validation only",
+      "permitted_claim": "the local GreenLight implementation reproduces the original evaluation workflow/error scale",
+      "forbidden_claim": "facility-specific validity for AGC 2019 or AGC 2024"
+    },
+    "agc2019": {
+      "doi": "10.4121/uuid:88d22c60-21b3-4ea8-90db-20249a5be2a7",
+      "role": "v9 development and failure diagnosis",
+      "status": "all frozen v8 temporal holdout outcomes have been opened",
+      "permitted_claim": "development evidence only; never reused as prospective validation for v9"
+    },
+    "agc2023_pretrial": {
+      "doi": "10.4121/e1ee9de9-6ce9-4502-a37c-34b5b1372bed",
+      "role": "v9 development",
+      "outcome_policy": "outcomes may be opened only after an input/schema audit records source hashes and confirms the archive role; they can never serve as v9 validation"
+    },
+    "agc2024_challenge": {
+      "doi": "10.4121/fa102772-32db-4b30-bace-12f2016722ce",
+      "role": "prospective external observed-action trajectory validation",
+      "status": "schema and permitted inputs audited; direct indoor temperature, RH, humidity-deficit and CO2 values remain unopened",
+      "selection_policy": "identities and periods may be chosen only from input completeness and timestamps",
+      "opening_policy": "do not access indoor outcomes until the v9 model/ensemble, hashes, initial-state rule, identities, metrics, thresholds and one-shot handling are committed"
+    }
+  },
+  "counterfactual_claim_rule": "AGC 2024 trajectory agreement under observed equipment states does not by itself validate arbitrary counterfactual actions. Counterfactual conclusions must remain stable over the frozen physically plausible parameter ensemble and within declared action support."
+}
