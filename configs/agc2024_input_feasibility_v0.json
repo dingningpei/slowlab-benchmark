@@ -1,0 +1,3312 @@
+{
+  "archive_sha256": "19bfddf994ffeeb6eff8c20da14af8ae09956d23d7c6d85d7e5aa017cff3f7b1",
+  "audit_disclosure": "An initial implementation summarized resource-field ranges because the frozen protocol allowed resource inputs. The accompanying paper was then found to define heating energy from pipe temperature minus indoor air temperature. No identity or period had been selected. The final auditor excludes all energy/economics values, records their names only, and does not use them for eligibility.",
+  "audit_id": "agc2024-dwarf-tomato-input-feasibility-v0",
+  "derived_field_semantics": {
+    "energy/co2_dosage": "calculated from positive changes in cumulative dosing minutes times 0.125 g m-2 min-1",
+    "energy/electricity_use.lighting": "calculated from lamp activation, 200 micromol m-2 s-1 maximum and assumed 3.2 micromol J-1 efficacy",
+    "energy/energy_use.heating": "not an independent heat-meter measurement; paper estimates 5-minute heat from 2*max(0, pipe temperature - indoor air temperature) W m-2"
+  },
+  "direct_outcome_values_accessed": false,
+  "known_unmeasured_or_unpublished": [
+    "heating-water mass flow and separate supply/return temperatures per circuit",
+    "direct natural-ventilation air mass flow or a facility-specific discharge calibration",
+    "fogging or humidification realised state and water rate",
+    "CO2 instantaneous mass flow; public channels expose actuation state, cumulative dosing minutes and aggregate dosage",
+    "screen heat/moisture flux and material exchange coefficients",
+    "continuous canopy transpiration or LAI state",
+    "compartment geometry, boundary temperatures, thermal masses and equipment calibration parameters in the archive"
+  ],
+  "protocol_id": "agc2024-dwarf-tomato-input-only-feasibility-v0",
+  "protocol_sha256": "544069d13459da3f668bc4560803c37257c93e5937c0329860c1b605ac3920cf",
+  "provisional_decision": "B for prospective observed-action climate replay after source-grounded fogging/controller and crop-state reconstruction with frozen uncertainty bounds; C for direct counterfactual actuator validation because the public archive alone does not identify ventilation, screen, crop-transpiration, or heating-flux responses.",
+  "selection_made": false,
+  "source_grounded_facility_evidence": {
+    "boundary_topology": "each compartment has one exterior side wall and one side wall shared with another compartment",
+    "co2_capacity_g_m2_h": 7.5,
+    "crop": "Pick-&-Joy Red Cherry dwarf tomato; 13 cm pots on three 1.62 x 6.12 m, 0.8 m-high tables; initial density 56 plants m-2",
+    "development_asset_not_in_public_archive": "Teams had access to Kaspro parameterized for these compartments and a dwarf-tomato crop model; the public timeseries archive does not include either model.",
+    "floor_plan": "10 m x 9.6 m (96 m2), with figure A1 cross-section and table layout",
+    "fogging_capacity_g_m2_h": 220,
+    "heating": "single floor pipe-rail circuit; 120 W m-2 peak capacity",
+    "lighting": "8 Fluence VYPR 4i B9F WB dimmable LED fixtures; 20-200 micromol m-2 s-1; assumed efficacy 3.2 micromol J-1",
+    "paper": "Maree et al. 2025, Sensors 25:4321, doi:10.3390/s25144321",
+    "screens": [
+      "LUXOUS 1547 D FR energy screen",
+      "OBSCURA 9950 FR W blackout screen"
+    ],
+    "ventilation": "continuous roof ventilation; opening area 0.3 m2 per m2 floor; 0.40 x 0.45 mm anti-insect net"
+  },
+  "tables": {
+    "agrifusion": {
+      "allowed_field_stats": {
+        "compartment/co2_actuation_state": {
+          "changes": 4267,
+          "coverage": 0.9994253127624774,
+          "max": 2.0,
+          "min": 1.0,
+          "nonmissing": 22608,
+          "numeric": 22608
+        },
+        "compartment/co2_concentration_setpoint": {
+          "changes": 157,
+          "coverage": 0.9994253127624774,
+          "max": 800.0,
+          "min": 300.0,
+          "nonmissing": 22608,
+          "numeric": 22608
+        },
+        "compartment/co2_concentration_vip": {
+          "changes": 163,
+          "coverage": 0.9994253127624774,
+          "max": 800.0,
+          "min": 300.0,
+          "nonmissing": 22608,
+          "numeric": 22608
+        },
+        "compartment/co2_dosage_minutes_cumulative": {
+          "changes": 8406,
+          "coverage": 0.9994253127624774,
+          "max": 672.0,
+          "min": 0.0,
+          "nonmissing": 22608,
+          "numeric": 22608
+        },
+        "compartment/heating_lower_circuit/pipe_temperature": {
+          "changes": 4325,
+          "coverage": 0.9994253127624774,
+          "max": 69.0,
+          "min": 0.0,
+          "nonmissing": 22608,
+          "numeric": 22608
+        },
+        "compartment/heating_temperature_setpoint": {
+          "changes": 158,
+          "coverage": 0.9994253127624774,
+          "max": 21.0,
+          "min": 17.0,
+          "nonmissing": 22608,
+          "numeric": 22608
+        },
+        "compartment/heating_temperature_vip": {
+          "changes": 170,
+          "coverage": 0.9994253127624774,
+          "max": 21.0,
+          "min": 17.0,
+          "nonmissing": 22608,
+          "numeric": 22608
+        },
+        "compartment/humidity_deficit_setpoint": {
+          "changes": 0,
+          "coverage": 0.9994253127624774,
+          "max": 2.0,
+          "min": 2.0,
+          "nonmissing": 22608,
+          "numeric": 22608
+        },
+        "compartment/humidity_deficit_vip": {
+          "changes": 0,
+          "coverage": 0.9994253127624774,
+          "max": 2.0,
+          "min": 2.0,
+          "nonmissing": 22608,
+          "numeric": 22608
+        },
+        "compartment/lamps_activation_percentage": {
+          "changes": 158,
+          "coverage": 0.9994253127624774,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 22608,
+          "numeric": 22608
+        },
+        "compartment/lamps_activation_percentage_setpoint": {
+          "changes": 158,
+          "coverage": 0.9994253127624774,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 22608,
+          "numeric": 22608
+        },
+        "compartment/minimum_pipe_temperature_setpoint": {
+          "changes": 0,
+          "coverage": 0.9994253127624774,
+          "max": 0.0,
+          "min": 0.0,
+          "nonmissing": 22608,
+          "numeric": 22608
+        },
+        "compartment/minimum_pipe_temperature_vip": {
+          "changes": 0,
+          "coverage": 0.9994253127624774,
+          "max": 0.0,
+          "min": 0.0,
+          "nonmissing": 22608,
+          "numeric": 22608
+        },
+        "compartment/minimum_window_position_lee_side_setpoint": {
+          "changes": 0,
+          "coverage": 0.9994253127624774,
+          "max": 5.0,
+          "min": 5.0,
+          "nonmissing": 22608,
+          "numeric": 22608
+        },
+        "compartment/minimum_window_position_lee_side_vip": {
+          "changes": 0,
+          "coverage": 0.9994253127624774,
+          "max": 5.0,
+          "min": 5.0,
+          "nonmissing": 22608,
+          "numeric": 22608
+        },
+        "compartment/screen_blackout/screen_position": {
+          "changes": 608,
+          "coverage": 0.9994253127624774,
+          "max": 99.9,
+          "min": 0.2,
+          "nonmissing": 22608,
+          "numeric": 22608
+        },
+        "compartment/screen_blackout/screen_position_setpoint": {
+          "changes": 219,
+          "coverage": 0.9994253127624774,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 22608,
+          "numeric": 22608
+        },
+        "compartment/screen_blackout/screen_position_vip": {
+          "changes": 214,
+          "coverage": 0.9994253127624774,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 22608,
+          "numeric": 22608
+        },
+        "compartment/screen_energy/screen_position": {
+          "changes": 548,
+          "coverage": 0.9994253127624774,
+          "max": 89.9,
+          "min": 0.1,
+          "nonmissing": 22608,
+          "numeric": 22608
+        },
+        "compartment/screen_energy/screen_position_setpoint": {
+          "changes": 158,
+          "coverage": 0.9994253127624774,
+          "max": 90.0,
+          "min": 0.0,
+          "nonmissing": 22608,
+          "numeric": 22608
+        },
+        "compartment/screen_energy/screen_position_vip": {
+          "changes": 159,
+          "coverage": 0.9994253127624774,
+          "max": 90.0,
+          "min": 0.0,
+          "nonmissing": 22608,
+          "numeric": 22608
+        },
+        "compartment/substrate/bulk_ec": {
+          "changes": 10363,
+          "coverage": 0.9618496087706114,
+          "max": 0.541,
+          "min": 0.0,
+          "nonmissing": 21758,
+          "numeric": 21758
+        },
+        "compartment/substrate/bulk_ec.1": {
+          "changes": 7154,
+          "coverage": 0.9621590557446621,
+          "max": 0.575,
+          "min": 0.0,
+          "nonmissing": 21765,
+          "numeric": 21765
+        },
+        "compartment/substrate/bulk_ec.2": {
+          "changes": 8347,
+          "coverage": 0.9628663631139207,
+          "max": 0.386,
+          "min": 0.0,
+          "nonmissing": 21781,
+          "numeric": 21781
+        },
+        "compartment/substrate/relative_permittivity": {
+          "changes": 14812,
+          "coverage": 0.9628663631139207,
+          "max": 18.83,
+          "min": 0.96,
+          "nonmissing": 21781,
+          "numeric": 21781
+        },
+        "compartment/substrate/relative_permittivity.1": {
+          "changes": 14355,
+          "coverage": 0.962822156403342,
+          "max": 15.34,
+          "min": 1.35,
+          "nonmissing": 21780,
+          "numeric": 21780
+        },
+        "compartment/substrate/relative_permittivity.2": {
+          "changes": 13472,
+          "coverage": 0.9628663631139207,
+          "max": 11.3,
+          "min": 1.28,
+          "nonmissing": 21781,
+          "numeric": 21781
+        },
+        "compartment/substrate/substrate_temperature": {
+          "changes": 16713,
+          "coverage": 0.9629105698244994,
+          "max": 28.87,
+          "min": 15.25,
+          "nonmissing": 21782,
+          "numeric": 21782
+        },
+        "compartment/substrate/substrate_temperature.1": {
+          "changes": 16911,
+          "coverage": 0.9629105698244994,
+          "max": 29.28,
+          "min": 15.28,
+          "nonmissing": 21782,
+          "numeric": 21782
+        },
+        "compartment/substrate/substrate_temperature.2": {
+          "changes": 16871,
+          "coverage": 0.9629105698244994,
+          "max": 28.82,
+          "min": 15.71,
+          "nonmissing": 21782,
+          "numeric": 21782
+        },
+        "compartment/ventilation_temperature_lee_side_vip": {
+          "changes": 161,
+          "coverage": 0.9994253127624774,
+          "max": 23.0,
+          "min": 19.0,
+          "nonmissing": 22608,
+          "numeric": 22608
+        },
+        "compartment/ventilation_temperature_setpoint": {
+          "changes": 159,
+          "coverage": 0.9994253127624774,
+          "max": 23.0,
+          "min": 19.0,
+          "nonmissing": 22608,
+          "numeric": 22608
+        },
+        "compartment/ventilation_temperature_wind_side_vip": {
+          "changes": 161,
+          "coverage": 0.9994253127624774,
+          "max": 23.0,
+          "min": 19.0,
+          "nonmissing": 22608,
+          "numeric": 22608
+        },
+        "compartment/water_drain/ec": {
+          "changes": 12647,
+          "coverage": 0.9994253127624774,
+          "max": 5.23,
+          "min": 1.86,
+          "nonmissing": 22608,
+          "numeric": 22608
+        },
+        "compartment/water_drain/ph": {
+          "changes": 7944,
+          "coverage": 0.9994253127624774,
+          "max": 7.35,
+          "min": 4.33,
+          "nonmissing": 22608,
+          "numeric": 22608
+        },
+        "compartment/water_drain/water_volume": {
+          "changes": 234,
+          "coverage": 0.9994253127624774,
+          "max": 1.13,
+          "min": 0.0,
+          "nonmissing": 22608,
+          "numeric": 22608
+        },
+        "compartment/water_supply/water_flow_duration": {
+          "changes": 353,
+          "coverage": 0.9994253127624774,
+          "max": 8.0,
+          "min": 0.0,
+          "nonmissing": 22608,
+          "numeric": 22608
+        },
+        "compartment/water_supply/water_supply_interval_setpoint": {
+          "changes": 546,
+          "coverage": 0.9994253127624774,
+          "max": 1440.0,
+          "min": 4.0,
+          "nonmissing": 22608,
+          "numeric": 22608
+        },
+        "compartment/water_supply/water_supply_interval_vip": {
+          "changes": 540,
+          "coverage": 0.9994253127624774,
+          "max": 1440.0,
+          "min": 4.0,
+          "nonmissing": 22608,
+          "numeric": 22608
+        },
+        "compartment/window_position_lee_side": {
+          "changes": 6402,
+          "coverage": 0.9994253127624774,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 22608,
+          "numeric": 22608
+        },
+        "compartment/window_position_wind_side": {
+          "changes": 4305,
+          "coverage": 0.9994253127624774,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 22608,
+          "numeric": 22608
+        },
+        "dwarf_tomato/harvest_date": {
+          "changes": 0,
+          "coverage": 4.4206710578665844e-05,
+          "max": 325.0,
+          "min": 325.0,
+          "nonmissing": 1,
+          "numeric": 1
+        },
+        "dwarf_tomato/plant_density": {
+          "changes": 3,
+          "coverage": 0.00017682684231466338,
+          "max": 56.0,
+          "min": 20.0,
+          "nonmissing": 4,
+          "numeric": 4
+        },
+        "dwarf_tomato/pot_area": {
+          "changes": 3,
+          "coverage": 0.9999557932894213,
+          "max": 0.05,
+          "min": 0.017857142857142856,
+          "nonmissing": 22620,
+          "numeric": 22620
+        }
+      },
+      "columns": 65,
+      "derived_resource_columns_named_only": [
+        "economics/fixed_costs.per_m2",
+        "economics/fixed_costs.per_pot",
+        "economics/heating_costs.per_m2",
+        "economics/heating_costs.per_pot",
+        "economics/co2_costs.per_m2",
+        "economics/co2_costs.per_pot",
+        "economics/lighting_costs.per_m2",
+        "economics/lighting_costs.per_pot",
+        "energy/energy_use.heating",
+        "energy/electricity_use.lighting",
+        "energy/co2_dosage"
+      ],
+      "derived_resource_values_accessed": false,
+      "essential_input_complete_rows": 22608,
+      "essential_input_incomplete_timestamps": [
+        "2024-09-03 00:00:00+02:00",
+        "2024-10-27 02:00:00+01:00",
+        "2024-10-27 02:05:00+01:00",
+        "2024-10-27 02:10:00+01:00",
+        "2024-10-27 02:15:00+01:00",
+        "2024-10-27 02:20:00+01:00",
+        "2024-10-27 02:25:00+01:00",
+        "2024-10-27 02:30:00+01:00",
+        "2024-10-27 02:35:00+01:00",
+        "2024-10-27 02:40:00+01:00",
+        "2024-10-27 02:45:00+01:00",
+        "2024-10-27 02:50:00+01:00",
+        "2024-10-27 02:55:00+01:00"
+      ],
+      "forbidden_outcome_columns_named_only": [
+        "compartment/air_temperature",
+        "compartment/relative_humidity",
+        "compartment/co2_concentration",
+        "compartment/humidity_deficit",
+        "compartment/air_temperature.microclimate",
+        "compartment/relative_humidity.microclimate"
+      ],
+      "forbidden_outcome_values_accessed": false,
+      "nonincreasing_timestamp_steps": 0,
+      "observation_only_columns_named_only": [
+        "compartment/par",
+        "compartment/mass.plant",
+        "compartment/vivent_biosignals"
+      ],
+      "observation_only_values_accessed": false,
+      "required_inputs": {
+        "co2_minutes": {
+          "column": "compartment/co2_dosage_minutes_cumulative",
+          "present": true,
+          "stats": {
+            "changes": 8406,
+            "coverage": 0.9994253127624774,
+            "max": 672.0,
+            "min": 0.0,
+            "nonmissing": 22608,
+            "numeric": 22608
+          }
+        },
+        "co2_state": {
+          "column": "compartment/co2_actuation_state",
+          "present": true,
+          "stats": {
+            "changes": 4267,
+            "coverage": 0.9994253127624774,
+            "max": 2.0,
+            "min": 1.0,
+            "nonmissing": 22608,
+            "numeric": 22608
+          }
+        },
+        "lamp_state": {
+          "column": "compartment/lamps_activation_percentage",
+          "present": true,
+          "stats": {
+            "changes": 158,
+            "coverage": 0.9994253127624774,
+            "max": 100.0,
+            "min": 0.0,
+            "nonmissing": 22608,
+            "numeric": 22608
+          }
+        },
+        "pipe_temperature": {
+          "column": "compartment/heating_lower_circuit/pipe_temperature",
+          "present": true,
+          "stats": {
+            "changes": 4325,
+            "coverage": 0.9994253127624774,
+            "max": 69.0,
+            "min": 0.0,
+            "nonmissing": 22608,
+            "numeric": 22608
+          }
+        },
+        "plant_density": {
+          "column": "dwarf_tomato/plant_density",
+          "present": true,
+          "stats": {
+            "changes": 3,
+            "coverage": 0.00017682684231466338,
+            "max": 56.0,
+            "min": 20.0,
+            "nonmissing": 4,
+            "numeric": 4
+          }
+        },
+        "screen_blackout": {
+          "column": "compartment/screen_blackout/screen_position",
+          "present": true,
+          "stats": {
+            "changes": 608,
+            "coverage": 0.9994253127624774,
+            "max": 99.9,
+            "min": 0.2,
+            "nonmissing": 22608,
+            "numeric": 22608
+          }
+        },
+        "screen_energy": {
+          "column": "compartment/screen_energy/screen_position",
+          "present": true,
+          "stats": {
+            "changes": 548,
+            "coverage": 0.9994253127624774,
+            "max": 89.9,
+            "min": 0.1,
+            "nonmissing": 22608,
+            "numeric": 22608
+          }
+        },
+        "window_lee": {
+          "column": "compartment/window_position_lee_side",
+          "present": true,
+          "stats": {
+            "changes": 6402,
+            "coverage": 0.9994253127624774,
+            "max": 100.0,
+            "min": 0.0,
+            "nonmissing": 22608,
+            "numeric": 22608
+          }
+        },
+        "window_wind": {
+          "column": "compartment/window_position_wind_side",
+          "present": true,
+          "stats": {
+            "changes": 4305,
+            "coverage": 0.9994253127624774,
+            "max": 100.0,
+            "min": 0.0,
+            "nonmissing": 22608,
+            "numeric": 22608
+          }
+        }
+      },
+      "row_width_errors": 0,
+      "rows": 22621,
+      "steps_not_300_seconds": 0,
+      "timestamp_count": 22621,
+      "timestamp_end": "2024-11-20T12:00:00+01:00",
+      "timestamp_start": "2024-09-03T00:00:00+02:00"
+    },
+    "ideas": {
+      "allowed_field_stats": {
+        "compartment/co2_actuation_state": {
+          "changes": 4848,
+          "coverage": 0.9993601417532116,
+          "max": 2.0,
+          "min": 1.0,
+          "nonmissing": 20304,
+          "numeric": 20304
+        },
+        "compartment/co2_concentration_setpoint": {
+          "changes": 297,
+          "coverage": 0.4988433331692671,
+          "max": 1200.0,
+          "min": 300.0,
+          "nonmissing": 10135,
+          "numeric": 10135
+        },
+        "compartment/co2_concentration_vip": {
+          "changes": 297,
+          "coverage": 0.9993601417532116,
+          "max": 1200.0,
+          "min": 300.0,
+          "nonmissing": 20304,
+          "numeric": 20304
+        },
+        "compartment/co2_dosage_minutes_cumulative": {
+          "changes": 10195,
+          "coverage": 0.9993601417532116,
+          "max": 832.0,
+          "min": 0.0,
+          "nonmissing": 20304,
+          "numeric": 20304
+        },
+        "compartment/heating_lower_circuit/pipe_temperature": {
+          "changes": 3494,
+          "coverage": 0.9993601417532116,
+          "max": 64.5,
+          "min": 0.0,
+          "nonmissing": 20304,
+          "numeric": 20304
+        },
+        "compartment/heating_temperature_setpoint": {
+          "changes": 270,
+          "coverage": 0.4970714180243146,
+          "max": 24.0,
+          "min": 17.0,
+          "nonmissing": 10099,
+          "numeric": 10099
+        },
+        "compartment/heating_temperature_vip": {
+          "changes": 270,
+          "coverage": 0.9993601417532116,
+          "max": 24.0,
+          "min": 17.0,
+          "nonmissing": 20304,
+          "numeric": 20304
+        },
+        "compartment/humidity_deficit_setpoint": {
+          "changes": 299,
+          "coverage": 0.16759364079342423,
+          "max": 7.04,
+          "min": 4.0,
+          "nonmissing": 3405,
+          "numeric": 3405
+        },
+        "compartment/humidity_deficit_vip": {
+          "changes": 299,
+          "coverage": 0.9993601417532116,
+          "max": 7.04,
+          "min": 4.0,
+          "nonmissing": 20304,
+          "numeric": 20304
+        },
+        "compartment/lamps_activation_percentage": {
+          "changes": 329,
+          "coverage": 0.9993601417532116,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 20304,
+          "numeric": 20304
+        },
+        "compartment/lamps_activation_percentage_setpoint": {
+          "changes": 329,
+          "coverage": 0.48117340158487965,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 9776,
+          "numeric": 9776
+        },
+        "compartment/minimum_pipe_temperature_vip": {
+          "changes": 0,
+          "coverage": 0.9993601417532116,
+          "max": 0.0,
+          "min": 0.0,
+          "nonmissing": 20304,
+          "numeric": 20304
+        },
+        "compartment/minimum_window_position_lee_side_setpoint": {
+          "changes": 382,
+          "coverage": 0.1560269724860954,
+          "max": 80.0,
+          "min": 0.0,
+          "nonmissing": 3170,
+          "numeric": 3170
+        },
+        "compartment/minimum_window_position_lee_side_vip": {
+          "changes": 382,
+          "coverage": 0.9993601417532116,
+          "max": 80.0,
+          "min": 0.0,
+          "nonmissing": 20304,
+          "numeric": 20304
+        },
+        "compartment/screen_blackout/screen_position": {
+          "changes": 500,
+          "coverage": 0.9993601417532116,
+          "max": 99.9,
+          "min": 0.1,
+          "nonmissing": 20304,
+          "numeric": 20304
+        },
+        "compartment/screen_blackout/screen_position_setpoint": {
+          "changes": 142,
+          "coverage": 0.49298616921789634,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 10016,
+          "numeric": 10016
+        },
+        "compartment/screen_blackout/screen_position_vip": {
+          "changes": 140,
+          "coverage": 0.9993601417532116,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 20304,
+          "numeric": 20304
+        },
+        "compartment/screen_energy/screen_position": {
+          "changes": 481,
+          "coverage": 0.9993601417532116,
+          "max": 94.8,
+          "min": 0.1,
+          "nonmissing": 20304,
+          "numeric": 20304
+        },
+        "compartment/screen_energy/screen_position_setpoint": {
+          "changes": 170,
+          "coverage": 0.1609981788649899,
+          "max": 95.0,
+          "min": 0.0,
+          "nonmissing": 3271,
+          "numeric": 3271
+        },
+        "compartment/screen_energy/screen_position_vip": {
+          "changes": 170,
+          "coverage": 0.9993601417532116,
+          "max": 95.0,
+          "min": 0.0,
+          "nonmissing": 20304,
+          "numeric": 20304
+        },
+        "compartment/substrate/bulk_ec": {
+          "changes": 9270,
+          "coverage": 0.958606093419304,
+          "max": 0.641,
+          "min": 0.0,
+          "nonmissing": 19476,
+          "numeric": 19476
+        },
+        "compartment/substrate/bulk_ec.1": {
+          "changes": 6813,
+          "coverage": 0.9588029728798543,
+          "max": 0.536,
+          "min": 0.0,
+          "nonmissing": 19480,
+          "numeric": 19480
+        },
+        "compartment/substrate/bulk_ec.2": {
+          "changes": 9105,
+          "coverage": 0.9594920509917803,
+          "max": 0.942,
+          "min": 0.0,
+          "nonmissing": 19494,
+          "numeric": 19494
+        },
+        "compartment/substrate/relative_permittivity": {
+          "changes": 12445,
+          "coverage": 0.9594920509917803,
+          "max": 18.72,
+          "min": 1.07,
+          "nonmissing": 19494,
+          "numeric": 19494
+        },
+        "compartment/substrate/relative_permittivity.1": {
+          "changes": 12288,
+          "coverage": 0.9594428311266427,
+          "max": 16.08,
+          "min": 1.81,
+          "nonmissing": 19493,
+          "numeric": 19493
+        },
+        "compartment/substrate/relative_permittivity.2": {
+          "changes": 12411,
+          "coverage": 0.9594920509917803,
+          "max": 20.71,
+          "min": 1.23,
+          "nonmissing": 19494,
+          "numeric": 19494
+        },
+        "compartment/substrate/substrate_temperature": {
+          "changes": 14354,
+          "coverage": 0.9595412708569179,
+          "max": 29.4,
+          "min": 18.0,
+          "nonmissing": 19495,
+          "numeric": 19495
+        },
+        "compartment/substrate/substrate_temperature.1": {
+          "changes": 13833,
+          "coverage": 0.9595412708569179,
+          "max": 28.04,
+          "min": 17.87,
+          "nonmissing": 19495,
+          "numeric": 19495
+        },
+        "compartment/substrate/substrate_temperature.2": {
+          "changes": 13294,
+          "coverage": 0.9595412708569179,
+          "max": 27.4,
+          "min": 17.78,
+          "nonmissing": 19495,
+          "numeric": 19495
+        },
+        "compartment/ventilation_temperature_lee_side_vip": {
+          "changes": 6,
+          "coverage": 0.9993601417532116,
+          "max": 25.0,
+          "min": 18.0,
+          "nonmissing": 20304,
+          "numeric": 20304
+        },
+        "compartment/ventilation_temperature_setpoint": {
+          "changes": 6,
+          "coverage": 0.49697297829403947,
+          "max": 25.0,
+          "min": 18.0,
+          "nonmissing": 10097,
+          "numeric": 10097
+        },
+        "compartment/ventilation_temperature_wind_side_vip": {
+          "changes": 6,
+          "coverage": 0.9993601417532116,
+          "max": 25.0,
+          "min": 18.0,
+          "nonmissing": 20304,
+          "numeric": 20304
+        },
+        "compartment/water_drain/ec": {
+          "changes": 6985,
+          "coverage": 0.9993601417532116,
+          "max": 0.11,
+          "min": 0.05,
+          "nonmissing": 20304,
+          "numeric": 20304
+        },
+        "compartment/water_drain/ph": {
+          "changes": 9374,
+          "coverage": 0.9993601417532116,
+          "max": 16.5,
+          "min": 14.24,
+          "nonmissing": 20304,
+          "numeric": 20304
+        },
+        "compartment/water_drain/water_volume": {
+          "changes": 526,
+          "coverage": 0.9993601417532116,
+          "max": 1.68,
+          "min": 0.0,
+          "nonmissing": 20304,
+          "numeric": 20304
+        },
+        "compartment/water_supply/water_flow_duration": {
+          "changes": 357,
+          "coverage": 0.9993601417532116,
+          "max": 8.0,
+          "min": 0.0,
+          "nonmissing": 20304,
+          "numeric": 20304
+        },
+        "compartment/water_supply/water_supply_interval_setpoint": {
+          "changes": 281,
+          "coverage": 0.013880001968794605,
+          "max": 1440.0,
+          "min": 80.0,
+          "nonmissing": 282,
+          "numeric": 282
+        },
+        "compartment/water_supply/water_supply_interval_vip": {
+          "changes": 280,
+          "coverage": 0.9993601417532116,
+          "max": 1440.0,
+          "min": 80.0,
+          "nonmissing": 20304,
+          "numeric": 20304
+        },
+        "compartment/window_position_lee_side": {
+          "changes": 6461,
+          "coverage": 0.9993601417532116,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 20304,
+          "numeric": 20304
+        },
+        "compartment/window_position_wind_side": {
+          "changes": 3548,
+          "coverage": 0.9993601417532116,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 20304,
+          "numeric": 20304
+        },
+        "dwarf_tomato/harvest_date": {
+          "changes": 0,
+          "coverage": 4.9219865137569525e-05,
+          "max": 317.0,
+          "min": 317.0,
+          "nonmissing": 1,
+          "numeric": 1
+        },
+        "dwarf_tomato/plant_density": {
+          "changes": 2,
+          "coverage": 0.00014765959541270858,
+          "max": 56.0,
+          "min": 30.0,
+          "nonmissing": 3,
+          "numeric": 3
+        },
+        "dwarf_tomato/pot_area": {
+          "changes": 2,
+          "coverage": 0.9999507801348624,
+          "max": 0.03333333333333333,
+          "min": 0.017857142857142856,
+          "nonmissing": 20316,
+          "numeric": 20316
+        }
+      },
+      "columns": 60,
+      "derived_resource_columns_named_only": [
+        "economics/fixed_costs.per_m2",
+        "economics/fixed_costs.per_pot",
+        "economics/heating_costs.per_m2",
+        "economics/heating_costs.per_pot",
+        "economics/co2_costs.per_m2",
+        "economics/co2_costs.per_pot",
+        "economics/lighting_costs.per_m2",
+        "economics/lighting_costs.per_pot",
+        "energy/energy_use.heating",
+        "energy/electricity_use.lighting",
+        "energy/co2_dosage"
+      ],
+      "derived_resource_values_accessed": false,
+      "essential_input_complete_rows": 20304,
+      "essential_input_incomplete_timestamps": [
+        "2024-09-03 00:00:00+02:00",
+        "2024-10-27 02:00:00+01:00",
+        "2024-10-27 02:05:00+01:00",
+        "2024-10-27 02:10:00+01:00",
+        "2024-10-27 02:15:00+01:00",
+        "2024-10-27 02:20:00+01:00",
+        "2024-10-27 02:25:00+01:00",
+        "2024-10-27 02:30:00+01:00",
+        "2024-10-27 02:35:00+01:00",
+        "2024-10-27 02:40:00+01:00",
+        "2024-10-27 02:45:00+01:00",
+        "2024-10-27 02:50:00+01:00",
+        "2024-10-27 02:55:00+01:00"
+      ],
+      "forbidden_outcome_columns_named_only": [
+        "compartment/air_temperature",
+        "compartment/relative_humidity",
+        "compartment/co2_concentration",
+        "compartment/humidity_deficit"
+      ],
+      "forbidden_outcome_values_accessed": false,
+      "nonincreasing_timestamp_steps": 0,
+      "observation_only_columns_named_only": [
+        "compartment/par"
+      ],
+      "observation_only_values_accessed": false,
+      "required_inputs": {
+        "co2_minutes": {
+          "column": "compartment/co2_dosage_minutes_cumulative",
+          "present": true,
+          "stats": {
+            "changes": 10195,
+            "coverage": 0.9993601417532116,
+            "max": 832.0,
+            "min": 0.0,
+            "nonmissing": 20304,
+            "numeric": 20304
+          }
+        },
+        "co2_state": {
+          "column": "compartment/co2_actuation_state",
+          "present": true,
+          "stats": {
+            "changes": 4848,
+            "coverage": 0.9993601417532116,
+            "max": 2.0,
+            "min": 1.0,
+            "nonmissing": 20304,
+            "numeric": 20304
+          }
+        },
+        "lamp_state": {
+          "column": "compartment/lamps_activation_percentage",
+          "present": true,
+          "stats": {
+            "changes": 329,
+            "coverage": 0.9993601417532116,
+            "max": 100.0,
+            "min": 0.0,
+            "nonmissing": 20304,
+            "numeric": 20304
+          }
+        },
+        "pipe_temperature": {
+          "column": "compartment/heating_lower_circuit/pipe_temperature",
+          "present": true,
+          "stats": {
+            "changes": 3494,
+            "coverage": 0.9993601417532116,
+            "max": 64.5,
+            "min": 0.0,
+            "nonmissing": 20304,
+            "numeric": 20304
+          }
+        },
+        "plant_density": {
+          "column": "dwarf_tomato/plant_density",
+          "present": true,
+          "stats": {
+            "changes": 2,
+            "coverage": 0.00014765959541270858,
+            "max": 56.0,
+            "min": 30.0,
+            "nonmissing": 3,
+            "numeric": 3
+          }
+        },
+        "screen_blackout": {
+          "column": "compartment/screen_blackout/screen_position",
+          "present": true,
+          "stats": {
+            "changes": 500,
+            "coverage": 0.9993601417532116,
+            "max": 99.9,
+            "min": 0.1,
+            "nonmissing": 20304,
+            "numeric": 20304
+          }
+        },
+        "screen_energy": {
+          "column": "compartment/screen_energy/screen_position",
+          "present": true,
+          "stats": {
+            "changes": 481,
+            "coverage": 0.9993601417532116,
+            "max": 94.8,
+            "min": 0.1,
+            "nonmissing": 20304,
+            "numeric": 20304
+          }
+        },
+        "window_lee": {
+          "column": "compartment/window_position_lee_side",
+          "present": true,
+          "stats": {
+            "changes": 6461,
+            "coverage": 0.9993601417532116,
+            "max": 100.0,
+            "min": 0.0,
+            "nonmissing": 20304,
+            "numeric": 20304
+          }
+        },
+        "window_wind": {
+          "column": "compartment/window_position_wind_side",
+          "present": true,
+          "stats": {
+            "changes": 3548,
+            "coverage": 0.9993601417532116,
+            "max": 100.0,
+            "min": 0.0,
+            "nonmissing": 20304,
+            "numeric": 20304
+          }
+        }
+      },
+      "row_width_errors": 0,
+      "rows": 20317,
+      "steps_not_300_seconds": 0,
+      "timestamp_count": 20317,
+      "timestamp_end": "2024-11-12T12:00:00+01:00",
+      "timestamp_start": "2024-09-03T00:00:00+02:00"
+    },
+    "mugrow": {
+      "allowed_field_stats": {
+        "compartment/co2_actuation_state": {
+          "changes": 2216,
+          "coverage": 0.9993509411353537,
+          "max": 2.0,
+          "min": 1.0,
+          "nonmissing": 20016,
+          "numeric": 20016
+        },
+        "compartment/co2_concentration_setpoint": {
+          "changes": 609,
+          "coverage": 0.9977033301712517,
+          "max": 700.0,
+          "min": 400.0,
+          "nonmissing": 19983,
+          "numeric": 19983
+        },
+        "compartment/co2_concentration_vip": {
+          "changes": 609,
+          "coverage": 0.9993509411353537,
+          "max": 700.0,
+          "min": 400.0,
+          "nonmissing": 20016,
+          "numeric": 20016
+        },
+        "compartment/co2_dosage_minutes_cumulative": {
+          "changes": 2880,
+          "coverage": 0.9993509411353537,
+          "max": 342.0,
+          "min": 0.0,
+          "nonmissing": 20016,
+          "numeric": 20016
+        },
+        "compartment/heating_lower_circuit/pipe_temperature": {
+          "changes": 781,
+          "coverage": 0.9993509411353537,
+          "max": 40.7,
+          "min": 0.0,
+          "nonmissing": 20016,
+          "numeric": 20016
+        },
+        "compartment/heating_temperature_setpoint": {
+          "changes": 1456,
+          "coverage": 0.0832792450946128,
+          "max": 22.7,
+          "min": 10.2,
+          "nonmissing": 1668,
+          "numeric": 1668
+        },
+        "compartment/heating_temperature_vip": {
+          "changes": 1455,
+          "coverage": 0.9993509411353537,
+          "max": 22.7,
+          "min": 10.2,
+          "nonmissing": 20016,
+          "numeric": 20016
+        },
+        "compartment/humidity_deficit_setpoint": {
+          "changes": 142,
+          "coverage": 0.9978031853811973,
+          "max": 3.0,
+          "min": 2.0,
+          "nonmissing": 19985,
+          "numeric": 19985
+        },
+        "compartment/humidity_deficit_vip": {
+          "changes": 142,
+          "coverage": 0.9993509411353537,
+          "max": 3.0,
+          "min": 2.0,
+          "nonmissing": 20016,
+          "numeric": 20016
+        },
+        "compartment/lamps_activation_percentage": {
+          "changes": 285,
+          "coverage": 0.9993509411353537,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 20016,
+          "numeric": 20016
+        },
+        "compartment/lamps_activation_percentage_setpoint": {
+          "changes": 285,
+          "coverage": 0.08317938988466723,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 1666,
+          "numeric": 1666
+        },
+        "compartment/minimum_pipe_temperature_vip": {
+          "changes": 0,
+          "coverage": 0.9993509411353537,
+          "max": 0.0,
+          "min": 0.0,
+          "nonmissing": 20016,
+          "numeric": 20016
+        },
+        "compartment/minimum_window_position_lee_side_vip": {
+          "changes": 1472,
+          "coverage": 0.9993509411353537,
+          "max": 15.0,
+          "min": 0.0,
+          "nonmissing": 20016,
+          "numeric": 20016
+        },
+        "compartment/screen_blackout/screen_position": {
+          "changes": 575,
+          "coverage": 0.9993509411353537,
+          "max": 100.0,
+          "min": 0.2,
+          "nonmissing": 20016,
+          "numeric": 20016
+        },
+        "compartment/screen_blackout/screen_position_setpoint": {
+          "changes": 151,
+          "coverage": 0.997154126516551,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 19972,
+          "numeric": 19972
+        },
+        "compartment/screen_blackout/screen_position_vip": {
+          "changes": 151,
+          "coverage": 0.9993509411353537,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 20016,
+          "numeric": 20016
+        },
+        "compartment/screen_energy/screen_position": {
+          "changes": 2947,
+          "coverage": 0.9993509411353537,
+          "max": 89.9,
+          "min": 0.1,
+          "nonmissing": 20016,
+          "numeric": 20016
+        },
+        "compartment/screen_energy/screen_position_setpoint": {
+          "changes": 2091,
+          "coverage": 0.997154126516551,
+          "max": 90.0,
+          "min": 0.0,
+          "nonmissing": 19972,
+          "numeric": 19972
+        },
+        "compartment/screen_energy/screen_position_vip": {
+          "changes": 2085,
+          "coverage": 0.9993509411353537,
+          "max": 90.0,
+          "min": 0.0,
+          "nonmissing": 20016,
+          "numeric": 20016
+        },
+        "compartment/substrate/bulk_ec": {
+          "changes": 9174,
+          "coverage": 0.9583603774526936,
+          "max": 0.712,
+          "min": 0.0,
+          "nonmissing": 19195,
+          "numeric": 19195
+        },
+        "compartment/substrate/bulk_ec.1": {
+          "changes": 7776,
+          "coverage": 0.9586100154775575,
+          "max": 0.703,
+          "min": 0.0,
+          "nonmissing": 19200,
+          "numeric": 19200
+        },
+        "compartment/substrate/bulk_ec.2": {
+          "changes": 7987,
+          "coverage": 0.9593090019471766,
+          "max": 0.602,
+          "min": 0.0,
+          "nonmissing": 19214,
+          "numeric": 19214
+        },
+        "compartment/substrate/relative_permittivity": {
+          "changes": 11961,
+          "coverage": 0.9593090019471766,
+          "max": 18.89,
+          "min": 1.13,
+          "nonmissing": 19214,
+          "numeric": 19214
+        },
+        "compartment/substrate/relative_permittivity.1": {
+          "changes": 12699,
+          "coverage": 0.9592590743422038,
+          "max": 16.26,
+          "min": 0.95,
+          "nonmissing": 19213,
+          "numeric": 19213
+        },
+        "compartment/substrate/relative_permittivity.2": {
+          "changes": 12228,
+          "coverage": 0.9593090019471766,
+          "max": 16.63,
+          "min": 0.88,
+          "nonmissing": 19214,
+          "numeric": 19214
+        },
+        "compartment/substrate/substrate_temperature": {
+          "changes": 13848,
+          "coverage": 0.9593589295521494,
+          "max": 28.89,
+          "min": 15.94,
+          "nonmissing": 19215,
+          "numeric": 19215
+        },
+        "compartment/substrate/substrate_temperature.1": {
+          "changes": 14456,
+          "coverage": 0.9593589295521494,
+          "max": 29.08,
+          "min": 16.22,
+          "nonmissing": 19215,
+          "numeric": 19215
+        },
+        "compartment/substrate/substrate_temperature.2": {
+          "changes": 13923,
+          "coverage": 0.9593090019471766,
+          "max": 28.99,
+          "min": 16.05,
+          "nonmissing": 19214,
+          "numeric": 19214
+        },
+        "compartment/ventilation_temperature_lee_side_vip": {
+          "changes": 1454,
+          "coverage": 0.9993509411353537,
+          "max": 26.0,
+          "min": 13.8,
+          "nonmissing": 20016,
+          "numeric": 20016
+        },
+        "compartment/ventilation_temperature_setpoint": {
+          "changes": 1455,
+          "coverage": 0.0832792450946128,
+          "max": 26.0,
+          "min": 13.8,
+          "nonmissing": 1668,
+          "numeric": 1668
+        },
+        "compartment/ventilation_temperature_wind_side_vip": {
+          "changes": 1454,
+          "coverage": 0.9993509411353537,
+          "max": 26.0,
+          "min": 13.8,
+          "nonmissing": 20016,
+          "numeric": 20016
+        },
+        "compartment/water_drain/ec": {
+          "changes": 9256,
+          "coverage": 0.9993509411353537,
+          "max": 5.17,
+          "min": 2.43,
+          "nonmissing": 20016,
+          "numeric": 20016
+        },
+        "compartment/water_drain/ph": {
+          "changes": 4284,
+          "coverage": 0.9993509411353537,
+          "max": 5.17,
+          "min": 4.67,
+          "nonmissing": 20016,
+          "numeric": 20016
+        },
+        "compartment/water_drain/water_volume": {
+          "changes": 132,
+          "coverage": 0.9993509411353537,
+          "max": 2.56,
+          "min": 0.0,
+          "nonmissing": 20016,
+          "numeric": 20016
+        },
+        "compartment/water_supply/water_flow_duration": {
+          "changes": 322,
+          "coverage": 0.9993509411353537,
+          "max": 7.0,
+          "min": 0.0,
+          "nonmissing": 20016,
+          "numeric": 20016
+        },
+        "compartment/water_supply/water_supply_interval_setpoint": {
+          "changes": 168,
+          "coverage": 0.995256877527585,
+          "max": 4320.0,
+          "min": 30.0,
+          "nonmissing": 19934,
+          "numeric": 19934
+        },
+        "compartment/water_supply/water_supply_interval_vip": {
+          "changes": 168,
+          "coverage": 0.9993509411353537,
+          "max": 4320.0,
+          "min": 30.0,
+          "nonmissing": 20016,
+          "numeric": 20016
+        },
+        "compartment/window_position_lee_side": {
+          "changes": 5766,
+          "coverage": 0.9993509411353537,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 20016,
+          "numeric": 20016
+        },
+        "compartment/window_position_wind_side": {
+          "changes": 3836,
+          "coverage": 0.9993509411353537,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 20016,
+          "numeric": 20016
+        },
+        "dwarf_tomato/harvest_date": {
+          "changes": 0,
+          "coverage": 4.992760497278945e-05,
+          "max": 316.0,
+          "min": 316.0,
+          "nonmissing": 1,
+          "numeric": 1
+        },
+        "dwarf_tomato/plant_density": {
+          "changes": 1,
+          "coverage": 9.98552099455789e-05,
+          "max": 56.0,
+          "min": 30.0,
+          "nonmissing": 2,
+          "numeric": 2
+        },
+        "dwarf_tomato/pot_area": {
+          "changes": 1,
+          "coverage": 0.9999500723950272,
+          "max": 0.03333333333333333,
+          "min": 0.017857142857142856,
+          "nonmissing": 20028,
+          "numeric": 20028
+        }
+      },
+      "columns": 65,
+      "derived_resource_columns_named_only": [
+        "economics/fixed_costs.per_m2",
+        "economics/fixed_costs.per_pot",
+        "economics/heating_costs.per_m2",
+        "economics/heating_costs.per_pot",
+        "economics/co2_costs.per_m2",
+        "economics/co2_costs.per_pot",
+        "economics/lighting_costs.per_m2",
+        "economics/lighting_costs.per_pot",
+        "energy/energy_use.heating",
+        "energy/electricity_use.lighting",
+        "energy/co2_dosage"
+      ],
+      "derived_resource_values_accessed": false,
+      "essential_input_complete_rows": 20016,
+      "essential_input_incomplete_timestamps": [
+        "2024-09-03 00:00:00+02:00",
+        "2024-10-27 02:00:00+01:00",
+        "2024-10-27 02:05:00+01:00",
+        "2024-10-27 02:10:00+01:00",
+        "2024-10-27 02:15:00+01:00",
+        "2024-10-27 02:20:00+01:00",
+        "2024-10-27 02:25:00+01:00",
+        "2024-10-27 02:30:00+01:00",
+        "2024-10-27 02:35:00+01:00",
+        "2024-10-27 02:40:00+01:00",
+        "2024-10-27 02:45:00+01:00",
+        "2024-10-27 02:50:00+01:00",
+        "2024-10-27 02:55:00+01:00"
+      ],
+      "forbidden_outcome_columns_named_only": [
+        "compartment/air_temperature",
+        "compartment/relative_humidity",
+        "compartment/co2_concentration",
+        "compartment/humidity_deficit"
+      ],
+      "forbidden_outcome_values_accessed": false,
+      "nonincreasing_timestamp_steps": 0,
+      "observation_only_columns_named_only": [
+        "compartment/fluorescence/gardin_efficiency",
+        "compartment/fluorescence/gardin_health",
+        "compartment/fluorescence/gardin_energy_balance",
+        "compartment/fluorescence/gardin_productivity",
+        "compartment/fluorescence/gardin_actinic",
+        "compartment/fluorescence/gardin_qe",
+        "compartment/par"
+      ],
+      "observation_only_values_accessed": false,
+      "required_inputs": {
+        "co2_minutes": {
+          "column": "compartment/co2_dosage_minutes_cumulative",
+          "present": true,
+          "stats": {
+            "changes": 2880,
+            "coverage": 0.9993509411353537,
+            "max": 342.0,
+            "min": 0.0,
+            "nonmissing": 20016,
+            "numeric": 20016
+          }
+        },
+        "co2_state": {
+          "column": "compartment/co2_actuation_state",
+          "present": true,
+          "stats": {
+            "changes": 2216,
+            "coverage": 0.9993509411353537,
+            "max": 2.0,
+            "min": 1.0,
+            "nonmissing": 20016,
+            "numeric": 20016
+          }
+        },
+        "lamp_state": {
+          "column": "compartment/lamps_activation_percentage",
+          "present": true,
+          "stats": {
+            "changes": 285,
+            "coverage": 0.9993509411353537,
+            "max": 100.0,
+            "min": 0.0,
+            "nonmissing": 20016,
+            "numeric": 20016
+          }
+        },
+        "pipe_temperature": {
+          "column": "compartment/heating_lower_circuit/pipe_temperature",
+          "present": true,
+          "stats": {
+            "changes": 781,
+            "coverage": 0.9993509411353537,
+            "max": 40.7,
+            "min": 0.0,
+            "nonmissing": 20016,
+            "numeric": 20016
+          }
+        },
+        "plant_density": {
+          "column": "dwarf_tomato/plant_density",
+          "present": true,
+          "stats": {
+            "changes": 1,
+            "coverage": 9.98552099455789e-05,
+            "max": 56.0,
+            "min": 30.0,
+            "nonmissing": 2,
+            "numeric": 2
+          }
+        },
+        "screen_blackout": {
+          "column": "compartment/screen_blackout/screen_position",
+          "present": true,
+          "stats": {
+            "changes": 575,
+            "coverage": 0.9993509411353537,
+            "max": 100.0,
+            "min": 0.2,
+            "nonmissing": 20016,
+            "numeric": 20016
+          }
+        },
+        "screen_energy": {
+          "column": "compartment/screen_energy/screen_position",
+          "present": true,
+          "stats": {
+            "changes": 2947,
+            "coverage": 0.9993509411353537,
+            "max": 89.9,
+            "min": 0.1,
+            "nonmissing": 20016,
+            "numeric": 20016
+          }
+        },
+        "window_lee": {
+          "column": "compartment/window_position_lee_side",
+          "present": true,
+          "stats": {
+            "changes": 5766,
+            "coverage": 0.9993509411353537,
+            "max": 100.0,
+            "min": 0.0,
+            "nonmissing": 20016,
+            "numeric": 20016
+          }
+        },
+        "window_wind": {
+          "column": "compartment/window_position_wind_side",
+          "present": true,
+          "stats": {
+            "changes": 3836,
+            "coverage": 0.9993509411353537,
+            "max": 100.0,
+            "min": 0.0,
+            "nonmissing": 20016,
+            "numeric": 20016
+          }
+        }
+      },
+      "row_width_errors": 0,
+      "rows": 20029,
+      "steps_not_300_seconds": 0,
+      "timestamp_count": 20029,
+      "timestamp_end": "2024-11-11T12:00:00+01:00",
+      "timestamp_start": "2024-09-03T00:00:00+02:00"
+    },
+    "reference": {
+      "allowed_field_stats": {
+        "compartment/co2_actuation_state": {
+          "changes": 4910,
+          "coverage": 0.999386242387045,
+          "max": 2.0,
+          "min": 1.0,
+          "nonmissing": 21168,
+          "numeric": 21168
+        },
+        "compartment/co2_concentration_setpoint": {
+          "changes": 14047,
+          "coverage": 0.9371134507341485,
+          "max": 1914.0,
+          "min": 159.0,
+          "nonmissing": 19849,
+          "numeric": 19849
+        },
+        "compartment/co2_concentration_vip": {
+          "changes": 12646,
+          "coverage": 0.999386242387045,
+          "max": 1914.0,
+          "min": 159.0,
+          "nonmissing": 21168,
+          "numeric": 21168
+        },
+        "compartment/co2_dosage_minutes_cumulative": {
+          "changes": 8757,
+          "coverage": 0.999386242387045,
+          "max": 719.0,
+          "min": 0.0,
+          "nonmissing": 21168,
+          "numeric": 21168
+        },
+        "compartment/heating_lower_circuit/pipe_temperature": {
+          "changes": 2746,
+          "coverage": 0.999386242387045,
+          "max": 62.1,
+          "min": 0.0,
+          "nonmissing": 21168,
+          "numeric": 21168
+        },
+        "compartment/heating_temperature_setpoint": {
+          "changes": 6788,
+          "coverage": 0.9382465417119116,
+          "max": 22.0,
+          "min": 15.9,
+          "nonmissing": 19873,
+          "numeric": 19873
+        },
+        "compartment/heating_temperature_vip": {
+          "changes": 6009,
+          "coverage": 0.999386242387045,
+          "max": 22.0,
+          "min": 15.9,
+          "nonmissing": 21168,
+          "numeric": 21168
+        },
+        "compartment/humidity_deficit_setpoint": {
+          "changes": 4229,
+          "coverage": 0.9373495113545158,
+          "max": 5.9,
+          "min": 1.1,
+          "nonmissing": 19854,
+          "numeric": 19854
+        },
+        "compartment/humidity_deficit_vip": {
+          "changes": 3454,
+          "coverage": 0.999386242387045,
+          "max": 5.9,
+          "min": 1.1,
+          "nonmissing": 21168,
+          "numeric": 21168
+        },
+        "compartment/lamps_activation_percentage": {
+          "changes": 1187,
+          "coverage": 0.999386242387045,
+          "max": 75.0,
+          "min": 0.0,
+          "nonmissing": 21168,
+          "numeric": 21168
+        },
+        "compartment/lamps_activation_percentage_setpoint": {
+          "changes": 1349,
+          "coverage": 0.9391907841933809,
+          "max": 75.0,
+          "min": 0.0,
+          "nonmissing": 19893,
+          "numeric": 19893
+        },
+        "compartment/minimum_pipe_temperature_setpoint": {
+          "changes": 1,
+          "coverage": 9.442424814692413e-05,
+          "max": 30.0,
+          "min": 0.0,
+          "nonmissing": 2,
+          "numeric": 2
+        },
+        "compartment/minimum_pipe_temperature_vip": {
+          "changes": 2,
+          "coverage": 0.999386242387045,
+          "max": 30.0,
+          "min": 0.0,
+          "nonmissing": 21168,
+          "numeric": 21168
+        },
+        "compartment/minimum_window_position_lee_side_setpoint": {
+          "changes": 7388,
+          "coverage": 0.9388602993248666,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 19886,
+          "numeric": 19886
+        },
+        "compartment/minimum_window_position_lee_side_vip": {
+          "changes": 6699,
+          "coverage": 0.999386242387045,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 21168,
+          "numeric": 21168
+        },
+        "compartment/screen_blackout/screen_position": {
+          "changes": 2124,
+          "coverage": 0.999386242387045,
+          "max": 99.9,
+          "min": 0.2,
+          "nonmissing": 21168,
+          "numeric": 21168
+        },
+        "compartment/screen_blackout/screen_position_setpoint": {
+          "changes": 2314,
+          "coverage": 0.9397573296822624,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 19905,
+          "numeric": 19905
+        },
+        "compartment/screen_blackout/screen_position_vip": {
+          "changes": 2089,
+          "coverage": 0.999386242387045,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 21168,
+          "numeric": 21168
+        },
+        "compartment/screen_energy/screen_position": {
+          "changes": 3178,
+          "coverage": 0.999386242387045,
+          "max": 99.8,
+          "min": 0.1,
+          "nonmissing": 21168,
+          "numeric": 21168
+        },
+        "compartment/screen_energy/screen_position_setpoint": {
+          "changes": 4236,
+          "coverage": 0.9395684811859686,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 19901,
+          "numeric": 19901
+        },
+        "compartment/screen_energy/screen_position_vip": {
+          "changes": 3788,
+          "coverage": 0.999386242387045,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 21168,
+          "numeric": 21168
+        },
+        "compartment/ventilation_temperature_lee_side_vip": {
+          "changes": 6013,
+          "coverage": 0.999386242387045,
+          "max": 24.0,
+          "min": 17.9,
+          "nonmissing": 21168,
+          "numeric": 21168
+        },
+        "compartment/ventilation_temperature_setpoint": {
+          "changes": 6791,
+          "coverage": 0.9382937538359851,
+          "max": 24.0,
+          "min": 17.9,
+          "nonmissing": 19874,
+          "numeric": 19874
+        },
+        "compartment/ventilation_temperature_wind_side_vip": {
+          "changes": 6013,
+          "coverage": 0.999386242387045,
+          "max": 24.0,
+          "min": 17.9,
+          "nonmissing": 21168,
+          "numeric": 21168
+        },
+        "compartment/water_drain/ec": {
+          "changes": 1289,
+          "coverage": 0.999386242387045,
+          "max": 0.07,
+          "min": 0.03,
+          "nonmissing": 21168,
+          "numeric": 21168
+        },
+        "compartment/water_drain/ph": {
+          "changes": 2,
+          "coverage": 0.999386242387045,
+          "max": 0.06,
+          "min": 0.05,
+          "nonmissing": 21168,
+          "numeric": 21168
+        },
+        "compartment/water_drain/water_volume": {
+          "changes": 487,
+          "coverage": 0.999386242387045,
+          "max": 1.14,
+          "min": 0.0,
+          "nonmissing": 21168,
+          "numeric": 21168
+        },
+        "compartment/water_supply/water_flow_duration": {
+          "changes": 401,
+          "coverage": 0.999386242387045,
+          "max": 7.0,
+          "min": 0.0,
+          "nonmissing": 21168,
+          "numeric": 21168
+        },
+        "compartment/water_supply/water_supply_interval_setpoint": {
+          "changes": 203,
+          "coverage": 0.999386242387045,
+          "max": 1440.0,
+          "min": 80.0,
+          "nonmissing": 21168,
+          "numeric": 21168
+        },
+        "compartment/water_supply/water_supply_interval_vip": {
+          "changes": 359,
+          "coverage": 0.999386242387045,
+          "max": 1440.0,
+          "min": 45.0,
+          "nonmissing": 21168,
+          "numeric": 21168
+        },
+        "compartment/window_position_lee_side": {
+          "changes": 8715,
+          "coverage": 0.999386242387045,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 21168,
+          "numeric": 21168
+        },
+        "compartment/window_position_wind_side": {
+          "changes": 4505,
+          "coverage": 0.999386242387045,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 21168,
+          "numeric": 21168
+        },
+        "dwarf_tomato/harvest_date": {
+          "changes": 0,
+          "coverage": 4.7212124073462063e-05,
+          "max": 320.0,
+          "min": 320.0,
+          "nonmissing": 1,
+          "numeric": 1
+        },
+        "dwarf_tomato/plant_density": {
+          "changes": 3,
+          "coverage": 0.00018884849629384825,
+          "max": 56.0,
+          "min": 20.0,
+          "nonmissing": 4,
+          "numeric": 4
+        },
+        "dwarf_tomato/pot_area": {
+          "changes": 3,
+          "coverage": 0.9999527878759266,
+          "max": 0.05,
+          "min": 0.017857142857142856,
+          "nonmissing": 21180,
+          "numeric": 21180
+        }
+      },
+      "columns": 52,
+      "derived_resource_columns_named_only": [
+        "economics/fixed_costs.per_m2",
+        "economics/fixed_costs.per_pot",
+        "economics/heating_costs.per_m2",
+        "economics/heating_costs.per_pot",
+        "economics/co2_costs.per_m2",
+        "economics/co2_costs.per_pot",
+        "economics/lighting_costs.per_m2",
+        "economics/lighting_costs.per_pot",
+        "energy/energy_use.heating",
+        "energy/electricity_use.lighting",
+        "energy/co2_dosage"
+      ],
+      "derived_resource_values_accessed": false,
+      "essential_input_complete_rows": 21168,
+      "essential_input_incomplete_timestamps": [
+        "2024-09-03 00:00:00+02:00",
+        "2024-10-27 02:00:00+01:00",
+        "2024-10-27 02:05:00+01:00",
+        "2024-10-27 02:10:00+01:00",
+        "2024-10-27 02:15:00+01:00",
+        "2024-10-27 02:20:00+01:00",
+        "2024-10-27 02:25:00+01:00",
+        "2024-10-27 02:30:00+01:00",
+        "2024-10-27 02:35:00+01:00",
+        "2024-10-27 02:40:00+01:00",
+        "2024-10-27 02:45:00+01:00",
+        "2024-10-27 02:50:00+01:00",
+        "2024-10-27 02:55:00+01:00"
+      ],
+      "forbidden_outcome_columns_named_only": [
+        "compartment/air_temperature",
+        "compartment/relative_humidity",
+        "compartment/co2_concentration",
+        "compartment/humidity_deficit"
+      ],
+      "forbidden_outcome_values_accessed": false,
+      "nonincreasing_timestamp_steps": 0,
+      "observation_only_columns_named_only": [
+        "compartment/par"
+      ],
+      "observation_only_values_accessed": false,
+      "required_inputs": {
+        "co2_minutes": {
+          "column": "compartment/co2_dosage_minutes_cumulative",
+          "present": true,
+          "stats": {
+            "changes": 8757,
+            "coverage": 0.999386242387045,
+            "max": 719.0,
+            "min": 0.0,
+            "nonmissing": 21168,
+            "numeric": 21168
+          }
+        },
+        "co2_state": {
+          "column": "compartment/co2_actuation_state",
+          "present": true,
+          "stats": {
+            "changes": 4910,
+            "coverage": 0.999386242387045,
+            "max": 2.0,
+            "min": 1.0,
+            "nonmissing": 21168,
+            "numeric": 21168
+          }
+        },
+        "lamp_state": {
+          "column": "compartment/lamps_activation_percentage",
+          "present": true,
+          "stats": {
+            "changes": 1187,
+            "coverage": 0.999386242387045,
+            "max": 75.0,
+            "min": 0.0,
+            "nonmissing": 21168,
+            "numeric": 21168
+          }
+        },
+        "pipe_temperature": {
+          "column": "compartment/heating_lower_circuit/pipe_temperature",
+          "present": true,
+          "stats": {
+            "changes": 2746,
+            "coverage": 0.999386242387045,
+            "max": 62.1,
+            "min": 0.0,
+            "nonmissing": 21168,
+            "numeric": 21168
+          }
+        },
+        "plant_density": {
+          "column": "dwarf_tomato/plant_density",
+          "present": true,
+          "stats": {
+            "changes": 3,
+            "coverage": 0.00018884849629384825,
+            "max": 56.0,
+            "min": 20.0,
+            "nonmissing": 4,
+            "numeric": 4
+          }
+        },
+        "screen_blackout": {
+          "column": "compartment/screen_blackout/screen_position",
+          "present": true,
+          "stats": {
+            "changes": 2124,
+            "coverage": 0.999386242387045,
+            "max": 99.9,
+            "min": 0.2,
+            "nonmissing": 21168,
+            "numeric": 21168
+          }
+        },
+        "screen_energy": {
+          "column": "compartment/screen_energy/screen_position",
+          "present": true,
+          "stats": {
+            "changes": 3178,
+            "coverage": 0.999386242387045,
+            "max": 99.8,
+            "min": 0.1,
+            "nonmissing": 21168,
+            "numeric": 21168
+          }
+        },
+        "window_lee": {
+          "column": "compartment/window_position_lee_side",
+          "present": true,
+          "stats": {
+            "changes": 8715,
+            "coverage": 0.999386242387045,
+            "max": 100.0,
+            "min": 0.0,
+            "nonmissing": 21168,
+            "numeric": 21168
+          }
+        },
+        "window_wind": {
+          "column": "compartment/window_position_wind_side",
+          "present": true,
+          "stats": {
+            "changes": 4505,
+            "coverage": 0.999386242387045,
+            "max": 100.0,
+            "min": 0.0,
+            "nonmissing": 21168,
+            "numeric": 21168
+          }
+        }
+      },
+      "row_width_errors": 0,
+      "rows": 21181,
+      "steps_not_300_seconds": 0,
+      "timestamp_count": 21181,
+      "timestamp_end": "2024-11-15T12:00:00+01:00",
+      "timestamp_start": "2024-09-03T00:00:00+02:00"
+    },
+    "tomatonuts": {
+      "allowed_field_stats": {
+        "compartment/co2_actuation_state": {
+          "changes": 6042,
+          "coverage": 0.999432537430704,
+          "max": 2.0,
+          "min": 1.0,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/co2_concentration_setpoint": {
+          "changes": 445,
+          "coverage": 0.8574795931729888,
+          "max": 800.0,
+          "min": 0.0,
+          "nonmissing": 19644,
+          "numeric": 19644
+        },
+        "compartment/co2_concentration_vip": {
+          "changes": 443,
+          "coverage": 0.999432537430704,
+          "max": 800.0,
+          "min": 0.0,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/co2_dosage_minutes_cumulative": {
+          "changes": 9609,
+          "coverage": 0.999432537430704,
+          "max": 1184.0,
+          "min": 0.0,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/heating_lower_circuit/pipe_temperature": {
+          "changes": 12764,
+          "coverage": 0.999432537430704,
+          "max": 69.8,
+          "min": 0.0,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/heating_temperature_setpoint": {
+          "changes": 1030,
+          "coverage": 0.8519359203806365,
+          "max": 26.0,
+          "min": 15.0,
+          "nonmissing": 19517,
+          "numeric": 19517
+        },
+        "compartment/heating_temperature_vip": {
+          "changes": 699,
+          "coverage": 0.999432537430704,
+          "max": 26.0,
+          "min": 15.0,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/humidity_deficit_setpoint": {
+          "changes": 176,
+          "coverage": 0.08629796149984723,
+          "max": 5.0,
+          "min": 3.0,
+          "nonmissing": 1977,
+          "numeric": 1977
+        },
+        "compartment/humidity_deficit_vip": {
+          "changes": 182,
+          "coverage": 0.999432537430704,
+          "max": 5.0,
+          "min": 3.0,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/lamps_activation_percentage": {
+          "changes": 557,
+          "coverage": 0.999432537430704,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/lamps_activation_percentage_setpoint": {
+          "changes": 556,
+          "coverage": 0.8493168623685015,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 19457,
+          "numeric": 19457
+        },
+        "compartment/minimum_pipe_temperature_setpoint": {
+          "changes": 98,
+          "coverage": 0.07315902047230347,
+          "max": 30.0,
+          "min": 0.0,
+          "nonmissing": 1676,
+          "numeric": 1676
+        },
+        "compartment/minimum_pipe_temperature_vip": {
+          "changes": 98,
+          "coverage": 0.999432537430704,
+          "max": 30.0,
+          "min": 0.0,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/minimum_window_position_lee_side_setpoint": {
+          "changes": 22,
+          "coverage": 0.007900825003273822,
+          "max": 10.0,
+          "min": 0.0,
+          "nonmissing": 181,
+          "numeric": 181
+        },
+        "compartment/minimum_window_position_lee_side_vip": {
+          "changes": 22,
+          "coverage": 0.999432537430704,
+          "max": 10.0,
+          "min": 0.0,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/screen_blackout/screen_position": {
+          "changes": 949,
+          "coverage": 0.999432537430704,
+          "max": 99.9,
+          "min": 0.2,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/screen_blackout/screen_position_setpoint": {
+          "changes": 371,
+          "coverage": 0.08232572351477585,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 1886,
+          "numeric": 1886
+        },
+        "compartment/screen_blackout/screen_position_vip": {
+          "changes": 371,
+          "coverage": 0.999432537430704,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/screen_energy/screen_position": {
+          "changes": 1436,
+          "coverage": 0.999432537430704,
+          "max": 99.8,
+          "min": 0.1,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/screen_energy/screen_position_setpoint": {
+          "changes": 458,
+          "coverage": 0.8574795931729888,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 19644,
+          "numeric": 19644
+        },
+        "compartment/screen_energy/screen_position_vip": {
+          "changes": 455,
+          "coverage": 0.999432537430704,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/substrate/bulk_ec": {
+          "changes": 13727,
+          "coverage": 0.9589244401763499,
+          "max": 0.725,
+          "min": 0.0,
+          "nonmissing": 21968,
+          "numeric": 21968
+        },
+        "compartment/substrate/bulk_ec.1": {
+          "changes": 10149,
+          "coverage": 0.9590990440438256,
+          "max": 0.275,
+          "min": 0.0,
+          "nonmissing": 21972,
+          "numeric": 21972
+        },
+        "compartment/substrate/bulk_ec.2": {
+          "changes": 11847,
+          "coverage": 0.9599720633812039,
+          "max": 0.473,
+          "min": 0.0,
+          "nonmissing": 21992,
+          "numeric": 21992
+        },
+        "compartment/substrate/relative_permittivity": {
+          "changes": 14344,
+          "coverage": 0.9599720633812039,
+          "max": 20.41,
+          "min": 1.13,
+          "nonmissing": 21992,
+          "numeric": 21992
+        },
+        "compartment/substrate/relative_permittivity.1": {
+          "changes": 14685,
+          "coverage": 0.959928412414335,
+          "max": 16.72,
+          "min": 0.96,
+          "nonmissing": 21991,
+          "numeric": 21991
+        },
+        "compartment/substrate/relative_permittivity.2": {
+          "changes": 14519,
+          "coverage": 0.9599720633812039,
+          "max": 17.84,
+          "min": 0.91,
+          "nonmissing": 21992,
+          "numeric": 21992
+        },
+        "compartment/substrate/substrate_temperature": {
+          "changes": 18763,
+          "coverage": 0.9599720633812039,
+          "max": 33.19,
+          "min": 14.62,
+          "nonmissing": 21992,
+          "numeric": 21992
+        },
+        "compartment/substrate/substrate_temperature.1": {
+          "changes": 18501,
+          "coverage": 0.9600157143480728,
+          "max": 31.65,
+          "min": 15.08,
+          "nonmissing": 21993,
+          "numeric": 21993
+        },
+        "compartment/substrate/substrate_temperature.2": {
+          "changes": 18520,
+          "coverage": 0.9600157143480728,
+          "max": 32.83,
+          "min": 14.82,
+          "nonmissing": 21993,
+          "numeric": 21993
+        },
+        "compartment/ventilation_temperature_lee_side_vip": {
+          "changes": 347,
+          "coverage": 0.999432537430704,
+          "max": 28.0,
+          "min": 15.0,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/ventilation_temperature_setpoint": {
+          "changes": 1151,
+          "coverage": 0.8518486184468986,
+          "max": 28.0,
+          "min": 15.0,
+          "nonmissing": 19515,
+          "numeric": 19515
+        },
+        "compartment/ventilation_temperature_wind_side_vip": {
+          "changes": 347,
+          "coverage": 0.999432537430704,
+          "max": 28.0,
+          "min": 15.0,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/water_drain/ec": {
+          "changes": 16,
+          "coverage": 0.999432537430704,
+          "max": 0.09,
+          "min": 0.07,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/water_drain/ph": {
+          "changes": 168,
+          "coverage": 0.999432537430704,
+          "max": 0.06,
+          "min": 0.05,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/water_drain/water_volume": {
+          "changes": 979,
+          "coverage": 0.999432537430704,
+          "max": 4.11,
+          "min": 0.0,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/water_supply/water_flow_duration": {
+          "changes": 614,
+          "coverage": 0.999432537430704,
+          "max": 22.0,
+          "min": 0.0,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/water_supply/water_supply_interval_setpoint": {
+          "changes": 308,
+          "coverage": 0.057575625300100394,
+          "max": 2000.0,
+          "min": 14.591666,
+          "nonmissing": 1319,
+          "numeric": 1319
+        },
+        "compartment/water_supply/water_supply_interval_vip": {
+          "changes": 311,
+          "coverage": 0.999432537430704,
+          "max": 2000.0,
+          "min": 15.0,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/window_position_lee_side": {
+          "changes": 7816,
+          "coverage": 0.999432537430704,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/window_position_wind_side": {
+          "changes": 2769,
+          "coverage": 0.999432537430704,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "dwarf_tomato/harvest_date": {
+          "changes": 0,
+          "coverage": 4.3650966868916145e-05,
+          "max": 326.0,
+          "min": 326.0,
+          "nonmissing": 1,
+          "numeric": 1
+        },
+        "dwarf_tomato/plant_density": {
+          "changes": 1,
+          "coverage": 8.730193373783229e-05,
+          "max": 56.0,
+          "min": 20.0,
+          "nonmissing": 2,
+          "numeric": 2
+        },
+        "dwarf_tomato/pot_area": {
+          "changes": 1,
+          "coverage": 0.9999563490331311,
+          "max": 0.05,
+          "min": 0.017857142857142856,
+          "nonmissing": 22908,
+          "numeric": 22908
+        }
+      },
+      "columns": 61,
+      "derived_resource_columns_named_only": [
+        "economics/fixed_costs.per_m2",
+        "economics/fixed_costs.per_pot",
+        "economics/heating_costs.per_m2",
+        "economics/heating_costs.per_pot",
+        "economics/co2_costs.per_m2",
+        "economics/co2_costs.per_pot",
+        "economics/lighting_costs.per_m2",
+        "economics/lighting_costs.per_pot",
+        "energy/energy_use.heating",
+        "energy/electricity_use.lighting",
+        "energy/co2_dosage"
+      ],
+      "derived_resource_values_accessed": false,
+      "essential_input_complete_rows": 22896,
+      "essential_input_incomplete_timestamps": [
+        "2024-09-03 00:00:00+02:00",
+        "2024-10-27 02:00:00+01:00",
+        "2024-10-27 02:05:00+01:00",
+        "2024-10-27 02:10:00+01:00",
+        "2024-10-27 02:15:00+01:00",
+        "2024-10-27 02:20:00+01:00",
+        "2024-10-27 02:25:00+01:00",
+        "2024-10-27 02:30:00+01:00",
+        "2024-10-27 02:35:00+01:00",
+        "2024-10-27 02:40:00+01:00",
+        "2024-10-27 02:45:00+01:00",
+        "2024-10-27 02:50:00+01:00",
+        "2024-10-27 02:55:00+01:00"
+      ],
+      "forbidden_outcome_columns_named_only": [
+        "compartment/air_temperature",
+        "compartment/relative_humidity",
+        "compartment/co2_concentration",
+        "compartment/humidity_deficit"
+      ],
+      "forbidden_outcome_values_accessed": false,
+      "nonincreasing_timestamp_steps": 0,
+      "observation_only_columns_named_only": [
+        "compartment/par"
+      ],
+      "observation_only_values_accessed": false,
+      "required_inputs": {
+        "co2_minutes": {
+          "column": "compartment/co2_dosage_minutes_cumulative",
+          "present": true,
+          "stats": {
+            "changes": 9609,
+            "coverage": 0.999432537430704,
+            "max": 1184.0,
+            "min": 0.0,
+            "nonmissing": 22896,
+            "numeric": 22896
+          }
+        },
+        "co2_state": {
+          "column": "compartment/co2_actuation_state",
+          "present": true,
+          "stats": {
+            "changes": 6042,
+            "coverage": 0.999432537430704,
+            "max": 2.0,
+            "min": 1.0,
+            "nonmissing": 22896,
+            "numeric": 22896
+          }
+        },
+        "lamp_state": {
+          "column": "compartment/lamps_activation_percentage",
+          "present": true,
+          "stats": {
+            "changes": 557,
+            "coverage": 0.999432537430704,
+            "max": 100.0,
+            "min": 0.0,
+            "nonmissing": 22896,
+            "numeric": 22896
+          }
+        },
+        "pipe_temperature": {
+          "column": "compartment/heating_lower_circuit/pipe_temperature",
+          "present": true,
+          "stats": {
+            "changes": 12764,
+            "coverage": 0.999432537430704,
+            "max": 69.8,
+            "min": 0.0,
+            "nonmissing": 22896,
+            "numeric": 22896
+          }
+        },
+        "plant_density": {
+          "column": "dwarf_tomato/plant_density",
+          "present": true,
+          "stats": {
+            "changes": 1,
+            "coverage": 8.730193373783229e-05,
+            "max": 56.0,
+            "min": 20.0,
+            "nonmissing": 2,
+            "numeric": 2
+          }
+        },
+        "screen_blackout": {
+          "column": "compartment/screen_blackout/screen_position",
+          "present": true,
+          "stats": {
+            "changes": 949,
+            "coverage": 0.999432537430704,
+            "max": 99.9,
+            "min": 0.2,
+            "nonmissing": 22896,
+            "numeric": 22896
+          }
+        },
+        "screen_energy": {
+          "column": "compartment/screen_energy/screen_position",
+          "present": true,
+          "stats": {
+            "changes": 1436,
+            "coverage": 0.999432537430704,
+            "max": 99.8,
+            "min": 0.1,
+            "nonmissing": 22896,
+            "numeric": 22896
+          }
+        },
+        "window_lee": {
+          "column": "compartment/window_position_lee_side",
+          "present": true,
+          "stats": {
+            "changes": 7816,
+            "coverage": 0.999432537430704,
+            "max": 100.0,
+            "min": 0.0,
+            "nonmissing": 22896,
+            "numeric": 22896
+          }
+        },
+        "window_wind": {
+          "column": "compartment/window_position_wind_side",
+          "present": true,
+          "stats": {
+            "changes": 2769,
+            "coverage": 0.999432537430704,
+            "max": 100.0,
+            "min": 0.0,
+            "nonmissing": 22896,
+            "numeric": 22896
+          }
+        }
+      },
+      "row_width_errors": 0,
+      "rows": 22909,
+      "steps_not_300_seconds": 0,
+      "timestamp_count": 22909,
+      "timestamp_end": "2024-11-21T12:00:00+01:00",
+      "timestamp_start": "2024-09-03T00:00:00+02:00"
+    },
+    "trigger": {
+      "allowed_field_stats": {
+        "compartment/co2_actuation_state": {
+          "changes": 2526,
+          "coverage": 0.999432537430704,
+          "max": 2.0,
+          "min": 1.0,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/co2_concentration_setpoint": {
+          "changes": 1503,
+          "coverage": 0.9945872801082544,
+          "max": 3464.287,
+          "min": 0.0,
+          "nonmissing": 22785,
+          "numeric": 22785
+        },
+        "compartment/co2_concentration_vip": {
+          "changes": 1455,
+          "coverage": 0.999432537430704,
+          "max": 3464.0,
+          "min": 0.0,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/co2_dosage_minutes_cumulative": {
+          "changes": 6252,
+          "coverage": 0.999432537430704,
+          "max": 591.0,
+          "min": 0.0,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/heating_lower_circuit/pipe_temperature": {
+          "changes": 10137,
+          "coverage": 0.999432537430704,
+          "max": 59.8,
+          "min": 0.0,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/heating_temperature_setpoint": {
+          "changes": 4920,
+          "coverage": 0.999432537430704,
+          "max": 20.5,
+          "min": 15.5,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/heating_temperature_vip": {
+          "changes": 3265,
+          "coverage": 0.999432537430704,
+          "max": 20.5,
+          "min": 15.5,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/humidity_deficit_setpoint": {
+          "changes": 3695,
+          "coverage": 0.999432537430704,
+          "max": 2.5,
+          "min": 2.0,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/humidity_deficit_vip": {
+          "changes": 3489,
+          "coverage": 0.999432537430704,
+          "max": 2.5,
+          "min": 2.0,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/lamps_activation_percentage": {
+          "changes": 457,
+          "coverage": 0.999432537430704,
+          "max": 90.0,
+          "min": 0.0,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/lamps_activation_percentage_setpoint": {
+          "changes": 449,
+          "coverage": 0.5355100615478633,
+          "max": 90.0,
+          "min": 0.0,
+          "nonmissing": 12268,
+          "numeric": 12268
+        },
+        "compartment/minimum_pipe_temperature_setpoint": {
+          "changes": 3600,
+          "coverage": 0.9889126544152953,
+          "max": 40.0,
+          "min": 0.0,
+          "nonmissing": 22655,
+          "numeric": 22655
+        },
+        "compartment/minimum_pipe_temperature_vip": {
+          "changes": 3503,
+          "coverage": 0.999432537430704,
+          "max": 40.0,
+          "min": 0.0,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/minimum_window_position_lee_side_setpoint": {
+          "changes": 63,
+          "coverage": 0.9948928368763368,
+          "max": 10.0,
+          "min": 0.0,
+          "nonmissing": 22792,
+          "numeric": 22792
+        },
+        "compartment/minimum_window_position_lee_side_vip": {
+          "changes": 63,
+          "coverage": 0.999432537430704,
+          "max": 10.0,
+          "min": 0.0,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/screen_blackout/screen_position": {
+          "changes": 1271,
+          "coverage": 0.999432537430704,
+          "max": 99.9,
+          "min": 0.2,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/screen_blackout/screen_position_setpoint": {
+          "changes": 1098,
+          "coverage": 0.9662141516434589,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 22135,
+          "numeric": 22135
+        },
+        "compartment/screen_blackout/screen_position_vip": {
+          "changes": 771,
+          "coverage": 0.999432537430704,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/screen_energy/screen_position": {
+          "changes": 1662,
+          "coverage": 0.999432537430704,
+          "max": 99.8,
+          "min": 0.1,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/screen_energy/screen_position_setpoint": {
+          "changes": 1137,
+          "coverage": 0.9947618839757301,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 22789,
+          "numeric": 22789
+        },
+        "compartment/screen_energy/screen_position_vip": {
+          "changes": 1128,
+          "coverage": 0.999432537430704,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/substrate/bulk_ec": {
+          "changes": 9521,
+          "coverage": 0.9606268278842376,
+          "max": 0.397,
+          "min": 0.0,
+          "nonmissing": 22007,
+          "numeric": 22007
+        },
+        "compartment/substrate/bulk_ec.1": {
+          "changes": 10570,
+          "coverage": 0.9608450827185823,
+          "max": 0.557,
+          "min": 0.0,
+          "nonmissing": 22012,
+          "numeric": 22012
+        },
+        "compartment/substrate/bulk_ec.2": {
+          "changes": 9857,
+          "coverage": 0.9615871491553538,
+          "max": 0.451,
+          "min": 0.0,
+          "nonmissing": 22029,
+          "numeric": 22029
+        },
+        "compartment/substrate/relative_permittivity": {
+          "changes": 14293,
+          "coverage": 0.9615434981884848,
+          "max": 11.73,
+          "min": 1.15,
+          "nonmissing": 22028,
+          "numeric": 22028
+        },
+        "compartment/substrate/relative_permittivity.1": {
+          "changes": 14399,
+          "coverage": 0.9615434981884848,
+          "max": 17.1,
+          "min": 1.07,
+          "nonmissing": 22028,
+          "numeric": 22028
+        },
+        "compartment/substrate/relative_permittivity.2": {
+          "changes": 14286,
+          "coverage": 0.9615434981884848,
+          "max": 15.55,
+          "min": 1.03,
+          "nonmissing": 22028,
+          "numeric": 22028
+        },
+        "compartment/substrate/substrate_temperature": {
+          "changes": 15570,
+          "coverage": 0.9615871491553538,
+          "max": 30.32,
+          "min": 15.83,
+          "nonmissing": 22029,
+          "numeric": 22029
+        },
+        "compartment/substrate/substrate_temperature.1": {
+          "changes": 15475,
+          "coverage": 0.9615871491553538,
+          "max": 31.17,
+          "min": 15.97,
+          "nonmissing": 22029,
+          "numeric": 22029
+        },
+        "compartment/substrate/substrate_temperature.2": {
+          "changes": 15065,
+          "coverage": 0.9615434981884848,
+          "max": 30.37,
+          "min": 15.83,
+          "nonmissing": 22028,
+          "numeric": 22028
+        },
+        "compartment/ventilation_temperature_lee_side_vip": {
+          "changes": 3505,
+          "coverage": 0.999432537430704,
+          "max": 27.4,
+          "min": 16.5,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/ventilation_temperature_setpoint": {
+          "changes": 5039,
+          "coverage": 0.9810991313457593,
+          "max": 27.39,
+          "min": 16.5,
+          "nonmissing": 22476,
+          "numeric": 22476
+        },
+        "compartment/ventilation_temperature_wind_side_vip": {
+          "changes": 3511,
+          "coverage": 0.999432537430704,
+          "max": 27.4,
+          "min": 16.5,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/water_drain/ec": {
+          "changes": 9793,
+          "coverage": 0.999432537430704,
+          "max": 0.11,
+          "min": 0.03,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/water_drain/ph": {
+          "changes": 9268,
+          "coverage": 0.999432537430704,
+          "max": 15.99,
+          "min": 14.04,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/water_drain/water_volume": {
+          "changes": 1752,
+          "coverage": 0.999432537430704,
+          "max": 7.07,
+          "min": 0.0,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/water_supply/water_flow_duration": {
+          "changes": 717,
+          "coverage": 0.999432537430704,
+          "max": 30.0,
+          "min": 0.0,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/water_supply/water_supply_interval_setpoint": {
+          "changes": 1234,
+          "coverage": 0.10122659216901654,
+          "max": 1440.0,
+          "min": 0.0,
+          "nonmissing": 2319,
+          "numeric": 2319
+        },
+        "compartment/water_supply/water_supply_interval_vip": {
+          "changes": 1196,
+          "coverage": 0.999432537430704,
+          "max": 1440.0,
+          "min": 0.0,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/window_position_lee_side": {
+          "changes": 8146,
+          "coverage": 0.999432537430704,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "compartment/window_position_wind_side": {
+          "changes": 7170,
+          "coverage": 0.999432537430704,
+          "max": 100.0,
+          "min": 0.0,
+          "nonmissing": 22896,
+          "numeric": 22896
+        },
+        "dwarf_tomato/harvest_date": {
+          "changes": 0,
+          "coverage": 4.3650966868916145e-05,
+          "max": 326.0,
+          "min": 326.0,
+          "nonmissing": 1,
+          "numeric": 1
+        },
+        "dwarf_tomato/plant_density": {
+          "changes": 2,
+          "coverage": 0.00013095290060674843,
+          "max": 56.0,
+          "min": 30.0,
+          "nonmissing": 3,
+          "numeric": 3
+        },
+        "dwarf_tomato/pot_area": {
+          "changes": 2,
+          "coverage": 0.9999563490331311,
+          "max": 0.03333333333333333,
+          "min": 0.017857142857142856,
+          "nonmissing": 22908,
+          "numeric": 22908
+        }
+      },
+      "columns": 64,
+      "derived_resource_columns_named_only": [
+        "economics/fixed_costs.per_m2",
+        "economics/fixed_costs.per_pot",
+        "economics/heating_costs.per_m2",
+        "economics/heating_costs.per_pot",
+        "economics/co2_costs.per_m2",
+        "economics/co2_costs.per_pot",
+        "economics/lighting_costs.per_m2",
+        "economics/lighting_costs.per_pot",
+        "energy/energy_use.heating",
+        "energy/electricity_use.lighting",
+        "energy/co2_dosage"
+      ],
+      "derived_resource_values_accessed": false,
+      "essential_input_complete_rows": 22896,
+      "essential_input_incomplete_timestamps": [
+        "2024-09-03 00:00:00+02:00",
+        "2024-10-27 02:00:00+01:00",
+        "2024-10-27 02:05:00+01:00",
+        "2024-10-27 02:10:00+01:00",
+        "2024-10-27 02:15:00+01:00",
+        "2024-10-27 02:20:00+01:00",
+        "2024-10-27 02:25:00+01:00",
+        "2024-10-27 02:30:00+01:00",
+        "2024-10-27 02:35:00+01:00",
+        "2024-10-27 02:40:00+01:00",
+        "2024-10-27 02:45:00+01:00",
+        "2024-10-27 02:50:00+01:00",
+        "2024-10-27 02:55:00+01:00"
+      ],
+      "forbidden_outcome_columns_named_only": [
+        "compartment/air_temperature",
+        "compartment/relative_humidity",
+        "compartment/co2_concentration",
+        "compartment/humidity_deficit",
+        "compartment/leaf_temperature",
+        "compartment/leaf_temperature.1"
+      ],
+      "forbidden_outcome_values_accessed": false,
+      "nonincreasing_timestamp_steps": 0,
+      "observation_only_columns_named_only": [
+        "compartment/par",
+        "compartment/mass.plant"
+      ],
+      "observation_only_values_accessed": false,
+      "required_inputs": {
+        "co2_minutes": {
+          "column": "compartment/co2_dosage_minutes_cumulative",
+          "present": true,
+          "stats": {
+            "changes": 6252,
+            "coverage": 0.999432537430704,
+            "max": 591.0,
+            "min": 0.0,
+            "nonmissing": 22896,
+            "numeric": 22896
+          }
+        },
+        "co2_state": {
+          "column": "compartment/co2_actuation_state",
+          "present": true,
+          "stats": {
+            "changes": 2526,
+            "coverage": 0.999432537430704,
+            "max": 2.0,
+            "min": 1.0,
+            "nonmissing": 22896,
+            "numeric": 22896
+          }
+        },
+        "lamp_state": {
+          "column": "compartment/lamps_activation_percentage",
+          "present": true,
+          "stats": {
+            "changes": 457,
+            "coverage": 0.999432537430704,
+            "max": 90.0,
+            "min": 0.0,
+            "nonmissing": 22896,
+            "numeric": 22896
+          }
+        },
+        "pipe_temperature": {
+          "column": "compartment/heating_lower_circuit/pipe_temperature",
+          "present": true,
+          "stats": {
+            "changes": 10137,
+            "coverage": 0.999432537430704,
+            "max": 59.8,
+            "min": 0.0,
+            "nonmissing": 22896,
+            "numeric": 22896
+          }
+        },
+        "plant_density": {
+          "column": "dwarf_tomato/plant_density",
+          "present": true,
+          "stats": {
+            "changes": 2,
+            "coverage": 0.00013095290060674843,
+            "max": 56.0,
+            "min": 30.0,
+            "nonmissing": 3,
+            "numeric": 3
+          }
+        },
+        "screen_blackout": {
+          "column": "compartment/screen_blackout/screen_position",
+          "present": true,
+          "stats": {
+            "changes": 1271,
+            "coverage": 0.999432537430704,
+            "max": 99.9,
+            "min": 0.2,
+            "nonmissing": 22896,
+            "numeric": 22896
+          }
+        },
+        "screen_energy": {
+          "column": "compartment/screen_energy/screen_position",
+          "present": true,
+          "stats": {
+            "changes": 1662,
+            "coverage": 0.999432537430704,
+            "max": 99.8,
+            "min": 0.1,
+            "nonmissing": 22896,
+            "numeric": 22896
+          }
+        },
+        "window_lee": {
+          "column": "compartment/window_position_lee_side",
+          "present": true,
+          "stats": {
+            "changes": 8146,
+            "coverage": 0.999432537430704,
+            "max": 100.0,
+            "min": 0.0,
+            "nonmissing": 22896,
+            "numeric": 22896
+          }
+        },
+        "window_wind": {
+          "column": "compartment/window_position_wind_side",
+          "present": true,
+          "stats": {
+            "changes": 7170,
+            "coverage": 0.999432537430704,
+            "max": 100.0,
+            "min": 0.0,
+            "nonmissing": 22896,
+            "numeric": 22896
+          }
+        }
+      },
+      "row_width_errors": 0,
+      "rows": 22909,
+      "steps_not_300_seconds": 0,
+      "timestamp_count": 22909,
+      "timestamp_end": "2024-11-21T12:00:00+01:00",
+      "timestamp_start": "2024-09-03T00:00:00+02:00"
+    },
+    "weather": {
+      "allowed_field_stats": {
+        "weather/air_absolute_humidity_content.outside": {
+          "changes": 21775,
+          "coverage": 1.0,
+          "max": 17.905693,
+          "min": 3.0461287,
+          "nonmissing": 23039,
+          "numeric": 23039
+        },
+        "weather/air_temperature.outside": {
+          "changes": 14174,
+          "coverage": 1.0,
+          "max": 28.6,
+          "min": 0.1,
+          "nonmissing": 23039,
+          "numeric": 23039
+        },
+        "weather/heat_emission": {
+          "changes": 16666,
+          "coverage": 1.0,
+          "max": 0.0,
+          "min": -126.0,
+          "nonmissing": 23039,
+          "numeric": 23039
+        },
+        "weather/humidity_deficit": {
+          "changes": 21776,
+          "coverage": 1.0,
+          "max": 12.415272,
+          "min": 0.0,
+          "nonmissing": 23039,
+          "numeric": 23039
+        },
+        "weather/par.outside": {
+          "changes": 14451,
+          "coverage": 1.0,
+          "max": 1901.0,
+          "min": 0.0,
+          "nonmissing": 23039,
+          "numeric": 23039
+        },
+        "weather/radiation_global": {
+          "changes": 11468,
+          "coverage": 1.0,
+          "max": 800.0,
+          "min": 0.0,
+          "nonmissing": 23039,
+          "numeric": 23039
+        },
+        "weather/radiation_sum": {
+          "changes": 9435,
+          "coverage": 1.0,
+          "max": 1557.0,
+          "min": 0.0,
+          "nonmissing": 23039,
+          "numeric": 23039
+        },
+        "weather/rain_state": {
+          "changes": 508,
+          "coverage": 1.0,
+          "max": 1.0,
+          "min": 0.0,
+          "nonmissing": 23039,
+          "numeric": 23039
+        },
+        "weather/relative_humidity.outside": {
+          "changes": 20558,
+          "coverage": 1.0,
+          "max": 100.0,
+          "min": 39.6,
+          "nonmissing": 23039,
+          "numeric": 23039
+        },
+        "weather/wind_direction.registration": {
+          "changes": 939,
+          "coverage": 1.0,
+          "max": 128.0,
+          "min": 1.0,
+          "nonmissing": 23039,
+          "numeric": 23039
+        },
+        "weather/wind_speed": {
+          "changes": 5033,
+          "coverage": 1.0,
+          "max": 15.2,
+          "min": 0.0,
+          "nonmissing": 23039,
+          "numeric": 23039
+        }
+      },
+      "columns": 12,
+      "derived_resource_columns_named_only": [],
+      "derived_resource_values_accessed": false,
+      "essential_input_complete_rows": 23039,
+      "essential_input_incomplete_timestamps": [],
+      "forbidden_outcome_columns_named_only": [],
+      "forbidden_outcome_values_accessed": false,
+      "nonincreasing_timestamp_steps": 0,
+      "observation_only_columns_named_only": [],
+      "observation_only_values_accessed": false,
+      "required_inputs": {
+        "outside_rh": {
+          "column": "weather/relative_humidity.outside",
+          "present": true,
+          "stats": {
+            "changes": 20558,
+            "coverage": 1.0,
+            "max": 100.0,
+            "min": 39.6,
+            "nonmissing": 23039,
+            "numeric": 23039
+          }
+        },
+        "outside_temperature": {
+          "column": "weather/air_temperature.outside",
+          "present": true,
+          "stats": {
+            "changes": 14174,
+            "coverage": 1.0,
+            "max": 28.6,
+            "min": 0.1,
+            "nonmissing": 23039,
+            "numeric": 23039
+          }
+        },
+        "rain_state": {
+          "column": "weather/rain_state",
+          "present": true,
+          "stats": {
+            "changes": 508,
+            "coverage": 1.0,
+            "max": 1.0,
+            "min": 0.0,
+            "nonmissing": 23039,
+            "numeric": 23039
+          }
+        },
+        "sky_longwave_proxy": {
+          "column": "weather/heat_emission",
+          "present": true,
+          "stats": {
+            "changes": 16666,
+            "coverage": 1.0,
+            "max": 0.0,
+            "min": -126.0,
+            "nonmissing": 23039,
+            "numeric": 23039
+          }
+        },
+        "solar_radiation": {
+          "column": "weather/radiation_global",
+          "present": true,
+          "stats": {
+            "changes": 11468,
+            "coverage": 1.0,
+            "max": 800.0,
+            "min": 0.0,
+            "nonmissing": 23039,
+            "numeric": 23039
+          }
+        },
+        "wind_direction": {
+          "column": "weather/wind_direction.registration",
+          "present": true,
+          "stats": {
+            "changes": 939,
+            "coverage": 1.0,
+            "max": 128.0,
+            "min": 1.0,
+            "nonmissing": 23039,
+            "numeric": 23039
+          }
+        },
+        "wind_speed": {
+          "column": "weather/wind_speed",
+          "present": true,
+          "stats": {
+            "changes": 5033,
+            "coverage": 1.0,
+            "max": 15.2,
+            "min": 0.0,
+            "nonmissing": 23039,
+            "numeric": 23039
+          }
+        }
+      },
+      "row_width_errors": 0,
+      "rows": 23039,
+      "steps_not_300_seconds": 1,
+      "timestamp_count": 23039,
+      "timestamp_end": "2024-11-21T23:55:00+01:00",
+      "timestamp_start": "2024-09-03T00:05:00+02:00"
+    },
+    "weather_forecast": {
+      "allowed_field_stats": {
+        "weather_forecast/air_temperature.outside": {
+          "changes": 1789,
+          "coverage": 0.08329354572681107,
+          "max": 27.3,
+          "min": -0.4,
+          "nonmissing": 1919,
+          "numeric": 1919
+        },
+        "weather_forecast/degree_of_cloudiness": {
+          "changes": 743,
+          "coverage": 0.08329354572681107,
+          "max": 8.0,
+          "min": 0.0,
+          "nonmissing": 1919,
+          "numeric": 1919
+        },
+        "weather_forecast/radiation_global": {
+          "changes": 1026,
+          "coverage": 0.08329354572681107,
+          "max": 633.0,
+          "min": 0.0,
+          "nonmissing": 1919,
+          "numeric": 1919
+        },
+        "weather_forecast/radiation_sum": {
+          "changes": 8113,
+          "coverage": 1.0,
+          "max": 1648.0,
+          "min": 93.0,
+          "nonmissing": 23039,
+          "numeric": 23039
+        },
+        "weather_forecast/relative_humidity.outside": {
+          "changes": 1556,
+          "coverage": 0.08329354572681107,
+          "max": 100.0,
+          "min": 52.0,
+          "nonmissing": 1919,
+          "numeric": 1919
+        },
+        "weather_forecast/wind_speed": {
+          "changes": 928,
+          "coverage": 0.08329354572681107,
+          "max": 10.8,
+          "min": 0.5,
+          "nonmissing": 1919,
+          "numeric": 1919
+        }
+      },
+      "columns": 7,
+      "derived_resource_columns_named_only": [],
+      "derived_resource_values_accessed": false,
+      "essential_input_complete_rows": 0,
+      "essential_input_incomplete_timestamps": [],
+      "forbidden_outcome_columns_named_only": [],
+      "forbidden_outcome_values_accessed": false,
+      "nonincreasing_timestamp_steps": 0,
+      "observation_only_columns_named_only": [],
+      "observation_only_values_accessed": false,
+      "required_inputs": {},
+      "row_width_errors": 0,
+      "rows": 23039,
+      "steps_not_300_seconds": 1,
+      "timestamp_count": 23039,
+      "timestamp_end": "2024-11-21T23:55:00+01:00",
+      "timestamp_start": "2024-09-03T00:05:00+02:00"
+    }
+  }
+}
