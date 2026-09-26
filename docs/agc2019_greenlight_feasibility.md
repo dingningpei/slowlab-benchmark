@@ -2,19 +2,21 @@
 
 ## Decision
 
-Phase -1 has reached the limit supported by the public data. The frozen v7 replay passes the pooled calibration-period gate for air temperature, relative humidity, and CO2, but it fails the pre-registered requirement that every compartment pass. The holdout beginning 2020-04-01 remains unopened.
+Phase -1 completed its pre-registered one-shot temporal holdout. The frozen v8 hybrid replay **does not pass** the required “与真实温室轨迹一致” gate. All eight sequences completed without sampled physical violations, and pooled CO2 passed, but pooled temperature and relative humidity failed. The rule also required every compartment to pass.
 
 | Scope | Air temperature RMSE | RH RMSE | CO2 RMSE | Gate |
 | --- | ---: | ---: | ---: | --- |
-| Pooled | 2.035 °C | 4.673 percentage points | 254.9 ppm | Pass |
-| AICU | 1.390 °C | 3.392 percentage points | 346.6 ppm | Pass |
-| Automatoes | 2.252 °C | 4.053 percentage points | 329.7 ppm | Fail: temperature |
-| Digilog | 2.200 °C | 6.023 percentage points | 220.7 ppm | Fail: temperature |
-| IUACAAS | 2.417 °C | 4.909 percentage points | 134.2 ppm | Fail: temperature |
-| Reference | 2.064 °C | 4.906 percentage points | 224.6 ppm | Fail: temperature |
-| TheAutomators | 1.585 °C | 3.994 percentage points | 251.3 ppm | Pass |
+| Pooled | 2.579 °C | 9.983 percentage points | 211.8 ppm | Fail: temperature, RH |
+| AICU | 2.035 °C | 11.049 percentage points | 116.8 ppm | Fail: RH |
+| Automatoes | 4.127 °C | 6.219 percentage points | 444.1 ppm | Fail: temperature, CO2 |
+| Digilog | 4.033 °C | 7.132 percentage points | 187.5 ppm | Fail: temperature |
+| IUACAAS | 1.837 °C | 8.916 percentage points | 82.7 ppm | Fail: RH |
+| Reference | 1.965 °C | 8.932 percentage points | 190.2 ppm | Fail: RH |
+| TheAutomators | 2.416 °C | 15.752 percentage points | 189.0 ppm | Fail: temperature, RH |
 
-The frozen limits are 2.04 °C, 8.5 percentage points, and 361 ppm. All 21 sequences completed, all 1,200 hourly samples were physically valid, and the observed-pipe demand and bounded tracking inputs remained within the published 180/30 W m⁻² rail/grow capacities.
+The frozen limits are 2.04 °C, 8.5 percentage points, and 361 ppm. The holdout contains 3,288 hourly samples over 137 compartment-days beginning after 2020-04-01. This failure cannot be repaired by refitting v8 on the opened holdout. A scientifically valid continuation must define a new prospective model version and evaluate it on a new untouched temporal, facility, or experimental holdout.
+
+The residual layer improves calibration fit, but its temporal transfer is insufficient and it does not validate latent crop dynamics or counterfactual actuator responses. The current simulator therefore cannot support the paper's desired real-greenhouse trajectory-consistency claim. The exact frozen outcome is in `configs/agc2019_holdout_result_v8.json`.
 
 ## What the public data determine
 
@@ -32,10 +34,10 @@ The residual timing supports the same diagnosis. Pooled air-temperature RMSE is 
 
 This is material rather than cosmetic. In v7, AICU has a +0.084 °C temperature bias, while Automatoes, Digilog, IUACAAS, and Reference have biases of −1.721, −1.322, −1.700, and −1.124 °C. A single global heat correction would move the already passing AICU in the wrong direction. Team-specific offsets could reduce calibration error, but they would encode the outcomes being validated and would not establish physical fidelity.
 
-## Scientific boundary
+## Scientific boundary after the holdout
 
-No further scalar tuning should be selected from these calibration outcomes. The holdout stays closed. Strict per-compartment validation can resume only if independent compartment drawings/specifications or system-identification measurements determine the missing parameters before the holdout is read.
+Do not report v8 as passing real-trajectory validation, and do not tune v8 against this holdout. The calibration and holdout together are useful diagnostic evidence: the remaining errors are compartment- and period-dependent, especially the cold bias in Automatoes and Digilog and the humid bias in AICU and TheAutomators. They point to missing compartment boundary conditions, moisture processes, and actuator/system-identification data rather than a defensible global scalar correction.
 
-Until then, the paper may state that the simulator reproduces the pooled calibration-period climate trajectory at the published GreenLight error scale under observed actions. It may not call this per-compartment validation, holdout validation, counterfactual actuator validation, or an AGC digital twin. Observed-pipe replay is a historical boundary condition and cannot supply the heating response for new counterfactual policies.
+The next version should be treated as a new prospective study. It needs an explicit new validation source that remains unopened during development. The strongest route is independent greenhouse trajectory data with weather, realized heating, ventilation, screening, fogging/humidification, CO2, lighting, indoor temperature, RH/VPD, and CO2 at aligned timestamps, plus facility geometry and actuator capacities. If those data cannot be obtained, narrow the paper's claim to a synthetic benchmark and present AGC replay as a failed external-validity audit rather than evidence of a digital twin.
 
-Primary facility sources are the [2019/2020 challenge study](https://doi.org/10.3390/s20226430) and [WUR Report WPR-1329](https://edepot.wur.nl/661490). Machine-readable evidence is in `configs/agc2019_calibration_result_v7.json` and `configs/agc2019_identifiability_audit_v0.json`.
+Primary facility sources are the [2019/2020 challenge study](https://doi.org/10.3390/s20226430) and [WUR Report WPR-1329](https://edepot.wur.nl/661490). Machine-readable evidence is in `configs/agc2019_calibration_result_v7.json`, `configs/agc2019_calibration_result_v8.json`, `configs/agc2019_identifiability_audit_v0.json`, and `configs/agc2019_holdout_result_v8.json`.

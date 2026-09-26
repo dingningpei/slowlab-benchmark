@@ -1,0 +1,575 @@
+{
+  "decision": "fail",
+  "execution_audit": [
+    "First attempt stopped before simulation because the candidate JSON wrapper was not unwrapped; some workers read sequence starting states but no trajectory metrics were produced.",
+    "The runner-only JSON loading defect was fixed without changing model, identities, features, regularization, physical parameters, or thresholds.",
+    "A subsequent invocation had a misspelled sequence-manifest pathname and stopped before reading observations.",
+    "The final invocation used the frozen execution contract and completed all eight sequences."
+  ],
+  "gate_checks": {
+    "AICU": {
+      "metric_pass": {
+        "co2InPpm": true,
+        "rhIn": false,
+        "tAir": true
+      },
+      "overall_pass": false,
+      "physical_violations_pass": true,
+      "solver_completion_pass": true
+    },
+    "Automatoes": {
+      "metric_pass": {
+        "co2InPpm": false,
+        "rhIn": true,
+        "tAir": false
+      },
+      "overall_pass": false,
+      "physical_violations_pass": true,
+      "solver_completion_pass": true
+    },
+    "Digilog": {
+      "metric_pass": {
+        "co2InPpm": true,
+        "rhIn": true,
+        "tAir": false
+      },
+      "overall_pass": false,
+      "physical_violations_pass": true,
+      "solver_completion_pass": true
+    },
+    "IUACAAS": {
+      "metric_pass": {
+        "co2InPpm": true,
+        "rhIn": false,
+        "tAir": true
+      },
+      "overall_pass": false,
+      "physical_violations_pass": true,
+      "solver_completion_pass": true
+    },
+    "Reference": {
+      "metric_pass": {
+        "co2InPpm": true,
+        "rhIn": false,
+        "tAir": true
+      },
+      "overall_pass": false,
+      "physical_violations_pass": true,
+      "solver_completion_pass": true
+    },
+    "TheAutomators": {
+      "metric_pass": {
+        "co2InPpm": true,
+        "rhIn": false,
+        "tAir": false
+      },
+      "overall_pass": false,
+      "physical_violations_pass": true,
+      "solver_completion_pass": true
+    },
+    "pooled": {
+      "metric_pass": {
+        "co2InPpm": true,
+        "rhIn": false,
+        "tAir": false
+      },
+      "overall_pass": false,
+      "physical_violations_pass": true,
+      "solver_completion_pass": true
+    }
+  },
+  "limits": {
+    "co2InPpm": 361.0,
+    "rhIn": 8.5,
+    "tAir": 2.04
+  },
+  "one_shot_interpretation": "The frozen model, identities, features, regularization, physical parameters, and thresholds must not be changed in response to this holdout. Any later model is a new prospective version requiring a new untouched validation set.",
+  "result": {
+    "aggregate": {
+      "AICU": {
+        "metrics": {
+          "co2InPpm": {
+            "bias": -4.876946778209572,
+            "hourly_change_rmse": 91.94488500398145,
+            "mae": 80.68637541288568,
+            "rmse": 116.84783826388951
+          },
+          "rhIn": {
+            "bias": 8.01458999538052,
+            "hourly_change_rmse": 6.3226445766075825,
+            "mae": 8.562185216342355,
+            "rmse": 11.049431687611719
+          },
+          "tAir": {
+            "bias": -1.330124782978637,
+            "hourly_change_rmse": 1.1092521233562067,
+            "mae": 1.6621532985578968,
+            "rmse": 2.035399928147122
+          }
+        },
+        "physical_violations": {
+          "co2InPpm": 0,
+          "rhIn": 0,
+          "tAir": 0
+        },
+        "samples": 504,
+        "sequence_count": 2,
+        "solver_completion_fraction": 1.0
+      },
+      "Automatoes": {
+        "metrics": {
+          "co2InPpm": {
+            "bias": 224.8256403014344,
+            "hourly_change_rmse": 130.0548025768199,
+            "mae": 258.50304063791583,
+            "rmse": 444.06195440428417
+          },
+          "rhIn": {
+            "bias": 3.04171694840427,
+            "hourly_change_rmse": 4.591063256364325,
+            "mae": 4.540636535236662,
+            "rmse": 6.2189355002828455
+          },
+          "tAir": {
+            "bias": -3.790686718025687,
+            "hourly_change_rmse": 1.210496535262231,
+            "mae": 3.8826482926661883,
+            "rmse": 4.127410524678769
+          }
+        },
+        "physical_violations": {
+          "co2InPpm": 0,
+          "rhIn": 0,
+          "tAir": 0
+        },
+        "samples": 408,
+        "sequence_count": 2,
+        "solver_completion_fraction": 1.0
+      },
+      "Digilog": {
+        "metrics": {
+          "co2InPpm": {
+            "bias": 113.92671676116366,
+            "hourly_change_rmse": 71.80618974010308,
+            "mae": 133.23747605950658,
+            "rmse": 187.48992251458046
+          },
+          "rhIn": {
+            "bias": 4.792786620832663,
+            "hourly_change_rmse": 4.57042975406519,
+            "mae": 5.717001649994754,
+            "rmse": 7.132301824556846
+          },
+          "tAir": {
+            "bias": -3.8208431173599573,
+            "hourly_change_rmse": 0.9325030064757063,
+            "mae": 3.835777501570275,
+            "rmse": 4.033382369411709
+          }
+        },
+        "physical_violations": {
+          "co2InPpm": 0,
+          "rhIn": 0,
+          "tAir": 0
+        },
+        "samples": 264,
+        "sequence_count": 1,
+        "solver_completion_fraction": 1.0
+      },
+      "IUACAAS": {
+        "metrics": {
+          "co2InPpm": {
+            "bias": -39.13843688396174,
+            "hourly_change_rmse": 54.11827126140819,
+            "mae": 59.63320439562441,
+            "rmse": 82.74527965392242
+          },
+          "rhIn": {
+            "bias": 2.754335103061351,
+            "hourly_change_rmse": 5.6379661334904965,
+            "mae": 6.641540480266474,
+            "rmse": 8.916169322909003
+          },
+          "tAir": {
+            "bias": -0.997705533624971,
+            "hourly_change_rmse": 1.1857925914883085,
+            "mae": 1.3660035928796408,
+            "rmse": 1.8369432290900332
+          }
+        },
+        "physical_violations": {
+          "co2InPpm": 0,
+          "rhIn": 0,
+          "tAir": 0
+        },
+        "samples": 864,
+        "sequence_count": 1,
+        "solver_completion_fraction": 1.0
+      },
+      "Reference": {
+        "metrics": {
+          "co2InPpm": {
+            "bias": 15.320916962449482,
+            "hourly_change_rmse": 117.62949281241269,
+            "mae": 128.17718498803927,
+            "rmse": 190.1911541253136
+          },
+          "rhIn": {
+            "bias": 5.443989518298544,
+            "hourly_change_rmse": 4.81478628688816,
+            "mae": 6.238846821701239,
+            "rmse": 8.931710612064323
+          },
+          "tAir": {
+            "bias": -1.395853859211261,
+            "hourly_change_rmse": 0.8986098246036578,
+            "mae": 1.6085755227108942,
+            "rmse": 1.9653438924618447
+          }
+        },
+        "physical_violations": {
+          "co2InPpm": 0,
+          "rhIn": 0,
+          "tAir": 0
+        },
+        "samples": 840,
+        "sequence_count": 1,
+        "solver_completion_fraction": 1.0
+      },
+      "TheAutomators": {
+        "metrics": {
+          "co2InPpm": {
+            "bias": -121.05852215388279,
+            "hourly_change_rmse": 104.3126611208503,
+            "mae": 139.67499116090482,
+            "rmse": 188.99646863188005
+          },
+          "rhIn": {
+            "bias": 13.449026871387737,
+            "hourly_change_rmse": 5.625988704564935,
+            "mae": 13.526110472952473,
+            "rmse": 15.752128647235853
+          },
+          "tAir": {
+            "bias": -1.453892580120829,
+            "hourly_change_rmse": 1.1605725494004901,
+            "mae": 1.9300599720770881,
+            "rmse": 2.415831241494809
+          }
+        },
+        "physical_violations": {
+          "co2InPpm": 0,
+          "rhIn": 0,
+          "tAir": 0
+        },
+        "samples": 408,
+        "sequence_count": 1,
+        "solver_completion_fraction": 1.0
+      },
+      "pooled": {
+        "metrics": {
+          "co2InPpm": {
+            "bias": 14.905601287605005,
+            "hourly_change_rmse": 97.26792245254696,
+            "mae": 120.89087221699982,
+            "rmse": 211.79470050610357
+          },
+          "rhIn": {
+            "bias": 5.774199887001986,
+            "hourly_change_rmse": 5.350040799628505,
+            "mae": 7.3524284881860105,
+            "rmse": 9.982907860896558
+          },
+          "tAir": {
+            "bias": -1.7802337743422976,
+            "hourly_change_rmse": 1.0876872266541215,
+            "mae": 2.0539495250085613,
+            "rmse": 2.579306849260968
+          }
+        },
+        "physical_violations": {
+          "co2InPpm": 0,
+          "rhIn": 0,
+          "tAir": 0
+        },
+        "samples": 3288,
+        "sequence_count": 8,
+        "solver_completion_fraction": 1.0
+      }
+    },
+    "execution_sha256": "dd72c038449476c328cdc4aa92b569e55eb4c4970e19388907e118559e8982fc",
+    "model_sha256": "731963491233c400b0e5aa598f4c62996826a0c163aabdc4e748cc1dc1ca6016",
+    "protocol_id": "agc2019-greenlight-temperature-residual-v8",
+    "sequence_count": 8,
+    "sequences": [
+      {
+        "compartment": "AICU",
+        "day_count": 1,
+        "metrics": {
+          "co2InPpm": {
+            "bias": 25.4010769374167,
+            "hourly_change_rmse": 82.45781084641206,
+            "mae": 58.57941801640231,
+            "rmse": 87.46854256509418
+          },
+          "rhIn": {
+            "bias": 4.791144552989221,
+            "hourly_change_rmse": 5.315483785201128,
+            "mae": 5.020765709396265,
+            "rmse": 7.011603709429005
+          },
+          "tAir": {
+            "bias": -1.6549023698023528,
+            "hourly_change_rmse": 0.889738660215439,
+            "mae": 1.7723504733304238,
+            "rmse": 2.0157737285437687
+          }
+        },
+        "physical_violations": {
+          "co2InPpm": 0,
+          "rhIn": 0,
+          "tAir": 0
+        },
+        "samples": 24,
+        "sequence_id": "AICU:2020-05-04:1d",
+        "solver_complete": true,
+        "start_day": "2020-05-04"
+      },
+      {
+        "compartment": "AICU",
+        "day_count": 20,
+        "metrics": {
+          "co2InPpm": {
+            "bias": -6.390847963990885,
+            "hourly_change_rmse": 92.3759110102693,
+            "mae": 81.79172328270985,
+            "rmse": 118.12514920781351
+          },
+          "rhIn": {
+            "bias": 8.175762267500085,
+            "hourly_change_rmse": 6.366997769997428,
+            "mae": 8.73925619168966,
+            "rmse": 11.213220247603003
+          },
+          "tAir": {
+            "bias": -1.313885903637451,
+            "hourly_change_rmse": 1.1187091939224239,
+            "mae": 1.6566434398192704,
+            "rmse": 2.036376272853819
+          }
+        },
+        "physical_violations": {
+          "co2InPpm": 0,
+          "rhIn": 0,
+          "tAir": 0
+        },
+        "samples": 480,
+        "sequence_id": "AICU:2020-05-06:20d",
+        "solver_complete": true,
+        "start_day": "2020-05-06"
+      },
+      {
+        "compartment": "Automatoes",
+        "day_count": 1,
+        "metrics": {
+          "co2InPpm": {
+            "bias": -39.572908518731815,
+            "hourly_change_rmse": 71.46475450815977,
+            "mae": 64.57699752067586,
+            "rmse": 76.2474272368427
+          },
+          "rhIn": {
+            "bias": 3.21856967792202,
+            "hourly_change_rmse": 5.183677106213192,
+            "mae": 4.506191973356168,
+            "rmse": 5.452943516662094
+          },
+          "tAir": {
+            "bias": -3.4912321292816753,
+            "hourly_change_rmse": 1.1717525093796781,
+            "mae": 3.534156033417703,
+            "rmse": 3.790283255267836
+          }
+        },
+        "physical_violations": {
+          "co2InPpm": 0,
+          "rhIn": 0,
+          "tAir": 0
+        },
+        "samples": 24,
+        "sequence_id": "Automatoes:2020-05-08:1d",
+        "solver_complete": true,
+        "start_day": "2020-05-08"
+      },
+      {
+        "compartment": "Automatoes",
+        "day_count": 16,
+        "metrics": {
+          "co2InPpm": {
+            "bias": 241.35054960269477,
+            "hourly_change_rmse": 132.752742574759,
+            "mae": 270.6234183327433,
+            "rmse": 457.33150304092567
+          },
+          "rhIn": {
+            "bias": 3.03066365280941,
+            "hourly_change_rmse": 4.553021034963202,
+            "mae": 4.542789320354193,
+            "rmse": 6.263700513013569
+          },
+          "tAir": {
+            "bias": -3.8094026298221877,
+            "hourly_change_rmse": 1.212783804614482,
+            "mae": 3.9044290588692188,
+            "rmse": 4.1475712223520835
+          }
+        },
+        "physical_violations": {
+          "co2InPpm": 0,
+          "rhIn": 0,
+          "tAir": 0
+        },
+        "samples": 384,
+        "sequence_id": "Automatoes:2020-05-10:16d",
+        "solver_complete": true,
+        "start_day": "2020-05-10"
+      },
+      {
+        "compartment": "Digilog",
+        "day_count": 11,
+        "metrics": {
+          "co2InPpm": {
+            "bias": 113.92671676116366,
+            "hourly_change_rmse": 71.80618974010308,
+            "mae": 133.23747605950658,
+            "rmse": 187.48992251458046
+          },
+          "rhIn": {
+            "bias": 4.792786620832663,
+            "hourly_change_rmse": 4.57042975406519,
+            "mae": 5.717001649994754,
+            "rmse": 7.132301824556846
+          },
+          "tAir": {
+            "bias": -3.8208431173599573,
+            "hourly_change_rmse": 0.9325030064757063,
+            "mae": 3.835777501570275,
+            "rmse": 4.033382369411709
+          }
+        },
+        "physical_violations": {
+          "co2InPpm": 0,
+          "rhIn": 0,
+          "tAir": 0
+        },
+        "samples": 264,
+        "sequence_id": "Digilog:2020-05-15:11d",
+        "solver_complete": true,
+        "start_day": "2020-05-15"
+      },
+      {
+        "compartment": "IUACAAS",
+        "day_count": 36,
+        "metrics": {
+          "co2InPpm": {
+            "bias": -39.13843688396174,
+            "hourly_change_rmse": 54.11827126140819,
+            "mae": 59.63320439562441,
+            "rmse": 82.74527965392242
+          },
+          "rhIn": {
+            "bias": 2.754335103061351,
+            "hourly_change_rmse": 5.6379661334904965,
+            "mae": 6.641540480266474,
+            "rmse": 8.916169322909003
+          },
+          "tAir": {
+            "bias": -0.997705533624971,
+            "hourly_change_rmse": 1.1857925914883085,
+            "mae": 1.3660035928796408,
+            "rmse": 1.8369432290900332
+          }
+        },
+        "physical_violations": {
+          "co2InPpm": 0,
+          "rhIn": 0,
+          "tAir": 0
+        },
+        "samples": 864,
+        "sequence_id": "IUACAAS:2020-04-20:36d",
+        "solver_complete": true,
+        "start_day": "2020-04-20"
+      },
+      {
+        "compartment": "Reference",
+        "day_count": 35,
+        "metrics": {
+          "co2InPpm": {
+            "bias": 15.320916962449482,
+            "hourly_change_rmse": 117.62949281241269,
+            "mae": 128.17718498803927,
+            "rmse": 190.1911541253136
+          },
+          "rhIn": {
+            "bias": 5.443989518298544,
+            "hourly_change_rmse": 4.81478628688816,
+            "mae": 6.238846821701239,
+            "rmse": 8.931710612064323
+          },
+          "tAir": {
+            "bias": -1.395853859211261,
+            "hourly_change_rmse": 0.8986098246036578,
+            "mae": 1.6085755227108942,
+            "rmse": 1.9653438924618447
+          }
+        },
+        "physical_violations": {
+          "co2InPpm": 0,
+          "rhIn": 0,
+          "tAir": 0
+        },
+        "samples": 840,
+        "sequence_id": "Reference:2020-04-21:35d",
+        "solver_complete": true,
+        "start_day": "2020-04-21"
+      },
+      {
+        "compartment": "TheAutomators",
+        "day_count": 17,
+        "metrics": {
+          "co2InPpm": {
+            "bias": -121.05852215388279,
+            "hourly_change_rmse": 104.3126611208503,
+            "mae": 139.67499116090482,
+            "rmse": 188.99646863188005
+          },
+          "rhIn": {
+            "bias": 13.449026871387737,
+            "hourly_change_rmse": 5.625988704564935,
+            "mae": 13.526110472952473,
+            "rmse": 15.752128647235853
+          },
+          "tAir": {
+            "bias": -1.453892580120829,
+            "hourly_change_rmse": 1.1605725494004901,
+            "mae": 1.9300599720770881,
+            "rmse": 2.415831241494809
+          }
+        },
+        "physical_violations": {
+          "co2InPpm": 0,
+          "rhIn": 0,
+          "tAir": 0
+        },
+        "samples": 408,
+        "sequence_id": "TheAutomators:2020-05-09:17d",
+        "solver_complete": true,
+        "start_day": "2020-05-09"
+      }
+    ],
+    "status": "one-shot temporal holdout evaluated"
+  },
+  "source_result_sha256": "ecd448ddfd83e42f850cd3f67c2fff62557eb1be21cf1e98fd72872559d5e822",
+  "status": "completed; frozen temporal holdout gate failed",
+  "version": 8
+}
