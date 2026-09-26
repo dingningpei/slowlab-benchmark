@@ -1,0 +1,570 @@
+{
+  "audit_id": "agc2023-development-summary-v0",
+  "claim_boundary": {
+    "supported": [
+      "develop temperature and RH observed-action replay",
+      "develop rail-pipe, ventilation, screens and lighting response",
+      "develop dwarf-tomato crop-state and light-treatment components"
+    ],
+    "unsupported": [
+      "prospective validation",
+      "CO2 actuator-response identification",
+      "fogging-response identification",
+      "arbitrary counterfactual action validation"
+    ]
+  },
+  "climate": {
+    "end": "2023-11-09T00:00:00",
+    "fields": {
+      "co2": {
+        "changes": 18081,
+        "coverage": 0.9991453447999573,
+        "max": 826.999327599427,
+        "mean": 478.4166785695115,
+        "min": 349.0,
+        "nonmissing": 18705
+      },
+      "co2out": {
+        "changes": 18019,
+        "coverage": 0.9991453447999573,
+        "max": 629.99999779053,
+        "mean": 436.2369028485829,
+        "min": 396.2,
+        "nonmissing": 18705
+      },
+      "iglob": {
+        "changes": 10775,
+        "coverage": 0.9991453447999573,
+        "max": 749.999741105575,
+        "mean": 93.37399981061728,
+        "min": 0.0,
+        "nonmissing": 18705
+      },
+      "ligth_on": {
+        "changes": 452,
+        "coverage": 0.9991453447999573,
+        "max": 1.0,
+        "mean": 0.5688318643373835,
+        "min": 0.0,
+        "nonmissing": 18705
+      },
+      "par2": {
+        "changes": 10880,
+        "coverage": 0.9991453447999573,
+        "max": 487.499831718624,
+        "mean": 136.72461833236244,
+        "min": 0.0,
+        "nonmissing": 18705
+      },
+      "par3": {
+        "changes": 10881,
+        "coverage": 0.9991453447999573,
+        "max": 487.499831718624,
+        "mean": 113.9713437588671,
+        "min": 0.0,
+        "nonmissing": 18705
+      },
+      "par4": {
+        "changes": 10881,
+        "coverage": 0.9991453447999573,
+        "max": 487.499831718624,
+        "mean": 100.31937901476991,
+        "min": 0.0,
+        "nonmissing": 18705
+      },
+      "parout": {
+        "changes": 9230,
+        "coverage": 0.9991453447999573,
+        "max": 1536.99799596538,
+        "mean": 186.90326201442645,
+        "min": 0.0,
+        "nonmissing": 18705
+      },
+      "part1": {
+        "changes": 10880,
+        "coverage": 0.9991453447999573,
+        "max": 487.499831718624,
+        "mean": 146.96359189043537,
+        "min": 0.0,
+        "nonmissing": 18705
+      },
+      "pyrgeo": {
+        "changes": 16198,
+        "coverage": 0.9991453447999573,
+        "max": 0.0,
+        "mean": -41.49944669740127,
+        "min": -134.0,
+        "nonmissing": 18705
+      },
+      "rain": {
+        "changes": 1595,
+        "coverage": 0.9991453447999573,
+        "max": 1.0,
+        "mean": 0.11221589498990799,
+        "min": 0.0,
+        "nonmissing": 18705
+      },
+      "rh": {
+        "changes": 17380,
+        "coverage": 0.9991453447999573,
+        "max": 94.5,
+        "mean": 78.9140024864944,
+        "min": 33.1000312144071,
+        "nonmissing": 18705
+      },
+      "rhout": {
+        "changes": 16707,
+        "coverage": 0.9991453447999573,
+        "max": 99.6,
+        "mean": 84.1478345139765,
+        "min": 36.6000003118067,
+        "nonmissing": 18705
+      },
+      "scr_blck": {
+        "changes": 3053,
+        "coverage": 0.9991453447999573,
+        "max": 100.0,
+        "mean": 42.20623373215609,
+        "min": 0.0,
+        "nonmissing": 18705
+      },
+      "scr_enrg": {
+        "changes": 5002,
+        "coverage": 0.9991453447999573,
+        "max": 100.0,
+        "mean": 57.45458179641055,
+        "min": 0.0,
+        "nonmissing": 18705
+      },
+      "t_air": {
+        "changes": 14910,
+        "coverage": 0.9991453447999573,
+        "max": 35.1999987125314,
+        "mean": 21.338416595474637,
+        "min": 16.5,
+        "nonmissing": 18705
+      },
+      "t_rail": {
+        "changes": 3872,
+        "coverage": 0.9991453447999573,
+        "max": 52.0999987125314,
+        "mean": 6.410082734842313,
+        "min": 0.0,
+        "nonmissing": 18705
+      },
+      "tout": {
+        "changes": 15316,
+        "coverage": 0.9991453447999573,
+        "max": 31.7999999061227,
+        "mean": 15.18470899328612,
+        "min": 6.10000063702872,
+        "nonmissing": 18705
+      },
+      "vent_lee": {
+        "changes": 7414,
+        "coverage": 0.9991453447999573,
+        "max": 100.0,
+        "mean": 30.489824458179076,
+        "min": 0.0,
+        "nonmissing": 18705
+      },
+      "vent_wind": {
+        "changes": 3516,
+        "coverage": 0.9991453447999573,
+        "max": 100.0,
+        "mean": 9.544592337067467,
+        "min": 0.0,
+        "nonmissing": 18705
+      },
+      "windsp": {
+        "changes": 6337,
+        "coverage": 0.9991453447999573,
+        "max": 14.6,
+        "mean": 3.731924520973365,
+        "min": 0.0,
+        "nonmissing": 18705
+      }
+    },
+    "non_five_minute_steps": 0,
+    "rows": 18721,
+    "start": "2023-09-05T00:00:00"
+  },
+  "data_role": "v9 development only; never prospective validation",
+  "destructive_crop": {
+    "continuous_density_gap": "Info sheet jumps from 22-29 September at 25 plants/m2 to 9 October-9 November at 20 plants/m2; do not infer the 29 September-9 October trajectory from this workbook.",
+    "groups": [
+      {
+        "date": "2023-09-04",
+        "density_plants_m2": 48.0,
+        "ec": "EC3",
+        "lai_m2_m2": 0.16846,
+        "leaf_area_mean_cm2_plant": 35.09583333333333,
+        "leaf_area_sd_cm2_plant": 4.625263546954691,
+        "light": "high light",
+        "n": 12
+      },
+      {
+        "date": "2023-09-04",
+        "density_plants_m2": 48.0,
+        "ec": "EC6",
+        "lai_m2_m2": 0.16846,
+        "leaf_area_mean_cm2_plant": 35.09583333333333,
+        "leaf_area_sd_cm2_plant": 4.625263546954691,
+        "light": "high light",
+        "n": 12
+      },
+      {
+        "date": "2023-09-04",
+        "density_plants_m2": 48.0,
+        "ec": "EC3",
+        "lai_m2_m2": 0.16846,
+        "leaf_area_mean_cm2_plant": 35.09583333333333,
+        "leaf_area_sd_cm2_plant": 4.625263546954691,
+        "light": "low light",
+        "n": 12
+      },
+      {
+        "date": "2023-09-04",
+        "density_plants_m2": 48.0,
+        "ec": "EC6",
+        "lai_m2_m2": 0.16846,
+        "leaf_area_mean_cm2_plant": 35.09583333333333,
+        "leaf_area_sd_cm2_plant": 4.625263546954691,
+        "light": "low light",
+        "n": 12
+      },
+      {
+        "date": "2023-09-04",
+        "density_plants_m2": 48.0,
+        "ec": "EC3",
+        "lai_m2_m2": 0.16846,
+        "leaf_area_mean_cm2_plant": 35.09583333333333,
+        "leaf_area_sd_cm2_plant": 4.625263546954691,
+        "light": "med light",
+        "n": 12
+      },
+      {
+        "date": "2023-09-04",
+        "density_plants_m2": 48.0,
+        "ec": "EC6",
+        "lai_m2_m2": 0.16846,
+        "leaf_area_mean_cm2_plant": 35.09583333333333,
+        "leaf_area_sd_cm2_plant": 4.625263546954691,
+        "light": "med light",
+        "n": 12
+      },
+      {
+        "date": "2023-09-04",
+        "density_plants_m2": 48.0,
+        "ec": "EC3",
+        "lai_m2_m2": 0.16846,
+        "leaf_area_mean_cm2_plant": 35.09583333333333,
+        "leaf_area_sd_cm2_plant": 4.625263546954691,
+        "light": "no light",
+        "n": 12
+      },
+      {
+        "date": "2023-09-04",
+        "density_plants_m2": 48.0,
+        "ec": "EC6",
+        "lai_m2_m2": 0.16846,
+        "leaf_area_mean_cm2_plant": 35.09583333333333,
+        "leaf_area_sd_cm2_plant": 4.625263546954691,
+        "light": "no light",
+        "n": 12
+      },
+      {
+        "date": "2023-09-18",
+        "density_plants_m2": 48.0,
+        "ec": "EC3",
+        "lai_m2_m2": 1.3618880000000002,
+        "leaf_area_mean_cm2_plant": 283.7266666666667,
+        "leaf_area_sd_cm2_plant": 22.982513062471362,
+        "light": "high light",
+        "n": 6
+      },
+      {
+        "date": "2023-09-18",
+        "density_plants_m2": 48.0,
+        "ec": "EC6",
+        "lai_m2_m2": 1.507896,
+        "leaf_area_mean_cm2_plant": 314.145,
+        "leaf_area_sd_cm2_plant": 23.695566462948285,
+        "light": "high light",
+        "n": 6
+      },
+      {
+        "date": "2023-09-18",
+        "density_plants_m2": 48.0,
+        "ec": "EC3",
+        "lai_m2_m2": 1.22272,
+        "leaf_area_mean_cm2_plant": 254.73333333333335,
+        "leaf_area_sd_cm2_plant": 66.71051781141162,
+        "light": "low light",
+        "n": 6
+      },
+      {
+        "date": "2023-09-18",
+        "density_plants_m2": 48.0,
+        "ec": "EC6",
+        "lai_m2_m2": 1.2061600000000001,
+        "leaf_area_mean_cm2_plant": 251.28333333333333,
+        "leaf_area_sd_cm2_plant": 38.50944074725919,
+        "light": "low light",
+        "n": 6
+      },
+      {
+        "date": "2023-09-18",
+        "density_plants_m2": 48.0,
+        "ec": "EC3",
+        "lai_m2_m2": 1.363968,
+        "leaf_area_mean_cm2_plant": 284.16,
+        "leaf_area_sd_cm2_plant": 35.73682134717636,
+        "light": "med light",
+        "n": 6
+      },
+      {
+        "date": "2023-09-18",
+        "density_plants_m2": 48.0,
+        "ec": "EC6",
+        "lai_m2_m2": 1.261944,
+        "leaf_area_mean_cm2_plant": 262.905,
+        "leaf_area_sd_cm2_plant": 44.98237910560089,
+        "light": "med light",
+        "n": 6
+      },
+      {
+        "date": "2023-09-18",
+        "density_plants_m2": 48.0,
+        "ec": "EC3",
+        "lai_m2_m2": 1.123536,
+        "leaf_area_mean_cm2_plant": 234.07,
+        "leaf_area_sd_cm2_plant": 37.52994484408416,
+        "light": "no light",
+        "n": 6
+      },
+      {
+        "date": "2023-09-18",
+        "density_plants_m2": 48.0,
+        "ec": "EC6",
+        "lai_m2_m2": 1.173072,
+        "leaf_area_mean_cm2_plant": 244.39,
+        "leaf_area_sd_cm2_plant": 27.64974140927904,
+        "light": "no light",
+        "n": 6
+      },
+      {
+        "date": "2023-09-29",
+        "density_plants_m2": 25.0,
+        "ec": "EC3",
+        "lai_m2_m2": 1.1178416666666666,
+        "leaf_area_mean_cm2_plant": 447.13666666666666,
+        "leaf_area_sd_cm2_plant": 150.98222169072312,
+        "light": "high light",
+        "n": 6
+      },
+      {
+        "date": "2023-09-29",
+        "density_plants_m2": 25.0,
+        "ec": "EC6",
+        "lai_m2_m2": 1.6972708333333333,
+        "leaf_area_mean_cm2_plant": 678.9083333333333,
+        "leaf_area_sd_cm2_plant": 98.83375504687994,
+        "light": "high light",
+        "n": 6
+      },
+      {
+        "date": "2023-09-29",
+        "density_plants_m2": 25.0,
+        "ec": "EC3",
+        "lai_m2_m2": 1.1715833333333334,
+        "leaf_area_mean_cm2_plant": 468.6333333333333,
+        "leaf_area_sd_cm2_plant": 52.52388434480706,
+        "light": "low light",
+        "n": 6
+      },
+      {
+        "date": "2023-09-29",
+        "density_plants_m2": 25.0,
+        "ec": "EC6",
+        "lai_m2_m2": 1.5430291666666665,
+        "leaf_area_mean_cm2_plant": 617.2116666666666,
+        "leaf_area_sd_cm2_plant": 66.74244658885878,
+        "light": "low light",
+        "n": 6
+      },
+      {
+        "date": "2023-09-29",
+        "density_plants_m2": 25.0,
+        "ec": "EC3",
+        "lai_m2_m2": 1.4367166666666666,
+        "leaf_area_mean_cm2_plant": 574.6866666666666,
+        "leaf_area_sd_cm2_plant": 177.98587951482745,
+        "light": "med light",
+        "n": 6
+      },
+      {
+        "date": "2023-09-29",
+        "density_plants_m2": 25.0,
+        "ec": "EC6",
+        "lai_m2_m2": 1.3792124999999997,
+        "leaf_area_mean_cm2_plant": 551.685,
+        "leaf_area_sd_cm2_plant": 130.7818119999872,
+        "light": "med light",
+        "n": 6
+      },
+      {
+        "date": "2023-09-29",
+        "density_plants_m2": 25.0,
+        "ec": "EC3",
+        "lai_m2_m2": 0.97205,
+        "leaf_area_mean_cm2_plant": 388.82,
+        "leaf_area_sd_cm2_plant": 113.55784288194278,
+        "light": "no light",
+        "n": 6
+      },
+      {
+        "date": "2023-09-29",
+        "density_plants_m2": 25.0,
+        "ec": "EC6",
+        "lai_m2_m2": 1.1763125,
+        "leaf_area_mean_cm2_plant": 470.525,
+        "leaf_area_sd_cm2_plant": 99.06291006224276,
+        "light": "no light",
+        "n": 6
+      },
+      {
+        "date": "2023-11-09",
+        "density_plants_m2": 20.0,
+        "ec": "EC3",
+        "lai_m2_m2": 2.9865833333333334,
+        "leaf_area_mean_cm2_plant": 1493.2916666666667,
+        "leaf_area_sd_cm2_plant": 339.5586568130264,
+        "light": "high light",
+        "n": 6
+      },
+      {
+        "date": "2023-11-09",
+        "density_plants_m2": 20.0,
+        "ec": "EC6",
+        "lai_m2_m2": 2.5970866666666663,
+        "leaf_area_mean_cm2_plant": 1298.5433333333333,
+        "leaf_area_sd_cm2_plant": 331.3895318000656,
+        "light": "high light",
+        "n": 6
+      },
+      {
+        "date": "2023-11-09",
+        "density_plants_m2": 20.0,
+        "ec": "EC3",
+        "lai_m2_m2": 2.297276666666667,
+        "leaf_area_mean_cm2_plant": 1148.6383333333333,
+        "leaf_area_sd_cm2_plant": 457.11608614953235,
+        "light": "low light",
+        "n": 6
+      },
+      {
+        "date": "2023-11-09",
+        "density_plants_m2": 20.0,
+        "ec": "EC6",
+        "lai_m2_m2": 2.4130966666666667,
+        "leaf_area_mean_cm2_plant": 1206.5483333333334,
+        "leaf_area_sd_cm2_plant": 411.0415858482773,
+        "light": "low light",
+        "n": 6
+      },
+      {
+        "date": "2023-11-09",
+        "density_plants_m2": 20.0,
+        "ec": "EC3",
+        "lai_m2_m2": 2.8944433333333333,
+        "leaf_area_mean_cm2_plant": 1447.2216666666666,
+        "leaf_area_sd_cm2_plant": 415.5534589636653,
+        "light": "med light",
+        "n": 6
+      },
+      {
+        "date": "2023-11-09",
+        "density_plants_m2": 20.0,
+        "ec": "EC6",
+        "lai_m2_m2": 2.680283333333333,
+        "leaf_area_mean_cm2_plant": 1340.1416666666667,
+        "leaf_area_sd_cm2_plant": 227.73825918511508,
+        "light": "med light",
+        "n": 6
+      },
+      {
+        "date": "2023-11-09",
+        "density_plants_m2": 20.0,
+        "ec": "EC3",
+        "lai_m2_m2": 2.3546433333333336,
+        "leaf_area_mean_cm2_plant": 1177.3216666666667,
+        "leaf_area_sd_cm2_plant": 210.7186792305482,
+        "light": "no light",
+        "n": 6
+      },
+      {
+        "date": "2023-11-09",
+        "density_plants_m2": 20.0,
+        "ec": "EC6",
+        "lai_m2_m2": 2.120553333333333,
+        "leaf_area_mean_cm2_plant": 1060.2766666666666,
+        "leaf_area_sd_cm2_plant": 241.076148274081,
+        "light": "no light",
+        "n": 6
+      }
+    ],
+    "raw_date_density_counts": [
+      {
+        "date": "2023-09-04",
+        "rows": 96,
+        "workbook_density": "1050"
+      },
+      {
+        "date": "2023-09-18",
+        "rows": 48,
+        "workbook_density": "48"
+      },
+      {
+        "date": "2023-09-29",
+        "rows": 48,
+        "workbook_density": "25"
+      },
+      {
+        "date": "2023-11-09",
+        "rows": 48,
+        "workbook_density": "20"
+      }
+    ],
+    "rows": 240,
+    "warnings": [
+      "combined-table transplant density 1050 conflicts with Info sheet and table geometry; replaced by 48 only for this sampled date"
+    ]
+  },
+  "nondestructive_crop": {
+    "dates": {
+      "2023-09-06": 40,
+      "2023-09-12": 40,
+      "2023-09-20": 40,
+      "2023-09-27": 40,
+      "2023-10-04": 40,
+      "2023-10-11": 40,
+      "2023-10-18": 40,
+      "2023-10-25": 40,
+      "2023-11-01": 40
+    },
+    "plant_height_nonmissing_rows": 331,
+    "rows": 360,
+    "warning": "Use the consolidated All data sheet. The week 38 and week 39 source tabs contain 2024 date typos; the consolidated sheet contains the internally consistent 2023 dates.",
+    "weekly_tabs_with_2024_date_typo": [
+      "week 38",
+      "week 39"
+    ]
+  },
+  "schema_audit_id": "agc2023-pretrial-input-schema-v0",
+  "workbook_hashes": {
+    "ClimateTimeseries.xlsx": "8cd91c6014b81cd2591f2d6bed8c8f2b4af4f9b1288d1b3994a0acbc63ddd1ba",
+    "CropMeasurements.xlsx": "9769565fa86c17bc00577e6801c3f40b18d1969c68c728c38362ff10593ee10e",
+    "DestructiveHarvest.xlsx": "78e0a28fdee730b241b21c5b61a2762ff06a171d42b065f0e7426eb86caa677c"
+  }
+}
