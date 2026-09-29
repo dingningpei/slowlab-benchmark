@@ -12,7 +12,7 @@ import sys
 ROOT=Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path: sys.path.insert(0,str(ROOT))
 from scripts.agc.audit_agc2019_climate_replay import error_metrics, interpolate  # noqa: E402
-from slowlab.v22.greenlight_adapter import (assert_greenlight_solution_complete,
+from slowlab.greenlight_adapter import (assert_greenlight_solution_complete,
     greenlight_boundary_temperature_override, greenlight_initial_climate_override,
     greenlight_initial_pipe_override)  # noqa: E402
 
