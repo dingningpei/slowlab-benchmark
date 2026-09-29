@@ -1,8 +1,10 @@
 """Causal sensor records for the V2.2 executor (not an agent-owned object).
 
-Only query payloads may cross the agent boundary. The executor owns the clock,
-records samples once, and applies sensor noise before recording. Offline CSVs
-are deliberately not accepted: relabelled timestamps cannot be repaired here.
+Only query payloads may cross the agent boundary. The executor owns the clock
+and records each supplied sample once. The current V2.2 sensor bridge supplies
+deterministic values; a calibrated or declared noise transform is not yet
+implemented. Offline CSVs are deliberately not accepted: relabelled timestamps
+cannot be repaired here.
 """
 from __future__ import annotations
 
