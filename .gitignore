@@ -20,15 +20,15 @@ dist/
 Thumbs.db
 
 # ── LaTeX build products ────────────────────────────────────────────────
-paper/*.aux
-paper/*.log
-paper/*.out
-paper/*.bbl
-paper/*.blg
-paper/*.fls
-paper/*.fdb_latexmk
-paper/*.synctex.gz
-paper/*.toc
+**/paper/*.aux
+**/paper/*.log
+**/paper/*.out
+**/paper/*.bbl
+**/paper/*.blg
+**/paper/*.fls
+**/paper/*.fdb_latexmk
+**/paper/*.synctex.gz
+**/paper/*.toc
 
 # ── Run products ────────────────────────────────────────────────────────
 # The summary JSON under results/ IS tracked: every table and figure in the
@@ -43,10 +43,10 @@ paper/*.toc
 # The previous version of this rule read `results/llm/transcript_*.json` and
 # silently matched nothing once the directory was renamed to carry the
 # environment version. Keep the glob wide enough to survive that.
-results/**/transcript_*.json
-results/**/events_*.json
-results/**/*.pkl
-results/_oracle_cache/
+**/results/**/transcript_*.json
+**/results/**/events_*.json
+**/results/**/*.pkl
+**/results/_oracle_cache/
 
 # ── Internal lab notebook, not part of the release ──────────────────────
 CHANGELOG_*.md

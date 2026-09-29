@@ -12,7 +12,7 @@ if str(ROOT) not in sys.path:sys.path.insert(0,str(ROOT))
 from scripts.agc.audit_agc2019_climate_replay import error_metrics,interpolate
 from scripts.agc.run_agc2019_calibration_sequences import aggregate,first_numeric_row,observed_start,sequence_metrics
 from slowlab.archive.agc_temperature_residual import TemperatureResidualModel,feature_vector
-from slowlab.v22.greenlight_adapter import assert_greenlight_solution_complete,greenlight_boundary_temperature_override,greenlight_initial_climate_override,greenlight_initial_pipe_override
+from slowlab.greenlight_adapter import assert_greenlight_solution_complete,greenlight_boundary_temperature_override,greenlight_initial_climate_override,greenlight_initial_pipe_override
 
 def digest(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 def corrected_tair(path,obs_path,start,days,model):

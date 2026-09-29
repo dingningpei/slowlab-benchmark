@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from slowlab.v22.greenlight_adapter import assert_greenlight_solution_complete  # noqa: E402
+from slowlab.greenlight_adapter import assert_greenlight_solution_complete  # noqa: E402
 
 
 def sha256(path: Path) -> str:
