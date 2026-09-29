@@ -23,6 +23,30 @@ choices. The frozen environment and package remain at **v2.0.0**; the Version 2.
 uses the same environment and does not change ground truth. Version 1 remains an audit
 artifact described in [`ENVIRONMENT_v1.0.md`](ENVIRONMENT_v1.0.md).
 
+### Version 2.2 reality boundary
+
+The Version 2.2 redesign is a **reality-constrained simulation benchmark**, not a validated
+digital twin. A preregistered GreenLight v8 observed-action holdout failed the trajectory
+gate: pooled temperature RMSE was 2.579 °C against a 2.04 °C limit and relative-humidity
+RMSE was 9.983 percentage points against an 8.5-point limit; CO2 passed its separate
+threshold. Public AGC data therefore constrain observed ranges, dynamics, missingness,
+facility capacities and executor sensitivities, while the failed audit remains an explicit
+external-validity result.
+
+The evidence classes, source roles, supported ranges and unsupported actuator fluxes are
+frozen in [`configs/reality_constraints_v2_2.json`](configs/reality_constraints_v2_2.json)
+and explained in
+[`docs/reality_constraints_v2_2.md`](docs/reality_constraints_v2_2.md). Formal Version 2.2
+records must pass `scripts/audit_reality_support.py`; passing that range audit does not
+establish causal or counterfactual validity.
+
+Formal model calls are additionally governed by
+[`configs/simulation_blinding_v2_2.json`](configs/simulation_blinding_v2_2.json). Public
+datasets define aggregate constraints but are not replayed as confirmatory outcomes. Site
+seeds, simulator identity, latent parameters, oracle values and future records are blocked
+from provider messages by a fail-closed prompt firewall; see
+[`docs/simulation_blinding_v2_2.md`](docs/simulation_blinding_v2_2.md).
+
 ---
 
 ## Install and run

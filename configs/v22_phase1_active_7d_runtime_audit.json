@@ -1,0 +1,13 @@
+{
+  "status": "bounded_early_active_runtime_passed_compute_gate_open",
+  "window": "2017-01-01 fixed CET, seven early-crop days; 2016-12/2017 Cabauw lc1 forcing",
+  "per_unit_steps": 2016,
+  "frame_stepping_seconds": 9.613277291995473,
+  "array_stepping_seconds": 8.235245042014867,
+  "max_final_state_abs_diff": 0.0,
+  "ledger_equal": true,
+  "array_peak_rss_bytes_platform": 131907584,
+  "optimistic_four_unit_year_linear_hours": 0.47712133973578197,
+  "optimistic_1024_campaign_worker_hours": 488.57225188944074,
+  "limitations": "early-crop seven-day window only; not a mature-crop annual run, no loading/evaluator/agent/retries; single machine performance does not translate directly to remote vCPU-hours"
+}

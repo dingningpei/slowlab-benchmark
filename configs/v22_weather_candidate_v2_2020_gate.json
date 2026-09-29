@@ -1,0 +1,24 @@
+{
+  "status": "failed_cross_year_weather_gate",
+  "scope": "2020 weather-only diagnostic; no greenhouse trajectory or agent outcome validation",
+  "lock_sha256": "9ec3ae3c4f7769f6a01b2cb963dc2602c2db23a318790d3fa96f8b82c80b0e15",
+  "diagnostic_sha256": "5b90e41b38f1d0efeba8649f1d8d2de07cdffd364816a8b1c0e609481bbf44ae",
+  "values": {
+    "physical_support_count": 11,
+    "all_source_nonreplay_count": 8,
+    "max_abs_monthly_mean_training_sd": 1.630806609992474,
+    "daily_variance_ratio_min": 0.45067745088361605,
+    "daily_variance_ratio_max": 1.6515331253920746,
+    "ten_minute_p99_ratio_min": 0.7560068515340378,
+    "ten_minute_p99_ratio_max": 1.1136956574962467,
+    "max_abs_daily_cross_channel_correlation_delta": 0.38816752558764595
+  },
+  "checks": {
+    "physical_support": true,
+    "nonreplay": true,
+    "monthly_mean": false,
+    "daily_variance": false,
+    "ten_minute_p99": true,
+    "daily_correlation": true
+  }
+}

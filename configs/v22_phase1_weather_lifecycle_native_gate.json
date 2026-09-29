@@ -1,0 +1,57 @@
+{
+  "status": "passed_weather_lifecycle",
+  "scope": "one unit; two-day weather-driven cleanup/replant; 90s compute bound",
+  "native_rhs": true,
+  "active_steps": 2,
+  "cleanup_steps": 576,
+  "stop_at": 300.0,
+  "replant_at": 173100.0,
+  "facility_state_continuity": true,
+  "endpoint_early_stop_release": "accrued_only",
+  "public_air_records": 579,
+  "model_load_count": 2,
+  "model_load_elapsed_seconds": 8.29522204096429,
+  "cleanup_elapsed_seconds": 3.360245499992743,
+  "elapsed_seconds": 11.674836999969557,
+  "peak_rss_bytes_platform": 130039808,
+  "ledger": {
+    "per_m2": {
+      "heat_kwh_m2": 0.020602129640661278,
+      "light_kwh_m2": 0.0,
+      "co2_kg_m2": 0.0,
+      "harvest_kg_m2": 6.665391453480099e-118,
+      "transpiration_kg_m2": 0.00025575325895468577,
+      "days": 2.00694444444447
+    },
+    "by_phase_per_m2": {
+      "active": {
+        "heat_kwh_m2": 0.019999000099989755,
+        "light_kwh_m2": 0.0,
+        "co2_kg_m2": 0.0,
+        "harvest_kg_m2": 6.665391453480099e-118,
+        "transpiration_kg_m2": 0.00025575325895468577,
+        "days": 0.006944444444444444
+      },
+      "cleanup": {
+        "heat_kwh_m2": 0.0006031295406715217,
+        "light_kwh_m2": 0.0,
+        "co2_kg_m2": 0.0,
+        "harvest_kg_m2": 0.0,
+        "transpiration_kg_m2": 0.0,
+        "days": 2.0000000000000253
+      },
+      "idle": {
+        "heat_kwh_m2": 0.0,
+        "light_kwh_m2": 0.0,
+        "co2_kg_m2": 0.0,
+        "harvest_kg_m2": 0.0,
+        "transpiration_kg_m2": 0.0,
+        "days": 0.0
+      }
+    },
+    "event_cost_eur_m2": 4.5,
+    "synthetic_margin_eur": -432.10555688894186,
+    "occupied_m2_days": 192.66666666666913,
+    "scope": "single-compartment accrued ledger; not final campaign settlement"
+  }
+}

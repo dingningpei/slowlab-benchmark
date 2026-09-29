@@ -1,0 +1,18 @@
+{
+  "status": "bounded_optimization_passed_compute_gate_still_open",
+  "scope": "single unit, 576 cleanup steps plus two active steps on audited Cabauw lc1; one CPU thread; not mature-crop annual timing",
+  "before_indexing_cleanup_seconds": 3.360245499992743,
+  "after_indexing_cleanup_seconds": 2.8411000829655677,
+  "paired_frame_cleanup_seconds": 3.010050292010419,
+  "paired_array_cleanup_seconds": 2.4713265420868993,
+  "max_final_state_abs_diff": 0.0,
+  "ledger_equal": true,
+  "all_auxiliaries_evaluated": true,
+  "array_mode_skips_only_pandas_packaging": true,
+  "four_unit_365_day_linear_projection_hours": 0.5011301043676213,
+  "planned_1024_campaign_linear_projection_worker_hours": 513.1572268724442,
+  "projection_limits": "empty-crop segment only; excludes mature crops, annual weather boundaries, model loading, LLM/BO, evaluation, retries, parallel scheduling and disk persistence",
+  "input_data_rows_per_step": 1,
+  "new_dataset_downloads": 0,
+  "llm_api_calls": 0
+}

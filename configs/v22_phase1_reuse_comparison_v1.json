@@ -1,0 +1,164 @@
+{
+  "scope": "six 300s steps with synthetic weather; not whole Phase1",
+  "load_once_seconds": 3.7467042080825195,
+  "steps": [
+    {
+      "end_seconds": 21900,
+      "commands": {
+        "uBoil": 1.0,
+        "uRoof": 0.0,
+        "uExtCo2": 0.999999999999996,
+        "uLamp": 1.0
+      },
+      "state_count": 28,
+      "max_abs_state_difference": 0.0,
+      "matches_at_solver_tolerance": true,
+      "current_input_rows": 1,
+      "reload_seconds": 3.8268285000231117,
+      "reuse_seconds": 0.10287599998991936,
+      "climate": {
+        "temperature": 18.33235215300912,
+        "rh": 75.55064847569481,
+        "co2": 461.59702473398016,
+        "solar": 100.0
+      }
+    },
+    {
+      "end_seconds": 22200,
+      "commands": {
+        "uBoil": 0.9999999999997864,
+        "uRoof": 2.1350528012220593e-09,
+        "uExtCo2": 0.9999999999970901,
+        "uLamp": 1.0
+      },
+      "state_count": 28,
+      "max_abs_state_difference": 0.0,
+      "matches_at_solver_tolerance": true,
+      "current_input_rows": 1,
+      "reload_seconds": 3.8411884169327095,
+      "reuse_seconds": 0.0572336670011282,
+      "climate": {
+        "temperature": 19.171420012611698,
+        "rh": 70.27830265269529,
+        "co2": 531.1236039727587,
+        "solar": 100.0
+      }
+    },
+    {
+      "end_seconds": 22500,
+      "commands": {
+        "uBoil": 0.0,
+        "uRoof": 0.4,
+        "uExtCo2": 0.0,
+        "uLamp": 0.0
+      },
+      "state_count": 28,
+      "max_abs_state_difference": 0.0,
+      "matches_at_solver_tolerance": true,
+      "current_input_rows": 1,
+      "reload_seconds": 3.8595718330470845,
+      "reuse_seconds": 0.08590241707861423,
+      "climate": {
+        "temperature": 12.752873861192526,
+        "rh": 77.43333324486431,
+        "co2": 429.54331591223865,
+        "solar": 100.0
+      }
+    },
+    {
+      "end_seconds": 22800,
+      "commands": {
+        "uBoil": 0.6,
+        "uRoof": 0.1,
+        "uExtCo2": 0.2,
+        "uLamp": 1.0
+      },
+      "state_count": 28,
+      "max_abs_state_difference": 0.0,
+      "matches_at_solver_tolerance": true,
+      "current_input_rows": 1,
+      "reload_seconds": 3.835153124993667,
+      "reuse_seconds": 0.08100329095032066,
+      "climate": {
+        "temperature": 14.768056122758184,
+        "rh": 66.11769034665332,
+        "co2": 434.29983977590274,
+        "solar": 100.0
+      }
+    },
+    {
+      "end_seconds": 23100,
+      "commands": {
+        "uBoil": 1.0,
+        "uRoof": 0.0,
+        "uExtCo2": 0.9999999999997644,
+        "uLamp": 1.0
+      },
+      "state_count": 28,
+      "max_abs_state_difference": 0.0,
+      "matches_at_solver_tolerance": true,
+      "current_input_rows": 1,
+      "reload_seconds": 3.8776424169773236,
+      "reuse_seconds": 0.07287145801819861,
+      "climate": {
+        "temperature": 17.098792572825626,
+        "rh": 57.869445363945765,
+        "co2": 505.1237563405731,
+        "solar": 100.0
+      }
+    },
+    {
+      "end_seconds": 23400,
+      "commands": {
+        "uBoil": 1.0,
+        "uRoof": 2.4868995751603507e-14,
+        "uExtCo2": 0.9999999998396938,
+        "uLamp": 1.0
+      },
+      "state_count": 28,
+      "max_abs_state_difference": 0.0,
+      "matches_at_solver_tolerance": true,
+      "current_input_rows": 1,
+      "reload_seconds": 3.905386499944143,
+      "reuse_seconds": 0.046815208974294364,
+      "climate": {
+        "temperature": 18.579896724502063,
+        "rh": 53.57573753834411,
+        "co2": 574.8691633870538,
+        "solar": 100.0
+      }
+    }
+  ],
+  "status": "passed_comparison",
+  "model_load_count": 1,
+  "registered_inputs": [
+    "cmdHeat",
+    "cmdVent",
+    "cmdCo2",
+    "cmdLamp",
+    "cmdDay"
+  ],
+  "bootstrap_inputs": {
+    "Time": 21600.0,
+    "cmdHeat": 0.0,
+    "cmdVent": 0.0,
+    "cmdCo2": 0.0,
+    "cmdLamp": 0.0,
+    "cmdDay": 1.0
+  },
+  "speedup_excluding_initialization": 51.81478617747538,
+  "wall_seconds": 27.340386625030078,
+  "peak_rss_bytes": 114458624,
+  "artifact_hashes": {
+    "configs/v22_task_contract_v0.json": "1b70f8c277c04f32f61925037ebcfd665e45802712f14ec100f3adbf50d9fa6f",
+    "slowlab/v22_greenlight_reuse.py": "74ad00934806a879005d8b041b48631267b901249b8d8530743149efc2d8a321",
+    "scripts/compare_v22_reuse.py": "bc88cf2e1e8f80c0fa43c6405f447dd3b2202d8466e0cc3a431a6b5b235c4b59"
+  },
+  "dependency_versions": {
+    "numpy": "1.26.4",
+    "scipy": "1.14.1",
+    "pandas": "2.2.3",
+    "numexpr": "2.10.2"
+  },
+  "numerical_threads": 1
+}

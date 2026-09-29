@@ -1,0 +1,4919 @@
+{
+  "gate": "fail",
+  "scope": "2012/2013/2014/2016 same-station v3 development years only; not greenhouse validation",
+  "files": 96,
+  "net_new_bytes": 13027903,
+  "plan_sha256": "c93a8543fa191b05834a23605df5715eb1ba70cb4992284200c43d31020fca63",
+  "months": {
+    "201201": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201201.nc",
+        "sha256": "19db71acfaa6be2a3c0d1ccc1955308cf36d6f2f2d2c6c9410af66a12b3cb528",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2
+          ],
+          "IQ002": [
+            2
+          ],
+          "IF010": [
+            2
+          ],
+          "ISWD": [
+            1,
+            2
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            266.9499816894531,
+            285.75
+          ],
+          "TD002": [
+            263.267822265625,
+            285.08172607421875
+          ],
+          "RH002": [
+            55.64296340942383,
+            102.02833557128906
+          ],
+          "F010": [
+            0.03999999910593033,
+            19.139999389648438
+          ],
+          "SWD": [
+            -0.3662674129009247,
+            346.96343994140625
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201201.nc",
+        "sha256": "1e1e84553a477d0cb32858718d6767c1258424b56add5bfbc571d89b9148cf70",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            1
+          ],
+          "ILWD": [
+            1
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -0.16164235770702362,
+            355.0624694824219
+          ],
+          "LWD": [
+            198.43301391601562,
+            375.9389953613281
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.2197265625,
+        "swd_rows_different": 1524,
+        "max_swd_difference_w_m2": 27.4512939453125,
+        "mean_abs_swd_difference_w_m2": 1.3021796952035862,
+        "swd_rows_difference_over_25_w_m2": 1,
+        "swd_rows_difference_over_100_w_m2": 0,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201202": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201202.nc",
+        "sha256": "b641a5999ce3c737be636ac51631bae6329cf8ef8677d838c84ab46e3cb1f9db",
+        "format": "hdf5",
+        "rows": 4176,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3
+          ],
+          "IQ002": [
+            2,
+            3
+          ],
+          "IF010": [
+            2
+          ],
+          "ISWD": [
+            2,
+            3,
+            5,
+            7
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            253.34999084472656,
+            284.6499938964844
+          ],
+          "TD002": [
+            251.8555908203125,
+            283.666015625
+          ],
+          "RH002": [
+            28.46559715270996,
+            102.68755340576172
+          ],
+          "F010": [
+            0.10000000149011612,
+            11.729999542236328
+          ],
+          "SWD": [
+            -0.5190994143486023,
+            560.3711547851562
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201202.nc",
+        "sha256": "553689bd6460f1c647c859ae8789223973dadce72bfbda68eff00228c47afb92",
+        "format": "hdf5",
+        "rows": 4176,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            1,
+            2,
+            5,
+            7
+          ],
+          "ILWD": [
+            1,
+            2
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            0.0,
+            557.6198120117188
+          ],
+          "LWD": [
+            170.6950225830078,
+            369.6860046386719
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.2197265625,
+        "swd_rows_different": 1604,
+        "max_swd_difference_w_m2": 71.04421997070312,
+        "mean_abs_swd_difference_w_m2": 2.124758135721063,
+        "swd_rows_difference_over_25_w_m2": 50,
+        "swd_rows_difference_over_100_w_m2": 0,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201203": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201203.nc",
+        "sha256": "cade79b60953c1c4a3c50738d03834289103b7c73256e5d4587d259ce6dd2eca",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3,
+            5
+          ],
+          "IQ002": [
+            2,
+            3,
+            5
+          ],
+          "IF010": [
+            2,
+            5
+          ],
+          "ISWD": [
+            1,
+            2,
+            5
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            271.8500061035156,
+            292.04998779296875
+          ],
+          "TD002": [
+            271.4886169433594,
+            283.968017578125
+          ],
+          "RH002": [
+            40.01047897338867,
+            100.59164428710938
+          ],
+          "F010": [
+            0.10000000149011612,
+            10.579999923706055
+          ],
+          "SWD": [
+            -0.42135316133499146,
+            811.474365234375
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201203.nc",
+        "sha256": "8d775fa8b9026e6295d96a7d5b5e0e9e469d6a6ee18bdd032667e3c2b8afbd40",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            1,
+            5
+          ],
+          "ILWD": [
+            1
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            0.0,
+            817.6834106445312
+          ],
+          "LWD": [
+            239.7770233154297,
+            360.66998291015625
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.2197265625,
+        "swd_rows_different": 2208,
+        "max_swd_difference_w_m2": 95.55978393554688,
+        "mean_abs_swd_difference_w_m2": 2.5941964403453275,
+        "swd_rows_difference_over_25_w_m2": 50,
+        "swd_rows_difference_over_100_w_m2": 0,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201204": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201204.nc",
+        "sha256": "a12e6d3cf329904e06da802466167994651f365ae13ccbf31f2f61b407f9d27e",
+        "format": "hdf5",
+        "rows": 4320,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3,
+            5,
+            7
+          ],
+          "IQ002": [
+            2,
+            3,
+            5,
+            7
+          ],
+          "IF010": [
+            2,
+            5,
+            7
+          ],
+          "ISWD": [
+            2,
+            5,
+            7
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            270.8500061035156,
+            295.04998779296875
+          ],
+          "TD002": [
+            268.178955078125,
+            286.49505615234375
+          ],
+          "RH002": [
+            36.79447555541992,
+            102.62307739257812
+          ],
+          "F010": [
+            0.08566740155220032,
+            12.84000015258789
+          ],
+          "SWD": [
+            -0.228515625,
+            944.127197265625
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201204.nc",
+        "sha256": "2f8058ae954374e5887bc59dc6d4ef1bd4cfc81ac3b94ca177e52f1bc95677ae",
+        "format": "hdf5",
+        "rows": 4320,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            1,
+            2,
+            5,
+            7
+          ],
+          "ILWD": [
+            1
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -0.5836511850357056,
+            940.5911254882812
+          ],
+          "LWD": [
+            232.18798828125,
+            376.58099365234375
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.2197265625,
+        "swd_rows_different": 2484,
+        "max_swd_difference_w_m2": 342.2882080078125,
+        "mean_abs_swd_difference_w_m2": 6.02576634820914,
+        "swd_rows_difference_over_25_w_m2": 245,
+        "swd_rows_difference_over_100_w_m2": 22,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201205": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201205.nc",
+        "sha256": "fb47298d2211900336aba5718d4200af7659542f40ab028d08e37d20886d8afb",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3,
+            5
+          ],
+          "IQ002": [
+            2,
+            3,
+            5
+          ],
+          "IF010": [
+            2,
+            3,
+            5
+          ],
+          "ISWD": [
+            2,
+            5
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            275.54998779296875,
+            300.75
+          ],
+          "TD002": [
+            273.7035217285156,
+            293.1805725097656
+          ],
+          "RH002": [
+            30.692962646484375,
+            102.14766693115234
+          ],
+          "F010": [
+            0.0,
+            9.399999618530273
+          ],
+          "SWD": [
+            -0.4729324281215668,
+            1043.14306640625
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201205.nc",
+        "sha256": "e4be784b8948a3659605a58c9fb57381d80df4c9559490496d888e15058e571e",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            1,
+            2,
+            5
+          ],
+          "ILWD": [
+            1,
+            2,
+            5
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -0.8918555974960327,
+            1030.035400390625
+          ],
+          "LWD": [
+            251.50100708007812,
+            418.802001953125
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.2197265625,
+        "swd_rows_different": 2910,
+        "max_swd_difference_w_m2": 203.4122314453125,
+        "mean_abs_swd_difference_w_m2": 5.984903901248151,
+        "swd_rows_difference_over_25_w_m2": 200,
+        "swd_rows_difference_over_100_w_m2": 13,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201206": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201206.nc",
+        "sha256": "14879fed4d2147857452feb85f350f1a25e04010d9eba97a30bf5bac558da009",
+        "format": "hdf5",
+        "rows": 4320,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3,
+            5
+          ],
+          "IQ002": [
+            2,
+            3,
+            5
+          ],
+          "IF010": [
+            2,
+            5
+          ],
+          "ISWD": [
+            2,
+            5
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            277.1499938964844,
+            301.1499938964844
+          ],
+          "TD002": [
+            275.6128234863281,
+            294.5069580078125
+          ],
+          "RH002": [
+            41.21282196044922,
+            102.0762710571289
+          ],
+          "F010": [
+            0.0,
+            13.670000076293945
+          ],
+          "SWD": [
+            -0.3612259030342102,
+            1053.373291015625
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201206.nc",
+        "sha256": "bd9ade1f48d8a935ae8b10bc09f67b8397d8d983d7c95dd6d55719ecc7830284",
+        "format": "hdf5",
+        "rows": 4320,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            1,
+            2,
+            5
+          ],
+          "ILWD": [
+            1,
+            2
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -1.4627773761749268,
+            1045.04248046875
+          ],
+          "LWD": [
+            259.66595458984375,
+            423.9139709472656
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.2197265625,
+        "swd_rows_different": 2979,
+        "max_swd_difference_w_m2": 233.9483642578125,
+        "mean_abs_swd_difference_w_m2": 9.275456770693806,
+        "swd_rows_difference_over_25_w_m2": 402,
+        "swd_rows_difference_over_100_w_m2": 36,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201207": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201207.nc",
+        "sha256": "eae3e53ec93f193533521d466fefadf481d40bc59607827f7e214ba8f9fdeddc",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3
+          ],
+          "IQ002": [
+            2,
+            3
+          ],
+          "IF010": [
+            2,
+            3
+          ],
+          "ISWD": [
+            2,
+            5
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            280.6499938964844,
+            301.6499938964844
+          ],
+          "TD002": [
+            280.3410339355469,
+            292.2690124511719
+          ],
+          "RH002": [
+            35.284671783447266,
+            101.33509063720703
+          ],
+          "F010": [
+            0.0,
+            10.15999984741211
+          ],
+          "SWD": [
+            -0.39960938692092896,
+            1070.9219970703125
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201207.nc",
+        "sha256": "05541439f27d74a5ef72aea8d6a28f791f8f8787c387ed1a6d20a0491caa1fe7",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            1,
+            5
+          ],
+          "ILWD": [
+            1
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -1.271014928817749,
+            1014.603515625
+          ],
+          "LWD": [
+            287.3429870605469,
+            421.6949768066406
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 2987,
+        "max_swd_difference_w_m2": 249.0911865234375,
+        "mean_abs_swd_difference_w_m2": 9.044165583509546,
+        "swd_rows_difference_over_25_w_m2": 381,
+        "swd_rows_difference_over_100_w_m2": 35,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201208": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201208.nc",
+        "sha256": "2caa54bebd8e927d2c7b7f23803ef555405cfba811ae15be179f2fe9e27a6cf2",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3,
+            5
+          ],
+          "IQ002": [
+            2,
+            3,
+            5,
+            7
+          ],
+          "IF010": [
+            2,
+            3,
+            5
+          ],
+          "ISWD": [
+            1,
+            2,
+            5
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            281.25,
+            305.54998779296875
+          ],
+          "TD002": [
+            280.33990478515625,
+            296.8482666015625
+          ],
+          "RH002": [
+            39.11044692993164,
+            101.13455963134766
+          ],
+          "F010": [
+            0.0,
+            13.199999809265137
+          ],
+          "SWD": [
+            -0.4364364743232727,
+            936.7991943359375
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201208.nc",
+        "sha256": "f2f252575e37f16f694e75fa116eebf1df51b7bab76d5d396fa6a7535ee7a2cd",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            1,
+            2,
+            3,
+            5
+          ],
+          "ILWD": [
+            1,
+            2,
+            5
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            0.0,
+            947.7620239257812
+          ],
+          "LWD": [
+            284.2230529785156,
+            432.0559997558594
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 2683,
+        "max_swd_difference_w_m2": 208.6015625,
+        "mean_abs_swd_difference_w_m2": 7.80423772764746,
+        "swd_rows_difference_over_25_w_m2": 321,
+        "swd_rows_difference_over_100_w_m2": 23,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201209": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201209.nc",
+        "sha256": "fa2046970ca60f8b5df18caf97d912f9c5f0e96d2654bf04276450f6c4443844",
+        "format": "hdf5",
+        "rows": 4320,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3
+          ],
+          "IQ002": [
+            2,
+            3
+          ],
+          "IF010": [
+            2,
+            3
+          ],
+          "ISWD": [
+            2,
+            5
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            277.4499816894531,
+            301.1499938964844
+          ],
+          "TD002": [
+            277.4222106933594,
+            290.04095458984375
+          ],
+          "RH002": [
+            40.50475311279297,
+            102.1556625366211
+          ],
+          "F010": [
+            0.0,
+            17.260000228881836
+          ],
+          "SWD": [
+            -0.38730621337890625,
+            847.1624755859375
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201209.nc",
+        "sha256": "18597f6b9c58957b71267ab225d40df5c6d6a783812af3da9318323f7cecc1f4",
+        "format": "hdf5",
+        "rows": 4320,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            1,
+            2,
+            5
+          ],
+          "ILWD": [
+            1,
+            2
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -0.5301650762557983,
+            856.4454956054688
+          ],
+          "LWD": [
+            267.7970275878906,
+            406.8467102050781
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 2261,
+        "max_swd_difference_w_m2": 169.17340087890625,
+        "mean_abs_swd_difference_w_m2": 5.829059677195511,
+        "swd_rows_difference_over_25_w_m2": 206,
+        "swd_rows_difference_over_100_w_m2": 11,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201210": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201210.nc",
+        "sha256": "f055c05452e2eb4b7a34d800a95ebed20d8c9a768a33e0b38b2578aede9aaef7",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3
+          ],
+          "IQ002": [
+            2,
+            3,
+            5
+          ],
+          "IF010": [
+            2,
+            3
+          ],
+          "ISWD": [
+            2,
+            5
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            271.04998779296875,
+            294.54998779296875
+          ],
+          "TD002": [
+            269.48284912109375,
+            289.22442626953125
+          ],
+          "RH002": [
+            50.052734375,
+            104.10489654541016
+          ],
+          "F010": [
+            0.0,
+            13.149999618530273
+          ],
+          "SWD": [
+            -0.6059585809707642,
+            658.5596313476562
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201210.nc",
+        "sha256": "2106568b1a636d51235f59af41be8646e39c36a8f1ff77ccdb8cab5f30f715cd",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            1,
+            5
+          ],
+          "ILWD": [
+            1
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -0.10960531234741211,
+            662.1627197265625
+          ],
+          "LWD": [
+            227.92599487304688,
+            408.38201904296875
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 1962,
+        "max_swd_difference_w_m2": 106.73565673828125,
+        "mean_abs_swd_difference_w_m2": 3.4370274729566694,
+        "swd_rows_difference_over_25_w_m2": 70,
+        "swd_rows_difference_over_100_w_m2": 2,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201211": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201211.nc",
+        "sha256": "ea9a920320c62480a2d7e8dd53fe0c33d7297e34e62c0ccf0d544e67b19d7cb6",
+        "format": "hdf5",
+        "rows": 4320,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3
+          ],
+          "IQ002": [
+            2,
+            3
+          ],
+          "IF010": [
+            2,
+            3
+          ],
+          "ISWD": [
+            2,
+            5
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            270.54998779296875,
+            285.8500061035156
+          ],
+          "TD002": [
+            270.3855895996094,
+            284.07257080078125
+          ],
+          "RH002": [
+            51.457820892333984,
+            105.3735122680664
+          ],
+          "F010": [
+            0.019999999552965164,
+            18.540000915527344
+          ],
+          "SWD": [
+            -0.45769044756889343,
+            407.2982177734375
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201211.nc",
+        "sha256": "980a00349a68b288d55fd3ec8d2b3d4cd4ae0a7e16997ab543a46211889b4fd8",
+        "format": "hdf5",
+        "rows": 4320,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            1,
+            5
+          ],
+          "ILWD": [
+            1
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -0.1642620861530304,
+            413.66888427734375
+          ],
+          "LWD": [
+            236.16098022460938,
+            366.0300598144531
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 1572,
+        "max_swd_difference_w_m2": 72.17581176757812,
+        "mean_abs_swd_difference_w_m2": 2.1297895921700762,
+        "swd_rows_difference_over_25_w_m2": 10,
+        "swd_rows_difference_over_100_w_m2": 0,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201212": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201212.nc",
+        "sha256": "b9140e9468dfde4d5336ad89e7b49dded38040e83703003560c63d54678acf79",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3,
+            5
+          ],
+          "IQ002": [
+            2,
+            3,
+            5
+          ],
+          "IF010": [
+            2,
+            3,
+            5
+          ],
+          "ISWD": [
+            2,
+            5
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            266.8500061035156,
+            285.9499816894531
+          ],
+          "TD002": [
+            266.5746765136719,
+            284.6775817871094
+          ],
+          "RH002": [
+            69.86094665527344,
+            103.42667388916016
+          ],
+          "F010": [
+            0.0,
+            14.930000305175781
+          ],
+          "SWD": [
+            -0.10498199611902237,
+            276.9230651855469
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201212.nc",
+        "sha256": "f1d2ebfc60888903c6c6310bbabe0f8873b596300199875712bec297a30707aa",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 89,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            1,
+            5,
+            7
+          ],
+          "ILWD": [
+            1
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -0.22331936657428741,
+            288.04718017578125
+          ],
+          "LWD": [
+            -9999.0,
+            372.2870178222656
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 1444,
+        "max_swd_difference_w_m2": 79.30866241455078,
+        "mean_abs_swd_difference_w_m2": 1.852622485899825,
+        "swd_rows_difference_over_25_w_m2": 18,
+        "swd_rows_difference_over_100_w_m2": 0,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201301": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201301.nc",
+        "sha256": "7007205955ad0bc7abb4d71740bcdd1a5c53c14ecbabc9659610dfb5cc5d4436",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3
+          ],
+          "IQ002": [
+            2,
+            3
+          ],
+          "IF010": [
+            2,
+            3
+          ],
+          "ISWD": [
+            2,
+            5
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            260.1499938964844,
+            285.6499938964844
+          ],
+          "TD002": [
+            259.8629150390625,
+            284.576904296875
+          ],
+          "RH002": [
+            59.10798645019531,
+            103.80908203125
+          ],
+          "F010": [
+            0.0,
+            14.079999923706055
+          ],
+          "SWD": [
+            -4.8224897384643555,
+            360.36480712890625
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201301.nc",
+        "sha256": "a41feef6bf92a4e2e3af1f9b8528b75896ab75a0f1cbf29237f39a1ca10b399c",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            2,
+            5
+          ],
+          "ILWD": [
+            2
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -4.8224897384643555,
+            360.36480712890625
+          ],
+          "LWD": [
+            200.96200561523438,
+            372.3349914550781
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 0,
+        "max_swd_difference_w_m2": 0.0,
+        "mean_abs_swd_difference_w_m2": 0.0,
+        "swd_rows_difference_over_25_w_m2": 0,
+        "swd_rows_difference_over_100_w_m2": 0,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201302": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201302.nc",
+        "sha256": "fb2f48c81717989d6be0324cd73e47cc086d3dd88f26778fc7e5bf293813b578",
+        "format": "hdf5",
+        "rows": 4032,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3
+          ],
+          "IQ002": [
+            2,
+            3
+          ],
+          "IF010": [
+            2,
+            3
+          ],
+          "ISWD": [
+            2,
+            3,
+            5,
+            7
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            268.04998779296875,
+            283.1499938964844
+          ],
+          "TD002": [
+            263.1678771972656,
+            280.5430603027344
+          ],
+          "RH002": [
+            51.31624984741211,
+            104.10253143310547
+          ],
+          "F010": [
+            0.0,
+            12.0600004196167
+          ],
+          "SWD": [
+            -5.056096076965332,
+            569.8970947265625
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201302.nc",
+        "sha256": "f9484dded82980a03bd9c92ba4ccbf13233aa6f4327e7085442ebb00634702e3",
+        "format": "hdf5",
+        "rows": 4032,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            1,
+            2,
+            5,
+            7
+          ],
+          "ILWD": [
+            1,
+            2,
+            5
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -0.002106723142787814,
+            576.2103881835938
+          ],
+          "LWD": [
+            207.0189971923828,
+            352.1039733886719
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 3884,
+        "max_swd_difference_w_m2": 212.74887084960938,
+        "mean_abs_swd_difference_w_m2": 4.673605573955207,
+        "swd_rows_difference_over_25_w_m2": 92,
+        "swd_rows_difference_over_100_w_m2": 16,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201303": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201303.nc",
+        "sha256": "2af3db6ee0b200efad6c6426eb21b8359ae6fb6c13da07b823104b059a0242dc",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3
+          ],
+          "IQ002": [
+            2,
+            3,
+            5
+          ],
+          "IF010": [
+            2,
+            3
+          ],
+          "ISWD": [
+            2,
+            5
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            266.04998779296875,
+            289.4499816894531
+          ],
+          "TD002": [
+            255.35824584960938,
+            281.95452880859375
+          ],
+          "RH002": [
+            19.16377067565918,
+            102.01244354248047
+          ],
+          "F010": [
+            0.11999999731779099,
+            11.492532730102539
+          ],
+          "SWD": [
+            -4.948400020599365,
+            735.9100341796875
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201303.nc",
+        "sha256": "6bfe768082640380c062b4c54dc7754df019826fc473ae78f5c03101e3caaaf9",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            1,
+            5
+          ],
+          "ILWD": [
+            1
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -0.5418991446495056,
+            739.6804809570312
+          ],
+          "LWD": [
+            201.68698120117188,
+            354.10699462890625
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 4464,
+        "max_swd_difference_w_m2": 203.63677978515625,
+        "mean_abs_swd_difference_w_m2": 5.683676677861161,
+        "swd_rows_difference_over_25_w_m2": 150,
+        "swd_rows_difference_over_100_w_m2": 26,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201304": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201304.nc",
+        "sha256": "1daab4e4d83828e5624b1f52cdc4c7239897cad47a16532b4c4430671f202abf",
+        "format": "hdf5",
+        "rows": 4320,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3
+          ],
+          "IQ002": [
+            2,
+            3
+          ],
+          "IF010": [
+            2
+          ],
+          "ISWD": [
+            2,
+            5
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            270.54998779296875,
+            295.3500061035156
+          ],
+          "TD002": [
+            263.16796875,
+            286.49310302734375
+          ],
+          "RH002": [
+            24.259902954101562,
+            102.0443344116211
+          ],
+          "F010": [
+            0.03999999910593033,
+            15.319999694824219
+          ],
+          "SWD": [
+            -5.711770057678223,
+            1017.2150268554688
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201304.nc",
+        "sha256": "668c4837a8ad8bb874fbce21acb69e4452789e69ae0b1a0acae2f82b6fd728fa",
+        "format": "hdf5",
+        "rows": 4320,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            1,
+            5
+          ],
+          "ILWD": [
+            1
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            0.0,
+            1023.7258911132812
+          ],
+          "LWD": [
+            216.7310028076172,
+            376.1189880371094
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 4320,
+        "max_swd_difference_w_m2": 446.24462890625,
+        "mean_abs_swd_difference_w_m2": 9.855720775710372,
+        "swd_rows_difference_over_25_w_m2": 355,
+        "swd_rows_difference_over_100_w_m2": 67,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201305": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201305.nc",
+        "sha256": "172d24dd20f6b3a57c9fb3568dffc42f071cb709a44ef597a50b0c5095d10ca7",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3,
+            5
+          ],
+          "IQ002": [
+            2,
+            3,
+            5
+          ],
+          "IF010": [
+            2,
+            3,
+            5
+          ],
+          "ISWD": [
+            2,
+            5,
+            7
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            275.9499816894531,
+            296.6499938964844
+          ],
+          "TD002": [
+            273.7037048339844,
+            287.8094177246094
+          ],
+          "RH002": [
+            34.02764129638672,
+            101.29598999023438
+          ],
+          "F010": [
+            0.0,
+            11.59000015258789
+          ],
+          "SWD": [
+            -5.667880058288574,
+            967.2687377929688
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201305.nc",
+        "sha256": "c855942057f99f3e683dd70b9542e36835f93a9c3ef3c1ae5d6a221e6f349137",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            1,
+            2,
+            5,
+            7
+          ],
+          "ILWD": [
+            1,
+            5
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -0.2887534499168396,
+            966.9177856445312
+          ],
+          "LWD": [
+            250.46200561523438,
+            388.322998046875
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 4182,
+        "max_swd_difference_w_m2": 365.5528564453125,
+        "mean_abs_swd_difference_w_m2": 8.730096965518948,
+        "swd_rows_difference_over_25_w_m2": 355,
+        "swd_rows_difference_over_100_w_m2": 66,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201306": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201306.nc",
+        "sha256": "36c9fa4255e33ab8f3603111fed5ee05ef69eae412d19af4c23a8189a037b4f0",
+        "format": "hdf5",
+        "rows": 4320,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3
+          ],
+          "IQ002": [
+            2,
+            3
+          ],
+          "IF010": [
+            2
+          ],
+          "ISWD": [
+            2,
+            5
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            278.6499938964844,
+            303.04998779296875
+          ],
+          "TD002": [
+            278.4273376464844,
+            293.9957580566406
+          ],
+          "RH002": [
+            45.35057067871094,
+            102.70391082763672
+          ],
+          "F010": [
+            0.0,
+            12.640000343322754
+          ],
+          "SWD": [
+            -2.6700806617736816,
+            1021.4671630859375
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201306.nc",
+        "sha256": "a4b01f2f1c8ca9173984e0c6893ebca1e34292d94af48f5b6981866e461dceb8",
+        "format": "hdf5",
+        "rows": 4320,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            1,
+            2,
+            5
+          ],
+          "ILWD": [
+            1,
+            5
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -1.1223859786987305,
+            1017.0968017578125
+          ],
+          "LWD": [
+            264.4420166015625,
+            417.698974609375
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 4320,
+        "max_swd_difference_w_m2": 420.56414794921875,
+        "mean_abs_swd_difference_w_m2": 10.581941373708778,
+        "swd_rows_difference_over_25_w_m2": 429,
+        "swd_rows_difference_over_100_w_m2": 101,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201307": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201307.nc",
+        "sha256": "c6dcf1f5f907772f6a1f017f66a53104db4a43e5faa48d124e993c3baf379a47",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3
+          ],
+          "IQ002": [
+            2,
+            3
+          ],
+          "IF010": [
+            2
+          ],
+          "ISWD": [
+            2,
+            5
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            281.25,
+            305.1499938964844
+          ],
+          "TD002": [
+            281.14544677734375,
+            293.9961853027344
+          ],
+          "RH002": [
+            35.251792907714844,
+            102.22643280029297
+          ],
+          "F010": [
+            0.0,
+            8.800000190734863
+          ],
+          "SWD": [
+            -3.2420525550842285,
+            995.5660400390625
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201307.nc",
+        "sha256": "35a67fb8ec948c165291660c7bdaa58e063ae54970122120372ccbcddf96af4e",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            1,
+            5
+          ],
+          "ILWD": [
+            1
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            0.0,
+            977.9346923828125
+          ],
+          "LWD": [
+            291.9309997558594,
+            423.6219787597656
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 4464,
+        "max_swd_difference_w_m2": 342.1864013671875,
+        "mean_abs_swd_difference_w_m2": 10.363647402112713,
+        "swd_rows_difference_over_25_w_m2": 440,
+        "swd_rows_difference_over_100_w_m2": 92,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201308": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201308.nc",
+        "sha256": "ba6207af45ff99e7906d5b987d0d7beec34302891f694f36a69c1bffc77953fe",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3
+          ],
+          "IQ002": [
+            2,
+            3
+          ],
+          "IF010": [
+            2,
+            3
+          ],
+          "ISWD": [
+            1,
+            2,
+            5,
+            7
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            280.8500061035156,
+            306.54998779296875
+          ],
+          "TD002": [
+            279.9375915527344,
+            297.25909423828125
+          ],
+          "RH002": [
+            36.818328857421875,
+            102.82763671875
+          ],
+          "F010": [
+            0.03999999910593033,
+            8.470000267028809
+          ],
+          "SWD": [
+            -3.4701695442199707,
+            922.36474609375
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201308.nc",
+        "sha256": "94addb0b5144b385499bc0050b76194f1781c7eeb04c4f8fec92a13bea7ca4c2",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            1,
+            2,
+            5,
+            7
+          ],
+          "ILWD": [
+            1
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -0.14372976124286652,
+            934.4954833984375
+          ],
+          "LWD": [
+            283.3139953613281,
+            449.25201416015625
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 4279,
+        "max_swd_difference_w_m2": 338.2438049316406,
+        "mean_abs_swd_difference_w_m2": 10.857155858281857,
+        "swd_rows_difference_over_25_w_m2": 450,
+        "swd_rows_difference_over_100_w_m2": 97,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201309": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201309.nc",
+        "sha256": "020d8ba517ecdf33e0d821d863319928f0faaf40116a5bd5305aa8e88c30f915",
+        "format": "hdf5",
+        "rows": 4320,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3
+          ],
+          "IQ002": [
+            2,
+            3
+          ],
+          "IF010": [
+            2,
+            3
+          ],
+          "ISWD": [
+            2,
+            5
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            279.25,
+            303.6499938964844
+          ],
+          "TD002": [
+            277.4236145019531,
+            291.6595153808594
+          ],
+          "RH002": [
+            41.78314971923828,
+            102.97685241699219
+          ],
+          "F010": [
+            0.0,
+            10.890000343322754
+          ],
+          "SWD": [
+            -4.0158209800720215,
+            796.9591064453125
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201309.nc",
+        "sha256": "facf34ad5f34d8290d95564c345fe092a30e5d2a1a593218d533eb72c96a75e0",
+        "format": "hdf5",
+        "rows": 4320,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            1,
+            5
+          ],
+          "ILWD": [
+            1
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -1.162381887435913,
+            804.0928955078125
+          ],
+          "LWD": [
+            266.39300537109375,
+            414.6520080566406
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 4320,
+        "max_swd_difference_w_m2": 303.60968017578125,
+        "mean_abs_swd_difference_w_m2": 6.721017374895113,
+        "swd_rows_difference_over_25_w_m2": 265,
+        "swd_rows_difference_over_100_w_m2": 28,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201310": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201310.nc",
+        "sha256": "4bfe6ee7b0efa012d3271181cedc9471a9e20d08efc9999cf6f6cd06e9faddf5",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3,
+            5
+          ],
+          "IQ002": [
+            2,
+            3,
+            5
+          ],
+          "IF010": [
+            2,
+            3,
+            5
+          ],
+          "ISWD": [
+            1,
+            2,
+            3,
+            5
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            276.4499816894531,
+            294.75
+          ],
+          "TD002": [
+            276.21588134765625,
+            290.34027099609375
+          ],
+          "RH002": [
+            48.56413269042969,
+            103.40807342529297
+          ],
+          "F010": [
+            0.0,
+            20.739999771118164
+          ],
+          "SWD": [
+            -3.5920512676239014,
+            653.32470703125
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201310.nc",
+        "sha256": "555febf190f7808988e8539fec73f7b0bdd870fddab36494c0fe83357919b919",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            1,
+            2,
+            5
+          ],
+          "ILWD": [
+            1
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -0.631662905216217,
+            596.2262573242188
+          ],
+          "LWD": [
+            258.8899841308594,
+            396.59503173828125
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 4440,
+        "max_swd_difference_w_m2": 193.02532958984375,
+        "mean_abs_swd_difference_w_m2": 4.175184553441522,
+        "swd_rows_difference_over_25_w_m2": 138,
+        "swd_rows_difference_over_100_w_m2": 10,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201311": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201311.nc",
+        "sha256": "540971e3e128d723ba3d6052670152f8e016e581fb0b5fc4a48c38d6accf6b36",
+        "format": "hdf5",
+        "rows": 4320,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3
+          ],
+          "IQ002": [
+            2,
+            3
+          ],
+          "IF010": [
+            2,
+            3
+          ],
+          "ISWD": [
+            2,
+            5
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            271.9499816894531,
+            287.4499816894531
+          ],
+          "TD002": [
+            271.89080810546875,
+            286.39501953125
+          ],
+          "RH002": [
+            67.84205627441406,
+            104.12748718261719
+          ],
+          "F010": [
+            0.019999999552965164,
+            13.399999618530273
+          ],
+          "SWD": [
+            -2.692317008972168,
+            455.0525817871094
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201311.nc",
+        "sha256": "fcb1d2350a971d3baf72099ee1748491527c91d87a0fff652b47d2cb2edffdc3",
+        "format": "hdf5",
+        "rows": 4320,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            1,
+            5
+          ],
+          "ILWD": [
+            1
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            0.0,
+            502.6390686035156
+          ],
+          "LWD": [
+            237.2969970703125,
+            380.6510009765625
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 4320,
+        "max_swd_difference_w_m2": 80.36322021484375,
+        "mean_abs_swd_difference_w_m2": 1.8927246610696549,
+        "swd_rows_difference_over_25_w_m2": 20,
+        "swd_rows_difference_over_100_w_m2": 0,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201312": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201312.nc",
+        "sha256": "87b8c3aa240d09d900d6769ba5ae07f350b475dc00396e32c3a76bdc26bb201c",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3
+          ],
+          "IQ002": [
+            2,
+            3
+          ],
+          "IF010": [
+            2,
+            3
+          ],
+          "ISWD": [
+            2,
+            3,
+            5
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            269.75,
+            285.25
+          ],
+          "TD002": [
+            269.68267822265625,
+            282.1576232910156
+          ],
+          "RH002": [
+            56.84335708618164,
+            104.60396575927734
+          ],
+          "F010": [
+            0.10000000149011612,
+            19.219999313354492
+          ],
+          "SWD": [
+            -2.973090171813965,
+            290.2037658691406
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201312.nc",
+        "sha256": "60fcd43f4f1adea55404cfca0460563d09745111de2ee558bf6a46de73958938",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            1,
+            2,
+            5
+          ],
+          "ILWD": [
+            1,
+            5
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -0.8770003318786621,
+            318.7061767578125
+          ],
+          "LWD": [
+            236.1379852294922,
+            360.07403564453125
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 4458,
+        "max_swd_difference_w_m2": 63.454071044921875,
+        "mean_abs_swd_difference_w_m2": 1.8147012175891781,
+        "swd_rows_difference_over_25_w_m2": 16,
+        "swd_rows_difference_over_100_w_m2": 0,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201401": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201401.nc",
+        "sha256": "ce0eb462361b4d71003cbf4b4ba1d63d35340d623163bb32ca60c5a6eb44d2da",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3
+          ],
+          "IQ002": [
+            2,
+            3,
+            5
+          ],
+          "IF010": [
+            2,
+            3
+          ],
+          "ISWD": [
+            2,
+            3,
+            5
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            271.4499816894531,
+            287.04998779296875
+          ],
+          "TD002": [
+            269.9844970703125,
+            283.6686096191406
+          ],
+          "RH002": [
+            71.7121810913086,
+            101.2320785522461
+          ],
+          "F010": [
+            0.11999999731779099,
+            15.09000015258789
+          ],
+          "SWD": [
+            -2.5953240394592285,
+            335.4756774902344
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201401.nc",
+        "sha256": "8b8ac9f859c06ce8baa7301ba25669fbe87fc94d466dc5bca9b4f36ce3b27e21",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            1,
+            2,
+            5
+          ],
+          "ILWD": [
+            1,
+            5
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -0.36221304535865784,
+            379.79315185546875
+          ],
+          "LWD": [
+            227.6120147705078,
+            368.21697998046875
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 4463,
+        "max_swd_difference_w_m2": 68.996826171875,
+        "mean_abs_swd_difference_w_m2": 1.829212850272467,
+        "swd_rows_difference_over_25_w_m2": 20,
+        "swd_rows_difference_over_100_w_m2": 0,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201402": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201402.nc",
+        "sha256": "72e892788b97d8861a21e2f216aae3bc0546d230c818219121d8c1793fdb480e",
+        "format": "hdf5",
+        "rows": 4032,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3
+          ],
+          "IQ002": [
+            2,
+            3
+          ],
+          "IF010": [
+            2
+          ],
+          "ISWD": [
+            1,
+            2,
+            5
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            273.54998779296875,
+            286.04998779296875
+          ],
+          "TD002": [
+            273.201904296875,
+            282.4582214355469
+          ],
+          "RH002": [
+            59.39942932128906,
+            99.7232894897461
+          ],
+          "F010": [
+            0.6600000262260437,
+            16.950000762939453
+          ],
+          "SWD": [
+            -3.1766300201416016,
+            613.9645385742188
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201402.nc",
+        "sha256": "f6f56da3179c971e2e972eab96346a895c51ad7753f503c35d1c1b8a27fe8019",
+        "format": "hdf5",
+        "rows": 4032,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            1,
+            2,
+            5
+          ],
+          "ILWD": [
+            1,
+            2
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -3.1766300201416016,
+            613.9645385742188
+          ],
+          "LWD": [
+            238.2849884033203,
+            360.28936767578125
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 0,
+        "max_swd_difference_w_m2": 0.0,
+        "mean_abs_swd_difference_w_m2": 0.0,
+        "swd_rows_difference_over_25_w_m2": 0,
+        "swd_rows_difference_over_100_w_m2": 0,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201403": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201403.nc",
+        "sha256": "9cbfd4d87d7ebe84ad200f4983ac4e5dbb999d6bbcb439adab87556eadecde5a",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3,
+            5
+          ],
+          "IQ002": [
+            2,
+            3,
+            5
+          ],
+          "IF010": [
+            2,
+            3,
+            5
+          ],
+          "ISWD": [
+            1,
+            2,
+            3,
+            5,
+            7
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            271.9499816894531,
+            293.54998779296875
+          ],
+          "TD002": [
+            271.69000244140625,
+            283.767822265625
+          ],
+          "RH002": [
+            37.676429748535156,
+            105.59322357177734
+          ],
+          "F010": [
+            0.0,
+            11.880000114440918
+          ],
+          "SWD": [
+            -2.223191976547241,
+            790.1483764648438
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201403.nc",
+        "sha256": "b467ac067442ee96149083d45c0bf9ee7cc1ab7886e6183574c12b94eb921518",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            1,
+            2,
+            3,
+            5,
+            7
+          ],
+          "ILWD": [
+            1,
+            2,
+            5,
+            7
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -2.223191976547241,
+            790.1483764648438
+          ],
+          "LWD": [
+            221.46263122558594,
+            362.16009521484375
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 0,
+        "max_swd_difference_w_m2": 0.0,
+        "mean_abs_swd_difference_w_m2": 0.0,
+        "swd_rows_difference_over_25_w_m2": 0,
+        "swd_rows_difference_over_100_w_m2": 0,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201404": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201404.nc",
+        "sha256": "50cc7c5fbf3b0a88cb22ece570cf45543612e2773f359087ae3d6aab16097807",
+        "format": "hdf5",
+        "rows": 4320,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3
+          ],
+          "IQ002": [
+            2,
+            3
+          ],
+          "IF010": [
+            2,
+            3
+          ],
+          "ISWD": [
+            1,
+            2,
+            3,
+            5,
+            7
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            274.1499938964844,
+            296.25
+          ],
+          "TD002": [
+            273.8035888671875,
+            288.4163513183594
+          ],
+          "RH002": [
+            40.613502502441406,
+            104.0966796875
+          ],
+          "F010": [
+            0.0,
+            11.59000015258789
+          ],
+          "SWD": [
+            -2.389712333679199,
+            945.4888916015625
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201404.nc",
+        "sha256": "2a81df967651d8a83785838b9ffae936c61123504c8f84a49ef0300d5233be9f",
+        "format": "hdf5",
+        "rows": 4320,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            1,
+            2,
+            3,
+            5,
+            7
+          ],
+          "ILWD": [
+            1,
+            2,
+            5
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -2.389712333679199,
+            945.4888916015625
+          ],
+          "LWD": [
+            244.9990234375,
+            388.3736267089844
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 0,
+        "max_swd_difference_w_m2": 0.0,
+        "mean_abs_swd_difference_w_m2": 0.0,
+        "swd_rows_difference_over_25_w_m2": 0,
+        "swd_rows_difference_over_100_w_m2": 0,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201405": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201405.nc",
+        "sha256": "874bf89efee80b29598379d77115919da29282c0153426abd86bbe2bc7bbf0b3",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3
+          ],
+          "IQ002": [
+            2,
+            3
+          ],
+          "IF010": [
+            2
+          ],
+          "ISWD": [
+            1,
+            2,
+            3,
+            5
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            273.75,
+            298.6499938964844
+          ],
+          "TD002": [
+            273.8038635253906,
+            289.6314697265625
+          ],
+          "RH002": [
+            37.92031478881836,
+            103.48902893066406
+          ],
+          "F010": [
+            0.019999999552965164,
+            14.65999984741211
+          ],
+          "SWD": [
+            -3.570155620574951,
+            1047.6348876953125
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201405.nc",
+        "sha256": "be5f87dfabc6069235a1cc9a053936ca78cec7e76a9ce555f8439e9cd4d65fe6",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            1,
+            2,
+            3,
+            5
+          ],
+          "ILWD": [
+            1,
+            2,
+            5
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -3.570155620574951,
+            1047.6348876953125
+          ],
+          "LWD": [
+            251.3224639892578,
+            396.7944641113281
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 0,
+        "max_swd_difference_w_m2": 0.0,
+        "mean_abs_swd_difference_w_m2": 0.0,
+        "swd_rows_difference_over_25_w_m2": 0,
+        "swd_rows_difference_over_100_w_m2": 0,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201406": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201406.nc",
+        "sha256": "2e9f0fb1cb208fdbf5ff850a5319caabd466c2ef75e170c9377d1b12fe3dc476",
+        "format": "hdf5",
+        "rows": 4320,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3
+          ],
+          "IQ002": [
+            2,
+            3
+          ],
+          "IF010": [
+            2,
+            3
+          ],
+          "ISWD": [
+            1,
+            2,
+            5
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            280.75,
+            300.6499938964844
+          ],
+          "TD002": [
+            278.8307189941406,
+            294.5038146972656
+          ],
+          "RH002": [
+            43.40529251098633,
+            103.46834564208984
+          ],
+          "F010": [
+            0.0,
+            11.920000076293945
+          ],
+          "SWD": [
+            -3.0401971340179443,
+            1051.1258544921875
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201406.nc",
+        "sha256": "bb228e32caef06c1e0fb59d77fc02b36ee4b962b8346a76aed76957ae3ed051b",
+        "format": "hdf5",
+        "rows": 4320,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            1,
+            2,
+            5
+          ],
+          "ILWD": [
+            1,
+            2
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -3.0401971340179443,
+            1051.1258544921875
+          ],
+          "LWD": [
+            270.4241943359375,
+            412.8641662597656
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 0,
+        "max_swd_difference_w_m2": 0.0,
+        "mean_abs_swd_difference_w_m2": 0.0,
+        "swd_rows_difference_over_25_w_m2": 0,
+        "swd_rows_difference_over_100_w_m2": 0,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201407": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201407.nc",
+        "sha256": "dd5b169513554e85238b5b6779c0a54dcb207eae4bbe7e6051d0e5c94c728253",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3
+          ],
+          "IQ002": [
+            2,
+            3
+          ],
+          "IF010": [
+            2,
+            3
+          ],
+          "ISWD": [
+            1,
+            2,
+            5
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            279.6499938964844,
+            306.8500061035156
+          ],
+          "TD002": [
+            279.93756103515625,
+            294.5058288574219
+          ],
+          "RH002": [
+            32.06618881225586,
+            103.44111633300781
+          ],
+          "F010": [
+            0.0,
+            10.529999732971191
+          ],
+          "SWD": [
+            -4.851800918579102,
+            1057.0582275390625
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201407.nc",
+        "sha256": "4807c9f4fad380f8b3e3058126ed6a14c7d8d81910ea9fafc8c85c154237a84d",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            1,
+            2,
+            5
+          ],
+          "ILWD": [
+            1,
+            2
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -4.851800918579102,
+            1057.0582275390625
+          ],
+          "LWD": [
+            283.2840881347656,
+            433.8103942871094
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 0,
+        "max_swd_difference_w_m2": 0.0,
+        "mean_abs_swd_difference_w_m2": 0.0,
+        "swd_rows_difference_over_25_w_m2": 0,
+        "swd_rows_difference_over_100_w_m2": 0,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201408": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201408.nc",
+        "sha256": "00483bf492329d00c3e60a6fe24aaabb3d0aea114b3f459e14ed01a23189aa1c",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3
+          ],
+          "IQ002": [
+            2,
+            3
+          ],
+          "IF010": [
+            2,
+            3
+          ],
+          "ISWD": [
+            2,
+            5
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            280.3500061035156,
+            300.3500061035156
+          ],
+          "TD002": [
+            280.0390319824219,
+            292.6773986816406
+          ],
+          "RH002": [
+            44.81739807128906,
+            102.89971160888672
+          ],
+          "F010": [
+            0.10000000149011612,
+            10.229999542236328
+          ],
+          "SWD": [
+            -3.7404818534851074,
+            999.9796142578125
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201408.nc",
+        "sha256": "2dfca18332180f79c28bbe563e05577c1fd4519526d8f1079ab003312a95406e",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            2,
+            5
+          ],
+          "ILWD": [
+            2
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -3.7404818534851074,
+            999.9796142578125
+          ],
+          "LWD": [
+            280.2935791015625,
+            419.7665100097656
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 0,
+        "max_swd_difference_w_m2": 0.0,
+        "mean_abs_swd_difference_w_m2": 0.0,
+        "swd_rows_difference_over_25_w_m2": 0,
+        "swd_rows_difference_over_100_w_m2": 0,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201409": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201409.nc",
+        "sha256": "967c1de2216b9e72d05823cffe9b3a4089e962d01b509e9c64f13f7e63e81e93",
+        "format": "hdf5",
+        "rows": 4320,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3,
+            5
+          ],
+          "IQ002": [
+            2,
+            3,
+            5
+          ],
+          "IF010": [
+            2,
+            3
+          ],
+          "ISWD": [
+            2
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            280.1499938964844,
+            298.6499938964844
+          ],
+          "TD002": [
+            277.62322998046875,
+            292.064697265625
+          ],
+          "RH002": [
+            43.8388557434082,
+            102.99789428710938
+          ],
+          "F010": [
+            0.0,
+            8.760000228881836
+          ],
+          "SWD": [
+            -3.959625244140625,
+            827.2275390625
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201409.nc",
+        "sha256": "37333e17b3753e44de57ec9d804a734b2809856b3c64cc0a0e710f89838c037f",
+        "format": "hdf5",
+        "rows": 4320,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            2
+          ],
+          "ILWD": [
+            2
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -3.959625244140625,
+            827.2275390625
+          ],
+          "LWD": [
+            283.65692138671875,
+            409.08978271484375
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 0,
+        "max_swd_difference_w_m2": 0.0,
+        "mean_abs_swd_difference_w_m2": 0.0,
+        "swd_rows_difference_over_25_w_m2": 0,
+        "swd_rows_difference_over_100_w_m2": 0,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201410": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201410.nc",
+        "sha256": "cb645c9428902ea2692b03149bd903af89e16eaeb12936263b95c946d93e1b63",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3
+          ],
+          "IQ002": [
+            2,
+            3
+          ],
+          "IF010": [
+            2
+          ],
+          "ISWD": [
+            1,
+            2,
+            3,
+            5
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            280.4499816894531,
+            295.9499816894531
+          ],
+          "TD002": [
+            276.6182556152344,
+            290.6440734863281
+          ],
+          "RH002": [
+            59.38362503051758,
+            104.28360748291016
+          ],
+          "F010": [
+            0.0,
+            13.9399995803833
+          ],
+          "SWD": [
+            -3.9953346252441406,
+            643.0889892578125
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201410.nc",
+        "sha256": "11215bef2d5ac7a3e8a6afedd0cb3b1fe2ab295f314cad346d4c9a3b4890f992",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            1,
+            2,
+            3,
+            5
+          ],
+          "ILWD": [
+            1,
+            2,
+            5
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -3.9953346252441406,
+            643.0889892578125
+          ],
+          "LWD": [
+            271.54998779296875,
+            401.5191650390625
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 0,
+        "max_swd_difference_w_m2": 0.0,
+        "mean_abs_swd_difference_w_m2": 0.0,
+        "swd_rows_difference_over_25_w_m2": 0,
+        "swd_rows_difference_over_100_w_m2": 0,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201411": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201411.nc",
+        "sha256": "7e34a8d299a2e84bac98249983effc9d8d61137f5132834d0a8f031d3b2bb9a0",
+        "format": "hdf5",
+        "rows": 4320,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3
+          ],
+          "IQ002": [
+            2,
+            3,
+            5
+          ],
+          "IF010": [
+            2,
+            3
+          ],
+          "ISWD": [
+            1,
+            2,
+            5,
+            7
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            272.75,
+            291.1499938964844
+          ],
+          "TD002": [
+            272.9942932128906,
+            287.4035339355469
+          ],
+          "RH002": [
+            68.7972183227539,
+            107.38404083251953
+          ],
+          "F010": [
+            0.019999999552965164,
+            12.930000305175781
+          ],
+          "SWD": [
+            -3.8836967945098877,
+            453.1441955566406
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201411.nc",
+        "sha256": "cfaff2b4859564670fc8cc55fcb6101f6421e219781f69f329045664ba0e6cf2",
+        "format": "hdf5",
+        "rows": 4320,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            1,
+            2,
+            5,
+            7
+          ],
+          "ILWD": [
+            1,
+            2
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -3.8836967945098877,
+            453.1441955566406
+          ],
+          "LWD": [
+            249.18563842773438,
+            385.88995361328125
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 0,
+        "max_swd_difference_w_m2": 0.0,
+        "mean_abs_swd_difference_w_m2": 0.0,
+        "swd_rows_difference_over_25_w_m2": 0,
+        "swd_rows_difference_over_100_w_m2": 0,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201412": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201412.nc",
+        "sha256": "a9a08aba22d81cc554cb95e1ae9307992e853a66c1c94d550a7d77d8d438b68f",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3
+          ],
+          "IQ002": [
+            2,
+            3
+          ],
+          "IF010": [
+            2,
+            3
+          ],
+          "ISWD": [
+            1,
+            2
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            269.1499938964844,
+            285.8500061035156
+          ],
+          "TD002": [
+            265.9732666015625,
+            284.2730712890625
+          ],
+          "RH002": [
+            64.7471694946289,
+            103.44830322265625
+          ],
+          "F010": [
+            0.12784695625305176,
+            16.600000381469727
+          ],
+          "SWD": [
+            -3.6660068035125732,
+            311.99066162109375
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201412.nc",
+        "sha256": "b476c0bc7e07fae21d01a8c8146c338dc36af4ae0898b63b55c726ae8914393b",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            1,
+            2
+          ],
+          "ILWD": [
+            1,
+            2
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -3.6660068035125732,
+            311.99066162109375
+          ],
+          "LWD": [
+            196.96002197265625,
+            370.84661865234375
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 0,
+        "max_swd_difference_w_m2": 0.0,
+        "mean_abs_swd_difference_w_m2": 0.0,
+        "swd_rows_difference_over_25_w_m2": 0,
+        "swd_rows_difference_over_100_w_m2": 0,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201601": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201601.nc",
+        "sha256": "d8ae0998ad75fe1c8d97ed127c151bb904d9da2a2b565ce9d52d4d6206297c4a",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3
+          ],
+          "IQ002": [
+            2,
+            3
+          ],
+          "IF010": [
+            2,
+            3
+          ],
+          "ISWD": [
+            2,
+            3
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            266.9499816894531,
+            286.8500061035156
+          ],
+          "TD002": [
+            266.5747985839844,
+            283.8693542480469
+          ],
+          "RH002": [
+            58.779109954833984,
+            109.05909729003906
+          ],
+          "F010": [
+            0.0642877072095871,
+            14.800000190734863
+          ],
+          "SWD": [
+            -2.316319465637207,
+            377.8328857421875
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201601.nc",
+        "sha256": "7ada3203324d34e1bd9e0983c300ae4506cf09347d9df37ac56933746e40195d",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            2,
+            3
+          ],
+          "ILWD": [
+            1,
+            2
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -2.316319465637207,
+            377.8328857421875
+          ],
+          "LWD": [
+            205.9004364013672,
+            370.5585632324219
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 0,
+        "max_swd_difference_w_m2": 0.0,
+        "mean_abs_swd_difference_w_m2": 0.0,
+        "swd_rows_difference_over_25_w_m2": 0,
+        "swd_rows_difference_over_100_w_m2": 0,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201602": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201602.nc",
+        "sha256": "9c42ca13a22213e07716e2763e61b797ea754d6eed6321c157aa538e49cffeb0",
+        "format": "hdf5",
+        "rows": 4176,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3
+          ],
+          "IQ002": [
+            2,
+            3
+          ],
+          "IF010": [
+            2,
+            3
+          ],
+          "ISWD": [
+            2
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            268.6499938964844,
+            285.3500061035156
+          ],
+          "TD002": [
+            268.0782470703125,
+            283.5666198730469
+          ],
+          "RH002": [
+            44.95250701904297,
+            103.34546661376953
+          ],
+          "F010": [
+            0.1599999964237213,
+            18.5
+          ],
+          "SWD": [
+            -2.6307530403137207,
+            707.33349609375
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201602.nc",
+        "sha256": "f2bdf142edc04933942bfaed23eff86a021668481a1a5816bbd3588656d307b8",
+        "format": "hdf5",
+        "rows": 4176,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            2
+          ],
+          "ILWD": [
+            2
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -2.6307530403137207,
+            707.33349609375
+          ],
+          "LWD": [
+            207.33749389648438,
+            367.1322021484375
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 0,
+        "max_swd_difference_w_m2": 0.0,
+        "mean_abs_swd_difference_w_m2": 0.0,
+        "swd_rows_difference_over_25_w_m2": 0,
+        "swd_rows_difference_over_100_w_m2": 0,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201603": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201603.nc",
+        "sha256": "eb5d187f923248703a7c6a4ae3cc0600ec392a441db31f73f093de2f9501072a",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3
+          ],
+          "IQ002": [
+            2,
+            3
+          ],
+          "IF010": [
+            2,
+            3
+          ],
+          "ISWD": [
+            2
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            268.54998779296875,
+            287.4499816894531
+          ],
+          "TD002": [
+            268.3799743652344,
+            281.3494873046875
+          ],
+          "RH002": [
+            39.16520309448242,
+            105.49803161621094
+          ],
+          "F010": [
+            0.0,
+            17.420000076293945
+          ],
+          "SWD": [
+            -2.7185723781585693,
+            871.5
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201603.nc",
+        "sha256": "d2b48c05e22c615e2c36b10112f0c1750bf23ad8dadf762762213b61faaff6ba",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            2
+          ],
+          "ILWD": [
+            2
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -2.7185723781585693,
+            871.5
+          ],
+          "LWD": [
+            220.5823974609375,
+            359.7894592285156
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 0,
+        "max_swd_difference_w_m2": 0.0,
+        "mean_abs_swd_difference_w_m2": 0.0,
+        "swd_rows_difference_over_25_w_m2": 0,
+        "swd_rows_difference_over_100_w_m2": 0,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201604": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201604.nc",
+        "sha256": "06d63576fe4d679c722ae0d3b7ddf0e319e922c519eacf1952e86efef04dec9f",
+        "format": "hdf5",
+        "rows": 4320,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3
+          ],
+          "IQ002": [
+            2,
+            3
+          ],
+          "IF010": [
+            2,
+            3
+          ],
+          "ISWD": [
+            2
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            273.54998779296875,
+            293.4499816894531
+          ],
+          "TD002": [
+            270.9873352050781,
+            286.39434814453125
+          ],
+          "RH002": [
+            42.75116729736328,
+            104.11978912353516
+          ],
+          "F010": [
+            0.18000000715255737,
+            12.680000305175781
+          ],
+          "SWD": [
+            -2.819662570953369,
+            973.1803588867188
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201604.nc",
+        "sha256": "6316b373cbe797fbb3e3cb1002be1984b1c0eeffd8f25f8f5424e9a3b04ee44b",
+        "format": "hdf5",
+        "rows": 4320,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            2
+          ],
+          "ILWD": [
+            2
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -2.819662570953369,
+            973.1803588867188
+          ],
+          "LWD": [
+            235.8336181640625,
+            383.9342956542969
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 0,
+        "max_swd_difference_w_m2": 0.0,
+        "mean_abs_swd_difference_w_m2": 0.0,
+        "swd_rows_difference_over_25_w_m2": 0,
+        "swd_rows_difference_over_100_w_m2": 0,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201605": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201605.nc",
+        "sha256": "c489207095db7b1b9734880e8651e7b70bd044f9ed60fd0a9f71c95d6cc84bd6",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3
+          ],
+          "IQ002": [
+            2,
+            3
+          ],
+          "IF010": [
+            2,
+            3
+          ],
+          "ISWD": [
+            2
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            273.8500061035156,
+            298.9499816894531
+          ],
+          "TD002": [
+            272.39190673828125,
+            290.74676513671875
+          ],
+          "RH002": [
+            28.44801139831543,
+            104.32404327392578
+          ],
+          "F010": [
+            0.10716497898101807,
+            10.350000381469727
+          ],
+          "SWD": [
+            -2.877229928970337,
+            1006.4738159179688
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201605.nc",
+        "sha256": "7b47447f5c4b03262f2c86c7e49fbf811d619111e72980142e2500b18e7a8c8a",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            2
+          ],
+          "ILWD": [
+            2
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -2.877229928970337,
+            1006.4738159179688
+          ],
+          "LWD": [
+            243.11734008789062,
+            399.3110046386719
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 0,
+        "max_swd_difference_w_m2": 0.0,
+        "mean_abs_swd_difference_w_m2": 0.0,
+        "swd_rows_difference_over_25_w_m2": 0,
+        "swd_rows_difference_over_100_w_m2": 0,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201606": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201606.nc",
+        "sha256": "50f6799049cc2ab653dcd9b912dab6638995431f2bc3cbac44a42e929320666d",
+        "format": "hdf5",
+        "rows": 4320,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3,
+            5
+          ],
+          "IQ002": [
+            2,
+            3,
+            5
+          ],
+          "IF010": [
+            2,
+            3
+          ],
+          "ISWD": [
+            2,
+            5
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            283.04998779296875,
+            300.8500061035156
+          ],
+          "TD002": [
+            278.1263427734375,
+            296.6440734863281
+          ],
+          "RH002": [
+            38.256099700927734,
+            108.52985382080078
+          ],
+          "F010": [
+            0.03999999910593033,
+            9.72731876373291
+          ],
+          "SWD": [
+            -2.554304361343384,
+            1037.7098388671875
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201606.nc",
+        "sha256": "aeed6ca6c65b252713173dc0209d00895f17ee7749d6954151475df98aaadf7a",
+        "format": "hdf5",
+        "rows": 4320,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            2,
+            5
+          ],
+          "ILWD": [
+            2,
+            5
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -2.554304361343384,
+            1037.7098388671875
+          ],
+          "LWD": [
+            292.7076110839844,
+            427.11761474609375
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 0,
+        "max_swd_difference_w_m2": 0.0,
+        "mean_abs_swd_difference_w_m2": 0.0,
+        "swd_rows_difference_over_25_w_m2": 0,
+        "swd_rows_difference_over_100_w_m2": 0,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201607": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201607.nc",
+        "sha256": "b653ff8b6e0b429cc2beb95cb9f673e710c20b0f7b5cdb8d21b0330de4573bda",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3
+          ],
+          "IQ002": [
+            2,
+            3
+          ],
+          "IF010": [
+            2,
+            3
+          ],
+          "ISWD": [
+            2
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            282.1499938964844,
+            306.1499938964844
+          ],
+          "TD002": [
+            280.7437744140625,
+            294.1999206542969
+          ],
+          "RH002": [
+            39.73789596557617,
+            107.8309326171875
+          ],
+          "F010": [
+            0.0,
+            11.550000190734863
+          ],
+          "SWD": [
+            -2.1800129413604736,
+            1078.5860595703125
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201607.nc",
+        "sha256": "0ff845a2ac9434314fece9bf7a42d4b4ac8c538afa639aae0d9ad42b176e0579",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            2
+          ],
+          "ILWD": [
+            1,
+            2
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -2.1800129413604736,
+            1078.5860595703125
+          ],
+          "LWD": [
+            291.802490234375,
+            436.45941162109375
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 0,
+        "max_swd_difference_w_m2": 0.0,
+        "mean_abs_swd_difference_w_m2": 0.0,
+        "swd_rows_difference_over_25_w_m2": 0,
+        "swd_rows_difference_over_100_w_m2": 0,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201608": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201608.nc",
+        "sha256": "4f815fef421e550379d23ccf97f5dd889ded2819d377abeea98af124a33584ac",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3
+          ],
+          "IQ002": [
+            2,
+            3
+          ],
+          "IF010": [
+            2,
+            3
+          ],
+          "ISWD": [
+            2,
+            3,
+            5
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            280.75,
+            304.75
+          ],
+          "TD002": [
+            279.9374694824219,
+            296.23663330078125
+          ],
+          "RH002": [
+            36.87987518310547,
+            102.87287902832031
+          ],
+          "F010": [
+            0.05999999865889549,
+            9.920000076293945
+          ],
+          "SWD": [
+            -3.0924429893493652,
+            944.0421752929688
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201608.nc",
+        "sha256": "1b1e2ca1c64e10116ec6dd1efdac04d33c134a00c3f84af2c850a0a79556735b",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            2,
+            3,
+            5
+          ],
+          "ILWD": [
+            2,
+            5
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -3.0924429893493652,
+            944.0421752929688
+          ],
+          "LWD": [
+            278.13909912109375,
+            423.20355224609375
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 0,
+        "max_swd_difference_w_m2": 0.0,
+        "mean_abs_swd_difference_w_m2": 0.0,
+        "swd_rows_difference_over_25_w_m2": 0,
+        "swd_rows_difference_over_100_w_m2": 0,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201609": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201609.nc",
+        "sha256": "d42f412266cad699f5f52c5e747e919adf0f047278a57307e2a719e6476c39ee",
+        "format": "hdf5",
+        "rows": 4320,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3,
+            5
+          ],
+          "IQ002": [
+            2,
+            3,
+            5
+          ],
+          "IF010": [
+            2,
+            3
+          ],
+          "ISWD": [
+            1,
+            2,
+            3,
+            5
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            279.75,
+            304.8500061035156
+          ],
+          "TD002": [
+            280.2392578125,
+            292.3704528808594
+          ],
+          "RH002": [
+            33.39364242553711,
+            103.46529388427734
+          ],
+          "F010": [
+            0.0,
+            10.779999732971191
+          ],
+          "SWD": [
+            -2.828178644180298,
+            820.1266479492188
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201609.nc",
+        "sha256": "ea34aeabf0de7623c62b5ce3f3365350a97aeb86e8b37adc9574e022f3258a5f",
+        "format": "hdf5",
+        "rows": 4320,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            1,
+            2,
+            3,
+            5
+          ],
+          "ILWD": [
+            1,
+            2,
+            5
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -2.828178644180298,
+            820.1266479492188
+          ],
+          "LWD": [
+            285.69329833984375,
+            414.1349182128906
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 0,
+        "max_swd_difference_w_m2": 0.0,
+        "mean_abs_swd_difference_w_m2": 0.0,
+        "swd_rows_difference_over_25_w_m2": 0,
+        "swd_rows_difference_over_100_w_m2": 0,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201610": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201610.nc",
+        "sha256": "90ba327f2549598ff85af6d53c634a29cb9f7fb99025105bd4c14ddd80b9b97a",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3
+          ],
+          "IQ002": [
+            2,
+            3
+          ],
+          "IF010": [
+            2,
+            3
+          ],
+          "ISWD": [
+            2
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            272.1499938964844,
+            292.4499816894531
+          ],
+          "TD002": [
+            271.7902526855469,
+            286.49151611328125
+          ],
+          "RH002": [
+            49.66593551635742,
+            104.09088134765625
+          ],
+          "F010": [
+            0.019999999552965164,
+            9.75
+          ],
+          "SWD": [
+            -2.5410549640655518,
+            647.8009643554688
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201610.nc",
+        "sha256": "45863b3c6c5c45bad43d92acd6c497be6cfe6042529056a5c46a69aad320ec31",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            2
+          ],
+          "ILWD": [
+            2
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -2.5410549640655518,
+            647.8009643554688
+          ],
+          "LWD": [
+            252.7264404296875,
+            379.7136535644531
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 0,
+        "max_swd_difference_w_m2": 0.0,
+        "mean_abs_swd_difference_w_m2": 0.0,
+        "swd_rows_difference_over_25_w_m2": 0,
+        "swd_rows_difference_over_100_w_m2": 0,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201611": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201611.nc",
+        "sha256": "9c6b281842f88b225774dd15a80d5e96861593efc1e2a99335c904cdc4f234ba",
+        "format": "hdf5",
+        "rows": 4320,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3
+          ],
+          "IQ002": [
+            2,
+            3,
+            5
+          ],
+          "IF010": [
+            2,
+            3
+          ],
+          "ISWD": [
+            2
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            266.25,
+            287.25
+          ],
+          "TD002": [
+            265.27154541015625,
+            286.1900634765625
+          ],
+          "RH002": [
+            42.67596435546875,
+            102.86871337890625
+          ],
+          "F010": [
+            0.019999999552965164,
+            19.979999542236328
+          ],
+          "SWD": [
+            -2.472501277923584,
+            514.95361328125
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201611.nc",
+        "sha256": "94aa66cd703409e7b1145ab204cf7184c7797b44972540e7eb89282c8b829f53",
+        "format": "hdf5",
+        "rows": 4320,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            2
+          ],
+          "ILWD": [
+            2
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -2.472501277923584,
+            514.95361328125
+          ],
+          "LWD": [
+            215.5848846435547,
+            381.0062255859375
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 0,
+        "max_swd_difference_w_m2": 0.0,
+        "mean_abs_swd_difference_w_m2": 0.0,
+        "swd_rows_difference_over_25_w_m2": 0,
+        "swd_rows_difference_over_100_w_m2": 0,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    },
+    "201612": {
+      "meteo": {
+        "filename": "cesar_surface_meteo_lc1_t10_v1.0_201612.nc",
+        "sha256": "d0317e39e92e5accb403ba440c05c0a91b269f5a76debcd37e5a256a89faf389",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "TA002": 0,
+          "TD002": 0,
+          "RH002": 0,
+          "F010": 0,
+          "SWD": 0,
+          "ITA002": 0,
+          "IQ002": 0,
+          "IF010": 0,
+          "ISWD": 0
+        },
+        "source_codes": {
+          "ITA002": [
+            2,
+            3
+          ],
+          "IQ002": [
+            2,
+            3,
+            5
+          ],
+          "IF010": [
+            2,
+            3
+          ],
+          "ISWD": [
+            2,
+            5
+          ]
+        },
+        "extrema": {
+          "TA002": [
+            269.25,
+            284.54998779296875
+          ],
+          "TD002": [
+            266.9754943847656,
+            283.3634948730469
+          ],
+          "RH002": [
+            57.44326400756836,
+            108.57456970214844
+          ],
+          "F010": [
+            0.0,
+            14.430000305175781
+          ],
+          "SWD": [
+            -2.3476123809814453,
+            280.19122314453125
+          ]
+        }
+      },
+      "radiation": {
+        "filename": "cesar_surface_radiation_lc1_t10_v1.0_201612.nc",
+        "sha256": "f85ef8300608b1f47cbe11948db56ac72ee4ba6e178f1b419db217748dd2c030",
+        "format": "hdf5",
+        "rows": 4464,
+        "missing_by_channel": {
+          "SWD": 0,
+          "LWD": 0,
+          "ISWD": 0,
+          "ILWD": 0
+        },
+        "source_codes": {
+          "ISWD": [
+            2,
+            5
+          ],
+          "ILWD": [
+            1,
+            2
+          ]
+        },
+        "extrema": {
+          "SWD": [
+            -2.3476123809814453,
+            280.19122314453125
+          ],
+          "LWD": [
+            221.17117309570312,
+            366.55535888671875
+          ]
+        }
+      },
+      "cross_product": {
+        "max_bound_difference_seconds": 0.0,
+        "swd_rows_different": 0,
+        "max_swd_difference_w_m2": 0.0,
+        "mean_abs_swd_difference_w_m2": 0.0,
+        "swd_rows_difference_over_25_w_m2": 0,
+        "swd_rows_difference_over_100_w_m2": 0,
+        "selected_swd": "radiation_lc1_t10.SWD"
+      }
+    }
+  },
+  "issues": [
+    "cesar_surface_radiation_lc1_t10_v1.0_201212.nc: invalid/missing LWD",
+    "cesar_surface_radiation_lc1_t10_v1.0_201212.nc: outside physical support LWD"
+  ],
+  "cautions": [
+    "201201: duplicate SWD differs; radiation product selected",
+    "201202: duplicate SWD differs; radiation product selected",
+    "201203: duplicate SWD differs; radiation product selected",
+    "201204: duplicate SWD differs; radiation product selected",
+    "201205: duplicate SWD differs; radiation product selected",
+    "201206: duplicate SWD differs; radiation product selected",
+    "201207: duplicate SWD differs; radiation product selected",
+    "201208: duplicate SWD differs; radiation product selected",
+    "201209: duplicate SWD differs; radiation product selected",
+    "201210: duplicate SWD differs; radiation product selected",
+    "201211: duplicate SWD differs; radiation product selected",
+    "201212: duplicate SWD differs; radiation product selected",
+    "201302: duplicate SWD differs; radiation product selected",
+    "201303: duplicate SWD differs; radiation product selected",
+    "201304: duplicate SWD differs; radiation product selected",
+    "201305: duplicate SWD differs; radiation product selected",
+    "201306: duplicate SWD differs; radiation product selected",
+    "201307: duplicate SWD differs; radiation product selected",
+    "201308: duplicate SWD differs; radiation product selected",
+    "201309: duplicate SWD differs; radiation product selected",
+    "201310: duplicate SWD differs; radiation product selected",
+    "201311: duplicate SWD differs; radiation product selected",
+    "201312: duplicate SWD differs; radiation product selected",
+    "201401: duplicate SWD differs; radiation product selected"
+  ],
+  "complete_years": [
+    2013,
+    2014,
+    2016
+  ],
+  "incomplete_years": {
+    "2012": [
+      "cesar_surface_radiation_lc1_t10_v1.0_201212.nc: invalid/missing LWD",
+      "cesar_surface_radiation_lc1_t10_v1.0_201212.nc: outside physical support LWD"
+    ]
+  }
+}

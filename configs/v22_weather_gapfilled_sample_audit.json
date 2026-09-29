@@ -1,0 +1,112 @@
+{
+  "gate": "pass",
+  "meaning": "sample structure supports remaining authorized quality audit only; not a model-input unit or source-code approval",
+  "months": [
+    "201701"
+  ],
+  "files": {
+    "meteo": {
+      "name": "cesar_surface_meteo_lc1_t10_v1.0_201701.nc",
+      "size": 171967,
+      "sha256": "0e1bfaab49fdda891bd8ebaf3efe3b7111a12340d92eb526a3aa6c560c15238c",
+      "format": "HDF5/NetCDF4",
+      "units": {
+        "F010": "m s-1",
+        "RH002": "1e-2",
+        "SWD": "W m-2",
+        "TA002": "degC",
+        "TD002": "degC"
+      },
+      "valid_dates_zero": 0
+    },
+    "radiation": {
+      "name": "cesar_surface_radiation_lc1_t10_v1.0_201701.nc",
+      "size": 116390,
+      "sha256": "5edcfb53e5087c87f97f76c8cf773ab0e0e934732a60a13b904a56eb0755c82b",
+      "format": "HDF5/NetCDF4",
+      "units": {
+        "LWD": "W m-2",
+        "SWD": "W m-2"
+      },
+      "valid_dates_zero": 0
+    }
+  },
+  "time_aligned": true,
+  "channels": {
+    "meteo/TA002": {
+      "missing": 0,
+      "minimum": 265.9499816894531,
+      "maximum": 283.25,
+      "lb1_missing_count": 12,
+      "lc1_vs_lb1_max_abs_on_valid": 0.0
+    },
+    "meteo/RH002": {
+      "missing": 0,
+      "minimum": 38.36507797241211,
+      "maximum": 104.0874252319336,
+      "lb1_missing_count": 12,
+      "lc1_vs_lb1_max_abs_on_valid": 10.469985961914062
+    },
+    "meteo/TD002": {
+      "missing": 0,
+      "minimum": 263.86883544921875,
+      "maximum": 280.94635009765625,
+      "lb1_missing_count": 12,
+      "lc1_vs_lb1_max_abs_on_valid": 1.3388671875
+    },
+    "meteo/F010": {
+      "missing": 0,
+      "minimum": 0.05999999865889549,
+      "maximum": 12.65999984741211,
+      "lb1_missing_count": 3,
+      "lc1_vs_lb1_max_abs_on_valid": 0.8499698638916016
+    },
+    "meteo/SWD": {
+      "missing": 0,
+      "minimum": -2.0823745727539062,
+      "maximum": 410.0480041503906
+    },
+    "radiation/SWD": {
+      "missing": 0,
+      "minimum": -2.0823745727539062,
+      "maximum": 410.0480041503906,
+      "lb1_missing_count": 0,
+      "lc1_vs_lb1_max_abs_on_valid": 2.0823745727539062
+    },
+    "radiation/LWD": {
+      "missing": 0,
+      "minimum": 207.24783325195312,
+      "maximum": 348.6781921386719,
+      "lb1_missing_count": 0,
+      "lc1_vs_lb1_max_abs_on_valid": 0.0
+    }
+  },
+  "source_indices": {
+    "meteo/TA002": {
+      "2": 4452,
+      "3": 12
+    },
+    "meteo/Q002": {
+      "2": 4363,
+      "3": 12,
+      "5": 4,
+      "7": 85
+    },
+    "meteo/F010": {
+      "2": 4461,
+      "3": 3
+    },
+    "meteo/SWD": {
+      "2": 4464
+    },
+    "radiation/SWD": {
+      "2": 4464
+    },
+    "radiation/LWD": {
+      "2": 4464
+    }
+  },
+  "label_value_conflicts": [
+    "TA002 and TD002 carry degC unit labels but actual 2017-01 values are Kelvin-scale; do not convert by label alone"
+  ]
+}

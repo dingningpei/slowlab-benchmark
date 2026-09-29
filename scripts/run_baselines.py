@@ -41,6 +41,7 @@ def run_episode(task_name: str, agent_name: str, seed: int) -> dict:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--seeds", type=int, default=30)
+    ap.add_argument("--seed-start", type=int, default=0)
     ap.add_argument("--tasks", nargs="+", default=list(CORE_TASK_KEYS),
                     help="core tasks by default; pass Screen explicitly for experimental runs")
     # The three deployable reference policies. The rep2 / transfer pair is a *result*, not a scale
@@ -52,7 +53,8 @@ def main():
 
     out = pathlib.Path(args.out); out.mkdir(parents=True, exist_ok=True)
     rows = [run_episode(t, a, s)
-            for t in args.tasks for a in args.agents for s in range(args.seeds)]
+            for t in args.tasks for a in args.agents
+            for s in range(args.seed_start, args.seed_start + args.seeds)]
 
     with open(out / "episodes.csv", "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=list(rows[0])); w.writeheader(); w.writerows(rows)

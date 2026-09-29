@@ -1,0 +1,848 @@
+{
+  "scope": "seven same-station development weather years; no formal sites, crop outcomes, or 2015/2025 holdout",
+  "candidate_version": "block-weather-v3c-expanded-development",
+  "year_set": [
+    2013,
+    2014,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020
+  ],
+  "excluded_years": {
+    "2012": [
+      "cesar_surface_radiation_lc1_t10_v1.0_201212.nc: invalid/missing LWD",
+      "cesar_surface_radiation_lc1_t10_v1.0_201212.nc: outside physical support LWD"
+    ]
+  },
+  "new_years_archive_sha256": "752d386094be9bc3b745da513d66e233bb460216b1f9400971a26c0f38e5eef7",
+  "new_years_metadata_sha256": "cf55dfe4bba3dc35e15111d01e75a1497b1ee76a5d9735ea456f66cc6bf2d846",
+  "legacy_weather_plan_sha256": "00f7da43cc227a05ac1f383986ff5d437b02b909378ca3f11cc5e3363e0b2e32",
+  "legacy_weather_manifest_sha256": "f682f9eb3c00a945aec196c3f500c5fded00e14f05fe574c593d4cae52805954",
+  "candidate_code_sha256": "92e3361935961a4c1b146e368d41c53000efcac5cd8ec70689abd2ec9b65edd6",
+  "audit_code_sha256": "ca9b09343367f4c0d5460786ae1f09f9af4ddcf0a9e69df42e024684b5af790a",
+  "candidates_per_fold": 12,
+  "nonreplay_rule": "aligned 24h and 6h windows against training years only; threshold 0.08; sliding audit pending",
+  "energy_score_estimator": "off-diagonal U-statistic; undefined for fewer than two accepted candidates",
+  "folds": [
+    {
+      "heldout_year": 2013,
+      "fit_years": [
+        2014,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020
+      ],
+      "rows": [
+        {
+          "development_seed": 20463300,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_24h_distance": 0.15516555120586664,
+          "minimum_6h_distance": 0.07625512726687757
+        },
+        {
+          "development_seed": 20463301,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.14349379014426536,
+          "minimum_6h_distance": 0.09183178380750422,
+          "wind_daily_variance_ratio_vs_heldout": 1.1003201037670685
+        },
+        {
+          "development_seed": 20463302,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.1801876676962947,
+          "minimum_6h_distance": 0.08637047030748625,
+          "wind_daily_variance_ratio_vs_heldout": 0.7617647452859561
+        },
+        {
+          "development_seed": 20463303,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.1438171430211615,
+          "minimum_6h_distance": 0.09293820722720618,
+          "wind_daily_variance_ratio_vs_heldout": 0.8901798180618142
+        },
+        {
+          "development_seed": 20463304,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_24h_distance": 0.14636326592162757,
+          "minimum_6h_distance": 0.07879949759816648
+        },
+        {
+          "development_seed": 20463305,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.17440845520201312,
+          "minimum_6h_distance": 0.08712045370009486,
+          "wind_daily_variance_ratio_vs_heldout": 1.2067246480352334
+        },
+        {
+          "development_seed": 20463306,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.16834744816748165,
+          "minimum_6h_distance": 0.08195198392074471,
+          "wind_daily_variance_ratio_vs_heldout": 0.6755535410812032
+        },
+        {
+          "development_seed": 20463307,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_24h_distance": 0.15660813556627462,
+          "minimum_6h_distance": 0.07965091364989517
+        },
+        {
+          "development_seed": 20463308,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.1444631560824263,
+          "minimum_6h_distance": 0.0917796411754416,
+          "wind_daily_variance_ratio_vs_heldout": 1.0943736903419545
+        },
+        {
+          "development_seed": 20463309,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.15716229442407315,
+          "minimum_6h_distance": 0.0951538187303172,
+          "wind_daily_variance_ratio_vs_heldout": 1.3261256583934593
+        },
+        {
+          "development_seed": 20463310,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.16387283671627736,
+          "minimum_6h_distance": 0.09746127976868316,
+          "wind_daily_variance_ratio_vs_heldout": 0.8834083305848972
+        },
+        {
+          "development_seed": 20463311,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.17057881372842792,
+          "minimum_6h_distance": 0.08604410218700137,
+          "wind_daily_variance_ratio_vs_heldout": 0.9241239527737851
+        }
+      ],
+      "physical_support_count": 12,
+      "nonreplay_count": 9,
+      "monthly_5_95_coverage": 0.5833333333333334,
+      "weather_fair_energy_score": 0.30501652972047305,
+      "whole_year_resample_baseline_fair_energy_score": 0.25072365800035923,
+      "generated_wind_daily_variance_ratio_range": [
+        0.6755535410812032,
+        1.3261256583934593
+      ]
+    },
+    {
+      "heldout_year": 2014,
+      "fit_years": [
+        2013,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020
+      ],
+      "rows": [
+        {
+          "development_seed": 20463400,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_24h_distance": 0.1352507321653689,
+          "minimum_6h_distance": 0.07457674534421076
+        },
+        {
+          "development_seed": 20463401,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.17245323000666937,
+          "minimum_6h_distance": 0.10045571002170871,
+          "wind_daily_variance_ratio_vs_heldout": 1.0536829902519738
+        },
+        {
+          "development_seed": 20463402,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.18349098813744844,
+          "minimum_6h_distance": 0.09219048319011139,
+          "wind_daily_variance_ratio_vs_heldout": 0.8358448440444434
+        },
+        {
+          "development_seed": 20463403,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.1658294006123138,
+          "minimum_6h_distance": 0.08348514756795336,
+          "wind_daily_variance_ratio_vs_heldout": 0.6475390212021657
+        },
+        {
+          "development_seed": 20463404,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.1559374439128092,
+          "minimum_6h_distance": 0.0884282630362536,
+          "wind_daily_variance_ratio_vs_heldout": 0.9629168921125331
+        },
+        {
+          "development_seed": 20463405,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.16683074662830463,
+          "minimum_6h_distance": 0.09019719016259437,
+          "wind_daily_variance_ratio_vs_heldout": 1.0213327922018045
+        },
+        {
+          "development_seed": 20463406,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.1801443300115326,
+          "minimum_6h_distance": 0.09206435722566515,
+          "wind_daily_variance_ratio_vs_heldout": 1.2243972847001028
+        },
+        {
+          "development_seed": 20463407,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.1732416149550805,
+          "minimum_6h_distance": 0.0989706769766492,
+          "wind_daily_variance_ratio_vs_heldout": 0.9857118002413392
+        },
+        {
+          "development_seed": 20463408,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.151258587948435,
+          "minimum_6h_distance": 0.08885574428946262,
+          "wind_daily_variance_ratio_vs_heldout": 0.8817831754968428
+        },
+        {
+          "development_seed": 20463409,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.14408411591724435,
+          "minimum_6h_distance": 0.09683529546430343,
+          "wind_daily_variance_ratio_vs_heldout": 0.957222469745818
+        },
+        {
+          "development_seed": 20463410,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.1426434408003408,
+          "minimum_6h_distance": 0.08600847606233086,
+          "wind_daily_variance_ratio_vs_heldout": 0.8336425649964124
+        },
+        {
+          "development_seed": 20463411,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.1305229192592922,
+          "minimum_6h_distance": 0.0869037839406691,
+          "wind_daily_variance_ratio_vs_heldout": 0.6647099013762225
+        }
+      ],
+      "physical_support_count": 12,
+      "nonreplay_count": 11,
+      "monthly_5_95_coverage": 0.5666666666666667,
+      "weather_fair_energy_score": 0.28041360776582497,
+      "whole_year_resample_baseline_fair_energy_score": 0.24477526421120235,
+      "generated_wind_daily_variance_ratio_range": [
+        0.6475390212021657,
+        1.2243972847001028
+      ]
+    },
+    {
+      "heldout_year": 2016,
+      "fit_years": [
+        2013,
+        2014,
+        2017,
+        2018,
+        2019,
+        2020
+      ],
+      "rows": [
+        {
+          "development_seed": 20463600,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.15812466973336295,
+          "minimum_6h_distance": 0.08659058340106132,
+          "wind_daily_variance_ratio_vs_heldout": 0.924394674624082
+        },
+        {
+          "development_seed": 20463601,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.1436788278804962,
+          "minimum_6h_distance": 0.08917991095588967,
+          "wind_daily_variance_ratio_vs_heldout": 1.1218674345614303
+        },
+        {
+          "development_seed": 20463602,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.16423593324610292,
+          "minimum_6h_distance": 0.09310546433150868,
+          "wind_daily_variance_ratio_vs_heldout": 0.8128766987211063
+        },
+        {
+          "development_seed": 20463603,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.16421310367424027,
+          "minimum_6h_distance": 0.08842207139820005,
+          "wind_daily_variance_ratio_vs_heldout": 1.2044422315960626
+        },
+        {
+          "development_seed": 20463604,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.1768404638759042,
+          "minimum_6h_distance": 0.09145969096761714,
+          "wind_daily_variance_ratio_vs_heldout": 0.9292115542978897
+        },
+        {
+          "development_seed": 20463605,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.15931312924258256,
+          "minimum_6h_distance": 0.09901114886250678,
+          "wind_daily_variance_ratio_vs_heldout": 1.132125834122544
+        },
+        {
+          "development_seed": 20463606,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_24h_distance": 0.18849201463587578,
+          "minimum_6h_distance": 0.07604747296129621
+        },
+        {
+          "development_seed": 20463607,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.17462991409778456,
+          "minimum_6h_distance": 0.09834300950778217,
+          "wind_daily_variance_ratio_vs_heldout": 1.3944000016478437
+        },
+        {
+          "development_seed": 20463608,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.1807734964659555,
+          "minimum_6h_distance": 0.09534709889658524,
+          "wind_daily_variance_ratio_vs_heldout": 1.1970010124045691
+        },
+        {
+          "development_seed": 20463609,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.15442835418585915,
+          "minimum_6h_distance": 0.09761247627017595,
+          "wind_daily_variance_ratio_vs_heldout": 0.8127828688613765
+        },
+        {
+          "development_seed": 20463610,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.1752147608104193,
+          "minimum_6h_distance": 0.08620073831768676,
+          "wind_daily_variance_ratio_vs_heldout": 0.9728470182597082
+        },
+        {
+          "development_seed": 20463611,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.1684314035348819,
+          "minimum_6h_distance": 0.09013256851798745,
+          "wind_daily_variance_ratio_vs_heldout": 1.0289185950552409
+        }
+      ],
+      "physical_support_count": 12,
+      "nonreplay_count": 11,
+      "monthly_5_95_coverage": 0.75,
+      "weather_fair_energy_score": 0.2071244108820782,
+      "whole_year_resample_baseline_fair_energy_score": 0.16828996127513576,
+      "generated_wind_daily_variance_ratio_range": [
+        0.8127828688613765,
+        1.3944000016478437
+      ]
+    },
+    {
+      "heldout_year": 2017,
+      "fit_years": [
+        2013,
+        2014,
+        2016,
+        2018,
+        2019,
+        2020
+      ],
+      "rows": [
+        {
+          "development_seed": 20463700,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.144074750253021,
+          "minimum_6h_distance": 0.08825761847216348,
+          "wind_daily_variance_ratio_vs_heldout": 0.8683658115571347
+        },
+        {
+          "development_seed": 20463701,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.1553143529833993,
+          "minimum_6h_distance": 0.09168387515695799,
+          "wind_daily_variance_ratio_vs_heldout": 1.1026521057626295
+        },
+        {
+          "development_seed": 20463702,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.17338121718661098,
+          "minimum_6h_distance": 0.10730084028342106,
+          "wind_daily_variance_ratio_vs_heldout": 1.2034563858017289
+        },
+        {
+          "development_seed": 20463703,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.1697984802605605,
+          "minimum_6h_distance": 0.0848163135399673,
+          "wind_daily_variance_ratio_vs_heldout": 1.188011401371432
+        },
+        {
+          "development_seed": 20463704,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.15919756505642338,
+          "minimum_6h_distance": 0.09532695742710266,
+          "wind_daily_variance_ratio_vs_heldout": 1.1241008742933483
+        },
+        {
+          "development_seed": 20463705,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.15960105335753838,
+          "minimum_6h_distance": 0.09171941917254939,
+          "wind_daily_variance_ratio_vs_heldout": 1.053253764889579
+        },
+        {
+          "development_seed": 20463706,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.16755013648794234,
+          "minimum_6h_distance": 0.0892095848937793,
+          "wind_daily_variance_ratio_vs_heldout": 0.9397256609969563
+        },
+        {
+          "development_seed": 20463707,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.1759848926556549,
+          "minimum_6h_distance": 0.09101562698988036,
+          "wind_daily_variance_ratio_vs_heldout": 1.154791952876001
+        },
+        {
+          "development_seed": 20463708,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.17335167535063184,
+          "minimum_6h_distance": 0.09155716403727143,
+          "wind_daily_variance_ratio_vs_heldout": 1.1367956708335527
+        },
+        {
+          "development_seed": 20463709,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.1657376311678711,
+          "minimum_6h_distance": 0.09289432778150088,
+          "wind_daily_variance_ratio_vs_heldout": 0.9499444982093747
+        },
+        {
+          "development_seed": 20463710,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.13614797326690373,
+          "minimum_6h_distance": 0.08304224989268359,
+          "wind_daily_variance_ratio_vs_heldout": 1.0625179242197595
+        },
+        {
+          "development_seed": 20463711,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.1698397463657497,
+          "minimum_6h_distance": 0.09116037565340948,
+          "wind_daily_variance_ratio_vs_heldout": 1.1832560119804687
+        }
+      ],
+      "physical_support_count": 12,
+      "nonreplay_count": 12,
+      "monthly_5_95_coverage": 0.6833333333333333,
+      "weather_fair_energy_score": 0.20682888121079138,
+      "whole_year_resample_baseline_fair_energy_score": 0.19506078400523802,
+      "generated_wind_daily_variance_ratio_range": [
+        0.8683658115571347,
+        1.2034563858017289
+      ]
+    },
+    {
+      "heldout_year": 2018,
+      "fit_years": [
+        2013,
+        2014,
+        2016,
+        2017,
+        2019,
+        2020
+      ],
+      "rows": [
+        {
+          "development_seed": 20463800,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.15254206332689604,
+          "minimum_6h_distance": 0.09163630780939809,
+          "wind_daily_variance_ratio_vs_heldout": 1.3326407753384504
+        },
+        {
+          "development_seed": 20463801,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.15463813031883264,
+          "minimum_6h_distance": 0.09754129457396596,
+          "wind_daily_variance_ratio_vs_heldout": 1.6440266799281513
+        },
+        {
+          "development_seed": 20463802,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.148193876356817,
+          "minimum_6h_distance": 0.09608558827941396,
+          "wind_daily_variance_ratio_vs_heldout": 1.3342581811431218
+        },
+        {
+          "development_seed": 20463803,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.1494125561110459,
+          "minimum_6h_distance": 0.09643624116824057,
+          "wind_daily_variance_ratio_vs_heldout": 1.281619523954463
+        },
+        {
+          "development_seed": 20463804,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.17693424193506266,
+          "minimum_6h_distance": 0.09396016935394816,
+          "wind_daily_variance_ratio_vs_heldout": 1.3788468829629632
+        },
+        {
+          "development_seed": 20463805,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.15803857858852102,
+          "minimum_6h_distance": 0.0982471322353729,
+          "wind_daily_variance_ratio_vs_heldout": 1.2484081263878901
+        },
+        {
+          "development_seed": 20463806,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.18320123727431203,
+          "minimum_6h_distance": 0.09641731728012991,
+          "wind_daily_variance_ratio_vs_heldout": 1.4407745450076554
+        },
+        {
+          "development_seed": 20463807,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.148170545278946,
+          "minimum_6h_distance": 0.09025417926095423,
+          "wind_daily_variance_ratio_vs_heldout": 1.5654405609822792
+        },
+        {
+          "development_seed": 20463808,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.14642611623401527,
+          "minimum_6h_distance": 0.09153598240849181,
+          "wind_daily_variance_ratio_vs_heldout": 1.231694993761128
+        },
+        {
+          "development_seed": 20463809,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.1449687141265673,
+          "minimum_6h_distance": 0.08584164819360399,
+          "wind_daily_variance_ratio_vs_heldout": 1.2608841335713052
+        },
+        {
+          "development_seed": 20463810,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_24h_distance": 0.1618830157466936,
+          "minimum_6h_distance": 0.0780131711758611
+        },
+        {
+          "development_seed": 20463811,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.16225285766709796,
+          "minimum_6h_distance": 0.09307520573416499,
+          "wind_daily_variance_ratio_vs_heldout": 1.516198834355365
+        }
+      ],
+      "physical_support_count": 12,
+      "nonreplay_count": 11,
+      "monthly_5_95_coverage": 0.5833333333333334,
+      "weather_fair_energy_score": 0.3646972828955903,
+      "whole_year_resample_baseline_fair_energy_score": 0.3092629475554711,
+      "generated_wind_daily_variance_ratio_range": [
+        1.231694993761128,
+        1.6440266799281513
+      ]
+    },
+    {
+      "heldout_year": 2019,
+      "fit_years": [
+        2013,
+        2014,
+        2016,
+        2017,
+        2018,
+        2020
+      ],
+      "rows": [
+        {
+          "development_seed": 20463900,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.19100106939960185,
+          "minimum_6h_distance": 0.10496820805613435,
+          "wind_daily_variance_ratio_vs_heldout": 0.7834056874614604
+        },
+        {
+          "development_seed": 20463901,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.18978590016655597,
+          "minimum_6h_distance": 0.08817020407791523,
+          "wind_daily_variance_ratio_vs_heldout": 0.9781810545630018
+        },
+        {
+          "development_seed": 20463902,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.13193604392082775,
+          "minimum_6h_distance": 0.08915463484177212,
+          "wind_daily_variance_ratio_vs_heldout": 1.059356486802434
+        },
+        {
+          "development_seed": 20463903,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.17896146409232502,
+          "minimum_6h_distance": 0.09671501112477587,
+          "wind_daily_variance_ratio_vs_heldout": 0.8277070681991457
+        },
+        {
+          "development_seed": 20463904,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.15341631203723974,
+          "minimum_6h_distance": 0.10236705485769128,
+          "wind_daily_variance_ratio_vs_heldout": 0.7718041232234646
+        },
+        {
+          "development_seed": 20463905,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.14137992019341647,
+          "minimum_6h_distance": 0.08670444047288632,
+          "wind_daily_variance_ratio_vs_heldout": 0.8385285220770358
+        },
+        {
+          "development_seed": 20463906,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.1574533897073266,
+          "minimum_6h_distance": 0.08883422966971755,
+          "wind_daily_variance_ratio_vs_heldout": 1.2675074209871782
+        },
+        {
+          "development_seed": 20463907,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.16095785719627623,
+          "minimum_6h_distance": 0.08684016992121649,
+          "wind_daily_variance_ratio_vs_heldout": 1.0209602064567767
+        },
+        {
+          "development_seed": 20463908,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.14707773120196396,
+          "minimum_6h_distance": 0.08868506072800919,
+          "wind_daily_variance_ratio_vs_heldout": 0.9616224410886677
+        },
+        {
+          "development_seed": 20463909,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_24h_distance": 0.15307875129705018,
+          "minimum_6h_distance": 0.07275725724087431
+        },
+        {
+          "development_seed": 20463910,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.1686211423949743,
+          "minimum_6h_distance": 0.09782683540418317,
+          "wind_daily_variance_ratio_vs_heldout": 1.0179233856466527
+        },
+        {
+          "development_seed": 20463911,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.1586879438669765,
+          "minimum_6h_distance": 0.08956729164881651,
+          "wind_daily_variance_ratio_vs_heldout": 1.0818810915943635
+        }
+      ],
+      "physical_support_count": 12,
+      "nonreplay_count": 11,
+      "monthly_5_95_coverage": 0.8666666666666667,
+      "weather_fair_energy_score": 0.2675918056776735,
+      "whole_year_resample_baseline_fair_energy_score": 0.1655286185083601,
+      "generated_wind_daily_variance_ratio_range": [
+        0.7718041232234646,
+        1.2675074209871782
+      ]
+    },
+    {
+      "heldout_year": 2020,
+      "fit_years": [
+        2013,
+        2014,
+        2016,
+        2017,
+        2018,
+        2019
+      ],
+      "rows": [
+        {
+          "development_seed": 20464000,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_24h_distance": 0.16518781641236974,
+          "minimum_6h_distance": 0.07683199457956959
+        },
+        {
+          "development_seed": 20464001,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.16294512202298034,
+          "minimum_6h_distance": 0.094686434932555,
+          "wind_daily_variance_ratio_vs_heldout": 0.6431492982990809
+        },
+        {
+          "development_seed": 20464002,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.17297305803285934,
+          "minimum_6h_distance": 0.09316651247431186,
+          "wind_daily_variance_ratio_vs_heldout": 0.6139795167082159
+        },
+        {
+          "development_seed": 20464003,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_24h_distance": 0.14670358415105084,
+          "minimum_6h_distance": 0.07429608298203084
+        },
+        {
+          "development_seed": 20464004,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.17805649296949647,
+          "minimum_6h_distance": 0.0858701330767069,
+          "wind_daily_variance_ratio_vs_heldout": 0.6277547381216096
+        },
+        {
+          "development_seed": 20464005,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.164097798193811,
+          "minimum_6h_distance": 0.08004758511305292,
+          "wind_daily_variance_ratio_vs_heldout": 0.7296735934718037
+        },
+        {
+          "development_seed": 20464006,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.16887009804585987,
+          "minimum_6h_distance": 0.0967190490617832,
+          "wind_daily_variance_ratio_vs_heldout": 0.670887111117078
+        },
+        {
+          "development_seed": 20464007,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.16504422750852185,
+          "minimum_6h_distance": 0.0906506220570797,
+          "wind_daily_variance_ratio_vs_heldout": 0.5482049955454567
+        },
+        {
+          "development_seed": 20464008,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.15013817268495924,
+          "minimum_6h_distance": 0.08239251545353692,
+          "wind_daily_variance_ratio_vs_heldout": 0.60193318559989
+        },
+        {
+          "development_seed": 20464009,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.14088529945699643,
+          "minimum_6h_distance": 0.10230198983742651,
+          "wind_daily_variance_ratio_vs_heldout": 0.6803921664967371
+        },
+        {
+          "development_seed": 20464010,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.17192013891512914,
+          "minimum_6h_distance": 0.0932019406431054,
+          "wind_daily_variance_ratio_vs_heldout": 0.9219079302302526
+        },
+        {
+          "development_seed": 20464011,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_24h_distance": 0.1647573539852221,
+          "minimum_6h_distance": 0.09155731995956728,
+          "wind_daily_variance_ratio_vs_heldout": 0.817015542834746
+        }
+      ],
+      "physical_support_count": 12,
+      "nonreplay_count": 10,
+      "monthly_5_95_coverage": 0.6166666666666667,
+      "weather_fair_energy_score": 0.5066632034196685,
+      "whole_year_resample_baseline_fair_energy_score": 0.3169366388784888,
+      "generated_wind_daily_variance_ratio_range": [
+        0.5482049955454567,
+        0.9219079302302526
+      ]
+    }
+  ],
+  "elapsed_seconds": 204.5868812990375
+}

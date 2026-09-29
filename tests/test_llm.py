@@ -249,3 +249,42 @@ def test_constraint_checklist_is_a_small_prespecified_prompt_variant():
     assert variant == standard + "\n\n" + CONSTRAINT_CHECKLIST
     assert CONSTRAINT_CHECKLIST in WithinCycleLLMAgent(
         complete=lambda _: "", prompt_variant="constraint_checklist")._system_prompt()
+
+
+def test_callable_tool_is_returned_only_after_explicit_model_call():
+    replies = []
+    def complete(messages):
+        replies.append(messages)
+        if len(replies) == 1:
+            return '{"action":"call_tool","tool":"propose_design"}'
+        result = messages[-1]["content"]
+        assert "TOOL RESULT" in result and "constraint-aware GP-UCB" in result
+        tool = json.loads(result.split("\n", 1)[1].split("\nNow return", 1)[0])
+        return json.dumps({
+            "reasoning": "use proposal", "treatments": tool["treatments"],
+            "allocation": tool["allocation"], "randomization_seed": 1,
+            "stop": False, "current_best": next(iter(tool["treatments"].values())),
+        })
+
+    env = SlowLabEnv(TASKS["T3"], seed=19)
+    agent = LLMAgent(complete=complete, tool_mode="design", tool_delivery="callable")
+    blob = agent._ask(env, None)
+    design = __import__("slowlab.llm", fromlist=["_to_design"])._to_design(env, blob)
+    agent._record_tool_use(env, design, blob)
+    assert len(agent.tool_use_records) == 1
+    assert agent.tool_use_records[0]["invoked_by_model"] is True
+    assert agent.tool_use_records[0]["design_adopted"] is True
+    assert "TOOL RESULT" not in agent.transcript[0]["user"]
+
+
+def test_callable_tool_availability_does_not_inject_result():
+    captured = []
+    def complete(messages):
+        captured.append(messages[-1]["content"])
+        return '{"stop":true,"current_best":{"day_temp":24,"density":3}}'
+    env = SlowLabEnv(TASKS["T3"], seed=20)
+    agent = LLMAgent(complete=complete, tool_mode="both", tool_delivery="callable")
+    agent._ask(env, None)
+    assert "OPTIONAL CALLABLE TOOLS" in captured[0]
+    assert "posterior_best" not in captured[0]
+    assert agent.tool_use_records == []

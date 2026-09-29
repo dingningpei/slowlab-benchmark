@@ -1,0 +1,20 @@
+{
+  "status": "passed_bounded_soil_boundary_sensitivity",
+  "source": "GreenLight 2.0.5 Katzin 2021/Vanthoor 2011 native model",
+  "scope": "One active compartment, Cabauw lc1 at fixed CET 2017-01-01 00:00, six 300-second steps; cannot estimate annual sensitivity",
+  "model_depth": "tSoOut is external deep soil boundary, approximately 2 m per GreenLight energy_plus.py",
+  "thermal_conductance_w_m2_k": 0.8854166666666666,
+  "scenario_c": [
+    8,
+    20
+  ],
+  "endpoint_difference_8_minus_20": {
+    "air_temperature_c": 7.51754214434186e-12,
+    "relative_humidity_pct": -2.476241434123949e-11,
+    "co2_ppm": 1.0516032489249483e-11
+  },
+  "heat_kwh_m2_difference_8_minus_20": 2.6277591214096674e-14,
+  "weather_downloads": 0,
+  "soil_downloads": 0,
+  "interpretation": "No discernible room-climate effect in 30 minutes because heat crosses thick soil layers; this does not imply negligible campaign effects."
+}

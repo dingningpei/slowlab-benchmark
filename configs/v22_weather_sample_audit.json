@@ -1,0 +1,133 @@
+{
+  "status": "sample_audit",
+  "files": {
+    "meteo": {
+      "container": "89484446",
+      "sha256": "3bc861ccb9ab37eddb9dc75a33103ec9ccd2095087fafc3761537847a6e8c641",
+      "bytes": 166433,
+      "rows": 4464,
+      "time_start_h": 0.0,
+      "time_end_h": 743.8333129882812,
+      "bounds_start_h": 0.0,
+      "bounds_end_h": 744.0,
+      "time_equals_bound_start_max_error_s": 0.0,
+      "interval_width_range_s": [
+        599.853515625,
+        600.0732421875
+      ],
+      "start_step_range_s": [
+        599.853515625,
+        600.0732421875
+      ],
+      "adjacent_bound_max_gap_s": 0.0,
+      "valid_dates_zero": 0,
+      "channels": {
+        "TA002": {
+          "attrs": {
+            "units": "b'K'",
+            "_FillValue": "[-9999.]",
+            "cell_methods": "b'time: mean'"
+          },
+          "invalid_count": 12,
+          "valid_min": 265.9499816894531,
+          "valid_max": 283.25
+        },
+        "RH002": {
+          "attrs": {
+            "units": "b'%'",
+            "_FillValue": "[-9999.]",
+            "cell_methods": "b'time: mean'"
+          },
+          "invalid_count": 12,
+          "valid_min": 38.2941780090332,
+          "valid_max": 103.65653228759766
+        },
+        "TD002": {
+          "attrs": {
+            "units": "b'K'",
+            "_FillValue": "[-9999.]",
+            "cell_methods": "b'time: mean'"
+          },
+          "invalid_count": 12,
+          "valid_min": 263.8500061035156,
+          "valid_max": 280.8500061035156
+        },
+        "F010": {
+          "attrs": {
+            "units": "b'm s-1'",
+            "_FillValue": "[-9999.]",
+            "cell_methods": "b'time: mean'"
+          },
+          "invalid_count": 3,
+          "valid_min": 0.05999999865889549,
+          "valid_max": 12.65999984741211
+        },
+        "SWD": {
+          "attrs": {
+            "units": "b'W m-2'",
+            "_FillValue": "[-9999.]",
+            "cell_methods": "b'time: mean'"
+          },
+          "invalid_count": 0,
+          "valid_min": 0.0,
+          "valid_max": 410.0480041503906
+        },
+        "P0": {
+          "attrs": {
+            "units": "b'hPa'",
+            "_FillValue": "[-9999.]",
+            "cell_methods": "b'time: mean'"
+          },
+          "invalid_count": 89,
+          "valid_min": 984.0,
+          "valid_max": 1041.0
+        }
+      }
+    },
+    "radiation": {
+      "container": "43444601",
+      "sha256": "8dff1279ef9bd75e7cf9c0fce814875c13084d7ff909485a3abde5d2d635f718",
+      "bytes": 238396,
+      "rows": 4464,
+      "time_start_h": 0.0,
+      "time_end_h": 743.8333129882812,
+      "bounds_start_h": 0.0,
+      "bounds_end_h": 744.0,
+      "time_equals_bound_start_max_error_s": 0.0,
+      "interval_width_range_s": [
+        599.853515625,
+        600.0732421875
+      ],
+      "start_step_range_s": [
+        599.853515625,
+        600.0732421875
+      ],
+      "adjacent_bound_max_gap_s": 0.0,
+      "valid_dates_zero": 0,
+      "channels": {
+        "SWD": {
+          "attrs": {
+            "units": "b'W m-2'",
+            "_FillValue": "-9999.0",
+            "cell_methods": "b'time: mean'"
+          },
+          "invalid_count": 0,
+          "valid_min": 0.0,
+          "valid_max": 410.0480041503906
+        },
+        "LWD": {
+          "attrs": {
+            "units": "b'W m-2'",
+            "_FillValue": "-9999.0",
+            "cell_methods": "b'time: mean'"
+          },
+          "invalid_count": 0,
+          "valid_min": 207.24783325195312,
+          "valid_max": 348.6781921386719
+        }
+      }
+    }
+  },
+  "aligned_time_bounds": true,
+  "sample_rh_above_100_count": 222
+}

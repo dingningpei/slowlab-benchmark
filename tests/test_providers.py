@@ -133,3 +133,58 @@ def test_deepseek_chat_completions_uses_native_thinking_fields(monkeypatch):
     assert "reasoning" not in bodies[0]
     assert bodies[1]["thinking"] == {"type": "disabled"}
     assert "reasoning_effort" not in bodies[1]
+
+
+def test_openrouter_provider_pin_is_fail_closed(monkeypatch):
+    import json
+    import slowlab.providers as P
+
+    bodies = []
+    class _Resp:
+        def read(self):
+            return json.dumps({
+                "model": "qwen/qwen3.8-27b", "provider": "Phala", "usage": {},
+                "choices": [{"finish_reason": "stop", "message": {"content": "{}"}}],
+            }).encode()
+        def __enter__(self): return self
+        def __exit__(self, *args): pass
+    def fake(req, timeout=None, context=None):
+        bodies.append(json.loads(req.data.decode())); return _Resp()
+
+    monkeypatch.setattr(P.urllib.request, "urlopen", fake)
+    monkeypatch.setenv("OPENROUTER_API_KEY", "sk-test")
+    fn = P.openai_compatible("qwen/qwen3.8-27b", provider_only=["Phala"],
+                             expected_provider="Phala",
+                             expected_actual_model="qwen/qwen3.8-27b")
+    assert fn([]) == "{}"
+    assert bodies[0]["provider"] == {"only": ["Phala"], "allow_fallbacks": False}
+
+    bad = P.openai_compatible("qwen/qwen3.8-27b", expected_provider="Other")
+    with pytest.raises(RuntimeError, match="provider mismatch"):
+        bad([])
+
+
+def test_openrouter_does_not_identify_benchmark_by_default(monkeypatch):
+    import json
+    import slowlab.providers as P
+
+    headers = []
+
+    class _Resp:
+        def read(self):
+            return json.dumps({
+                "model": "test/model", "usage": {},
+                "choices": [{"finish_reason": "stop", "message": {"content": "{}"}}],
+            }).encode()
+        def __enter__(self): return self
+        def __exit__(self, *args): pass
+
+    def fake(req, timeout=None, context=None):
+        headers.append(dict(req.header_items()))
+        return _Resp()
+
+    monkeypatch.setattr(P.urllib.request, "urlopen", fake)
+    monkeypatch.setenv("OPENROUTER_API_KEY", "sk-test")
+    P.openai_compatible("test/model")([])
+    assert "Http-referer" not in headers[0]
+    assert "X-title" not in headers[0]

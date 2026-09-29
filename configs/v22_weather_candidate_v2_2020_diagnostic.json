@@ -1,0 +1,246 @@
+{
+  "scope": "weather-only development audit; no formal private sites or crop outcomes",
+  "version": "candidate-v2",
+  "comparison_year": 2020,
+  "versioned_rule": "first 365 local-standard-time days; 2020 retains Feb 29 and excludes Dec 31",
+  "fixed_seed_start": 20260928,
+  "fixed_seed_count": 12,
+  "support_passes": 11,
+  "nonreplay_passes": 8,
+  "rows": [
+    {
+      "development_seed": 20260928,
+      "physical_support": true,
+      "nonreplay": false,
+      "minimum_standardized_rmse": {
+        "24h": 0.14262045953748395,
+        "6h": 0.07503635954628025
+      }
+    },
+    {
+      "development_seed": 20260929,
+      "physical_support": true,
+      "nonreplay": true,
+      "minimum_standardized_rmse": {
+        "24h": 0.17244286523921304,
+        "6h": 0.09461156565230501
+      },
+      "daily_variance_ratio_vs_reference": [
+        1.6373832713916674,
+        1.6515331253920746,
+        0.5607253132606151,
+        0.9383440519408518,
+        1.304021082667763
+      ],
+      "ten_minute_p99_ratio_vs_reference": [
+        0.9566119620429988,
+        1.1136956574962467,
+        0.8261658558425125,
+        0.9404734530315332,
+        1.018064237288495
+      ],
+      "max_abs_monthly_standardized_mean_delta_vs_reference": 1.6157021531644302,
+      "max_abs_daily_cross_channel_correlation_delta_vs_reference": 0.2464669110773383
+    },
+    {
+      "development_seed": 20260930,
+      "physical_support": true,
+      "nonreplay": true,
+      "minimum_standardized_rmse": {
+        "24h": 0.12835179774147384,
+        "6h": 0.10413550331800119
+      },
+      "daily_variance_ratio_vs_reference": [
+        1.4400017799164164,
+        1.4116761668828512,
+        0.5570660691198507,
+        0.8825256532749751,
+        1.1178840080736345
+      ],
+      "ten_minute_p99_ratio_vs_reference": [
+        0.9121691157586236,
+        1.1035781654998775,
+        0.8450474567725149,
+        0.9244947501088886,
+        1.0148755753584267
+      ],
+      "max_abs_monthly_standardized_mean_delta_vs_reference": 1.040432460989265,
+      "max_abs_daily_cross_channel_correlation_delta_vs_reference": 0.18707090236625465
+    },
+    {
+      "development_seed": 20260931,
+      "physical_support": true,
+      "nonreplay": true,
+      "minimum_standardized_rmse": {
+        "24h": 0.16773072264365882,
+        "6h": 0.10372446006403817
+      },
+      "daily_variance_ratio_vs_reference": [
+        1.1210027906882405,
+        1.108739249337057,
+        0.5466223811464463,
+        0.8152650785227752,
+        0.9249119394987302
+      ],
+      "ten_minute_p99_ratio_vs_reference": [
+        0.8799855386766807,
+        1.0623574011959855,
+        0.7871480026409994,
+        0.9114556816455223,
+        0.9971680925991256
+      ],
+      "max_abs_monthly_standardized_mean_delta_vs_reference": 1.4756514500040818,
+      "max_abs_daily_cross_channel_correlation_delta_vs_reference": 0.282959355192575
+    },
+    {
+      "development_seed": 20260932,
+      "physical_support": true,
+      "nonreplay": true,
+      "minimum_standardized_rmse": {
+        "24h": 0.14962895645537663,
+        "6h": 0.09320494166623067
+      },
+      "daily_variance_ratio_vs_reference": [
+        1.2276378115340825,
+        1.1498548826063288,
+        0.48445055105648344,
+        0.9585522002486455,
+        0.9559912341752772
+      ],
+      "ten_minute_p99_ratio_vs_reference": [
+        0.8572314446862184,
+        0.9391233790436867,
+        0.7682643201316196,
+        0.9566684929060091,
+        0.9745982670699948
+      ],
+      "max_abs_monthly_standardized_mean_delta_vs_reference": 1.5812859704112239,
+      "max_abs_daily_cross_channel_correlation_delta_vs_reference": 0.1989289891584642
+    },
+    {
+      "development_seed": 20260933,
+      "physical_support": true,
+      "nonreplay": false,
+      "minimum_standardized_rmse": {
+        "24h": 0.12105128723587677,
+        "6h": 0.0720949043353079
+      }
+    },
+    {
+      "development_seed": 20260934,
+      "physical_support": true,
+      "nonreplay": true,
+      "minimum_standardized_rmse": {
+        "24h": 0.182863581428471,
+        "6h": 0.08921260634507146
+      },
+      "daily_variance_ratio_vs_reference": [
+        1.3226996124471457,
+        1.4260225449019412,
+        0.46537160250939813,
+        0.8596622428142172,
+        1.2030787750366825
+      ],
+      "ten_minute_p99_ratio_vs_reference": [
+        0.8917032887906724,
+        1.0621706228896135,
+        0.7560068515340378,
+        0.9236900650095516,
+        1.0321482768158308
+      ],
+      "max_abs_monthly_standardized_mean_delta_vs_reference": 1.4298207339595548,
+      "max_abs_daily_cross_channel_correlation_delta_vs_reference": 0.26273471406944615
+    },
+    {
+      "development_seed": 20260935,
+      "physical_support": true,
+      "nonreplay": false,
+      "minimum_standardized_rmse": {
+        "24h": 0.17230083659397585,
+        "6h": 0.07898584577640455
+      }
+    },
+    {
+      "development_seed": 20260936,
+      "physical_support": true,
+      "nonreplay": true,
+      "minimum_standardized_rmse": {
+        "24h": 0.15301367321137224,
+        "6h": 0.10058752689837193
+      },
+      "daily_variance_ratio_vs_reference": [
+        1.229674268352504,
+        1.2318237742970843,
+        0.5273049077140928,
+        0.8984494335389956,
+        1.0821652086010614
+      ],
+      "ten_minute_p99_ratio_vs_reference": [
+        0.8857878111822357,
+        1.0195333230345351,
+        0.7915073556347432,
+        0.9436052803167779,
+        1.0071803875324976
+      ],
+      "max_abs_monthly_standardized_mean_delta_vs_reference": 1.1566754009127886,
+      "max_abs_daily_cross_channel_correlation_delta_vs_reference": 0.28002149303991786
+    },
+    {
+      "development_seed": 20260937,
+      "physical_support": true,
+      "nonreplay": true,
+      "minimum_standardized_rmse": {
+        "24h": 0.1893657214335733,
+        "6h": 0.1013028965968881
+      },
+      "daily_variance_ratio_vs_reference": [
+        1.4210626149988914,
+        1.4176823049841736,
+        0.45067745088361605,
+        0.718110007124077,
+        1.2189965641159253
+      ],
+      "ten_minute_p99_ratio_vs_reference": [
+        0.9022435211313351,
+        1.0579194771474842,
+        0.7645596166750788,
+        0.894408308786635,
+        1.0172397330358962
+      ],
+      "max_abs_monthly_standardized_mean_delta_vs_reference": 1.630806609992474,
+      "max_abs_daily_cross_channel_correlation_delta_vs_reference": 0.278626188896623
+    },
+    {
+      "development_seed": 20260938,
+      "physical_support": true,
+      "nonreplay": true,
+      "minimum_standardized_rmse": {
+        "24h": 0.19650975041138305,
+        "6h": 0.11686873935431286
+      },
+      "daily_variance_ratio_vs_reference": [
+        1.5465910443702802,
+        1.524425998030065,
+        0.5316531348362654,
+        0.7655825825237428,
+        1.14519031919056
+      ],
+      "ten_minute_p99_ratio_vs_reference": [
+        0.9309941380439544,
+        1.064454893749189,
+        0.7923334088506983,
+        0.8999692580895313,
+        1.0027818815932625
+      ],
+      "max_abs_monthly_standardized_mean_delta_vs_reference": 0.894871221086302,
+      "max_abs_daily_cross_channel_correlation_delta_vs_reference": 0.38816752558764595
+    },
+    {
+      "development_seed": 20260939,
+      "physical_support": false,
+      "nonreplay": null,
+      "support_error": "candidate violates predeclared physical support: dewpoint_above_temperature=1.005 C"
+    }
+  ],
+  "elapsed_seconds": 32.293705390999094
+}

@@ -1,0 +1,21 @@
+{
+  "decision_id": "v22-greenlight-native-model-family-v1",
+  "date": "2026-09-27",
+  "status": "model_family_selected_facility_and_task_contract_pending",
+  "repository": "https://github.com/davkat1/GreenLight",
+  "tag": "v2.0.5",
+  "commit": "fa502eddae5f9eff7b3380c88037d9b5f3f14bf5",
+  "entrypoint": "main_katzin_2021.json",
+  "files": {
+    "main_katzin_2021.json": "760baaeddb8d696e16895d901899536243a3ec40f5c71913e06fb2403719eb60",
+    "vanthoor_2011/greenhouse_vanthoor_2011_chapter_8.json": "c0fb7a025533f15b80cb6cd60aafdc19be9fe42df6b8183cf97b83fc086138b3",
+    "vanthoor_2011/crop_vanthoor_2011_chapter_9_simplified.json": "272a589edf0bb40d1a91b34e883f8e94b9adf747a576be4620c50296c03d7033",
+    "extension_greenhouse_katzin_2021_vanthoor_2011.json": "244837fca1796620edeb3c1a67d561471dff1f63ffba9b09cf21f50abbb42551"
+  },
+  "crop": "Vanthoor 2011 tomato, simplified by Katzin; no cultivar-specific calibration claim",
+  "lighting": "native overhead LED configuration; no interlighting",
+  "root_zone": "non-limiting water and nutrients; no EC or irrigation treatment",
+  "evidence_level": "official composition and static equation audit only; no new runtime or trajectory validation",
+  "facility_gate": "Native floor area is 40000 m2; must not relabel it as a small experimental compartment or resize area alone.",
+  "harvest_gate": "Integrate mcFruitHar (mg CH2O m^-2 s^-1); cFruit is standing stock, not cumulative harvest. Fresh marketable yield and prices require an explicit conversion contract."
+}

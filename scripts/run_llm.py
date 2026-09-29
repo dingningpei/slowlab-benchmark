@@ -15,6 +15,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from slowlab import SlowLabEnv, TASKS
 from slowlab.llm import LLMAgent, WithinCycleLLMAgent, zero_shot_recommendation, scripted_completer
+from slowlab.prompt_firewall import blinded_completer
 from slowlab import llm as llm_module
 
 
@@ -31,7 +32,9 @@ def noise_scaled_task(task, multiplier: float):
 def make_completer(model: str, temperature: float = 0.7, rpm: float = 0.0,
                    max_tokens: int = 4096, reasoning_effort: str | None = None,
                    generation_seed: int | None = None,
-                   json_mode: bool = False):
+                   json_mode: bool = False, provider_only: list[str] | None = None,
+                   expected_provider: str | None = None,
+                   expected_actual_model: str | None = None):
     """fake uses the built-in stub model; anything else goes to an OpenAI-compatible endpoint (DeepSeek / OpenAI / Qwen ...)."""
     if model == "fake":
         return scripted_completer()
@@ -40,7 +43,9 @@ def make_completer(model: str, temperature: float = 0.7, rpm: float = 0.0,
                              max_tokens=max_tokens,
                              reasoning_effort=reasoning_effort,
                              generation_seed=generation_seed,
-                             json_mode=json_mode)
+                             json_mode=json_mode, provider_only=provider_only,
+                             expected_provider=expected_provider,
+                             expected_actual_model=expected_actual_model)
 
 
 def load_done(path: pathlib.Path, drop_incomplete: bool = False) -> dict:
@@ -79,6 +84,8 @@ def main():
                     help="request the provider's native JSON-object response mode")
     ap.add_argument("--prompt-variant", choices=["standard", "constraint_checklist"],
                     default="standard")
+    ap.add_argument("--blinding-policy", type=pathlib.Path,
+                    help="fail closed if outbound messages reveal simulator identity or hidden state")
     ap.add_argument("--rpm", type=float, default=0.0,
                     help="maximum calls per minute (0 = unlimited). With multiple processes, set this to total quota / number of processes")
     ap.add_argument("--quiet-effects", action="store_true",
@@ -90,6 +97,14 @@ def main():
                     help="backwards-compatible alias for --tool-mode both")
     ap.add_argument("--tool-mode", choices=["bare", "design", "inference", "both"],
                     default=None, help="Phase 3 factorial tool condition")
+    ap.add_argument("--tool-delivery", choices=["passive", "callable"], default="passive",
+                    help="legacy prompt-injected aid or explicit model-initiated tool calls")
+    ap.add_argument("--provider-only", action="append", default=None,
+                    help="OpenRouter provider slug/name to pin; repeatable, fallbacks disabled")
+    ap.add_argument("--expected-provider", default=None,
+                    help="fail closed unless response metadata reports this provider")
+    ap.add_argument("--expected-actual-model", default=None,
+                    help="fail closed unless response metadata reports this exact model")
     ap.add_argument("--within-cycle", action="store_true",
                     help="allow the model to choose within-cycle observation times")
     ap.add_argument("--recovery-days", type=float, default=None,
@@ -117,7 +132,13 @@ def main():
               f"these episodes are a separate condition)\n")
 
     complete = make_completer(a.model, a.temperature, a.rpm, a.max_tokens,
-                              a.reasoning_effort, a.generation_seed, a.json_mode)
+                              a.reasoning_effort, a.generation_seed, a.json_mode,
+                              a.provider_only, a.expected_provider,
+                              a.expected_actual_model)
+    blinding_policy_sha256 = None
+    if a.blinding_policy is not None:
+        blinding_policy_sha256 = hashlib.sha256(a.blinding_policy.read_bytes()).hexdigest()
+        complete = blinded_completer(complete, a.blinding_policy)
     out = ROOT / a.out
     out.mkdir(parents=True, exist_ok=True)
     # When running a task subset, the task names go into the filename so parallel
@@ -151,7 +172,10 @@ def main():
         inspect.getsource(LLMAgent._ask),
         inspect.getsource(WithinCycleLLMAgent._cycle_prompt),
         inspect.getsource(llm_module.tool_text), tool_mode, a.prompt_variant,
-        f"json_mode={a.json_mode}",
+        f"json_mode={a.json_mode}", f"tool_delivery={a.tool_delivery}",
+        f"provider_only={a.provider_only}", f"expected_provider={a.expected_provider}",
+        f"expected_actual_model={a.expected_actual_model}",
+        f"blinding_policy_sha256={blinding_policy_sha256}",
     ])
     prompt_protocol_hash = hashlib.sha256(protocol_material.encode()).hexdigest()
     total = len(a.tasks) * a.seeds
@@ -165,6 +189,7 @@ def main():
                 continue
             t0 = time.time()
             call_start = len(getattr(complete, "call_records", []))
+            audit_start = len(getattr(complete, "audit_reports", []))
             # Recall with no experiment: on the same site, first ask what the model
             # recommends with no data. The gap to its post-campaign score is what
             # this model actually gained from experimenting.
@@ -176,6 +201,7 @@ def main():
             agent_class = WithinCycleLLMAgent if a.within_cycle else LLMAgent
             ag = agent_class(complete=complete, name=a.model,
                              tools=a.tools, tool_mode=tool_mode,
+                             tool_delivery=a.tool_delivery,
                              prompt_variant=a.prompt_variant)
             r = env.submit_recommendation(ag.run(env), a.model,
                                           x_transfer=getattr(ag, "x_transfer", None))
@@ -197,6 +223,7 @@ def main():
                          "format_failures": ag.format_failures,
                          "infeasible": ag.infeasible_submissions,
                          "tool_mode": tool_mode,
+                         "tool_delivery": a.tool_delivery,
                          "tool_use_records": ag.tool_use_records,
                          "generation_seed": a.generation_seed,
                          "temperature": a.temperature,
@@ -206,6 +233,16 @@ def main():
                          "prompt_variant": a.prompt_variant,
                          "api_calls": getattr(complete, "call_records", [])[call_start:],
                          "prompt_protocol_hash": prompt_protocol_hash,
+                         "blinding_audit": ({
+                             "policy_sha256": blinding_policy_sha256,
+                             "provider_calls_checked": len(
+                                 getattr(complete, "audit_reports", [])[audit_start:]
+                             ),
+                             "failed_calls": sum(
+                                 report.get("status") != "pass"
+                                 for report in getattr(complete, "audit_reports", [])[audit_start:]
+                             ),
+                         } if blinding_policy_sha256 else None),
                          "episode_prompt_hash": hashlib.sha256(json.dumps(
                              [turn["user"] for turn in ag.transcript],
                              ensure_ascii=False, separators=(",", ":")).encode()).hexdigest(),

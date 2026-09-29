@@ -13,6 +13,7 @@ dependencies = ["numpy>=1.24", "scipy>=1.10"]
 
 [project.optional-dependencies]
 figures = ["matplotlib>=3.7"]
+weather = ["h5py>=3.8"]
 llm = ["certifi"]        # needed by python.org builds of Python on macOS to verify TLS certificates
 dev = ["pytest>=7.0"]
 analysis = ["matplotlib>=3.7"]

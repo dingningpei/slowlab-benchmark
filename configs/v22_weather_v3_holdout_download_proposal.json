@@ -1,0 +1,313 @@
+{
+  "id": "slowlab-v22-v3-weather-holdout-metadata-proposal",
+  "status": "metadata_only_no_download_user_approval_required",
+  "source": "existing audited KNMI lc1 v1.0 catalog metadata; no new file bytes fetched",
+  "purpose": "two temporal weather-only holdouts, older 2015 and newer 2025, reserved before v3 generator tuning; same station, not independent greenhouse sites",
+  "years": [
+    2015,
+    2025
+  ],
+  "datasets": [
+    "cesar_surface_meteo_lc1_t10",
+    "cesar_surface_radiation_lc1_t10"
+  ],
+  "file_count": 48,
+  "total_bytes": 10331080,
+  "sample_months": [
+    "201501",
+    "202501"
+  ],
+  "sample_bytes": 872945,
+  "download_rule": "Do not download any file until user explicitly approves this bounded scope; first acquire two sample months and audit schema/time-bounds/channel completeness before remaining 44 files. Abort if metadata sizes or quality contract change.",
+  "no_simulator_runs_from_2025": "2024-12 lc1 boundary month absent from catalog; 2025 reserved weather-only unless a separately justified bootstrap is developed.",
+  "files": [
+    {
+      "dataset": "cesar_surface_meteo_lc1_t10",
+      "filename": "cesar_surface_meteo_lc1_t10_v1.0_201501.nc",
+      "size": 170994,
+      "lastModified": "2019-12-11T14:50:16+00:00"
+    },
+    {
+      "dataset": "cesar_surface_meteo_lc1_t10",
+      "filename": "cesar_surface_meteo_lc1_t10_v1.0_201502.nc",
+      "size": 161895,
+      "lastModified": "2019-12-11T14:50:12+00:00"
+    },
+    {
+      "dataset": "cesar_surface_meteo_lc1_t10",
+      "filename": "cesar_surface_meteo_lc1_t10_v1.0_201503.nc",
+      "size": 171475,
+      "lastModified": "2019-12-11T14:50:20+00:00"
+    },
+    {
+      "dataset": "cesar_surface_meteo_lc1_t10",
+      "filename": "cesar_surface_meteo_lc1_t10_v1.0_201504.nc",
+      "size": 169972,
+      "lastModified": "2019-12-11T14:50:15+00:00"
+    },
+    {
+      "dataset": "cesar_surface_meteo_lc1_t10",
+      "filename": "cesar_surface_meteo_lc1_t10_v1.0_201505.nc",
+      "size": 173648,
+      "lastModified": "2019-12-11T14:50:12+00:00"
+    },
+    {
+      "dataset": "cesar_surface_meteo_lc1_t10",
+      "filename": "cesar_surface_meteo_lc1_t10_v1.0_201506.nc",
+      "size": 169896,
+      "lastModified": "2019-12-11T14:50:19+00:00"
+    },
+    {
+      "dataset": "cesar_surface_meteo_lc1_t10",
+      "filename": "cesar_surface_meteo_lc1_t10_v1.0_201507.nc",
+      "size": 174537,
+      "lastModified": "2019-12-11T14:50:21+00:00"
+    },
+    {
+      "dataset": "cesar_surface_meteo_lc1_t10",
+      "filename": "cesar_surface_meteo_lc1_t10_v1.0_201508.nc",
+      "size": 174451,
+      "lastModified": "2019-12-11T14:50:14+00:00"
+    },
+    {
+      "dataset": "cesar_surface_meteo_lc1_t10",
+      "filename": "cesar_surface_meteo_lc1_t10_v1.0_201509.nc",
+      "size": 169972,
+      "lastModified": "2019-12-11T14:50:17+00:00"
+    },
+    {
+      "dataset": "cesar_surface_meteo_lc1_t10",
+      "filename": "cesar_surface_meteo_lc1_t10_v1.0_201510.nc",
+      "size": 170785,
+      "lastModified": "2019-12-11T14:50:21+00:00"
+    },
+    {
+      "dataset": "cesar_surface_meteo_lc1_t10",
+      "filename": "cesar_surface_meteo_lc1_t10_v1.0_201511.nc",
+      "size": 169772,
+      "lastModified": "2019-12-11T14:50:14+00:00"
+    },
+    {
+      "dataset": "cesar_surface_meteo_lc1_t10",
+      "filename": "cesar_surface_meteo_lc1_t10_v1.0_201512.nc",
+      "size": 168335,
+      "lastModified": "2019-12-11T14:50:18+00:00"
+    },
+    {
+      "dataset": "cesar_surface_meteo_lc1_t10",
+      "filename": "cesar_surface_meteo_lc1_t10_v1.0_202501.nc",
+      "size": 364884,
+      "lastModified": "2026-07-03T19:15:57+00:00"
+    },
+    {
+      "dataset": "cesar_surface_meteo_lc1_t10",
+      "filename": "cesar_surface_meteo_lc1_t10_v1.0_202502.nc",
+      "size": 330320,
+      "lastModified": "2026-07-15T19:15:45+00:00"
+    },
+    {
+      "dataset": "cesar_surface_meteo_lc1_t10",
+      "filename": "cesar_surface_meteo_lc1_t10_v1.0_202503.nc",
+      "size": 364884,
+      "lastModified": "2025-09-26T19:15:58+00:00"
+    },
+    {
+      "dataset": "cesar_surface_meteo_lc1_t10",
+      "filename": "cesar_surface_meteo_lc1_t10_v1.0_202504.nc",
+      "size": 353364,
+      "lastModified": "2026-03-04T19:15:43+00:00"
+    },
+    {
+      "dataset": "cesar_surface_meteo_lc1_t10",
+      "filename": "cesar_surface_meteo_lc1_t10_v1.0_202505.nc",
+      "size": 364884,
+      "lastModified": "2026-03-23T19:15:42+00:00"
+    },
+    {
+      "dataset": "cesar_surface_meteo_lc1_t10",
+      "filename": "cesar_surface_meteo_lc1_t10_v1.0_202506.nc",
+      "size": 353364,
+      "lastModified": "2026-07-03T19:15:59+00:00"
+    },
+    {
+      "dataset": "cesar_surface_meteo_lc1_t10",
+      "filename": "cesar_surface_meteo_lc1_t10_v1.0_202507.nc",
+      "size": 364884,
+      "lastModified": "2025-09-26T19:15:59+00:00"
+    },
+    {
+      "dataset": "cesar_surface_meteo_lc1_t10",
+      "filename": "cesar_surface_meteo_lc1_t10_v1.0_202508.nc",
+      "size": 364884,
+      "lastModified": "2025-11-20T19:15:45+00:00"
+    },
+    {
+      "dataset": "cesar_surface_meteo_lc1_t10",
+      "filename": "cesar_surface_meteo_lc1_t10_v1.0_202509.nc",
+      "size": 353364,
+      "lastModified": "2025-10-10T19:15:47+00:00"
+    },
+    {
+      "dataset": "cesar_surface_meteo_lc1_t10",
+      "filename": "cesar_surface_meteo_lc1_t10_v1.0_202510.nc",
+      "size": 364884,
+      "lastModified": "2025-12-15T19:15:44+00:00"
+    },
+    {
+      "dataset": "cesar_surface_meteo_lc1_t10",
+      "filename": "cesar_surface_meteo_lc1_t10_v1.0_202511.nc",
+      "size": 353364,
+      "lastModified": "2026-07-03T19:15:59+00:00"
+    },
+    {
+      "dataset": "cesar_surface_meteo_lc1_t10",
+      "filename": "cesar_surface_meteo_lc1_t10_v1.0_202512.nc",
+      "size": 364884,
+      "lastModified": "2026-04-23T19:15:45+00:00"
+    },
+    {
+      "dataset": "cesar_surface_radiation_lc1_t10",
+      "filename": "cesar_surface_radiation_lc1_t10_v1.0_201501.nc",
+      "size": 116907,
+      "lastModified": "2022-01-04T12:52:33+00:00"
+    },
+    {
+      "dataset": "cesar_surface_radiation_lc1_t10",
+      "filename": "cesar_surface_radiation_lc1_t10_v1.0_201502.nc",
+      "size": 111368,
+      "lastModified": "2022-01-04T12:52:33+00:00"
+    },
+    {
+      "dataset": "cesar_surface_radiation_lc1_t10",
+      "filename": "cesar_surface_radiation_lc1_t10_v1.0_201503.nc",
+      "size": 117397,
+      "lastModified": "2022-01-04T12:52:33+00:00"
+    },
+    {
+      "dataset": "cesar_surface_radiation_lc1_t10",
+      "filename": "cesar_surface_radiation_lc1_t10_v1.0_201504.nc",
+      "size": 116226,
+      "lastModified": "2022-01-04T12:52:33+00:00"
+    },
+    {
+      "dataset": "cesar_surface_radiation_lc1_t10",
+      "filename": "cesar_surface_radiation_lc1_t10_v1.0_201505.nc",
+      "size": 118725,
+      "lastModified": "2022-01-04T12:52:33+00:00"
+    },
+    {
+      "dataset": "cesar_surface_radiation_lc1_t10",
+      "filename": "cesar_surface_radiation_lc1_t10_v1.0_201506.nc",
+      "size": 116223,
+      "lastModified": "2022-01-04T12:52:33+00:00"
+    },
+    {
+      "dataset": "cesar_surface_radiation_lc1_t10",
+      "filename": "cesar_surface_radiation_lc1_t10_v1.0_201507.nc",
+      "size": 118677,
+      "lastModified": "2022-01-04T12:52:33+00:00"
+    },
+    {
+      "dataset": "cesar_surface_radiation_lc1_t10",
+      "filename": "cesar_surface_radiation_lc1_t10_v1.0_201508.nc",
+      "size": 118080,
+      "lastModified": "2022-01-04T12:52:33+00:00"
+    },
+    {
+      "dataset": "cesar_surface_radiation_lc1_t10",
+      "filename": "cesar_surface_radiation_lc1_t10_v1.0_201509.nc",
+      "size": 116435,
+      "lastModified": "2022-01-04T12:52:33+00:00"
+    },
+    {
+      "dataset": "cesar_surface_radiation_lc1_t10",
+      "filename": "cesar_surface_radiation_lc1_t10_v1.0_201510.nc",
+      "size": 115832,
+      "lastModified": "2022-01-04T12:52:33+00:00"
+    },
+    {
+      "dataset": "cesar_surface_radiation_lc1_t10",
+      "filename": "cesar_surface_radiation_lc1_t10_v1.0_201511.nc",
+      "size": 115059,
+      "lastModified": "2022-01-04T12:52:33+00:00"
+    },
+    {
+      "dataset": "cesar_surface_radiation_lc1_t10",
+      "filename": "cesar_surface_radiation_lc1_t10_v1.0_201512.nc",
+      "size": 112923,
+      "lastModified": "2022-01-04T12:52:33+00:00"
+    },
+    {
+      "dataset": "cesar_surface_radiation_lc1_t10",
+      "filename": "cesar_surface_radiation_lc1_t10_v1.0_202501.nc",
+      "size": 220160,
+      "lastModified": "2026-07-03T19:16:08+00:00"
+    },
+    {
+      "dataset": "cesar_surface_radiation_lc1_t10",
+      "filename": "cesar_surface_radiation_lc1_t10_v1.0_202502.nc",
+      "size": 199420,
+      "lastModified": "2026-07-15T19:15:51+00:00"
+    },
+    {
+      "dataset": "cesar_surface_radiation_lc1_t10",
+      "filename": "cesar_surface_radiation_lc1_t10_v1.0_202503.nc",
+      "size": 220160,
+      "lastModified": "2025-09-26T19:16:08+00:00"
+    },
+    {
+      "dataset": "cesar_surface_radiation_lc1_t10",
+      "filename": "cesar_surface_radiation_lc1_t10_v1.0_202504.nc",
+      "size": 213248,
+      "lastModified": "2026-03-04T19:15:49+00:00"
+    },
+    {
+      "dataset": "cesar_surface_radiation_lc1_t10",
+      "filename": "cesar_surface_radiation_lc1_t10_v1.0_202505.nc",
+      "size": 220160,
+      "lastModified": "2026-03-23T19:15:48+00:00"
+    },
+    {
+      "dataset": "cesar_surface_radiation_lc1_t10",
+      "filename": "cesar_surface_radiation_lc1_t10_v1.0_202506.nc",
+      "size": 213248,
+      "lastModified": "2026-07-03T19:16:09+00:00"
+    },
+    {
+      "dataset": "cesar_surface_radiation_lc1_t10",
+      "filename": "cesar_surface_radiation_lc1_t10_v1.0_202507.nc",
+      "size": 220160,
+      "lastModified": "2025-09-26T19:16:09+00:00"
+    },
+    {
+      "dataset": "cesar_surface_radiation_lc1_t10",
+      "filename": "cesar_surface_radiation_lc1_t10_v1.0_202508.nc",
+      "size": 220160,
+      "lastModified": "2025-11-20T19:15:53+00:00"
+    },
+    {
+      "dataset": "cesar_surface_radiation_lc1_t10",
+      "filename": "cesar_surface_radiation_lc1_t10_v1.0_202509.nc",
+      "size": 213248,
+      "lastModified": "2025-10-10T19:15:57+00:00"
+    },
+    {
+      "dataset": "cesar_surface_radiation_lc1_t10",
+      "filename": "cesar_surface_radiation_lc1_t10_v1.0_202510.nc",
+      "size": 220160,
+      "lastModified": "2025-12-15T19:15:50+00:00"
+    },
+    {
+      "dataset": "cesar_surface_radiation_lc1_t10",
+      "filename": "cesar_surface_radiation_lc1_t10_v1.0_202511.nc",
+      "size": 213248,
+      "lastModified": "2026-07-03T19:16:10+00:00"
+    },
+    {
+      "dataset": "cesar_surface_radiation_lc1_t10",
+      "filename": "cesar_surface_radiation_lc1_t10_v1.0_202512.nc",
+      "size": 220160,
+      "lastModified": "2026-04-23T19:15:52+00:00"
+    }
+  ]
+}

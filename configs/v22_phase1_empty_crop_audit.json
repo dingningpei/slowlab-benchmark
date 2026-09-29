@@ -1,0 +1,10 @@
+{
+  "scope": "pinned-equation algebra audit, no solver run",
+  "status": "requires_explicit_crop_absent_mode",
+  "empty_cLeaf": 0.0,
+  "lai": 0.0,
+  "capCan": 0.0,
+  "inverse_capacity_undefined": true,
+  "temperature_rhs": "(1/capCan) * (rParSunCan + rNirSunCan + rPipeCan - hCanAir - lCanAir - rCanCovIn - rCanFlr - rCanSky - rCanThScr - rCanBlScr + rParLampCan + rNirLampCan + rFirLampCan + rGroPipeCan + rParIntLampCan + rNirIntLampCan + rFirIntLampCan)",
+  "claim_limit": "Naive clearing is singular; this does not prove all crop-absent formulations fail."
+}

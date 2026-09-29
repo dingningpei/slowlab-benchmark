@@ -1,0 +1,57 @@
+{
+  "protocol_id": "slowlab-v2.2-simulation-blinding-0.1",
+  "status": "required_before_any_v2.2_model_pilot",
+  "threat_model": [
+    "The model may have memorized public greenhouse datasets, papers or an older SlowLab release.",
+    "A prompt, tool result or provider metadata could reveal the benchmark, simulator family, hidden site or evaluation target.",
+    "An exact public trajectory replay could reward memorization rather than experimental reasoning.",
+    "A deterministic public seed or published confirmatory site list could permit reconstruction of hidden outcomes."
+  ],
+  "allowed_model_information": [
+    "factor names, units and feasible bounds required to act",
+    "facility topology, shared-control rules, budget and current time",
+    "the model's own earlier requests and mechanical rejection reasons",
+    "observations whose timestamps are no later than the current simulator time",
+    "callable-aid output computed only from the same visible history and public constraints"
+  ],
+  "forbidden_model_information": [
+    "benchmark, repository, dataset, paper, team or DOI identity",
+    "simulator family, equations, source paths, code commit or implementation notes",
+    "site, environment or generation seeds",
+    "site-generating distribution, latent parameters or private state",
+    "oracle values, true optimum, future records or counterfactual outcomes",
+    "provider headers identifying SlowLab or its repository"
+  ],
+  "forbidden_patterns": [
+    "\\bslowlab\\b",
+    "\\btomgro\\b",
+    "\\bgreenlight\\b",
+    "\\bagc(?:[ _-]?(?:2019|2023|2024))?\\b",
+    "\\bdoi\\s*:",
+    "10\\.\\d{4,9}/[-._;()/:a-z0-9]+",
+    "\\bsite[ _-]?seed\\b",
+    "\\benvironment[ _-]?seed\\b",
+    "\\bgeneration[ _-]?seed\\b",
+    "\\boracle\\b",
+    "\\bground[ _-]?truth\\b",
+    "\\blatent[ _-]?(?:site|parameter|state|variable)s?\\b",
+    "\\b(?:simulator|simulation|synthetic)[ _-]?(?:data|site|world|trajectory|outcome)?s?\\b",
+    "/Users/",
+    "(?:^|[ /])configs/",
+    "(?:^|[ /])results/",
+    "\\.git(?:hub)?"
+  ],
+  "allowed_seed_term": "randomization_seed is part of the model's proposed physical design and is not an environment seed.",
+  "site_generation_rules": {
+    "public_data_use": "Fit or freeze aggregate ranges, correlations, cadence and missingness only; do not replay a public outcome trajectory in a confirmatory episode.",
+    "confirmatory_sites": "Generate new private sites after the generator is frozen.",
+    "weather": "Use newly generated weather paths; exact public windows are forbidden in the confirmatory matrix.",
+    "commit_reveal": "Commit the generator/config hash and a salted hash of the private seed list before execution; reveal seeds only after the formal matrix is locked.",
+    "similarity_audit": "Before model calls, compare every generated path with all source paths and reject exact or preregistered near-duplicate replays using outcome-blind thresholds."
+  },
+  "interpretation": {
+    "allowed_prior_knowledge": "General agronomy and greenhouse knowledge is part of model capability and is measured by a zero-data baseline.",
+    "forbidden_advantage": "Knowledge of the exact hidden site, generator or future trajectory is leakage.",
+    "guarantee": "Mechanical information isolation can be tested; a model's training corpus cannot be observed directly, so the study must not claim proof of absent pretraining exposure."
+  }
+}

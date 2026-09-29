@@ -1,0 +1,407 @@
+{
+  "scope": "2017-2020 same-station weather-only v3 development pilot; no formal sites, holdout acquisition or crop outcomes",
+  "candidate_version": "block-weather-v3-development",
+  "candidates_per_fold": 12,
+  "vector_score": "monthly means/channel train SD/sqrt(60); log daily variance/sqrt(5); 10-minute p99/channel train SD/sqrt(5); 10 daily cross-channel correlations/sqrt(10)",
+  "leap_rule": "remove Feb 29 only for calendar-aligned development fit and scoring; original 2020 diagnostic retained",
+  "folds": [
+    {
+      "heldout_year": 2017,
+      "fit_years": [
+        2018,
+        2019,
+        2020
+      ],
+      "rows": [
+        {
+          "development_seed": 20462700,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.0570807997642155
+        },
+        {
+          "development_seed": 20462701,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_6h_distance": 0.0812172888801478,
+          "wind_daily_variance_ratio_vs_heldout": 0.9688533293133657
+        },
+        {
+          "development_seed": 20462702,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_6h_distance": 0.08774167723887662,
+          "wind_daily_variance_ratio_vs_heldout": 1.1675248579881234
+        },
+        {
+          "development_seed": 20462703,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_6h_distance": 0.08320066959555954,
+          "wind_daily_variance_ratio_vs_heldout": 1.2104611813964485
+        },
+        {
+          "development_seed": 20462704,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_6h_distance": 0.09660551793176299,
+          "wind_daily_variance_ratio_vs_heldout": 1.0435999816698076
+        },
+        {
+          "development_seed": 20462705,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_6h_distance": 0.10415460536316411,
+          "wind_daily_variance_ratio_vs_heldout": 1.3824327673308494
+        },
+        {
+          "development_seed": 20462706,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.045856337345303734
+        },
+        {
+          "development_seed": 20462707,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.06789752117638585
+        },
+        {
+          "development_seed": 20462708,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.07083540680002938
+        },
+        {
+          "development_seed": 20462709,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_6h_distance": 0.09913076982318095,
+          "wind_daily_variance_ratio_vs_heldout": 1.2287225706495406
+        },
+        {
+          "development_seed": 20462710,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_6h_distance": 0.09235559421692556,
+          "wind_daily_variance_ratio_vs_heldout": 1.0273349795302391
+        },
+        {
+          "development_seed": 20462711,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_6h_distance": 0.08651612808713482,
+          "wind_daily_variance_ratio_vs_heldout": 1.1385723446216813
+        }
+      ],
+      "physical_support_count": 12,
+      "nonreplay_count": 8,
+      "monthly_5_95_coverage": 0.6333333333333333,
+      "weather_energy_score": 0.23609951769592563,
+      "whole_year_resample_baseline_energy_score": 0.30150340546102056,
+      "generated_wind_daily_variance_ratio_range": [
+        0.9688533293133657,
+        1.3824327673308494
+      ]
+    },
+    {
+      "heldout_year": 2018,
+      "fit_years": [
+        2017,
+        2019,
+        2020
+      ],
+      "rows": [
+        {
+          "development_seed": 20462800,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_6h_distance": 0.08099247494351547,
+          "wind_daily_variance_ratio_vs_heldout": 1.485984115212925
+        },
+        {
+          "development_seed": 20462801,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_6h_distance": 0.09945887590024614,
+          "wind_daily_variance_ratio_vs_heldout": 1.271479996384688
+        },
+        {
+          "development_seed": 20462802,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_6h_distance": 0.08743706720312278,
+          "wind_daily_variance_ratio_vs_heldout": 1.5863524342089348
+        },
+        {
+          "development_seed": 20462803,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.04762928493736491
+        },
+        {
+          "development_seed": 20462804,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_6h_distance": 0.0961011178455452,
+          "wind_daily_variance_ratio_vs_heldout": 1.3895695891881423
+        },
+        {
+          "development_seed": 20462805,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.07287335085318483
+        },
+        {
+          "development_seed": 20462806,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_6h_distance": 0.09179112741379156,
+          "wind_daily_variance_ratio_vs_heldout": 1.5370437633920018
+        },
+        {
+          "development_seed": 20462807,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_6h_distance": 0.0807461872123897,
+          "wind_daily_variance_ratio_vs_heldout": 1.6282337379080218
+        },
+        {
+          "development_seed": 20462808,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.07851854743572878
+        },
+        {
+          "development_seed": 20462809,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_6h_distance": 0.08492190005415837,
+          "wind_daily_variance_ratio_vs_heldout": 1.4436704134153528
+        },
+        {
+          "development_seed": 20462810,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.06552421785662657
+        },
+        {
+          "development_seed": 20462811,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_6h_distance": 0.09464360881985473,
+          "wind_daily_variance_ratio_vs_heldout": 1.1808273973759515
+        }
+      ],
+      "physical_support_count": 12,
+      "nonreplay_count": 8,
+      "monthly_5_95_coverage": 0.5666666666666667,
+      "weather_energy_score": 0.4132057213395723,
+      "whole_year_resample_baseline_energy_score": 0.4157495437457037,
+      "generated_wind_daily_variance_ratio_range": [
+        1.1808273973759515,
+        1.6282337379080218
+      ]
+    },
+    {
+      "heldout_year": 2019,
+      "fit_years": [
+        2017,
+        2018,
+        2020
+      ],
+      "rows": [
+        {
+          "development_seed": 20462900,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.07301069230693581
+        },
+        {
+          "development_seed": 20462901,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.060276268192924885
+        },
+        {
+          "development_seed": 20462902,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_6h_distance": 0.0882288438002521,
+          "wind_daily_variance_ratio_vs_heldout": 1.0127596157687027
+        },
+        {
+          "development_seed": 20462903,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_6h_distance": 0.09576409224374322,
+          "wind_daily_variance_ratio_vs_heldout": 0.9241836381667361
+        },
+        {
+          "development_seed": 20462904,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.06661136789569694
+        },
+        {
+          "development_seed": 20462905,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_6h_distance": 0.08582583935567774,
+          "wind_daily_variance_ratio_vs_heldout": 1.0537073162751547
+        },
+        {
+          "development_seed": 20462906,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.07479962234613381
+        },
+        {
+          "development_seed": 20462907,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_6h_distance": 0.09082701617418959,
+          "wind_daily_variance_ratio_vs_heldout": 0.8316712145252144
+        },
+        {
+          "development_seed": 20462908,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.06930036347396601
+        },
+        {
+          "development_seed": 20462909,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.0671160936654086
+        },
+        {
+          "development_seed": 20462910,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_6h_distance": 0.09491942698911651,
+          "wind_daily_variance_ratio_vs_heldout": 0.8618110023784397
+        },
+        {
+          "development_seed": 20462911,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_6h_distance": 0.09546910675310359,
+          "wind_daily_variance_ratio_vs_heldout": 1.0203962446686945
+        }
+      ],
+      "physical_support_count": 12,
+      "nonreplay_count": 6,
+      "monthly_5_95_coverage": 0.6833333333333333,
+      "weather_energy_score": 0.21277186619226765,
+      "whole_year_resample_baseline_energy_score": 0.21309992671910413,
+      "generated_wind_daily_variance_ratio_range": [
+        0.8316712145252144,
+        1.0537073162751547
+      ]
+    },
+    {
+      "heldout_year": 2020,
+      "fit_years": [
+        2017,
+        2018,
+        2019
+      ],
+      "rows": [
+        {
+          "development_seed": 20463000,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_6h_distance": 0.10333562932024543,
+          "wind_daily_variance_ratio_vs_heldout": 0.5841257520924923
+        },
+        {
+          "development_seed": 20463001,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.04535483331246069
+        },
+        {
+          "development_seed": 20463002,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.07841722387270832
+        },
+        {
+          "development_seed": 20463003,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_6h_distance": 0.10543340214289035,
+          "wind_daily_variance_ratio_vs_heldout": 0.6911395037589448
+        },
+        {
+          "development_seed": 20463004,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_6h_distance": 0.08067996773435884,
+          "wind_daily_variance_ratio_vs_heldout": 0.6916325509572224
+        },
+        {
+          "development_seed": 20463005,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_6h_distance": 0.09489462302651108,
+          "wind_daily_variance_ratio_vs_heldout": 0.6254948949714078
+        },
+        {
+          "development_seed": 20463006,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_6h_distance": 0.09471743733372835,
+          "wind_daily_variance_ratio_vs_heldout": 0.5826521037885635
+        },
+        {
+          "development_seed": 20463007,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.07187457134201286
+        },
+        {
+          "development_seed": 20463008,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_6h_distance": 0.08530544926241594,
+          "wind_daily_variance_ratio_vs_heldout": 0.5682448921423567
+        },
+        {
+          "development_seed": 20463009,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_6h_distance": 0.09569887158067739,
+          "wind_daily_variance_ratio_vs_heldout": 0.8361276716783834
+        },
+        {
+          "development_seed": 20463010,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_6h_distance": 0.10981022798831101,
+          "wind_daily_variance_ratio_vs_heldout": 0.6840523911591234
+        },
+        {
+          "development_seed": 20463011,
+          "physical_support": true,
+          "nonreplay": true,
+          "minimum_6h_distance": 0.09200387569040223,
+          "wind_daily_variance_ratio_vs_heldout": 0.5017973388308108
+        }
+      ],
+      "physical_support_count": 12,
+      "nonreplay_count": 9,
+      "monthly_5_95_coverage": 0.5,
+      "weather_energy_score": 0.5114933544212089,
+      "whole_year_resample_baseline_energy_score": 0.408090427510423,
+      "generated_wind_daily_variance_ratio_range": [
+        0.5017973388308108,
+        0.8361276716783834
+      ]
+    }
+  ],
+  "elapsed_seconds": 58.282563225133345,
+  "generator_code_sha256": "b9abf15b380e21dde18ce1cbeae3e14ef85d619b787070e9059a60f8ec868638",
+  "status": "development_candidate_not_frozen"
+}

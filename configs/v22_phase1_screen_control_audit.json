@@ -1,0 +1,31 @@
+{
+  "status": "contract_gap",
+  "scope": "native screen actuator within one fixed-command 300s segment",
+  "contract_rule": "Controller uses last available sensor values only, held until next tick. No actual full-day dayRadSum or future measured endpoint. Native lampNoCons/smoothLamp/day classification must be overridden consistently.",
+  "registered_commands": {
+    "uBoil": "cmdHeat",
+    "uRoof": "cmdVent",
+    "uExtCo2": "cmdCo2",
+    "uLamp": "cmdLamp"
+  },
+  "screen_is_registered_held_input": false,
+  "uThScr_min": 9.999999999999971e-23,
+  "uThScr_max": 9.999999999999971e-23,
+  "uThScr_range": 0.0,
+  "equations": {
+    "uThScr": "min(thScrCold, min(thScrHeat, thScrRh))",
+    "thScrHeat": "proportionalControl(tAir, heatSetPoint + thScrDeadZone, - thScrPband, 1, 0)",
+    "thScrRh": "max(proportionalControl(rhIn, rhMax + thScrMaxRh, thScrRhPband, 1, 0), 1 - ventCold)",
+    "thScrCold": "proportionalControl(tOut, thScrSp, thScrPband, 0, 1)"
+  },
+  "source_sha256": "244837fca1796620edeb3c1a67d561471dff1f63ffba9b09cf21f50abbb42551",
+  "meaning": "current internal climate feedback bypasses declared sampled sensor/controller interface; not evidence of future-weather leakage",
+  "next": "Expose held screen command from shared controller, use available T/RH/outdoor measurements, specify common active/standby screen settings, then rerun equivalence and lifecycle checks.",
+  "note": "At this fixed-weather operating point the cold-screen minimum masks downstream variation; the contract gap is established by the verified expression dependencies and absent command channel, not by claimed nonzero actuator motion.",
+  "internal_feedback_ranges": {
+    "thScrHeat": 0.0,
+    "thScrRh": 0.00015048813607365652,
+    "rhIn": 13.713063006564141,
+    "tAir": 0.6296834762961758
+  }
+}

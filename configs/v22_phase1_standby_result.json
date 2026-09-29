@@ -1,0 +1,62 @@
+{
+  "status": "passed",
+  "contract_id": "slowlab-v22-task-v1",
+  "scope": "one compartment, fixed-weather fixture, two-day cleanup + idle + replant; not weather validation",
+  "threads": 1,
+  "steps": 579,
+  "temperature_range_c": [
+    14.173637936658414,
+    17.129683476296176
+  ],
+  "empty_flux_max_abs": 4.9960036108132044e-15,
+  "heat_quadrature_error": 0.0,
+  "facility_continuity": true,
+  "replant_after_full_cleanup": true,
+  "elapsed_seconds": 41.329603584017605,
+  "ledger": {
+    "per_m2": {
+      "heat_kwh_m2": 0.008,
+      "light_kwh_m2": 0.01111111111111111,
+      "co2_kg_m2": 0.000375,
+      "harvest_kg_m2": 6.665449314913128e-118,
+      "transpiration_kg_m2": 0.00130091520224107,
+      "days": 2.010416666666692
+    },
+    "by_phase_per_m2": {
+      "active": {
+        "heat_kwh_m2": 0.008,
+        "light_kwh_m2": 0.01111111111111111,
+        "co2_kg_m2": 0.000375,
+        "harvest_kg_m2": 6.665449314913128e-118,
+        "transpiration_kg_m2": 0.00130091520224107,
+        "days": 0.006944444444444444
+      },
+      "cleanup": {
+        "heat_kwh_m2": 7.187869019796031e-19,
+        "light_kwh_m2": 0.0,
+        "co2_kg_m2": 0.0,
+        "harvest_kg_m2": 0.0,
+        "transpiration_kg_m2": 0.0,
+        "days": 2.0000000000000253
+      },
+      "idle": {
+        "heat_kwh_m2": 7.089008899675752e-22,
+        "light_kwh_m2": 0.0,
+        "co2_kg_m2": 0.0,
+        "harvest_kg_m2": 0.0,
+        "transpiration_kg_m2": 0.0,
+        "days": 0.003472222222222222
+      }
+    },
+    "event_cost_eur_m2": 4.5,
+    "synthetic_margin_eur": -432.21226666666666,
+    "occupied_m2_days": 192.66666666666913,
+    "scope": "single-compartment accrued ledger; not final campaign settlement"
+  },
+  "hashes": {
+    "configs/v22_task_contract_v1.json": "d1c4d9a331e7806ba920a23cc3b40d2803723c426a5b7d7babe37c9211512b71",
+    "slowlab/v22_resources.py": "30cbe2931b3f8953a7bc7e596e40f426997b6604bc8a1814b58f095c2572e786",
+    "slowlab/v22_greenlight_reuse.py": "c3dd46ce7864e58df9a47bea4ce6722012ff1e8ced686546efc546cd80f115a5",
+    "scripts/check_v22_standby.py": "6eb70d417339fc854b48ee71f344a37317d4addc2a9aae2061fcfb4aa2eccae6"
+  }
+}

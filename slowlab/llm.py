@@ -265,6 +265,7 @@ class LLMAgent:
     infeasible_submissions: int = 0
     tools: bool = False          # backwards-compatible alias for tool_mode="both"
     tool_mode: str | None = None # bare / design / inference / both
+    tool_delivery: str = "passive" # passive (legacy aid) / callable
     tool_use_records: list = field(default_factory=list)
     max_observation_times: int = 4
     prompt_variant: str = "standard"
@@ -283,11 +284,18 @@ class LLMAgent:
         raise ValueError(f"unknown prompt variant {self.prompt_variant!r}")
 
     def _ask(self, env, feedback: str | None) -> dict:
-        user = "\n\n".join([
+        pieces = [
             _facility_text(env),
             _observations_text(env),
-        ] + ([tool_text(env, self.effective_tool_mode())]
-             if self.effective_tool_mode() != "bare" else []) + [
+        ]
+        if self.effective_tool_mode() != "bare":
+            if self.tool_delivery == "passive":
+                pieces.append(tool_text(env, self.effective_tool_mode()))
+            elif self.tool_delivery == "callable":
+                pieces.append(callable_tool_instructions(self.effective_tool_mode()))
+            else:
+                raise ValueError(f"unknown tool delivery {self.tool_delivery!r}")
+        user = "\n\n".join(pieces + [
             f"ROUNDS REMAINING: {env.rounds_left}",
             f"UNITS YOU MAY DRAW FROM (choose at most {env.task.units_per_round}): "
             + ", ".join(env.available_units()),
@@ -296,13 +304,80 @@ class LLMAgent:
              if feedback else []))
         msgs = [{"role": "system", "content": self._system_prompt()},
                 {"role": "user", "content": user}]
-        reply = self.complete(msgs)
-        self.transcript.append({"user": user, "assistant": reply})
-        return _extract_json(reply)
+        return self._complete_action(env, msgs, phase="design")
+
+    def _available_tools(self, phase: str) -> set[str]:
+        mode = self.effective_tool_mode()
+        tools = set()
+        if phase == "design" and mode in {"design", "both"}:
+            tools.add("propose_design")
+        if mode in {"inference", "both"}:
+            tools.add("analyze_history")
+        return tools
+
+    def _complete_action(self, env, msgs: list[dict], *, phase: str) -> dict:
+        """Run the model/tool loop. A tool result is returned only after the model
+        explicitly emits a call_tool action; availability alone never injects aid."""
+        called = set()
+        first_user = msgs[-1]["content"]
+        turns = []
+        for _ in range(3):
+            reply = self.complete(msgs)
+            turns.append({"assistant": reply})
+            blob = _extract_json(reply)
+            if blob.get("action") != "call_tool":
+                self.transcript.append({"user": first_user, "assistant": reply,
+                                        "tool_turns": turns[:-1]})
+                return blob
+            name = str(blob.get("tool", ""))
+            available = self._available_tools(phase)
+            if name not in available:
+                result = {"error": "tool_unavailable", "available_tools": sorted(available)}
+            elif name in called:
+                result = {"error": "tool_already_called", "available_tools": sorted(available)}
+            else:
+                result = callable_tool_result(env, name)
+                called.add(name)
+                self.tool_use_records.append({
+                    "round": int(env.round), "phase": phase, "mode": self.effective_tool_mode(),
+                    "tool": name, "delivery": "application_layer_callable",
+                    "invoked_by_model": True, "result": result,
+                })
+            tool_message = "TOOL RESULT:\n" + json.dumps(result, ensure_ascii=False)
+            turns[-1]["tool_result"] = result
+            msgs = msgs + [{"role": "assistant", "content": reply},
+                           {"role": "user", "content": tool_message +
+                            "\nNow return either another permitted call_tool action or the requested final JSON."}]
+        raise ValueError("tool-call limit exceeded")
 
     def _record_tool_use(self, env, design, blob) -> None:
         mode = self.effective_tool_mode()
         if mode == "bare":
+            return
+        if self.tool_delivery == "callable":
+            names = [factor.name for factor in env.task.factors]
+            proposed = np.asarray([[values[name] for name in names]
+                                   for values in design.treatments.values()], float)
+            for rec in reversed(self.tool_use_records):
+                if rec.get("round") != int(env.round) or rec.get("phase") != "design":
+                    continue
+                result = rec.get("result", {})
+                if rec.get("tool") == "propose_design" and result.get("treatments"):
+                    suggested = np.asarray([
+                        [(float(v[name]) - env.task.factors[j].low) /
+                         (env.task.factors[j].high - env.task.factors[j].low)
+                         for j, name in enumerate(names)]
+                        for v in result["treatments"].values()], float)
+                    distances = np.sqrt(((proposed[:, None] - suggested[None, :]) ** 2).sum(-1))
+                    dist = float(0.5 * (distances.min(1).mean() + distances.min(0).mean()))
+                    rec["design_distance"] = dist
+                    rec["design_adopted"] = dist <= 0.10
+                if rec.get("tool") == "analyze_history" and result.get("posterior_best") and "current_best" in blob:
+                    current = _to_point(env, blob["current_best"])
+                    suggested = _to_point(env, result["posterior_best"])
+                    dist = float(np.linalg.norm(current - suggested) / np.sqrt(env.task.d))
+                    rec["recommendation_distance"] = dist
+                    rec["inference_adopted"] = dist <= 0.05
             return
         artifacts = tool_artifacts(env)
         names = [factor.name for factor in env.task.factors]
@@ -396,12 +471,12 @@ class LLMAgent:
         # once more, the last round's data would be paid for and never used.
         for _ in range(self.max_retries):
             try:
+                user = _final_prompt(env)
+                if self.tool_delivery == "callable" and self.effective_tool_mode() in {"inference", "both"}:
+                    user += "\n\n" + callable_tool_instructions("inference")
                 msgs = [{"role": "system", "content": self._system_prompt()},
-                        {"role": "user", "content": _final_prompt(env)}]
-                reply = self.complete(msgs)
-                self.transcript.append({"user": msgs[-1]["content"],
-                                        "assistant": reply})
-                blob = _extract_json(reply)
+                        {"role": "user", "content": user}]
+                blob = self._complete_action(env, msgs, phase="final")
                 best = _to_point(env, blob["recommendation"])
                 env.record_recommendation(best, phase="final")
                 break
@@ -417,12 +492,12 @@ class LLMAgent:
         if getattr(env.task, "transfer_energy_shock", None) is not None:
             for _ in range(self.max_retries):
                 try:
+                    user = _transfer_prompt(env)
+                    if self.tool_delivery == "callable" and self.effective_tool_mode() in {"inference", "both"}:
+                        user += "\n\n" + callable_tool_instructions("inference")
                     msgs = [{"role": "system", "content": self._system_prompt()},
-                            {"role": "user", "content": _transfer_prompt(env)}]
-                    reply = self.complete(msgs)
-                    self.transcript.append({"user": msgs[-1]["content"],
-                                            "assistant": reply})
-                    blob = _extract_json(reply)
+                            {"role": "user", "content": user}]
+                    blob = self._complete_action(env, msgs, phase="transfer")
                     self.x_transfer = _to_point(env, blob["recommendation"])
                     break
                 except Exception:
@@ -600,6 +675,83 @@ CONSTRAINT_CHECKLIST = """Before submitting a design, explicitly verify internal
 every unit is allocated at most once, the allocation stays within the round cap,
 all values are within bounds, and every chamber-level factor is constant inside
 each chamber. Return the requested JSON only; do not print the checklist."""
+
+
+def callable_tool_instructions(mode: str) -> str:
+    names = []
+    if mode in {"design", "both"}:
+        names.append("propose_design")
+    if mode in {"inference", "both"}:
+        names.append("analyze_history")
+    return """OPTIONAL CALLABLE TOOLS
+No tool output is shown automatically. You may explicitly call at most once each
+by replying with exactly:
+{"action":"call_tool","tool":"TOOL_NAME"}
+Available tool names: %s.
+The tool returns advice only. You remain responsible for the submitted design or
+final recommendation. If you do not want a tool, return the requested answer JSON.""" % ", ".join(names)
+
+
+def _callable_gp_design(env) -> Design:
+    """One deterministic, constraint-aware GP-UCB batch proposal without submission."""
+    from .agents import GP, _cands, respect_hierarchy, chamber_safe_allocation
+    t = env.task
+    rng = np.random.default_rng(int(env.seed) * 1009 + int(env.round) * 917 + 23)
+    n_pts = t.units_per_round
+    X, y = env.as_arrays()
+    if len(y) < 2:
+        P = rng.random((n_pts, t.d))
+    else:
+        g = GP(noise=max(0.15, t.plant_cv)).fit(X, y)
+        C = _cands(t.d, 2500, rng)
+        mu, var = g.predict(C)
+        order = np.argsort(-(mu + 1.8 * np.sqrt(var)))
+        chosen = []
+        for i in order:
+            if all(np.linalg.norm(C[i] - p) > 0.05 for p in chosen):
+                chosen.append(C[i])
+            if len(chosen) == n_pts:
+                break
+        P = np.asarray(chosen) if chosen else rng.random((n_pts, t.d))
+    P = respect_hierarchy(P, t, env.facility, rng)
+    tids = [f"gp{i}" for i in range(len(P))]
+    treatments = {tid: {f.name: float(P[i][j]) for j, f in enumerate(t.factors)}
+                  for i, tid in enumerate(tids)}
+    allocation = chamber_safe_allocation(
+        tids, 1, env.facility, rng, treatments, t, avail=env.available_units())
+    return Design(treatments=treatments, allocation=allocation,
+                  randomization_seed=int(rng.integers(1_000_000)),
+                  question="callable constraint-aware GP-UCB proposal")
+
+
+def callable_tool_result(env, name: str) -> dict:
+    t = env.task
+    if name == "propose_design":
+        design = _callable_gp_design(env)
+        treatments = {
+            tid: {f.name: round(float(f.denorm(values[f.name])), 8) for f in t.factors}
+            for tid, values in design.treatments.items()
+        }
+        return {"tool": name, "method": "constraint-aware GP-UCB batch",
+                "treatments": treatments, "allocation": design.allocation,
+                "randomization_seed": design.randomization_seed,
+                "note": "advice only; no design has been submitted"}
+    if name == "analyze_history":
+        from .agents import GP, _cands, _gp_posterior_max
+        X, y = env.as_arrays()
+        if not len(y):
+            return {"tool": name, "status": "unavailable_before_observations",
+                    "note": "no recommendation has been submitted"}
+        x = _gp_posterior_max(env)
+        g = GP(noise=max(0.15, t.plant_cv)).fit(X, y)
+        mu, var = g.predict(np.asarray([x]))
+        point = {f.name: round(float(f.denorm(x[j])), 8) for j, f in enumerate(t.factors)}
+        return {"tool": name, "method": "GP posterior-mean reader",
+                "posterior_best": point, "predicted_mean": float(mu[0]),
+                "posterior_sd": float(np.sqrt(var[0])),
+                "n_observations": int(len(y)),
+                "note": "advice only; no recommendation has been submitted"}
+    raise ValueError(f"unknown callable tool {name!r}")
 
 
 def tool_artifacts(env) -> dict:

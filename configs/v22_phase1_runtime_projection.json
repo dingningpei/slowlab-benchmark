@@ -1,0 +1,16 @@
+{
+  "status": "scaling_gate_not_benchmark",
+  "basis": "579 steps, one compartment, mostly empty, fixed-weather integration test; includes two model loads and diagnostic checks",
+  "observed_seconds": 41.329603584017605,
+  "observed_steps": 579,
+  "naive_seconds_per_step": 0.07138100791712886,
+  "four_compartment_365day_steps": 420480,
+  "naive_campaign_hours_single_worker": 8.33730172472065,
+  "draft_1024_campaigns_serial_days": 355.72487358808104,
+  "limitations": [
+    "Not measured full-campaign runtime or a guaranteed bound.",
+    "Active crop dynamics, variable weather and all controller/permission code have not been profiled.",
+    "No large rollout or parallel load is authorized by this estimate."
+  ],
+  "next": "Profile solver vs all-auxiliary evaluation/output overhead; preserve 300s controls, observation timing and raw-endpoint accuracy."
+}

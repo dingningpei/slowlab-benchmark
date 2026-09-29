@@ -1,0 +1,137 @@
+{
+  "status": "passed",
+  "scope": "fixed-weather development fixture, not annual or empirical validation",
+  "thresholds": {
+    "derivative_rtol": 1e-10,
+    "derivative_atol": 1e-10,
+    "state_rtol": 1e-06,
+    "state_atol": 0.001,
+    "ledger_rtol": 1e-05,
+    "ledger_atol": 1e-09
+  },
+  "comparisons": [],
+  "derivatives": [
+    {
+      "mode": "active",
+      "cases": 5,
+      "max_abs_difference": 2.4097634191856894e-37,
+      "source_sha256": "ad58f0d3521380b5898b81e743b16afd6c3e02dcd44082488ea78d74db2e3c01",
+      "compiler": "gcc (GCC) 10.2.1 20200825 (Alibaba 10.2.1-3.8 2.32)",
+      "flags": [
+        "-O2",
+        "-fno-fast-math",
+        "-ffp-contract=off",
+        "-shared",
+        "-fPIC"
+      ]
+    },
+    {
+      "mode": "empty",
+      "cases": 5,
+      "max_abs_difference": 2.527312854267918e-37,
+      "source_sha256": "ee47c291d8180419281a0ba199179db565b267e05634d729d35715c68ac529c4",
+      "compiler": "gcc (GCC) 10.2.1 20200825 (Alibaba 10.2.1-3.8 2.32)",
+      "flags": [
+        "-O2",
+        "-fno-fast-math",
+        "-ffp-contract=off",
+        "-shared",
+        "-fPIC"
+      ]
+    }
+  ],
+  "steps": 600,
+  "max_abs_state_difference": 5.3238088639773196e-05,
+  "reference_step_seconds": 109.77726935758255,
+  "native_step_seconds": 11.263647104147822,
+  "speedup": 9.746156670440895,
+  "ledgers": [
+    {
+      "per_m2": {
+        "heat_kwh_m2": 0.09600000000000006,
+        "light_kwh_m2": 0.06666666666666668,
+        "co2_kg_m2": 0.004500000000000001,
+        "harvest_kg_m2": 8.010795974301561e-117,
+        "transpiration_kg_m2": 0.015628010195044797,
+        "days": 2.083333333333359
+      },
+      "by_phase_per_m2": {
+        "active": {
+          "heat_kwh_m2": 0.09600000000000006,
+          "light_kwh_m2": 0.06666666666666668,
+          "co2_kg_m2": 0.004500000000000001,
+          "harvest_kg_m2": 8.010795974301561e-117,
+          "transpiration_kg_m2": 0.015628010195044797,
+          "days": 0.08333333333333336
+        },
+        "cleanup": {
+          "heat_kwh_m2": 5.963179990698867e-19,
+          "light_kwh_m2": 0.0,
+          "co2_kg_m2": 0.0,
+          "harvest_kg_m2": 0.0,
+          "transpiration_kg_m2": 0.0,
+          "days": 2.0000000000000253
+        },
+        "idle": {
+          "heat_kwh_m2": 0.0,
+          "light_kwh_m2": 0.0,
+          "co2_kg_m2": 0.0,
+          "harvest_kg_m2": 0.0,
+          "transpiration_kg_m2": 0.0,
+          "days": 0.0
+        }
+      },
+      "event_cost_eur_m2": 4.5,
+      "synthetic_margin_eur": -433.5872,
+      "occupied_m2_days": 200.00000000000244,
+      "scope": "single-compartment accrued ledger; not final campaign settlement"
+    },
+    {
+      "per_m2": {
+        "heat_kwh_m2": 0.09600000000000006,
+        "light_kwh_m2": 0.06666666666666668,
+        "co2_kg_m2": 0.004500000000000001,
+        "harvest_kg_m2": 8.010795974253969e-117,
+        "transpiration_kg_m2": 0.015628010189969937,
+        "days": 2.083333333333359
+      },
+      "by_phase_per_m2": {
+        "active": {
+          "heat_kwh_m2": 0.09600000000000006,
+          "light_kwh_m2": 0.06666666666666668,
+          "co2_kg_m2": 0.004500000000000001,
+          "harvest_kg_m2": 8.010795974253969e-117,
+          "transpiration_kg_m2": 0.015628010189969937,
+          "days": 0.08333333333333336
+        },
+        "cleanup": {
+          "heat_kwh_m2": 5.963179990698866e-19,
+          "light_kwh_m2": 0.0,
+          "co2_kg_m2": 0.0,
+          "harvest_kg_m2": 0.0,
+          "transpiration_kg_m2": 0.0,
+          "days": 2.0000000000000253
+        },
+        "idle": {
+          "heat_kwh_m2": 0.0,
+          "light_kwh_m2": 0.0,
+          "co2_kg_m2": 0.0,
+          "harvest_kg_m2": 0.0,
+          "transpiration_kg_m2": 0.0,
+          "days": 0.0
+        }
+      },
+      "event_cost_eur_m2": 4.5,
+      "synthetic_margin_eur": -433.5872,
+      "occupied_m2_days": 200.00000000000244,
+      "scope": "single-compartment accrued ledger; not final campaign settlement"
+    }
+  ],
+  "elapsed_seconds": 168.6907896019984,
+  "hashes": {
+    "slowlab/v22_native_rhs.py": "58e87f01ff7f1dc94f6bf1d6c4413d3e9aac42e8c2af5e98351c042134ff266c",
+    "slowlab/v22_greenlight_reuse.py": "5764350f1072e43f3da07ba6e6359fdda21d3aacbb297223c9857f0f8bfb66b5",
+    "scripts/check_v22_native_rhs.py": "d7984f5dcca23edbe4d539facee71a02f7f482c528c912d4e6fc7095ed7b95ec",
+    "configs/v22_task_contract_v1.json": "d1c4d9a331e7806ba920a23cc3b40d2803723c426a5b7d7babe37c9211512b71"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "status": "passed_structural_audit",
+  "scope": "single-compartment runtime/cause/accounting checks only; not empirical climate or crop validation",
+  "result_sha256": "146c49e4e8cd367d2eb9dae107dada2351626a402fff1d3f6103148a03efe33c",
+  "progress_sha256": "cf86d79899705586215f9b9bfeaf6dc97ef893a012ffbc2226cc480ceb49a877",
+  "contract_sha256": "ad55ca8a771cdc46de6e90500a9e7c74b34ab85e34b2ea702ba2d9e7dfd9143a",
+  "days": 365,
+  "steps": 105120,
+  "wall_seconds": 2119.1926719001494,
+  "model_load_seconds": 23.221066321013495,
+  "peak_rss_bytes": 271216640,
+  "phase_days": {
+    "active": 360.00000000052586,
+    "cleanup": 4.000000000000082,
+    "idle": 0.999999999999997
+  },
+  "lifecycle_events": [
+    [
+      "stop",
+      180.0
+    ],
+    [
+      "replant",
+      182.0
+    ],
+    [
+      "stop",
+      362.0
+    ]
+  ],
+  "event_cost_eur_m2": 5.0,
+  "harvest_kg_m2_synthetic": 67.92609379048888
+}

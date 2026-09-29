@@ -1,0 +1,22 @@
+{
+  "status": "blocking_contract_gap",
+  "contract_id": "slowlab-v22-task-v2",
+  "compartments": 4,
+  "per_compartment": {
+    "heating_w": 11520,
+    "co2_mg_s": 200,
+    "lamp_electric_w": 6400.0
+  },
+  "sum_of_per_compartment_maxima": {
+    "heating_w": 46080,
+    "co2_mg_s": 800,
+    "lamp_electric_w": 25600.0
+  },
+  "missing": [
+    "central_heating_w",
+    "central_co2_mg_s",
+    "central_lamp_electric_w"
+  ],
+  "safe_current_interpretation": "per-compartment caps only; no cross-compartment contention claim",
+  "required_decision": "freeze whether central supply is adequately sized or an explicitly synthetic shared bottleneck; then version contract and implement allocator if needed"
+}

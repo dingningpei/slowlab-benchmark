@@ -1,0 +1,94 @@
+{
+  "status": "calendar_erratum_recomputed",
+  "scope": "v2 2020 monthly diagnostic only; old report preserved, 2020 no longer untouched",
+  "reason": "2020 previous monthly comparison used non-leap month ends despite including Feb 29",
+  "reference_month_days": [
+    31,
+    29,
+    31,
+    30,
+    31,
+    30,
+    31,
+    31,
+    30,
+    31,
+    30,
+    30
+  ],
+  "generated_month_days": [
+    31,
+    28,
+    31,
+    30,
+    31,
+    30,
+    31,
+    31,
+    30,
+    31,
+    30,
+    31
+  ],
+  "rows": [
+    {
+      "development_seed": 20260929,
+      "corrected_max_abs_monthly_training_sd": 1.6569021053011246,
+      "max_month": 2,
+      "max_channel": "wind_m_s",
+      "previous_misgrouped_max": 1.6157021531644302
+    },
+    {
+      "development_seed": 20260930,
+      "corrected_max_abs_monthly_training_sd": 1.0816324131259594,
+      "max_month": 2,
+      "max_channel": "wind_m_s",
+      "previous_misgrouped_max": 1.040432460989265
+    },
+    {
+      "development_seed": 20260931,
+      "corrected_max_abs_monthly_training_sd": 1.516851402140776,
+      "max_month": 2,
+      "max_channel": "wind_m_s",
+      "previous_misgrouped_max": 1.4756514500040818
+    },
+    {
+      "development_seed": 20260932,
+      "corrected_max_abs_monthly_training_sd": 1.6224859225479182,
+      "max_month": 2,
+      "max_channel": "wind_m_s",
+      "previous_misgrouped_max": 1.5812859704112239
+    },
+    {
+      "development_seed": 20260934,
+      "corrected_max_abs_monthly_training_sd": 1.471020686096249,
+      "max_month": 2,
+      "max_channel": "wind_m_s",
+      "previous_misgrouped_max": 1.4298207339595548
+    },
+    {
+      "development_seed": 20260936,
+      "corrected_max_abs_monthly_training_sd": 1.163421700486667,
+      "max_month": 5,
+      "max_channel": "downward_longwave_w_m2",
+      "previous_misgrouped_max": 1.1566754009127886
+    },
+    {
+      "development_seed": 20260937,
+      "corrected_max_abs_monthly_training_sd": 1.6720065621291684,
+      "max_month": 2,
+      "max_channel": "wind_m_s",
+      "previous_misgrouped_max": 1.630806609992474
+    },
+    {
+      "development_seed": 20260938,
+      "corrected_max_abs_monthly_training_sd": 0.8996149853814387,
+      "max_month": 2,
+      "max_channel": "outdoor_dewpoint_c",
+      "previous_misgrouped_max": 0.894871221086302
+    }
+  ],
+  "corrected_max": 1.6720065621291684,
+  "locked_monthly_limit": 1.25,
+  "unchanged_daily_variance_gate": "failed in original report; independent of monthly partition"
+}

@@ -85,7 +85,11 @@ def openai_compatible(model: str, *, base_url: str | None = None,
                       reasoning_effort: str | None = None,
                       generation_seed: int | None = None,
                       json_mode: bool = False,
-                      rpm: float = 0.0) -> callable:
+                      rpm: float = 0.0,
+                      provider_only: list[str] | None = None,
+                      expected_provider: str | None = None,
+                      expected_actual_model: str | None = None,
+                      send_app_attribution: bool = False) -> callable:
     """Returns a complete(messages) -> str, retrying network and rate-limit errors with exponential backoff."""
     load_dotenv()                      # allows the key to live in .env
     env_var, default_url = _guess(model)
@@ -134,6 +138,10 @@ def openai_compatible(model: str, *, base_url: str | None = None,
             d["seed"] = int(generation_seed)
         if json_mode:
             d["response_format"] = {"type": "json_object"}
+        if provider_only:
+            if "openrouter" not in url:
+                raise ValueError("provider_only is supported only for OpenRouter routes")
+            d["provider"] = {"only": list(provider_only), "allow_fallbacks": False}
         d.update(mode)
         return json.dumps(d).encode()
 
@@ -148,7 +156,9 @@ def openai_compatible(model: str, *, base_url: str | None = None,
                 time.sleep(wait)
             _last[0] = time.time()
         hdr = {"Content-Type": "application/json", "Authorization": f"Bearer {key}"}
-        if "openrouter" in url:                    # OpenRouter's leaderboard attribution headers
+        if "openrouter" in url and send_app_attribution:
+            # Formal blinded runs must not identify the benchmark in provider
+            # metadata, even though these headers are not part of the prompt.
             hdr["HTTP-Referer"] = "https://github.com/slowlab-benchmark"
             hdr["X-Title"] = "SlowLab"
         req = urllib.request.Request(url, data=_body(messages), headers=hdr)
@@ -159,10 +169,18 @@ def openai_compatible(model: str, *, base_url: str | None = None,
                     payload = json.loads(r.read())
                 choice = payload["choices"][0]
                 msg = choice["message"]
+                actual_model = payload.get("model")
+                actual_provider = payload.get("provider")
+                if expected_provider is not None and actual_provider != expected_provider:
+                    raise RuntimeError(
+                        f"provider mismatch: expected {expected_provider!r}, got {actual_provider!r}")
+                if expected_actual_model is not None and actual_model != expected_actual_model:
+                    raise RuntimeError(
+                        f"model mismatch: expected {expected_actual_model!r}, got {actual_model!r}")
                 complete.call_records.append({
                     "requested_model": model,
-                    "actual_model": payload.get("model"),
-                    "provider": payload.get("provider"),
+                    "actual_model": actual_model,
+                    "provider": actual_provider,
                     "created": payload.get("created"),
                     "finish_reason": choice.get("finish_reason"),
                     "usage": payload.get("usage"),

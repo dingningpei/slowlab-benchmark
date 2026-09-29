@@ -93,7 +93,11 @@ def assert_greenlight_solution_complete(solution: object, expected_end_seconds: 
 
 
 def read_greenlight_series(path: Path, variable: str) -> GreenLightSeries:
-    """Read a GreenLight CSV while respecting its description and unit rows."""
+    """Read offline GreenLight output, respecting metadata rows.
+
+    Never use these resampled timestamps as online sensor availability. Use
+    raw solver endpoints and OnlineObservations for the V2.2 online path.
+    """
     with path.open(newline="", encoding="utf-8-sig") as handle:
         reader = csv.DictReader(handle)
         try:
@@ -212,3 +216,37 @@ def greenlight_initial_pipe_override(
         "tPipe": {"init": repr(rail if rail > 0 else air)},
         "tGroPipe": {"init": repr(grow if grow > 0 else air)},
     }
+
+
+def greenlight_raw_endpoint(
+    solution: object, state_names: Sequence[str], sensor_states: Sequence[str],
+    *, expected_time: float,
+) -> dict[str, float]:
+    """Executor-only bridge from unsaved states_sol at a sensor sampling event.
+
+    The executor must integrate exactly to the event and pass the actual state
+    ordering. No interpolation, CSV or full_sol resampling is accepted here.
+    Only explicitly selected state channels are returned; derived sensors and
+    their noise must be constructed once by the executor before recording.
+    This checks structure and time, not the scientific provenance of a sample.
+    """
+    if not getattr(solution, "success", False):
+        raise ValueError("raw sensor endpoint requires a successful solver result")
+    times = tuple(float(t) for t in getattr(solution, "t", ()))
+    if (not math.isfinite(expected_time) or expected_time < 0 or not times
+            or any(not math.isfinite(t) or t < 0 for t in times)
+            or any(a >= b for a, b in zip(times, times[1:]))
+            or times[-1] != expected_time):
+        raise ValueError("raw solver endpoint must equal the sensor event time")
+    names = tuple(state_names)
+    sensors = tuple(sensor_states)
+    if (not names or len(set(names)) != len(names) or not sensors
+            or len(set(sensors)) != len(sensors) or not set(sensors) <= set(names)):
+        raise ValueError("invalid solver state ordering or sensor selection")
+    values = getattr(solution, "y", ())
+    if len(values) != len(names) or any(len(row) != len(times) for row in values):
+        raise ValueError("raw solver state shape is inconsistent")
+    selected = {name: float(values[names.index(name)][-1]) for name in sensors}
+    if any(not math.isfinite(value) for value in selected.values()):
+        raise ValueError("raw sensor endpoint must be finite")
+    return selected

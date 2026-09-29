@@ -1,0 +1,1521 @@
+{
+  "status": "audited",
+  "scope": "all approved files, read-only; no weather generator or formal split",
+  "total_bytes": 21770259,
+  "months": {
+    "201701": {
+      "rows": 4464,
+      "invalid": {
+        "TA002": 12,
+        "RH002": 12,
+        "TD002": 12,
+        "F010": 3,
+        "SWD": 0,
+        "LWD": 0
+      },
+      "joint_invalid": 12,
+      "longest_joint_invalid_intervals": 4,
+      "rh_above_100": 222,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "3bc861ccb9ab37eddb9dc75a33103ec9ccd2095087fafc3761537847a6e8c641",
+        "radiation": "8dff1279ef9bd75e7cf9c0fce814875c13084d7ff909485a3abde5d2d635f718"
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "201702": {
+      "rows": 4032,
+      "invalid": {
+        "TA002": 44,
+        "RH002": 44,
+        "TD002": 44,
+        "F010": 3,
+        "SWD": 3,
+        "LWD": 3
+      },
+      "joint_invalid": 47,
+      "longest_joint_invalid_intervals": 20,
+      "rh_above_100": 141,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "ca3d2e35d9d04ff77c6ddd3a095eaa12249b4978567ea25b897f682665aac293",
+        "radiation": "3f96a3ca9badc06c8cbb0e325f555169fb7364dfdebf6536c1f076c1553bb331"
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "201703": {
+      "rows": 4464,
+      "invalid": {
+        "TA002": 41,
+        "RH002": 126,
+        "TD002": 126,
+        "F010": 2,
+        "SWD": 0,
+        "LWD": 0
+      },
+      "joint_invalid": 126,
+      "longest_joint_invalid_intervals": 111,
+      "rh_above_100": 76,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "f7bb57f5265d468c45756fd5d4fc970b1efe22b4f8f714a7cc832a14c15867be",
+        "radiation": "3ac4038b6c6bea3a58245bb29a0aa669a1b4a13522efe53e7ec29516427b3583"
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "201704": {
+      "rows": 4320,
+      "invalid": {
+        "TA002": 27,
+        "RH002": 27,
+        "TD002": 27,
+        "F010": 1,
+        "SWD": 0,
+        "LWD": 0
+      },
+      "joint_invalid": 28,
+      "longest_joint_invalid_intervals": 20,
+      "rh_above_100": 9,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "c418ca68d424bc43d25454d3db14f5abab874c4ea521484f02dfe7815ab12c7d",
+        "radiation": "a5a5684a0b2fed826cfa1cb4f61fdd050879fcb7dab54126998d2bffbee05d00"
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "201705": {
+      "rows": 4464,
+      "invalid": {
+        "TA002": 12,
+        "RH002": 12,
+        "TD002": 12,
+        "F010": 4,
+        "SWD": 343,
+        "LWD": 343
+      },
+      "joint_invalid": 356,
+      "longest_joint_invalid_intervals": 319,
+      "rh_above_100": 43,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "0425b36155ab7454d12a6b1f824220289edc3c0865329ad4ecf8d6ae93e23a1b",
+        "radiation": "527ea7f42e19876dc7f612e9c5cfe8118cca1c3df1d51fce362dbd6cac124904"
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 1
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "201706": {
+      "rows": 4320,
+      "invalid": {
+        "TA002": 8,
+        "RH002": 12,
+        "TD002": 12,
+        "F010": 4,
+        "SWD": 4,
+        "LWD": 4
+      },
+      "joint_invalid": 18,
+      "longest_joint_invalid_intervals": 4,
+      "rh_above_100": 12,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "fd9e6ae02defb636a7b3f24307b989ec6ff8132b4d14cfe90966ae6efbee06be",
+        "radiation": "569c1df760f013dd89a57fda2cb1f26f1236be0aa4bae8de6c2d3d41a8d21261"
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "201707": {
+      "rows": 4464,
+      "invalid": {
+        "TA002": 26,
+        "RH002": 26,
+        "TD002": 26,
+        "F010": 11,
+        "SWD": 0,
+        "LWD": 0
+      },
+      "joint_invalid": 26,
+      "longest_joint_invalid_intervals": 8,
+      "rh_above_100": 77,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "4b708e4e546f225309eba05414db952688ee35e58d0140d775999a23776c5789",
+        "radiation": "cda394fb7666f35a5efc7fc8237d757678ccd2c4d6730c768c6c9529145649db"
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "201708": {
+      "rows": 4464,
+      "invalid": {
+        "TA002": 12,
+        "RH002": 12,
+        "TD002": 12,
+        "F010": 4,
+        "SWD": 3,
+        "LWD": 1274
+      },
+      "joint_invalid": 1283,
+      "longest_joint_invalid_intervals": 838,
+      "rh_above_100": 204,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "8593fb8949230cdaaa7e4ddd850517c71ce89b1473542b188cf385c9e46cb4db",
+        "radiation": "2e77b88cbf723798c45578ec9bc917976325e924f69b26d4aa4c134149a85acf"
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "201709": {
+      "rows": 4320,
+      "invalid": {
+        "TA002": 5,
+        "RH002": 5,
+        "TD002": 5,
+        "F010": 2,
+        "SWD": 198,
+        "LWD": 1221
+      },
+      "joint_invalid": 1226,
+      "longest_joint_invalid_intervals": 433,
+      "rh_above_100": 412,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "aaa799a285e0fb72360d4be2120750e5157839008fecdc1d5e2bf9cc06484586",
+        "radiation": "469a196591fd3d7766acc0a4a4f0860a10481a4141e02ed3d31ab7f833f30aef"
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "201710": {
+      "rows": 4464,
+      "invalid": {
+        "TA002": 44,
+        "RH002": 44,
+        "TD002": 44,
+        "F010": 27,
+        "SWD": 131,
+        "LWD": 131
+      },
+      "joint_invalid": 149,
+      "longest_joint_invalid_intervals": 106,
+      "rh_above_100": 139,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "680d2d825acd04ea479cfbe70722ac1225fcf387280750c6d647b754c7824385",
+        "radiation": "78cefefb4cb93e0560129ff91382dde52de94a044bd4568bc3730fb708cf96f2"
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "201711": {
+      "rows": 4320,
+      "invalid": {
+        "TA002": 36,
+        "RH002": 39,
+        "TD002": 39,
+        "F010": 3,
+        "SWD": 0,
+        "LWD": 0
+      },
+      "joint_invalid": 40,
+      "longest_joint_invalid_intervals": 8,
+      "rh_above_100": 108,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "ccad3cfe6f6b4f9a3978ab702c89e12f724f4b877fb5b44d55b789dc3b9897fc",
+        "radiation": "3393a87c710e76973f98f6607f32104699fb072ea4569f66b674534fa1552189"
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "201712": {
+      "rows": 4464,
+      "invalid": {
+        "TA002": 10,
+        "RH002": 10,
+        "TD002": 10,
+        "F010": 6,
+        "SWD": 0,
+        "LWD": 0
+      },
+      "joint_invalid": 16,
+      "longest_joint_invalid_intervals": 10,
+      "rh_above_100": 120,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "76f26d2a7d550ee1d7d1a9b686164838933d00e96017b822819af2e6b88b8054",
+        "radiation": "caad908c077aeadee56148dffd2fa4900d8d66e573d4641b8ed8029e57587b30"
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "201801": {
+      "rows": 4464,
+      "invalid": {
+        "TA002": 5,
+        "RH002": 5,
+        "TD002": 5,
+        "F010": 3,
+        "SWD": 1,
+        "LWD": 1
+      },
+      "joint_invalid": 6,
+      "longest_joint_invalid_intervals": 3,
+      "rh_above_100": 48,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "d2470d16236a9162e9d9e1d487ca3e2f65109785887b3473efa531a798d41903",
+        "radiation": "afe7a2a905cb56bca950b8b94517df17a445d04a92ce911c0658f9fba6a9838d"
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "201802": {
+      "rows": 4032,
+      "invalid": {
+        "TA002": 403,
+        "RH002": 403,
+        "TD002": 403,
+        "F010": 171,
+        "SWD": 0,
+        "LWD": 0
+      },
+      "joint_invalid": 403,
+      "longest_joint_invalid_intervals": 403,
+      "rh_above_100": 16,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "7d50ac9281861d83c6682824112b1e732dc40ef0071a35776477aad364ba5cb5",
+        "radiation": "9c6230910b6f6d1c8c2d4809b6ab409b34c0c449c4f878b5f04c2c7299ca1daf"
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 363.2322769165039
+    },
+    "201803": {
+      "rows": 4464,
+      "invalid": {
+        "TA002": 10,
+        "RH002": 10,
+        "TD002": 10,
+        "F010": 3,
+        "SWD": 0,
+        "LWD": 0
+      },
+      "joint_invalid": 10,
+      "longest_joint_invalid_intervals": 4,
+      "rh_above_100": 157,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "bc55786f939d27654ecb4d448896ad1b7b9262bc3643c4bfe6c07d80f0cd18df",
+        "radiation": "56a77701f8f566b34ea79529b2027461a82564b3407ed1adc714ed81f4a3d1ab"
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "201804": {
+      "rows": 4320,
+      "invalid": {
+        "TA002": 146,
+        "RH002": 146,
+        "TD002": 146,
+        "F010": 3,
+        "SWD": 0,
+        "LWD": 0
+      },
+      "joint_invalid": 146,
+      "longest_joint_invalid_intervals": 70,
+      "rh_above_100": 121,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "d80e118f876cf5934b2de39da07a6477523e2bf9e3a436b681ade621e816a161",
+        "radiation": "9b69697ae9ce7137c8dbb112df80f09f20da4d89699208940c09f3f039bfbd0c"
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "201805": {
+      "rows": 4464,
+      "invalid": {
+        "TA002": 99,
+        "RH002": 99,
+        "TD002": 99,
+        "F010": 0,
+        "SWD": 56,
+        "LWD": 0
+      },
+      "joint_invalid": 155,
+      "longest_joint_invalid_intervals": 34,
+      "rh_above_100": 139,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "c80ea4f9c26aa8a5219f946a8b7bf06d38ba72d078895f88c287fa9979792091",
+        "radiation": "da54d989b4d12fbc833119620d79a40b778542a025a72aaafa060e6797f58961"
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "201806": {
+      "rows": 4320,
+      "invalid": {
+        "TA002": 36,
+        "RH002": 444,
+        "TD002": 444,
+        "F010": 3,
+        "SWD": 6,
+        "LWD": 6
+      },
+      "joint_invalid": 449,
+      "longest_joint_invalid_intervals": 77,
+      "rh_above_100": 67,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "b5bb2a551ce8a4e6961697c6a650b4fd888daf66409bd6710173cc5f4fa30a40",
+        "radiation": "3e294b7642696e090de173f5d68634384555d7c81f59c19a2a8cbbc858be62f3"
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "201807": {
+      "rows": 4464,
+      "invalid": {
+        "TA002": 22,
+        "RH002": 22,
+        "TD002": 22,
+        "F010": 4,
+        "SWD": 11,
+        "LWD": 12
+      },
+      "joint_invalid": 31,
+      "longest_joint_invalid_intervals": 8,
+      "rh_above_100": 4,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "2dcef3515bcab23abd35297b89b4c7a8436a87bff5a2d94db4543217fb33db38",
+        "radiation": "7dd73d8482c3822efc2c21ddc7ec5ffeffc968729fa3c7201adf426947895d2c"
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "201808": {
+      "rows": 4464,
+      "invalid": {
+        "TA002": 17,
+        "RH002": 17,
+        "TD002": 17,
+        "F010": 4,
+        "SWD": 0,
+        "LWD": 575
+      },
+      "joint_invalid": 589,
+      "longest_joint_invalid_intervals": 574,
+      "rh_above_100": 35,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "801e608ee948507eb3387b844264acdcbb663403b460f61437b9cd217a95c337",
+        "radiation": "394d91007b76c5ea50e00940aa9cceafdf0c438d34a33eaf5317ce8aa5cfdf8d"
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "201809": {
+      "rows": 4320,
+      "invalid": {
+        "TA002": 10,
+        "RH002": 10,
+        "TD002": 10,
+        "F010": 0,
+        "SWD": 118,
+        "LWD": 157
+      },
+      "joint_invalid": 167,
+      "longest_joint_invalid_intervals": 142,
+      "rh_above_100": 121,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "e9ebb091bdd92d72aa90472def18272fdf5da4e4de20b8cc66684cda477289e6",
+        "radiation": "a077004711f24cc56263637f5d87a6d7c58ec226431f0ade4e9c8f70d46da122"
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "201810": {
+      "rows": 4464,
+      "invalid": {
+        "TA002": 15,
+        "RH002": 15,
+        "TD002": 15,
+        "F010": 7,
+        "SWD": 8,
+        "LWD": 11
+      },
+      "joint_invalid": 26,
+      "longest_joint_invalid_intervals": 4,
+      "rh_above_100": 199,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "7eec5a1abdef4e45935d06b052bb70eac9b74a4916d52698b762a68bc43b3049",
+        "radiation": "aedc60e4437fbc05d52daec0d9ebad539704fa952b51644ffd362dcf48a8ff1f"
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "201811": {
+      "rows": 4320,
+      "invalid": {
+        "TA002": 9,
+        "RH002": 9,
+        "TD002": 9,
+        "F010": 7,
+        "SWD": 5,
+        "LWD": 5
+      },
+      "joint_invalid": 14,
+      "longest_joint_invalid_intervals": 4,
+      "rh_above_100": 65,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "d8554f4e7240cfd62e056e81af8e5801da36eb72670c4b56d671819142d23dba",
+        "radiation": "8d7c8e3a18653eacd38fe1ed0e0adba42cf668edc6870b2c497d14884179387c"
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "201812": {
+      "rows": 4464,
+      "invalid": {
+        "TA002": 6,
+        "RH002": 6,
+        "TD002": 6,
+        "F010": 0,
+        "SWD": 1,
+        "LWD": 1
+      },
+      "joint_invalid": 7,
+      "longest_joint_invalid_intervals": 2,
+      "rh_above_100": 162,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "ad079cc65f604f16f1398dcb0e43753559bee37c2f2a5a708ba05227b5849966",
+        "radiation": "9b2bf4527d129f5a43de57a74f732bcecc92bf1566e9d3fa94e86e34480d6909"
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "201901": {
+      "rows": 4464,
+      "invalid": {
+        "TA002": 16,
+        "RH002": 16,
+        "TD002": 16,
+        "F010": 4,
+        "SWD": 11,
+        "LWD": 330
+      },
+      "joint_invalid": 344,
+      "longest_joint_invalid_intervals": 166,
+      "rh_above_100": 17,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "c08fc0d97cd7f3c3c788a7856b30613db941cf3f88aa5480eb66ec7bb30a0142",
+        "radiation": "d7186ab5dd402dd98c2f619815be350d0e063681f48d842d09ab2f781e10de3d"
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "201902": {
+      "rows": 4032,
+      "invalid": {
+        "TA002": 9,
+        "RH002": 9,
+        "TD002": 9,
+        "F010": 0,
+        "SWD": 1,
+        "LWD": 1
+      },
+      "joint_invalid": 10,
+      "longest_joint_invalid_intervals": 3,
+      "rh_above_100": 1,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "211dac431f84f91881716bc0b55c86997f50a3210370e41532e62258eb8aef0f",
+        "radiation": "1fbf06c9147c536f7a88892e1c8cdf7b208ebbc66ee93bd087024c3ab45cd2d9"
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "201903": {
+      "rows": 4464,
+      "invalid": {
+        "TA002": 6,
+        "RH002": 6,
+        "TD002": 6,
+        "F010": 0,
+        "SWD": 16,
+        "LWD": 485
+      },
+      "joint_invalid": 491,
+      "longest_joint_invalid_intervals": 425,
+      "rh_above_100": 64,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "c133caea34e3f07b650862c3dc44b0e1171483f6f34fc0c3e11c92559a3f3f6d",
+        "radiation": "f1484a571dcfdffc11a86e06af877a3ae6439e5fa227e72a1171d2a3b130616e"
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "201904": {
+      "rows": 4320,
+      "invalid": {
+        "TA002": 10,
+        "RH002": 10,
+        "TD002": 10,
+        "F010": 3,
+        "SWD": 4,
+        "LWD": 4
+      },
+      "joint_invalid": 14,
+      "longest_joint_invalid_intervals": 4,
+      "rh_above_100": 8,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "6b498d570fcfe844536f2a4f55a11f1776a9ec833e970b3d10be77278bce166c",
+        "radiation": "1367366e560f926433190a29d30ba4ba9af2b2dd5cde9ade4dc40edf5866c9aa"
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "201905": {
+      "rows": 4464,
+      "invalid": {
+        "TA002": 15,
+        "RH002": 15,
+        "TD002": 15,
+        "F010": 5,
+        "SWD": 22,
+        "LWD": 22
+      },
+      "joint_invalid": 35,
+      "longest_joint_invalid_intervals": 11,
+      "rh_above_100": 63,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "7722fe832f700b2cc38c0cab33dc295b0e5a3ac94a48dd892b1f7865f5b3755d",
+        "radiation": "2870eef608c3df8326754063005d3959a5da8f970abce4628b0238d54d191258"
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "201906": {
+      "rows": 4320,
+      "invalid": {
+        "TA002": 4,
+        "RH002": 4,
+        "TD002": 4,
+        "F010": 3,
+        "SWD": 3,
+        "LWD": 3
+      },
+      "joint_invalid": 10,
+      "longest_joint_invalid_intervals": 3,
+      "rh_above_100": 0,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "5604a8bcecbd7c58abea8330a74425dee854488e747d5bafdd0068b6e3970ca0",
+        "radiation": "d585a8a55288e2c262a9da8644e00464490fe9b587a8dd20b1948ec3d46c6891"
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "201907": {
+      "rows": 4464,
+      "invalid": {
+        "TA002": 13,
+        "RH002": 13,
+        "TD002": 13,
+        "F010": 3,
+        "SWD": 123,
+        "LWD": 123
+      },
+      "joint_invalid": 137,
+      "longest_joint_invalid_intervals": 117,
+      "rh_above_100": 4,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "a19ac84d2303a22c5b1d37b8041c15b5b6fb67964566d292df1666446c889d5f",
+        "radiation": "7b68020e6cd348e5d8bfdd5df42a9bce6638f749155e23babab14465b68f359d"
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "201908": {
+      "rows": 4464,
+      "invalid": {
+        "TA002": 11,
+        "RH002": 11,
+        "TD002": 11,
+        "F010": 0,
+        "SWD": 9,
+        "LWD": 14
+      },
+      "joint_invalid": 25,
+      "longest_joint_invalid_intervals": 6,
+      "rh_above_100": 25,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "a8825edbc1db9d0816c08f572b98953c6ee3cdbb80f1bed388d27148bbdc3c7a",
+        "radiation": "1d91fb052d33e0088b7aaa3a1e5655a39fba245fa850f3c96f2cfcc04266a7ba"
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "201909": {
+      "rows": 4320,
+      "invalid": {
+        "TA002": 22,
+        "RH002": 22,
+        "TD002": 13,
+        "F010": 3,
+        "SWD": 48,
+        "LWD": 48
+      },
+      "joint_invalid": 73,
+      "longest_joint_invalid_intervals": 39,
+      "rh_above_100": 66,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "930edb2bbd918282ee7d3b6c0627eb2139d653f27d16c93ec64695670d483121",
+        "radiation": "809780520932afbf9cf0e18fb83f2d4e07440d18f0c0c9814c45575a28808b12"
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 372.4220733642578
+    },
+    "201910": {
+      "rows": 4464,
+      "invalid": {
+        "TA002": 18,
+        "RH002": 18,
+        "TD002": 18,
+        "F010": 13,
+        "SWD": 18,
+        "LWD": 19
+      },
+      "joint_invalid": 33,
+      "longest_joint_invalid_intervals": 8,
+      "rh_above_100": 144,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "7a73ec15335436a9d4ccc06998a4c0ca98b64349df6865e5e824cfa32c4cfb4e",
+        "radiation": "bcc9688f2e7a338793e36779289725a120435b2a338589e26c3aad9ac57e1955"
+      },
+      "formats": {
+        "meteo": "netcdf3",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "201911": {
+      "rows": 4320,
+      "invalid": {
+        "TA002": 13,
+        "RH002": 13,
+        "TD002": 13,
+        "F010": 3,
+        "SWD": 6,
+        "LWD": 6
+      },
+      "joint_invalid": 19,
+      "longest_joint_invalid_intervals": 4,
+      "rh_above_100": 243,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "67032c9079ab4b06f79c5296a6349ee8d13003a9f8f5da13f25194732ee215fb",
+        "radiation": "a97b55b7a948de6d12cc14067aab7cab06c7bd4281e2f9e64c3f77a4c688f610"
+      },
+      "formats": {
+        "meteo": "netcdf3",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "201912": {
+      "rows": 4464,
+      "invalid": {
+        "TA002": 14,
+        "RH002": 14,
+        "TD002": 14,
+        "F010": 2,
+        "SWD": 9,
+        "LWD": 9
+      },
+      "joint_invalid": 24,
+      "longest_joint_invalid_intervals": 9,
+      "rh_above_100": 206,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "439a93cf33874310ccf09edd19bf15339047026d96cadd51a5adc43e4f17faee",
+        "radiation": "157afc7591f44effc614c4783acbcd21c5c646a64bc1be5a57b685883d5150df"
+      },
+      "formats": {
+        "meteo": "netcdf3",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "202001": {
+      "rows": 4464,
+      "invalid": {
+        "TA002": 16,
+        "RH002": 16,
+        "TD002": 16,
+        "F010": 3,
+        "SWD": 1,
+        "LWD": 1
+      },
+      "joint_invalid": 17,
+      "longest_joint_invalid_intervals": 4,
+      "rh_above_100": 224,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "4deb7f5b0cf1a36f8d635cf2b13cad5c4c4d8f23c4b485e04a2585df05c48e99",
+        "radiation": "5111a2aef69b71b4c97d2e55ac43bc0803aa71b1829bbaab0b2553eedb5b5e63"
+      },
+      "formats": {
+        "meteo": "netcdf3",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "202002": {
+      "rows": 4176,
+      "invalid": {
+        "TA002": 17,
+        "RH002": 17,
+        "TD002": 17,
+        "F010": 8,
+        "SWD": 9,
+        "LWD": 9
+      },
+      "joint_invalid": 19,
+      "longest_joint_invalid_intervals": 10,
+      "rh_above_100": 4,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "0ce9a8f89f064fee63f349ef7c7d7eb3565f4b3546b946141fac62c09d964431",
+        "radiation": "a82b1f458bc8020d5242376e0197604a613e936a27987acaa1bc99de01871e78"
+      },
+      "formats": {
+        "meteo": "netcdf3",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "202003": {
+      "rows": 4464,
+      "invalid": {
+        "TA002": 14,
+        "RH002": 14,
+        "TD002": 14,
+        "F010": 2,
+        "SWD": 0,
+        "LWD": 1
+      },
+      "joint_invalid": 15,
+      "longest_joint_invalid_intervals": 4,
+      "rh_above_100": 6,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "d4ab66ae909bc516a7c9d3160f5176c5fd7b96e18cf36c9eac870c7ffafb48ab",
+        "radiation": "0c78402ea0f12d65ba74442e4522649378372542d7e2d02ae352732aea3ada64"
+      },
+      "formats": {
+        "meteo": "netcdf3",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "202004": {
+      "rows": 4320,
+      "invalid": {
+        "TA002": 21,
+        "RH002": 21,
+        "TD002": 21,
+        "F010": 10,
+        "SWD": 1,
+        "LWD": 1
+      },
+      "joint_invalid": 23,
+      "longest_joint_invalid_intervals": 4,
+      "rh_above_100": 38,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "c50fe304e379723da61b2adc072d89a97f366ce2c802dd9420363f58ca3226e2",
+        "radiation": "606573c1c63b7cd6bfeb73178a460513af195f0fff6fbf87172af88d0a49b816"
+      },
+      "formats": {
+        "meteo": "netcdf3",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "202005": {
+      "rows": 4464,
+      "invalid": {
+        "TA002": 22,
+        "RH002": 22,
+        "TD002": 22,
+        "F010": 2,
+        "SWD": 0,
+        "LWD": 0
+      },
+      "joint_invalid": 22,
+      "longest_joint_invalid_intervals": 8,
+      "rh_above_100": 40,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "abc986317a3fcd0f3ccd8e0b5e0e9eef44d52fe4e56dbb1b9adc24ea15e30b17",
+        "radiation": "35142ebe9455a56da58cf812a635b14b0c2c4c0bc4fb37d81a3b102c56a2b68b"
+      },
+      "formats": {
+        "meteo": "netcdf3",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "202006": {
+      "rows": 4320,
+      "invalid": {
+        "TA002": 15,
+        "RH002": 15,
+        "TD002": 15,
+        "F010": 8,
+        "SWD": 0,
+        "LWD": 0
+      },
+      "joint_invalid": 15,
+      "longest_joint_invalid_intervals": 5,
+      "rh_above_100": 5,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "e565ec812ec22d902934e97cb81376db1794c914960f384b1e1c15582ba4858a",
+        "radiation": "6a0a4221c67c8471332364cebb92b5521e5224b5802e664d8689c28837bb93ef"
+      },
+      "formats": {
+        "meteo": "netcdf3",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "202007": {
+      "rows": 4464,
+      "invalid": {
+        "TA002": 29,
+        "RH002": 29,
+        "TD002": 29,
+        "F010": 0,
+        "SWD": 0,
+        "LWD": 0
+      },
+      "joint_invalid": 29,
+      "longest_joint_invalid_intervals": 8,
+      "rh_above_100": 73,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "9da9fd8aa61d3bbd14778108b1bef67f66f6ffa7e4cb42a95d301171c89bef9e",
+        "radiation": "d4ea30d98cc970a2e8a76dca4dac4789714b13387e0581d5c2ed325268e1f0b1"
+      },
+      "formats": {
+        "meteo": "netcdf3",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 10060.518478393555
+    },
+    "202008": {
+      "rows": 4464,
+      "invalid": {
+        "TA002": 404,
+        "RH002": 404,
+        "TD002": 404,
+        "F010": 13,
+        "SWD": 4,
+        "LWD": 7
+      },
+      "joint_invalid": 411,
+      "longest_joint_invalid_intervals": 387,
+      "rh_above_100": 36,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "4b532956c2589ccc5ff455789438cabfd9a50f60aa3f25a216d7eeb9f7d05cc1",
+        "radiation": "47c31ada3a8e37bff35e20bc10d7e1c8b9acf80179ce00bb047c7997cc142d00"
+      },
+      "formats": {
+        "meteo": "netcdf3",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "202009": {
+      "rows": 4320,
+      "invalid": {
+        "TA002": 13,
+        "RH002": 13,
+        "TD002": 13,
+        "F010": 1,
+        "SWD": 148,
+        "LWD": 719
+      },
+      "joint_invalid": 729,
+      "longest_joint_invalid_intervals": 569,
+      "rh_above_100": 87,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "dfcad45768fe21075c16542ce0af6454114c1b55b20e975c5b13e29ad0f89ac2",
+        "radiation": "aaf751a12496cba40b0bc83e93f18232c91bb69c1e37244808fa27ab8dcd69c7"
+      },
+      "formats": {
+        "meteo": "netcdf3",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "202010": {
+      "rows": 4464,
+      "invalid": {
+        "TA002": 12,
+        "RH002": 12,
+        "TD002": 12,
+        "F010": 5,
+        "SWD": 0,
+        "LWD": 0
+      },
+      "joint_invalid": 17,
+      "longest_joint_invalid_intervals": 4,
+      "rh_above_100": 142,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "03c772749eab13c60976d2c718537d26c94c4b4296500314bffeabbdee40439d",
+        "radiation": "411667432f1429c91dc4515e3e27473525e9649a9269cc0f39898540fcdeaba7"
+      },
+      "formats": {
+        "meteo": "netcdf3",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "202011": {
+      "rows": 4320,
+      "invalid": {
+        "TA002": 15,
+        "RH002": 15,
+        "TD002": 15,
+        "F010": 7,
+        "SWD": 5,
+        "LWD": 5
+      },
+      "joint_invalid": 18,
+      "longest_joint_invalid_intervals": 6,
+      "rh_above_100": 262,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "7f3902cd20343f2452b825782c5a5b5e2cd1cf1654d91b9e4e73e29fcf15cea2",
+        "radiation": "83f718626d7657d84e95c8b3fae671ffa1e5bd8a241f2b34221b6c4bae4e6eeb"
+      },
+      "formats": {
+        "meteo": "netcdf3",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    },
+    "202012": {
+      "rows": 4464,
+      "invalid": {
+        "TA002": 9,
+        "RH002": 9,
+        "TD002": 9,
+        "F010": 3,
+        "SWD": 0,
+        "LWD": 0
+      },
+      "joint_invalid": 9,
+      "longest_joint_invalid_intervals": 3,
+      "rh_above_100": 333,
+      "rh_below_0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "source_sha256": {
+        "meteo": "31e36c7475425b3eccf6b7beceb7cb3bf49656a03dd3ae01ac39fae429b8109b",
+        "radiation": "19a98c6bb1caa064438a4e1a384884ec867e86dfb0b8e8cb6df535747ddb1cc0"
+      },
+      "formats": {
+        "meteo": "netcdf3",
+        "radiation": "netcdf3"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      },
+      "meteo_radiation_swd_max_abs_difference": 0.0
+    }
+  },
+  "years": {
+    "2017": {
+      "rows": 52560,
+      "joint_invalid": 3327,
+      "rh_gt100": 1563,
+      "rh_lt0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "individual_invalid": {
+        "TA002": 277,
+        "RH002": 369,
+        "TD002": 369,
+        "F010": 70,
+        "SWD": 682,
+        "LWD": 2976
+      },
+      "longest_month_internal_joint_invalid_intervals": 838,
+      "joint_invalid_fraction": 0.06329908675799087
+    },
+    "2018": {
+      "rows": 52560,
+      "joint_invalid": 2003,
+      "rh_gt100": 1134,
+      "rh_lt0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "individual_invalid": {
+        "TA002": 778,
+        "RH002": 1186,
+        "TD002": 1186,
+        "F010": 205,
+        "SWD": 206,
+        "LWD": 768
+      },
+      "longest_month_internal_joint_invalid_intervals": 574,
+      "joint_invalid_fraction": 0.03810882800608828
+    },
+    "2019": {
+      "rows": 52560,
+      "joint_invalid": 1215,
+      "rh_gt100": 841,
+      "rh_lt0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "individual_invalid": {
+        "TA002": 151,
+        "RH002": 151,
+        "TD002": 142,
+        "F010": 39,
+        "SWD": 270,
+        "LWD": 1064
+      },
+      "longest_month_internal_joint_invalid_intervals": 425,
+      "joint_invalid_fraction": 0.023116438356164382
+    },
+    "2020": {
+      "rows": 52704,
+      "joint_invalid": 1324,
+      "rh_gt100": 1250,
+      "rh_lt0": 0,
+      "swd_negative": 0,
+      "lwd_negative": 0,
+      "individual_invalid": {
+        "TA002": 587,
+        "RH002": 587,
+        "TD002": 587,
+        "F010": 62,
+        "SWD": 168,
+        "LWD": 743
+      },
+      "longest_month_internal_joint_invalid_intervals": 569,
+      "joint_invalid_fraction": 0.025121432908318156
+    }
+  }
+}

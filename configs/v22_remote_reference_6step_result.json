@@ -1,0 +1,287 @@
+{
+  "status": "passed_bounded_online_weather_bridge",
+  "scope": "one active compartment; six 300s steps, deterministic sensors, no Full/Endpoint agent API or annual campaign",
+  "soil_boundary_c": 20.0,
+  "origin_utc": "2016-12-31T23:00:00+00:00",
+  "local_standard_timezone": "CET UTC+1 fixed, no DST",
+  "first_measurement_time": 0,
+  "steps": [
+    {
+      "start": 0.0,
+      "end": 300.0,
+      "requested": {
+        "uBoil": 0.9999000099990001,
+        "uRoof": 0.024503426382799585,
+        "uExtCo2": 0.0,
+        "uLamp": 0.0,
+        "uThScr": 0.5
+      },
+      "realised": {
+        "uBoil": 0.9999000099990001,
+        "uRoof": 0.024503426382799585,
+        "uExtCo2": 0.0,
+        "uLamp": 0.0,
+        "uThScr": 0.5
+      },
+      "controller_sensor_times": {
+        "air_temperature_c": 0.0,
+        "relative_humidity_pct": 0.0,
+        "outdoor_temperature_c": 0.0,
+        "co2_ppm": 0.0,
+        "solar_radiation_w_m2": 0.0
+      },
+      "endpoint_indoor": {
+        "air_temperature_c": 12.548850546588087,
+        "relative_humidity_pct": 86.58692681196453,
+        "co2_ppm": 392.10617871291197
+      },
+      "new_outdoor_sample": null,
+      "model_input_rows": 1
+    },
+    {
+      "start": 300.0,
+      "end": 600.0,
+      "requested": {
+        "uBoil": 1.0,
+        "uRoof": 2.220446049250313e-16,
+        "uExtCo2": 0.0,
+        "uLamp": 0.0,
+        "uThScr": 0.9999999999999998
+      },
+      "realised": {
+        "uBoil": 1.0,
+        "uRoof": 2.220446049250313e-16,
+        "uExtCo2": 0.0,
+        "uLamp": 0.0,
+        "uThScr": 0.9999999999999998
+      },
+      "controller_sensor_times": {
+        "air_temperature_c": 300.0,
+        "relative_humidity_pct": 300.0,
+        "outdoor_temperature_c": 0.0,
+        "co2_ppm": 300.0,
+        "solar_radiation_w_m2": 0.0
+      },
+      "endpoint_indoor": {
+        "air_temperature_c": 14.902686588143085,
+        "relative_humidity_pct": 73.6464579284536,
+        "co2_ppm": 398.45689522118556
+      },
+      "new_outdoor_sample": {
+        "outdoor_temperature_c": 0.7999816894531477,
+        "solar_radiation_w_m2": 0.0
+      },
+      "model_input_rows": 1
+    },
+    {
+      "start": 600.0,
+      "end": 900.0,
+      "requested": {
+        "uBoil": 0.999999999959192,
+        "uRoof": 4.080808126971647e-07,
+        "uExtCo2": 0.0,
+        "uLamp": 0.0,
+        "uThScr": 0.9999995919191873
+      },
+      "realised": {
+        "uBoil": 0.999999999959192,
+        "uRoof": 4.080808126971647e-07,
+        "uExtCo2": 0.0,
+        "uLamp": 0.0,
+        "uThScr": 0.9999995919191873
+      },
+      "controller_sensor_times": {
+        "air_temperature_c": 600.0,
+        "relative_humidity_pct": 600.0,
+        "outdoor_temperature_c": 600.0,
+        "co2_ppm": 600.0,
+        "solar_radiation_w_m2": 600.0
+      },
+      "endpoint_indoor": {
+        "air_temperature_c": 16.356131510863282,
+        "relative_humidity_pct": 66.38309476472018,
+        "co2_ppm": 403.5043294166362
+      },
+      "new_outdoor_sample": null,
+      "model_input_rows": 1
+    },
+    {
+      "start": 900.0,
+      "end": 1200.0,
+      "requested": {
+        "uBoil": 0.9999734224771121,
+        "uRoof": 0.00032397153926254775,
+        "uExtCo2": 0.0,
+        "uLamp": 0.0,
+        "uThScr": 0.9999999977445256
+      },
+      "realised": {
+        "uBoil": 0.9999734224771121,
+        "uRoof": 0.00032397153926254775,
+        "uExtCo2": 0.0,
+        "uLamp": 0.0,
+        "uThScr": 0.9999999977445256
+      },
+      "controller_sensor_times": {
+        "air_temperature_c": 900.0,
+        "relative_humidity_pct": 900.0,
+        "outdoor_temperature_c": 600.0,
+        "co2_ppm": 900.0,
+        "solar_radiation_w_m2": 600.0
+      },
+      "endpoint_indoor": {
+        "air_temperature_c": 17.458915297776805,
+        "relative_humidity_pct": 61.2162197132831,
+        "co2_ppm": 407.9964904423041
+      },
+      "new_outdoor_sample": {
+        "outdoor_temperature_c": 0.7999816894531477,
+        "solar_radiation_w_m2": 0.0
+      },
+      "model_input_rows": 1
+    },
+    {
+      "start": 1200.0,
+      "end": 1500.0,
+      "requested": {
+        "uBoil": 0.5934881316310948,
+        "uRoof": 0.00012509594873590593,
+        "uExtCo2": 0.0,
+        "uLamp": 0.0,
+        "uThScr": 0.9999999999806586
+      },
+      "realised": {
+        "uBoil": 0.5934881316310948,
+        "uRoof": 0.00012509594873590593,
+        "uExtCo2": 0.0,
+        "uLamp": 0.0,
+        "uThScr": 0.9999999999806586
+      },
+      "controller_sensor_times": {
+        "air_temperature_c": 1200.0,
+        "relative_humidity_pct": 1200.0,
+        "outdoor_temperature_c": 1200.0,
+        "co2_ppm": 1200.0,
+        "solar_radiation_w_m2": 1200.0
+      },
+      "endpoint_indoor": {
+        "air_temperature_c": 18.27457651044757,
+        "relative_humidity_pct": 57.51962676690633,
+        "co2_ppm": 412.01417519218415
+      },
+      "new_outdoor_sample": null,
+      "model_input_rows": 1
+    },
+    {
+      "start": 1500.0,
+      "end": 1800.0,
+      "requested": {
+        "uBoil": 0.0007967971566768153,
+        "uRoof": 6.332025291267417e-05,
+        "uExtCo2": 0.0,
+        "uLamp": 0.0,
+        "uThScr": 0.9999999999993575
+      },
+      "realised": {
+        "uBoil": 0.0007967971566768153,
+        "uRoof": 6.332025291267417e-05,
+        "uExtCo2": 0.0,
+        "uLamp": 0.0,
+        "uThScr": 0.9999999999993575
+      },
+      "controller_sensor_times": {
+        "air_temperature_c": 1500.0,
+        "relative_humidity_pct": 1500.0,
+        "outdoor_temperature_c": 1200.0,
+        "co2_ppm": 1500.0,
+        "solar_radiation_w_m2": 1200.0
+      },
+      "endpoint_indoor": {
+        "air_temperature_c": 18.79966806892017,
+        "relative_humidity_pct": 55.062491517577314,
+        "co2_ppm": 415.5447647581691
+      },
+      "new_outdoor_sample": {
+        "outdoor_temperature_c": 0.7999816894531477,
+        "solar_radiation_w_m2": 0.0
+      },
+      "model_input_rows": 1
+    }
+  ],
+  "ledger": {
+    "per_m2": {
+      "heat_kwh_m2": 0.04594158361223076,
+      "light_kwh_m2": 0.0,
+      "co2_kg_m2": 0.0,
+      "harvest_kg_m2": 2.0020050240858524e-117,
+      "transpiration_kg_m2": 0.0008189877964436805,
+      "days": 0.020833333333333336
+    },
+    "by_phase_per_m2": {
+      "active": {
+        "heat_kwh_m2": 0.04594158361223076,
+        "light_kwh_m2": 0.0,
+        "co2_kg_m2": 0.0,
+        "harvest_kg_m2": 2.0020050240858524e-117,
+        "transpiration_kg_m2": 0.0008189877964436805,
+        "days": 0.020833333333333336
+      },
+      "cleanup": {
+        "heat_kwh_m2": 0.0,
+        "light_kwh_m2": 0.0,
+        "co2_kg_m2": 0.0,
+        "harvest_kg_m2": 0.0,
+        "transpiration_kg_m2": 0.0,
+        "days": 0.0
+      },
+      "idle": {
+        "heat_kwh_m2": 0.0,
+        "light_kwh_m2": 0.0,
+        "co2_kg_m2": 0.0,
+        "harvest_kg_m2": 0.0,
+        "transpiration_kg_m2": 0.0,
+        "days": 0.0
+      }
+    },
+    "event_cost_eur_m2": 2.0,
+    "synthetic_margin_eur": -192.24051960133872,
+    "occupied_m2_days": 2.0,
+    "scope": "single-compartment accrued ledger; not final campaign settlement"
+  },
+  "public_air_records": 7,
+  "controller_solar_records": 4,
+  "model_load_count": 1,
+  "final_state": {
+    "tCan": 16.01324637797827,
+    "tAir": 18.79966806892017,
+    "tFlr": 15.692394442250846,
+    "tSo1": 15.580494356417253,
+    "tSo2": 13.535323028056041,
+    "tSo3": 10.302628749239958,
+    "tSo4": 7.110417601457086,
+    "tSo5": 3.9880796153496405,
+    "tThScr": 11.582804194061046,
+    "tTop": 5.855115485015135,
+    "tCovIn": 2.8330178904501744,
+    "tCovE": 2.6059276980490362,
+    "tPipe": 28.801190148790766,
+    "vpAir": 1188.9314186553188,
+    "vpTop": 761.3200746000487,
+    "co2Air": 763.3852643929515,
+    "co2Top": 750.1744068321967,
+    "cBuf": 19598.287300706626,
+    "cFruit": 314.9031124629868,
+    "cLeaf": 4539.557213124423,
+    "cStem": 1694.8993355860591,
+    "tCanSum": 0.30715200939781717,
+    "tCan24": 20.38136915247232,
+    "tBlScr": 16.5,
+    "tGroPipe": 16.467129688825906,
+    "tLamp": 18.454822491433433,
+    "tIntLamp": 18.79402306533629,
+    "time_state": 0.0208333333333333
+  },
+  "native_rhs": false,
+  "array_output": false,
+  "elapsed_seconds": 12.97385902912356
+}

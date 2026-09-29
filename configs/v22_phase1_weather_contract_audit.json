@@ -1,0 +1,44 @@
+{
+  "status": "requires_weather_protocol",
+  "campaign_days": 365,
+  "contract_has_weather_section": false,
+  "audited_manifest_coverage": [
+    {
+      "source": "original GreenLight",
+      "start": "2009-10-19T15:15:00",
+      "end": "2010-02-08T15:15:00",
+      "span_days": 112.0
+    },
+    {
+      "source": "AGC2023",
+      "start": "2023-09-05T00:00:00",
+      "end": "2023-11-09T00:00:00",
+      "span_days": 65.0
+    },
+    {
+      "source": "AGC2024 weather",
+      "start": "2024-09-03T00:05:00+02:00",
+      "end": "2024-11-21T23:55:00+01:00",
+      "span_days": 80.03472222222223
+    }
+  ],
+  "scope": "Existing audit metadata only; not an exhaustive dataset search or verification of raw files currently on disk. No previously reserved outcomes inspected.",
+  "unfrozen": [
+    "source years/season and start calendar",
+    "aligned temperature/RH/solar/wind/sky-temperature/CO2 channels and units",
+    "missing data, timezone and downsampling conventions",
+    "development/pilot/test partition and independent evaluation weather",
+    "joint temporal/weather structure and blinding/trajectory-reuse audit"
+  ],
+  "prohibited_shortcuts": [
+    "repeat short seasonal records to manufacture a year",
+    "use constant smoke weather as annual evidence",
+    "resample individual weather channels independently"
+  ],
+  "hashes": {
+    "v22_task_contract_v2.json": "77ed6c53d1f499862a2a510df3a21db07d7b788e22e51e24e36653c4f08591f6",
+    "greenlight_original_validation_preflight_v0.json": "bb6a9f0ec5f9baaa966f5f3cd09963ba1456fbb9e958fc44e95f4732822b65c5",
+    "agc2023_development_summary_v0.json": "8adb8e8f63a0b8a5888a6c73a190db86702a3845157a1758a16a6c3b1eb64484",
+    "agc2024_input_feasibility_v0.json": "d8b6c8eaf248cfe9696e6c170ea5b845e178e27c73f611dc25b5572450c70a72"
+  }
+}

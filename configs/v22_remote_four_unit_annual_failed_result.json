@@ -1,0 +1,52 @@
+{
+  "status": "failed",
+  "scope": "four staggered compartments, fixed policies and Cabauw weather; runtime/lifecycle pilot only, not formal LLM benchmark or empirical validation",
+  "pilot_days": 365,
+  "max_seconds": 10800,
+  "max_rss_bytes": 350000000,
+  "origin_utc": "2016-12-31T23:00:00+00:00",
+  "stop_days": {
+    "0": [
+      14,
+      196
+    ],
+    "1": [
+      30,
+      212
+    ],
+    "2": [
+      60,
+      242
+    ],
+    "3": [
+      180,
+      362
+    ]
+  },
+  "replant_days": {
+    "0": [
+      16,
+      198
+    ],
+    "1": [
+      32,
+      214
+    ],
+    "2": [
+      62,
+      244
+    ],
+    "3": [
+      182
+    ]
+  },
+  "packed_observations": true,
+  "native_rhs": true,
+  "array_output": true,
+  "model_load_seconds": 105.41158859105781,
+  "error": "FloatingPointError: native RHS arithmetic fault: 8",
+  "completed_steps": 69338,
+  "completed_days": 240.75694444444446,
+  "elapsed_seconds": 5488.108241819078,
+  "peak_rss_kib_linux": 215268
+}

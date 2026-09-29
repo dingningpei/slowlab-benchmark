@@ -1,0 +1,30 @@
+{
+  "scope": "six 300s steps with synthetic weather; not whole Phase1",
+  "load_once_seconds": 3.806321957963519,
+  "steps": [
+    {
+      "end_seconds": 21900,
+      "commands": {
+        "uBoil": 1.0,
+        "uRoof": 0.0,
+        "uExtCo2": 0.999999999999996,
+        "uLamp": 1.0
+      },
+      "state_count": 28,
+      "max_abs_state_difference": 124.70661165840534,
+      "matches_at_solver_tolerance": false,
+      "reload_seconds": 3.7843145419610664,
+      "reuse_seconds": 0.10057745897211134,
+      "climate": {
+        "temperature": 16.411582867701927,
+        "rh": 84.75058891062116,
+        "co2": 391.22713926219103,
+        "solar": 100.0
+      }
+    }
+  ],
+  "status": "failed",
+  "error": "ValueError: reused model differs beyond solver tolerance",
+  "wall_seconds": 7.691375833004713,
+  "peak_rss_bytes": 112885760
+}

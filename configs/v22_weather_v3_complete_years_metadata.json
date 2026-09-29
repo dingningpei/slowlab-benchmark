@@ -1,0 +1,30 @@
+{
+  "scope": "audited complete Cabauw development years only; no greenhouse validation",
+  "source_selection": {
+    "temperature/dewpoint/wind": "meteo_lc1_t10",
+    "shortwave/longwave": "radiation_lc1_t10"
+  },
+  "leap_rule": "drop Feb 29 for 365-day generator fitting only",
+  "excluded_years": {
+    "2012": [
+      "cesar_surface_radiation_lc1_t10_v1.0_201212.nc: invalid/missing LWD",
+      "cesar_surface_radiation_lc1_t10_v1.0_201212.nc: outside physical support LWD"
+    ]
+  },
+  "audit_sha256": "9a4a416a824b6a1cfebd59f2bea42df0c6abc1d9dd3ea0c875fb4a8b1366a49e",
+  "years": {
+    "2013": {
+      "rows": 52560,
+      "sha256_f64_le": "4c648e39d9946f2fec23984e0abc9c1102c09bf5b7f24bcc02ea50b2a3286a69"
+    },
+    "2014": {
+      "rows": 52560,
+      "sha256_f64_le": "6f3e13f625a95d281a07c52f2904d9fbaf465fb2fb5b753ca7e6bc31846d8c07"
+    },
+    "2016": {
+      "rows": 52560,
+      "sha256_f64_le": "dc50f5106c2c54e5f9730f8a64f98a9bcdb3237de248847644a022fbc5d152ba"
+    }
+  },
+  "archive_sha256": "752d386094be9bc3b745da513d66e233bb460216b1f9400971a26c0f38e5eef7"
+}
