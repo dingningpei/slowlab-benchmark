@@ -22,6 +22,10 @@ def verify():
         if row['class'] == 'assumed' and row['core_use']:
             assert row.get('sensitivity')
     assert d['annual_soil_sensitivity']['soil_boundary_c'] == [8, 20]
+    assert d['annual_soil_sensitivity']['status'] == 'completed_paired_scenario_not_calibration'
+    soil_audit = json.loads((ROOT / d['annual_soil_sensitivity']['result']).read_text())
+    assert soil_audit['status'] == 'passed_paired_structural_audit'
+    assert soil_audit['days'] == 365 and soil_audit['weather_year'] == 2017
     assert contract['facility']['floor_area_m2'] == 96
     assert contract['facility']['root_zone'].startswith('non-limiting')
     assert contract['observations']['delivery_delay_seconds'] == 0
@@ -29,7 +33,8 @@ def verify():
     return {'status': 'passed_phase1_component_evidence_register',
             'components': len(ids), 'unsupported_excluded':
                 sum(row['class'] == 'unsupported' for row in d['components']),
-            'annual_soil_sensitivity_run': False}
+            'annual_soil_sensitivity_run': True,
+            'annual_soil_sensitivity_calibrated': False}
 
 
 if __name__ == '__main__':

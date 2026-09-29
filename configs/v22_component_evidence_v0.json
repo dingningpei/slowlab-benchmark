@@ -19,13 +19,15 @@
     {"id": "irrigation_ec_response", "class": "unsupported", "source": "configs/reality_constraints_v2_2.json", "scope": "observed EC inputs do not identify dynamic yield response; absent from formal core", "core_use": false}
   ],
   "annual_soil_sensitivity": {
-    "status": "planned_not_run",
-    "precondition": "resolve day-240 numerical fault and establish a stable annual reference",
+    "status": "completed_paired_scenario_not_calibration",
+    "precondition": "day-240 numerical fault resolved and stable annual reference established",
     "weather_year": 2017,
     "compartment": "single-unit fixed-policy paired replay before any multi-unit expansion",
     "soil_boundary_c": [8, 20],
     "same_everything_else": ["contract v3", "weather file hashes", "policy", "calendar", "initial state", "solver tolerances"],
     "compare": ["daily indoor temperature", "daily RH", "cumulative harvest", "heating", "lighting", "CO2 dosing", "numerical failure"],
-    "decision_rule": "report differences even if small or unfavorable; no post-hoc site exclusion or claim of calibration"
+    "decision_rule": "report differences even if small or unfavorable; no post-hoc site exclusion or claim of calibration",
+    "result": "configs/v22_soil_annual_sensitivity_audit.json",
+    "default_boundary_selection": "pending independent physical justification; scenario comparison alone cannot identify the actual approximately 2 m greenhouse soil temperature"
   }
 }

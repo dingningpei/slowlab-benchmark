@@ -1,0 +1,71 @@
+{
+  "status": "passed_paired_structural_audit",
+  "scope": "2017 Cabauw weather, fixed single-compartment policy, uncalibrated 8/20 C deep-soil scenario; not real-greenhouse validation",
+  "weather_year": 2017,
+  "days": 365,
+  "arm_hashes": {
+    "8": {
+      "result": "e905927cbd9a05b4635213b0d9f26eeab3508e8ae1595e1c698ea9bc0a95c281",
+      "progress": "95b3cd229e732228f6e7918b43fc69038e60f7aadb472106e480d4b7241dbe49"
+    },
+    "20": {
+      "result": "4fa43f2d65643fdd106a1a2a31a07dff683a70e96c4bb93136fb5edd671a9222",
+      "progress": "b5e59c833c181e8c254905e8153e9d9294f3e551ccc2a2834effbe6dec069c2f"
+    }
+  },
+  "climate": {
+    "air_c_mean": {
+      "annual_mean_8": 21.356065253031286,
+      "annual_mean_20": 21.47031500999097,
+      "mean_difference_8_minus_20": -0.11424975695968499,
+      "max_abs_daily_mean_difference": 0.35057914133247436
+    },
+    "rh_pct_mean": {
+      "annual_mean_8": 79.13045461887299,
+      "annual_mean_20": 78.8171031647108,
+      "mean_difference_8_minus_20": 0.31335145416225424,
+      "max_abs_daily_mean_difference": 1.672556459394258
+    }
+  },
+  "resources": {
+    "heat_kwh_m2": {
+      "soil_8": 308.353685855244,
+      "soil_20": 286.8795233814801,
+      "difference_8_minus_20": 21.474162473763897,
+      "relative_difference_vs_20": 0.07485428803229179
+    },
+    "light_kwh_m2": {
+      "soil_8": 218.8888888890004,
+      "soil_20": 218.8888888890004,
+      "difference_8_minus_20": 0.0,
+      "relative_difference_vs_20": 0.0
+    },
+    "co2_kg_m2": {
+      "soil_8": 27.39923801478518,
+      "soil_20": 27.39587729177974,
+      "difference_8_minus_20": 0.0033607230054393256,
+      "relative_difference_vs_20": 0.00012267258206940962
+    },
+    "harvest_kg_m2": {
+      "soil_8": 68.77354822223424,
+      "soil_20": 67.92748043834727,
+      "difference_8_minus_20": 0.8460677838869657,
+      "relative_difference_vs_20": 0.01245545659028055
+    },
+    "transpiration_kg_m2": {
+      "soil_8": 825.5617913563773,
+      "soil_20": 832.2452011715321,
+      "difference_8_minus_20": -6.683409815154846,
+      "relative_difference_vs_20": -0.008030577774130469
+    }
+  },
+  "synthetic_margin_eur": {
+    "soil_8": 6890.645165211092,
+    "soil_20": 6835.401781823224,
+    "difference_8_minus_20": 55.24338338786765
+  },
+  "max_rss_bytes": {
+    "soil_8": 273481728,
+    "soil_20": 286953472
+  }
+}
