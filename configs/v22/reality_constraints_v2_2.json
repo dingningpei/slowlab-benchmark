@@ -1,0 +1,364 @@
+{
+  "protocol_id": "slowlab-v2.2-reality-constraints-0.1",
+  "status": "frozen_phase0_evidence_roles",
+  "frozen_on": "2026-09-27",
+  "scope": "Evidence and support boundaries for the reality-constrained simulation benchmark; this is not a validated digital-twin contract.",
+  "phase0_decision": {
+    "status": "complete_external_trajectory_gate_failed",
+    "greenlight_v8_result": "fail",
+    "pooled_holdout": {
+      "sequences": 8,
+      "compartment_days": 137,
+      "hourly_samples": 3288,
+      "temperature_rmse_c": 2.579306849260968,
+      "temperature_limit_c": 2.04,
+      "rh_rmse_percentage_points": 9.982907860896558,
+      "rh_limit_percentage_points": 8.5,
+      "co2_rmse_ppm": 211.79470050610357,
+      "co2_limit_ppm": 361.0
+    },
+    "result_source": "configs/agc2019_holdout_result_v8.json",
+    "gate_source": "configs/agc2019_climate_validation_gate_v0.json"
+  },
+  "claim_boundary": {
+    "permitted": [
+      "reality-constrained simulation benchmark",
+      "source-grounded ranges and facility capacities",
+      "development evidence from opened AGC 2019 and AGC 2023 trajectories",
+      "failed external observed-action trajectory audit"
+    ],
+    "forbidden": [
+      "validated digital twin",
+      "validated real-greenhouse closed loop",
+      "facility-specific counterfactual validity",
+      "physical validation of unmeasured actuator fluxes"
+    ]
+  },
+  "evidence_classes": {
+    "observed": "Directly present in a public time series or measurement table. An observed envelope is descriptive support, not proof outside the observed policy.",
+    "literature_constrained": "Reported equipment, geometry or response range from a cited source, without a directly aligned realised time series.",
+    "assumed": "A transparent benchmark choice requiring sensitivity analysis; it is not empirical evidence.",
+    "unsupported": "The public sources do not measure or identify the quantity. It is ineligible for a formal reality claim."
+  },
+  "source_roles": {
+    "agc2019": {
+      "role": "development_and_failed_holdout_audit",
+      "may_support": ["development diagnostics", "failed external-validity audit"],
+      "may_not_support": ["v2.2 prospective validation", "arbitrary counterfactual actions"]
+    },
+    "agc2023": {
+      "role": "development_only",
+      "may_support": ["observed climate and action envelopes", "crop-state diagnostics"],
+      "may_not_support": ["prospective validation", "CO2 or fogging actuator identification"]
+    },
+    "agc2024": {
+      "role": "input_and_schema_evidence_only_for_v2.2",
+      "may_support": ["realised-action schema", "observed input envelopes", "reported facility capacities"],
+      "may_not_support": ["counterfactual actuator validation", "validated v2.2 digital twin"]
+    },
+    "root_zone_literature": {
+      "role": "candidate_phase1_constraints_not_yet_core",
+      "may_support": ["plausible envelope and sensitivity analysis"],
+      "may_not_support": ["a fully identified dynamic root-zone model"]
+    }
+  },
+  "formal_support_policy": {
+    "default": "Every formal v2.2 site, action, realised actuator value and observation covered by a reality claim must name a constraint_id.",
+    "out_of_range": "Fail the formal support audit unless the record is predeclared as a sensitivity analysis with a nonempty justification.",
+    "unsupported": "Never eligible for the formal reality-constrained matrix; allowed only in a clearly labelled sensitivity analysis.",
+    "unknown_constraint": "Fail; unknown quantities cannot be silently accepted.",
+    "observed_range_interpretation": "Range inclusion establishes interpolation within an observed envelope, not causal or counterfactual validation."
+  },
+  "constraints": [
+    {
+      "constraint_id": "agc2023.indoor_temperature",
+      "quantity": "indoor_air_temperature",
+      "evidence_class": "observed",
+      "unit": "degC",
+      "support": {"min": 16.5, "max": 35.1999987125314},
+      "source": "configs/agc2023_development_summary_v0.json#/climate/fields/t_air",
+      "claim_use": "development envelope only",
+      "formal_eligible": true
+    },
+    {
+      "constraint_id": "agc2023.indoor_rh",
+      "quantity": "indoor_relative_humidity",
+      "evidence_class": "observed",
+      "unit": "percent",
+      "support": {"min": 33.1000312144071, "max": 94.5},
+      "source": "configs/agc2023_development_summary_v0.json#/climate/fields/rh",
+      "claim_use": "development envelope only",
+      "formal_eligible": true
+    },
+    {
+      "constraint_id": "agc2023.indoor_co2",
+      "quantity": "indoor_co2_concentration",
+      "evidence_class": "observed",
+      "unit": "ppm",
+      "support": {"min": 349.0, "max": 826.999327599427},
+      "source": "configs/agc2023_development_summary_v0.json#/climate/fields/co2",
+      "claim_use": "outcome envelope only; no dosing input exists",
+      "formal_eligible": true
+    },
+    {
+      "constraint_id": "agc2023.rail_pipe_temperature",
+      "quantity": "rail_pipe_temperature",
+      "evidence_class": "observed",
+      "unit": "degC",
+      "support": {"min": 0.0, "max": 52.0999987125314},
+      "source": "configs/agc2023_development_summary_v0.json#/climate/fields/t_rail",
+      "claim_use": "observed realised-action envelope",
+      "formal_eligible": true
+    },
+    {
+      "constraint_id": "agc2023.vent_position",
+      "quantity": "roof_vent_position",
+      "evidence_class": "observed",
+      "unit": "percent",
+      "support": {"min": 0.0, "max": 100.0},
+      "source": "configs/agc2023_development_summary_v0.json#/climate/fields/vent_lee and /vent_wind",
+      "claim_use": "observed realised-action envelope; not measured air flow",
+      "formal_eligible": true
+    },
+    {
+      "constraint_id": "agc2023.lamp_state",
+      "quantity": "lamp_binary_state",
+      "evidence_class": "observed",
+      "unit": "binary",
+      "support": {"values": [0, 1]},
+      "source": "configs/agc2023_development_summary_v0.json#/climate/fields/ligth_on",
+      "claim_use": "observed realised-action state",
+      "formal_eligible": true
+    },
+    {
+      "constraint_id": "agc2024.heating_setpoint_vip",
+      "quantity": "heating_temperature_setpoint",
+      "evidence_class": "observed",
+      "unit": "degC",
+      "support": {"min": 10.2, "max": 26.0},
+      "source": "configs/agc2024_input_feasibility_v0.json#/tables/*/allowed_field_stats/compartment~1heating_temperature_vip",
+      "claim_use": "union of six observed VIP envelopes; not delivered heat flux",
+      "formal_eligible": true
+    },
+    {
+      "constraint_id": "agc2024.ventilation_temperature_vip",
+      "quantity": "ventilation_temperature_setpoint",
+      "evidence_class": "observed",
+      "unit": "degC",
+      "support": {"min": 13.8, "max": 28.0},
+      "source": "configs/agc2024_input_feasibility_v0.json#/tables/*/allowed_field_stats/compartment~1ventilation_temperature_*_vip",
+      "claim_use": "union of six observed VIP envelopes; not measured ventilation flow",
+      "formal_eligible": true
+    },
+    {
+      "constraint_id": "agc2024.humidity_deficit_vip",
+      "quantity": "humidity_deficit_setpoint",
+      "evidence_class": "observed",
+      "unit": "g_m3",
+      "support": {"min": 1.1, "max": 7.04},
+      "source": "configs/agc2024_input_feasibility_v0.json#/tables/*/allowed_field_stats/compartment~1humidity_deficit_vip",
+      "claim_use": "union of six observed VIP envelopes; fogging realisation is absent",
+      "formal_eligible": true
+    },
+    {
+      "constraint_id": "agc2024.lamp_activation",
+      "quantity": "lamp_activation",
+      "evidence_class": "observed",
+      "unit": "percent",
+      "support": {"min": 0.0, "max": 100.0},
+      "source": "configs/agc2024_input_feasibility_v0.json#/tables/*/allowed_field_stats/compartment~1lamps_activation_percentage",
+      "claim_use": "observed realised-action envelope",
+      "formal_eligible": true
+    },
+    {
+      "constraint_id": "agc2024.irrigation_duration",
+      "quantity": "irrigation_event_duration",
+      "evidence_class": "observed",
+      "unit": "minutes",
+      "support": {"min": 0.0, "max": 30.0},
+      "source": "configs/agc2024_input_feasibility_v0.json#/tables/*/allowed_field_stats/compartment~1water_supply~1water_flow_duration",
+      "claim_use": "observed event envelope; delivered volume is not identified",
+      "formal_eligible": true
+    },
+    {
+      "constraint_id": "agc2024.drain_ec",
+      "quantity": "drain_electrical_conductivity",
+      "evidence_class": "observed",
+      "unit": "dS_m",
+      "support": {"min": 0.03, "max": 5.23},
+      "source": "configs/agc2024_input_feasibility_v0.json#/tables/*/allowed_field_stats/compartment~1water_drain~1ec",
+      "claim_use": "observed sensor envelope; not a causal root-zone response",
+      "formal_eligible": true
+    },
+    {
+      "constraint_id": "agc2023.sampling_interval",
+      "quantity": "climate_sampling_interval",
+      "evidence_class": "observed",
+      "unit": "seconds",
+      "support": {"values": [300]},
+      "source": "configs/agc2023_development_summary_v0.json#/climate/non_five_minute_steps",
+      "claim_use": "observed five-minute cadence with no cadence breaks",
+      "formal_eligible": true
+    },
+    {
+      "constraint_id": "agc2023.climate_field_coverage",
+      "quantity": "climate_field_coverage_fraction",
+      "evidence_class": "observed",
+      "unit": "fraction",
+      "support": {"min": 0.9991453447999573, "max": 1.0},
+      "source": "configs/agc2023_development_summary_v0.json#/climate/fields",
+      "claim_use": "observed development-data completeness; not a universal missingness rate",
+      "formal_eligible": true
+    },
+    {
+      "constraint_id": "agc2024.realised_input_coverage",
+      "quantity": "essential_realised_input_coverage_fraction",
+      "evidence_class": "observed",
+      "unit": "fraction",
+      "support": {"min": 0.9993509411353537, "max": 1.0},
+      "source": "configs/agc2024_input_feasibility_v0.json#/tables",
+      "claim_use": "observed six-compartment completeness; shared initial and DST records explain gaps",
+      "formal_eligible": true
+    },
+    {
+      "constraint_id": "agc2024.floor_area",
+      "quantity": "compartment_floor_area",
+      "evidence_class": "literature_constrained",
+      "unit": "m2",
+      "support": {"values": [96.0]},
+      "source": "Maree et al. 2025, Sensors 25:4321, doi:10.3390/s25144321",
+      "claim_use": "reported AGC 2024 compartment geometry",
+      "formal_eligible": true
+    },
+    {
+      "constraint_id": "agc2024.heating_capacity",
+      "quantity": "peak_heating_capacity",
+      "evidence_class": "literature_constrained",
+      "unit": "W_m2",
+      "support": {"min": 0.0, "max": 120.0},
+      "source": "Maree et al. 2025, Sensors 25:4321, doi:10.3390/s25144321",
+      "claim_use": "capacity bound; realised heating flux is unmeasured",
+      "formal_eligible": true
+    },
+    {
+      "constraint_id": "agc2024.lighting_capacity",
+      "quantity": "supplemental_par_capacity",
+      "evidence_class": "literature_constrained",
+      "unit": "umol_m2_s",
+      "support": {"min": 20.0, "max": 200.0},
+      "source": "Maree et al. 2025, Sensors 25:4321, doi:10.3390/s25144321",
+      "claim_use": "reported fixture output range",
+      "formal_eligible": true
+    },
+    {
+      "constraint_id": "agc2024.co2_capacity",
+      "quantity": "co2_dosing_capacity",
+      "evidence_class": "literature_constrained",
+      "unit": "g_m2_h",
+      "support": {"min": 0.0, "max": 7.5},
+      "source": "Maree et al. 2025, Sensors 25:4321, doi:10.3390/s25144321",
+      "claim_use": "capacity bound; instantaneous realised mass flow is unmeasured",
+      "formal_eligible": true
+    },
+    {
+      "constraint_id": "agc2024.fogging_capacity",
+      "quantity": "fogging_capacity",
+      "evidence_class": "literature_constrained",
+      "unit": "g_m2_h",
+      "support": {"min": 0.0, "max": 220.0},
+      "source": "Maree et al. 2025, Sensors 25:4321, doi:10.3390/s25144321",
+      "claim_use": "installed capacity only; no realised fogging trace",
+      "formal_eligible": false
+    },
+    {
+      "constraint_id": "rootzone.feed_ec",
+      "quantity": "feed_electrical_conductivity",
+      "evidence_class": "observed",
+      "unit": "dS_m",
+      "support": {"min": 2.9, "max": 5.1},
+      "source": "configs/root_zone_evidence_v0.json#/agc_observed_ranges/feed_ec_ds_m",
+      "claim_use": "candidate Phase 1 envelope; root-zone model is not yet frozen",
+      "formal_eligible": false
+    },
+    {
+      "constraint_id": "benchmark.cycle_length",
+      "quantity": "crop_cycle_length",
+      "evidence_class": "assumed",
+      "unit": "days",
+      "support": {"values": [210.0]},
+      "source": "slowlab/tasks.py#Task.cycle_days",
+      "claim_use": "v2.1 benchmark choice; must be reconsidered in Phase 1",
+      "formal_eligible": false
+    },
+    {
+      "constraint_id": "unsupported.fogging_realised_flow",
+      "quantity": "realised_fogging_flow",
+      "evidence_class": "unsupported",
+      "unit": "g_m2_h",
+      "support": null,
+      "source": "configs/agc2024_input_feasibility_v0.json#/known_unmeasured_or_unpublished",
+      "claim_use": "not eligible for formal executor calibration",
+      "formal_eligible": false
+    },
+    {
+      "constraint_id": "unsupported.heating_water_flow",
+      "quantity": "heating_water_mass_flow",
+      "evidence_class": "unsupported",
+      "unit": "kg_s",
+      "support": null,
+      "source": "configs/agc2024_input_feasibility_v0.json#/known_unmeasured_or_unpublished",
+      "claim_use": "not eligible for formal executor calibration",
+      "formal_eligible": false
+    },
+    {
+      "constraint_id": "unsupported.ventilation_airflow",
+      "quantity": "realised_natural_ventilation_airflow",
+      "evidence_class": "unsupported",
+      "unit": "kg_m2_s",
+      "support": null,
+      "source": "configs/agc2024_input_feasibility_v0.json#/known_unmeasured_or_unpublished",
+      "claim_use": "not eligible for formal executor calibration",
+      "formal_eligible": false
+    },
+    {
+      "constraint_id": "unsupported.screen_flux",
+      "quantity": "screen_heat_or_moisture_flux",
+      "evidence_class": "unsupported",
+      "unit": "unknown",
+      "support": null,
+      "source": "configs/agc2024_input_feasibility_v0.json#/known_unmeasured_or_unpublished",
+      "claim_use": "not eligible for formal executor calibration",
+      "formal_eligible": false
+    },
+    {
+      "constraint_id": "unsupported.sensor_error_calibration",
+      "quantity": "facility_sensor_bias_and_noise_distribution",
+      "evidence_class": "unsupported",
+      "unit": "varies",
+      "support": null,
+      "source": "docs/agc2024_input_feasibility.md#remaining-gaps",
+      "claim_use": "sensor-error distributions must be labelled benchmark assumptions",
+      "formal_eligible": false
+    },
+    {
+      "constraint_id": "unsupported.executor_delay",
+      "quantity": "command_to_realisation_delay_distribution",
+      "evidence_class": "unsupported",
+      "unit": "seconds",
+      "support": null,
+      "source": "configs/agc2024_input_feasibility_v0.json and configs/agc2023_development_summary_v0.json do not align command issue times with actuator acknowledgements",
+      "claim_use": "delay distributions may appear only as declared sensitivity assumptions",
+      "formal_eligible": false
+    },
+    {
+      "constraint_id": "unsupported.executor_failure_rate",
+      "quantity": "actuator_failure_probability",
+      "evidence_class": "unsupported",
+      "unit": "probability",
+      "support": null,
+      "source": "audited AGC public files do not label actuator failures",
+      "claim_use": "failure rates may appear only as declared sensitivity assumptions",
+      "formal_eligible": false
+    }
+  ]
+}

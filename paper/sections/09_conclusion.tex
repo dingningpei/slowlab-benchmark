@@ -1,32 +1,26 @@
-\section{Conclusion and future work}
+\section{Conclusion}
 \label{sec:conclusion}
 
-\slowlab{} asks an agent to do what a grower's agronomist does: design an experiment, commit
-it, wait out a season, and design again. The four conditions are not scored, because in this
-domain they cannot be switched off; what is scored is the experimentation carried out while
-they hold, read both as the regret it realised and as the regret a perfect reasoner would
-still have carried given the same designs. One component does have a dial, and turning it
-sharpened the claim rather than confirming it: withdrawing a quarter of the facility after
-heat damage changes no agent's realised regret, scripted or otherwise, so irreversibility
-here binds through commitment and not through capacity (Appendix~\ref{app:defects}).
+\slowlab{} evaluates an agent as the operator of a resource-limited experimental campaign:
+it must allocate treatments to a tiered facility, interpret time-stamped evidence and issue
+a final recommendation while poor experiments incur economic loss. Version~2 makes
+within-cycle observation explicit and evaluates designs and recommendations against the
+same visible history.
 
-Run on five models, the instrument says what a single outcome number could not. No arm
-reaches what the instance distribution already allows with no data at all. The designs are
-not sloppy --- they replicate, declare their randomisation and respect the control hierarchy
---- they are too small, most using two distinct treatments whether the problem has one factor
-or six. And handing the models the method they failed to reconstruct moves the two halves of
-the score in opposite directions, within a model and paired by instance: the screening tool
-repairs the designs and the campaigns end worse, because the inference routine is fitted to
-those designs and inherits what they cannot support. Design quality and decision quality are
-two measurements, and that is the evidence.
+The experiments support a more specific result than a universal tool null. Fixed-history
+replay shows that allocation and reading are empirically separable but task dependent. In
+the original 928-episode protocol, standard aids do not reliably reduce final regret for
+the tested Luna and Sol conditions. A fresh 384-episode noise extension reproduces the Luna
+null at twice the observation noise and finds a harmful design-aid effect at half noise. A
+prospective 288-episode same-site extension then shows that inference-aid value is model
+dependent: it is null for Luna, directionally favorable but uncertain for DeepSeek V4.1
+Flash, and beneficial for Qwen 3.8 27B. Under inference, the pairwise final-regret model
+contrasts are no longer significant. Within-cycle access is used by the agent but does not
+significantly improve the final recommendation under the current synchronous action space.
 
-\paragraph{Future work.} The measure we would most like to add is a design score conditioned
-on the inference procedure that will actually read the design: \eqref{eq:eig} prices a design
-by what a Bayes-optimal reader could extract, and \S\ref{sec:results} shows the gap between
-that and what the agent's own reader extracts is where the action is. The cheapest missing
-experiment is a second tooled arm whose inference routine is known to be good on these tasks,
-which would separate deference under slow feedback from tool use in general. We release the
-environment, the reference points, the tasks and the harness; Appendix~\ref{app:defects}
-carries the register of what is still wrong with all four, Appendix~\ref{app:eig} what the
-estimator cannot yet do, and Appendix~\ref{app:admit} four task extensions the crop model
-already supports.
+These findings motivate benchmarks that expose the resource and timing choices through
+which better reasoning can affect an experiment. The next decisive extensions are matched
+scripted-and-model comparisons on the same sites, replication of the observed model--tool
+interaction, a calibrated higher-dimensional history evaluator, and asynchronous actions
+whose use of interim evidence can change physical capacity rather than only an interim
+recommendation.

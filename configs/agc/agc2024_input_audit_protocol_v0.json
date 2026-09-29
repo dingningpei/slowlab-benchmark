@@ -1,0 +1,45 @@
+{
+  "protocol_id": "agc2024-dwarf-tomato-input-only-feasibility-v0",
+  "status": "frozen before archive download or timeseries value access",
+  "source": {
+    "title": "4th Autonomous Greenhouse Challenge: Dwarf Tomato Timeseries and Images",
+    "doi": "10.4121/fa102772-32db-4b30-bace-12f2016722ce",
+    "publisher": "Wageningen University & Research",
+    "reported_scope": "2024 two-month cultivation; six 96 m2 compartments; five-minute greenhouse climate, control state, weather and plant measurements"
+  },
+  "purpose": "Determine whether the public archive contains sufficient exogenous inputs, realised equipment states, facility metadata and crop initialisation variables for a prospective GreenLight trajectory validation without using indoor climate outcomes to select identities or periods.",
+  "allowed_before_validation_contract_is_frozen": [
+    "landing-page and archive metadata",
+    "file names, directory names, compressed and uncompressed sizes, checksums and MIME types",
+    "table headers, declared units, documentation and data dictionaries",
+    "timestamp values and timestamp multiplicity",
+    "compartment identifiers",
+    "weather values and their missingness",
+    "requested setpoints and realised equipment/control-state values and their missingness",
+    "resource inputs, irrigation, crop-management and non-climate plant measurements and their missingness",
+    "facility geometry, equipment specifications, sensor metadata and calibration descriptions"
+  ],
+  "forbidden_before_validation_contract_is_frozen": [
+    "indoor air-temperature values",
+    "indoor relative-humidity, humidity-deficit, vapour-pressure or VPD values",
+    "indoor CO2 concentration values",
+    "any statistic, plot, missingness-based period selection or model residual computed from those outcome values"
+  ],
+  "selection_rule": "Candidate validation identities and periods may be selected only from timestamp continuity, compartment identity and completeness/range of allowed input fields. Outcome columns may be named in the schema but their values must not be parsed.",
+  "feasibility_questions": [
+    "Are outdoor weather drivers present at an alignable interval?",
+    "Are realised heating, ventilation, screening, fogging/humidification, CO2 dosing and lighting states present rather than only requested setpoints?",
+    "Are units and sign conventions documented?",
+    "Are facility geometry, equipment capacities and sensor locations/calibrations reported?",
+    "Are crop state or management measurements sufficient to initialise LAI/transpiration assumptions?",
+    "Do input-complete continuous sequences exist without selecting on indoor outcomes?",
+    "Which required physical fluxes remain unmeasured and would need reconstruction or uncertainty bounds?"
+  ],
+  "decision_categories": {
+    "A": "sufficient for prospective observed-action climate replay and candidate blind validation",
+    "B": "usable only after source-grounded input reconstruction with frozen uncertainty bounds",
+    "C": "usable for descriptive realism or development, not strict trajectory validation",
+    "D": "insufficient even for aligned observed-action replay"
+  },
+  "next_freeze_before_outcome_access": "A validation contract defining identities, periods, initial-condition access, model version and hashes, metrics, thresholds, missing-data rules and one-shot handling must be committed before any forbidden outcome value is read."
+}

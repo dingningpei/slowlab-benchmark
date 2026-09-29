@@ -69,3 +69,122 @@ def test_mandatory_reasoning_endpoint_falls_back_to_a_cap(monkeypatch):
     assert calls[1]["reasoning"] == {"max_tokens": 777}
     f([{"role": "user", "content": "hi"}])
     assert calls[2]["reasoning"] == {"max_tokens": 777}     # no longer retries with it disabled
+
+
+def test_generation_seed_reasoning_and_response_metadata_are_recorded(monkeypatch):
+    import json
+    import slowlab.providers as P
+
+    bodies = []
+
+    class _Resp:
+        def read(self):
+            return json.dumps({
+                "model": "actual/model", "provider": "test-provider", "created": 123,
+                "usage": {"prompt_tokens": 4, "completion_tokens": 2},
+                "choices": [{"finish_reason": "stop", "message": {"content": "ok"}}],
+            }).encode()
+        def __enter__(self): return self
+        def __exit__(self, *args): pass
+
+    def fake(req, timeout=None, context=None):
+        bodies.append(json.loads(req.data.decode()))
+        return _Resp()
+
+    monkeypatch.setattr(P.urllib.request, "urlopen", fake)
+    monkeypatch.setenv("OPENROUTER_API_KEY", "sk-test")
+    complete = P.openai_compatible(
+        "openai/gpt-test", generation_seed=1701, reasoning_effort="medium",
+        temperature=0.0, max_tokens=321, json_mode=True)
+    assert complete([{"role": "user", "content": "hi"}]) == "ok"
+    assert bodies[0]["seed"] == 1701
+    assert bodies[0]["reasoning"] == {"effort": "medium"}
+    assert bodies[0]["response_format"] == {"type": "json_object"}
+    assert complete.call_records[0]["actual_model"] == "actual/model"
+    assert complete.call_records[0]["usage"]["completion_tokens"] == 2
+    assert complete.call_records[0]["json_mode"] is True
+
+
+def test_deepseek_chat_completions_uses_native_thinking_fields(monkeypatch):
+    import json
+    import slowlab.providers as P
+
+    bodies = []
+
+    class _Resp:
+        def read(self):
+            return json.dumps({
+                "model": "deepseek-flash", "usage": {},
+                "choices": [{"finish_reason": "stop", "message": {"content": "{}"}}],
+            }).encode()
+        def __enter__(self): return self
+        def __exit__(self, *args): pass
+
+    def fake(req, timeout=None, context=None):
+        bodies.append(json.loads(req.data.decode()))
+        return _Resp()
+
+    monkeypatch.setattr(P.urllib.request, "urlopen", fake)
+    monkeypatch.setenv("DEEPSEEK_API_KEY", "sk-test")
+    P.openai_compatible("deepseek-flash", reasoning_effort="low")([])
+    P.openai_compatible("deepseek-flash")([])
+    assert bodies[0]["thinking"] == {"type": "enabled"}
+    assert bodies[0]["reasoning_effort"] == "low"
+    assert "reasoning" not in bodies[0]
+    assert bodies[1]["thinking"] == {"type": "disabled"}
+    assert "reasoning_effort" not in bodies[1]
+
+
+def test_openrouter_provider_pin_is_fail_closed(monkeypatch):
+    import json
+    import slowlab.providers as P
+
+    bodies = []
+    class _Resp:
+        def read(self):
+            return json.dumps({
+                "model": "qwen/qwen3.8-27b", "provider": "Phala", "usage": {},
+                "choices": [{"finish_reason": "stop", "message": {"content": "{}"}}],
+            }).encode()
+        def __enter__(self): return self
+        def __exit__(self, *args): pass
+    def fake(req, timeout=None, context=None):
+        bodies.append(json.loads(req.data.decode())); return _Resp()
+
+    monkeypatch.setattr(P.urllib.request, "urlopen", fake)
+    monkeypatch.setenv("OPENROUTER_API_KEY", "sk-test")
+    fn = P.openai_compatible("qwen/qwen3.8-27b", provider_only=["Phala"],
+                             expected_provider="Phala",
+                             expected_actual_model="qwen/qwen3.8-27b")
+    assert fn([]) == "{}"
+    assert bodies[0]["provider"] == {"only": ["Phala"], "allow_fallbacks": False}
+
+    bad = P.openai_compatible("qwen/qwen3.8-27b", expected_provider="Other")
+    with pytest.raises(RuntimeError, match="provider mismatch"):
+        bad([])
+
+
+def test_openrouter_does_not_identify_benchmark_by_default(monkeypatch):
+    import json
+    import slowlab.providers as P
+
+    headers = []
+
+    class _Resp:
+        def read(self):
+            return json.dumps({
+                "model": "test/model", "usage": {},
+                "choices": [{"finish_reason": "stop", "message": {"content": "{}"}}],
+            }).encode()
+        def __enter__(self): return self
+        def __exit__(self, *args): pass
+
+    def fake(req, timeout=None, context=None):
+        headers.append(dict(req.header_items()))
+        return _Resp()
+
+    monkeypatch.setattr(P.urllib.request, "urlopen", fake)
+    monkeypatch.setenv("OPENROUTER_API_KEY", "sk-test")
+    P.openai_compatible("test/model")([])
+    assert "Http-referer" not in headers[0]
+    assert "X-title" not in headers[0]

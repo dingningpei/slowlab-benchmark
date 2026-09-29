@@ -1,0 +1,82 @@
+{
+  "status": "passed_active_window",
+  "scope": "one early active crop; archived Jan 2017 weather; bounded 1\u20137 days",
+  "array_output": true,
+  "days": 7,
+  "model_load_seconds": 12.524746196111664,
+  "stepping_seconds": 39.42461949586868,
+  "steps": 2016,
+  "final_state": {
+    "tCan": 16.798416716939816,
+    "tAir": 18.825216231903422,
+    "tFlr": 17.7750384436612,
+    "tSo1": 17.892250101419748,
+    "tSo2": 17.661827373572436,
+    "tSo3": 16.423878692721402,
+    "tSo4": 14.154123647437888,
+    "tSo5": 12.058864018952521,
+    "tThScr": 12.098577645413947,
+    "tTop": 5.880616736023545,
+    "tCovIn": 2.5871874714188032,
+    "tCovE": 2.3293003643623402,
+    "tPipe": 24.112689073740658,
+    "vpAir": 1517.9546117552218,
+    "vpTop": 762.9067149616569,
+    "co2Air": 1068.1509180453857,
+    "co2Top": 958.3227618203643,
+    "cBuf": 377.6920987514266,
+    "cFruit": 6445.273579061782,
+    "cLeaf": 33493.84677852254,
+    "cStem": 25611.680080606373,
+    "tCanSum": 130.9145065077089,
+    "tCan24": 19.323198787433817,
+    "tBlScr": 16.5,
+    "tGroPipe": 21.556404153943767,
+    "tLamp": 18.52209664442184,
+    "tIntLamp": 18.82700088577903,
+    "time_state": 7.000000000000112
+  },
+  "ledger": {
+    "per_m2": {
+      "heat_kwh_m2": 5.023895539545878,
+      "light_kwh_m2": 5.599999999999982,
+      "co2_kg_m2": 0.18294720364526956,
+      "harvest_kg_m2": 2.0277355647616222e-113,
+      "transpiration_kg_m2": 3.5442753469750468,
+      "days": 7.000000000000167
+    },
+    "by_phase_per_m2": {
+      "active": {
+        "heat_kwh_m2": 5.023895539545878,
+        "light_kwh_m2": 5.599999999999982,
+        "co2_kg_m2": 0.18294720364526956,
+        "harvest_kg_m2": 2.0277355647616222e-113,
+        "transpiration_kg_m2": 3.5442753469750468,
+        "days": 7.000000000000167
+      },
+      "cleanup": {
+        "heat_kwh_m2": 0.0,
+        "light_kwh_m2": 0.0,
+        "co2_kg_m2": 0.0,
+        "harvest_kg_m2": 0.0,
+        "transpiration_kg_m2": 0.0,
+        "days": 0.0
+      },
+      "idle": {
+        "heat_kwh_m2": 0.0,
+        "light_kwh_m2": 0.0,
+        "co2_kg_m2": 0.0,
+        "harvest_kg_m2": 0.0,
+        "transpiration_kg_m2": 0.0,
+        "days": 0.0
+      }
+    },
+    "event_cost_eur_m2": 2.0,
+    "synthetic_margin_eur": -306.9872848998093,
+    "occupied_m2_days": 672.000000000016,
+    "scope": "single-compartment accrued ledger; not final campaign settlement"
+  },
+  "public_air_records": 2017,
+  "elapsed_seconds": 51.9675537541043,
+  "peak_rss_bytes_platform": 131112
+}

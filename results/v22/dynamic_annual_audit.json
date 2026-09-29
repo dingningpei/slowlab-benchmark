@@ -1,0 +1,47 @@
+{
+  "status": "passed_annual_dynamic_structural_audit",
+  "scope": "mechanical causality/resource/settlement audit only; no real-greenhouse validation",
+  "days": 365,
+  "ticks": 105120,
+  "starts": 5,
+  "wall_seconds": 7924.732518548844,
+  "peak_rss_bytes": 260685824,
+  "result_sha256": "eca12214684dc4d42604f35e2ed3acfe033ca9cb175c099132ddf0ce9268c21b",
+  "progress_sha256": "d24ef2f2b5062f8bd49a17270e9af1b988d0b0a5e0f0d852b98a805b22cf9dfa",
+  "trace_compressed_sha256": "9818c4f226bbc098f6c2b63e74401ffbd7ba772f83f6bbda4cdae575c8730357",
+  "trace_uncompressed_sha256": "40cce2b4a806fb6a8e567610e605726fb3b2135565913c65923b0c4f144c1044",
+  "per_unit_per_m2": {
+    "0": {
+      "heat_kwh_m2": 112.57838029014981,
+      "light_kwh_m2": 77.46666666666565,
+      "co2_kg_m2": 12.029541989849296,
+      "harvest_kg_m2": 37.58123193636465,
+      "transpiration_kg_m2": 459.68020961028856,
+      "days": 365.0000000003988
+    },
+    "1": {
+      "heat_kwh_m2": 125.65805661558782,
+      "light_kwh_m2": 84.77777777778257,
+      "co2_kg_m2": 12.388320988191555,
+      "harvest_kg_m2": 36.26372732008521,
+      "transpiration_kg_m2": 437.71495066678386,
+      "days": 365.00000000040245
+    },
+    "2": {
+      "heat_kwh_m2": 125.02116722558011,
+      "light_kwh_m2": 98.66666666668252,
+      "co2_kg_m2": 14.64232300860005,
+      "harvest_kg_m2": 39.17719265351957,
+      "transpiration_kg_m2": 477.5465136226566,
+      "days": 365.00000000040245
+    },
+    "3": {
+      "heat_kwh_m2": 29.27790621397655,
+      "light_kwh_m2": 19.7000000000018,
+      "co2_kg_m2": 1.107401224733011,
+      "harvest_kg_m2": 4.948579743887261e-63,
+      "transpiration_kg_m2": 34.98758252794578,
+      "days": 365.00000000047197
+    }
+  }
+}

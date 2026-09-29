@@ -1,0 +1,15 @@
+{
+  "status": "identified",
+  "scope": "exact saved LSODA trial state and inputs; model definitions hash-verified",
+  "unit": "1",
+  "time": 20801424.086320132,
+  "overflow_events": [
+    {
+      "index": 333,
+      "command": "a[333] = (1 / (1 + np.exp(-0.1 * ((y[14]) - ((610.78 * np.exp(17.2694 *(y[10]) / ((y[10]) + 238.3))))))) * 6.4e-9 * (a[52] * (np.abs(y[9] - y[10]))**0.33 * a[50] / a[51]) * ((y[14])-((610.78 * np.exp(17.2694 *(y[10]) / ((y[10]) + 238.3))))))",
+      "error": "FloatingPointError: overflow encountered in exp"
+    }
+  ],
+  "all_derivatives_finite": true,
+  "max_abs_derivative_difference_vs_saved_reference": 0.0
+}

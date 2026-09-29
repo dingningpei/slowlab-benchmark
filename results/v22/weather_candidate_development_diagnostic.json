@@ -1,0 +1,176 @@
+{
+  "status": "candidate_development_diagnostic",
+  "scope": "2017-18 fit; 2019 descriptive selection check; 2020 only fixed duplicate filter; no crop outcomes, no private formal seeds",
+  "source_rows": {
+    "2017": 52560,
+    "2018": 52560,
+    "2019": 52560,
+    "2020": 52704
+  },
+  "candidate_rows": 52560,
+  "support_attempts": [
+    {
+      "attempt": 0,
+      "support": "rejected",
+      "reason": "candidate violates predeclared physical support: shortwave=[0.000,1516.403] outside [0,1500]"
+    },
+    {
+      "attempt": 1,
+      "support": "rejected",
+      "reason": "candidate violates predeclared physical support: shortwave=[0.000,1634.179] outside [0,1500]"
+    },
+    {
+      "attempt": 2,
+      "support": "rejected",
+      "reason": "candidate violates predeclared physical support: shortwave=[0.000,1519.082] outside [0,1500]"
+    },
+    {
+      "attempt": 3,
+      "support": "accepted",
+      "nonreplay_passed": false,
+      "nearest_24h": 0.12536010560859848,
+      "nearest_6h": 0.07925465751683673
+    },
+    {
+      "attempt": 4,
+      "support": "rejected",
+      "reason": "candidate violates predeclared physical support: shortwave=[0.000,1528.494] outside [0,1500]"
+    },
+    {
+      "attempt": 5,
+      "support": "rejected",
+      "reason": "candidate violates predeclared physical support: shortwave=[0.000,1625.485] outside [0,1500]"
+    },
+    {
+      "attempt": 6,
+      "support": "rejected",
+      "reason": "candidate violates predeclared physical support: shortwave=[0.000,1501.634] outside [0,1500]"
+    },
+    {
+      "attempt": 7,
+      "support": "rejected",
+      "reason": "candidate violates predeclared physical support: shortwave=[0.000,1631.168] outside [0,1500]"
+    },
+    {
+      "attempt": 8,
+      "support": "rejected",
+      "reason": "candidate violates predeclared physical support: shortwave=[0.000,1599.048] outside [0,1500]"
+    },
+    {
+      "attempt": 9,
+      "support": "rejected",
+      "reason": "candidate violates predeclared physical support: shortwave=[0.000,1571.822] outside [0,1500]"
+    },
+    {
+      "attempt": 10,
+      "support": "accepted",
+      "nonreplay_passed": true,
+      "nearest_24h": 0.12688387720842104,
+      "nearest_6h": 0.08979314589703995
+    }
+  ],
+  "accepted_attempt": 10,
+  "similarity": {
+    "passed": true,
+    "threshold": 0.08,
+    "by_window": {
+      "24h": {
+        "minimum_standardized_rmse": 0.12688387720842104,
+        "near_duplicate_windows": 0,
+        "windows": 365
+      },
+      "6h": {
+        "minimum_standardized_rmse": 0.08979314589703995,
+        "near_duplicate_windows": 0,
+        "windows": 1460
+      }
+    }
+  },
+  "monthly_standardized_mean_delta_vs_2019": [
+    [
+      -0.21938527595434865,
+      -0.2191717233733523,
+      0.15964346594491413,
+      -0.01437034722900063,
+      -0.02884411972251243
+    ],
+    [
+      -0.15812286922593846,
+      -0.07999899773384739,
+      0.27810483030926514,
+      -0.10125273181908495,
+      0.2728993455584567
+    ],
+    [
+      -0.39776245186808856,
+      -0.4251052753906218,
+      -0.5897936181269474,
+      0.03900529866721025,
+      -0.5820416030017181
+    ],
+    [
+      0.05067437937930285,
+      0.358480634041883,
+      0.09456786521252582,
+      -0.16372849034987896,
+      0.420614736367931
+    ],
+    [
+      0.1301428609903807,
+      0.1334000189313016,
+      0.027900306890301364,
+      0.16370720787996376,
+      -0.11547636940009957
+    ],
+    [
+      -0.028742792506464783,
+      0.24183703567571704,
+      -0.17188499322957912,
+      -0.24432470441122417,
+      0.3048075177671865
+    ],
+    [
+      0.35088293615361427,
+      0.6149752739961278,
+      0.2799013203006411,
+      -0.12938471818510677,
+      0.43276310765738574
+    ],
+    [
+      0.02009103462822745,
+      0.11072707872339457,
+      -0.010770688506220772,
+      0.07849925342613173,
+      0.1396866733465563
+    ],
+    [
+      0.009209631726408969,
+      -0.01994187402050008,
+      -0.3900159008862522,
+      0.17687495658536082,
+      -0.2265508203912299
+    ],
+    [
+      -0.20005393779094555,
+      -0.31873391530276407,
+      0.007465489430095635,
+      -0.005334684997172348,
+      -0.2934197454390012
+    ],
+    [
+      0.25531293906067853,
+      0.16170556516823326,
+      0.09418204225753722,
+      0.001991857306771608,
+      0.13725508234858103
+    ],
+    [
+      0.11361047039106309,
+      0.17014515668469626,
+      -0.5385461417117563,
+      -0.016997077050156024,
+      0.18790417812370647
+    ]
+  ],
+  "elapsed_seconds": 10.480375073151663
+}

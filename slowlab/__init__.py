@@ -11,16 +11,20 @@ from .validity import score_validity, ValidityReport
 from .tomgro import TomgroModel, TomgroParams
 from .economics import EconomicModel, TomgroProfitModel, sample_site_econ
 from .world import ManagedTomgro, MANAGEMENT_FACTORS, sample_instance_params
-from .tasks import TASKS, Task
-from .env import SlowLabEnv, EpisodeResult, Observation
+from .tasks import (CORE_TASK_KEYS, CORE_TASK_NAMES, CORE_TASKS,
+                    EXPERIMENTAL_TASK_KEYS, EXPERIMENTAL_TASK_NAMES,
+                    EXPERIMENTAL_TASKS, TASKS, Task)
+from .env import (SlowLabEnv, EpisodeResult, Measurement, Observation,
+                  RecommendationUpdate, VisibleEvent)
 
 # ── Environment version ─────────────────────────────────────
-# Frozen 2026-09-10. See ENVIRONMENT_v1.0.md.
+# Version 2 adds persistent within-cycle state and timestamped measurements. See
+# ENVIRONMENT_v2.0.md. The terminal forward model remains numerically identical,
+# but v1 transcripts do not contain the new decision opportunities.
 #
-# What "frozen" means: the environment is a fixed artefact. Known defects are
-# registered in sections A-E of ENVIRONMENT_v1.0.md, published rather than all
-# fixed -- a benchmark's value is comparability across agents, not correctness
-# of the simulator.
+# What "frozen" means: a released version is a fixed artefact. Version-specific
+# changes are recorded rather than silently applied to existing results -- a
+# benchmark's value depends on comparability across agents.
 #
 # The stopping rule: a defect is fixed if it changes a claim the paper makes,
 # and recorded if it does not.
@@ -28,12 +32,15 @@ from .env import SlowLabEnv, EpisodeResult, Observation
 # Any change to ground truth (numbers in world / economics / tomgro / tasks)
 # must bump this version, and invalidates every episode already run.
 # tests/test_frozen.py guards this with a set of fingerprints.
-ENV_VERSION = "1.0.0"
+ENV_VERSION = "2.0.0"
 
-__version__ = "1.0.0"
+__version__ = "2.0.0"
 __all__ = ["FactorSpec", "Facility", "Unit", "Design", "Rejection", "RejectCode",
            "score_validity", "ValidityReport", "TomgroModel", "TomgroParams",
            "EconomicModel", "TomgroProfitModel", "ManagedTomgro",
            "MANAGEMENT_FACTORS", "sample_instance_params", "TASKS", "Task",
-           "SlowLabEnv", "EpisodeResult", "Observation",
+           "CORE_TASK_KEYS", "CORE_TASK_NAMES", "CORE_TASKS",
+           "EXPERIMENTAL_TASK_KEYS", "EXPERIMENTAL_TASK_NAMES", "EXPERIMENTAL_TASKS",
+           "SlowLabEnv", "EpisodeResult", "Measurement", "Observation",
+           "RecommendationUpdate", "VisibleEvent",
            "sample_site_econ", "ENV_VERSION"]

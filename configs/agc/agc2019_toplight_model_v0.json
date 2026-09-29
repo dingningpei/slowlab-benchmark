@@ -1,0 +1,59 @@
+{
+  "version": 0,
+  "status": "source-grounded input contract; thermal GreenLight extension not yet calibrated",
+  "topology": {
+    "hps": "overhead supplemental-light source",
+    "elixia": "second overhead supplemental-light source (working physical interpretation)",
+    "greenlight_interlighting_mapping_allowed": false,
+    "basis": [
+      "Hemming et al. 2020 reports six HPS and eight ELIXIA fixtures in one hybrid-lighting compartment",
+      "Heliospectra describes ELIXIA optics suitable for high-mount greenhouse installation",
+      "AGC-specific mounting height, optic and fixture heat partition remain unpublished"
+    ]
+  },
+  "source_capacities_umol_m2_s": {
+    "hps_par": 100.0,
+    "led_blue": 11.0,
+    "led_red": 49.0,
+    "led_white": 37.0,
+    "led_far_red_non_par": 12.0
+  },
+  "official_processing_power_coefficients_w_m2_not_independent_metering": {
+    "hps": 81.0,
+    "led_blue": 7.27,
+    "led_red": 25.3,
+    "led_white": 22.72,
+    "led_far_red": 6.23
+  },
+  "independent_nameplate_cross_check": {
+    "hps_fixture_count": 6,
+    "hps_w_per_fixture": 1000,
+    "floor_area_m2": 96,
+    "derived_hps_w_m2_floor": 62.5,
+    "interpretation": "The mismatch with the 81 W/m2 processing coefficient is retained, not reconciled by silently choosing an area basis."
+  },
+  "interlock": "LED VIPs may retain non-zero requested values while HPS power is off, but effective LED output is then zero. Missing LED commands while HPS is on remain unknown.",
+  "greenlight_extension_gate": {
+    "required_structure": "separate overhead LED energy balance or an explicitly validated aggregate overhead approximation",
+    "calibration_only_parameters": [
+      "LED electrical-to-PAR conversion after channel mixing",
+      "LED non-PAR radiative fraction",
+      "LED convective heat-transfer coefficient",
+      "LED fixture heat capacity and longwave emissivity",
+      "effective overhead fixture area and downward/upward view factors"
+    ],
+    "constraints": [
+      "all energy fractions are non-negative",
+      "radiative, convective, actively removed and stored energy close the electrical energy balance",
+      "calibration uses only the frozen calibration period",
+      "parameter ranges and identifiability are frozen before holdout",
+      "holdout outcomes are inspected once after parameters are frozen"
+    ]
+  },
+  "claim_boundary": "This supports a calibrated aggregate overhead LED model, not an exact digital twin of the AGC fixture geometry.",
+  "sources": {
+    "agc_experiment": "https://doi.org/10.3390/s20226430",
+    "official_agc_hybrid_lighting_summary": "https://heliospectra.com/blog/autonomous-greenhouse-challenge-the-conclusion/",
+    "manufacturer_high_mount_product_context_not_agc_specific_geometry": "https://heliospectra.com/led-grow-lights/elixia-c5/"
+  }
+}

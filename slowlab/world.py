@@ -92,22 +92,45 @@ _FRUIT_SPREAD = {
 }
 # Vegetative parameters are stable across sites, so only perturb them slightly (VC14's +/-10%)
 _VEG_STABLE = ("beta", "Nb", "delta", "Nm")
+CROP_LATENT_DIMENSION = len(_VEG_STABLE) + len(_FRUIT_SPREAD) + 1
+
+
+def crop_params_from_latent(latent, veg_cv: float = 0.06) -> TomgroParams:
+    """Map four standard normals and six unit uniforms to one crop site."""
+    latent = np.asarray(latent, float).ravel()
+    if len(latent) != CROP_LATENT_DIMENSION:
+        raise ValueError(
+            f"crop latent coordinate must contain {CROP_LATENT_DIMENSION} values")
+    uniforms = latent[len(_VEG_STABLE):]
+    if np.any((uniforms < 0.0) | (uniforms > 1.0)):
+        raise ValueError("the final six crop coordinates must lie in [0, 1]")
+    base = TomgroParams.from_j99("Gainesville")
+    values = dict(base.values)
+    for key, z in zip(_VEG_STABLE, latent[:len(_VEG_STABLE)]):
+        if key in values:
+            values[key] = float(values[key] * np.exp(float(z) * veg_cv))
+    offset = len(_VEG_STABLE)
+    for index, (key, (lo, hi)) in enumerate(_FRUIT_SPREAD.items()):
+        values[key] = float(lo + uniforms[index] * (hi - lo))
+    lo, hi = TP.VC14_NOMINAL["E"][1:3]
+    values["E"] = float(lo + uniforms[-1] * (hi - lo))
+    return TomgroParams(
+        values=values, intervals=TP.perturbation_intervals("VC14"),
+        provenance="j99", site="continuous-posterior",
+        source=("parameter distribution from the J99 three-site spread plus "
+                "VC14 +/-10% intervals"))
 
 
 def sample_instance_params(seed: int, veg_cv: float = 0.06) -> TomgroParams:
     """Draw one site: vegetative parameters perturbed slightly, fruit parameters drawn across the between-site spread."""
     rng = np.random.default_rng(20_000 + seed)
-    base = TomgroParams.from_j99("Gainesville")
-    v = dict(base.values)
-    for k in _VEG_STABLE:
-        if k in v:
-            v[k] = float(v[k] * np.exp(rng.normal(0, veg_cv)))
-    for k, (lo, hi) in _FRUIT_SPREAD.items():
-        v[k] = float(rng.uniform(lo, hi))
-    v["E"] = float(rng.uniform(*TP.VC14_NOMINAL["E"][1:3]))
-    return TomgroParams(values=v, intervals=TP.perturbation_intervals("VC14"),
-                        provenance="j99", site=f"sampled#{seed}",
-                        source="parameter distribution from the J99 three-site spread plus VC14 +/-10% intervals")
+    latent = np.concatenate([
+        rng.normal(size=len(_VEG_STABLE)),
+        rng.random(len(_FRUIT_SPREAD) + 1),
+    ])
+    params = crop_params_from_latent(latent, veg_cv=veg_cv)
+    params.site = f"sampled#{seed}"
+    return params
 
 
 
@@ -165,13 +188,15 @@ class ManagedTomgro:
     """
 
     def __init__(self, seed: int = 0, econ: EconomicModel | None = None,
+                 params: TomgroParams | None = None,
                  factors: list[FactorSpec] | None = None,
                  cycle_days: float = DEFAULT_CYCLE_DAYS):
         self.seed = seed
         self.cycle_days = float(cycle_days)
         self.factors = factors or MANAGEMENT_FACTORS
         self.d = len(self.factors)
-        self.params = sample_instance_params(seed)
+        self.params = sample_instance_params(seed) if params is None else params
+        self._oracle_cacheable = params is None
         # A site is a place: climate and prices vary with the seed rather than
         # being shared by every site. Passing econ overrides this (used by scan
         # scripts and unit tests).
@@ -187,21 +212,34 @@ class ManagedTomgro:
         return {f[i].name: f[i].low + X[:, i] * (f[i].high - f[i].low)
                 for i in range(self.d)}
 
-    def __call__(self, X, plant_params: dict | None = None, components: bool = False):
-        """Fully vectorised: rho, LAImax, p1 and cycle length all vary per candidate point.
+    @dataclass
+    class State:
+        """Resumable latent crop state. It is never exposed to an agent."""
 
-        Variable cycles are handled by running to the longest one and freezing WM
-        for each point on its own end day.
+        drivers: dict
+        params: dict
+        crop: TomgroModel
+        end: np.ndarray
+        N: np.ndarray
+        LAI: np.ndarray
+        W: np.ndarray
+        WF: np.ndarray
+        WM: np.ndarray
+        WM_final: np.ndarray
+        day: int = 0
+
+    def start(self, X, plant_params: dict | None = None) -> "ManagedTomgro.State":
+        """Create a persistent crop state at day zero.
+
+        The state contains biological truth, including variables that are not
+        directly measurable.  Environment-facing code must use a measurement
+        model instead of returning this object to an agent.
         """
         d = self._split(X)
         n = len(next(iter(d.values())))
-        for name, u in self._fixed.items():          # fill in the factors the task does not expose
+        for name, u in self._fixed.items():
             f = next(g for g in MANAGEMENT_FACTORS if g.name == name)
             d[name] = np.full(n, f.denorm(u))
-        # Cycle length is not a decision variable (see Limitations). This must
-        # *assert* rather than silently override: anyone who adds cycle_days back
-        # to the factor set should get an error immediately, not discover later
-        # that their whole scan ran at one cycle length.
         assert "cycle_days" not in {f.name for f in self.factors}, (
             "cycle_days is declared by the task, not chosen by the agent; "
             "set Task.cycle_days instead of adding it as a factor")
@@ -211,43 +249,93 @@ class ManagedTomgro:
             "penalty, so its optimum is always at the upper rail")
         d["leaf_prune"] = np.full(n, FIXED_LEAF_PRUNE)
         p = dict(self.params.values) if plant_params is None else plant_params
+        end = np.round(d["cycle_days"]).astype(int)
+        crop = TomgroModel(params=TomgroParams(values=dict(p), provenance="j99"),
+                           factors=self.factors[:4], days=1)
+        return self.State(
+            drivers=d, params=p, crop=crop, end=end,
+            N=np.full(n, 3.0), LAI=np.full(n, 0.01),
+            W=np.full(n, 0.3), WF=np.zeros(n), WM=np.zeros(n),
+            WM_final=np.zeros(n), day=0)
+
+    def advance_state(self, state: "ManagedTomgro.State", target_day: int) -> "ManagedTomgro.State":
+        """Advance an existing crop state monotonically to ``target_day``."""
+        target_day = int(target_day)
+        if target_day < state.day:
+            raise ValueError(f"cannot move crop state backwards from day {state.day} to {target_day}")
+        if target_day > int(state.end.max()):
+            raise ValueError(f"target day {target_day} exceeds crop end day {int(state.end.max())}")
+
+        d, p, crop = state.drivers, state.params, state.crop
         Tday, Tnight = d["day_temp"], d["night_temp"]
         Td = 0.5 * (Tday + Tnight)
         par, co2 = d["par"], d["co2"]
         rho, laimax, p1 = d["density"], d["lai_max"], d["leaf_prune"]
-        end = np.round(d["cycle_days"]).astype(int)
-
-        crop = TomgroModel(params=TomgroParams(values=dict(p), provenance="j99"),
-                           factors=self.factors[:4], days=1)
-        N = np.full(n, 3.0); LAI = np.full(n, 0.01)
-        W = np.full(n, 0.3); WF = np.zeros(n); WM = np.zeros(n)
-        WM_final = np.zeros(n)
         gT = TP.g_daytime_vec(Tday, p["TCRIT"])
 
-        for day in range(1, int(end.max()) + 1):
-            live = day <= end
+        for day in range(state.day + 1, target_day + 1):
+            live = day <= state.end
             dN = p["Nm"] * crop._fN(Tday)
-            e = np.exp(np.clip(p["beta"] * (N - p["Nb"]), -30, 30))
-            dLAI = np.where(LAI <= laimax,
-                            rho * p["delta"] * crop._lambda(Td) * e / (1 + e) * dN, 0.0)
-            Pg = crop._Pg(LAI, par, co2, p)
-            Rm = p["Q10"] ** ((Td - 20.0) / 10.0) * p["rm"] * np.clip(W - WM, 0, None)
-            GRnet = np.clip(p["E"] * (Pg - Rm) * (1.0 - crop._fR(N)), 0.0, None)
-            started = N > p["NFF"]
-            dWF = np.where(started,
-                           GRnet * p["alphaF"] * crop._fF(Td)
-                           * (1.0 - np.exp(-p["vartheta"] * np.clip(N - p["NFF"], 0, None)))
-                           * gT, 0.0)
-            dW = np.minimum(GRnet - np.where(LAI >= laimax, p1 * rho * dN, 0.0),
-                            dWF + (p["Vmax"] - p1) * rho * dN)
-            mat = np.where(N > p["NFF"] + p["kappaF"],
-                           crop._DF(Td, p) * np.clip(WF - WM, 0, None), 0.0)
-            N = np.where(live, N + dN, N)
-            LAI = np.where(live, LAI + dLAI, LAI)
-            W = np.where(live, np.clip(W + dW, 0, None), W)
-            WF = np.where(live, np.clip(WF + dWF, 0, None), WF)
-            WM = np.where(live, np.clip(WM + mat, 0, None), WM)
-            WM_final = np.where(day == end, WM, WM_final)
+            e = np.exp(np.clip(p["beta"] * (state.N - p["Nb"]), -30, 30))
+            dLAI = np.where(
+                state.LAI <= laimax,
+                rho * p["delta"] * crop._lambda(Td) * e / (1 + e) * dN, 0.0)
+            Pg = crop._Pg(state.LAI, par, co2, p)
+            Rm = (p["Q10"] ** ((Td - 20.0) / 10.0) * p["rm"]
+                  * np.clip(state.W - state.WM, 0, None))
+            GRnet = np.clip(p["E"] * (Pg - Rm) * (1.0 - crop._fR(state.N)), 0.0, None)
+            started = state.N > p["NFF"]
+            dWF = np.where(
+                started,
+                GRnet * p["alphaF"] * crop._fF(Td)
+                * (1.0 - np.exp(-p["vartheta"] * np.clip(state.N - p["NFF"], 0, None)))
+                * gT, 0.0)
+            dW = np.minimum(
+                GRnet - np.where(state.LAI >= laimax, p1 * rho * dN, 0.0),
+                dWF + (p["Vmax"] - p1) * rho * dN)
+            mat = np.where(
+                state.N > p["NFF"] + p["kappaF"],
+                crop._DF(Td, p) * np.clip(state.WF - state.WM, 0, None), 0.0)
+            state.N = np.where(live, state.N + dN, state.N)
+            state.LAI = np.where(live, state.LAI + dLAI, state.LAI)
+            state.W = np.where(live, np.clip(state.W + dW, 0, None), state.W)
+            state.WF = np.where(live, np.clip(state.WF + dWF, 0, None), state.WF)
+            state.WM = np.where(live, np.clip(state.WM + mat, 0, None), state.WM)
+            state.WM_final = np.where(day == state.end, state.WM, state.WM_final)
+        state.day = target_day
+        return state
+
+    def components(self, state: "ManagedTomgro.State", *, final: bool = False) -> dict[str, np.ndarray]:
+        """Compute internally consistent economic components at the current day."""
+        d = state.drivers
+        elapsed = np.full(len(state.WM), state.day, dtype=float)
+        denominator = np.maximum(elapsed, 1.0)
+        wm = state.WM_final if final else state.WM
+        revenue = self.econ.revenue(wm)
+        energy_rate = self.econ.energy_cost(d["day_temp"], d["night_temp"], d["par"])
+        other_rate = self.econ.other_cost(
+            d["co2"], d["day_temp"], d["night_temp"], d["density"], state.end.astype(float))
+        cost_rate = energy_rate + other_rate
+        return {
+            "mature_dry_mass": wm,
+            "revenue_to_date": revenue,
+            "energy_cost_to_date": energy_rate * elapsed,
+            "other_cost_to_date": other_rate * elapsed,
+            "rev_rate": revenue / denominator,
+            "energy_cost_rate": energy_rate,
+            "other_cost_rate": other_rate,
+            "cost_rate": cost_rate,
+            "profit": revenue / denominator - cost_rate,
+        }
+
+    def __call__(self, X, plant_params: dict | None = None, components: bool = False):
+        """Fully vectorised: rho, LAImax, p1 and cycle length all vary per candidate point.
+
+        Variable cycles are handled by running to the longest one and freezing WM
+        for each point on its own end day.
+        """
+        state = self.start(X, plant_params=plant_params)
+        self.advance_state(state, int(state.end.max()))
 
         if components:
             # Decomposable observation. The price shock acts on electricity and
@@ -256,14 +344,8 @@ class ManagedTomgro:
             # energy price rise, because it does not know how much of it was
             # energy. This is both harder and more realistic than the old version,
             # where lambda scaled all cost and cost_rate was scalable as a whole.
-            days = end.astype(float)
-            return {"rev_rate": self.econ.revenue(WM_final) / days,
-                    "energy_cost_rate": self.econ.energy_cost(Tday, Tnight, par),
-                    "other_cost_rate": self.econ.other_cost(co2, Tday, Tnight, rho, days),
-                    "cost_rate": self.econ.daily_cost(Tday, Tnight, co2, par, rho, days),
-                    "profit": self.econ.profit_rate(WM_final, Tday, Tnight, co2, par,
-                                                    end, rho)}
-        return self.econ.profit_rate(WM_final, Tday, Tnight, co2, par, end, rho)
+            return self.components(state, final=True)
+        return self.components(state, final=True)["profit"]
 
     def sample_plant_params(self, n: int, rng, cv: float) -> dict:
         """Draw a parameter set per plant -- plant-to-plant variation is modelled as
@@ -309,6 +391,10 @@ class ManagedTomgro:
 
     def oracle(self, n_sample: int = 6000, seed: int = 0):
         if self._oracle is None:
+            if not self._oracle_cacheable:
+                self._oracle = _maximise(
+                    self, self.d, np.random.default_rng(seed), n_sample=n_sample)
+                return self._oracle
             fp = _oracle_disk(_oracle_key(self.seed, self.factors,
                                           self.cycle_days,
                                           self.econ.energy_shock))

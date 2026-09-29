@@ -4,7 +4,7 @@ import numpy as np
 import pytest
 
 from slowlab import SlowLabEnv, TASKS
-from slowlab.llm import LLMAgent, scripted_completer, _extract_json
+from slowlab.llm import LLMAgent, WithinCycleLLMAgent, scripted_completer, _extract_json
 
 
 def test_json_extraction_survives_fences_and_prose():
@@ -164,3 +164,127 @@ def test_tools_flag_changes_the_prompt():
     a1.run(env2)
     assert "TOOL 1" not in a0.transcript[0]["user"]
     assert "TOOL 1" in a1.transcript[0]["user"]
+
+
+def test_within_cycle_llm_selects_observation_time_and_sees_measurement():
+    base = scripted_completer()
+
+    def visiting_completer(messages):
+        text = messages[-1]["content"]
+        if "RUNNING ROUND" not in text:
+            return base(messages)
+        if "current crop day 0 " in text:
+            return json.dumps({
+                "action": "observe", "day": 60,
+                "modalities": ["canopy_lai", "energy_cost_to_date"],
+                "units": ["c0l0"],
+                "current_best": {"day_temp": 24.0, "density": 3.0},
+            })
+        assert "canopy_lai" in text and "absolute day" in text
+        return json.dumps({
+            "action": "finish",
+            "current_best": {"day_temp": 24.0, "density": 3.0},
+        })
+
+    env = SlowLabEnv(TASKS["T3"], seed=0)
+    # Avoid disk work in this protocol test; oracle correctness is tested elsewhere.
+    env.truth._oracle = (np.full(env.task.d, 0.5), 0.0)
+    agent = WithinCycleLLMAgent(complete=visiting_completer)
+    agent.run(env)
+    measured = [event for event in env.history() if event.kind == "measured"]
+    assert len(measured) == 2 * env.task.n_rounds
+    assert all(event.day == 60 for event in measured)
+    assert len(env.observations()) > 0
+
+
+def test_scripted_arrays_and_component_reader_use_only_visible_history():
+    from slowlab.design import Design
+    env = SlowLabEnv(TASKS["T3"], seed=4)
+    treatments = {"a": {f.name: 0.5 for f in env.task.factors}}
+    allocation = {"a": [u.id for u in env.facility.units if u.chamber == 0][:2]}
+    design = Design(treatments, allocation, randomization_seed=1)
+    env.submit_design(design)
+    env.advance_to(100)
+    X, y = env.as_arrays()
+    Xc, fields = env.component_arrays()
+    assert X.shape == (0, env.task.d) and y.size == 0
+    assert Xc.shape == (0, env.task.d) and all(v.size == 0 for v in fields.values())
+    env.advance()
+    assert len(env.as_arrays()[1]) == len(env.observations())
+
+
+def test_four_tool_modes_are_factorial_and_record_adoption():
+    from slowlab import SlowLabEnv, TASKS
+    from slowlab.llm import LLMAgent, scripted_completer
+    first_prompts = {}
+    for mode in ("bare", "design", "inference", "both"):
+        env = SlowLabEnv(TASKS["T3"], seed=11)
+        env.truth._oracle = (np.full(env.task.d, 0.5), 0.0)
+        agent = LLMAgent(complete=scripted_completer(), tool_mode=mode)
+        agent.run(env)
+        first_prompts[mode] = agent.transcript[0]["user"]
+        if mode == "bare":
+            assert agent.tool_use_records == []
+        else:
+            assert len(agent.tool_use_records) == env.task.n_rounds
+            assert all(record["delivery"] == "passive_prompt_output"
+                       for record in agent.tool_use_records)
+            if mode == "design":
+                assert all(record["recommendation_distance"] is None
+                           for record in agent.tool_use_records)
+            if mode == "inference":
+                assert all(record["design_distance"] is None
+                           for record in agent.tool_use_records)
+    assert "TOOL 1" not in first_prompts["bare"] and "TOOL 2" not in first_prompts["bare"]
+    assert "TOOL 1" in first_prompts["design"] and "TOOL 2" not in first_prompts["design"]
+    assert "TOOL 1" not in first_prompts["inference"] and "TOOL 2" in first_prompts["inference"]
+    assert "TOOL 1" in first_prompts["both"] and "TOOL 2" in first_prompts["both"]
+
+
+def test_constraint_checklist_is_a_small_prespecified_prompt_variant():
+    from slowlab.llm import CONSTRAINT_CHECKLIST, LLMAgent, WithinCycleLLMAgent
+    standard = LLMAgent(complete=lambda _: "")._system_prompt()
+    variant = LLMAgent(
+        complete=lambda _: "", prompt_variant="constraint_checklist")._system_prompt()
+    assert variant == standard + "\n\n" + CONSTRAINT_CHECKLIST
+    assert CONSTRAINT_CHECKLIST in WithinCycleLLMAgent(
+        complete=lambda _: "", prompt_variant="constraint_checklist")._system_prompt()
+
+
+def test_callable_tool_is_returned_only_after_explicit_model_call():
+    replies = []
+    def complete(messages):
+        replies.append(messages)
+        if len(replies) == 1:
+            return '{"action":"call_tool","tool":"propose_design"}'
+        result = messages[-1]["content"]
+        assert "TOOL RESULT" in result and "constraint-aware GP-UCB" in result
+        tool = json.loads(result.split("\n", 1)[1].split("\nNow return", 1)[0])
+        return json.dumps({
+            "reasoning": "use proposal", "treatments": tool["treatments"],
+            "allocation": tool["allocation"], "randomization_seed": 1,
+            "stop": False, "current_best": next(iter(tool["treatments"].values())),
+        })
+
+    env = SlowLabEnv(TASKS["T3"], seed=19)
+    agent = LLMAgent(complete=complete, tool_mode="design", tool_delivery="callable")
+    blob = agent._ask(env, None)
+    design = __import__("slowlab.llm", fromlist=["_to_design"])._to_design(env, blob)
+    agent._record_tool_use(env, design, blob)
+    assert len(agent.tool_use_records) == 1
+    assert agent.tool_use_records[0]["invoked_by_model"] is True
+    assert agent.tool_use_records[0]["design_adopted"] is True
+    assert "TOOL RESULT" not in agent.transcript[0]["user"]
+
+
+def test_callable_tool_availability_does_not_inject_result():
+    captured = []
+    def complete(messages):
+        captured.append(messages[-1]["content"])
+        return '{"stop":true,"current_best":{"day_temp":24,"density":3}}'
+    env = SlowLabEnv(TASKS["T3"], seed=20)
+    agent = LLMAgent(complete=complete, tool_mode="both", tool_delivery="callable")
+    agent._ask(env, None)
+    assert "OPTIONAL CALLABLE TOOLS" in captured[0]
+    assert "posterior_best" not in captured[0]
+    assert agent.tool_use_records == []

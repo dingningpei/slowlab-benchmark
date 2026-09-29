@@ -1,0 +1,97 @@
+{
+  "preflight_id": "greenlight-original-implementation-validation-v0",
+  "status": "preflight complete; required four-CSV subset not downloaded because explicit approval is pending",
+  "purpose": "Validate that the pinned official Python GreenLight implementation reproduces the original Katzin et al. 2020 evaluation workflow and error scale before it is used in v9 development.",
+  "data_role": "implementation validation only; no AGC facility-specific or counterfactual-control claim",
+  "dataset": {
+    "doi": "10.4121/78968e1b-eaea-4f37-89f9-2b98ba3ed865",
+    "methodology_sha256": "036b13c7819d6659fecb159132b85c6e3d6f897b0672de53eff18f4c71ea90eb",
+    "raw_archive": {
+      "size_bytes": 6882979,
+      "sha256": "f43c6e027e0f2b9b56ef6ceb110a28affbc13961f4debeaa9b546e7d52123d1d"
+    },
+    "processed_archive": {
+      "size_bytes": 2888456,
+      "sha256": "655951bde9bfc50d83e30f0cd3164a97130ec1b9dcbe651b493086f9d9aa5d54"
+    },
+    "simulation_archive": {
+      "content_url": "https://data.4tu.nl/file/78968e1b-eaea-4f37-89f9-2b98ba3ed865/56d5e9cb-fabd-44b6-b9b5-557962dda7cf",
+      "content_length_bytes": 538319416,
+      "etag": "04b77e18acaa2a7c163dadfae9c13a0f-65",
+      "full_archive_download_allowed": false,
+      "remote_directory_bytes_downloaded": 1048576,
+      "required_range_download": {
+        "requested_bytes": 23109001,
+        "approximate_mib": 22.04,
+        "status": "not downloaded; auto-review rejected the request pending explicit user approval",
+        "temporary_destination": "/private/tmp/greenlight_katzin2020_csv_range.bin"
+      }
+    }
+  },
+  "official_implementation": {
+    "repository": "https://github.com/davkat1/GreenLight",
+    "tag": "v2.0.5",
+    "commit": "fa502eddae5f9eff7b3380c88037d9b5f3f14bf5",
+    "source_checkout_size_mib": 2.5,
+    "main_model": "greenlight/models/katzin_2021/definition/main_katzin_2020.json",
+    "main_model_sha256": "e9c9cab7973c5086dfa462cd558bec3faa229835376aa9b6b93b129f66e9ad9b",
+    "formatter_sha256": "1d34df80a8e2dc68698bacb04fd2b80d8dfcd6f996b3d33d2dd9b050613e43fb",
+    "runner_sha256": "8747e5fa575b395d32156b37b99f004920e8698e1f41a590e4b97e0922d8491f",
+    "solver": "LSODA",
+    "max_step_seconds": 300,
+    "output_step_seconds": 300,
+    "t_end_seconds": 9676800
+  },
+  "required_simulation_csv_entries": [
+    {
+      "name": "Simulation data/CSV output/climateModel_hps_manuscriptParams.csv",
+      "compressed_bytes": 5690630,
+      "uncompressed_bytes": 16907697,
+      "local_header_offset": 103
+    },
+    {
+      "name": "Simulation data/CSV output/climateModel_led_manuscriptParams.csv",
+      "compressed_bytes": 5439023,
+      "uncompressed_bytes": 16452407,
+      "local_header_offset": 5690827
+    },
+    {
+      "name": "Simulation data/CSV output/energyUse_hps__manuscriptParams_1-1.csv",
+      "compressed_bytes": 6110450,
+      "uncompressed_bytes": 17877314,
+      "local_header_offset": 11129944
+    },
+    {
+      "name": "Simulation data/CSV output/energyUse_led__manuscriptParams_1-1.csv",
+      "compressed_bytes": 5867770,
+      "uncompressed_bytes": 17356550,
+      "local_header_offset": 17240490
+    }
+  ],
+  "declared_experiment_horizon": {
+    "start": "2009-10-19T15:15:00",
+    "end": "2010-02-08T15:15:00",
+    "five_minute_records": 32257,
+    "raw_hps_rows": 32257,
+    "raw_led_rows": 32257,
+    "raw_hps_cadence_breaks": 0,
+    "raw_led_cadence_breaks": 0
+  },
+  "processed_data_anomaly": {
+    "processed_hps_rows": 36394,
+    "processed_led_rows": 36394,
+    "extra_rows_after_declared_horizon": 4137,
+    "processed_time_end_if_untrimmed": "2010-02-23T00:00:00",
+    "rule": "Use only the first 32257 records ending 2010-02-08T15:15:00. Never score or fit against the 4137-row trailing segment."
+  },
+  "execution_order_after_approval": [
+    "download and CRC-check only the four required CSV entries",
+    "run the official formatter and verify generated input hashes",
+    "create an isolated pinned Python environment for GreenLight v2.0.5",
+    "run a one-day HPS climate smoke test with one worker and one BLAS thread",
+    "inspect completion, runtime, memory and output schema",
+    "freeze exact climate and energy comparison metrics before any full-season score is computed",
+    "run the four official 112-day simulations only after reporting expected load"
+  ],
+  "large_download_policy": "The 513 MB full archive is forbidden. The 22.04 MiB range-only subset still requires explicit approval because automatic review classified it as a material dataset transfer."
+}

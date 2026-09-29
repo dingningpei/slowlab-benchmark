@@ -82,7 +82,14 @@ def openai_compatible(model: str, *, base_url: str | None = None,
                       api_key: str | None = None, temperature: float = 0.7,
                       max_tokens: int = 4096, timeout: float = 90.0,
                       max_attempts: int = 5, reasoning_cap: int = 1024,
-                      rpm: float = 0.0) -> callable:
+                      reasoning_effort: str | None = None,
+                      generation_seed: int | None = None,
+                      json_mode: bool = False,
+                      rpm: float = 0.0,
+                      provider_only: list[str] | None = None,
+                      expected_provider: str | None = None,
+                      expected_actual_model: str | None = None,
+                      send_app_attribution: bool = False) -> callable:
     """Returns a complete(messages) -> str, retrying network and rate-limit errors with exponential backoff."""
     load_dotenv()                      # allows the key to live in .env
     env_var, default_url = _guess(model)
@@ -110,11 +117,31 @@ def openai_compatible(model: str, *, base_url: str | None = None,
     # "Reasoning is mandatory for this endpoint"), so we fall back to capping it
     # rather than disabling it, which still bounds the cost. The downgrade happens
     # once and holds for the rest of the run.
-    mode = {"reasoning": {"enabled": False}} if "openrouter" in url else {}
+    if "api.deepseek.com" in url:
+        # DeepSeek's OpenAI Chat Completions schema uses a top-level
+        # reasoning_effort plus a thinking toggle. A Responses/OpenRouter-style
+        # `reasoning` object is accepted but ignored, leaving the default high
+        # thinking mode enabled and potentially consuming the full output budget.
+        mode = ({"thinking": {"type": "enabled"},
+                 "reasoning_effort": reasoning_effort}
+                if reasoning_effort else
+                {"thinking": {"type": "disabled"}})
+    else:
+        mode = ({"reasoning": {"effort": reasoning_effort}}
+                if reasoning_effort else
+                {"reasoning": {"enabled": False}} if "openrouter" in url else {})
 
     def _body(messages):
         d = {"model": model, "messages": messages,
              "temperature": temperature, "max_tokens": max_tokens}
+        if generation_seed is not None:
+            d["seed"] = int(generation_seed)
+        if json_mode:
+            d["response_format"] = {"type": "json_object"}
+        if provider_only:
+            if "openrouter" not in url:
+                raise ValueError("provider_only is supported only for OpenRouter routes")
+            d["provider"] = {"only": list(provider_only), "allow_fallbacks": False}
         d.update(mode)
         return json.dumps(d).encode()
 
@@ -129,7 +156,9 @@ def openai_compatible(model: str, *, base_url: str | None = None,
                 time.sleep(wait)
             _last[0] = time.time()
         hdr = {"Content-Type": "application/json", "Authorization": f"Bearer {key}"}
-        if "openrouter" in url:                    # OpenRouter's leaderboard attribution headers
+        if "openrouter" in url and send_app_attribution:
+            # Formal blinded runs must not identify the benchmark in provider
+            # metadata, even though these headers are not part of the prompt.
             hdr["HTTP-Referer"] = "https://github.com/slowlab-benchmark"
             hdr["X-Title"] = "SlowLab"
         req = urllib.request.Request(url, data=_body(messages), headers=hdr)
@@ -138,7 +167,30 @@ def openai_compatible(model: str, *, base_url: str | None = None,
             try:
                 with urllib.request.urlopen(req, timeout=timeout, context=_CTX) as r:
                     payload = json.loads(r.read())
-                msg = payload["choices"][0]["message"]
+                choice = payload["choices"][0]
+                msg = choice["message"]
+                actual_model = payload.get("model")
+                actual_provider = payload.get("provider")
+                if expected_provider is not None and actual_provider != expected_provider:
+                    raise RuntimeError(
+                        f"provider mismatch: expected {expected_provider!r}, got {actual_provider!r}")
+                if expected_actual_model is not None and actual_model != expected_actual_model:
+                    raise RuntimeError(
+                        f"model mismatch: expected {expected_actual_model!r}, got {actual_model!r}")
+                complete.call_records.append({
+                    "requested_model": model,
+                    "actual_model": actual_model,
+                    "provider": actual_provider,
+                    "created": payload.get("created"),
+                    "finish_reason": choice.get("finish_reason"),
+                    "usage": payload.get("usage"),
+                    "attempt": attempt + 1,
+                    "generation_seed": generation_seed,
+                    "temperature": temperature,
+                    "max_tokens": max_tokens,
+                    "reasoning_effort": reasoning_effort,
+                    "json_mode": json_mode,
+                })
                 txt = msg.get("content") or ""
                 if not txt.strip():                # some models fill only the reasoning field
                     txt = msg.get("reasoning") or ""
@@ -187,4 +239,5 @@ def openai_compatible(model: str, *, base_url: str | None = None,
                 time.sleep(2.0 * (2 ** attempt))
         raise SystemExit(f"still failing after {max_attempts} attempts: {last}")
 
+    complete.call_records = []
     return complete

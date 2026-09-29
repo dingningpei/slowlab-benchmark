@@ -414,6 +414,7 @@ SITE_ECON_SPREAD = {
     # hence conservative.
     "price_per_kg_fw": (1.30, 1.62),
 }
+SITE_ECON_KEYS = tuple(SITE_ECON_SPREAD)
 
 # Climate cannot be drawn independently: a cold place is cold by day and by
 # night. A single dimension u in [0,1] walks from a north-west European winter to
@@ -422,6 +423,28 @@ SITE_ECON_SPREAD = {
 # east Spain (Almeria) about 18/8 C. The TOMGRO calibration sites Gainesville /
 # Avignon at 14/8 fall inside the range.
 _CLIMATE = {"t_out_day": (6.0, 18.0), "t_out_night": (1.0, 9.0)}
+
+
+def site_econ_from_unit(unit) -> "EconomicModel":
+    """Map six independent U(0,1) coordinates to one economic site.
+
+    Five coordinates cover the sourced economic/equipment ranges and the last
+    coordinate moves day and night outdoor temperature together. Exposing this
+    map lets posterior samplers move continuously inside the same prior used by
+    ``sample_site_econ`` instead of hoping that a finite prior draw happens to
+    land inside a narrow accounting-record likelihood.
+    """
+    unit = np.asarray(unit, float).ravel()
+    expected = len(SITE_ECON_KEYS) + 1
+    if len(unit) != expected or np.any((unit < 0.0) | (unit > 1.0)):
+        raise ValueError(f"economic unit coordinate must contain {expected} values in [0, 1]")
+    kw = {}
+    for value, key in zip(unit[:-1], SITE_ECON_KEYS):
+        lo, hi = SITE_ECON_SPREAD[key]
+        kw[key] = float(lo + value * (hi - lo))
+    for key, (lo, hi) in _CLIMATE.items():
+        kw[key] = float(lo + unit[-1] * (hi - lo))
+    return EconomicModel(**kw)
 
 
 def sample_site_econ(seed: int, **overrides) -> "EconomicModel":
@@ -434,12 +457,10 @@ def sample_site_econ(seed: int, **overrides) -> "EconomicModel":
     parameters from Dutch ones.
     """
     r = np.random.default_rng(70_000 + int(seed))
-    kw = {k: float(r.uniform(*v)) for k, v in SITE_ECON_SPREAD.items()}
-    u = float(r.random())
-    for k, (lo, hi) in _CLIMATE.items():
-        kw[k] = lo + u * (hi - lo)
-    kw.update(overrides)
-    return EconomicModel(**kw)
+    econ = site_econ_from_unit(r.random(len(SITE_ECON_KEYS) + 1))
+    for key, value in overrides.items():
+        setattr(econ, key, value)
+    return econ
 
 
 class TomgroProfitModel:

@@ -1,0 +1,244 @@
+{
+  "scope": "weather-only development audit; no formal private sites or crop outcomes",
+  "version": "candidate-v2",
+  "fixed_seed_start": 20260928,
+  "fixed_seed_count": 12,
+  "support_passes": 11,
+  "nonreplay_passes": 8,
+  "rows": [
+    {
+      "development_seed": 20260928,
+      "physical_support": true,
+      "nonreplay": false,
+      "minimum_standardized_rmse": {
+        "24h": 0.14262045953748395,
+        "6h": 0.07503635954628025
+      }
+    },
+    {
+      "development_seed": 20260929,
+      "physical_support": true,
+      "nonreplay": true,
+      "minimum_standardized_rmse": {
+        "24h": 0.17244286523921304,
+        "6h": 0.09461156565230501
+      },
+      "daily_variance_ratio_vs_2019": [
+        1.438069533512802,
+        1.6250398189286297,
+        0.732957773035228,
+        1.0656888239085345,
+        1.2334686114013282
+      ],
+      "ten_minute_p99_ratio_vs_2019": [
+        0.9499219596024144,
+        1.1317644758779282,
+        0.8912237460090503,
+        0.9564642107607371,
+        1.0258703915002312
+      ],
+      "max_abs_monthly_standardized_mean_delta_vs_2019": 0.7249840823290732,
+      "max_abs_daily_cross_channel_correlation_delta_vs_2019": 0.11381836535120639
+    },
+    {
+      "development_seed": 20260930,
+      "physical_support": true,
+      "nonreplay": true,
+      "minimum_standardized_rmse": {
+        "24h": 0.12835179774147384,
+        "6h": 0.10413550331800119
+      },
+      "daily_variance_ratio_vs_2019": [
+        1.264714696970089,
+        1.389030560360433,
+        0.7281745549907087,
+        1.002295185398589,
+        1.0574022563541985
+      ],
+      "ten_minute_p99_ratio_vs_2019": [
+        0.9057899214219584,
+        1.1214828356924824,
+        0.9115922119683753,
+        0.9402138238618577,
+        1.022657280045424
+      ],
+      "max_abs_monthly_standardized_mean_delta_vs_2019": 0.7019306629842901,
+      "max_abs_daily_cross_channel_correlation_delta_vs_2019": 0.27196544710156123
+    },
+    {
+      "development_seed": 20260931,
+      "physical_support": true,
+      "nonreplay": true,
+      "minimum_standardized_rmse": {
+        "24h": 0.16773072264365882,
+        "6h": 0.10372446006403817
+      },
+      "daily_variance_ratio_vs_2019": [
+        0.9845464946648845,
+        1.0909532490025113,
+        0.7145229824680617,
+        0.9259065274699488,
+        0.8748707063447627
+      ],
+      "ten_minute_p99_ratio_vs_2019": [
+        0.8738314180561805,
+        1.079593297564478,
+        0.8491333630120163,
+        0.9269530536756622,
+        1.0048140226109523
+      ],
+      "max_abs_monthly_standardized_mean_delta_vs_2019": 1.021371051718921,
+      "max_abs_daily_cross_channel_correlation_delta_vs_2019": 0.10186064444619781
+    },
+    {
+      "development_seed": 20260932,
+      "physical_support": true,
+      "nonreplay": true,
+      "minimum_standardized_rmse": {
+        "24h": 0.14962895645537663,
+        "6h": 0.09320494166623067
+      },
+      "daily_variance_ratio_vs_2019": [
+        1.0782011553440374,
+        1.1314093199197517,
+        0.6332544450031159,
+        1.088639465263332,
+        0.9042684936639577
+      ],
+      "ten_minute_p99_ratio_vs_2019": [
+        0.8512364533159988,
+        0.9543599022892563,
+        0.8287626515556679,
+        0.9729346129627862,
+        0.9820711396929462
+      ],
+      "max_abs_monthly_standardized_mean_delta_vs_2019": 0.8494542073563834,
+      "max_abs_daily_cross_channel_correlation_delta_vs_2019": 0.11398595748442499
+    },
+    {
+      "development_seed": 20260933,
+      "physical_support": true,
+      "nonreplay": false,
+      "minimum_standardized_rmse": {
+        "24h": 0.12105128723587677,
+        "6h": 0.0720949043353079
+      }
+    },
+    {
+      "development_seed": 20260934,
+      "physical_support": true,
+      "nonreplay": true,
+      "minimum_standardized_rmse": {
+        "24h": 0.182863581428471,
+        "6h": 0.08921260634507146
+      },
+      "daily_variance_ratio_vs_2019": [
+        1.1616913693229216,
+        1.4031467988905497,
+        0.6083152041516408,
+        0.9763289303196908,
+        1.1379876642906928
+      ],
+      "ten_minute_p99_ratio_vs_2019": [
+        0.8854672208603211,
+        1.0794034889299615,
+        0.8155399469342273,
+        0.9393954567979418,
+        1.0400624224297277
+      ],
+      "max_abs_monthly_standardized_mean_delta_vs_2019": 0.7292343885721342,
+      "max_abs_daily_cross_channel_correlation_delta_vs_2019": 0.16966553728793848
+    },
+    {
+      "development_seed": 20260935,
+      "physical_support": true,
+      "nonreplay": false,
+      "minimum_standardized_rmse": {
+        "24h": 0.17230083659397585,
+        "6h": 0.07898584577640455
+      }
+    },
+    {
+      "development_seed": 20260936,
+      "physical_support": true,
+      "nonreplay": true,
+      "minimum_standardized_rmse": {
+        "24h": 0.15301367321137224,
+        "6h": 0.10058752689837193
+      },
+      "daily_variance_ratio_vs_2019": [
+        1.0799897204027222,
+        1.2120632958303492,
+        0.6892719513966961,
+        1.0203800175309419,
+        1.0236159789910875
+      ],
+      "ten_minute_p99_ratio_vs_2019": [
+        0.8795931127530071,
+        1.0360744330981213,
+        0.8538360009602987,
+        0.9596492881310391,
+        1.0149030882581953
+      ],
+      "max_abs_monthly_standardized_mean_delta_vs_2019": 1.0601178313040367,
+      "max_abs_daily_cross_channel_correlation_delta_vs_2019": 0.11655784597805459
+    },
+    {
+      "development_seed": 20260937,
+      "physical_support": true,
+      "nonreplay": true,
+      "minimum_standardized_rmse": {
+        "24h": 0.1893657214335733,
+        "6h": 0.1013028965968881
+      },
+      "daily_variance_ratio_vs_2019": [
+        1.2480809396000638,
+        1.3949403501324764,
+        0.5891075950111748,
+        0.8155663238298507,
+        1.1530442407932637
+      ],
+      "ten_minute_p99_ratio_vs_2019": [
+        0.8959337407837434,
+        1.0750833717594068,
+        0.8247662146791718,
+        0.9096158263733272,
+        1.0250395652424893
+      ],
+      "max_abs_monthly_standardized_mean_delta_vs_2019": 0.7770365022966282,
+      "max_abs_daily_cross_channel_correlation_delta_vs_2019": 0.08713570098279466
+    },
+    {
+      "development_seed": 20260938,
+      "physical_support": true,
+      "nonreplay": true,
+      "minimum_standardized_rmse": {
+        "24h": 0.19650975041138305,
+        "6h": 0.11686873935431286
+      },
+      "daily_variance_ratio_vs_2019": [
+        1.3583291710451542,
+        1.4999716988545244,
+        0.6949557805243418,
+        0.8694815087142624,
+        1.083231192790549
+      ],
+      "ten_minute_p99_ratio_vs_2019": [
+        0.924483292159922,
+        1.0817248202512693,
+        0.8547271031963933,
+        0.915271327832651,
+        1.0104708561409794
+      ],
+      "max_abs_monthly_standardized_mean_delta_vs_2019": 0.7432255618849077,
+      "max_abs_daily_cross_channel_correlation_delta_vs_2019": 0.35926744776470454
+    },
+    {
+      "development_seed": 20260939,
+      "physical_support": false,
+      "nonreplay": null,
+      "support_error": "candidate violates predeclared physical support: dewpoint_above_temperature=1.005 C"
+    }
+  ],
+  "elapsed_seconds": 32.14694700902328
+}

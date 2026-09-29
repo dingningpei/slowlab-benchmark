@@ -1,0 +1,145 @@
+{
+  "status": "passed_four_unit_structural_audit",
+  "scope": "fixed-policy runtime, clock, lifecycle and accounting structure only; no independent tick trace, empirical greenhouse validation or LLM benchmark",
+  "result_sha256": "62ff14eac1680d04fab9af99ba196fa10a5c8b03b8963af4dcc41c35552c7bff",
+  "progress_sha256": "3890b27e75f92f2402b546ce958e48b836c1a0c55390189fb8f499dd34c096fa",
+  "contract_sha256": "ad55ca8a771cdc46de6e90500a9e7c74b34ab85e34b2ea702ba2d9e7dfd9143a",
+  "days": 365,
+  "steps": 105120,
+  "wall_seconds": 8343.181820518803,
+  "peak_rss_bytes": 252141568,
+  "phase_days": {
+    "0": {
+      "active": 361,
+      "cleanup": 4,
+      "idle": 0
+    },
+    "1": {
+      "active": 361,
+      "cleanup": 4,
+      "idle": 0
+    },
+    "2": {
+      "active": 361,
+      "cleanup": 4,
+      "idle": 0
+    },
+    "3": {
+      "active": 360,
+      "cleanup": 4,
+      "idle": 1
+    }
+  },
+  "events": [
+    [
+      "0",
+      "plant",
+      0
+    ],
+    [
+      "1",
+      "plant",
+      0
+    ],
+    [
+      "2",
+      "plant",
+      0
+    ],
+    [
+      "3",
+      "plant",
+      0
+    ],
+    [
+      "0",
+      "stop",
+      14
+    ],
+    [
+      "0",
+      "replant",
+      16
+    ],
+    [
+      "1",
+      "stop",
+      30
+    ],
+    [
+      "1",
+      "replant",
+      32
+    ],
+    [
+      "2",
+      "stop",
+      60
+    ],
+    [
+      "2",
+      "replant",
+      62
+    ],
+    [
+      "3",
+      "stop",
+      180
+    ],
+    [
+      "3",
+      "replant",
+      182
+    ],
+    [
+      "0",
+      "stop",
+      196
+    ],
+    [
+      "0",
+      "replant",
+      198
+    ],
+    [
+      "1",
+      "stop",
+      212
+    ],
+    [
+      "1",
+      "replant",
+      214
+    ],
+    [
+      "2",
+      "stop",
+      242
+    ],
+    [
+      "2",
+      "replant",
+      244
+    ],
+    [
+      "3",
+      "stop",
+      362
+    ],
+    [
+      "0",
+      "deadline_stop",
+      365
+    ],
+    [
+      "1",
+      "deadline_stop",
+      365
+    ],
+    [
+      "2",
+      "deadline_stop",
+      365
+    ]
+  ]
+}

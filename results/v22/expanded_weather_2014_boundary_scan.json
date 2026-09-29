@@ -1,0 +1,29 @@
+{
+  "status": "passed_2014_weather_boundary_scan",
+  "scope": "Cabauw 2014 365-day private physical forcing coverage only; not greenhouse trajectory validation or blind year",
+  "origin_utc": "2013-12-31T23:00:00+00:00",
+  "queries": 105121,
+  "selected_swd_product": "cesar_surface_radiation_lc1_t10",
+  "monthly_max_duplicate_swd_difference_w_m2": {
+    "201312": 63.454071044921875,
+    "201401": 68.996826171875,
+    "201402": 0.0,
+    "201403": 0.0,
+    "201404": 0.0,
+    "201405": 0.0,
+    "201406": 0.0,
+    "201407": 0.0,
+    "201408": 0.0,
+    "201409": 0.0,
+    "201410": 0.0,
+    "201411": 0.0,
+    "201412": 0.0
+  },
+  "independent_matrix_comparison": {
+    "rows": 52560,
+    "max_abs_difference": 0.0,
+    "archive_sha256": "752d386094be9bc3b745da513d66e233bb460216b1f9400971a26c0f38e5eef7"
+  },
+  "plan_sha256": "c93a8543fa191b05834a23605df5715eb1ba70cb4992284200c43d31020fca63",
+  "audit_sha256": "9a4a416a824b6a1cfebd59f2bea42df0c6abc1d9dd3ea0c875fb4a8b1366a49e"
+}

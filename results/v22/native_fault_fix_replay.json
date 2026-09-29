@@ -1,0 +1,13 @@
+{
+  "status": "passed_exact_fault_replay",
+  "scope": "single saved LSODA trial evaluation, not a full campaign or annual stability pass",
+  "unit": "1",
+  "time": 20801424.086320132,
+  "old_flags": 8,
+  "old_native_derivative_all_finite": true,
+  "new_native_all_finite": true,
+  "max_abs_difference_vs_reference": 7.632783294297951e-17,
+  "max_abs_difference_vs_old_native": 0.0,
+  "native_source_sha256": "f30e86f9405ae3eee508a03a256a868428c87ef0e3b8715560c0a17885e31c21",
+  "native_compiler": "gcc (GCC) 10.2.1 20200825 (Alibaba 10.2.1-3.8 2.32)"
+}

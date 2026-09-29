@@ -1,0 +1,61 @@
+{
+  "protocol_id": "agc2019-capacity-constrained-observed-pipe-v3",
+  "status": "frozen before v3 candidate outcomes",
+  "holdout_start": "2020-04-01",
+  "holdout_policy": "No outcome or trajectory at or after holdout_start may be read until one final candidate is frozen.",
+  "v2_outcome": {
+    "eligibility": "All three corrected-key v2 candidates were ineligible because maximum implied grow-pipe demand exceeded the published 30 W m^-2 capacity.",
+    "maximum_demands_w_m2": {
+      "cDgh_0.15": 30.18746436181589,
+      "cDgh_0.20": 30.84759040996909,
+      "cDgh_0.25": 31.43496828548213
+    },
+    "selection_consequence": "No v2 climate score was used to select a candidate."
+  },
+  "capacity_derived_fix": {
+    "v2_fixed_lGroPipe_m_per_m2": 0.6,
+    "worst_v2_demand_w_m2": 31.43496828548213,
+    "linear_capacity_boundary_lGroPipe_m_per_m2": 0.5726107256266292,
+    "fixed_lGroPipe_m_per_m2": 0.57,
+    "selection_rule": "Scale by the worst v2 capacity ratio and round downward to 0.57; this value is determined only by the capacity eligibility constraint, not climate RMSE."
+  },
+  "search_sequences": [
+    "AICU:2020-03-05:4d",
+    "Automatoes:2020-03-05:4d",
+    "Digilog:2020-03-05:4d",
+    "IUACAAS:2020-03-05:4d",
+    "Reference:2020-03-05:4d",
+    "TheAutomators:2020-03-05:4d"
+  ],
+  "grid": {
+    "cDgh": [
+      0.15,
+      0.2,
+      0.25
+    ],
+    "candidate_count": 3
+  },
+  "fixed_parameters": {
+    "lPipe_m_per_m2": 1.3375,
+    "cLeakage": 3e-05,
+    "initial_lai": 3.0,
+    "lGroPipe_m_per_m2": 0.57
+  },
+  "eligibility": {
+    "solver_completion_fraction": 1.0,
+    "sampled_physical_violations": 0,
+    "maximum_implied_active_rail_pipe_demand_w_m2": 180.0,
+    "maximum_implied_active_grow_pipe_demand_w_m2": 30.0
+  },
+  "selection_objective": {
+    "primary": "minimize the maximum RMSE divided by its frozen gate across tAir, rhIn, and co2InPpm for pooled data and every compartment",
+    "tie_breaker": "minimize the mean pooled normalized RMSE across the three channels",
+    "frozen_rmse_gates": {
+      "tAir": 2.04,
+      "rhIn": 8.5,
+      "co2InPpm": 361.0
+    }
+  },
+  "full_calibration_check": "Run exactly one selected candidate on all 21 continuous calibration sequences and require the frozen gate pooled and for every compartment before holdout access.",
+  "claim_boundary": "lPipe and lGroPipe are effective exchange lengths because installed AGC pipe geometry is not public; they are not asserted physical measurements."
+}

@@ -1,0 +1,78 @@
+{
+  "scope": "10-minute development smoke, not full Phase1 or validation",
+  "events": [
+    {
+      "start_s": 21600,
+      "end_s": 21900,
+      "commands": {
+        "uBoil": 1.0,
+        "uRoof": 0.0,
+        "uExtCo2": 0.999999999999996,
+        "uLamp": 1.0
+      },
+      "climate": {
+        "temperature": 18.33235215300912,
+        "rh": 75.55064847569481,
+        "co2": 461.59702473398016,
+        "solar": 100.0
+      },
+      "public_temperature": {
+        "compartment": "0",
+        "variable": "tAir",
+        "unit": "degC",
+        "measurement_time": 21900.0,
+        "available_at": 21900.0,
+        "value": 18.33235215300912
+      },
+      "solver_nfev": 318,
+      "load_seconds": 7.819637499982491,
+      "solve_seconds": 0.1095153329661116
+    },
+    {
+      "start_s": 21900,
+      "end_s": 22200,
+      "commands": {
+        "uBoil": 0.9999999999997864,
+        "uRoof": 2.1350528012220593e-09,
+        "uExtCo2": 0.9999999999970901,
+        "uLamp": 1.0
+      },
+      "climate": {
+        "temperature": 19.171420012611698,
+        "rh": 70.27830265269529,
+        "co2": 531.1236039727587,
+        "solar": 100.0
+      },
+      "public_temperature": {
+        "compartment": "0",
+        "variable": "tAir",
+        "unit": "degC",
+        "measurement_time": 22200.0,
+        "available_at": 22200.0,
+        "value": 19.171420012611698
+      },
+      "solver_nfev": 146,
+      "load_seconds": 3.77661558391992,
+      "solve_seconds": 0.055304915993474424
+    }
+  ],
+  "versions": {
+    "numpy": "1.26.4",
+    "scipy": "1.14.1",
+    "pandas": "2.2.3",
+    "numexpr": "2.10.2"
+  },
+  "status": "passed_bounded_smoke",
+  "elapsed_seconds": 11.761327292071655,
+  "peak_rss_bytes": 104611840,
+  "thread_environment": {
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1"
+  },
+  "artifact_hashes": {
+    "configs/v22_task_contract_v0.json": "1b70f8c277c04f32f61925037ebcfd665e45802712f14ec100f3adbf50d9fa6f",
+    "slowlab/v22_greenlight_smoke.py": "574814a1ec8a666cf4ba7722af701bb09dcb0aaff91627063bae224f85b0553f",
+    "scripts/run_v22_greenlight_smoke.py": "bcdd1c466d54d5ea26eac8c953e926b39fbe84e38fc83e6414af9bbc3aed80e2"
+  }
+}

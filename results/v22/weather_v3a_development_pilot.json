@@ -1,0 +1,348 @@
+{
+  "scope": "2017-2020 same-station weather-only v3 development pilot; no formal sites, holdout acquisition or crop outcomes",
+  "candidate_version": "block-weather-v3-development",
+  "candidates_per_fold": 12,
+  "vector_score": "monthly means/channel train SD/sqrt(60); log daily variance/sqrt(5); 10-minute p99/channel train SD/sqrt(5); 10 daily cross-channel correlations/sqrt(10)",
+  "leap_rule": "remove Feb 29 only for calendar-aligned development fit and scoring; original 2020 diagnostic retained",
+  "folds": [
+    {
+      "heldout_year": 2017,
+      "fit_years": [
+        2018,
+        2019,
+        2020
+      ],
+      "rows": [
+        {
+          "development_seed": 20462700,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.04338688687423122
+        },
+        {
+          "development_seed": 20462701,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.06377234506885644
+        },
+        {
+          "development_seed": 20462702,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.06036946099059787
+        },
+        {
+          "development_seed": 20462703,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.03427384633253049
+        },
+        {
+          "development_seed": 20462704,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.05607417086485554
+        },
+        {
+          "development_seed": 20462705,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.027901986561092506
+        },
+        {
+          "development_seed": 20462706,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.06671579913221315
+        },
+        {
+          "development_seed": 20462707,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.042971388326399275
+        },
+        {
+          "development_seed": 20462708,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.05545384254494828
+        },
+        {
+          "development_seed": 20462709,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.06204670050683198
+        },
+        {
+          "development_seed": 20462710,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.05256588768674886
+        },
+        {
+          "development_seed": 20462711,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.054902993635329085
+        }
+      ],
+      "physical_support_count": 12,
+      "nonreplay_count": 0
+    },
+    {
+      "heldout_year": 2018,
+      "fit_years": [
+        2017,
+        2019,
+        2020
+      ],
+      "rows": [
+        {
+          "development_seed": 20462800,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.03788520835616681
+        },
+        {
+          "development_seed": 20462801,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.04512989871496401
+        },
+        {
+          "development_seed": 20462802,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.0546381462755602
+        },
+        {
+          "development_seed": 20462803,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.05304690338612688
+        },
+        {
+          "development_seed": 20462804,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.032690963968559236
+        },
+        {
+          "development_seed": 20462805,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.05247607483449584
+        },
+        {
+          "development_seed": 20462806,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.04052178299378411
+        },
+        {
+          "development_seed": 20462807,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.051008202915642516
+        },
+        {
+          "development_seed": 20462808,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.04828533011534799
+        },
+        {
+          "development_seed": 20462809,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.039296379273394806
+        },
+        {
+          "development_seed": 20462810,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.038334013095459765
+        },
+        {
+          "development_seed": 20462811,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.05490199948327468
+        }
+      ],
+      "physical_support_count": 12,
+      "nonreplay_count": 0
+    },
+    {
+      "heldout_year": 2019,
+      "fit_years": [
+        2017,
+        2018,
+        2020
+      ],
+      "rows": [
+        {
+          "development_seed": 20462900,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.04841211656949945
+        },
+        {
+          "development_seed": 20462901,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.0372835169118452
+        },
+        {
+          "development_seed": 20462902,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.0477896636355569
+        },
+        {
+          "development_seed": 20462903,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.05423113873604299
+        },
+        {
+          "development_seed": 20462904,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.03580229652769056
+        },
+        {
+          "development_seed": 20462905,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.053951669592007555
+        },
+        {
+          "development_seed": 20462906,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.05940318816328711
+        },
+        {
+          "development_seed": 20462907,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.04538906599247581
+        },
+        {
+          "development_seed": 20462908,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.04703262571944863
+        },
+        {
+          "development_seed": 20462909,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.04902726531351871
+        },
+        {
+          "development_seed": 20462910,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.06558263610630874
+        },
+        {
+          "development_seed": 20462911,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.06634738595634347
+        }
+      ],
+      "physical_support_count": 12,
+      "nonreplay_count": 0
+    },
+    {
+      "heldout_year": 2020,
+      "fit_years": [
+        2017,
+        2018,
+        2019
+      ],
+      "rows": [
+        {
+          "development_seed": 20463000,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.055108280175388144
+        },
+        {
+          "development_seed": 20463001,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.06875549461613104
+        },
+        {
+          "development_seed": 20463002,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.05280060671439955
+        },
+        {
+          "development_seed": 20463003,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.06343803085543419
+        },
+        {
+          "development_seed": 20463004,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.05380560918582825
+        },
+        {
+          "development_seed": 20463005,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.030319591928446327
+        },
+        {
+          "development_seed": 20463006,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.06539619809357157
+        },
+        {
+          "development_seed": 20463007,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.03995117899787502
+        },
+        {
+          "development_seed": 20463008,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.06206170196777988
+        },
+        {
+          "development_seed": 20463009,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.05172481298734138
+        },
+        {
+          "development_seed": 20463010,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.06063267248017133
+        },
+        {
+          "development_seed": 20463011,
+          "physical_support": true,
+          "nonreplay": false,
+          "minimum_6h_distance": 0.05509474551502882
+        }
+      ],
+      "physical_support_count": 12,
+      "nonreplay_count": 0
+    }
+  ],
+  "elapsed_seconds": 102.09843984921463,
+  "generator_code_sha256": "36a55a2f1e541f0b1e168d0b8db25336ca06c551876955ecd028d2d1d02d5272",
+  "status": "failed_all_48_near_replay_rejections"
+}

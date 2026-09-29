@@ -1,0 +1,844 @@
+{
+  "status": "passed_bounded_four_unit_bridge",
+  "contract_id": "slowlab-v22-task-v3",
+  "scope": "four active compartments, same clock, six 300s steps; not full campaign or annual validation",
+  "origin_utc": "2017-01-01T05:00:00+00:00",
+  "local_clock_offset_seconds": 21600,
+  "central_supply_model": "adequately_sized_no_cross_compartment_contention",
+  "steps": [
+    {
+      "start": 0,
+      "end": 300,
+      "compartments": [
+        {
+          "unit": "0",
+          "requested": {
+            "uBoil": 1.0,
+            "uRoof": 0.0,
+            "uExtCo2": 0.999999999999996,
+            "uLamp": 1.0,
+            "uThScr": 0.999999999999996
+          },
+          "realised": {
+            "uBoil": 1.0,
+            "uExtCo2": 0.999999999999996,
+            "uLamp": 1.0,
+            "uRoof": 0.0,
+            "uThScr": 0.999999999999996
+          },
+          "forcing_time": 0,
+          "sensor_max_time": 0.0,
+          "temperature_c": 20.208737465321693,
+          "rates": {
+            "heat_w_m2": 120.0,
+            "co2_mg_m2_s": 2.083333333333325,
+            "lamp_w_m2": 66.66666666666667
+          }
+        },
+        {
+          "unit": "1",
+          "requested": {
+            "uBoil": 1.0,
+            "uRoof": 1.000088900582341e-12,
+            "uExtCo2": 0.9999999999604774,
+            "uLamp": 1.0,
+            "uThScr": 0.9999999999989999
+          },
+          "realised": {
+            "uBoil": 1.0,
+            "uExtCo2": 0.9999999999604774,
+            "uLamp": 1.0,
+            "uRoof": 1.000088900582341e-12,
+            "uThScr": 0.9999999999989999
+          },
+          "forcing_time": 0,
+          "sensor_max_time": 0.0,
+          "temperature_c": 20.208737465311543,
+          "rates": {
+            "heat_w_m2": 120.0,
+            "co2_mg_m2_s": 2.0833333332509945,
+            "lamp_w_m2": 66.66666666666667
+          }
+        },
+        {
+          "unit": "2",
+          "requested": {
+            "uBoil": 1.0,
+            "uRoof": 0.0,
+            "uExtCo2": 0.999999999999996,
+            "uLamp": 1.0,
+            "uThScr": 0.999999999999996
+          },
+          "realised": {
+            "uBoil": 1.0,
+            "uExtCo2": 0.999999999999996,
+            "uLamp": 1.0,
+            "uRoof": 0.0,
+            "uThScr": 0.999999999999996
+          },
+          "forcing_time": 0,
+          "sensor_max_time": 0.0,
+          "temperature_c": 20.208737465321693,
+          "rates": {
+            "heat_w_m2": 120.0,
+            "co2_mg_m2_s": 2.083333333333325,
+            "lamp_w_m2": 66.66666666666667
+          }
+        },
+        {
+          "unit": "3",
+          "requested": {
+            "uBoil": 1.0,
+            "uRoof": 1.000088900582341e-12,
+            "uExtCo2": 0.9999999999604774,
+            "uLamp": 1.0,
+            "uThScr": 0.9999999999989999
+          },
+          "realised": {
+            "uBoil": 1.0,
+            "uExtCo2": 0.9999999999604774,
+            "uLamp": 1.0,
+            "uRoof": 1.000088900582341e-12,
+            "uThScr": 0.9999999999989999
+          },
+          "forcing_time": 0,
+          "sensor_max_time": 0.0,
+          "temperature_c": 20.208737465311543,
+          "rates": {
+            "heat_w_m2": 120.0,
+            "co2_mg_m2_s": 2.0833333332509945,
+            "lamp_w_m2": 66.66666666666667
+          }
+        }
+      ]
+    },
+    {
+      "start": 300,
+      "end": 600,
+      "compartments": [
+        {
+          "unit": "0",
+          "requested": {
+            "uBoil": 0.9999931617198108,
+            "uRoof": 0.0006337532414919876,
+            "uExtCo2": 0.9999999999883147,
+            "uLamp": 1.0,
+            "uThScr": 0.999999935289083
+          },
+          "realised": {
+            "uBoil": 0.9999931617198108,
+            "uExtCo2": 0.9999999999883147,
+            "uLamp": 1.0,
+            "uRoof": 0.0006337532414919876,
+            "uThScr": 0.999999935289083
+          },
+          "forcing_time": 300,
+          "sensor_max_time": 300.0,
+          "temperature_c": 22.246183087913856,
+          "rates": {
+            "heat_w_m2": 119.99917940637731,
+            "co2_mg_m2_s": 2.083333333308989,
+            "lamp_w_m2": 66.66666666666667
+          }
+        },
+        {
+          "unit": "1",
+          "requested": {
+            "uBoil": 0.9359936911582278,
+            "uRoof": 0.0006337532414928134,
+            "uExtCo2": 0.9999998831477531,
+            "uLamp": 1.0,
+            "uThScr": 0.999999935289083
+          },
+          "realised": {
+            "uBoil": 0.9359936911582278,
+            "uExtCo2": 0.9999998831477531,
+            "uLamp": 1.0,
+            "uRoof": 0.0006337532414928134,
+            "uThScr": 0.999999935289083
+          },
+          "forcing_time": 300,
+          "sensor_max_time": 300.0,
+          "temperature_c": 22.244026869705095,
+          "rates": {
+            "heat_w_m2": 112.31924293898733,
+            "co2_mg_m2_s": 2.0833330898911524,
+            "lamp_w_m2": 66.66666666666667
+          }
+        },
+        {
+          "unit": "2",
+          "requested": {
+            "uBoil": 0.9999931617198108,
+            "uRoof": 0.0006337532414919876,
+            "uExtCo2": 0.9999999999883147,
+            "uLamp": 1.0,
+            "uThScr": 0.999999935289083
+          },
+          "realised": {
+            "uBoil": 0.9999931617198108,
+            "uExtCo2": 0.9999999999883147,
+            "uLamp": 1.0,
+            "uRoof": 0.0006337532414919876,
+            "uThScr": 0.999999935289083
+          },
+          "forcing_time": 300,
+          "sensor_max_time": 300.0,
+          "temperature_c": 22.246183087913856,
+          "rates": {
+            "heat_w_m2": 119.99917940637731,
+            "co2_mg_m2_s": 2.083333333308989,
+            "lamp_w_m2": 66.66666666666667
+          }
+        },
+        {
+          "unit": "3",
+          "requested": {
+            "uBoil": 0.9359936911582278,
+            "uRoof": 0.0006337532414928134,
+            "uExtCo2": 0.9999998831477531,
+            "uLamp": 1.0,
+            "uThScr": 0.999999935289083
+          },
+          "realised": {
+            "uBoil": 0.9359936911582278,
+            "uExtCo2": 0.9999998831477531,
+            "uLamp": 1.0,
+            "uRoof": 0.0006337532414928134,
+            "uThScr": 0.999999935289083
+          },
+          "forcing_time": 300,
+          "sensor_max_time": 300.0,
+          "temperature_c": 22.244026869705095,
+          "rates": {
+            "heat_w_m2": 112.31924293898733,
+            "co2_mg_m2_s": 2.0833330898911524,
+            "lamp_w_m2": 66.66666666666667
+          }
+        }
+      ]
+    },
+    {
+      "start": 600,
+      "end": 900,
+      "compartments": [
+        {
+          "unit": "0",
+          "requested": {
+            "uBoil": 0.0010347085731467864,
+            "uRoof": 0.00010532772464970133,
+            "uExtCo2": 0.9999999767519497,
+            "uLamp": 1.0,
+            "uThScr": 0.9999999999918164
+          },
+          "realised": {
+            "uBoil": 0.0010347085731467864,
+            "uExtCo2": 0.9999999767519497,
+            "uLamp": 1.0,
+            "uRoof": 0.00010532772464970133,
+            "uThScr": 0.9999999999918164
+          },
+          "forcing_time": 600,
+          "sensor_max_time": 600.0,
+          "temperature_c": 23.48319255568383,
+          "rates": {
+            "heat_w_m2": 0.12416502877761437,
+            "co2_mg_m2_s": 2.0833332848998953,
+            "lamp_w_m2": 66.66666666666667
+          }
+        },
+        {
+          "unit": "1",
+          "requested": {
+            "uBoil": 1.0565558896654702e-07,
+            "uRoof": 0.00010545190253420552,
+            "uExtCo2": 0.9997676683306853,
+            "uLamp": 1.0,
+            "uThScr": 0.999999999991768
+          },
+          "realised": {
+            "uBoil": 1.0565558896654702e-07,
+            "uExtCo2": 0.9997676683306853,
+            "uLamp": 1.0,
+            "uRoof": 0.00010545190253420552,
+            "uThScr": 0.999999999991768
+          },
+          "forcing_time": 600,
+          "sensor_max_time": 600.0,
+          "temperature_c": 23.477065055958658,
+          "rates": {
+            "heat_w_m2": 1.2678670675985644e-05,
+            "co2_mg_m2_s": 2.082849309022261,
+            "lamp_w_m2": 66.66666666666667
+          }
+        },
+        {
+          "unit": "2",
+          "requested": {
+            "uBoil": 0.0010347085731467864,
+            "uRoof": 0.00010532772464970133,
+            "uExtCo2": 0.9999999767519497,
+            "uLamp": 1.0,
+            "uThScr": 0.9999999999918164
+          },
+          "realised": {
+            "uBoil": 0.0010347085731467864,
+            "uExtCo2": 0.9999999767519497,
+            "uLamp": 1.0,
+            "uRoof": 0.00010532772464970133,
+            "uThScr": 0.9999999999918164
+          },
+          "forcing_time": 600,
+          "sensor_max_time": 600.0,
+          "temperature_c": 23.48319255568383,
+          "rates": {
+            "heat_w_m2": 0.12416502877761437,
+            "co2_mg_m2_s": 2.0833332848998953,
+            "lamp_w_m2": 66.66666666666667
+          }
+        },
+        {
+          "unit": "3",
+          "requested": {
+            "uBoil": 1.0565558896654702e-07,
+            "uRoof": 0.00010545190253420552,
+            "uExtCo2": 0.9997676683306853,
+            "uLamp": 1.0,
+            "uThScr": 0.999999999991768
+          },
+          "realised": {
+            "uBoil": 1.0565558896654702e-07,
+            "uExtCo2": 0.9997676683306853,
+            "uLamp": 1.0,
+            "uRoof": 0.00010545190253420552,
+            "uThScr": 0.999999999991768
+          },
+          "forcing_time": 600,
+          "sensor_max_time": 600.0,
+          "temperature_c": 23.477065055958658,
+          "rates": {
+            "heat_w_m2": 1.2678670675985644e-05,
+            "co2_mg_m2_s": 2.082849309022261,
+            "lamp_w_m2": 66.66666666666667
+          }
+        }
+      ]
+    },
+    {
+      "start": 900,
+      "end": 1200,
+      "compartments": [
+        {
+          "unit": "0",
+          "requested": {
+            "uBoil": 1.1674271043928023e-08,
+            "uRoof": 4.018314315028598e-05,
+            "uExtCo2": 0.9999661368402266,
+            "uLamp": 1.0,
+            "uThScr": 0.9999999999991435
+          },
+          "realised": {
+            "uBoil": 1.1674271043928023e-08,
+            "uExtCo2": 0.9999661368402266,
+            "uLamp": 1.0,
+            "uRoof": 4.018314315028598e-05,
+            "uThScr": 0.9999999999991435
+          },
+          "forcing_time": 900,
+          "sensor_max_time": 900.0,
+          "temperature_c": 24.1995436267493,
+          "rates": {
+            "heat_w_m2": 1.400912525271363e-06,
+            "co2_mg_m2_s": 2.0832627850838055,
+            "lamp_w_m2": 66.66666666666667
+          }
+        },
+        {
+          "unit": "1",
+          "requested": {
+            "uBoil": 1.2352070909865716e-12,
+            "uRoof": 0.00029987123205368996,
+            "uExtCo2": 0.7475993821182019,
+            "uLamp": 1.0,
+            "uThScr": 0.9999999919041916
+          },
+          "realised": {
+            "uBoil": 1.2352070909865716e-12,
+            "uExtCo2": 0.7475993821182019,
+            "uLamp": 1.0,
+            "uRoof": 0.00029987123205368996,
+            "uThScr": 0.9999999919041916
+          },
+          "forcing_time": 900,
+          "sensor_max_time": 900.0,
+          "temperature_c": 24.186854638966828,
+          "rates": {
+            "heat_w_m2": 1.482248509183886e-10,
+            "co2_mg_m2_s": 1.5574987127462538,
+            "lamp_w_m2": 66.66666666666667
+          }
+        },
+        {
+          "unit": "2",
+          "requested": {
+            "uBoil": 1.1674271043928023e-08,
+            "uRoof": 4.018314315028598e-05,
+            "uExtCo2": 0.9999661368402266,
+            "uLamp": 1.0,
+            "uThScr": 0.9999999999991435
+          },
+          "realised": {
+            "uBoil": 1.1674271043928023e-08,
+            "uExtCo2": 0.9999661368402266,
+            "uLamp": 1.0,
+            "uRoof": 4.018314315028598e-05,
+            "uThScr": 0.9999999999991435
+          },
+          "forcing_time": 900,
+          "sensor_max_time": 900.0,
+          "temperature_c": 24.1995436267493,
+          "rates": {
+            "heat_w_m2": 1.400912525271363e-06,
+            "co2_mg_m2_s": 2.0832627850838055,
+            "lamp_w_m2": 66.66666666666667
+          }
+        },
+        {
+          "unit": "3",
+          "requested": {
+            "uBoil": 1.2352070909865716e-12,
+            "uRoof": 0.00029987123205368996,
+            "uExtCo2": 0.7475993821182019,
+            "uLamp": 1.0,
+            "uThScr": 0.9999999919041916
+          },
+          "realised": {
+            "uBoil": 1.2352070909865716e-12,
+            "uExtCo2": 0.7475993821182019,
+            "uLamp": 1.0,
+            "uRoof": 0.00029987123205368996,
+            "uThScr": 0.9999999919041916
+          },
+          "forcing_time": 900,
+          "sensor_max_time": 900.0,
+          "temperature_c": 24.186854638966828,
+          "rates": {
+            "heat_w_m2": 1.482248509183886e-10,
+            "co2_mg_m2_s": 1.5574987127462538,
+            "lamp_w_m2": 66.66666666666667
+          }
+        }
+      ]
+    },
+    {
+      "start": 1200,
+      "end": 1500,
+      "compartments": [
+        {
+          "unit": "0",
+          "requested": {
+            "uBoil": 1.591569078676263e-11,
+            "uRoof": 0.00015829779792422916,
+            "uExtCo2": 0.964943352944813,
+            "uLamp": 1.0,
+            "uThScr": 0.9999999993716893
+          },
+          "realised": {
+            "uBoil": 1.591569078676263e-11,
+            "uExtCo2": 0.964943352944813,
+            "uLamp": 1.0,
+            "uRoof": 0.00015829779792422916,
+            "uThScr": 0.9999999993716893
+          },
+          "forcing_time": 1200,
+          "sensor_max_time": 1200.0,
+          "temperature_c": 24.607287492411952,
+          "rates": {
+            "heat_w_m2": 1.9098828944115158e-09,
+            "co2_mg_m2_s": 2.0102986519683603,
+            "lamp_w_m2": 66.66666666666667
+          }
+        },
+        {
+          "unit": "1",
+          "requested": {
+            "uBoil": 1.7888809701618997e-15,
+            "uRoof": 0.0015352791901017838,
+            "uExtCo2": 0.017795065534197,
+            "uLamp": 1.0,
+            "uThScr": 0.9999944099443919
+          },
+          "realised": {
+            "uBoil": 1.7888809701618997e-15,
+            "uExtCo2": 0.017795065534197,
+            "uLamp": 1.0,
+            "uRoof": 0.0015352791901017838,
+            "uThScr": 0.9999944099443919
+          },
+          "forcing_time": 1200,
+          "sensor_max_time": 1200.0,
+          "temperature_c": 24.575410804452282,
+          "rates": {
+            "heat_w_m2": 2.1466571641942797e-13,
+            "co2_mg_m2_s": 0.03707305319624375,
+            "lamp_w_m2": 66.66666666666667
+          }
+        },
+        {
+          "unit": "2",
+          "requested": {
+            "uBoil": 1.591569078676263e-11,
+            "uRoof": 0.00015829779792422916,
+            "uExtCo2": 0.964943352944813,
+            "uLamp": 1.0,
+            "uThScr": 0.9999999993716893
+          },
+          "realised": {
+            "uBoil": 1.591569078676263e-11,
+            "uExtCo2": 0.964943352944813,
+            "uLamp": 1.0,
+            "uRoof": 0.00015829779792422916,
+            "uThScr": 0.9999999993716893
+          },
+          "forcing_time": 1200,
+          "sensor_max_time": 1200.0,
+          "temperature_c": 24.607287492411952,
+          "rates": {
+            "heat_w_m2": 1.9098828944115158e-09,
+            "co2_mg_m2_s": 2.0102986519683603,
+            "lamp_w_m2": 66.66666666666667
+          }
+        },
+        {
+          "unit": "3",
+          "requested": {
+            "uBoil": 1.7888809701618997e-15,
+            "uRoof": 0.0015352791901017838,
+            "uExtCo2": 0.017795065534197,
+            "uLamp": 1.0,
+            "uThScr": 0.9999944099443919
+          },
+          "realised": {
+            "uBoil": 1.7888809701618997e-15,
+            "uExtCo2": 0.017795065534197,
+            "uLamp": 1.0,
+            "uRoof": 0.0015352791901017838,
+            "uThScr": 0.9999944099443919
+          },
+          "forcing_time": 1200,
+          "sensor_max_time": 1200.0,
+          "temperature_c": 24.575410804452282,
+          "rates": {
+            "heat_w_m2": 2.1466571641942797e-13,
+            "co2_mg_m2_s": 0.03707305319624375,
+            "lamp_w_m2": 66.66666666666667
+          }
+        }
+      ]
+    },
+    {
+      "start": 1500,
+      "end": 1800,
+      "compartments": [
+        {
+          "unit": "0",
+          "requested": {
+            "uBoil": 3.7226313494185436e-13,
+            "uRoof": 0.0004046799676123479,
+            "uExtCo2": 0.04327674040439847,
+            "uLamp": 1.0,
+            "uThScr": 0.9999999731372817
+          },
+          "realised": {
+            "uBoil": 3.7226313494185436e-13,
+            "uExtCo2": 0.04327674040439847,
+            "uLamp": 1.0,
+            "uRoof": 0.0004046799676123479,
+            "uThScr": 0.9999999731372817
+          },
+          "forcing_time": 1500,
+          "sensor_max_time": 1500.0,
+          "temperature_c": 24.843894481792617,
+          "rates": {
+            "heat_w_m2": 4.4671576193022516e-11,
+            "co2_mg_m2_s": 0.09015987584249681,
+            "lamp_w_m2": 66.66666666666667
+          }
+        },
+        {
+          "unit": "1",
+          "requested": {
+            "uBoil": 4.9929450011372464e-17,
+            "uRoof": 0.0037478317330141195,
+            "uExtCo2": 0.031512226795836,
+            "uLamp": 1.0,
+            "uThScr": 0.9997997575063858
+          },
+          "realised": {
+            "uBoil": 4.9929450011372464e-17,
+            "uExtCo2": 0.031512226795836,
+            "uLamp": 1.0,
+            "uRoof": 0.0037478317330141195,
+            "uThScr": 0.9997997575063858
+          },
+          "forcing_time": 1500,
+          "sensor_max_time": 1500.0,
+          "temperature_c": 24.771942779472823,
+          "rates": {
+            "heat_w_m2": 5.991534001364695e-15,
+            "co2_mg_m2_s": 0.065650472491325,
+            "lamp_w_m2": 66.66666666666667
+          }
+        },
+        {
+          "unit": "2",
+          "requested": {
+            "uBoil": 3.7226313494185436e-13,
+            "uRoof": 0.0004046799676123479,
+            "uExtCo2": 0.04327674040439847,
+            "uLamp": 1.0,
+            "uThScr": 0.9999999731372817
+          },
+          "realised": {
+            "uBoil": 3.7226313494185436e-13,
+            "uExtCo2": 0.04327674040439847,
+            "uLamp": 1.0,
+            "uRoof": 0.0004046799676123479,
+            "uThScr": 0.9999999731372817
+          },
+          "forcing_time": 1500,
+          "sensor_max_time": 1500.0,
+          "temperature_c": 24.843894481792617,
+          "rates": {
+            "heat_w_m2": 4.4671576193022516e-11,
+            "co2_mg_m2_s": 0.09015987584249681,
+            "lamp_w_m2": 66.66666666666667
+          }
+        },
+        {
+          "unit": "3",
+          "requested": {
+            "uBoil": 4.9929450011372464e-17,
+            "uRoof": 0.0037478317330141195,
+            "uExtCo2": 0.031512226795836,
+            "uLamp": 1.0,
+            "uThScr": 0.9997997575063858
+          },
+          "realised": {
+            "uBoil": 4.9929450011372464e-17,
+            "uExtCo2": 0.031512226795836,
+            "uLamp": 1.0,
+            "uRoof": 0.0037478317330141195,
+            "uThScr": 0.9997997575063858
+          },
+          "forcing_time": 1500,
+          "sensor_max_time": 1500.0,
+          "temperature_c": 24.771942779472823,
+          "rates": {
+            "heat_w_m2": 5.991534001364695e-15,
+            "co2_mg_m2_s": 0.065650472491325,
+            "lamp_w_m2": 66.66666666666667
+          }
+        }
+      ]
+    }
+  ],
+  "max_realised_flux": {
+    "heat_w_m2": 120.0,
+    "co2_mg_m2_s": 2.083333333333325,
+    "lamp_w_m2": 66.66666666666667
+  },
+  "ledgers": {
+    "0": {
+      "per_m2": {
+        "heat_kwh_m2": 0.020010278819835168,
+        "light_kwh_m2": 0.03333333333333334,
+        "co2_kg_m2": 0.003130116379331062,
+        "harvest_kg_m2": 2.0021025000324177e-117,
+        "transpiration_kg_m2": 0.003415650093697789,
+        "days": 0.020833333333333336
+      },
+      "by_phase_per_m2": {
+        "active": {
+          "heat_kwh_m2": 0.020010278819835168,
+          "light_kwh_m2": 0.03333333333333334,
+          "co2_kg_m2": 0.003130116379331062,
+          "harvest_kg_m2": 2.0021025000324177e-117,
+          "transpiration_kg_m2": 0.003415650093697789,
+          "days": 0.020833333333333336
+        },
+        "cleanup": {
+          "heat_kwh_m2": 0.0,
+          "light_kwh_m2": 0.0,
+          "co2_kg_m2": 0.0,
+          "harvest_kg_m2": 0.0,
+          "transpiration_kg_m2": 0.0,
+          "days": 0.0
+        },
+        "idle": {
+          "heat_kwh_m2": 0.0,
+          "light_kwh_m2": 0.0,
+          "co2_kg_m2": 0.0,
+          "harvest_kg_m2": 0.0,
+          "transpiration_kg_m2": 0.0,
+          "days": 0.0
+        }
+      },
+      "event_cost_eur_m2": 2.0,
+      "synthetic_margin_eur": -192.65614757281838,
+      "occupied_m2_days": 2.0,
+      "scope": "single-compartment accrued ledger; not final campaign settlement"
+    },
+    "1": {
+      "per_m2": {
+        "heat_kwh_m2": 0.019359937968150536,
+        "light_kwh_m2": 0.03333333333333334,
+        "co2_kg_m2": 0.002372921391179469,
+        "harvest_kg_m2": 2.002102485266733e-117,
+        "transpiration_kg_m2": 0.003442917776855503,
+        "days": 0.020833333333333336
+      },
+      "by_phase_per_m2": {
+        "active": {
+          "heat_kwh_m2": 0.019359937968150536,
+          "light_kwh_m2": 0.03333333333333334,
+          "co2_kg_m2": 0.002372921391179469,
+          "harvest_kg_m2": 2.002102485266733e-117,
+          "transpiration_kg_m2": 0.003442917776855503,
+          "days": 0.020833333333333336
+        },
+        "cleanup": {
+          "heat_kwh_m2": 0.0,
+          "light_kwh_m2": 0.0,
+          "co2_kg_m2": 0.0,
+          "harvest_kg_m2": 0.0,
+          "transpiration_kg_m2": 0.0,
+          "days": 0.0
+        },
+        "idle": {
+          "heat_kwh_m2": 0.0,
+          "light_kwh_m2": 0.0,
+          "co2_kg_m2": 0.0,
+          "harvest_kg_m2": 0.0,
+          "transpiration_kg_m2": 0.0,
+          "days": 0.0
+        }
+      },
+      "event_cost_eur_m2": 2.0,
+      "synthetic_margin_eur": -192.63848779295776,
+      "occupied_m2_days": 2.0,
+      "scope": "single-compartment accrued ledger; not final campaign settlement"
+    },
+    "2": {
+      "per_m2": {
+        "heat_kwh_m2": 0.020010278819835168,
+        "light_kwh_m2": 0.03333333333333334,
+        "co2_kg_m2": 0.003130116379331062,
+        "harvest_kg_m2": 2.0021025000324177e-117,
+        "transpiration_kg_m2": 0.003415650093697789,
+        "days": 0.020833333333333336
+      },
+      "by_phase_per_m2": {
+        "active": {
+          "heat_kwh_m2": 0.020010278819835168,
+          "light_kwh_m2": 0.03333333333333334,
+          "co2_kg_m2": 0.003130116379331062,
+          "harvest_kg_m2": 2.0021025000324177e-117,
+          "transpiration_kg_m2": 0.003415650093697789,
+          "days": 0.020833333333333336
+        },
+        "cleanup": {
+          "heat_kwh_m2": 0.0,
+          "light_kwh_m2": 0.0,
+          "co2_kg_m2": 0.0,
+          "harvest_kg_m2": 0.0,
+          "transpiration_kg_m2": 0.0,
+          "days": 0.0
+        },
+        "idle": {
+          "heat_kwh_m2": 0.0,
+          "light_kwh_m2": 0.0,
+          "co2_kg_m2": 0.0,
+          "harvest_kg_m2": 0.0,
+          "transpiration_kg_m2": 0.0,
+          "days": 0.0
+        }
+      },
+      "event_cost_eur_m2": 2.0,
+      "synthetic_margin_eur": -192.65614757281838,
+      "occupied_m2_days": 2.0,
+      "scope": "single-compartment accrued ledger; not final campaign settlement"
+    },
+    "3": {
+      "per_m2": {
+        "heat_kwh_m2": 0.019359937968150536,
+        "light_kwh_m2": 0.03333333333333334,
+        "co2_kg_m2": 0.002372921391179469,
+        "harvest_kg_m2": 2.002102485266733e-117,
+        "transpiration_kg_m2": 0.003442917776855503,
+        "days": 0.020833333333333336
+      },
+      "by_phase_per_m2": {
+        "active": {
+          "heat_kwh_m2": 0.019359937968150536,
+          "light_kwh_m2": 0.03333333333333334,
+          "co2_kg_m2": 0.002372921391179469,
+          "harvest_kg_m2": 2.002102485266733e-117,
+          "transpiration_kg_m2": 0.003442917776855503,
+          "days": 0.020833333333333336
+        },
+        "cleanup": {
+          "heat_kwh_m2": 0.0,
+          "light_kwh_m2": 0.0,
+          "co2_kg_m2": 0.0,
+          "harvest_kg_m2": 0.0,
+          "transpiration_kg_m2": 0.0,
+          "days": 0.0
+        },
+        "idle": {
+          "heat_kwh_m2": 0.0,
+          "light_kwh_m2": 0.0,
+          "co2_kg_m2": 0.0,
+          "harvest_kg_m2": 0.0,
+          "transpiration_kg_m2": 0.0,
+          "days": 0.0
+        }
+      },
+      "event_cost_eur_m2": 2.0,
+      "synthetic_margin_eur": -192.63848779295776,
+      "occupied_m2_days": 2.0,
+      "scope": "single-compartment accrued ledger; not final campaign settlement"
+    }
+  },
+  "public_indoor_record_counts": {
+    "0": 7,
+    "1": 7,
+    "2": 7,
+    "3": 7
+  },
+  "feedback_permissions": {
+    "0": {
+      "full_records": 7,
+      "endpoint_running_science": "denied",
+      "endpoint_final_aggregate": "unreleased"
+    },
+    "1": {
+      "full_records": 7,
+      "endpoint_running_science": "denied",
+      "endpoint_final_aggregate": "unreleased"
+    },
+    "2": {
+      "full_records": 7,
+      "endpoint_running_science": "denied",
+      "endpoint_final_aggregate": "unreleased"
+    },
+    "3": {
+      "full_records": 7,
+      "endpoint_running_science": "denied",
+      "endpoint_final_aggregate": "unreleased"
+    }
+  },
+  "model_load_count": 4,
+  "elapsed_seconds": 16.755945458076894,
+  "peak_rss_bytes_platform": 126877696
+}

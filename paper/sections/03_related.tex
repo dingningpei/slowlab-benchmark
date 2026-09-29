@@ -1,66 +1,86 @@
 \section{Related work}
 \label{sec:related}
 
-\paragraph{Experimental design benchmarks.} \citet{boxinggym} is the closest prior work.
-It scores design quality by expected information gain about the parameter vector---the
-Bayesian optimal-experimental-design objective, estimated by nested Monte Carlo. We take
-the same stance, that design quality should be measured from theory rather than from a
-hand-built checklist. We do not take the same quantity. Ours is a decision-theoretic
-one: the Bayes risk a design leaves behind on the \emph{recommendation}, not the entropy it
-removes from the parameters (\S\ref{sec:eig}). A design can pin $\theta$ down tightly and
-spend its budget far from the optimum, which scores well on theirs and badly on ours; their
-task is model discovery and ours is a decision. And the
-regime differs: experiments there are instantaneous, free and unboundedly repeatable, with no
-parallelism constraint and no irreversibility, so the arithmetic behind our main result---a
-replicate and a new treatment competing for the same physical unit---cannot arise.
+\paragraph{Agent benchmarks for experimentation.}
+BoxingGym gives language agents ten sequential experiments in generative probabilistic
+environments and evaluates experimental design by expected information gain (EIG), followed
+by prediction or model communication \citep{boxinggym}. Its reported learning curves are
+especially relevant here: prediction usually improves with more observations, but error
+increases in the hyperbolic-discounting environment. \slowlab{} asks a different question.
+The endpoint is an operating recommendation, the design is an allocation to named physical
+units, and trials consume a fixed campaign budget and opportunity cost. We therefore score
+decision regret and condition design diagnostics on the same history used for the
+recommendation, rather than equating parameter information with decision value.
 
-\paragraph{Optimal experimental design.} The quantity in our second contribution is old.
-Bayesian experimental design begins with \citet{lindley1956} and is surveyed by
-\citet{chaloner1995}; its decision-theoretic branch, which scores a design by the Bayes
-risk it leaves on a \emph{decision} rather than by the entropy it removes from parameters,
-is \citet{raiffa1961} and \citet{howard1966}. The same object appears in Bayesian
-optimisation as the Knowledge Gradient \citep{frazier2008kg}, beside entropy-search
-criteria that target the optimum's location instead \citep{hennig2012,hernandez2014}.
-Estimating any of them is the standing difficulty \citep{rainforth2018}, and
-Appendix~\ref{app:eig} reports how ours failed before it worked. What we contribute is not
-the measure but its use as a benchmark score under conditions --- capped parallelism,
-priced trials, no retries --- in which an agent cannot substitute more queries for a better
-design.
+CARE also evaluates an LLM inside a budgeted sequential reaction-optimization loop
+\citep{care2026}. It has the model write an executable ranking program while a numerical
+reference policy and intervention gate retain control over experiment selection. Its matched
+offline replay reveals one condition at a time from an enumerated pool. \slowlab{} instead
+evaluates direct agent control of feasible batches, including allocation, correlated
+measurements and a recommendation that need not be one of the tested treatments. These are
+complementary tests of how an LLM enters an experimental controller.
 
-\paragraph{Task validity.} \citet{spade} trains a model to author
-executable environments and solve them in self-play, scoring \emph{task} quality by
-hint-based regret, $r_D(e)=\bar r_A(e\mid h)-\bar r_A(e)$: the gain a solver gets from
-privileged information. This is a lightweight estimate of the minimax-regret objective of
-PAIRED \citep{paired}, with the hint-equipped agent standing in for the antagonist, and it
-separates environments at the learning frontier from those already mastered or intractable.
-A benchmark needs exactly this, since the alternative is to assert that one's tasks are
-well-posed. We report it as a diagnostic rather than adopt it as our score: with four
-hand-built configurations we can price a task directly against what a perfect reasoner
-could extract from it (\S\ref{sec:eig}), whereas hint regret estimates reachability from a
-solver's behaviour, which is what one needs when the environments are generated at scale.
-It earned its place by correcting us. \textsc{Screen} is the task we came closest to
-withdrawing, since its ceiling sits below the noise a full budget leaves
-(Table~\ref{tab:tasks}); it also carries the largest hint gap of the tasks the diagnostic
-scores, $0.27$ against $0.15$--$0.17$. A task can be at the frontier of what a solver can
-do and still be one where instance-tailoring is worth little, and only one of the two
-instruments sees each fact. Note that ``validity'' in that work means executability; the
-word is already claimed in this literature for something other than inferential soundness.
+\paragraph{Executable experiment-optimization benchmarks.}
+Summit provides mechanistic and data-driven reaction benchmarks and common optimizer
+interfaces \citep{summit}; Olympus adds noisy emulators trained on experimental chemistry
+and materials datasets and a broad planner library \citep{olympus}. Minerva goes further
+toward laboratory execution, supporting noisy multi-objective optimization in large
+parallel batches and enforcing batch constraints in automated high-throughput chemistry
+\citep{minerva}. These systems establish that noise, finite data and parallel execution are
+already central benchmark concerns. \slowlab{} contributes a different resource geometry:
+controls act at chamber and loop levels, so the agent must assign treatments to units under
+split-plot constraints, and every tested treatment is charged by its economic shortfall.
+Table~\ref{tab:related-comparison} uses ``not reported'' where the cited evaluation does not
+specify a property; absence of a report is not evidence that a system cannot represent it.
 
-\paragraph{Self-driving laboratories.} \citet{sdlsurvey} survey deployed self-driving
-laboratories and argue that evaluation should ``prioritise decision quality under
-constraints and reproducibility rather than single-number performance in idealised
-settings''. They prescribe the reference agents we adopt---``random and space-filling
-designs, standard BO for short-horizon tasks''---with the aim of providing ``stable
-reference points that reflect decision structure, not to maximise baseline performance''
-(Appendix~\ref{app:refs}). What is missing is an executable environment in which any of it can
-be measured.
+\begin{table*}[t]
+\centering\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\textwidth}{@{}l*{5}{>{\centering\arraybackslash}X}@{}}
+\toprule
+System & noisy outcomes & finite campaign & parallel / batch constraint & time-stamped interim data & separate final recommendation \\
+\midrule
+BoxingGym & yes & yes (10 queries) & not reported & not reported & yes (prediction/model) \\
+Summit & not reported & user-set & not reported & not reported & N/A \\
+Olympus & yes & user-set & not reported & not reported & N/A \\
+Minerva & yes & yes & yes & not reported & N/A \\
+CARE & dataset outcomes & yes (15 total) & N/A (sequential replay) & N/A & best tested condition \\
+\slowlab{} & yes & yes & tiered physical capacity & yes & yes (continuous action) \\
+\bottomrule
+\end{tabularx}
+\caption{Scope of the evaluated interfaces in the cited work. ``N/A'' means the published
+task has a different endpoint; ``not reported'' avoids inferring a negative from an omitted
+feature.}
+\label{tab:related-comparison}
+\end{table*}
 
-\paragraph{Adjacent benchmarks.} ScienceAgentBench, DiscoveryBench and related suites
-\citep{scienceagentbench,discoverybench} evaluate analysis and reproduction of published
-findings, where the data already exist and the agent bears no collection cost. WOFOSTGym and CropGym expose crop simulators
-as RL \emph{control} problems \citep{wofostgym}---the agent sets irrigation over time rather
-than committing to a design and waiting; we reuse the framing but not the task. A
-substantial literature builds autonomous laboratories
-\citep{szymanski2023autonomous,szymanski2026correction,burger2020mobile,coscientist,chemcrow}, surveyed by
-\citet{stach2024sdl} and \citet{abolhasani2023rise}; those systems operate on hour-to-day timescales and report
-constraint-violation behaviour rather than releasing an executable benchmark.
+\paragraph{Budget, delay and experimental structure.}
+Budgeted Bayesian optimization studies how to allocate a total evaluation-cost budget,
+including the non-myopic case where costs vary and are initially unknown
+\citep{astudillo2021budgeted}. Delayed-feedback BO studies how to choose new evaluations
+while earlier ones remain pending \citep{verma2022delayed}. These methods provide algorithmic
+baselines and regret analyses; our benchmark fixes a domain-specific facility and exposes
+the resulting control hierarchy to general-purpose agents. The chamber/loop hierarchy is a
+split-plot design: whole-plot factors have fewer independent experimental units than
+subplot factors, so analysis and randomization must respect two error strata
+\citep{goos2011splitplot}. This statistical structure motivates both the feasibility checker
+and the block-aware readers.
+
+\paragraph{Decision-theoretic design.}
+Bayesian experimental design commonly scores parameter information
+\citep{lindley1956,chaloner1995}; decision-theoretic design instead values how observations
+change a downstream action \citep{raiffa1961,howard1966}. Related quantities appear as the
+knowledge gradient and entropy-search criteria in Bayesian optimization
+\citep{frazier2008kg,hennig2012,hernandez2014}. Our common-history diagnostic applies this
+decision view to benchmark traces: it separates risk supported by the observed history from
+excess risk introduced by the submitted recommendation, while reporting the numerical
+calibration limits of the posterior evaluator.
+
+\paragraph{Scientific agents and self-driving laboratories.}
+Scientific-agent suites often start from existing data, while autonomous chemistry and
+materials systems connect planners to laboratory tools
+\citep{scienceagentbench,discoverybench,coscientist,chemcrow,
+szymanski2023autonomous,burger2020mobile}. CropGym-style environments expose crop simulators
+as control problems \citep{wofostgym}. \slowlab{} occupies a narrower intersection: it is a
+simulated benchmark for experimental allocation and final recommendation in one greenhouse
+domain. We do not infer cross-domain validity from that instantiation.

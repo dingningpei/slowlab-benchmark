@@ -1,0 +1,531 @@
+{
+  "environment_version": "2.1.0",
+  "analysis_status": "prospective_post_primary",
+  "protocol_id": "slowlab-v2-phase5-model-extension-2026-09-20-a3",
+  "protocol_sha256": "5bc0d1ffbf1f4b25103d324031a613b54c7fe4caf80eebdf150f6092bf085299",
+  "analysis_id": "slowlab-v2-phase5-model-extension-analysis-2026-09-20-a3",
+  "bootstrap_seed": 20260920,
+  "bootstrap_resamples": 10000,
+  "episodes": {
+    "expected": 288,
+    "matched": 288,
+    "missing": 0,
+    "duplicates": 0,
+    "unexpected": 0
+  },
+  "cost_audit_usd": {
+    "a3_deepseek_and_qwen": 0.6717893651999992,
+    "prior_valid_and_excluded_runs": 0.686,
+    "all_recorded_spend": 1.3577893651999993,
+    "hard_cap": 4.0,
+    "direct_deepseek_policy": "peak cache-miss input and peak output rate upper bound"
+  },
+  "execution_deviations": [
+    "The 22-episode DeepSeek OpenRouter pilot and four-episode direct low-thinking pilot were excluded before effect inspection.",
+    "DeepSeek formal runs used the direct API, native JSON mode, and non-thinking mode after non-reserved interface diagnostics.",
+    "Qwen requested and actual model IDs matched, but OpenRouter used multiple underlying providers.",
+    "Provider-hidden reasoning was disabled for all formal A3 model conditions; the already completed Luna cells used the same setting."
+  ],
+  "arms": {
+    "luna|bare": {
+      "n_episodes": 48,
+      "n_sites": 24,
+      "final_simple_regret": {
+        "n": 48,
+        "mean": 0.01072479007598256,
+        "se": 0.0018233963695529346
+      },
+      "cumulative_regret": {
+        "n": 48,
+        "mean": 393.29007849357595,
+        "se": 21.75721656416087
+      },
+      "campaign_cash": {
+        "n": 48,
+        "mean": -1099.037625,
+        "se": 67.6334766277592
+      },
+      "mean_rounds_submitted": {
+        "n": 48,
+        "mean": 2.875,
+        "se": 0.05668908609485166
+      },
+      "format_failures": 1,
+      "infeasible_submissions": 69,
+      "episodes_below_round_cap": 5,
+      "design_adoption_rate": null,
+      "inference_adoption_rate": null,
+      "api_audit": {
+        "successful_calls": 304,
+        "actual_models": [
+          "openai/gpt-5.6-luna"
+        ],
+        "providers": [
+          "OpenAI"
+        ],
+        "prompt_tokens": 364876,
+        "completion_tokens": 62874,
+        "reported_cost_usd": 0.16181671,
+        "max_successful_attempt": 2
+      }
+    },
+    "luna|inference": {
+      "n_episodes": 48,
+      "n_sites": 24,
+      "final_simple_regret": {
+        "n": 48,
+        "mean": 0.010619902833084907,
+        "se": 0.0025799023294293287
+      },
+      "cumulative_regret": {
+        "n": 48,
+        "mean": 328.08392148832536,
+        "se": 18.968827199542183
+      },
+      "campaign_cash": {
+        "n": 48,
+        "mean": -1039.4313125,
+        "se": 65.97314520426374
+      },
+      "mean_rounds_submitted": {
+        "n": 48,
+        "mean": 2.8333333333333335,
+        "se": 0.06198070316648417
+      },
+      "format_failures": 0,
+      "infeasible_submissions": 57,
+      "episodes_below_round_cap": 7,
+      "design_adoption_rate": null,
+      "inference_adoption_rate": 0.8672566371681416,
+      "api_audit": {
+        "successful_calls": 289,
+        "actual_models": [
+          "openai/gpt-5.6-luna"
+        ],
+        "providers": [
+          "OpenAI"
+        ],
+        "prompt_tokens": 361905,
+        "completion_tokens": 60125,
+        "reported_cost_usd": 0.15796022,
+        "max_successful_attempt": 1
+      }
+    },
+    "deepseek|bare": {
+      "n_episodes": 48,
+      "n_sites": 24,
+      "final_simple_regret": {
+        "n": 48,
+        "mean": 0.01117740079662436,
+        "se": 0.0015867288512566382
+      },
+      "cumulative_regret": {
+        "n": 48,
+        "mean": 233.9065613697031,
+        "se": 11.989129937964956
+      },
+      "campaign_cash": {
+        "n": 48,
+        "mean": -861.154,
+        "se": 58.25249265388528
+      },
+      "mean_rounds_submitted": {
+        "n": 48,
+        "mean": 2.5625,
+        "se": 0.0888572546398304
+      },
+      "format_failures": 0,
+      "infeasible_submissions": 0,
+      "episodes_below_round_cap": 18,
+      "design_adoption_rate": null,
+      "inference_adoption_rate": null,
+      "api_audit": {
+        "successful_calls": 219,
+        "actual_models": [
+          "deepseek-flash"
+        ],
+        "providers": [],
+        "prompt_tokens": 269508,
+        "completion_tokens": 51596,
+        "reported_cost_usd": 0.0,
+        "max_successful_attempt": 1
+      }
+    },
+    "deepseek|inference": {
+      "n_episodes": 48,
+      "n_sites": 24,
+      "final_simple_regret": {
+        "n": 48,
+        "mean": 0.008113926949026238,
+        "se": 0.0011302924965223514
+      },
+      "cumulative_regret": {
+        "n": 48,
+        "mean": 206.39181641352977,
+        "se": 6.95493595170421
+      },
+      "campaign_cash": {
+        "n": 48,
+        "mean": -915.2508750000001,
+        "se": 54.8972330689807
+      },
+      "mean_rounds_submitted": {
+        "n": 48,
+        "mean": 2.8333333333333335,
+        "se": 0.06198070316648417
+      },
+      "format_failures": 0,
+      "infeasible_submissions": 1,
+      "episodes_below_round_cap": 7,
+      "design_adoption_rate": null,
+      "inference_adoption_rate": 0.6629213483146067,
+      "api_audit": {
+        "successful_calls": 233,
+        "actual_models": [
+          "deepseek-flash"
+        ],
+        "providers": [],
+        "prompt_tokens": 310429,
+        "completion_tokens": 53073,
+        "reported_cost_usd": 0.0,
+        "max_successful_attempt": 1
+      }
+    },
+    "qwen|bare": {
+      "n_episodes": 48,
+      "n_sites": 24,
+      "final_simple_regret": {
+        "n": 48,
+        "mean": 0.024247542240204912,
+        "se": 0.0022526431710594174
+      },
+      "cumulative_regret": {
+        "n": 48,
+        "mean": 318.1357783316593,
+        "se": 14.742048379303878
+      },
+      "campaign_cash": {
+        "n": 48,
+        "mean": -851.2393750000001,
+        "se": 58.88674245096574
+      },
+      "mean_rounds_submitted": {
+        "n": 48,
+        "mean": 2.1458333333333335,
+        "se": 0.0665085669662596
+      },
+      "format_failures": 0,
+      "infeasible_submissions": 26,
+      "episodes_below_round_cap": 39,
+      "design_adoption_rate": null,
+      "inference_adoption_rate": null,
+      "api_audit": {
+        "successful_calls": 225,
+        "actual_models": [
+          "qwen/qwen3.8-27b"
+        ],
+        "providers": [
+          "AkashML",
+          "Chutes",
+          "Cloudflare",
+          "CoreWeave",
+          "Darkbloom",
+          "DekaLLM",
+          "Io Net",
+          "Ionstream",
+          "Mancer 2",
+          "Novita",
+          "Parasail",
+          "Phala",
+          "Reka",
+          "Venice",
+          "Wafer"
+        ],
+        "prompt_tokens": 271560,
+        "completion_tokens": 63946,
+        "reported_cost_usd": 0.1856720782,
+        "max_successful_attempt": 2
+      }
+    },
+    "qwen|inference": {
+      "n_episodes": 48,
+      "n_sites": 24,
+      "final_simple_regret": {
+        "n": 48,
+        "mean": 0.00968930946906561,
+        "se": 0.001953698850265721
+      },
+      "cumulative_regret": {
+        "n": 48,
+        "mean": 264.80020954882707,
+        "se": 18.704534102540258
+      },
+      "campaign_cash": {
+        "n": 48,
+        "mean": -847.0433125,
+        "se": 71.5074488829794
+      },
+      "mean_rounds_submitted": {
+        "n": 48,
+        "mean": 2.4375,
+        "se": 0.08372028953266124
+      },
+      "format_failures": 0,
+      "infeasible_submissions": 15,
+      "episodes_below_round_cap": 25,
+      "design_adoption_rate": null,
+      "inference_adoption_rate": 0.4794520547945205,
+      "api_audit": {
+        "successful_calls": 228,
+        "actual_models": [
+          "qwen/qwen3.8-27b"
+        ],
+        "providers": [
+          "AkashML",
+          "Alibaba",
+          "Chutes",
+          "Darkbloom",
+          "DeepInfra",
+          "Io Net",
+          "Ionstream",
+          "Novita",
+          "Phala",
+          "Wafer"
+        ],
+        "prompt_tokens": 300523,
+        "completion_tokens": 64922,
+        "reported_cost_usd": 0.186533387,
+        "max_successful_attempt": 1
+      }
+    }
+  },
+  "tool_contrasts_bh_family": {
+    "luna:inference_minus_bare": {
+      "n_sites": 24,
+      "mean": -0.0001048872428976548,
+      "median": -0.0007589733975396189,
+      "sd": 0.016588670912909793,
+      "standardized_effect": -0.006322823778246662,
+      "ci95": [
+        -0.006468955191410611,
+        0.006457640377358176
+      ],
+      "p_raw_normal_approx": 0.9752891709882336,
+      "p_bh": 0.9752891709882338,
+      "cumulative_regret": {
+        "n_sites": 24,
+        "mean": -65.2061570052506,
+        "median": -70.97170482319578,
+        "sd": 143.12034839568813,
+        "standardized_effect": -0.45560367715828665,
+        "ci95": [
+          -121.76891484358292,
+          -10.612802387229657
+        ],
+        "p_raw_normal_approx": 0.02561542109167754
+      }
+    },
+    "deepseek:inference_minus_bare": {
+      "n_sites": 24,
+      "mean": -0.003063473847598124,
+      "median": -0.003436452517918992,
+      "sd": 0.009751214827737956,
+      "standardized_effect": -0.31416330187741087,
+      "ci95": [
+        -0.006975746434543353,
+        0.0007029347568278437
+      ],
+      "p_raw_normal_approx": 0.12378487171261515,
+      "p_bh": 0.18567730756892273,
+      "cumulative_regret": {
+        "n_sites": 24,
+        "mean": -27.51474495617336,
+        "median": -26.89172183925143,
+        "sd": 66.12913106285676,
+        "standardized_effect": -0.41607600937656614,
+        "ci95": [
+          -54.09346271760019,
+          -3.2695713786408565
+        ],
+        "p_raw_normal_approx": 0.041515159266564426
+      }
+    },
+    "qwen:inference_minus_bare": {
+      "n_sites": 24,
+      "mean": -0.014558232771139308,
+      "median": -0.01483979883187432,
+      "sd": 0.014165051048783283,
+      "standardized_effect": -1.027757169458969,
+      "ci95": [
+        -0.020050206990609144,
+        -0.009144050769599784
+      ],
+      "p_raw_normal_approx": 4.779454082920576e-07,
+      "p_bh": 1.4338362248761728e-06,
+      "cumulative_regret": {
+        "n_sites": 24,
+        "mean": -53.33556878283219,
+        "median": -44.477582105258,
+        "sd": 100.78909879972528,
+        "standardized_effect": -0.5291799353104005,
+        "ci95": [
+          -91.94453124154165,
+          -12.658968988969491
+        ],
+        "p_raw_normal_approx": 0.009529734631124323
+      }
+    }
+  },
+  "model_contrasts_bh_family": {
+    "bare:deepseek_minus_luna": {
+      "n_sites": 24,
+      "mean": 0.00045261072064179997,
+      "median": 0.005062063457256467,
+      "sd": 0.012201790645380304,
+      "standardized_effect": 0.03709379498435847,
+      "ci95": [
+        -0.004554708472544687,
+        0.004895331359454984
+      ],
+      "p_raw_normal_approx": 0.8558011034576155,
+      "p_bh": 0.8558011034576155,
+      "cumulative_regret": {
+        "n_sites": 24,
+        "mean": -159.38351712387285,
+        "median": -154.10566898001048,
+        "sd": 107.64431351543304,
+        "standardized_effect": -1.480649668512419,
+        "ci95": [
+          -205.84816511908457,
+          -121.63193135533778
+        ],
+        "p_raw_normal_approx": 4.0562065665272626e-13
+      }
+    },
+    "bare:qwen_minus_luna": {
+      "n_sites": 24,
+      "mean": 0.013522752164222355,
+      "median": 0.01313197745485047,
+      "sd": 0.01540435846088338,
+      "standardized_effect": 0.8778523428003167,
+      "ci95": [
+        0.0074056342695880935,
+        0.019648710425519085
+      ],
+      "p_raw_normal_approx": 1.7035118244579457e-05,
+      "p_bh": 5.1105354733738375e-05,
+      "cumulative_regret": {
+        "n_sites": 24,
+        "mean": -75.15430016191667,
+        "median": -38.51441477066608,
+        "sd": 139.95634846617017,
+        "standardized_effect": -0.5369838595073287,
+        "ci95": [
+          -132.17663168412682,
+          -23.683212913025447
+        ],
+        "p_raw_normal_approx": 0.008521600763753199
+      }
+    },
+    "bare:qwen_minus_deepseek": {
+      "n_sites": 24,
+      "mean": 0.013070141443580555,
+      "median": 0.011101640065065328,
+      "sd": 0.011892690584367205,
+      "standardized_effect": 1.099006263625583,
+      "ci95": [
+        0.008435711041251475,
+        0.01782680719001745
+      ],
+      "p_raw_normal_approx": 7.284480214967454e-08,
+      "p_bh": 4.3706881289804727e-07,
+      "cumulative_regret": {
+        "n_sites": 24,
+        "mean": 84.22921696195617,
+        "median": 102.02303090713835,
+        "sd": 99.79650036187556,
+        "standardized_effect": 0.8440097263584362,
+        "ci95": [
+          44.38773765243966,
+          123.23984996408497
+        ],
+        "p_raw_normal_approx": 3.552850299408545e-05
+      }
+    },
+    "inference:deepseek_minus_luna": {
+      "n_sites": 24,
+      "mean": -0.0025059758840586693,
+      "median": 0.00038843264471035907,
+      "sd": 0.010331582402990834,
+      "standardized_effect": -0.24255489491457066,
+      "ci95": [
+        -0.006939964105790279,
+        0.001166276535637783
+      ],
+      "p_raw_normal_approx": 0.23472648025076778,
+      "p_bh": 0.46945296050153557,
+      "cumulative_regret": {
+        "n_sites": 24,
+        "mean": -121.6921050747956,
+        "median": -103.45952897094273,
+        "sd": 105.21023209349731,
+        "standardized_effect": -1.1566565594746652,
+        "ci95": [
+          -164.29650388873145,
+          -81.58190349372913
+        ],
+        "p_raw_normal_approx": 1.4579760913943683e-08
+      }
+    },
+    "inference:qwen_minus_luna": {
+      "n_sites": 24,
+      "mean": -0.0009305933640192972,
+      "median": 0.0014935673916870174,
+      "sd": 0.01443322477025547,
+      "standardized_effect": -0.06447577577653324,
+      "ci95": [
+        -0.006929454977480913,
+        0.0044476029523910846
+      ],
+      "p_raw_normal_approx": 0.7521045971291193,
+      "p_bh": 0.8558011034576155,
+      "cumulative_regret": {
+        "n_sites": 24,
+        "mean": -63.28371193949826,
+        "median": -58.708248448854036,
+        "sd": 114.60517965210141,
+        "standardized_effect": -0.5521889336206619,
+        "ci95": [
+          -108.4013493198643,
+          -18.480017824759617
+        ],
+        "p_raw_normal_approx": 0.006827103307586123
+      }
+    },
+    "inference:qwen_minus_deepseek": {
+      "n_sites": 24,
+      "mean": 0.001575382520039372,
+      "median": 0.0007182062754223575,
+      "sd": 0.010836017106588774,
+      "standardized_effect": 0.14538390854712385,
+      "ci95": [
+        -0.0024910893351781068,
+        0.006085625538015974
+      ],
+      "p_raw_normal_approx": 0.47632063801553143,
+      "p_bh": 0.7144809570232972,
+      "cumulative_regret": {
+        "n_sites": 24,
+        "mean": 58.40839313529734,
+        "median": 23.681455629295307,
+        "sd": 107.47326077018344,
+        "standardized_effect": 0.5434690705085754,
+        "ci95": [
+          20.09940125050851,
+          102.84826989143937
+        ],
+        "p_raw_normal_approx": 0.007757551632915712
+      }
+    }
+  }
+}

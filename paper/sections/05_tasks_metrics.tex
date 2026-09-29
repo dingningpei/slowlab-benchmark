@@ -1,10 +1,65 @@
+\section{Tasks and evaluation}
+\label{sec:tasks-eval}
+
+\subsection{Controlled-environment horticulture}
+\label{sec:domain}
+
+The current benchmark contains one validated domain. Its response model is the reduced
+state-variable TOMGRO model \citep{jones1999reduced}; a site seed draws crop and economic
+parameters and fixes the corresponding response surface. Climate chambers are blocks and
+independently plumbed hydroponic loops are units. Temperature, photoperiod, lamp intensity
+and carbon-dioxide enrichment are chamber-level controls; planting density and the pruning
+target are loop-level controls. The objective is net profit per square metre per day. This
+construction makes the simulator traceable to a published crop model, while Appendix
+\ref{app:domain} records the additional choices made for parameter distributions, factor
+ranges, prices, observation noise and facility size.
+
+\subsection{Tasks}
+\label{sec:tasks}
+
+Three core tasks vary the decision geometry while retaining the same crop-cycle duration,
+commitment rule and economic objective. \textsc{Sanity} is a one-factor interface and
+evaluator check. \textsc{Optimise} varies one chamber-level and one loop-level factor, so a
+feasible batch is a split-plot allocation rather than an unordered list of points.
+\textsc{Transfer} optimizes four resource factors and then asks for a new recommendation
+after electricity and gas prices rise by $2.2\times$, without allowing another experiment.
+Table~\ref{tab:tasks-v2} states the resource structure directly; we do not reuse the
+Version~1 task-difficulty ratios.
+
+\begin{table}[t]
+\centering\small
+\begin{tabular}{@{}lrrrrl@{}}
+\toprule
+Task & factors & rounds & units/round & unit-days & decision tested \\
+\midrule
+Sanity & 1 & 2 & 8  & 3,360  & interface / calibration \\
+Optimise & 2 & 3 & 12 & 7,560  & split-plot iteration \\
+Transfer & 4 & 3 & 24 & 15,120 & post-shock recommendation \\
+\bottomrule
+\end{tabular}
+\caption{Version~2.1 core tasks. Unit-days are the physical capacity committed by one
+campaign; factor ranges and control levels are given in Appendix~\ref{app:tasks}.}
+\label{tab:tasks-v2}
+\end{table}
+
+The implementation retains an experimental six-factor \textsc{Screen} configuration for
+archival analyses and future task development, but it is excluded from the core suite and
+Version~2.1 model claims. Its current endpoint is final operating regret, which scores
+high-dimensional optimisation rather than factor screening. A valid future task must elicit
+factor ranks, effect directions and confidence, and score rank, sign and top-$k$ selection
+quality directly.
+
 \subsection{Evaluation}
 \label{sec:eval}
 
-Two quantities are reported per episode and never combined. \emph{Realised regret} is read
-from what the campaign did; the \emph{regret a perfect reasoner would still carry} is read
-from what each design could have supported, before its outcome is seen. Neither elicits
-anything from the agent beyond a design and a recommendation.
+Following the information boundary of \S\ref{sec:roles}, evaluation has two layers. The
+\emph{outcome evaluator} uses the hidden site to score what the campaign did: recommendation
+regret and the opportunity cost of its executed experiments. These exact simulator outcomes
+support the primary comparisons. The \emph{common-history evaluator} is a calibrated
+benchmark-side diagnostic: it conditions on the same $H_t$ visible to the reader, while
+using the known instance distribution and forward model to ask what that history could have
+supported. It never supplies a posterior, action or score to the agent. The layers are
+reported separately and never combined.
 
 \subsubsection{Realised regret}
 \label{sec:outcome}
@@ -35,72 +90,46 @@ implies the other, and in our runs they do order agents differently
 (Appendix~\ref{app:refs}); an agent that runs no experiments forgoes nothing and is judged
 by \eqref{eq:regret} alone.
 
-\subsubsection{Design and decision quality}
+\subsubsection{Risk conditioned on the visible history}
 \label{sec:eig}
 
-A campaign can fail in two ways that a single score cannot tell apart: the experiments could
-not have answered the question, or they could and the agent did not read them. Both are
-measured against $\mathcal{R}^\star(D_r)$, the regret still left after a decision-maker who
-reasoned perfectly from this design's outcome,
+The common-history evaluator compares design support and recommendation quality against the
+same information set. Let
+$H_t$ contain every submitted design, completed result, within-cycle measurement and
+recommendation visible by simulation time $t$, and define
+$R(\theta,x)=f_\theta(x^\star_\theta)-f_\theta(x)$.  The Bayes risk remaining after that
+history is
 \begin{equation}
-\mathcal{R}^\star(D_r) \;=\;
-\underbrace{\mathbb{E}_{p(y \mid D_r)}}_{\text{over outcomes not yet seen}}
-\Big[\, \underbrace{\min_{x \in \mathcal{X}}}_{\text{best recommendation}} \;
-\underbrace{\mathbb{E}_{p(\theta \mid y, D_r)}
-\big[\, f_\theta(x^\star_\theta) - f_\theta(x) \,\big]}_{\text{its expected regret}} \Big].
+b(H_t)=\min_{x\in\mathcal X}\mathbb E[R(\theta,x)\mid H_t].
 \label{eq:eig}
 \end{equation}
-Read it from the inside out. The bracket is the regret \eqref{eq:problem} of recommending
-$x$ at site $\theta$, averaged over the posterior a perfect reasoner would hold after seeing
-$y$, the vector of observations \eqref{eq:obs} that design $D_r$ returns. The $\min$ picks
-the recommendation that posterior supports best. The outer expectation averages over
-outcomes the design has not produced yet, so $\mathcal{R}^\star$ is a property of the design
-alone and can be computed before it is run. No agent can compute it: doing so needs
-$P_\Theta$ and the forward model, which the interface withholds. Written
-$\mathcal{R}^\star(\varnothing)$ for a design that runs nothing, it is the regret of the
-best single recommendation, and so the most any experiment on the task could remove.
-
-From it we form one ratio for what was run and one for what was concluded,
+For the agent's contemporaneous recommendation $\hat x_t$, its posterior risk and excess
+risk are
 \begin{equation}
-\underbrace{c(D_r) \;=\; \frac{\mathcal{R}^\star(\varnothing) - \mathcal{R}^\star(D_r)}
-                  {\mathcal{R}^\star(\varnothing)}}_{\text{\emph{design efficiency}}},
-\qquad
-\underbrace{\eta(D_r) \;=\; \frac{\mathcal{R}^\star(D_r)}{\bar{\mathcal{R}}(r)}}
-           _{\text{\emph{decision efficiency}}}.
+a(H_t,\hat x_t)=\mathbb E[R(\theta,\hat x_t)\mid H_t],\qquad
+g(H_t,\hat x_t)=a(H_t,\hat x_t)-b(H_t)\geq0.
 \label{eq:capture}
 \end{equation}
-\emph{Design efficiency} $c$ is the fraction of the available risk
-$\mathcal{R}^\star(\varnothing)$ that the experiments removed; it is $0\%$ for a design that
-teaches nothing and $100\%$ for one that identifies the optimum exactly. \emph{Decision
-efficiency} $\eta$ divides what the design made available, $\mathcal{R}^\star(D_r)$, by what
-the agent actually achieved with it, $\bar{\mathcal{R}}(r)$ from \eqref{eq:regret}; it is
-near $100\%$ when the recommendation is as good as the data allowed and near $0\%$ when the
-agent left most of it unused. The \emph{decision} here is the recommendation $\hat{x}_r$
-and nothing else: both terms of $\eta$ are the regret of a point in $\mathcal{X}$, against
-the same optimum, and differ only in who chose it --- the $\min$ inside \eqref{eq:eig}, or
-the agent. Both are reported as percentages, larger is better for both,
-and an agent can fail at either.
+The numerical action set always includes $\hat x_t$, so the inequality follows from the
+minimisation rather than from clipping.  The conditional value of a newly committed design
+$D$ is $v(D\mid H)=b(H)-\mathbb E[b(H,D,Y_D)\mid H,D]$; it conditions on earlier evidence
+instead of restarting from the prior each round.
 
-Neither is new. $\mathcal{R}^\star(\varnothing)$ and $\mathcal{R}^\star(D)$ are the prior
-and preposterior Bayes risk of the decision problem, so their difference is the expected
-value of sample information \citep{raiffa1961,howard1966}, equivalently a Knowledge Gradient
-\citep{frazier2008kg} for a batch rather than a single point. What is ours is the pairing.
-Unlike information gain about $\theta$ \citep{boxinggym}, \eqref{eq:eig} scores the
-recommendation rather than the parameters, so a design that pins $\theta$ down while
-spending its budget far from the optimum scores low; and since \eqref{eq:eig} contains no
-$\hat{x}_r$, $c$ is a functional of the design and the instance distribution alone while
-$\eta$ carries $\bar{\mathcal{R}}(r)$ in its denominator. The two cannot be restatements of
-each other, and \S\ref{sec:results} shows one intervention moving them in opposite
-directions.
+The quantities in \eqref{eq:capture} replace the Version~1 ratios called design efficiency
+$c$ and decision efficiency $\eta$, which are
+withdrawn.  Their numerators were prior, preposterior design scores while their denominators
+used realised recommendations, so $\eta$ was not a fraction of acquired information.  A
+correlation between $c$ and $\eta$, movement in opposite directions, or their product does
+not identify independent design and reader failures.  Likewise, identifying $\theta$ while
+sampling far from the optimum need not imply low decision value: the value depends on the
+posterior action, not the physical distance between sampled treatments and the optimum.
 
-\paragraph{Estimation.}\label{sec:estimator} We discretise $P_\Theta$ into $M$ atoms and score each round's
-design against the prior rather than against the realised history, because conditioning on a
-history collapses the effective atom count below five by the third round. The obvious
-estimator --- the same atoms forming the posterior, choosing the recommendation and grading
-it --- is in-sample selection and is badly optimistic: it reports $c = 97\%$ for a design
-worth $-64\%$ on held-out atoms. We temper the likelihood, choose the temperature by
-leave-one-out over the inference atoms, and grade on a disjoint half.
-Appendix~\ref{app:eig} gives the mechanics, the diagnostics, and what each change is worth.
-What survives estimation is an ordering, so we report $c$ and $\eta$ as ranks and as means
-over dozens of designs, and draw conclusions only from arms compared pairwise at fixed $M$;
-Appendix~\ref{app:eig} says what forces that.
+\paragraph{Estimation.}\label{sec:estimator} Crop physiology and site economics are updated
+as independent continuous priors from canopy/harvest and cost records respectively;
+terminal revenue then couples their product posterior.  One posterior sample selects the
+Bayes action and an independent sample evaluates it and the agent recommendation.  Plant
+variation is integrated with common stratified draws, and chamber, loop, batch, measurement
+and reporting-resolution covariance retain their actual scopes.  Finite candidate search
+provides only a feasible lower bound on each world's optimum and is labelled as such.  We
+report seeds, effective sample sizes, predictive checks and between-run error, and suppress
+quantitative decompositions whose calibration error is not below the effect being discussed.

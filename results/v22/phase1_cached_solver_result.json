@@ -1,0 +1,180 @@
+{
+  "status": "passed",
+  "scope": "12 steps each active/empty across 22:00 with held-command changes, all outputs compared",
+  "steps": [
+    {
+      "mode": "active",
+      "tick": 0,
+      "max_abs_all_output_difference": 0.0,
+      "reference_seconds": 0.11310866696294397,
+      "cached_seconds": 0.0956460420275107
+    },
+    {
+      "mode": "active",
+      "tick": 1,
+      "max_abs_all_output_difference": 0.0,
+      "reference_seconds": 0.08618179196491838,
+      "cached_seconds": 0.07274545799009502
+    },
+    {
+      "mode": "active",
+      "tick": 2,
+      "max_abs_all_output_difference": 0.0,
+      "reference_seconds": 0.0848610409302637,
+      "cached_seconds": 0.0715111669851467
+    },
+    {
+      "mode": "active",
+      "tick": 3,
+      "max_abs_all_output_difference": 0.0,
+      "reference_seconds": 0.06781479204073548,
+      "cached_seconds": 0.05479112500324845
+    },
+    {
+      "mode": "active",
+      "tick": 4,
+      "max_abs_all_output_difference": 0.0,
+      "reference_seconds": 0.07779479201417416,
+      "cached_seconds": 0.06513229198753834
+    },
+    {
+      "mode": "active",
+      "tick": 5,
+      "max_abs_all_output_difference": 0.0,
+      "reference_seconds": 0.07182479195762426,
+      "cached_seconds": 0.05723554210271686
+    },
+    {
+      "mode": "active",
+      "tick": 6,
+      "max_abs_all_output_difference": 0.0,
+      "reference_seconds": 0.07258570799604058,
+      "cached_seconds": 0.06119558296632022
+    },
+    {
+      "mode": "active",
+      "tick": 7,
+      "max_abs_all_output_difference": 0.0,
+      "reference_seconds": 0.08223312499467283,
+      "cached_seconds": 0.06693029205780476
+    },
+    {
+      "mode": "active",
+      "tick": 8,
+      "max_abs_all_output_difference": 0.0,
+      "reference_seconds": 0.08730629098135978,
+      "cached_seconds": 0.07426583301275969
+    },
+    {
+      "mode": "active",
+      "tick": 9,
+      "max_abs_all_output_difference": 0.0,
+      "reference_seconds": 0.07231358299031854,
+      "cached_seconds": 0.05800287507008761
+    },
+    {
+      "mode": "active",
+      "tick": 10,
+      "max_abs_all_output_difference": 0.0,
+      "reference_seconds": 0.07678887504152954,
+      "cached_seconds": 0.06434454105328768
+    },
+    {
+      "mode": "active",
+      "tick": 11,
+      "max_abs_all_output_difference": 0.0,
+      "reference_seconds": 0.06989937496837229,
+      "cached_seconds": 0.05666912498418242
+    },
+    {
+      "mode": "empty",
+      "tick": 0,
+      "max_abs_all_output_difference": 0.0,
+      "reference_seconds": 0.11726629198528826,
+      "cached_seconds": 0.10345345898531377
+    },
+    {
+      "mode": "empty",
+      "tick": 1,
+      "max_abs_all_output_difference": 0.0,
+      "reference_seconds": 0.10466170904692262,
+      "cached_seconds": 0.09172466595191509
+    },
+    {
+      "mode": "empty",
+      "tick": 2,
+      "max_abs_all_output_difference": 0.0,
+      "reference_seconds": 0.05165579204913229,
+      "cached_seconds": 0.03912574995774776
+    },
+    {
+      "mode": "empty",
+      "tick": 3,
+      "max_abs_all_output_difference": 0.0,
+      "reference_seconds": 0.06747404206544161,
+      "cached_seconds": 0.05452216591220349
+    },
+    {
+      "mode": "empty",
+      "tick": 4,
+      "max_abs_all_output_difference": 0.0,
+      "reference_seconds": 0.07345637492835522,
+      "cached_seconds": 0.06072812504135072
+    },
+    {
+      "mode": "empty",
+      "tick": 5,
+      "max_abs_all_output_difference": 0.0,
+      "reference_seconds": 0.04530466697178781,
+      "cached_seconds": 0.03265512501820922
+    },
+    {
+      "mode": "empty",
+      "tick": 6,
+      "max_abs_all_output_difference": 0.0,
+      "reference_seconds": 0.06524766702204943,
+      "cached_seconds": 0.051244208007119596
+    },
+    {
+      "mode": "empty",
+      "tick": 7,
+      "max_abs_all_output_difference": 0.0,
+      "reference_seconds": 0.05839449993800372,
+      "cached_seconds": 0.04510324995499104
+    },
+    {
+      "mode": "empty",
+      "tick": 8,
+      "max_abs_all_output_difference": 0.0,
+      "reference_seconds": 0.0444524169433862,
+      "cached_seconds": 0.03173616691492498
+    },
+    {
+      "mode": "empty",
+      "tick": 9,
+      "max_abs_all_output_difference": 0.0,
+      "reference_seconds": 0.07108245801646262,
+      "cached_seconds": 0.05768645799253136
+    },
+    {
+      "mode": "empty",
+      "tick": 10,
+      "max_abs_all_output_difference": 0.0,
+      "reference_seconds": 0.0667733340524137,
+      "cached_seconds": 0.05468549998477101
+    },
+    {
+      "mode": "empty",
+      "tick": 11,
+      "max_abs_all_output_difference": 0.0,
+      "reference_seconds": 0.049946125014685094,
+      "cached_seconds": 0.03367637505289167
+    }
+  ],
+  "speedup": 1.2224461179325923,
+  "hashes": {
+    "slowlab/v22_cached_solver.py": "4f9710eb0dbc7abef79a6735ba90ae4ab0a25b777c19a9947008dce8701074ca",
+    "slowlab/v22_greenlight_reuse.py": "6fd86485771ed4321c31346705018d3d50d60827847b24060397fda00dcdd76b",
+    "scripts/check_v22_cached_solver.py": "a98d173dd0ee77c054a34e8c658ed4d92939509105aef5c46129a8f94865cdcd"
+  }
+}

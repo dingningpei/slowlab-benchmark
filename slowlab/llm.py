@@ -39,6 +39,17 @@ spend costs nothing.
 Answer with a single JSON object and nothing else."""
 
 
+SYSTEM_V2 = """You are an agronomist running experiments in a real greenhouse.
+
+You submit a fixed design for each crop cycle. While that cycle is running you
+may choose integer days to enter the facility and read supported sensors and
+ledgers. Final gross margin is unavailable until the cycle ends, and observing
+does not change treatments already submitted. The facility remains occupied
+throughout the cycle.
+
+Answer with a single JSON object and nothing else."""
+
+
 def _facility_text(env) -> str:
     t, f = env.task, env.facility
     lines = [
@@ -80,26 +91,42 @@ def _observations_text(env) -> str:
     claim was false for the LLM interface.** Both sides now see the same
     observation object.
     """
-    obs = env.observations()
-    if not obs:
-        return "OBSERVATIONS SO FAR: none (this is round 1)."
+    history = env.history()
+    completed = [e for e in history if e.kind == "completed"]
+    measured = [e for e in history if e.kind == "measured"]
+    if not completed and not measured:
+        return "VISIBLE OBSERVATIONS SO FAR: none."
+    designs = {e.design_id: e.payload for e in history if e.kind == "submitted"}
+    sections = []
+    if measured:
+        rows = ["WITHIN-CYCLE MEASUREMENTS SO FAR:"]
+        for event in measured:
+            p = event.payload
+            rows.append(
+                f"  absolute day {event.absolute_day:g}  round {event.round + 1} "
+                f"day {event.day}  {p['unit_id']}  {p['modality']} "
+                f"= {p['value']!r} {p['unit']}  ({p['method']})")
+        sections.append("\n".join(rows))
+    if not completed:
+        sections.append("TERMINAL OBSERVATIONS SO FAR: none; the running crop has not finished.")
+        return "\n\n".join(sections)
     rows = ["OBSERVATIONS SO FAR. All rates are per m2 per day, in EUR.",
             "gross margin = revenue - energy cost - other cost.",
             "  energy cost is electricity + gas; other cost is CO2, transplants, labour.",
             ""]
-    for o in obs:
-        d = env._designs[o.design_id]
-        fv = d.treatments[o.treatment]
+    for event in completed:
+        p = event.payload
+        d = designs[event.design_id]
+        fv = d["treatments"][p["treatment"]]
         setting = ", ".join(
             f"{g.name}={g.denorm(fv[g.name]):.4g}" for g in env.task.factors)
-        parts = ""
-        if o.rev_rate == o.rev_rate:            # not NaN
-            parts = (f"  [revenue {o.rev_rate:+.4f}"
-                     f"  energy {o.energy_cost_rate:+.4f}"
-                     f"  other {o.other_cost_rate:+.4f}]")
-        rows.append(f"  round {o.design_id + 1}  {o.unit_id}  {setting}"
-                    f"  -> margin {o.value:+.4f}{parts}")
-    return "\n".join(rows)
+        parts = (f"  [revenue {p['rev_rate']!r}"
+                 f"  energy {p['energy_cost_rate']!r}"
+                 f"  other {p['other_cost_rate']!r}]")
+        rows.append(f"  round {event.round + 1}  {p['unit_id']}  {setting}"
+                    f"  -> margin {p['value']!r}{parts}")
+    sections.append("\n".join(rows))
+    return "\n\n".join(sections)
 
 
 FINAL_ASK = """All rounds are finished and every observation is above. No further
@@ -236,24 +263,161 @@ class LLMAgent:
     transcript: list = field(default_factory=list)
     format_failures: int = 0
     infeasible_submissions: int = 0
-    tools: bool = False          # the tool ablation: put standard tools' output into the prompt
+    tools: bool = False          # backwards-compatible alias for tool_mode="both"
+    tool_mode: str | None = None # bare / design / inference / both
+    tool_delivery: str = "passive" # passive (legacy aid) / callable
+    tool_use_records: list = field(default_factory=list)
+    max_observation_times: int = 4
+    prompt_variant: str = "standard"
+
+    def effective_tool_mode(self) -> str:
+        mode = self.tool_mode or ("both" if self.tools else "bare")
+        if mode not in {"bare", "design", "inference", "both"}:
+            raise ValueError(f"unknown tool mode {mode!r}")
+        return mode
+
+    def _system_prompt(self) -> str:
+        if self.prompt_variant == "standard":
+            return SYSTEM
+        if self.prompt_variant == "constraint_checklist":
+            return SYSTEM + "\n\n" + CONSTRAINT_CHECKLIST
+        raise ValueError(f"unknown prompt variant {self.prompt_variant!r}")
 
     def _ask(self, env, feedback: str | None) -> dict:
-        user = "\n\n".join([
+        pieces = [
             _facility_text(env),
             _observations_text(env),
-        ] + ([tool_text(env)] if self.tools else []) + [
+        ]
+        if self.effective_tool_mode() != "bare":
+            if self.tool_delivery == "passive":
+                pieces.append(tool_text(env, self.effective_tool_mode()))
+            elif self.tool_delivery == "callable":
+                pieces.append(callable_tool_instructions(self.effective_tool_mode()))
+            else:
+                raise ValueError(f"unknown tool delivery {self.tool_delivery!r}")
+        user = "\n\n".join(pieces + [
             f"ROUNDS REMAINING: {env.rounds_left}",
             f"UNITS YOU MAY DRAW FROM (choose at most {env.task.units_per_round}): "
             + ", ".join(env.available_units()),
             _schema_text(env),
         ] + ([f"YOUR PREVIOUS REPLY WAS REJECTED: {feedback}\nFix it and reply again."]
              if feedback else []))
-        msgs = [{"role": "system", "content": SYSTEM},
+        msgs = [{"role": "system", "content": self._system_prompt()},
                 {"role": "user", "content": user}]
-        reply = self.complete(msgs)
-        self.transcript.append({"user": user, "assistant": reply})
-        return _extract_json(reply)
+        return self._complete_action(env, msgs, phase="design")
+
+    def _available_tools(self, phase: str) -> set[str]:
+        mode = self.effective_tool_mode()
+        tools = set()
+        if phase == "design" and mode in {"design", "both"}:
+            tools.add("propose_design")
+        if mode in {"inference", "both"}:
+            tools.add("analyze_history")
+        return tools
+
+    def _complete_action(self, env, msgs: list[dict], *, phase: str) -> dict:
+        """Run the model/tool loop. A tool result is returned only after the model
+        explicitly emits a call_tool action; availability alone never injects aid."""
+        called = set()
+        first_user = msgs[-1]["content"]
+        turns = []
+        for _ in range(3):
+            reply = self.complete(msgs)
+            turns.append({"assistant": reply})
+            blob = _extract_json(reply)
+            if blob.get("action") != "call_tool":
+                self.transcript.append({"user": first_user, "assistant": reply,
+                                        "tool_turns": turns[:-1]})
+                return blob
+            name = str(blob.get("tool", ""))
+            available = self._available_tools(phase)
+            if name not in available:
+                result = {"error": "tool_unavailable", "available_tools": sorted(available)}
+            elif name in called:
+                result = {"error": "tool_already_called", "available_tools": sorted(available)}
+            else:
+                result = callable_tool_result(env, name)
+                called.add(name)
+                self.tool_use_records.append({
+                    "round": int(env.round), "phase": phase, "mode": self.effective_tool_mode(),
+                    "tool": name, "delivery": "application_layer_callable",
+                    "invoked_by_model": True, "result": result,
+                })
+            tool_message = "TOOL RESULT:\n" + json.dumps(result, ensure_ascii=False)
+            turns[-1]["tool_result"] = result
+            msgs = msgs + [{"role": "assistant", "content": reply},
+                           {"role": "user", "content": tool_message +
+                            "\nNow return either another permitted call_tool action or the requested final JSON."}]
+        raise ValueError("tool-call limit exceeded")
+
+    def _record_tool_use(self, env, design, blob) -> None:
+        mode = self.effective_tool_mode()
+        if mode == "bare":
+            return
+        if self.tool_delivery == "callable":
+            names = [factor.name for factor in env.task.factors]
+            proposed = np.asarray([[values[name] for name in names]
+                                   for values in design.treatments.values()], float)
+            for rec in reversed(self.tool_use_records):
+                if rec.get("round") != int(env.round) or rec.get("phase") != "design":
+                    continue
+                result = rec.get("result", {})
+                if rec.get("tool") == "propose_design" and result.get("treatments"):
+                    suggested = np.asarray([
+                        [(float(v[name]) - env.task.factors[j].low) /
+                         (env.task.factors[j].high - env.task.factors[j].low)
+                         for j, name in enumerate(names)]
+                        for v in result["treatments"].values()], float)
+                    distances = np.sqrt(((proposed[:, None] - suggested[None, :]) ** 2).sum(-1))
+                    dist = float(0.5 * (distances.min(1).mean() + distances.min(0).mean()))
+                    rec["design_distance"] = dist
+                    rec["design_adopted"] = dist <= 0.10
+                if rec.get("tool") == "analyze_history" and result.get("posterior_best") and "current_best" in blob:
+                    current = _to_point(env, blob["current_best"])
+                    suggested = _to_point(env, result["posterior_best"])
+                    dist = float(np.linalg.norm(current - suggested) / np.sqrt(env.task.d))
+                    rec["recommendation_distance"] = dist
+                    rec["inference_adopted"] = dist <= 0.05
+            return
+        artifacts = tool_artifacts(env)
+        names = [factor.name for factor in env.task.factors]
+        proposed = np.asarray([[values[name] for name in names]
+                               for values in design.treatments.values()], float)
+        suggested_design = artifacts.get("design") if mode in {"design", "both"} else None
+        design_distance = None
+        if suggested_design is not None and len(proposed):
+            suggested = np.asarray([[values[name] for name in names]
+                                    for tid, values in suggested_design.treatments.items()
+                                    if tid in suggested_design.allocation], float)
+            if len(suggested):
+                distances = np.sqrt(((proposed[:, None] - suggested[None, :]) ** 2).sum(-1))
+                design_distance = float(0.5 * (distances.min(1).mean() +
+                                               distances.min(0).mean()))
+        recommendation_distance = None
+        if (mode in {"inference", "both"} and
+                artifacts.get("inference") is not None and "current_best" in blob):
+            try:
+                current = _to_point(env, blob["current_best"])
+                recommendation_distance = float(np.linalg.norm(
+                    current - artifacts["inference"]) / np.sqrt(env.task.d))
+            except Exception:
+                pass
+        self.tool_use_records.append({
+            "round": int(env.round), "mode": mode,
+            "delivery": "passive_prompt_output", "invoked_by_model": False,
+            "design_distance": design_distance,
+            "design_adopted": (None if design_distance is None else design_distance <= 0.10),
+            "recommendation_distance": recommendation_distance,
+            "inference_adopted": (None if recommendation_distance is None
+                                  else recommendation_distance <= 0.05),
+            "reasoning": str(blob.get("reasoning", ""))[:800],
+        })
+
+    def _execute_submitted_round(self, env, best):
+        """Terminal-only control arm: reveal nothing until the crop finishes."""
+        env.advance()
+        env.interim_recommendation(best)
+        return best
 
     def run(self, env):
         best = np.full(env.task.d, 0.5)
@@ -279,6 +443,7 @@ class LLMAgent:
                         self.x_transfer = best
                         return best
                     design = _to_design(env, blob)
+                    self._record_tool_use(env, design, blob)
                 except Exception as exc:                    # format or parse failure
                     self.format_failures += 1
                     feedback = f"could not parse your reply ({exc})"
@@ -290,8 +455,7 @@ class LLMAgent:
                             best = _to_point(env, blob["current_best"])
                         except Exception:
                             pass
-                    env.advance()
-                    env.interim_recommendation(best)
+                    best = self._execute_submitted_round(env, best)
                     submitted = True
                     break
                 self.infeasible_submissions += 1
@@ -307,13 +471,14 @@ class LLMAgent:
         # once more, the last round's data would be paid for and never used.
         for _ in range(self.max_retries):
             try:
-                msgs = [{"role": "system", "content": SYSTEM},
-                        {"role": "user", "content": _final_prompt(env)}]
-                reply = self.complete(msgs)
-                self.transcript.append({"user": msgs[-1]["content"],
-                                        "assistant": reply})
-                blob = _extract_json(reply)
+                user = _final_prompt(env)
+                if self.tool_delivery == "callable" and self.effective_tool_mode() in {"inference", "both"}:
+                    user += "\n\n" + callable_tool_instructions("inference")
+                msgs = [{"role": "system", "content": self._system_prompt()},
+                        {"role": "user", "content": user}]
+                blob = self._complete_action(env, msgs, phase="final")
                 best = _to_point(env, blob["recommendation"])
+                env.record_recommendation(best, phase="final")
                 break
             except Exception:
                 self.format_failures += 1
@@ -327,16 +492,102 @@ class LLMAgent:
         if getattr(env.task, "transfer_energy_shock", None) is not None:
             for _ in range(self.max_retries):
                 try:
-                    msgs = [{"role": "system", "content": SYSTEM},
-                            {"role": "user", "content": _transfer_prompt(env)}]
-                    reply = self.complete(msgs)
-                    self.transcript.append({"user": msgs[-1]["content"],
-                                            "assistant": reply})
-                    blob = _extract_json(reply)
+                    user = _transfer_prompt(env)
+                    if self.tool_delivery == "callable" and self.effective_tool_mode() in {"inference", "both"}:
+                        user += "\n\n" + callable_tool_instructions("inference")
+                    msgs = [{"role": "system", "content": self._system_prompt()},
+                            {"role": "user", "content": user}]
+                    blob = self._complete_action(env, msgs, phase="transfer")
                     self.x_transfer = _to_point(env, blob["recommendation"])
                     break
                 except Exception:
                     self.format_failures += 1
+        return best
+
+
+class WithinCycleLLMAgent(LLMAgent):
+    """Version 2 LLM protocol with agent-chosen within-cycle observation days."""
+
+    def _system_prompt(self) -> str:
+        if self.prompt_variant == "standard":
+            return SYSTEM_V2
+        if self.prompt_variant == "constraint_checklist":
+            return SYSTEM_V2 + "\n\n" + CONSTRAINT_CHECKLIST
+        raise ValueError(f"unknown prompt variant {self.prompt_variant!r}")
+
+    def _cycle_prompt(self, env, visits_left: int) -> str:
+        active = env._active
+        modalities = list(env._MEASUREMENT_SPECS)
+        modalities.extend(f"setpoint:{f.name}" for f in env.task.factors)
+        names = [f.name for f in env.task.factors]
+        return "\n\n".join([
+            _facility_text(env),
+            _observations_text(env),
+            f"RUNNING ROUND: {env.round + 1}; current crop day {active.state.day} "
+            f"of {env.task.duration_days}. Observation times remaining: {visits_left}.",
+            "SUPPORTED MODALITIES: " + ", ".join(modalities),
+            f'''Choose the next action. To inspect, choose an integer day strictly after
+the current day and before day {env.task.duration_days}. Reading a cached record
+again returns the same value. Use null for units to inspect every running unit.
+
+{{
+  "action": "observe",
+  "day": <integer>,
+  "modalities": ["canopy_lai"],
+  "units": null,
+  "current_best": {{{", ".join(f'"{n}": <number>' for n in names)}}}
+}}
+
+To wait for the terminal result instead, reply with action "finish" and
+current_best. Finishing does not cancel or modify the treatment.''',
+        ])
+
+    def _execute_submitted_round(self, env, best):
+        # Starting at day zero fixes the batch and plant draws before the first
+        # choice of observation time. Measurement randomness uses a separate
+        # deterministic stream and cannot alter this biological path.
+        env.advance_to(0)
+        visits = 0
+        while visits < self.max_observation_times:
+            accepted = False
+            for _ in range(self.max_retries):
+                user = self._cycle_prompt(env, self.max_observation_times - visits)
+                msgs = [{"role": "system", "content": self._system_prompt()},
+                        {"role": "user", "content": user}]
+                reply = self.complete(msgs)
+                self.transcript.append({"user": user, "assistant": reply})
+                try:
+                    blob = _extract_json(reply)
+                    action = str(blob.get("action", "")).lower()
+                    if action == "finish":
+                        if "current_best" in blob:
+                            best = _to_point(env, blob["current_best"])
+                            env.interim_recommendation(best)
+                        env.advance()
+                        return best
+                    if action != "observe":
+                        raise ValueError("action must be 'observe' or 'finish'")
+                    day = int(blob["day"])
+                    if not (env._active.state.day < day < env.task.duration_days):
+                        raise ValueError("observation day must be after the current day and before terminal day")
+                    modalities = list(blob.get("modalities") or [])
+                    if not modalities:
+                        raise ValueError("at least one modality is required")
+                    units = blob.get("units")
+                    if "current_best" in blob:
+                        best = _to_point(env, blob["current_best"])
+                        env.interim_recommendation(best)
+                    env.advance_to(day)
+                    for modality in modalities:
+                        env.observe(units=units, modality=str(modality))
+                    visits += 1
+                    accepted = True
+                    break
+                except Exception:
+                    self.format_failures += 1
+            if not accepted:
+                break
+        env.advance()
         return best
 
 
@@ -416,49 +667,154 @@ already know about this crop. Reply with JSON and nothing else:
 # We expected something similar, and "tools were supplied and did not help" is
 # itself a reportable result.
 
-TOOLS_HEADER = """You also have the output of two standard tools, already run on this
-problem. Use them, adapt them, or ignore them.
-
-TOOL 1 - screening design (Plackett-Burman with replicated centre points), a ready-to-run
-allocation for this facility:
-{design}
-
-TOOL 2 - Gaussian-process fit to every observation so far; its posterior maximum is at:
-{gp}
+TOOLS_HEADER = """You have output from the following standard tools. Use it, adapt it, or ignore it.
+{body}
 """
 
+CONSTRAINT_CHECKLIST = """Before submitting a design, explicitly verify internally that
+every unit is allocated at most once, the allocation stays within the round cap,
+all values are within bounds, and every chamber-level factor is constant inside
+each chamber. Return the requested JSON only; do not print the checklist."""
 
-def tool_text(env) -> str:
-    """The two tools' output, assembled into a block that can go into the prompt."""
-    import numpy as np
+
+def callable_tool_instructions(mode: str) -> str:
+    names = []
+    if mode in {"design", "both"}:
+        names.append("propose_design")
+    if mode in {"inference", "both"}:
+        names.append("analyze_history")
+    return """OPTIONAL CALLABLE TOOLS
+No tool output is shown automatically. You may explicitly call at most once each
+by replying with exactly:
+{"action":"call_tool","tool":"TOOL_NAME"}
+Available tool names: %s.
+The tool returns advice only. You remain responsible for the submitted design or
+final recommendation. If you do not want a tool, return the requested answer JSON.""" % ", ".join(names)
+
+
+def _callable_gp_design(env) -> Design:
+    """One deterministic, constraint-aware GP-UCB batch proposal without submission."""
+    from .agents import GP, _cands, respect_hierarchy, chamber_safe_allocation
+    t = env.task
+    rng = np.random.default_rng(int(env.seed) * 1009 + int(env.round) * 917 + 23)
+    n_pts = t.units_per_round
+    X, y = env.as_arrays()
+    if len(y) < 2:
+        P = rng.random((n_pts, t.d))
+    else:
+        g = GP(noise=max(0.15, t.plant_cv)).fit(X, y)
+        C = _cands(t.d, 2500, rng)
+        mu, var = g.predict(C)
+        order = np.argsort(-(mu + 1.8 * np.sqrt(var)))
+        chosen = []
+        for i in order:
+            if all(np.linalg.norm(C[i] - p) > 0.05 for p in chosen):
+                chosen.append(C[i])
+            if len(chosen) == n_pts:
+                break
+        P = np.asarray(chosen) if chosen else rng.random((n_pts, t.d))
+    P = respect_hierarchy(P, t, env.facility, rng)
+    tids = [f"gp{i}" for i in range(len(P))]
+    treatments = {tid: {f.name: float(P[i][j]) for j, f in enumerate(t.factors)}
+                  for i, tid in enumerate(tids)}
+    allocation = chamber_safe_allocation(
+        tids, 1, env.facility, rng, treatments, t, avail=env.available_units())
+    return Design(treatments=treatments, allocation=allocation,
+                  randomization_seed=int(rng.integers(1_000_000)),
+                  question="callable constraint-aware GP-UCB proposal")
+
+
+def callable_tool_result(env, name: str) -> dict:
+    t = env.task
+    if name == "propose_design":
+        design = _callable_gp_design(env)
+        treatments = {
+            tid: {f.name: round(float(f.denorm(values[f.name])), 8) for f in t.factors}
+            for tid, values in design.treatments.items()
+        }
+        return {"tool": name, "method": "constraint-aware GP-UCB batch",
+                "treatments": treatments, "allocation": design.allocation,
+                "randomization_seed": design.randomization_seed,
+                "note": "advice only; no design has been submitted"}
+    if name == "analyze_history":
+        from .agents import GP, _cands, _gp_posterior_max
+        X, y = env.as_arrays()
+        if not len(y):
+            return {"tool": name, "status": "unavailable_before_observations",
+                    "note": "no recommendation has been submitted"}
+        x = _gp_posterior_max(env)
+        g = GP(noise=max(0.15, t.plant_cv)).fit(X, y)
+        mu, var = g.predict(np.asarray([x]))
+        point = {f.name: round(float(f.denorm(x[j])), 8) for j, f in enumerate(t.factors)}
+        return {"tool": name, "method": "GP posterior-mean reader",
+                "posterior_best": point, "predicted_mean": float(mu[0]),
+                "posterior_sd": float(np.sqrt(var[0])),
+                "n_observations": int(len(y)),
+                "note": "advice only; no recommendation has been submitted"}
+    raise ValueError(f"unknown callable tool {name!r}")
+
+
+def tool_artifacts(env) -> dict:
+    """Return normalized tool outputs so adoption can be measured geometrically."""
     from .agents import _pb12, respect_hierarchy, chamber_safe_allocation, _gp_posterior_max
     rng = np.random.default_rng(0)
     t, names = env.task, [f.name for f in env.task.factors]
+    design = None
     try:
-        P = _pb12()[:, :t.d] * 0.25 + 0.5      # +/-1 -> 0.25 / 0.75 within the normalised range
+        P = _pb12()[:, :t.d] * 0.25 + 0.5
         P = respect_hierarchy(P, t, env.facility, rng)
         tids = [f"t{i}" for i in range(len(P))]
-        trt = {tid: {n: float(P[i][j]) for j, n in enumerate(names)}
-               for i, tid in enumerate(tids)}
-        alloc = chamber_safe_allocation(tids, 1, env.facility, rng, trt, t,
-                                        avail=env.available_units())
-        lines = []
-        for tid, uids in alloc.items():
-            vals = ", ".join(f"{n}={t.factors[j].low + trt[tid][n] * (t.factors[j].high - t.factors[j].low):.1f}"
-                             for j, n in enumerate(names))
-            lines.append(f"  {tid}: {vals}  -> units {list(uids)}")
-        design = "\n".join(lines) if lines else "  (facility too small for this design)"
-    except Exception as exc:
-        design = f"  (unavailable: {exc})"
+        treatments = {tid: {name: float(P[i][j]) for j, name in enumerate(names)}
+                      for i, tid in enumerate(tids)}
+        allocation = chamber_safe_allocation(
+            tids, 1, env.facility, rng, treatments, t, avail=env.available_units())
+        design = Design(treatments, allocation, randomization_seed=0,
+                        question="supplied screening tool")
+    except Exception:
+        design = None
     X, y = env.as_arrays()
-    if len(y):
-        x = _gp_posterior_max(env)
-        gp = "  " + ", ".join(
-            f"{n}={t.factors[j].low + x[j] * (t.factors[j].high - t.factors[j].low):.1f}"
-            for j, n in enumerate(names))
-    else:
-        gp = "  (no observations yet)"
-    return TOOLS_HEADER.format(design=design, gp=gp)
+    inference = _gp_posterior_max(env) if len(y) else None
+    return {"design": design, "inference": inference}
+
+
+def design_tool_text(env, artifact=None) -> str:
+    artifact = artifact if artifact is not None else tool_artifacts(env)["design"]
+    if artifact is None:
+        return "TOOL 1 - screening design: unavailable for this facility."
+    t, names = env.task, [f.name for f in env.task.factors]
+    lines = []
+    for tid, units in artifact.allocation.items():
+        values = artifact.treatments[tid]
+        setting = ", ".join(
+            f"{name}={t.factors[j].denorm(values[name]):.1f}"
+            for j, name in enumerate(names))
+        lines.append(f"  {tid}: {setting}  -> units {list(units)}")
+    return ("TOOL 1 - screening design (Plackett-Burman), ready to run:\n" +
+            ("\n".join(lines) if lines else "  unavailable"))
+
+
+def inference_tool_text(env, artifact=None) -> str:
+    artifact = artifact if artifact is not None else tool_artifacts(env)["inference"]
+    if artifact is None:
+        return "TOOL 2 - Gaussian-process posterior maximum: unavailable before observations."
+    t = env.task
+    point = ", ".join(
+        f"{factor.name}={factor.denorm(artifact[j]):.1f}"
+        for j, factor in enumerate(t.factors))
+    return "TOOL 2 - Gaussian-process posterior maximum from visible observations:\n  " + point
+
+
+def tool_text(env, mode="both") -> str:
+    """Render design-only, inference-only or combined passive tool output."""
+    if mode not in {"design", "inference", "both"}:
+        raise ValueError(f"tool_text needs design, inference or both; got {mode!r}")
+    artifacts = tool_artifacts(env)
+    parts = []
+    if mode in {"design", "both"}:
+        parts.append(design_tool_text(env, artifacts["design"]))
+    if mode in {"inference", "both"}:
+        parts.append(inference_tool_text(env, artifacts["inference"]))
+    return TOOLS_HEADER.format(body="\n\n".join(parts))
 
 
 def zero_shot_recommendation(env, complete, max_retries: int = 3):

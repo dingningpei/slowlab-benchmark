@@ -1,0 +1,22 @@
+{
+  "status": "compute_feasibility_open",
+  "basis": "one active step, 576 two-day empty/cleanup steps, one active step; archived Cabauw lc1 weather; compiled native RHS; one CPU thread",
+  "model_load_seconds": 8.29522204096429,
+  "two_day_cleanup_stepping_seconds": 3.360245499992743,
+  "full_short_gate_seconds": 11.674836999969557,
+  "single_worker_four_unit_365_day_projection_hours": 0.6813831152763062,
+  "planned_1024_campaign_projection_worker_hours": 697.7363100429376,
+  "limits": "Linear extrapolation from empty crop, not a measured mature-crop annual campaign. Excludes per-campaign model loads, annual weather transitions, full agent/tool overhead, evaluators and retries. Not an approved compute budget.",
+  "peak_rss_bytes_platform": 130039808,
+  "ledger_max_abs_difference_cached_vs_native": 0.0,
+  "full_four_unit_short_window_seconds": 16.755945458076894,
+  "full_four_unit_peak_rss_bytes_platform": 126877696,
+  "max_realised_flux": {
+    "heat_w_m2": 120.0,
+    "co2_mg_m2_s": 2.083333333333325,
+    "lamp_w_m2": 66.66666666666667
+  },
+  "focused_tests_passed": 80,
+  "no_new_dataset_download": true,
+  "no_llm_api_call": true
+}

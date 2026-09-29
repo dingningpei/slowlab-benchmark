@@ -1,0 +1,33 @@
+{
+  "protocol_id": "slowlab-v22-weather-partition-v0",
+  "status": "phase1_source_weather_partition_not_confirmatory_preregistration",
+  "source": "KNMI CESAR Cabauw lc1 v1.0, paired surface meteo and radiation, 10-minute UTC intervals",
+  "source_plan": "configs/v22_weather_gapfilled_plan.json",
+  "source_plan_sha256": "00f7da43cc227a05ac1f383986ff5d437b02b909378ca3f11cc5e3363e0b2e32",
+  "quality_audit": "configs/v22_weather_gapfilled_quality_audit.json",
+  "quality_audit_sha256": "4432d75b35ad3606494c5e444335fc3c64c8a270920ed5fc6a4552b8089450ac",
+  "local_clock": "fixed CET UTC+01:00, no daylight-saving change",
+  "campaign_days": 365,
+  "tick_seconds": 300,
+  "weather_interval_seconds": 600,
+  "groups": {
+    "development_and_generator_fit": [2017, 2018],
+    "generator_selection": [2019],
+    "out_of_year_weather_diagnostic": [2020]
+  },
+  "windows": {
+    "2017": {"start_utc": "2016-12-31T23:00:00Z", "end_utc_exclusive": "2017-12-31T23:00:00Z"},
+    "2018": {"start_utc": "2017-12-31T23:00:00Z", "end_utc_exclusive": "2018-12-31T23:00:00Z"},
+    "2019": {"start_utc": "2018-12-31T23:00:00Z", "end_utc_exclusive": "2019-12-31T23:00:00Z"},
+    "2020": {"start_utc": "2019-12-31T23:00:00Z", "end_utc_exclusive": "2020-12-30T23:00:00Z"}
+  },
+  "leap_year_rule": "The 2020 365-day local campaign includes 29 February and excludes local 31 December; the exclusion is calendrical, not outcome-based.",
+  "initial_observation_halo": "At t=0 the controller may read the immediately preceding completed 10-minute interval. This interval can belong to the preceding year's campaign; exclude such bootstrap intervals from weather-generator fitting/holdout similarity statistics and disclose the overlap.",
+  "forbidden_uses": [
+    "Selecting source years or windows by simulated crop performance",
+    "Tuning simulator, controller, generator, exclusions or baselines on the 2020 diagnostic result and still calling it untouched",
+    "Treating 365 days, compartments or within-year segments as independent weather years",
+    "Presenting an exact public weather replay as a private confirmatory site"
+  ],
+  "confirmatory_rule": "After development freezes the generator and exclusions, create private non-replay weather/site paths with unrevealed seeds and a source-path similarity audit; this partition alone does not define the formal confirmatory matrix."
+}

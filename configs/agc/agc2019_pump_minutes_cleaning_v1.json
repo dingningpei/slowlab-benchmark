@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "source_dataset": "Autonomous Greenhouse Challenge, Second Edition (2019), official Version 2",
+  "source_field": "water_sup",
+  "source_unit": "cumulative pump-on minutes in a day",
+  "output_file": "pump_minutes_events.csv",
+  "output_unit": "pump-on minutes per observed increment",
+  "clock": "source Excel local-clock serial; timezone not declared",
+  "observed_reset_hours": [0.5833333333333334, 2.0833333333333335],
+  "reset_tolerance_minutes": 3,
+  "initial_partial_cycle": "discard before first observed reset",
+  "unscheduled_decrease": "counter correction; retain previous high-water mark",
+  "missing_block": "retain last valid counter; attribute accumulated increment at first resumed reading",
+  "large_increment_flag_minutes": 10,
+  "volume_conversion": "none; Cum_irr and Resources Irr are processed source quantities and not independent flow measurements",
+  "physical_flow_calibration": "unresolved; do not select an area or flow rate using holdout error"
+}

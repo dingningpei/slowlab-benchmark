@@ -1,0 +1,78 @@
+{
+  "contract_id": "agc2023-v9-development-v0",
+  "status": "frozen after the schema audit and first development-only outcome inspection; before v9 model fitting",
+  "source_schema_audit": "agc2023-pretrial-input-schema-v0",
+  "role": "development and failure diagnosis only; no record from this archive may become prospective validation evidence",
+  "compute": {
+    "workers": 1,
+    "blas_threads": 1,
+    "smoke_before_sustained_run": true
+  },
+  "climate": {
+    "cadence_minutes": 5,
+    "period": [
+      "2023-09-05T00:00:00",
+      "2023-11-09T00:00:00"
+    ],
+    "permitted_exogenous_inputs": [
+      "tout",
+      "rhout",
+      "iglob",
+      "windsp",
+      "rain",
+      "parout",
+      "pyrgeo",
+      "co2out"
+    ],
+    "permitted_realised_controls": [
+      "scr_enrg",
+      "scr_blck",
+      "ligth_on",
+      "vent_lee",
+      "vent_wind",
+      "t_rail"
+    ],
+    "development_targets": [
+      "t_air",
+      "rh"
+    ],
+    "diagnostic_only_target": "co2",
+    "co2_rule": "Indoor CO2 may be summarized for state diagnostics, but the archive contains no dosing input and cannot identify an actuator-response model.",
+    "allowed_model_selection": "blocked or rolling-origin cross-validation inside this development archive; every resulting score remains development evidence"
+  },
+  "crop": {
+    "destructive_source": "DestructiveHarvest.xlsx / All Data",
+    "nondestructive_source": "CropMeasurements.xlsx / All data",
+    "lai_formula": "mean leaf area (cm2/plant) * plants/m2 / 10000",
+    "sample_date_density_plants_m2": {
+      "2023-09-04": 48,
+      "2023-09-18": 48,
+      "2023-09-29": 25,
+      "2023-11-09": 20
+    },
+    "density_corrections": [
+      "Ignore the combined destructive table's value 1050 on 2023-09-04; the Info sheet and 242 plants on a 3.6 by 1.4 m table establish 48 plants/m2.",
+      "Do not interpolate or forward-fill the continuous density trajectory from 2023-09-29 through 2023-10-09 because the Info sheet leaves that interval unresolved."
+    ],
+    "date_corrections": [
+      "Use CropMeasurements.xlsx / All data. The separate week 38 and week 39 tabs contain 2024 date typos; the consolidated sheet records the internally consistent 2023 dates."
+    ],
+    "replication": "Within each destructive harvest, EC and light group, plants are biological replicates; the greenhouse compartment is not replicated.",
+    "permitted_uses": [
+      "crop-state initialization and development diagnostics",
+      "light-treatment response diagnostics",
+      "LAI and transpiration-component development"
+    ]
+  },
+  "excluded_downloads": [
+    "4.29 GiB canopy-camera archive",
+    "7.11 GiB single-plant-camera archive"
+  ],
+  "validation_firewall": "AGC 2024 indoor temperature, RH, humidity deficit and CO2 values remain closed until the v9 implementation, uncertainty ensemble, identities, periods, initial-state rule, metrics and thresholds are committed.",
+  "forbidden_claims": [
+    "independent validation",
+    "multi-compartment generalization",
+    "CO2 or fogging actuator fidelity",
+    "arbitrary counterfactual control validity"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "version": 0,
+  "status": "frozen before holdout replay",
+  "scope": "hourly climate trajectory under observed actions",
+  "source": {
+    "citation": "Katzin et al. 2020, GreenLight, Biosystems Engineering 194:61-81",
+    "doi": "https://doi.org/10.1016/j.biosystemseng.2020.03.010",
+    "reported_validation_rmse": {
+      "air_temperature_c": [1.74, 2.04],
+      "relative_humidity_percentage_points": [5.52, 8.5],
+      "co2_ppm": [347, 361]
+    }
+  },
+  "minimum_reality_gate": {
+    "solver_completion_fraction": 1.0,
+    "sampled_physical_violations": 0,
+    "maximum_rmse": {
+      "tAir_c": 2.04,
+      "rhIn_percentage_points": 8.5,
+      "co2InPpm": 361
+    },
+    "application": "must pass pooled holdout and each compartment separately; no parameter refitting or threshold changes after holdout is read"
+  },
+  "required_secondary_reports": [
+    "MAE", "bias", "hourly-change RMSE", "coverage", "solver failures",
+    "per-compartment values", "per-day values"
+  ],
+  "decision_claim_boundary": "Passing reproduces the error scale of the original GreenLight validation. The 361 ppm CO2 floor is not by itself decision-grade evidence; counterfactual CO2 claims additionally require policy-ranking robustness across the frozen uncertainty ensemble."
+}

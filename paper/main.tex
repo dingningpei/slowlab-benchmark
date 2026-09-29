@@ -16,6 +16,7 @@
 \newtheorem{definition}{Definition}
 \usepackage{graphicx}
 \usepackage{booktabs}
+\usepackage{tabularx}
 \providecommand{\euro}{\texteuro}
 \usepackage{multirow}
 \usepackage[table]{xcolor}
@@ -39,20 +40,12 @@
 \newcommand{\pystr}[1]{\textcolor{cStr}{#1}}
 \newcommand{\pycmt}[1]{\textcolor{cCmt}{\itshape #1}}
 
-\usepackage{tikz}
-\usetikzlibrary{tikzmark,arrows.meta,calc}
 \usepackage{placeins}
 \renewcommand{\topfraction}{0.92}
 \renewcommand{\textfraction}{0.06}
 \renewcommand{\floatpagefraction}{0.80}
 \setcounter{topnumber}{2}
 \raggedbottom   % allow slack at the foot of a page rather than an overfull vbox
-
-% ---- Note macro: marks unfinished places while drafting; set \draftmode to false
-% before submission ----
-\newif\ifdraftmode\draftmodetrue
-\newcommand{\todo}[1]{\ifdraftmode{\color{red}\textbf{[TODO: #1]}}\fi}
-\newcommand{\pending}[1]{\ifdraftmode{\color{orange}\textbf{[PENDING: #1]}}\fi}
 
 % ---- Notation shorthands ----
 \newcommand{\slowlab}{\textsc{SlowLab}}
@@ -64,18 +57,10 @@
 \titlespacing*{\section}{0pt}{1.1em}{0.5em}
 \titlespacing*{\subsection}{0pt}{0.8em}{0.35em}
 
-% ---- Project page. Edit this one line: it feeds both the title-page footnote and
-% Appendix "Reproducibility". ----
-\newcommand{\projecturl}{https://github.com/dingningpei/slowlab-benchmark}
-
 \title{\slowlab: Benchmarking Scientific Agents When Experiments Are\\
 Slow, Noisy, Costly, and Irreversible}
 
-\author{%
-  Ningpei Ding\thanks{Project: \url{\projecturl}}
-  \\[2pt]
-  \todo{affiliation}
-}
+\author{Anonymous Authors}
 \date{}
 
 \begin{document}
@@ -83,11 +68,12 @@ Slow, Noisy, Costly, and Irreversible}
 
 \input{sections/00_abstract}
 \input{sections/01_intro}
-\input{sections/03_related}
 \input{sections/02_regime}
 \input{sections/05_tasks_metrics}
+\input{sections/04_environment}
+\input{sections/03_related}
 \input{sections/07_results}
-
+\input{sections/08_limitations}
 \input{sections/09_conclusion}
 
 \bibliographystyle{plainnat}

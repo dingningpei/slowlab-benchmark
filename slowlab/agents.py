@@ -574,14 +574,13 @@ class TransferAgent(GPUCBAgent):
         else:
             # Learn revenue rate and cost rate separately, then recompose the
             # objective at the new prices. No new experiments are run.
-            Xo = np.array([[env._designs[o.design_id].treatments[o.treatment][f.name]
-                            for f in t.factors] for o in env.observations()])
+            Xo, visible = env.component_arrays()
             # Energy cost and other cost must be learned *separately*: the shock
             # multiplies energy alone, and a merged cost_rate cannot be recomposed
             # at the new prices.
-            rev = np.array([o.rev_rate for o in env.observations()])
-            e_c = np.array([o.energy_cost_rate for o in env.observations()])
-            o_c = np.array([o.other_cost_rate for o in env.observations()])
+            rev = visible["rev_rate"]
+            e_c = visible["energy_cost_rate"]
+            o_c = visible["other_cost_rate"]
             gr = GP(noise=noise).fit(Xo, rev)
             ge = GP(noise=0.02).fit(Xo, e_c)
             go = GP(noise=0.02).fit(Xo, o_c)

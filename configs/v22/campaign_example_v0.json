@@ -1,0 +1,78 @@
+{
+  "contract_id": "slowlab-v22-task-v0",
+  "scope": "logical contract dry-run, not greenhouse simulation",
+  "policy_a": {
+    "day_temperature_c": 22,
+    "night_temperature_c": 18,
+    "co2_target_ppm": 800,
+    "supplemental_light_hours": 12,
+    "vent_temperature_offset_c": 4,
+    "vent_rh_threshold_pct": 85
+  },
+  "policy_b": {
+    "day_temperature_c": 21,
+    "night_temperature_c": 17,
+    "co2_target_ppm": 700,
+    "supplemental_light_hours": 10,
+    "vent_temperature_offset_c": 4,
+    "vent_rh_threshold_pct": 85
+  },
+  "actions": [
+    {
+      "action": "start",
+      "unit": 0,
+      "policy": "policy_a"
+    },
+    {
+      "action": "start",
+      "unit": 1,
+      "policy": "policy_b"
+    },
+    {
+      "action": "advance",
+      "day": 14
+    },
+    {
+      "action": "observe",
+      "unit": 0
+    },
+    {
+      "action": "stop",
+      "unit": 0
+    },
+    {
+      "action": "advance",
+      "day": 16
+    },
+    {
+      "action": "start",
+      "unit": 0,
+      "policy": "policy_b"
+    },
+    {
+      "action": "advance",
+      "day": 180
+    },
+    {
+      "action": "observe",
+      "unit": 1
+    },
+    {
+      "action": "advance",
+      "day": 182
+    },
+    {
+      "action": "start",
+      "unit": 1,
+      "policy": "policy_a"
+    },
+    {
+      "action": "advance",
+      "day": 365
+    },
+    {
+      "action": "recommend",
+      "policy": "policy_b"
+    }
+  ]
+}

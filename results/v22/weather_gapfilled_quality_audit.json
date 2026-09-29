@@ -1,0 +1,6831 @@
+{
+  "status": "audited",
+  "scope": "2016-12 boundary and 2017-2020 paired 10-minute lc1/lb1; no formal weather split or simulator use",
+  "total_bytes": 18413090,
+  "months": {
+    "201701": {
+      "rows": 4464,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4452,
+          "3": 12
+        },
+        "meteo/RH002": {
+          "2": 4363,
+          "3": 12,
+          "5": 4,
+          "7": 85
+        },
+        "meteo/TD002": {
+          "2": 4363,
+          "3": 12,
+          "5": 4,
+          "7": 85
+        },
+        "meteo/F010": {
+          "2": 4461,
+          "3": 3
+        },
+        "meteo/SWD": {
+          "2": 4464
+        },
+        "radiation/SWD": {
+          "2": 4464
+        },
+        "radiation/LWD": {
+          "2": 4464
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 12,
+          "lc1_valid_where_lb1_missing": 12,
+          "both_valid": 4452,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 12,
+          "lc1_valid_where_lb1_missing": 12,
+          "both_valid": 4452,
+          "different_gt_0_01_on_both_valid": 4452,
+          "max_abs_difference_on_both_valid": 10.469985961914062
+        },
+        "meteo/TD002": {
+          "lb1_missing": 12,
+          "lc1_valid_where_lb1_missing": 12,
+          "both_valid": 4452,
+          "different_gt_0_01_on_both_valid": 4449,
+          "max_abs_difference_on_both_valid": 1.3388671875
+        },
+        "meteo/F010": {
+          "lb1_missing": 3,
+          "lc1_valid_where_lb1_missing": 3,
+          "both_valid": 4461,
+          "different_gt_0_01_on_both_valid": 681,
+          "max_abs_difference_on_both_valid": 0.8499698638916016
+        },
+        "meteo/SWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4464,
+          "different_gt_0_01_on_both_valid": 2842,
+          "max_abs_difference_on_both_valid": 2.0823745727539062
+        },
+        "radiation/SWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4464,
+          "different_gt_0_01_on_both_valid": 2842,
+          "max_abs_difference_on_both_valid": 2.0823745727539062
+        },
+        "radiation/LWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4464,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 265.9499816894531,
+        "ta_max": 283.25,
+        "td_min": 263.86883544921875,
+        "td_max": 280.94635009765625,
+        "rh_above_100": 328,
+        "rh_below_0": 0,
+        "swd_negative": 2842,
+        "swd_min": -2.0823745727539062,
+        "lwd_negative": 0,
+        "lwd_min": 207.24783325195312
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "hdf5"
+      },
+      "sha256": {
+        "meteo": "0e1bfaab49fdda891bd8ebaf3efe3b7111a12340d92eb526a3aa6c560c15238c",
+        "radiation": "5edcfb53e5087c87f97f76c8cf773ab0e0e934732a60a13b904a56eb0755c82b"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "201702": {
+      "rows": 4032,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 3988,
+          "3": 44
+        },
+        "meteo/RH002": {
+          "2": 3988,
+          "3": 44
+        },
+        "meteo/TD002": {
+          "2": 3988,
+          "3": 44
+        },
+        "meteo/F010": {
+          "2": 4029,
+          "3": 3
+        },
+        "meteo/SWD": {
+          "1": 1,
+          "2": 4029,
+          "3": 2
+        },
+        "radiation/SWD": {
+          "1": 1,
+          "2": 4029,
+          "3": 2
+        },
+        "radiation/LWD": {
+          "1": 3,
+          "2": 4029
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 44,
+          "lc1_valid_where_lb1_missing": 44,
+          "both_valid": 3988,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 44,
+          "lc1_valid_where_lb1_missing": 44,
+          "both_valid": 3988,
+          "different_gt_0_01_on_both_valid": 3988,
+          "max_abs_difference_on_both_valid": 0.7829666137695312
+        },
+        "meteo/TD002": {
+          "lb1_missing": 44,
+          "lc1_valid_where_lb1_missing": 44,
+          "both_valid": 3988,
+          "different_gt_0_01_on_both_valid": 3988,
+          "max_abs_difference_on_both_valid": 0.117889404296875
+        },
+        "meteo/F010": {
+          "lb1_missing": 3,
+          "lc1_valid_where_lb1_missing": 3,
+          "both_valid": 4029,
+          "different_gt_0_01_on_both_valid": 724,
+          "max_abs_difference_on_both_valid": 1.2263236045837402
+        },
+        "meteo/SWD": {
+          "lb1_missing": 3,
+          "lc1_valid_where_lb1_missing": 3,
+          "both_valid": 4029,
+          "different_gt_0_01_on_both_valid": 2310,
+          "max_abs_difference_on_both_valid": 2.429368495941162
+        },
+        "radiation/SWD": {
+          "lb1_missing": 3,
+          "lc1_valid_where_lb1_missing": 3,
+          "both_valid": 4029,
+          "different_gt_0_01_on_both_valid": 2310,
+          "max_abs_difference_on_both_valid": 2.429368495941162
+        },
+        "radiation/LWD": {
+          "lb1_missing": 3,
+          "lc1_valid_where_lb1_missing": 3,
+          "both_valid": 4029,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 269.1499938964844,
+        "ta_max": 286.8500061035156,
+        "td_min": 267.4767761230469,
+        "td_max": 283.76788330078125,
+        "rh_above_100": 260,
+        "rh_below_0": 0,
+        "swd_negative": 2310,
+        "swd_min": -2.429368495941162,
+        "lwd_negative": 0,
+        "lwd_min": 220.69900512695312
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "hdf5"
+      },
+      "sha256": {
+        "meteo": "001995af34d07559c67b1f9279f70b9446c9e1b668a847920e4203d6b780e05f",
+        "radiation": "9be88bfa4516a610725e897159f35ede8e8dcefb72b88d332a0f3d78849eca3a"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "201703": {
+      "rows": 4464,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4423,
+          "3": 41
+        },
+        "meteo/RH002": {
+          "2": 4338,
+          "3": 126
+        },
+        "meteo/TD002": {
+          "2": 4338,
+          "3": 126
+        },
+        "meteo/F010": {
+          "2": 4462,
+          "3": 2
+        },
+        "meteo/SWD": {
+          "2": 4464
+        },
+        "radiation/SWD": {
+          "2": 4464
+        },
+        "radiation/LWD": {
+          "2": 4464
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 41,
+          "lc1_valid_where_lb1_missing": 41,
+          "both_valid": 4423,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 126,
+          "lc1_valid_where_lb1_missing": 126,
+          "both_valid": 4338,
+          "different_gt_0_01_on_both_valid": 4338,
+          "max_abs_difference_on_both_valid": 0.8191146850585938
+        },
+        "meteo/TD002": {
+          "lb1_missing": 126,
+          "lc1_valid_where_lb1_missing": 126,
+          "both_valid": 4338,
+          "different_gt_0_01_on_both_valid": 4338,
+          "max_abs_difference_on_both_valid": 0.129150390625
+        },
+        "meteo/F010": {
+          "lb1_missing": 2,
+          "lc1_valid_where_lb1_missing": 2,
+          "both_valid": 4462,
+          "different_gt_0_01_on_both_valid": 684,
+          "max_abs_difference_on_both_valid": 1.2088141441345215
+        },
+        "meteo/SWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4464,
+          "different_gt_0_01_on_both_valid": 2208,
+          "max_abs_difference_on_both_valid": 2.455117702484131
+        },
+        "radiation/SWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4464,
+          "different_gt_0_01_on_both_valid": 2208,
+          "max_abs_difference_on_both_valid": 2.455117702484131
+        },
+        "radiation/LWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4464,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 272.75,
+        "ta_max": 294.6499938964844,
+        "td_min": 269.7830505371094,
+        "td_max": 285.0791320800781,
+        "rh_above_100": 205,
+        "rh_below_0": 0,
+        "swd_negative": 2208,
+        "swd_min": -2.455117702484131,
+        "lwd_negative": 0,
+        "lwd_min": 236.2052764892578
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "hdf5"
+      },
+      "sha256": {
+        "meteo": "34a6d81932de4d49a1be12e3ca695c9aa83a75628691682b4dbcc4a9a06f6446",
+        "radiation": "814170d0a8ef63f6aae6201237e641b6b0cd1b6ceb74297775085080e39f842e"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "201704": {
+      "rows": 4320,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4293,
+          "3": 27
+        },
+        "meteo/RH002": {
+          "2": 4293,
+          "3": 27
+        },
+        "meteo/TD002": {
+          "2": 4293,
+          "3": 27
+        },
+        "meteo/F010": {
+          "2": 4320
+        },
+        "meteo/SWD": {
+          "2": 4320
+        },
+        "radiation/SWD": {
+          "2": 4320
+        },
+        "radiation/LWD": {
+          "2": 4320
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 27,
+          "lc1_valid_where_lb1_missing": 27,
+          "both_valid": 4293,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 27,
+          "lc1_valid_where_lb1_missing": 27,
+          "both_valid": 4293,
+          "different_gt_0_01_on_both_valid": 4293,
+          "max_abs_difference_on_both_valid": 0.72491455078125
+        },
+        "meteo/TD002": {
+          "lb1_missing": 27,
+          "lc1_valid_where_lb1_missing": 27,
+          "both_valid": 4293,
+          "different_gt_0_01_on_both_valid": 4293,
+          "max_abs_difference_on_both_valid": 0.11810302734375
+        },
+        "meteo/F010": {
+          "lb1_missing": 1,
+          "lc1_valid_where_lb1_missing": 1,
+          "both_valid": 4319,
+          "different_gt_0_01_on_both_valid": 274,
+          "max_abs_difference_on_both_valid": 0.7576277256011963
+        },
+        "meteo/SWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4320,
+          "different_gt_0_01_on_both_valid": 1759,
+          "max_abs_difference_on_both_valid": 2.489652156829834
+        },
+        "radiation/SWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4320,
+          "different_gt_0_01_on_both_valid": 1759,
+          "max_abs_difference_on_both_valid": 2.489652156829834
+        },
+        "radiation/LWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4320,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 270.04998779296875,
+        "ta_max": 294.1499938964844,
+        "td_min": 268.6795654296875,
+        "td_max": 283.86810302734375,
+        "rh_above_100": 209,
+        "rh_below_0": 0,
+        "swd_negative": 1759,
+        "swd_min": -2.489652156829834,
+        "lwd_negative": 0,
+        "lwd_min": 228.281005859375
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "hdf5"
+      },
+      "sha256": {
+        "meteo": "2c3f21fc6a4a9ec1fa415b103000e83d2b200fa6a31130e45cb377a6ce78fbf5",
+        "radiation": "ce39f87a2184af3c6d7b7fde463e4f4d7c29b0ee10dec795f9079c8e67bc601e"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "201705": {
+      "rows": 4464,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4452,
+          "3": 10,
+          "5": 2
+        },
+        "meteo/RH002": {
+          "2": 4450,
+          "3": 10,
+          "5": 4
+        },
+        "meteo/TD002": {
+          "2": 4450,
+          "3": 10,
+          "5": 4
+        },
+        "meteo/F010": {
+          "2": 4460,
+          "3": 4
+        },
+        "meteo/SWD": {
+          "1": 244,
+          "2": 4121,
+          "3": 98,
+          "5": 1
+        },
+        "radiation/SWD": {
+          "1": 244,
+          "2": 4121,
+          "3": 98,
+          "5": 1
+        },
+        "radiation/LWD": {
+          "1": 343,
+          "2": 4121
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 12,
+          "lc1_valid_where_lb1_missing": 12,
+          "both_valid": 4452,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 12,
+          "lc1_valid_where_lb1_missing": 12,
+          "both_valid": 4452,
+          "different_gt_0_01_on_both_valid": 4452,
+          "max_abs_difference_on_both_valid": 1.1106109619140625
+        },
+        "meteo/TD002": {
+          "lb1_missing": 12,
+          "lc1_valid_where_lb1_missing": 12,
+          "both_valid": 4452,
+          "different_gt_0_01_on_both_valid": 4452,
+          "max_abs_difference_on_both_valid": 0.232879638671875
+        },
+        "meteo/F010": {
+          "lb1_missing": 4,
+          "lc1_valid_where_lb1_missing": 4,
+          "both_valid": 4460,
+          "different_gt_0_01_on_both_valid": 760,
+          "max_abs_difference_on_both_valid": 1.0521838665008545
+        },
+        "meteo/SWD": {
+          "lb1_missing": 343,
+          "lc1_valid_where_lb1_missing": 343,
+          "both_valid": 4121,
+          "different_gt_0_01_on_both_valid": 1409,
+          "max_abs_difference_on_both_valid": 2.455305576324463
+        },
+        "radiation/SWD": {
+          "lb1_missing": 343,
+          "lc1_valid_where_lb1_missing": 343,
+          "both_valid": 4121,
+          "different_gt_0_01_on_both_valid": 1409,
+          "max_abs_difference_on_both_valid": 2.455305576324463
+        },
+        "radiation/LWD": {
+          "lb1_missing": 343,
+          "lc1_valid_where_lb1_missing": 343,
+          "both_valid": 4121,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 273.04998779296875,
+        "ta_max": 303.8500061035156,
+        "td_min": 273.20196533203125,
+        "td_max": 292.87786865234375,
+        "rh_above_100": 93,
+        "rh_below_0": 0,
+        "swd_negative": 1409,
+        "swd_min": -2.455305576324463,
+        "lwd_negative": 0,
+        "lwd_min": 252.25039672851562
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "hdf5"
+      },
+      "sha256": {
+        "meteo": "d8469c978a4f3bbf7f084f093ab8b5b671dd42b7d329b7395ad88261b5a90325",
+        "radiation": "e4d66f154c3faa654431daee645cd8a36537722c86cf9d45a84c5d223b175e61"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "201706": {
+      "rows": 4320,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4312,
+          "3": 8
+        },
+        "meteo/RH002": {
+          "2": 4306,
+          "3": 12,
+          "5": 2
+        },
+        "meteo/TD002": {
+          "2": 4306,
+          "3": 12,
+          "5": 2
+        },
+        "meteo/F010": {
+          "2": 4316,
+          "3": 4
+        },
+        "meteo/SWD": {
+          "1": 3,
+          "2": 4316,
+          "3": 1
+        },
+        "radiation/SWD": {
+          "1": 3,
+          "2": 4316,
+          "3": 1
+        },
+        "radiation/LWD": {
+          "1": 4,
+          "2": 4316
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 8,
+          "lc1_valid_where_lb1_missing": 8,
+          "both_valid": 4312,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 12,
+          "lc1_valid_where_lb1_missing": 12,
+          "both_valid": 4308,
+          "different_gt_0_01_on_both_valid": 4308,
+          "max_abs_difference_on_both_valid": 1.2845382690429688
+        },
+        "meteo/TD002": {
+          "lb1_missing": 12,
+          "lc1_valid_where_lb1_missing": 12,
+          "both_valid": 4308,
+          "different_gt_0_01_on_both_valid": 4308,
+          "max_abs_difference_on_both_valid": 0.27374267578125
+        },
+        "meteo/F010": {
+          "lb1_missing": 4,
+          "lc1_valid_where_lb1_missing": 4,
+          "both_valid": 4316,
+          "different_gt_0_01_on_both_valid": 436,
+          "max_abs_difference_on_both_valid": 0.6188507080078125
+        },
+        "meteo/SWD": {
+          "lb1_missing": 4,
+          "lc1_valid_where_lb1_missing": 4,
+          "both_valid": 4316,
+          "different_gt_0_01_on_both_valid": 1292,
+          "max_abs_difference_on_both_valid": 3.507335662841797
+        },
+        "radiation/SWD": {
+          "lb1_missing": 4,
+          "lc1_valid_where_lb1_missing": 4,
+          "both_valid": 4316,
+          "different_gt_0_01_on_both_valid": 1292,
+          "max_abs_difference_on_both_valid": 3.507335662841797
+        },
+        "radiation/LWD": {
+          "lb1_missing": 4,
+          "lc1_valid_where_lb1_missing": 4,
+          "both_valid": 4316,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 282.54998779296875,
+        "ta_max": 304.1499938964844,
+        "td_min": 279.8373107910156,
+        "td_max": 293.2828369140625,
+        "rh_above_100": 81,
+        "rh_below_0": 0,
+        "swd_negative": 1292,
+        "swd_min": -3.507335662841797,
+        "lwd_negative": 0,
+        "lwd_min": 284.02734375
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "hdf5"
+      },
+      "sha256": {
+        "meteo": "69fa91ecfe578de142b746a2ce143c0e36b116341d2ef50d3dd8eeb7adefe28c",
+        "radiation": "7071aa56350b40b690457b19b9dcbd171aee51c485cb374e18350ea6b6278526"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "201707": {
+      "rows": 4464,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4438,
+          "3": 21,
+          "5": 5
+        },
+        "meteo/RH002": {
+          "2": 4438,
+          "3": 21,
+          "5": 5
+        },
+        "meteo/TD002": {
+          "2": 4438,
+          "3": 21,
+          "5": 5
+        },
+        "meteo/F010": {
+          "2": 4453,
+          "3": 6,
+          "5": 5
+        },
+        "meteo/SWD": {
+          "2": 4464
+        },
+        "radiation/SWD": {
+          "2": 4464
+        },
+        "radiation/LWD": {
+          "2": 4464
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 26,
+          "lc1_valid_where_lb1_missing": 26,
+          "both_valid": 4438,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 26,
+          "lc1_valid_where_lb1_missing": 26,
+          "both_valid": 4438,
+          "different_gt_0_01_on_both_valid": 4438,
+          "max_abs_difference_on_both_valid": 1.2927017211914062
+        },
+        "meteo/TD002": {
+          "lb1_missing": 26,
+          "lc1_valid_where_lb1_missing": 26,
+          "both_valid": 4438,
+          "different_gt_0_01_on_both_valid": 4438,
+          "max_abs_difference_on_both_valid": 0.254364013671875
+        },
+        "meteo/F010": {
+          "lb1_missing": 11,
+          "lc1_valid_where_lb1_missing": 11,
+          "both_valid": 4453,
+          "different_gt_0_01_on_both_valid": 447,
+          "max_abs_difference_on_both_valid": 0.6355161666870117
+        },
+        "meteo/SWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4464,
+          "different_gt_0_01_on_both_valid": 1442,
+          "max_abs_difference_on_both_valid": 3.192246913909912
+        },
+        "radiation/SWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4464,
+          "different_gt_0_01_on_both_valid": 1442,
+          "max_abs_difference_on_both_valid": 3.192246913909912
+        },
+        "radiation/LWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4464,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 282.04998779296875,
+        "ta_max": 302.3500061035156,
+        "td_min": 280.6430969238281,
+        "td_max": 294.40435791015625,
+        "rh_above_100": 176,
+        "rh_below_0": 0,
+        "swd_negative": 1442,
+        "swd_min": -3.192246913909912,
+        "lwd_negative": 0,
+        "lwd_min": 292.0520935058594
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "hdf5"
+      },
+      "sha256": {
+        "meteo": "7a9ec64230cba218be423a3b5023a8ed25a15d5f4156176ab24ecc24939144d5",
+        "radiation": "1c36b86509fc536116bfb8c40ff367939717a2dba0c991b22ceb0af9ffcb0fa1"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "201708": {
+      "rows": 4464,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4452,
+          "3": 12
+        },
+        "meteo/RH002": {
+          "2": 4452,
+          "3": 12
+        },
+        "meteo/TD002": {
+          "2": 4452,
+          "3": 12
+        },
+        "meteo/F010": {
+          "2": 4460,
+          "3": 4
+        },
+        "meteo/SWD": {
+          "2": 4461,
+          "3": 2,
+          "5": 1
+        },
+        "radiation/SWD": {
+          "2": 4461,
+          "3": 2,
+          "5": 1
+        },
+        "radiation/LWD": {
+          "1": 1074,
+          "2": 3190,
+          "5": 8,
+          "7": 192
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 12,
+          "lc1_valid_where_lb1_missing": 12,
+          "both_valid": 4452,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 12,
+          "lc1_valid_where_lb1_missing": 12,
+          "both_valid": 4452,
+          "different_gt_0_01_on_both_valid": 4452,
+          "max_abs_difference_on_both_valid": 1.3141250610351562
+        },
+        "meteo/TD002": {
+          "lb1_missing": 12,
+          "lc1_valid_where_lb1_missing": 12,
+          "both_valid": 4452,
+          "different_gt_0_01_on_both_valid": 4452,
+          "max_abs_difference_on_both_valid": 0.24114990234375
+        },
+        "meteo/F010": {
+          "lb1_missing": 4,
+          "lc1_valid_where_lb1_missing": 4,
+          "both_valid": 4460,
+          "different_gt_0_01_on_both_valid": 438,
+          "max_abs_difference_on_both_valid": 0.7726163864135742
+        },
+        "meteo/SWD": {
+          "lb1_missing": 3,
+          "lc1_valid_where_lb1_missing": 3,
+          "both_valid": 4461,
+          "different_gt_0_01_on_both_valid": 1724,
+          "max_abs_difference_on_both_valid": 2.9622013568878174
+        },
+        "radiation/SWD": {
+          "lb1_missing": 3,
+          "lc1_valid_where_lb1_missing": 3,
+          "both_valid": 4461,
+          "different_gt_0_01_on_both_valid": 1724,
+          "max_abs_difference_on_both_valid": 2.9622013568878174
+        },
+        "radiation/LWD": {
+          "lb1_missing": 1274,
+          "lc1_valid_where_lb1_missing": 1274,
+          "both_valid": 3190,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 282.9499816894531,
+        "ta_max": 301.8500061035156,
+        "td_min": 282.75836181640625,
+        "td_max": 293.6911315917969,
+        "rh_above_100": 432,
+        "rh_below_0": 0,
+        "swd_negative": 1725,
+        "swd_min": -2.9622013568878174,
+        "lwd_negative": 0,
+        "lwd_min": 295.7059326171875
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "hdf5"
+      },
+      "sha256": {
+        "meteo": "b69e7f5c44d4a4b69d9fa4bab0508dceab7d71ead098e4addd92336a94a479b3",
+        "radiation": "197225fadb6b2b92702247449d5e960a1fabe977a37bd215c355983442da1880"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "201709": {
+      "rows": 4320,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4315,
+          "3": 5
+        },
+        "meteo/RH002": {
+          "2": 4315,
+          "3": 5
+        },
+        "meteo/TD002": {
+          "2": 4315,
+          "3": 5
+        },
+        "meteo/F010": {
+          "2": 4318,
+          "3": 2
+        },
+        "meteo/SWD": {
+          "1": 129,
+          "2": 4122,
+          "3": 66,
+          "5": 3
+        },
+        "radiation/SWD": {
+          "1": 129,
+          "2": 4122,
+          "3": 66,
+          "5": 3
+        },
+        "radiation/LWD": {
+          "1": 1203,
+          "2": 3099,
+          "5": 18
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 5,
+          "lc1_valid_where_lb1_missing": 5,
+          "both_valid": 4315,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 5,
+          "lc1_valid_where_lb1_missing": 5,
+          "both_valid": 4315,
+          "different_gt_0_01_on_both_valid": 4315,
+          "max_abs_difference_on_both_valid": 1.2249526977539062
+        },
+        "meteo/TD002": {
+          "lb1_missing": 5,
+          "lc1_valid_where_lb1_missing": 5,
+          "both_valid": 4315,
+          "different_gt_0_01_on_both_valid": 4315,
+          "max_abs_difference_on_both_valid": 0.211334228515625
+        },
+        "meteo/F010": {
+          "lb1_missing": 2,
+          "lc1_valid_where_lb1_missing": 2,
+          "both_valid": 4318,
+          "different_gt_0_01_on_both_valid": 611,
+          "max_abs_difference_on_both_valid": 0.9347953796386719
+        },
+        "meteo/SWD": {
+          "lb1_missing": 198,
+          "lc1_valid_where_lb1_missing": 198,
+          "both_valid": 4122,
+          "different_gt_0_01_on_both_valid": 1957,
+          "max_abs_difference_on_both_valid": 2.586115837097168
+        },
+        "radiation/SWD": {
+          "lb1_missing": 198,
+          "lc1_valid_where_lb1_missing": 198,
+          "both_valid": 4122,
+          "different_gt_0_01_on_both_valid": 1957,
+          "max_abs_difference_on_both_valid": 2.586115837097168
+        },
+        "radiation/LWD": {
+          "lb1_missing": 1221,
+          "lc1_valid_where_lb1_missing": 1221,
+          "both_valid": 3099,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 277.54998779296875,
+        "ta_max": 296.4499816894531,
+        "td_min": 277.72357177734375,
+        "td_max": 291.861328125,
+        "rh_above_100": 671,
+        "rh_below_0": 0,
+        "swd_negative": 1957,
+        "swd_min": -2.586115837097168,
+        "lwd_negative": 0,
+        "lwd_min": 281.35595703125
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "hdf5"
+      },
+      "sha256": {
+        "meteo": "c74b1f26b942b9ffe7fd7ff7888318ba6679178944ea9181c99e9544b1cb7051",
+        "radiation": "19ab3ed09493cbf72783a331d9d2b68cdb037f10084ee4f8bb1a92b56a6e5087"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "201710": {
+      "rows": 4464,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4420,
+          "3": 34,
+          "5": 10
+        },
+        "meteo/RH002": {
+          "2": 4419,
+          "3": 33,
+          "5": 12
+        },
+        "meteo/TD002": {
+          "2": 4419,
+          "3": 33,
+          "5": 12
+        },
+        "meteo/F010": {
+          "2": 4437,
+          "3": 17,
+          "5": 10
+        },
+        "meteo/SWD": {
+          "2": 4333,
+          "3": 79,
+          "5": 10,
+          "7": 42
+        },
+        "radiation/SWD": {
+          "2": 4333,
+          "3": 79,
+          "5": 10,
+          "7": 42
+        },
+        "radiation/LWD": {
+          "1": 13,
+          "2": 4333,
+          "5": 12,
+          "7": 106
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 44,
+          "lc1_valid_where_lb1_missing": 44,
+          "both_valid": 4420,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 44,
+          "lc1_valid_where_lb1_missing": 44,
+          "both_valid": 4420,
+          "different_gt_0_01_on_both_valid": 4420,
+          "max_abs_difference_on_both_valid": 1.1226959228515625
+        },
+        "meteo/TD002": {
+          "lb1_missing": 44,
+          "lc1_valid_where_lb1_missing": 44,
+          "both_valid": 4420,
+          "different_gt_0_01_on_both_valid": 4420,
+          "max_abs_difference_on_both_valid": 0.204681396484375
+        },
+        "meteo/F010": {
+          "lb1_missing": 27,
+          "lc1_valid_where_lb1_missing": 27,
+          "both_valid": 4437,
+          "different_gt_0_01_on_both_valid": 476,
+          "max_abs_difference_on_both_valid": 1.0654735565185547
+        },
+        "meteo/SWD": {
+          "lb1_missing": 131,
+          "lc1_valid_where_lb1_missing": 131,
+          "both_valid": 4333,
+          "different_gt_0_01_on_both_valid": 2369,
+          "max_abs_difference_on_both_valid": 3.259763240814209
+        },
+        "radiation/SWD": {
+          "lb1_missing": 131,
+          "lc1_valid_where_lb1_missing": 131,
+          "both_valid": 4333,
+          "different_gt_0_01_on_both_valid": 2369,
+          "max_abs_difference_on_both_valid": 3.259763240814209
+        },
+        "radiation/LWD": {
+          "lb1_missing": 131,
+          "lc1_valid_where_lb1_missing": 131,
+          "both_valid": 4333,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 278.25,
+        "ta_max": 297.4499816894531,
+        "td_min": 276.4170837402344,
+        "td_max": 291.4546813964844,
+        "rh_above_100": 319,
+        "rh_below_0": 0,
+        "swd_negative": 2369,
+        "swd_min": -3.259763240814209,
+        "lwd_negative": 0,
+        "lwd_min": 263.14837646484375
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "hdf5"
+      },
+      "sha256": {
+        "meteo": "cf5fd77631e51d662dec96ff1e999951d06652f0636fb1159d75a8fe3ed7ea44",
+        "radiation": "9e3cf9929fa7efbc1f53a19a868f0d15a3006d0f1bb2522da5942e7325079f2f"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "201711": {
+      "rows": 4320,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4284,
+          "3": 36
+        },
+        "meteo/RH002": {
+          "2": 4281,
+          "3": 39
+        },
+        "meteo/TD002": {
+          "2": 4281,
+          "3": 39
+        },
+        "meteo/F010": {
+          "2": 4317,
+          "3": 3
+        },
+        "meteo/SWD": {
+          "2": 4320
+        },
+        "radiation/SWD": {
+          "2": 4320
+        },
+        "radiation/LWD": {
+          "2": 4320
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 36,
+          "lc1_valid_where_lb1_missing": 36,
+          "both_valid": 4284,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 39,
+          "lc1_valid_where_lb1_missing": 39,
+          "both_valid": 4281,
+          "different_gt_0_01_on_both_valid": 4281,
+          "max_abs_difference_on_both_valid": 0.848236083984375
+        },
+        "meteo/TD002": {
+          "lb1_missing": 39,
+          "lc1_valid_where_lb1_missing": 39,
+          "both_valid": 4281,
+          "different_gt_0_01_on_both_valid": 4281,
+          "max_abs_difference_on_both_valid": 0.13446044921875
+        },
+        "meteo/F010": {
+          "lb1_missing": 3,
+          "lc1_valid_where_lb1_missing": 3,
+          "both_valid": 4317,
+          "different_gt_0_01_on_both_valid": 70,
+          "max_abs_difference_on_both_valid": 0.5268917083740234
+        },
+        "meteo/SWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4320,
+          "different_gt_0_01_on_both_valid": 2693,
+          "max_abs_difference_on_both_valid": 2.487868070602417
+        },
+        "radiation/SWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4320,
+          "different_gt_0_01_on_both_valid": 2693,
+          "max_abs_difference_on_both_valid": 2.487868070602417
+        },
+        "radiation/LWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4320,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 270.25,
+        "ta_max": 287.3500061035156,
+        "td_min": 269.9844055175781,
+        "td_max": 285.38446044921875,
+        "rh_above_100": 171,
+        "rh_below_0": 0,
+        "swd_negative": 2693,
+        "swd_min": -2.487868070602417,
+        "lwd_negative": 0,
+        "lwd_min": 237.06698608398438
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "hdf5"
+      },
+      "sha256": {
+        "meteo": "65f405b473ba130c2e119a0746dfaff7fb307ea6c17f9b490206a5895d5d86a9",
+        "radiation": "e084dedf1f8ff48b3ca459294cd43a49751a02763693af915660fbd8c1317ed1"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "201712": {
+      "rows": 4464,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4454,
+          "3": 10
+        },
+        "meteo/RH002": {
+          "2": 4454,
+          "3": 10
+        },
+        "meteo/TD002": {
+          "2": 4454,
+          "3": 10
+        },
+        "meteo/F010": {
+          "2": 4458,
+          "3": 6
+        },
+        "meteo/SWD": {
+          "2": 4464
+        },
+        "radiation/SWD": {
+          "2": 4464
+        },
+        "radiation/LWD": {
+          "2": 4464
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 10,
+          "lc1_valid_where_lb1_missing": 10,
+          "both_valid": 4454,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 10,
+          "lc1_valid_where_lb1_missing": 10,
+          "both_valid": 4454,
+          "different_gt_0_01_on_both_valid": 4454,
+          "max_abs_difference_on_both_valid": 0.8056488037109375
+        },
+        "meteo/TD002": {
+          "lb1_missing": 10,
+          "lc1_valid_where_lb1_missing": 10,
+          "both_valid": 4454,
+          "different_gt_0_01_on_both_valid": 4454,
+          "max_abs_difference_on_both_valid": 0.12445068359375
+        },
+        "meteo/F010": {
+          "lb1_missing": 6,
+          "lc1_valid_where_lb1_missing": 6,
+          "both_valid": 4458,
+          "different_gt_0_01_on_both_valid": 314,
+          "max_abs_difference_on_both_valid": 0.7750244140625
+        },
+        "meteo/SWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4464,
+          "different_gt_0_01_on_both_valid": 2957,
+          "max_abs_difference_on_both_valid": 2.149846076965332
+        },
+        "radiation/SWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4464,
+          "different_gt_0_01_on_both_valid": 2957,
+          "max_abs_difference_on_both_valid": 2.149846076965332
+        },
+        "radiation/LWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4464,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 270.04998779296875,
+        "ta_max": 286.4499816894531,
+        "td_min": 269.18145751953125,
+        "td_max": 284.2744445800781,
+        "rh_above_100": 286,
+        "rh_below_0": 0,
+        "swd_negative": 2957,
+        "swd_min": -2.149846076965332,
+        "lwd_negative": 0,
+        "lwd_min": 225.4303741455078
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "hdf5"
+      },
+      "sha256": {
+        "meteo": "aded5a247cc50cbedb792e86fd59cfb8dc6400605e81e9aa82cb557871b43b1b",
+        "radiation": "784cd72a6b2fd0f894a365c954d6b62ebed51185a40fcba1c1be949de2854a09"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "201801": {
+      "rows": 4464,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4459,
+          "3": 5
+        },
+        "meteo/RH002": {
+          "2": 4459,
+          "3": 5
+        },
+        "meteo/TD002": {
+          "2": 4459,
+          "3": 5
+        },
+        "meteo/F010": {
+          "2": 4461,
+          "3": 3
+        },
+        "meteo/SWD": {
+          "2": 4463,
+          "3": 1
+        },
+        "radiation/SWD": {
+          "2": 4463,
+          "3": 1
+        },
+        "radiation/LWD": {
+          "1": 1,
+          "2": 4463
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 5,
+          "lc1_valid_where_lb1_missing": 5,
+          "both_valid": 4459,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 5,
+          "lc1_valid_where_lb1_missing": 5,
+          "both_valid": 4459,
+          "different_gt_0_01_on_both_valid": 4459,
+          "max_abs_difference_on_both_valid": 0.761810302734375
+        },
+        "meteo/TD002": {
+          "lb1_missing": 5,
+          "lc1_valid_where_lb1_missing": 5,
+          "both_valid": 4459,
+          "different_gt_0_01_on_both_valid": 4459,
+          "max_abs_difference_on_both_valid": 0.11962890625
+        },
+        "meteo/F010": {
+          "lb1_missing": 3,
+          "lc1_valid_where_lb1_missing": 3,
+          "both_valid": 4461,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/SWD": {
+          "lb1_missing": 1,
+          "lc1_valid_where_lb1_missing": 1,
+          "both_valid": 4463,
+          "different_gt_0_01_on_both_valid": 2863,
+          "max_abs_difference_on_both_valid": 2.4922823905944824
+        },
+        "radiation/SWD": {
+          "lb1_missing": 1,
+          "lc1_valid_where_lb1_missing": 1,
+          "both_valid": 4463,
+          "different_gt_0_01_on_both_valid": 2863,
+          "max_abs_difference_on_both_valid": 2.4922823905944824
+        },
+        "radiation/LWD": {
+          "lb1_missing": 1,
+          "lc1_valid_where_lb1_missing": 1,
+          "both_valid": 4463,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 272.54998779296875,
+        "ta_max": 287.04998779296875,
+        "td_min": 269.3818359375,
+        "td_max": 283.9696350097656,
+        "rh_above_100": 94,
+        "rh_below_0": 0,
+        "swd_negative": 2863,
+        "swd_min": -2.4922823905944824,
+        "lwd_negative": 0,
+        "lwd_min": 224.5025177001953
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "hdf5"
+      },
+      "sha256": {
+        "meteo": "cc2c8ef5aadcd0f5c2a69e3d045913724581ab32bfbe7aeed18675d9d2fdb2c3",
+        "radiation": "ec6653eabdbce2472457c1d17c5c366bc37e2bba8d0a43c97c87b4ff87d6a12c"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "201802": {
+      "rows": 4032,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 3629,
+          "3": 403
+        },
+        "meteo/RH002": {
+          "2": 3629,
+          "3": 403
+        },
+        "meteo/TD002": {
+          "2": 3629,
+          "3": 403
+        },
+        "meteo/F010": {
+          "2": 3861,
+          "3": 171
+        },
+        "meteo/SWD": {
+          "2": 4032
+        },
+        "radiation/SWD": {
+          "2": 4032
+        },
+        "radiation/LWD": {
+          "2": 4032
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 403,
+          "lc1_valid_where_lb1_missing": 403,
+          "both_valid": 3629,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 403,
+          "lc1_valid_where_lb1_missing": 403,
+          "both_valid": 3629,
+          "different_gt_0_01_on_both_valid": 3629,
+          "max_abs_difference_on_both_valid": 0.6282501220703125
+        },
+        "meteo/TD002": {
+          "lb1_missing": 403,
+          "lc1_valid_where_lb1_missing": 403,
+          "both_valid": 3629,
+          "different_gt_0_01_on_both_valid": 3629,
+          "max_abs_difference_on_both_valid": 0.097930908203125
+        },
+        "meteo/F010": {
+          "lb1_missing": 171,
+          "lc1_valid_where_lb1_missing": 171,
+          "both_valid": 3861,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/SWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4032,
+          "different_gt_0_01_on_both_valid": 2302,
+          "max_abs_difference_on_both_valid": 1.9679161310195923
+        },
+        "radiation/SWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4032,
+          "different_gt_0_01_on_both_valid": 4031,
+          "max_abs_difference_on_both_valid": 363.2322769165039
+        },
+        "radiation/LWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4032,
+          "different_gt_0_01_on_both_valid": 3949,
+          "max_abs_difference_on_both_valid": 35.051910400390625
+        }
+      },
+      "physical": {
+        "ta_min": 265.25,
+        "ta_max": 282.54998779296875,
+        "td_min": 258.4612731933594,
+        "td_max": 281.2479248046875,
+        "rh_above_100": 28,
+        "rh_below_0": 0,
+        "swd_negative": 2302,
+        "swd_min": -1.9679161310195923,
+        "lwd_negative": 0,
+        "lwd_min": 185.9971923828125
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "hdf5"
+      },
+      "sha256": {
+        "meteo": "46059f3d24a0153718dd8ba20a3dc36cccd1cf79f510324894e98a7b6ac15702",
+        "radiation": "9ff5ee6ef193c671a5171dbeffea323a3a0db3e72659bb55a94ea15911d40770"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "201803": {
+      "rows": 4464,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4454,
+          "3": 10
+        },
+        "meteo/RH002": {
+          "2": 4454,
+          "3": 10
+        },
+        "meteo/TD002": {
+          "2": 4454,
+          "3": 10
+        },
+        "meteo/F010": {
+          "2": 4461,
+          "3": 3
+        },
+        "meteo/SWD": {
+          "2": 4464
+        },
+        "radiation/SWD": {
+          "2": 4464
+        },
+        "radiation/LWD": {
+          "2": 4464
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 10,
+          "lc1_valid_where_lb1_missing": 10,
+          "both_valid": 4454,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 10,
+          "lc1_valid_where_lb1_missing": 10,
+          "both_valid": 4454,
+          "different_gt_0_01_on_both_valid": 4454,
+          "max_abs_difference_on_both_valid": 0.822662353515625
+        },
+        "meteo/TD002": {
+          "lb1_missing": 10,
+          "lc1_valid_where_lb1_missing": 10,
+          "both_valid": 4454,
+          "different_gt_0_01_on_both_valid": 4454,
+          "max_abs_difference_on_both_valid": 0.126129150390625
+        },
+        "meteo/F010": {
+          "lb1_missing": 3,
+          "lc1_valid_where_lb1_missing": 3,
+          "both_valid": 4461,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/SWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4464,
+          "different_gt_0_01_on_both_valid": 2208,
+          "max_abs_difference_on_both_valid": 2.422274351119995
+        },
+        "radiation/SWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4464,
+          "different_gt_0_01_on_both_valid": 2208,
+          "max_abs_difference_on_both_valid": 2.422274351119995
+        },
+        "radiation/LWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4464,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 265.25,
+        "ta_max": 287.8500061035156,
+        "td_min": 258.8618469238281,
+        "td_max": 284.47613525390625,
+        "rh_above_100": 243,
+        "rh_below_0": 0,
+        "swd_negative": 2209,
+        "swd_min": -2.422274351119995,
+        "lwd_negative": 0,
+        "lwd_min": 204.38999938964844
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "hdf5"
+      },
+      "sha256": {
+        "meteo": "8e0808b8d628dc3cf7e5e2022785d6d86a00cdb4b904dc95539614a0fb3e5c00",
+        "radiation": "3ae931a66c0d960a9d67137f6436116f709cb98f02d787ec5659c6d233cd0d47"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "201804": {
+      "rows": 4320,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4174,
+          "3": 144,
+          "5": 2
+        },
+        "meteo/RH002": {
+          "2": 4174,
+          "3": 144,
+          "5": 2
+        },
+        "meteo/TD002": {
+          "2": 4174,
+          "3": 144,
+          "5": 2
+        },
+        "meteo/F010": {
+          "2": 4317,
+          "3": 2,
+          "5": 1
+        },
+        "meteo/SWD": {
+          "2": 4320
+        },
+        "radiation/SWD": {
+          "2": 4320
+        },
+        "radiation/LWD": {
+          "2": 4320
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 146,
+          "lc1_valid_where_lb1_missing": 146,
+          "both_valid": 4174,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 146,
+          "lc1_valid_where_lb1_missing": 146,
+          "both_valid": 4174,
+          "different_gt_0_01_on_both_valid": 4174,
+          "max_abs_difference_on_both_valid": 0.8808059692382812
+        },
+        "meteo/TD002": {
+          "lb1_missing": 146,
+          "lc1_valid_where_lb1_missing": 146,
+          "both_valid": 4174,
+          "different_gt_0_01_on_both_valid": 4174,
+          "max_abs_difference_on_both_valid": 0.17144775390625
+        },
+        "meteo/F010": {
+          "lb1_missing": 3,
+          "lc1_valid_where_lb1_missing": 3,
+          "both_valid": 4317,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/SWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4320,
+          "different_gt_0_01_on_both_valid": 1781,
+          "max_abs_difference_on_both_valid": 2.342867136001587
+        },
+        "radiation/SWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4320,
+          "different_gt_0_01_on_both_valid": 1781,
+          "max_abs_difference_on_both_valid": 2.342867136001587
+        },
+        "radiation/LWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4320,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 274.8500061035156,
+        "ta_max": 300.54998779296875,
+        "td_min": 273.2015075683594,
+        "td_max": 288.92034912109375,
+        "rh_above_100": 179,
+        "rh_below_0": 0,
+        "swd_negative": 1781,
+        "swd_min": -2.342867136001587,
+        "lwd_negative": 0,
+        "lwd_min": 239.66650390625
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "hdf5"
+      },
+      "sha256": {
+        "meteo": "0fc0da87cb0c99a5cdc159bbc268e08c47357835a6f8d0d423b6794779b53082",
+        "radiation": "02346207d23d471e966092db50eaaf2bf3821a98e8132fa56c2f9fea055f91d4"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "201805": {
+      "rows": 4464,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4365,
+          "3": 99
+        },
+        "meteo/RH002": {
+          "2": 4365,
+          "3": 99
+        },
+        "meteo/TD002": {
+          "2": 4365,
+          "3": 99
+        },
+        "meteo/F010": {
+          "2": 4464
+        },
+        "meteo/SWD": {
+          "2": 4408,
+          "3": 56
+        },
+        "radiation/SWD": {
+          "2": 4408,
+          "3": 56
+        },
+        "radiation/LWD": {
+          "2": 4464
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 99,
+          "lc1_valid_where_lb1_missing": 99,
+          "both_valid": 4365,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 99,
+          "lc1_valid_where_lb1_missing": 99,
+          "both_valid": 4365,
+          "different_gt_0_01_on_both_valid": 4365,
+          "max_abs_difference_on_both_valid": 1.4570465087890625
+        },
+        "meteo/TD002": {
+          "lb1_missing": 99,
+          "lc1_valid_where_lb1_missing": 99,
+          "both_valid": 4365,
+          "different_gt_0_01_on_both_valid": 4365,
+          "max_abs_difference_on_both_valid": 0.24310302734375
+        },
+        "meteo/F010": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4464,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/SWD": {
+          "lb1_missing": 56,
+          "lc1_valid_where_lb1_missing": 56,
+          "both_valid": 4408,
+          "different_gt_0_01_on_both_valid": 1516,
+          "max_abs_difference_on_both_valid": 4.844470500946045
+        },
+        "radiation/SWD": {
+          "lb1_missing": 56,
+          "lc1_valid_where_lb1_missing": 56,
+          "both_valid": 4408,
+          "different_gt_0_01_on_both_valid": 1516,
+          "max_abs_difference_on_both_valid": 4.844470500946045
+        },
+        "radiation/LWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4464,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 277.1499938964844,
+        "ta_max": 303.75,
+        "td_min": 271.4892272949219,
+        "td_max": 293.7930908203125,
+        "rh_above_100": 201,
+        "rh_below_0": 0,
+        "swd_negative": 1516,
+        "swd_min": -4.844470500946045,
+        "lwd_negative": 0,
+        "lwd_min": 254.61825561523438
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "hdf5"
+      },
+      "sha256": {
+        "meteo": "981c61e30e22164a050325d5a4a4d867900b730df20f6eacdc067ff9fbb481ca",
+        "radiation": "139a480aaa3f5b122a0d031f269bddcf231ba2881e8a235ecb3b2a770b13f0e1"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "201806": {
+      "rows": 4320,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4284,
+          "3": 34,
+          "5": 2
+        },
+        "meteo/RH002": {
+          "2": 3876,
+          "3": 442,
+          "5": 2
+        },
+        "meteo/TD002": {
+          "2": 3876,
+          "3": 442,
+          "5": 2
+        },
+        "meteo/F010": {
+          "2": 4317,
+          "3": 1,
+          "5": 2
+        },
+        "meteo/SWD": {
+          "2": 4314,
+          "3": 3,
+          "5": 3
+        },
+        "radiation/SWD": {
+          "2": 4314,
+          "3": 3,
+          "5": 3
+        },
+        "radiation/LWD": {
+          "2": 4314,
+          "5": 6
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 36,
+          "lc1_valid_where_lb1_missing": 36,
+          "both_valid": 4284,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 444,
+          "lc1_valid_where_lb1_missing": 444,
+          "both_valid": 3876,
+          "different_gt_0_01_on_both_valid": 3876,
+          "max_abs_difference_on_both_valid": 1.2500076293945312
+        },
+        "meteo/TD002": {
+          "lb1_missing": 444,
+          "lc1_valid_where_lb1_missing": 444,
+          "both_valid": 3876,
+          "different_gt_0_01_on_both_valid": 3876,
+          "max_abs_difference_on_both_valid": 0.222442626953125
+        },
+        "meteo/F010": {
+          "lb1_missing": 3,
+          "lc1_valid_where_lb1_missing": 3,
+          "both_valid": 4317,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/SWD": {
+          "lb1_missing": 6,
+          "lc1_valid_where_lb1_missing": 6,
+          "both_valid": 4314,
+          "different_gt_0_01_on_both_valid": 1316,
+          "max_abs_difference_on_both_valid": 3.7271370887756348
+        },
+        "radiation/SWD": {
+          "lb1_missing": 6,
+          "lc1_valid_where_lb1_missing": 6,
+          "both_valid": 4314,
+          "different_gt_0_01_on_both_valid": 1316,
+          "max_abs_difference_on_both_valid": 3.7271370887756348
+        },
+        "radiation/LWD": {
+          "lb1_missing": 6,
+          "lc1_valid_where_lb1_missing": 6,
+          "both_valid": 4314,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 280.9499816894531,
+        "ta_max": 301.4499816894531,
+        "td_min": 277.6237487792969,
+        "td_max": 292.57244873046875,
+        "rh_above_100": 164,
+        "rh_below_0": 0,
+        "swd_negative": 1316,
+        "swd_min": -3.7271370887756348,
+        "lwd_negative": 0,
+        "lwd_min": 279.17071533203125
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "hdf5"
+      },
+      "sha256": {
+        "meteo": "85c2cc6346ee0c98cc62d43643bb71ab4c37744eda19f2196bbfa8afbfc8df97",
+        "radiation": "e55204fa97276c17e9c1c76d315196fed08bec390d8aeb14b81149469c765b35"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "201807": {
+      "rows": 4464,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4442,
+          "3": 14,
+          "5": 8
+        },
+        "meteo/RH002": {
+          "2": 4441,
+          "3": 14,
+          "5": 9
+        },
+        "meteo/TD002": {
+          "2": 4441,
+          "3": 14,
+          "5": 9
+        },
+        "meteo/F010": {
+          "2": 4460,
+          "5": 4
+        },
+        "meteo/SWD": {
+          "1": 8,
+          "2": 4453,
+          "5": 3
+        },
+        "radiation/SWD": {
+          "1": 8,
+          "2": 4453,
+          "5": 3
+        },
+        "radiation/LWD": {
+          "1": 9,
+          "2": 4452,
+          "5": 3
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 22,
+          "lc1_valid_where_lb1_missing": 22,
+          "both_valid": 4442,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 22,
+          "lc1_valid_where_lb1_missing": 22,
+          "both_valid": 4442,
+          "different_gt_0_01_on_both_valid": 4442,
+          "max_abs_difference_on_both_valid": 1.2878952026367188
+        },
+        "meteo/TD002": {
+          "lb1_missing": 22,
+          "lc1_valid_where_lb1_missing": 22,
+          "both_valid": 4442,
+          "different_gt_0_01_on_both_valid": 4442,
+          "max_abs_difference_on_both_valid": 0.233795166015625
+        },
+        "meteo/F010": {
+          "lb1_missing": 4,
+          "lc1_valid_where_lb1_missing": 4,
+          "both_valid": 4460,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/SWD": {
+          "lb1_missing": 11,
+          "lc1_valid_where_lb1_missing": 11,
+          "both_valid": 4453,
+          "different_gt_0_01_on_both_valid": 1421,
+          "max_abs_difference_on_both_valid": 3.5246262550354004
+        },
+        "radiation/SWD": {
+          "lb1_missing": 11,
+          "lc1_valid_where_lb1_missing": 11,
+          "both_valid": 4453,
+          "different_gt_0_01_on_both_valid": 1421,
+          "max_abs_difference_on_both_valid": 3.5246262550354004
+        },
+        "radiation/LWD": {
+          "lb1_missing": 12,
+          "lc1_valid_where_lb1_missing": 12,
+          "both_valid": 4452,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 283.9499816894531,
+        "ta_max": 307.8500061035156,
+        "td_min": 277.7241516113281,
+        "td_max": 293.18377685546875,
+        "rh_above_100": 48,
+        "rh_below_0": 0,
+        "swd_negative": 1422,
+        "swd_min": -3.5246262550354004,
+        "lwd_negative": 0,
+        "lwd_min": 294.490478515625
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "hdf5"
+      },
+      "sha256": {
+        "meteo": "33c95f757e1df90166dff81b2bf22c260ce78038c86309da90d4b4b062b43d9b",
+        "radiation": "9ceb79c43700ab3ebcaab17341f28587434913e6809319e59f874f3bf79b6d12"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "201808": {
+      "rows": 4464,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4447,
+          "3": 17
+        },
+        "meteo/RH002": {
+          "2": 4447,
+          "3": 17
+        },
+        "meteo/TD002": {
+          "2": 4447,
+          "3": 17
+        },
+        "meteo/F010": {
+          "2": 4460,
+          "3": 4
+        },
+        "meteo/SWD": {
+          "2": 4464
+        },
+        "radiation/SWD": {
+          "2": 4464
+        },
+        "radiation/LWD": {
+          "1": 573,
+          "2": 3889,
+          "5": 2
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 17,
+          "lc1_valid_where_lb1_missing": 17,
+          "both_valid": 4447,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 17,
+          "lc1_valid_where_lb1_missing": 17,
+          "both_valid": 4447,
+          "different_gt_0_01_on_both_valid": 4447,
+          "max_abs_difference_on_both_valid": 1.2788162231445312
+        },
+        "meteo/TD002": {
+          "lb1_missing": 17,
+          "lc1_valid_where_lb1_missing": 17,
+          "both_valid": 4447,
+          "different_gt_0_01_on_both_valid": 4447,
+          "max_abs_difference_on_both_valid": 0.2230224609375
+        },
+        "meteo/F010": {
+          "lb1_missing": 4,
+          "lc1_valid_where_lb1_missing": 4,
+          "both_valid": 4460,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/SWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4464,
+          "different_gt_0_01_on_both_valid": 1747,
+          "max_abs_difference_on_both_valid": 4.880650997161865
+        },
+        "radiation/SWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4464,
+          "different_gt_0_01_on_both_valid": 1747,
+          "max_abs_difference_on_both_valid": 4.880650997161865
+        },
+        "radiation/LWD": {
+          "lb1_missing": 575,
+          "lc1_valid_where_lb1_missing": 575,
+          "both_valid": 3889,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 281.1499938964844,
+        "ta_max": 306.8500061035156,
+        "td_min": 279.73699951171875,
+        "td_max": 292.4730224609375,
+        "rh_above_100": 194,
+        "rh_below_0": 0,
+        "swd_negative": 1748,
+        "swd_min": -4.880650997161865,
+        "lwd_negative": 0,
+        "lwd_min": 278.2554626464844
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "hdf5"
+      },
+      "sha256": {
+        "meteo": "0b958fb724346b6658bb9b648448b6293d818b729a93868d86e6249d7794e661",
+        "radiation": "36be7fe12c66a8fddf3a3b753c6c209ca9ae6b40b87f1915bb34532647612be5"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "201809": {
+      "rows": 4320,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4310,
+          "3": 10
+        },
+        "meteo/RH002": {
+          "2": 4310,
+          "3": 10
+        },
+        "meteo/TD002": {
+          "2": 4310,
+          "3": 10
+        },
+        "meteo/F010": {
+          "2": 4320
+        },
+        "meteo/SWD": {
+          "1": 44,
+          "2": 4202,
+          "3": 73,
+          "5": 1
+        },
+        "radiation/SWD": {
+          "1": 44,
+          "2": 4202,
+          "3": 73,
+          "5": 1
+        },
+        "radiation/LWD": {
+          "1": 156,
+          "2": 4163,
+          "5": 1
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 10,
+          "lc1_valid_where_lb1_missing": 10,
+          "both_valid": 4310,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 10,
+          "lc1_valid_where_lb1_missing": 10,
+          "both_valid": 4310,
+          "different_gt_0_01_on_both_valid": 4310,
+          "max_abs_difference_on_both_valid": 1.2873153686523438
+        },
+        "meteo/TD002": {
+          "lb1_missing": 10,
+          "lc1_valid_where_lb1_missing": 10,
+          "both_valid": 4310,
+          "different_gt_0_01_on_both_valid": 4310,
+          "max_abs_difference_on_both_valid": 0.223480224609375
+        },
+        "meteo/F010": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4320,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/SWD": {
+          "lb1_missing": 118,
+          "lc1_valid_where_lb1_missing": 118,
+          "both_valid": 4202,
+          "different_gt_0_01_on_both_valid": 1968,
+          "max_abs_difference_on_both_valid": 4.183846473693848
+        },
+        "radiation/SWD": {
+          "lb1_missing": 118,
+          "lc1_valid_where_lb1_missing": 118,
+          "both_valid": 4202,
+          "different_gt_0_01_on_both_valid": 1968,
+          "max_abs_difference_on_both_valid": 4.183846473693848
+        },
+        "radiation/LWD": {
+          "lb1_missing": 157,
+          "lc1_valid_where_lb1_missing": 157,
+          "both_valid": 4163,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 275.04998779296875,
+        "ta_max": 298.1499938964844,
+        "td_min": 275.1094970703125,
+        "td_max": 292.6734619140625,
+        "rh_above_100": 230,
+        "rh_below_0": 0,
+        "swd_negative": 1968,
+        "swd_min": -4.183846473693848,
+        "lwd_negative": 0,
+        "lwd_min": 261.356201171875
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "hdf5"
+      },
+      "sha256": {
+        "meteo": "169c4be3e60e4a0920175a6a862e0662f57d8aff0cdfc5a5672aef95bc89f062",
+        "radiation": "ed6fd6832c0459218308e822033fc18f2503a676ad823a4b7a1baaf02f6e1958"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "201810": {
+      "rows": 4464,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4449,
+          "3": 15
+        },
+        "meteo/RH002": {
+          "2": 4449,
+          "3": 15
+        },
+        "meteo/TD002": {
+          "2": 4449,
+          "3": 15
+        },
+        "meteo/F010": {
+          "2": 4457,
+          "3": 7
+        },
+        "meteo/SWD": {
+          "1": 6,
+          "2": 4456,
+          "3": 2
+        },
+        "radiation/SWD": {
+          "1": 6,
+          "2": 4456,
+          "3": 2
+        },
+        "radiation/LWD": {
+          "1": 11,
+          "2": 4453
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 15,
+          "lc1_valid_where_lb1_missing": 15,
+          "both_valid": 4449,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 15,
+          "lc1_valid_where_lb1_missing": 15,
+          "both_valid": 4449,
+          "different_gt_0_01_on_both_valid": 4449,
+          "max_abs_difference_on_both_valid": 1.0034027099609375
+        },
+        "meteo/TD002": {
+          "lb1_missing": 15,
+          "lc1_valid_where_lb1_missing": 15,
+          "both_valid": 4449,
+          "different_gt_0_01_on_both_valid": 4449,
+          "max_abs_difference_on_both_valid": 0.177764892578125
+        },
+        "meteo/F010": {
+          "lb1_missing": 7,
+          "lc1_valid_where_lb1_missing": 7,
+          "both_valid": 4457,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/SWD": {
+          "lb1_missing": 8,
+          "lc1_valid_where_lb1_missing": 8,
+          "both_valid": 4456,
+          "different_gt_0_01_on_both_valid": 2480,
+          "max_abs_difference_on_both_valid": 4.227072715759277
+        },
+        "radiation/SWD": {
+          "lb1_missing": 8,
+          "lc1_valid_where_lb1_missing": 8,
+          "both_valid": 4456,
+          "different_gt_0_01_on_both_valid": 2480,
+          "max_abs_difference_on_both_valid": 4.227072715759277
+        },
+        "radiation/LWD": {
+          "lb1_missing": 11,
+          "lc1_valid_where_lb1_missing": 11,
+          "both_valid": 4453,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 274.75,
+        "ta_max": 299.3500061035156,
+        "td_min": 270.485595703125,
+        "td_max": 289.4277648925781,
+        "rh_above_100": 292,
+        "rh_below_0": 0,
+        "swd_negative": 2480,
+        "swd_min": -4.227072715759277,
+        "lwd_negative": 0,
+        "lwd_min": 228.5608673095703
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "hdf5"
+      },
+      "sha256": {
+        "meteo": "1fe27dd045b2cf501a16144d1abcd4f9fccfafca9751be85e366191def60efbf",
+        "radiation": "14b69bc3f354568a138ab321434d503b886a13e07abd225ed7f982daaa48a220"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "201811": {
+      "rows": 4320,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4311,
+          "3": 9
+        },
+        "meteo/RH002": {
+          "2": 4306,
+          "3": 9,
+          "5": 5
+        },
+        "meteo/TD002": {
+          "2": 4306,
+          "3": 9,
+          "5": 5
+        },
+        "meteo/F010": {
+          "2": 4313,
+          "3": 7
+        },
+        "meteo/SWD": {
+          "1": 5,
+          "2": 4315
+        },
+        "radiation/SWD": {
+          "1": 5,
+          "2": 4315
+        },
+        "radiation/LWD": {
+          "1": 5,
+          "2": 4315
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 9,
+          "lc1_valid_where_lb1_missing": 9,
+          "both_valid": 4311,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 9,
+          "lc1_valid_where_lb1_missing": 9,
+          "both_valid": 4311,
+          "different_gt_0_01_on_both_valid": 4311,
+          "max_abs_difference_on_both_valid": 0.8838882446289062
+        },
+        "meteo/TD002": {
+          "lb1_missing": 9,
+          "lc1_valid_where_lb1_missing": 9,
+          "both_valid": 4311,
+          "different_gt_0_01_on_both_valid": 4311,
+          "max_abs_difference_on_both_valid": 0.16363525390625
+        },
+        "meteo/F010": {
+          "lb1_missing": 7,
+          "lc1_valid_where_lb1_missing": 7,
+          "both_valid": 4313,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/SWD": {
+          "lb1_missing": 5,
+          "lc1_valid_where_lb1_missing": 5,
+          "both_valid": 4315,
+          "different_gt_0_01_on_both_valid": 2747,
+          "max_abs_difference_on_both_valid": 4.200761318206787
+        },
+        "radiation/SWD": {
+          "lb1_missing": 5,
+          "lc1_valid_where_lb1_missing": 5,
+          "both_valid": 4315,
+          "different_gt_0_01_on_both_valid": 2747,
+          "max_abs_difference_on_both_valid": 4.200761318206787
+        },
+        "radiation/LWD": {
+          "lb1_missing": 5,
+          "lc1_valid_where_lb1_missing": 5,
+          "both_valid": 4315,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 273.04998779296875,
+        "ta_max": 292.25,
+        "td_min": 265.97314453125,
+        "td_max": 284.576904296875,
+        "rh_above_100": 111,
+        "rh_below_0": 0,
+        "swd_negative": 2748,
+        "swd_min": -4.200761318206787,
+        "lwd_negative": 0,
+        "lwd_min": 228.09368896484375
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "hdf5"
+      },
+      "sha256": {
+        "meteo": "62688600a805b2ba56cb870ac5f6557bf37351ed0e3f6032b1eb23bc2d5035cd",
+        "radiation": "eda7ca3baa227cace25a8d6d2fa91cc65f2e637f791e8db4f2cdeae4e89d96ea"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "201812": {
+      "rows": 4464,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4458,
+          "3": 6
+        },
+        "meteo/RH002": {
+          "2": 4457,
+          "3": 6,
+          "5": 1
+        },
+        "meteo/TD002": {
+          "2": 4457,
+          "3": 6,
+          "5": 1
+        },
+        "meteo/F010": {
+          "2": 4464
+        },
+        "meteo/SWD": {
+          "2": 4463,
+          "3": 1
+        },
+        "radiation/SWD": {
+          "2": 4463,
+          "3": 1
+        },
+        "radiation/LWD": {
+          "1": 1,
+          "2": 4463
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 6,
+          "lc1_valid_where_lb1_missing": 6,
+          "both_valid": 4458,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 6,
+          "lc1_valid_where_lb1_missing": 6,
+          "both_valid": 4458,
+          "different_gt_0_01_on_both_valid": 4458,
+          "max_abs_difference_on_both_valid": 0.8870773315429688
+        },
+        "meteo/TD002": {
+          "lb1_missing": 6,
+          "lc1_valid_where_lb1_missing": 6,
+          "both_valid": 4458,
+          "different_gt_0_01_on_both_valid": 4458,
+          "max_abs_difference_on_both_valid": 0.13623046875
+        },
+        "meteo/F010": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4464,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/SWD": {
+          "lb1_missing": 1,
+          "lc1_valid_where_lb1_missing": 1,
+          "both_valid": 4463,
+          "different_gt_0_01_on_both_valid": 3044,
+          "max_abs_difference_on_both_valid": 4.4319329261779785
+        },
+        "radiation/SWD": {
+          "lb1_missing": 1,
+          "lc1_valid_where_lb1_missing": 1,
+          "both_valid": 4463,
+          "different_gt_0_01_on_both_valid": 3044,
+          "max_abs_difference_on_both_valid": 4.4319329261779785
+        },
+        "radiation/LWD": {
+          "lb1_missing": 1,
+          "lc1_valid_where_lb1_missing": 1,
+          "both_valid": 4463,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 270.04998779296875,
+        "ta_max": 286.1499938964844,
+        "td_min": 267.67730712890625,
+        "td_max": 285.4862365722656,
+        "rh_above_100": 291,
+        "rh_below_0": 0,
+        "swd_negative": 3044,
+        "swd_min": -4.4319329261779785,
+        "lwd_negative": 0,
+        "lwd_min": 220.30111694335938
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "hdf5"
+      },
+      "sha256": {
+        "meteo": "a4116bb343f25a1f601b9de933b209a594aa1b94d1dd0a32c1d57f456482e48c",
+        "radiation": "e58296bdef5577387b97f10e8c7e29676e5eff36b24411a77e73ed7ecfd3afe5"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "201901": {
+      "rows": 4464,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4448,
+          "3": 14,
+          "5": 2
+        },
+        "meteo/RH002": {
+          "2": 4448,
+          "3": 14,
+          "5": 2
+        },
+        "meteo/TD002": {
+          "2": 4448,
+          "3": 14,
+          "5": 2
+        },
+        "meteo/F010": {
+          "2": 4460,
+          "3": 2,
+          "5": 2
+        },
+        "meteo/SWD": {
+          "1": 9,
+          "2": 4453,
+          "3": 1,
+          "5": 1
+        },
+        "radiation/SWD": {
+          "1": 9,
+          "2": 4453,
+          "3": 1,
+          "5": 1
+        },
+        "radiation/LWD": {
+          "1": 328,
+          "2": 4134,
+          "5": 2
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 16,
+          "lc1_valid_where_lb1_missing": 16,
+          "both_valid": 4448,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 16,
+          "lc1_valid_where_lb1_missing": 16,
+          "both_valid": 4448,
+          "different_gt_0_01_on_both_valid": 4448,
+          "max_abs_difference_on_both_valid": 0.6548309326171875
+        },
+        "meteo/TD002": {
+          "lb1_missing": 16,
+          "lc1_valid_where_lb1_missing": 16,
+          "both_valid": 4448,
+          "different_gt_0_01_on_both_valid": 4448,
+          "max_abs_difference_on_both_valid": 0.09954833984375
+        },
+        "meteo/F010": {
+          "lb1_missing": 4,
+          "lc1_valid_where_lb1_missing": 4,
+          "both_valid": 4460,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/SWD": {
+          "lb1_missing": 11,
+          "lc1_valid_where_lb1_missing": 11,
+          "both_valid": 4453,
+          "different_gt_0_01_on_both_valid": 2938,
+          "max_abs_difference_on_both_valid": 4.501473903656006
+        },
+        "radiation/SWD": {
+          "lb1_missing": 11,
+          "lc1_valid_where_lb1_missing": 11,
+          "both_valid": 4453,
+          "different_gt_0_01_on_both_valid": 2938,
+          "max_abs_difference_on_both_valid": 4.501473903656006
+        },
+        "radiation/LWD": {
+          "lb1_missing": 330,
+          "lc1_valid_where_lb1_missing": 330,
+          "both_valid": 4134,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 265.9499816894531,
+        "ta_max": 283.1499938964844,
+        "td_min": 265.4721984863281,
+        "td_max": 281.4495544433594,
+        "rh_above_100": 37,
+        "rh_below_0": 0,
+        "swd_negative": 2938,
+        "swd_min": -4.501473903656006,
+        "lwd_negative": 0,
+        "lwd_min": 208.2921142578125
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "hdf5"
+      },
+      "sha256": {
+        "meteo": "5732ff9628f869ae814103b85663d270639068a4a9920b9f5b7226cdbc0f64bd",
+        "radiation": "d89c93f08cc149fe95993a04cb79621b5d84848d4450b4f092c2500a8d718811"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "201902": {
+      "rows": 4032,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4023,
+          "3": 9
+        },
+        "meteo/RH002": {
+          "2": 4023,
+          "3": 9
+        },
+        "meteo/TD002": {
+          "2": 4023,
+          "3": 9
+        },
+        "meteo/F010": {
+          "2": 4032
+        },
+        "meteo/SWD": {
+          "1": 1,
+          "2": 4031
+        },
+        "radiation/SWD": {
+          "1": 1,
+          "2": 4031
+        },
+        "radiation/LWD": {
+          "1": 1,
+          "2": 4031
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 9,
+          "lc1_valid_where_lb1_missing": 9,
+          "both_valid": 4023,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 9,
+          "lc1_valid_where_lb1_missing": 9,
+          "both_valid": 4023,
+          "different_gt_0_01_on_both_valid": 4023,
+          "max_abs_difference_on_both_valid": 0.66015625
+        },
+        "meteo/TD002": {
+          "lb1_missing": 9,
+          "lc1_valid_where_lb1_missing": 9,
+          "both_valid": 4023,
+          "different_gt_0_01_on_both_valid": 4023,
+          "max_abs_difference_on_both_valid": 0.107696533203125
+        },
+        "meteo/F010": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4032,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/SWD": {
+          "lb1_missing": 1,
+          "lc1_valid_where_lb1_missing": 1,
+          "both_valid": 4031,
+          "different_gt_0_01_on_both_valid": 2363,
+          "max_abs_difference_on_both_valid": 4.825676441192627
+        },
+        "radiation/SWD": {
+          "lb1_missing": 1,
+          "lc1_valid_where_lb1_missing": 1,
+          "both_valid": 4031,
+          "different_gt_0_01_on_both_valid": 2363,
+          "max_abs_difference_on_both_valid": 4.825676441192627
+        },
+        "radiation/LWD": {
+          "lb1_missing": 1,
+          "lc1_valid_where_lb1_missing": 1,
+          "both_valid": 4031,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 269.9499816894531,
+        "ta_max": 291.1499938964844,
+        "td_min": 269.4823913574219,
+        "td_max": 282.8576965332031,
+        "rh_above_100": 4,
+        "rh_below_0": 0,
+        "swd_negative": 2364,
+        "swd_min": -4.825676441192627,
+        "lwd_negative": 0,
+        "lwd_min": 222.98121643066406
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "hdf5"
+      },
+      "sha256": {
+        "meteo": "5413740224c5111af310559135af1031fbbb37e59ecdb39a4010311f066e8fb5",
+        "radiation": "af7ef3146d9b6e3ede3fa4ccbf4e1a0d705dbfed3d548bb62fda46a58cccae86"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "201903": {
+      "rows": 4464,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4458,
+          "3": 6
+        },
+        "meteo/RH002": {
+          "2": 4458,
+          "3": 6
+        },
+        "meteo/TD002": {
+          "2": 4458,
+          "3": 6
+        },
+        "meteo/F010": {
+          "2": 4464
+        },
+        "meteo/SWD": {
+          "1": 4,
+          "2": 4448,
+          "3": 12
+        },
+        "radiation/SWD": {
+          "1": 4,
+          "2": 4448,
+          "3": 12
+        },
+        "radiation/LWD": {
+          "1": 484,
+          "2": 3979,
+          "5": 1
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 6,
+          "lc1_valid_where_lb1_missing": 6,
+          "both_valid": 4458,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 6,
+          "lc1_valid_where_lb1_missing": 6,
+          "both_valid": 4458,
+          "different_gt_0_01_on_both_valid": 4458,
+          "max_abs_difference_on_both_valid": 0.7242965698242188
+        },
+        "meteo/TD002": {
+          "lb1_missing": 6,
+          "lc1_valid_where_lb1_missing": 6,
+          "both_valid": 4458,
+          "different_gt_0_01_on_both_valid": 4458,
+          "max_abs_difference_on_both_valid": 0.11822509765625
+        },
+        "meteo/F010": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4464,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/SWD": {
+          "lb1_missing": 16,
+          "lc1_valid_where_lb1_missing": 16,
+          "both_valid": 4448,
+          "different_gt_0_01_on_both_valid": 2213,
+          "max_abs_difference_on_both_valid": 3.123833417892456
+        },
+        "radiation/SWD": {
+          "lb1_missing": 16,
+          "lc1_valid_where_lb1_missing": 16,
+          "both_valid": 4448,
+          "different_gt_0_01_on_both_valid": 2213,
+          "max_abs_difference_on_both_valid": 3.123833417892456
+        },
+        "radiation/LWD": {
+          "lb1_missing": 485,
+          "lc1_valid_where_lb1_missing": 485,
+          "both_valid": 3979,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 272.1499938964844,
+        "ta_max": 290.54998779296875,
+        "td_min": 271.4886779785156,
+        "td_max": 283.668212890625,
+        "rh_above_100": 140,
+        "rh_below_0": 0,
+        "swd_negative": 2213,
+        "swd_min": -3.123833417892456,
+        "lwd_negative": 0,
+        "lwd_min": 240.27032470703125
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "hdf5"
+      },
+      "sha256": {
+        "meteo": "47fccbd8d835d322969d93c829deb8392148d3a3044dd66dcbdaab29e5fb4acf",
+        "radiation": "bbd60b9b46d38ceb2b8e29e32102506cfcd8665eaf4e85d216e84cfe92b74f41"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "201904": {
+      "rows": 4320,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4310,
+          "3": 10
+        },
+        "meteo/RH002": {
+          "2": 4310,
+          "3": 10
+        },
+        "meteo/TD002": {
+          "2": 4310,
+          "3": 10
+        },
+        "meteo/F010": {
+          "2": 4317,
+          "3": 3
+        },
+        "meteo/SWD": {
+          "1": 3,
+          "2": 4316,
+          "3": 1
+        },
+        "radiation/SWD": {
+          "1": 3,
+          "2": 4316,
+          "3": 1
+        },
+        "radiation/LWD": {
+          "1": 4,
+          "2": 4316
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 10,
+          "lc1_valid_where_lb1_missing": 10,
+          "both_valid": 4310,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 10,
+          "lc1_valid_where_lb1_missing": 10,
+          "both_valid": 4310,
+          "different_gt_0_01_on_both_valid": 4310,
+          "max_abs_difference_on_both_valid": 0.8181991577148438
+        },
+        "meteo/TD002": {
+          "lb1_missing": 10,
+          "lc1_valid_where_lb1_missing": 10,
+          "both_valid": 4310,
+          "different_gt_0_01_on_both_valid": 4310,
+          "max_abs_difference_on_both_valid": 0.154144287109375
+        },
+        "meteo/F010": {
+          "lb1_missing": 3,
+          "lc1_valid_where_lb1_missing": 3,
+          "both_valid": 4317,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/SWD": {
+          "lb1_missing": 4,
+          "lc1_valid_where_lb1_missing": 4,
+          "both_valid": 4316,
+          "different_gt_0_01_on_both_valid": 1769,
+          "max_abs_difference_on_both_valid": 2.635122060775757
+        },
+        "radiation/SWD": {
+          "lb1_missing": 4,
+          "lc1_valid_where_lb1_missing": 4,
+          "both_valid": 4316,
+          "different_gt_0_01_on_both_valid": 1769,
+          "max_abs_difference_on_both_valid": 2.635122060775757
+        },
+        "radiation/LWD": {
+          "lb1_missing": 4,
+          "lc1_valid_where_lb1_missing": 4,
+          "both_valid": 4316,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 271.1499938964844,
+        "ta_max": 297.54998779296875,
+        "td_min": 268.4793395996094,
+        "td_max": 287.2041320800781,
+        "rh_above_100": 11,
+        "rh_below_0": 0,
+        "swd_negative": 1769,
+        "swd_min": -2.635122060775757,
+        "lwd_negative": 0,
+        "lwd_min": 227.17495727539062
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "hdf5"
+      },
+      "sha256": {
+        "meteo": "101b17c524f137a3fa814c7dc21d51b153f64c21d647c66668529ab3c3845639",
+        "radiation": "62a8c93ec4cbcb5e259991c8331bdecb7e537aeb7a19e8d4a605235839caac39"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "201905": {
+      "rows": 4464,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4449,
+          "3": 13,
+          "5": 2
+        },
+        "meteo/RH002": {
+          "2": 4440,
+          "3": 8,
+          "5": 3,
+          "7": 13
+        },
+        "meteo/TD002": {
+          "2": 4440,
+          "3": 8,
+          "5": 3,
+          "7": 13
+        },
+        "meteo/F010": {
+          "2": 4459,
+          "3": 5
+        },
+        "meteo/SWD": {
+          "1": 19,
+          "2": 4442,
+          "3": 1,
+          "5": 2
+        },
+        "radiation/SWD": {
+          "1": 19,
+          "2": 4442,
+          "3": 1,
+          "5": 2
+        },
+        "radiation/LWD": {
+          "1": 19,
+          "2": 4442,
+          "5": 3
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 15,
+          "lc1_valid_where_lb1_missing": 15,
+          "both_valid": 4449,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 15,
+          "lc1_valid_where_lb1_missing": 15,
+          "both_valid": 4449,
+          "different_gt_0_01_on_both_valid": 4449,
+          "max_abs_difference_on_both_valid": 9.635658264160156
+        },
+        "meteo/TD002": {
+          "lb1_missing": 15,
+          "lc1_valid_where_lb1_missing": 15,
+          "both_valid": 4449,
+          "different_gt_0_01_on_both_valid": 4449,
+          "max_abs_difference_on_both_valid": 2.473297119140625
+        },
+        "meteo/F010": {
+          "lb1_missing": 5,
+          "lc1_valid_where_lb1_missing": 5,
+          "both_valid": 4459,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/SWD": {
+          "lb1_missing": 22,
+          "lc1_valid_where_lb1_missing": 22,
+          "both_valid": 4442,
+          "different_gt_0_01_on_both_valid": 1506,
+          "max_abs_difference_on_both_valid": 2.576857805252075
+        },
+        "radiation/SWD": {
+          "lb1_missing": 22,
+          "lc1_valid_where_lb1_missing": 22,
+          "both_valid": 4442,
+          "different_gt_0_01_on_both_valid": 1506,
+          "max_abs_difference_on_both_valid": 2.576857805252075
+        },
+        "radiation/LWD": {
+          "lb1_missing": 22,
+          "lc1_valid_where_lb1_missing": 22,
+          "both_valid": 4442,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 275.25,
+        "ta_max": 294.54998779296875,
+        "td_min": 269.2812194824219,
+        "td_max": 288.31585693359375,
+        "rh_above_100": 141,
+        "rh_below_0": 0,
+        "swd_negative": 1506,
+        "swd_min": -2.576857805252075,
+        "lwd_negative": 0,
+        "lwd_min": 242.86477661132812
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "hdf5"
+      },
+      "sha256": {
+        "meteo": "0ffc1c804b7c6e4e5bbbd4f6d712c890f93f44cecc4e6aa4ebacde61b23d9d91",
+        "radiation": "9aa165b9ac3f9b207f3fd02a9388353fdb760d57d4da5748d3cd79dd9832cf42"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "201906": {
+      "rows": 4320,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4316,
+          "3": 4
+        },
+        "meteo/RH002": {
+          "2": 4314,
+          "3": 4,
+          "5": 2
+        },
+        "meteo/TD002": {
+          "2": 4314,
+          "3": 4,
+          "5": 2
+        },
+        "meteo/F010": {
+          "2": 4317,
+          "3": 3
+        },
+        "meteo/SWD": {
+          "1": 1,
+          "2": 4317,
+          "3": 2
+        },
+        "radiation/SWD": {
+          "1": 1,
+          "2": 4317,
+          "3": 2
+        },
+        "radiation/LWD": {
+          "1": 3,
+          "2": 4317
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 4,
+          "lc1_valid_where_lb1_missing": 4,
+          "both_valid": 4316,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 4,
+          "lc1_valid_where_lb1_missing": 4,
+          "both_valid": 4316,
+          "different_gt_0_01_on_both_valid": 4316,
+          "max_abs_difference_on_both_valid": 1.2948150634765625
+        },
+        "meteo/TD002": {
+          "lb1_missing": 4,
+          "lc1_valid_where_lb1_missing": 4,
+          "both_valid": 4316,
+          "different_gt_0_01_on_both_valid": 4316,
+          "max_abs_difference_on_both_valid": 0.32696533203125
+        },
+        "meteo/F010": {
+          "lb1_missing": 3,
+          "lc1_valid_where_lb1_missing": 3,
+          "both_valid": 4317,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/SWD": {
+          "lb1_missing": 3,
+          "lc1_valid_where_lb1_missing": 3,
+          "both_valid": 4317,
+          "different_gt_0_01_on_both_valid": 1299,
+          "max_abs_difference_on_both_valid": 3.464484214782715
+        },
+        "radiation/SWD": {
+          "lb1_missing": 3,
+          "lc1_valid_where_lb1_missing": 3,
+          "both_valid": 4317,
+          "different_gt_0_01_on_both_valid": 1299,
+          "max_abs_difference_on_both_valid": 3.464484214782715
+        },
+        "radiation/LWD": {
+          "lb1_missing": 3,
+          "lc1_valid_where_lb1_missing": 3,
+          "both_valid": 4317,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 282.3500061035156,
+        "ta_max": 305.75,
+        "td_min": 279.938232421875,
+        "td_max": 295.5221862792969,
+        "rh_above_100": 0,
+        "rh_below_0": 0,
+        "swd_negative": 1299,
+        "swd_min": -3.464484214782715,
+        "lwd_negative": 0,
+        "lwd_min": 285.9671630859375
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "hdf5"
+      },
+      "sha256": {
+        "meteo": "60ff5db5d5ebc3a925b67322d91f260ba9e227955f3d9301a0e57ee890d73179",
+        "radiation": "67d79140fcd29c21b6ddcf3fa22e9ac3d95cafb4a02fdcfff544c3fbd53b6d5d"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "201907": {
+      "rows": 4464,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4451,
+          "3": 11,
+          "5": 2
+        },
+        "meteo/RH002": {
+          "2": 4451,
+          "3": 11,
+          "5": 2
+        },
+        "meteo/TD002": {
+          "2": 4451,
+          "3": 11,
+          "5": 2
+        },
+        "meteo/F010": {
+          "2": 4461,
+          "3": 3
+        },
+        "meteo/SWD": {
+          "1": 73,
+          "2": 4341,
+          "3": 50
+        },
+        "radiation/SWD": {
+          "1": 73,
+          "2": 4341,
+          "3": 50
+        },
+        "radiation/LWD": {
+          "1": 123,
+          "2": 4341
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 13,
+          "lc1_valid_where_lb1_missing": 13,
+          "both_valid": 4451,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 13,
+          "lc1_valid_where_lb1_missing": 13,
+          "both_valid": 4451,
+          "different_gt_0_01_on_both_valid": 4451,
+          "max_abs_difference_on_both_valid": 1.35711669921875
+        },
+        "meteo/TD002": {
+          "lb1_missing": 13,
+          "lc1_valid_where_lb1_missing": 13,
+          "both_valid": 4451,
+          "different_gt_0_01_on_both_valid": 4451,
+          "max_abs_difference_on_both_valid": 0.260498046875
+        },
+        "meteo/F010": {
+          "lb1_missing": 3,
+          "lc1_valid_where_lb1_missing": 3,
+          "both_valid": 4461,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/SWD": {
+          "lb1_missing": 123,
+          "lc1_valid_where_lb1_missing": 123,
+          "both_valid": 4341,
+          "different_gt_0_01_on_both_valid": 1358,
+          "max_abs_difference_on_both_valid": 3.1987905502319336
+        },
+        "radiation/SWD": {
+          "lb1_missing": 123,
+          "lc1_valid_where_lb1_missing": 123,
+          "both_valid": 4341,
+          "different_gt_0_01_on_both_valid": 1358,
+          "max_abs_difference_on_both_valid": 3.1987905502319336
+        },
+        "radiation/LWD": {
+          "lb1_missing": 123,
+          "lc1_valid_where_lb1_missing": 123,
+          "both_valid": 4341,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 280.6499938964844,
+        "ta_max": 309.9499816894531,
+        "td_min": 278.830810546875,
+        "td_max": 294.81048583984375,
+        "rh_above_100": 62,
+        "rh_below_0": 0,
+        "swd_negative": 1358,
+        "swd_min": -3.1987905502319336,
+        "lwd_negative": 0,
+        "lwd_min": 284.92401123046875
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "hdf5"
+      },
+      "sha256": {
+        "meteo": "b68eb8800772b96cb4e918c1de7a091d1c98f8495b21400ae948706070968941",
+        "radiation": "906d4d650e9062d1516b19469c18e61106bba74d28932b705681fde79baa7aca"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "201908": {
+      "rows": 4464,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4453,
+          "3": 9,
+          "5": 2
+        },
+        "meteo/RH002": {
+          "2": 4453,
+          "3": 9,
+          "5": 2
+        },
+        "meteo/TD002": {
+          "2": 4453,
+          "3": 9,
+          "5": 2
+        },
+        "meteo/F010": {
+          "2": 4464
+        },
+        "meteo/SWD": {
+          "1": 8,
+          "2": 4455,
+          "3": 1
+        },
+        "radiation/SWD": {
+          "1": 8,
+          "2": 4455,
+          "3": 1
+        },
+        "radiation/LWD": {
+          "1": 14,
+          "2": 4450
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 11,
+          "lc1_valid_where_lb1_missing": 11,
+          "both_valid": 4453,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 11,
+          "lc1_valid_where_lb1_missing": 11,
+          "both_valid": 4453,
+          "different_gt_0_01_on_both_valid": 4453,
+          "max_abs_difference_on_both_valid": 1.3726348876953125
+        },
+        "meteo/TD002": {
+          "lb1_missing": 11,
+          "lc1_valid_where_lb1_missing": 11,
+          "both_valid": 4453,
+          "different_gt_0_01_on_both_valid": 4453,
+          "max_abs_difference_on_both_valid": 0.251556396484375
+        },
+        "meteo/F010": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4464,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/SWD": {
+          "lb1_missing": 9,
+          "lc1_valid_where_lb1_missing": 9,
+          "both_valid": 4455,
+          "different_gt_0_01_on_both_valid": 1710,
+          "max_abs_difference_on_both_valid": 2.9152166843414307
+        },
+        "radiation/SWD": {
+          "lb1_missing": 9,
+          "lc1_valid_where_lb1_missing": 9,
+          "both_valid": 4455,
+          "different_gt_0_01_on_both_valid": 1710,
+          "max_abs_difference_on_both_valid": 2.9152166843414307
+        },
+        "radiation/LWD": {
+          "lb1_missing": 14,
+          "lc1_valid_where_lb1_missing": 14,
+          "both_valid": 4450,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 282.6499938964844,
+        "ta_max": 305.4499816894531,
+        "td_min": 281.3470153808594,
+        "td_max": 294.2015380859375,
+        "rh_above_100": 145,
+        "rh_below_0": 0,
+        "swd_negative": 1710,
+        "swd_min": -2.9152166843414307,
+        "lwd_negative": 0,
+        "lwd_min": 289.8043212890625
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "hdf5"
+      },
+      "sha256": {
+        "meteo": "19b1999322354877302e5d4bcf68b29a2e89596155c83507e9085ed36d83f5be",
+        "radiation": "22adac59543c39d9fdf0d9fc120ed8b2ec78fe3de0bde73186f9c220e7760652"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "201909": {
+      "rows": 4320,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4298,
+          "3": 22
+        },
+        "meteo/RH002": {
+          "2": 4307,
+          "3": 13
+        },
+        "meteo/TD002": {
+          "2": 4307,
+          "3": 13
+        },
+        "meteo/F010": {
+          "2": 4317,
+          "3": 3
+        },
+        "meteo/SWD": {
+          "1": 5,
+          "2": 4272,
+          "3": 43
+        },
+        "radiation/SWD": {
+          "1": 5,
+          "2": 4272,
+          "3": 43
+        },
+        "radiation/LWD": {
+          "1": 48,
+          "2": 4272
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 22,
+          "lc1_valid_where_lb1_missing": 22,
+          "both_valid": 4298,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 22,
+          "lc1_valid_where_lb1_missing": 22,
+          "both_valid": 4298,
+          "different_gt_0_01_on_both_valid": 4298,
+          "max_abs_difference_on_both_valid": 1.16815185546875
+        },
+        "meteo/TD002": {
+          "lb1_missing": 13,
+          "lc1_valid_where_lb1_missing": 13,
+          "both_valid": 4307,
+          "different_gt_0_01_on_both_valid": 4307,
+          "max_abs_difference_on_both_valid": 0.194488525390625
+        },
+        "meteo/F010": {
+          "lb1_missing": 3,
+          "lc1_valid_where_lb1_missing": 3,
+          "both_valid": 4317,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/SWD": {
+          "lb1_missing": 48,
+          "lc1_valid_where_lb1_missing": 48,
+          "both_valid": 4272,
+          "different_gt_0_01_on_both_valid": 1962,
+          "max_abs_difference_on_both_valid": 3.108797788619995
+        },
+        "radiation/SWD": {
+          "lb1_missing": 48,
+          "lc1_valid_where_lb1_missing": 48,
+          "both_valid": 4272,
+          "different_gt_0_01_on_both_valid": 2250,
+          "max_abs_difference_on_both_valid": 372.4220733642578
+        },
+        "radiation/LWD": {
+          "lb1_missing": 48,
+          "lc1_valid_where_lb1_missing": 48,
+          "both_valid": 4272,
+          "different_gt_0_01_on_both_valid": 573,
+          "max_abs_difference_on_both_valid": 35.15771484375
+        }
+      },
+      "physical": {
+        "ta_min": 278.25,
+        "ta_max": 299.1499938964844,
+        "td_min": 277.8244323730469,
+        "td_max": 290.54449462890625,
+        "rh_above_100": 192,
+        "rh_below_0": 0,
+        "swd_negative": 1962,
+        "swd_min": -3.108797788619995,
+        "lwd_negative": 0,
+        "lwd_min": 278.956787109375
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "hdf5",
+        "radiation": "hdf5"
+      },
+      "sha256": {
+        "meteo": "6ae4c1aa8c97d949f8930ad16a4f8a0c909c8c42c7908f6ca08e339d6eacc017",
+        "radiation": "05c0334d90048d947481ae4d51ec1464e71abd062dd1cf4a78d119a3112405e5"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "201910": {
+      "rows": 4464,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4446,
+          "3": 12,
+          "5": 6
+        },
+        "meteo/RH002": {
+          "2": 4446,
+          "3": 12,
+          "5": 6
+        },
+        "meteo/TD002": {
+          "2": 4446,
+          "3": 12,
+          "5": 6
+        },
+        "meteo/F010": {
+          "2": 4451,
+          "3": 7,
+          "5": 6
+        },
+        "meteo/SWD": {
+          "1": 9,
+          "2": 4446,
+          "3": 9
+        },
+        "radiation/SWD": {
+          "1": 9,
+          "2": 4446,
+          "3": 9
+        },
+        "radiation/LWD": {
+          "1": 12,
+          "2": 4445,
+          "5": 7
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 18,
+          "lc1_valid_where_lb1_missing": 18,
+          "both_valid": 4446,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 18,
+          "lc1_valid_where_lb1_missing": 18,
+          "both_valid": 4446,
+          "different_gt_0_01_on_both_valid": 4446,
+          "max_abs_difference_on_both_valid": 1.115447998046875
+        },
+        "meteo/TD002": {
+          "lb1_missing": 18,
+          "lc1_valid_where_lb1_missing": 18,
+          "both_valid": 4446,
+          "different_gt_0_01_on_both_valid": 4446,
+          "max_abs_difference_on_both_valid": 0.19183349609375
+        },
+        "meteo/F010": {
+          "lb1_missing": 13,
+          "lc1_valid_where_lb1_missing": 13,
+          "both_valid": 4451,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/SWD": {
+          "lb1_missing": 18,
+          "lc1_valid_where_lb1_missing": 18,
+          "both_valid": 4446,
+          "different_gt_0_01_on_both_valid": 2435,
+          "max_abs_difference_on_both_valid": 3.2967441082000732
+        },
+        "radiation/SWD": {
+          "lb1_missing": 18,
+          "lc1_valid_where_lb1_missing": 18,
+          "both_valid": 4446,
+          "different_gt_0_01_on_both_valid": 2435,
+          "max_abs_difference_on_both_valid": 3.2967441082000732
+        },
+        "radiation/LWD": {
+          "lb1_missing": 19,
+          "lc1_valid_where_lb1_missing": 19,
+          "both_valid": 4445,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 274.1499938964844,
+        "ta_max": 294.8500061035156,
+        "td_min": 273.2013854980469,
+        "td_max": 290.3418273925781,
+        "rh_above_100": 302,
+        "rh_below_0": 0,
+        "swd_negative": 2435,
+        "swd_min": -3.2967441082000732,
+        "lwd_negative": 0,
+        "lwd_min": 236.83221435546875
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "netcdf3",
+        "radiation": "netcdf3"
+      },
+      "sha256": {
+        "meteo": "04051a8f2161ce5148a8ddc44699da3b08be04e5227cfc478898ae64d4f9990d",
+        "radiation": "bd67accb578b0b53a5e7e16d2c7e08161b07d3739db58a73bfba9b411ac0ff21"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "201911": {
+      "rows": 4320,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4307,
+          "3": 11,
+          "5": 2
+        },
+        "meteo/RH002": {
+          "2": 4307,
+          "3": 11,
+          "5": 2
+        },
+        "meteo/TD002": {
+          "2": 4307,
+          "3": 11,
+          "5": 2
+        },
+        "meteo/F010": {
+          "2": 4317,
+          "3": 3
+        },
+        "meteo/SWD": {
+          "1": 1,
+          "2": 4314,
+          "3": 5
+        },
+        "radiation/SWD": {
+          "1": 1,
+          "2": 4314,
+          "3": 5
+        },
+        "radiation/LWD": {
+          "1": 6,
+          "2": 4314
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 13,
+          "lc1_valid_where_lb1_missing": 13,
+          "both_valid": 4307,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 13,
+          "lc1_valid_where_lb1_missing": 13,
+          "both_valid": 4307,
+          "different_gt_0_01_on_both_valid": 4307,
+          "max_abs_difference_on_both_valid": 1.0357437133789062
+        },
+        "meteo/TD002": {
+          "lb1_missing": 13,
+          "lc1_valid_where_lb1_missing": 13,
+          "both_valid": 4307,
+          "different_gt_0_01_on_both_valid": 4307,
+          "max_abs_difference_on_both_valid": 0.159271240234375
+        },
+        "meteo/F010": {
+          "lb1_missing": 3,
+          "lc1_valid_where_lb1_missing": 3,
+          "both_valid": 4317,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/SWD": {
+          "lb1_missing": 6,
+          "lc1_valid_where_lb1_missing": 6,
+          "both_valid": 4314,
+          "different_gt_0_01_on_both_valid": 2680,
+          "max_abs_difference_on_both_valid": 2.74037504196167
+        },
+        "radiation/SWD": {
+          "lb1_missing": 6,
+          "lc1_valid_where_lb1_missing": 6,
+          "both_valid": 4314,
+          "different_gt_0_01_on_both_valid": 2680,
+          "max_abs_difference_on_both_valid": 2.74037504196167
+        },
+        "radiation/LWD": {
+          "lb1_missing": 6,
+          "lc1_valid_where_lb1_missing": 6,
+          "both_valid": 4314,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 271.25,
+        "ta_max": 287.75,
+        "td_min": 271.28826904296875,
+        "td_max": 287.50927734375,
+        "rh_above_100": 457,
+        "rh_below_0": 0,
+        "swd_negative": 2680,
+        "swd_min": -2.74037504196167,
+        "lwd_negative": 0,
+        "lwd_min": 237.32254028320312
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "netcdf3",
+        "radiation": "netcdf3"
+      },
+      "sha256": {
+        "meteo": "00a01b9afc7b789d6cf45a5c5de928f4f1d9294570fae5975a04306dde7d64e0",
+        "radiation": "0adb35d2aabb82560fd732e0be2ee9bad987bae14c44502bcb4e10257a8ea38b"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "201912": {
+      "rows": 4464,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4450,
+          "3": 13,
+          "5": 1
+        },
+        "meteo/RH002": {
+          "2": 4450,
+          "3": 13,
+          "5": 1
+        },
+        "meteo/TD002": {
+          "2": 4450,
+          "3": 13,
+          "5": 1
+        },
+        "meteo/F010": {
+          "2": 4462,
+          "3": 2
+        },
+        "meteo/SWD": {
+          "2": 4455,
+          "5": 9
+        },
+        "radiation/SWD": {
+          "2": 4455,
+          "5": 9
+        },
+        "radiation/LWD": {
+          "1": 9,
+          "2": 4455
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 14,
+          "lc1_valid_where_lb1_missing": 14,
+          "both_valid": 4450,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 14,
+          "lc1_valid_where_lb1_missing": 14,
+          "both_valid": 4450,
+          "different_gt_0_01_on_both_valid": 4450,
+          "max_abs_difference_on_both_valid": 0.7375946044921875
+        },
+        "meteo/TD002": {
+          "lb1_missing": 14,
+          "lc1_valid_where_lb1_missing": 14,
+          "both_valid": 4450,
+          "different_gt_0_01_on_both_valid": 4450,
+          "max_abs_difference_on_both_valid": 0.12091064453125
+        },
+        "meteo/F010": {
+          "lb1_missing": 2,
+          "lc1_valid_where_lb1_missing": 2,
+          "both_valid": 4462,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/SWD": {
+          "lb1_missing": 9,
+          "lc1_valid_where_lb1_missing": 9,
+          "both_valid": 4455,
+          "different_gt_0_01_on_both_valid": 2950,
+          "max_abs_difference_on_both_valid": 2.625095844268799
+        },
+        "radiation/SWD": {
+          "lb1_missing": 9,
+          "lc1_valid_where_lb1_missing": 9,
+          "both_valid": 4455,
+          "different_gt_0_01_on_both_valid": 2950,
+          "max_abs_difference_on_both_valid": 2.625095844268799
+        },
+        "radiation/LWD": {
+          "lb1_missing": 9,
+          "lc1_valid_where_lb1_missing": 9,
+          "both_valid": 4455,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 269.8500061035156,
+        "ta_max": 286.6499938964844,
+        "td_min": 269.7831726074219,
+        "td_max": 283.6708984375,
+        "rh_above_100": 285,
+        "rh_below_0": 0,
+        "swd_negative": 2950,
+        "swd_min": -2.625095844268799,
+        "lwd_negative": 0,
+        "lwd_min": 236.441162109375
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "netcdf3",
+        "radiation": "netcdf3"
+      },
+      "sha256": {
+        "meteo": "de7c4a6562c20455c3b4fefa042432d3a4fb6b616d192fd317e02424a1735f71",
+        "radiation": "5febb8e7eb471daeee565bb570f3daad0778432ae6ff322ded96875c1d2191ce"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "202001": {
+      "rows": 4464,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4448,
+          "3": 13,
+          "5": 3
+        },
+        "meteo/RH002": {
+          "2": 4448,
+          "3": 13,
+          "5": 3
+        },
+        "meteo/TD002": {
+          "2": 4448,
+          "3": 13,
+          "5": 3
+        },
+        "meteo/F010": {
+          "2": 4461,
+          "3": 2,
+          "5": 1
+        },
+        "meteo/SWD": {
+          "2": 4463,
+          "5": 1
+        },
+        "radiation/SWD": {
+          "2": 4463,
+          "5": 1
+        },
+        "radiation/LWD": {
+          "1": 1,
+          "2": 4463
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 16,
+          "lc1_valid_where_lb1_missing": 16,
+          "both_valid": 4448,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 16,
+          "lc1_valid_where_lb1_missing": 16,
+          "both_valid": 4448,
+          "different_gt_0_01_on_both_valid": 4448,
+          "max_abs_difference_on_both_valid": 0.7991943359375
+        },
+        "meteo/TD002": {
+          "lb1_missing": 16,
+          "lc1_valid_where_lb1_missing": 16,
+          "both_valid": 4448,
+          "different_gt_0_01_on_both_valid": 4448,
+          "max_abs_difference_on_both_valid": 0.125946044921875
+        },
+        "meteo/F010": {
+          "lb1_missing": 3,
+          "lc1_valid_where_lb1_missing": 3,
+          "both_valid": 4461,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/SWD": {
+          "lb1_missing": 1,
+          "lc1_valid_where_lb1_missing": 1,
+          "both_valid": 4463,
+          "different_gt_0_01_on_both_valid": 2868,
+          "max_abs_difference_on_both_valid": 2.4826786518096924
+        },
+        "radiation/SWD": {
+          "lb1_missing": 1,
+          "lc1_valid_where_lb1_missing": 1,
+          "both_valid": 4463,
+          "different_gt_0_01_on_both_valid": 2868,
+          "max_abs_difference_on_both_valid": 2.4826786518096924
+        },
+        "radiation/LWD": {
+          "lb1_missing": 1,
+          "lc1_valid_where_lb1_missing": 1,
+          "both_valid": 4463,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 271.3500061035156,
+        "ta_max": 285.8500061035156,
+        "td_min": 271.2872009277344,
+        "td_max": 284.575927734375,
+        "rh_above_100": 413,
+        "rh_below_0": 0,
+        "swd_negative": 2869,
+        "swd_min": -2.4826786518096924,
+        "lwd_negative": 0,
+        "lwd_min": 246.5729522705078
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "netcdf3",
+        "radiation": "netcdf3"
+      },
+      "sha256": {
+        "meteo": "ecd6188ab179b6d6b274d98b1a58eb8c4eb5083c4d3a71c722fbb7dcf6dbe0e7",
+        "radiation": "165d6542a955799d897dc35389bec6fc377cede9a4388419bb823e220b1ef593"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "202002": {
+      "rows": 4176,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4159,
+          "3": 8,
+          "5": 9
+        },
+        "meteo/RH002": {
+          "2": 4159,
+          "3": 8,
+          "5": 9
+        },
+        "meteo/TD002": {
+          "2": 4159,
+          "3": 8,
+          "5": 9
+        },
+        "meteo/F010": {
+          "2": 4168,
+          "5": 8
+        },
+        "meteo/SWD": {
+          "1": 3,
+          "2": 4167,
+          "5": 6
+        },
+        "radiation/SWD": {
+          "1": 3,
+          "2": 4167,
+          "5": 6
+        },
+        "radiation/LWD": {
+          "2": 4167,
+          "5": 9
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 17,
+          "lc1_valid_where_lb1_missing": 17,
+          "both_valid": 4159,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 17,
+          "lc1_valid_where_lb1_missing": 17,
+          "both_valid": 4159,
+          "different_gt_0_01_on_both_valid": 4159,
+          "max_abs_difference_on_both_valid": 0.8230972290039062
+        },
+        "meteo/TD002": {
+          "lb1_missing": 17,
+          "lc1_valid_where_lb1_missing": 17,
+          "both_valid": 4159,
+          "different_gt_0_01_on_both_valid": 4159,
+          "max_abs_difference_on_both_valid": 0.135650634765625
+        },
+        "meteo/F010": {
+          "lb1_missing": 8,
+          "lc1_valid_where_lb1_missing": 8,
+          "both_valid": 4168,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/SWD": {
+          "lb1_missing": 9,
+          "lc1_valid_where_lb1_missing": 9,
+          "both_valid": 4167,
+          "different_gt_0_01_on_both_valid": 2429,
+          "max_abs_difference_on_both_valid": 3.0061583518981934
+        },
+        "radiation/SWD": {
+          "lb1_missing": 9,
+          "lc1_valid_where_lb1_missing": 9,
+          "both_valid": 4167,
+          "different_gt_0_01_on_both_valid": 2429,
+          "max_abs_difference_on_both_valid": 3.0061583518981934
+        },
+        "radiation/LWD": {
+          "lb1_missing": 9,
+          "lc1_valid_where_lb1_missing": 9,
+          "both_valid": 4167,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 273.25,
+        "ta_max": 289.3500061035156,
+        "td_min": 270.6866455078125,
+        "td_max": 285.3856506347656,
+        "rh_above_100": 10,
+        "rh_below_0": 0,
+        "swd_negative": 2431,
+        "swd_min": -3.0061583518981934,
+        "lwd_negative": 0,
+        "lwd_min": 237.4021759033203
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "netcdf3",
+        "radiation": "netcdf3"
+      },
+      "sha256": {
+        "meteo": "8a54c484e37c2864dccd42f8cc70cef2a7a407657e158c398f08360c19ce48a4",
+        "radiation": "42315b4438a5111919b4c3c59df6bdb8cd170cc115781d4869f217266442c4b5"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "202003": {
+      "rows": 4464,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4450,
+          "3": 14
+        },
+        "meteo/RH002": {
+          "2": 4450,
+          "3": 14
+        },
+        "meteo/TD002": {
+          "2": 4450,
+          "3": 14
+        },
+        "meteo/F010": {
+          "2": 4462,
+          "3": 2
+        },
+        "meteo/SWD": {
+          "2": 4464
+        },
+        "radiation/SWD": {
+          "2": 4464
+        },
+        "radiation/LWD": {
+          "1": 1,
+          "2": 4463
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 14,
+          "lc1_valid_where_lb1_missing": 14,
+          "both_valid": 4450,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 14,
+          "lc1_valid_where_lb1_missing": 14,
+          "both_valid": 4450,
+          "different_gt_0_01_on_both_valid": 4450,
+          "max_abs_difference_on_both_valid": 0.7797317504882812
+        },
+        "meteo/TD002": {
+          "lb1_missing": 14,
+          "lc1_valid_where_lb1_missing": 14,
+          "both_valid": 4450,
+          "different_gt_0_01_on_both_valid": 4450,
+          "max_abs_difference_on_both_valid": 0.12249755859375
+        },
+        "meteo/F010": {
+          "lb1_missing": 2,
+          "lc1_valid_where_lb1_missing": 2,
+          "both_valid": 4462,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/SWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4464,
+          "different_gt_0_01_on_both_valid": 2191,
+          "max_abs_difference_on_both_valid": 2.634718894958496
+        },
+        "radiation/SWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4464,
+          "different_gt_0_01_on_both_valid": 2191,
+          "max_abs_difference_on_both_valid": 2.634718894958496
+        },
+        "radiation/LWD": {
+          "lb1_missing": 1,
+          "lc1_valid_where_lb1_missing": 1,
+          "both_valid": 4463,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 269.6499938964844,
+        "ta_max": 287.9499816894531,
+        "td_min": 262.4665832519531,
+        "td_max": 284.1724853515625,
+        "rh_above_100": 14,
+        "rh_below_0": 0,
+        "swd_negative": 2193,
+        "swd_min": -2.634718894958496,
+        "lwd_negative": 0,
+        "lwd_min": 213.93238830566406
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "netcdf3",
+        "radiation": "netcdf3"
+      },
+      "sha256": {
+        "meteo": "06d59de12c69e750d8653e66b088f61045198040a800e4f049440325c5648981",
+        "radiation": "6febfef434c7cc913639d17cd94bb405124ad49d29c7f809535b79d4273fc8cd"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "202004": {
+      "rows": 4320,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4299,
+          "3": 17,
+          "5": 4
+        },
+        "meteo/RH002": {
+          "2": 4180,
+          "3": 17,
+          "5": 7,
+          "7": 116
+        },
+        "meteo/TD002": {
+          "2": 4180,
+          "3": 17,
+          "5": 7,
+          "7": 116
+        },
+        "meteo/F010": {
+          "2": 4310,
+          "3": 6,
+          "5": 4
+        },
+        "meteo/SWD": {
+          "2": 4319,
+          "5": 1
+        },
+        "radiation/SWD": {
+          "2": 4319,
+          "5": 1
+        },
+        "radiation/LWD": {
+          "2": 4319,
+          "5": 1
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 21,
+          "lc1_valid_where_lb1_missing": 21,
+          "both_valid": 4299,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 21,
+          "lc1_valid_where_lb1_missing": 21,
+          "both_valid": 4299,
+          "different_gt_0_01_on_both_valid": 4299,
+          "max_abs_difference_on_both_valid": 6.943428039550781
+        },
+        "meteo/TD002": {
+          "lb1_missing": 21,
+          "lc1_valid_where_lb1_missing": 21,
+          "both_valid": 4299,
+          "different_gt_0_01_on_both_valid": 4299,
+          "max_abs_difference_on_both_valid": 2.462646484375
+        },
+        "meteo/F010": {
+          "lb1_missing": 10,
+          "lc1_valid_where_lb1_missing": 10,
+          "both_valid": 4310,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/SWD": {
+          "lb1_missing": 1,
+          "lc1_valid_where_lb1_missing": 1,
+          "both_valid": 4319,
+          "different_gt_0_01_on_both_valid": 1761,
+          "max_abs_difference_on_both_valid": 2.378753185272217
+        },
+        "radiation/SWD": {
+          "lb1_missing": 1,
+          "lc1_valid_where_lb1_missing": 1,
+          "both_valid": 4319,
+          "different_gt_0_01_on_both_valid": 1761,
+          "max_abs_difference_on_both_valid": 2.378753185272217
+        },
+        "radiation/LWD": {
+          "lb1_missing": 1,
+          "lc1_valid_where_lb1_missing": 1,
+          "both_valid": 4319,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 269.8500061035156,
+        "ta_max": 297.25,
+        "td_min": 269.78314208984375,
+        "td_max": 285.7856750488281,
+        "rh_above_100": 80,
+        "rh_below_0": 0,
+        "swd_negative": 1762,
+        "swd_min": -2.378753185272217,
+        "lwd_negative": 0,
+        "lwd_min": 231.45132446289062
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "netcdf3",
+        "radiation": "netcdf3"
+      },
+      "sha256": {
+        "meteo": "c57e6df88650d42c0b8888b490c0d6e8b77ff0197e5e5f8da4f76459f2eca96d",
+        "radiation": "c160b037d593bd30f508b92fd0f60787daa62c203cdcc3224a1ef8cee65274a6"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "202005": {
+      "rows": 4464,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4442,
+          "3": 22
+        },
+        "meteo/RH002": {
+          "2": 4442,
+          "3": 22
+        },
+        "meteo/TD002": {
+          "2": 4442,
+          "3": 22
+        },
+        "meteo/F010": {
+          "2": 4462,
+          "3": 2
+        },
+        "meteo/SWD": {
+          "2": 4464
+        },
+        "radiation/SWD": {
+          "2": 4464
+        },
+        "radiation/LWD": {
+          "2": 4464
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 22,
+          "lc1_valid_where_lb1_missing": 22,
+          "both_valid": 4442,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 22,
+          "lc1_valid_where_lb1_missing": 22,
+          "both_valid": 4442,
+          "different_gt_0_01_on_both_valid": 4442,
+          "max_abs_difference_on_both_valid": 0.9561538696289062
+        },
+        "meteo/TD002": {
+          "lb1_missing": 22,
+          "lc1_valid_where_lb1_missing": 22,
+          "both_valid": 4442,
+          "different_gt_0_01_on_both_valid": 4442,
+          "max_abs_difference_on_both_valid": 0.179290771484375
+        },
+        "meteo/F010": {
+          "lb1_missing": 2,
+          "lc1_valid_where_lb1_missing": 2,
+          "both_valid": 4462,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/SWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4464,
+          "different_gt_0_01_on_both_valid": 1485,
+          "max_abs_difference_on_both_valid": 3.289069175720215
+        },
+        "radiation/SWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4464,
+          "different_gt_0_01_on_both_valid": 1485,
+          "max_abs_difference_on_both_valid": 3.289069175720215
+        },
+        "radiation/LWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4464,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 273.3500061035156,
+        "ta_max": 299.4499816894531,
+        "td_min": 270.5860595703125,
+        "td_max": 289.529296875,
+        "rh_above_100": 115,
+        "rh_below_0": 0,
+        "swd_negative": 1485,
+        "swd_min": -3.289069175720215,
+        "lwd_negative": 0,
+        "lwd_min": 239.60581970214844
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "netcdf3",
+        "radiation": "netcdf3"
+      },
+      "sha256": {
+        "meteo": "b8cb4b2bd0ce00391e5b10bdabe58a53eb4b0ab66b4c5c676ef392cd578cf187",
+        "radiation": "69af6b324895ac928c64c9fa1be1369dd4a5cc302f96ccaaf354c7a55d3dc6c9"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "202006": {
+      "rows": 4320,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4305,
+          "3": 15
+        },
+        "meteo/RH002": {
+          "2": 4303,
+          "3": 15,
+          "5": 2
+        },
+        "meteo/TD002": {
+          "2": 4303,
+          "3": 15,
+          "5": 2
+        },
+        "meteo/F010": {
+          "2": 4312,
+          "3": 8
+        },
+        "meteo/SWD": {
+          "2": 4320
+        },
+        "radiation/SWD": {
+          "2": 4320
+        },
+        "radiation/LWD": {
+          "2": 4320
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 15,
+          "lc1_valid_where_lb1_missing": 15,
+          "both_valid": 4305,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 15,
+          "lc1_valid_where_lb1_missing": 15,
+          "both_valid": 4305,
+          "different_gt_0_01_on_both_valid": 4305,
+          "max_abs_difference_on_both_valid": 1.5178070068359375
+        },
+        "meteo/TD002": {
+          "lb1_missing": 15,
+          "lc1_valid_where_lb1_missing": 15,
+          "both_valid": 4305,
+          "different_gt_0_01_on_both_valid": 4305,
+          "max_abs_difference_on_both_valid": 0.286102294921875
+        },
+        "meteo/F010": {
+          "lb1_missing": 8,
+          "lc1_valid_where_lb1_missing": 8,
+          "both_valid": 4312,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/SWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4320,
+          "different_gt_0_01_on_both_valid": 1305,
+          "max_abs_difference_on_both_valid": 4.278291702270508
+        },
+        "radiation/SWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4320,
+          "different_gt_0_01_on_both_valid": 1305,
+          "max_abs_difference_on_both_valid": 4.278291702270508
+        },
+        "radiation/LWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4320,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 279.3500061035156,
+        "ta_max": 302.8500061035156,
+        "td_min": 276.7197570800781,
+        "td_max": 293.08154296875,
+        "rh_above_100": 67,
+        "rh_below_0": 0,
+        "swd_negative": 1307,
+        "swd_min": -4.278291702270508,
+        "lwd_negative": 0,
+        "lwd_min": 265.17083740234375
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "netcdf3",
+        "radiation": "netcdf3"
+      },
+      "sha256": {
+        "meteo": "66c6f24f31346f372b3208db0ab266a7db44852f2e88ad35627b52016d77fe7e",
+        "radiation": "8bc5cef4ba8b5f60d5db52afe8d71dee9a1ed815f1ca5a4a2bbb5f5b344b3d0b"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "202007": {
+      "rows": 4464,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4435,
+          "3": 27,
+          "5": 2
+        },
+        "meteo/RH002": {
+          "2": 4435,
+          "3": 27,
+          "5": 2
+        },
+        "meteo/TD002": {
+          "2": 4435,
+          "3": 27,
+          "5": 2
+        },
+        "meteo/F010": {
+          "2": 4464
+        },
+        "meteo/SWD": {
+          "2": 4463,
+          "5": 1
+        },
+        "radiation/SWD": {
+          "2": 4463,
+          "5": 1
+        },
+        "radiation/LWD": {
+          "1": 1,
+          "2": 4463
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 29,
+          "lc1_valid_where_lb1_missing": 29,
+          "both_valid": 4435,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 29,
+          "lc1_valid_where_lb1_missing": 29,
+          "both_valid": 4435,
+          "different_gt_0_01_on_both_valid": 4435,
+          "max_abs_difference_on_both_valid": 1.2233200073242188
+        },
+        "meteo/TD002": {
+          "lb1_missing": 29,
+          "lc1_valid_where_lb1_missing": 29,
+          "both_valid": 4435,
+          "different_gt_0_01_on_both_valid": 4435,
+          "max_abs_difference_on_both_valid": 0.21258544921875
+        },
+        "meteo/F010": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4464,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/SWD": {
+          "lb1_missing": 1,
+          "lc1_valid_where_lb1_missing": 1,
+          "both_valid": 4463,
+          "different_gt_0_01_on_both_valid": 1436,
+          "max_abs_difference_on_both_valid": 3.1581990718841553
+        },
+        "radiation/SWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4464,
+          "different_gt_0_01_on_both_valid": 1437,
+          "max_abs_difference_on_both_valid": 3.1581990718841553
+        },
+        "radiation/LWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4464,
+          "different_gt_0_01_on_both_valid": 1,
+          "max_abs_difference_on_both_valid": 0.73321533203125
+        }
+      },
+      "physical": {
+        "ta_min": 280.9499816894531,
+        "ta_max": 305.04998779296875,
+        "td_min": 279.0314025878906,
+        "td_max": 291.96258544921875,
+        "rh_above_100": 191,
+        "rh_below_0": 0,
+        "swd_negative": 1436,
+        "swd_min": -3.1581990718841553,
+        "lwd_negative": 0,
+        "lwd_min": 285.8623046875
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "netcdf3",
+        "radiation": "netcdf3"
+      },
+      "sha256": {
+        "meteo": "83df5562abe89df4d8a7ec8bf77bd0505df8193491fd95e45a1b024a0a439290",
+        "radiation": "d2f0881ac67112d9bc992d57e20be31a9fa86830b8d471d5de8f5e34e9cbb099"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "202008": {
+      "rows": 4464,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4060,
+          "3": 398,
+          "5": 6
+        },
+        "meteo/RH002": {
+          "2": 4060,
+          "3": 398,
+          "5": 6
+        },
+        "meteo/TD002": {
+          "2": 4060,
+          "3": 398,
+          "5": 6
+        },
+        "meteo/F010": {
+          "2": 4451,
+          "3": 7,
+          "5": 6
+        },
+        "meteo/SWD": {
+          "2": 4460,
+          "5": 4
+        },
+        "radiation/SWD": {
+          "2": 4460,
+          "5": 4
+        },
+        "radiation/LWD": {
+          "1": 3,
+          "2": 4457,
+          "5": 4
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 404,
+          "lc1_valid_where_lb1_missing": 404,
+          "both_valid": 4060,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 404,
+          "lc1_valid_where_lb1_missing": 404,
+          "both_valid": 4060,
+          "different_gt_0_01_on_both_valid": 4060,
+          "max_abs_difference_on_both_valid": 1.5049591064453125
+        },
+        "meteo/TD002": {
+          "lb1_missing": 404,
+          "lc1_valid_where_lb1_missing": 404,
+          "both_valid": 4060,
+          "different_gt_0_01_on_both_valid": 4060,
+          "max_abs_difference_on_both_valid": 0.29754638671875
+        },
+        "meteo/F010": {
+          "lb1_missing": 13,
+          "lc1_valid_where_lb1_missing": 13,
+          "both_valid": 4451,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/SWD": {
+          "lb1_missing": 4,
+          "lc1_valid_where_lb1_missing": 4,
+          "both_valid": 4460,
+          "different_gt_0_01_on_both_valid": 1745,
+          "max_abs_difference_on_both_valid": 5.111624717712402
+        },
+        "radiation/SWD": {
+          "lb1_missing": 4,
+          "lc1_valid_where_lb1_missing": 4,
+          "both_valid": 4460,
+          "different_gt_0_01_on_both_valid": 1745,
+          "max_abs_difference_on_both_valid": 5.111624717712402
+        },
+        "radiation/LWD": {
+          "lb1_missing": 7,
+          "lc1_valid_where_lb1_missing": 7,
+          "both_valid": 4457,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 282.1499938964844,
+        "ta_max": 307.25,
+        "td_min": 280.94500732421875,
+        "td_max": 296.7475280761719,
+        "rh_above_100": 164,
+        "rh_below_0": 0,
+        "swd_negative": 1746,
+        "swd_min": -5.111624717712402,
+        "lwd_negative": 0,
+        "lwd_min": 288.51361083984375
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "netcdf3",
+        "radiation": "netcdf3"
+      },
+      "sha256": {
+        "meteo": "98d301a9c8d6b73fdf4057aa7f2f93922470eb5b4def583651c504576b07b08a",
+        "radiation": "2fdc49eba3ba81064ef9552dd496a4989fc430de33f3b68126bf8d0310a4a396"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "202009": {
+      "rows": 4320,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4307,
+          "3": 11,
+          "5": 2
+        },
+        "meteo/RH002": {
+          "2": 4307,
+          "3": 11,
+          "5": 2
+        },
+        "meteo/TD002": {
+          "2": 4307,
+          "3": 11,
+          "5": 2
+        },
+        "meteo/F010": {
+          "2": 4319,
+          "3": 1
+        },
+        "meteo/SWD": {
+          "2": 4172,
+          "3": 74,
+          "5": 6,
+          "7": 68
+        },
+        "radiation/SWD": {
+          "2": 4172,
+          "3": 74,
+          "5": 6,
+          "7": 68
+        },
+        "radiation/LWD": {
+          "1": 719,
+          "2": 3601
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 13,
+          "lc1_valid_where_lb1_missing": 13,
+          "both_valid": 4307,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 13,
+          "lc1_valid_where_lb1_missing": 13,
+          "both_valid": 4307,
+          "different_gt_0_01_on_both_valid": 4307,
+          "max_abs_difference_on_both_valid": 1.2535476684570312
+        },
+        "meteo/TD002": {
+          "lb1_missing": 13,
+          "lc1_valid_where_lb1_missing": 13,
+          "both_valid": 4307,
+          "different_gt_0_01_on_both_valid": 4307,
+          "max_abs_difference_on_both_valid": 0.21258544921875
+        },
+        "meteo/F010": {
+          "lb1_missing": 1,
+          "lc1_valid_where_lb1_missing": 1,
+          "both_valid": 4319,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/SWD": {
+          "lb1_missing": 148,
+          "lc1_valid_where_lb1_missing": 148,
+          "both_valid": 4172,
+          "different_gt_0_01_on_both_valid": 1950,
+          "max_abs_difference_on_both_valid": 3.4853732585906982
+        },
+        "radiation/SWD": {
+          "lb1_missing": 148,
+          "lc1_valid_where_lb1_missing": 148,
+          "both_valid": 4172,
+          "different_gt_0_01_on_both_valid": 1950,
+          "max_abs_difference_on_both_valid": 3.4853732585906982
+        },
+        "radiation/LWD": {
+          "lb1_missing": 719,
+          "lc1_valid_where_lb1_missing": 719,
+          "both_valid": 3601,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 279.04998779296875,
+        "ta_max": 304.9499816894531,
+        "td_min": 277.7233581542969,
+        "td_max": 291.96258544921875,
+        "rh_above_100": 400,
+        "rh_below_0": 0,
+        "swd_negative": 1950,
+        "swd_min": -3.4853732585906982,
+        "lwd_negative": 0,
+        "lwd_min": 269.2260437011719
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "netcdf3",
+        "radiation": "netcdf3"
+      },
+      "sha256": {
+        "meteo": "9cdaed5cdc5bbf79730666259e68fed96c3df5e823f770b1b02c7d7ea625c177",
+        "radiation": "967a912a77115b748b931abd26adcd593e3ffd3c87daa5b4d0421216cba39770"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "202010": {
+      "rows": 4464,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4452,
+          "3": 8,
+          "5": 4
+        },
+        "meteo/RH002": {
+          "2": 4452,
+          "3": 8,
+          "5": 4
+        },
+        "meteo/TD002": {
+          "2": 4452,
+          "3": 8,
+          "5": 4
+        },
+        "meteo/F010": {
+          "2": 4459,
+          "3": 5
+        },
+        "meteo/SWD": {
+          "2": 4464
+        },
+        "radiation/SWD": {
+          "2": 4464
+        },
+        "radiation/LWD": {
+          "2": 4464
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 12,
+          "lc1_valid_where_lb1_missing": 12,
+          "both_valid": 4452,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 12,
+          "lc1_valid_where_lb1_missing": 12,
+          "both_valid": 4452,
+          "different_gt_0_01_on_both_valid": 4452,
+          "max_abs_difference_on_both_valid": 1.0897674560546875
+        },
+        "meteo/TD002": {
+          "lb1_missing": 12,
+          "lc1_valid_where_lb1_missing": 12,
+          "both_valid": 4452,
+          "different_gt_0_01_on_both_valid": 4452,
+          "max_abs_difference_on_both_valid": 0.17144775390625
+        },
+        "meteo/F010": {
+          "lb1_missing": 5,
+          "lc1_valid_where_lb1_missing": 5,
+          "both_valid": 4459,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/SWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4464,
+          "different_gt_0_01_on_both_valid": 2461,
+          "max_abs_difference_on_both_valid": 2.657813549041748
+        },
+        "radiation/SWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4464,
+          "different_gt_0_01_on_both_valid": 2461,
+          "max_abs_difference_on_both_valid": 2.657813549041748
+        },
+        "radiation/LWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4464,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 276.6499938964844,
+        "ta_max": 292.9499816894531,
+        "td_min": 276.5169372558594,
+        "td_max": 288.8214416503906,
+        "rh_above_100": 234,
+        "rh_below_0": 0,
+        "swd_negative": 2461,
+        "swd_min": -2.657813549041748,
+        "lwd_negative": 0,
+        "lwd_min": 264.6134948730469
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "netcdf3",
+        "radiation": "netcdf3"
+      },
+      "sha256": {
+        "meteo": "bba13d82bdf5aae72fad4f9e41d6d85c77cbe6d0620e436bb33c3814000eb466",
+        "radiation": "9eaa41c4646a07c4772baa38322d4a1c836c9947e3c05b2a00e29bd07d1b25e9"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "202011": {
+      "rows": 4320,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4305,
+          "3": 10,
+          "5": 5
+        },
+        "meteo/RH002": {
+          "2": 4305,
+          "3": 10,
+          "5": 5
+        },
+        "meteo/TD002": {
+          "2": 4305,
+          "3": 10,
+          "5": 5
+        },
+        "meteo/F010": {
+          "2": 4313,
+          "3": 3,
+          "5": 4
+        },
+        "meteo/SWD": {
+          "2": 4315,
+          "5": 5
+        },
+        "radiation/SWD": {
+          "2": 4315,
+          "5": 5
+        },
+        "radiation/LWD": {
+          "2": 4315,
+          "5": 5
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 15,
+          "lc1_valid_where_lb1_missing": 15,
+          "both_valid": 4305,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 15,
+          "lc1_valid_where_lb1_missing": 15,
+          "both_valid": 4305,
+          "different_gt_0_01_on_both_valid": 4305,
+          "max_abs_difference_on_both_valid": 1.1990203857421875
+        },
+        "meteo/TD002": {
+          "lb1_missing": 15,
+          "lc1_valid_where_lb1_missing": 15,
+          "both_valid": 4305,
+          "different_gt_0_01_on_both_valid": 4305,
+          "max_abs_difference_on_both_valid": 0.190582275390625
+        },
+        "meteo/F010": {
+          "lb1_missing": 7,
+          "lc1_valid_where_lb1_missing": 7,
+          "both_valid": 4313,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/SWD": {
+          "lb1_missing": 5,
+          "lc1_valid_where_lb1_missing": 5,
+          "both_valid": 4315,
+          "different_gt_0_01_on_both_valid": 2680,
+          "max_abs_difference_on_both_valid": 2.286374092102051
+        },
+        "radiation/SWD": {
+          "lb1_missing": 5,
+          "lc1_valid_where_lb1_missing": 5,
+          "both_valid": 4315,
+          "different_gt_0_01_on_both_valid": 2680,
+          "max_abs_difference_on_both_valid": 2.286374092102051
+        },
+        "radiation/LWD": {
+          "lb1_missing": 5,
+          "lc1_valid_where_lb1_missing": 5,
+          "both_valid": 4315,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 269.6499938964844,
+        "ta_max": 292.04998779296875,
+        "td_min": 269.5824890136719,
+        "td_max": 290.2405700683594,
+        "rh_above_100": 455,
+        "rh_below_0": 0,
+        "swd_negative": 2681,
+        "swd_min": -2.286374092102051,
+        "lwd_negative": 0,
+        "lwd_min": 236.45953369140625
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "netcdf3",
+        "radiation": "netcdf3"
+      },
+      "sha256": {
+        "meteo": "9950193273775cd396af565d387ee97a04965b064876566312a31056aa1c450d",
+        "radiation": "c2a49f322b4e2121a8c2f3662d30be038a27c22b3692e9bb778219faf0272245"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    },
+    "202012": {
+      "rows": 4464,
+      "joint_invalid": 0,
+      "longest_joint_invalid_intervals": 0,
+      "channel_invalid": {
+        "meteo/TA002": 0,
+        "meteo/RH002": 0,
+        "meteo/TD002": 0,
+        "meteo/F010": 0,
+        "meteo/SWD": 0,
+        "radiation/SWD": 0,
+        "radiation/LWD": 0
+      },
+      "source_index_counts": {
+        "meteo/TA002": {
+          "2": 4455,
+          "3": 9
+        },
+        "meteo/RH002": {
+          "2": 4455,
+          "3": 9
+        },
+        "meteo/TD002": {
+          "2": 4455,
+          "3": 9
+        },
+        "meteo/F010": {
+          "2": 4461,
+          "3": 3
+        },
+        "meteo/SWD": {
+          "2": 4464
+        },
+        "radiation/SWD": {
+          "2": 4464
+        },
+        "radiation/LWD": {
+          "2": 4464
+        }
+      },
+      "lb1_comparison": {
+        "meteo/TA002": {
+          "lb1_missing": 9,
+          "lc1_valid_where_lb1_missing": 9,
+          "both_valid": 4455,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/RH002": {
+          "lb1_missing": 9,
+          "lc1_valid_where_lb1_missing": 9,
+          "both_valid": 4455,
+          "different_gt_0_01_on_both_valid": 4455,
+          "max_abs_difference_on_both_valid": 0.8908157348632812
+        },
+        "meteo/TD002": {
+          "lb1_missing": 9,
+          "lc1_valid_where_lb1_missing": 9,
+          "both_valid": 4455,
+          "different_gt_0_01_on_both_valid": 4455,
+          "max_abs_difference_on_both_valid": 0.13616943359375
+        },
+        "meteo/F010": {
+          "lb1_missing": 3,
+          "lc1_valid_where_lb1_missing": 3,
+          "both_valid": 4461,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        },
+        "meteo/SWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4464,
+          "different_gt_0_01_on_both_valid": 2958,
+          "max_abs_difference_on_both_valid": 1.9434181451797485
+        },
+        "radiation/SWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4464,
+          "different_gt_0_01_on_both_valid": 2958,
+          "max_abs_difference_on_both_valid": 1.9434181451797485
+        },
+        "radiation/LWD": {
+          "lb1_missing": 0,
+          "lc1_valid_where_lb1_missing": 0,
+          "both_valid": 4464,
+          "different_gt_0_01_on_both_valid": 0,
+          "max_abs_difference_on_both_valid": 0.0
+        }
+      },
+      "physical": {
+        "ta_min": 271.7099914550781,
+        "ta_max": 286.1600036621094,
+        "td_min": 271.07818603515625,
+        "td_max": 285.5961608886719,
+        "rh_above_100": 424,
+        "rh_below_0": 0,
+        "swd_negative": 2958,
+        "swd_min": -1.9434181451797485,
+        "lwd_negative": 0,
+        "lwd_min": 237.53219604492188
+      },
+      "units": {
+        "meteo": {
+          "TA002": "degC",
+          "RH002": "1e-2",
+          "TD002": "degC",
+          "F010": "m s-1",
+          "SWD": "W m-2"
+        },
+        "radiation": {
+          "SWD": "W m-2",
+          "LWD": "W m-2"
+        }
+      },
+      "formats": {
+        "meteo": "netcdf3",
+        "radiation": "netcdf3"
+      },
+      "sha256": {
+        "meteo": "e5c4cefcba40ae4b5c554e1b7525512f39300cbd2b1a2288d56ad939ab447db5",
+        "radiation": "3514e1ad153ef27d3c547c4c439d4c9991e55f6db2a00b00f282efb9c7b37998"
+      },
+      "valid_dates_zero": {
+        "meteo": 0,
+        "radiation": 0
+      }
+    }
+  },
+  "years": {
+    "2017": {
+      "rows": 52560,
+      "joint_invalid": 0,
+      "joint_invalid_fraction": 0.0,
+      "longest_joint_invalid_intervals": 0,
+      "channels": {
+        "meteo/TA002": {
+          "lc1_missing": 0,
+          "lb1_missing": 277,
+          "lc1_valid_where_lb1_missing": 277,
+          "source_index_counts": {
+            "2": 52283,
+            "3": 260,
+            "5": 17
+          }
+        },
+        "meteo/RH002": {
+          "lc1_missing": 0,
+          "lb1_missing": 369,
+          "lc1_valid_where_lb1_missing": 369,
+          "source_index_counts": {
+            "2": 52097,
+            "3": 351,
+            "5": 27,
+            "7": 85
+          }
+        },
+        "meteo/TD002": {
+          "lc1_missing": 0,
+          "lb1_missing": 369,
+          "lc1_valid_where_lb1_missing": 369,
+          "source_index_counts": {
+            "2": 52097,
+            "3": 351,
+            "5": 27,
+            "7": 85
+          }
+        },
+        "meteo/F010": {
+          "lc1_missing": 0,
+          "lb1_missing": 70,
+          "lc1_valid_where_lb1_missing": 70,
+          "source_index_counts": {
+            "2": 52491,
+            "3": 54,
+            "5": 15
+          }
+        },
+        "meteo/SWD": {
+          "lc1_missing": 0,
+          "lb1_missing": 682,
+          "lc1_valid_where_lb1_missing": 682,
+          "source_index_counts": {
+            "2": 51878,
+            "1": 377,
+            "3": 248,
+            "5": 15,
+            "7": 42
+          }
+        },
+        "radiation/SWD": {
+          "lc1_missing": 0,
+          "lb1_missing": 682,
+          "lc1_valid_where_lb1_missing": 682,
+          "source_index_counts": {
+            "2": 51878,
+            "1": 377,
+            "3": 248,
+            "5": 15,
+            "7": 42
+          }
+        },
+        "radiation/LWD": {
+          "lc1_missing": 0,
+          "lb1_missing": 2976,
+          "lc1_valid_where_lb1_missing": 2976,
+          "source_index_counts": {
+            "2": 49584,
+            "1": 2640,
+            "5": 38,
+            "7": 298
+          }
+        }
+      },
+      "physical": {
+        "rh_above_100": 3231,
+        "rh_below_0": 0,
+        "swd_negative": 24963,
+        "lwd_negative": 0
+      }
+    },
+    "2018": {
+      "rows": 52560,
+      "joint_invalid": 0,
+      "joint_invalid_fraction": 0.0,
+      "longest_joint_invalid_intervals": 0,
+      "channels": {
+        "meteo/TA002": {
+          "lc1_missing": 0,
+          "lb1_missing": 778,
+          "lc1_valid_where_lb1_missing": 778,
+          "source_index_counts": {
+            "2": 51782,
+            "3": 766,
+            "5": 12
+          }
+        },
+        "meteo/RH002": {
+          "lc1_missing": 0,
+          "lb1_missing": 1186,
+          "lc1_valid_where_lb1_missing": 1186,
+          "source_index_counts": {
+            "2": 51367,
+            "3": 1174,
+            "5": 19
+          }
+        },
+        "meteo/TD002": {
+          "lc1_missing": 0,
+          "lb1_missing": 1186,
+          "lc1_valid_where_lb1_missing": 1186,
+          "source_index_counts": {
+            "2": 51367,
+            "3": 1174,
+            "5": 19
+          }
+        },
+        "meteo/F010": {
+          "lc1_missing": 0,
+          "lb1_missing": 205,
+          "lc1_valid_where_lb1_missing": 205,
+          "source_index_counts": {
+            "2": 52355,
+            "3": 198,
+            "5": 7
+          }
+        },
+        "meteo/SWD": {
+          "lc1_missing": 0,
+          "lb1_missing": 206,
+          "lc1_valid_where_lb1_missing": 206,
+          "source_index_counts": {
+            "2": 52354,
+            "3": 136,
+            "5": 7,
+            "1": 63
+          }
+        },
+        "radiation/SWD": {
+          "lc1_missing": 0,
+          "lb1_missing": 206,
+          "lc1_valid_where_lb1_missing": 206,
+          "source_index_counts": {
+            "2": 52354,
+            "3": 136,
+            "5": 7,
+            "1": 63
+          }
+        },
+        "radiation/LWD": {
+          "lc1_missing": 0,
+          "lb1_missing": 768,
+          "lc1_valid_where_lb1_missing": 768,
+          "source_index_counts": {
+            "1": 756,
+            "2": 51792,
+            "5": 12
+          }
+        }
+      },
+      "physical": {
+        "rh_above_100": 2075,
+        "rh_below_0": 0,
+        "swd_negative": 25397,
+        "lwd_negative": 0
+      }
+    },
+    "2019": {
+      "rows": 52560,
+      "joint_invalid": 0,
+      "joint_invalid_fraction": 0.0,
+      "longest_joint_invalid_intervals": 0,
+      "channels": {
+        "meteo/TA002": {
+          "lc1_missing": 0,
+          "lb1_missing": 151,
+          "lc1_valid_where_lb1_missing": 151,
+          "source_index_counts": {
+            "2": 52409,
+            "3": 134,
+            "5": 17
+          }
+        },
+        "meteo/RH002": {
+          "lc1_missing": 0,
+          "lb1_missing": 151,
+          "lc1_valid_where_lb1_missing": 151,
+          "source_index_counts": {
+            "2": 52407,
+            "3": 120,
+            "5": 20,
+            "7": 13
+          }
+        },
+        "meteo/TD002": {
+          "lc1_missing": 0,
+          "lb1_missing": 142,
+          "lc1_valid_where_lb1_missing": 142,
+          "source_index_counts": {
+            "2": 52407,
+            "3": 120,
+            "5": 20,
+            "7": 13
+          }
+        },
+        "meteo/F010": {
+          "lc1_missing": 0,
+          "lb1_missing": 39,
+          "lc1_valid_where_lb1_missing": 39,
+          "source_index_counts": {
+            "2": 52521,
+            "3": 31,
+            "5": 8
+          }
+        },
+        "meteo/SWD": {
+          "lc1_missing": 0,
+          "lb1_missing": 270,
+          "lc1_valid_where_lb1_missing": 270,
+          "source_index_counts": {
+            "1": 133,
+            "2": 52290,
+            "3": 125,
+            "5": 12
+          }
+        },
+        "radiation/SWD": {
+          "lc1_missing": 0,
+          "lb1_missing": 270,
+          "lc1_valid_where_lb1_missing": 270,
+          "source_index_counts": {
+            "1": 133,
+            "2": 52290,
+            "3": 125,
+            "5": 12
+          }
+        },
+        "radiation/LWD": {
+          "lc1_missing": 0,
+          "lb1_missing": 1064,
+          "lc1_valid_where_lb1_missing": 1064,
+          "source_index_counts": {
+            "1": 1051,
+            "2": 51496,
+            "5": 13
+          }
+        }
+      },
+      "physical": {
+        "rh_above_100": 1776,
+        "rh_below_0": 0,
+        "swd_negative": 25184,
+        "lwd_negative": 0
+      }
+    },
+    "2020": {
+      "rows": 52704,
+      "joint_invalid": 0,
+      "joint_invalid_fraction": 0.0,
+      "longest_joint_invalid_intervals": 0,
+      "channels": {
+        "meteo/TA002": {
+          "lc1_missing": 0,
+          "lb1_missing": 587,
+          "lc1_valid_where_lb1_missing": 587,
+          "source_index_counts": {
+            "2": 52117,
+            "3": 552,
+            "5": 35
+          }
+        },
+        "meteo/RH002": {
+          "lc1_missing": 0,
+          "lb1_missing": 587,
+          "lc1_valid_where_lb1_missing": 587,
+          "source_index_counts": {
+            "2": 51996,
+            "3": 552,
+            "5": 40,
+            "7": 116
+          }
+        },
+        "meteo/TD002": {
+          "lc1_missing": 0,
+          "lb1_missing": 587,
+          "lc1_valid_where_lb1_missing": 587,
+          "source_index_counts": {
+            "2": 51996,
+            "3": 552,
+            "5": 40,
+            "7": 116
+          }
+        },
+        "meteo/F010": {
+          "lc1_missing": 0,
+          "lb1_missing": 62,
+          "lc1_valid_where_lb1_missing": 62,
+          "source_index_counts": {
+            "2": 52642,
+            "3": 39,
+            "5": 23
+          }
+        },
+        "meteo/SWD": {
+          "lc1_missing": 0,
+          "lb1_missing": 169,
+          "lc1_valid_where_lb1_missing": 169,
+          "source_index_counts": {
+            "2": 52535,
+            "5": 24,
+            "1": 3,
+            "3": 74,
+            "7": 68
+          }
+        },
+        "radiation/SWD": {
+          "lc1_missing": 0,
+          "lb1_missing": 168,
+          "lc1_valid_where_lb1_missing": 168,
+          "source_index_counts": {
+            "2": 52535,
+            "5": 24,
+            "1": 3,
+            "3": 74,
+            "7": 68
+          }
+        },
+        "radiation/LWD": {
+          "lc1_missing": 0,
+          "lb1_missing": 743,
+          "lc1_valid_where_lb1_missing": 743,
+          "source_index_counts": {
+            "1": 725,
+            "2": 51960,
+            "5": 19
+          }
+        }
+      },
+      "physical": {
+        "rh_above_100": 2567,
+        "rh_below_0": 0,
+        "swd_negative": 25279,
+        "lwd_negative": 0
+      }
+    }
+  },
+  "boundary_201612": {
+    "meteo": {
+      "sha256": "d0317e39e92e5accb403ba440c05c0a91b269f5a76debcd37e5a256a89faf389",
+      "format": "hdf5",
+      "missing": {
+        "TA002": 0,
+        "RH002": 0,
+        "TD002": 0,
+        "F010": 0,
+        "SWD": 0
+      }
+    },
+    "radiation": {
+      "sha256": "f85ef8300608b1f47cbe11948db56ac72ee4ba6e178f1b419db217748dd2c030",
+      "format": "hdf5",
+      "missing": {
+        "SWD": 0,
+        "LWD": 0
+      }
+    }
+  }
+}

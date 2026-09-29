@@ -1,0 +1,131 @@
+{
+  "audit_id": "agc2019-public-data-identifiability-v0",
+  "status": "completed without holdout access",
+  "question": "Does the public AGC 2019 archive identify the compartment-specific physical parameters needed for strict GreenLight trajectory validation?",
+  "official_dataset": {
+    "doi": "10.4121/uuid:88d22c60-21b3-4ea8-90db-20249a5be2a7",
+    "figshare_version": 2,
+    "local_source_contract": "configs/agc2019_official_v2_source.json",
+    "holdout_start": "2020-04-01",
+    "holdout_read": false
+  },
+  "archive_inventory": {
+    "per_compartment": [
+      "CropParameters.csv",
+      "GreenhouseClimate.csv",
+      "GrodanSens.csv",
+      "LabAnalysis.csv",
+      "Production.csv",
+      "Resources.csv",
+      "TomQuality.csv"
+    ],
+    "shared": [
+      "Weather/Weather.csv",
+      "ReadMe.pdf",
+      "Economics.pdf"
+    ],
+    "compartments": [
+      "AICU",
+      "Automatoes",
+      "Digilog",
+      "IUACAAS",
+      "Reference",
+      "TheAutomators"
+    ]
+  },
+  "independently_reported_facility_facts": {
+    "source": "Hemming et al., Sensors 2020, 20(22):6430, https://doi.org/10.3390/s20226430",
+    "floor_area_m2": 96,
+    "paper_crop_area_m2": 76.8,
+    "roof_vent_opening_area_per_floor_area": 0.3,
+    "roof_vent_insect_net": true,
+    "heating_capacity_w_m2": {
+      "rail": 180,
+      "grow": 30
+    },
+    "equipment_summary": "two screens, six 1000 W HPS fixtures, eight multispectrum LED fixtures, fogging and CO2 supply"
+  },
+  "available_dynamic_observations": [
+    "outside weather including wind speed and direction",
+    "indoor temperature, relative humidity, and CO2",
+    "separate windward and leeward vent positions",
+    "rail and grow pipe process temperatures",
+    "screen positions and lighting channels",
+    "root-zone measurements, crop observations, resource use, production, and quality"
+  ],
+  "not_identified_by_public_archive_or_paper": [
+    "2019 roof slope, cover area, and greenhouse/lower-air heights",
+    "corridor and neighboring-compartment boundary temperatures and thermal coupling",
+    "structure and floor thermal masses",
+    "pipe geometry and thermal capacities",
+    "pressure coefficients, insect-net resistance, and mapping of windward/leeward openings to GreenLight ventilation",
+    "screen optical, leakage, and thermal exchange coefficients",
+    "lamp placement and electrical-to-radiative/convective heat partition",
+    "unambiguous area denominator across the paper and official ReadMe",
+    "team-specific crop initial state and cultivar response parameters"
+  ],
+  "empirical_identifiability_signal": {
+    "v7_pooled_temperature_rmse_c": 2.0349587744732447,
+    "v7_temperature_bias_c": {
+      "AICU": 0.08390637324780661,
+      "Automatoes": -1.7205876467748442,
+      "Digilog": -1.3223358810516814,
+      "IUACAAS": -1.7004482707254056,
+      "Reference": -1.1241279314911905,
+      "TheAutomators": -0.22673500621100967
+    },
+    "interpretation": "AICU is slightly warm while four failing compartments are cold. One global heat correction cannot remove these compartment-specific residuals without harming already passing compartments."
+  },
+  "decision": {
+    "continue_global_scalar_tuning": false,
+    "fit_team_specific_offsets_or_parameters": false,
+    "open_holdout": false,
+    "acceptable_current_claim": "pooled calibration-period climate replay under observed actions",
+    "unsupported_claims": [
+      "strict per-compartment validation",
+      "holdout validation",
+      "counterfactual actuator fidelity",
+      "a digital twin of the AGC compartments"
+    ],
+    "evidence_needed_to_resume_strict_gate": "independent compartment drawings/specifications or measured system-identification data that determine the missing physical parameters before holdout access"
+  },
+  "compartment_identity_2019": {
+    "TheAutomators": "301",
+    "AICU": "302",
+    "Reference": "303",
+    "IUACAAS": "304",
+    "Digilog": "305",
+    "Automatoes": "306"
+  },
+  "later_same_facility_footprint_evidence": {
+    "source": "WUR Report WPR-1329, https://edepot.wur.nl/661490",
+    "facts": [
+      "96 m2 equals 10 x 9.6 m",
+      "seven gutters including edge gutters",
+      "south exterior facade",
+      "east and west corridors",
+      "north neighboring compartment"
+    ],
+    "temporal_limit": "Published for a later experiment at the same facility; it constrains the footprint/topology but cannot certify unchanged 2019 heights, materials, or thermal conditions."
+  },
+  "residual_context_diagnostic": {
+    "pooled_tAir_rmse_c": {
+      "all_samples": 2.0349587744732447,
+      "after_first_24h_within_each_sequence": 1.858
+    },
+    "pooled_tAir_by_lighting": {
+      "lights_on": {
+        "samples": 868,
+        "bias_c": -0.62,
+        "rmse_c": 1.802
+      },
+      "lights_off": {
+        "samples": 332,
+        "bias_c": -2.127,
+        "rmse_c": 2.545
+      }
+    },
+    "interpretation": "Short-sequence state initialization contributes to error, but does not explain all failures: after the first 24 h Automatoes remains at 2.145 C and IUACAAS at 2.108 C. The larger lights-off cold error is consistent with unidentified storage and boundary heat exchange.",
+    "scoring_boundary": "This is diagnosis only. First-day observations remain in the frozen gate; no post-hoc warm-up exclusion is used to claim a pass."
+  }
+}

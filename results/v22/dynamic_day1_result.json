@@ -1,0 +1,48 @@
+{
+  "status": "passed_dynamic_prefix",
+  "scope": "four-unit 2017 weather annual event-driven integration pilot; fixed scripted actions; no LLM, no formal site, no real greenhouse validation",
+  "pilot_days": 1,
+  "max_seconds": 600,
+  "max_rss_bytes": 350000000,
+  "weather_year": 2017,
+  "event_log": [
+    {
+      "event": "campaign_open",
+      "clock": 0
+    },
+    {
+      "event": "start",
+      "unit": "0",
+      "clock": 0,
+      "run_index": 1,
+      "policy": {
+        "day_temperature_c": 22,
+        "night_temperature_c": 18,
+        "co2_target_ppm": 800,
+        "supplemental_light_hours": 12,
+        "vent_temperature_offset_c": 4,
+        "vent_rh_threshold_pct": 85
+      }
+    },
+    {
+      "event": "start",
+      "unit": "1",
+      "clock": 0,
+      "run_index": 1,
+      "policy": {
+        "day_temperature_c": 21,
+        "night_temperature_c": 17,
+        "co2_target_ppm": 700,
+        "supplemental_light_hours": 10,
+        "vent_temperature_offset_c": 4,
+        "vent_rh_threshold_pct": 85
+      }
+    }
+  ],
+  "trace_ticks": 288,
+  "trace_sha256": "051f034561470f40c7c8660cd4f794704ccf6f14650374ecc2d654a73b69096f",
+  "final_clock": 86400,
+  "elapsed_seconds": 113.16521181212738,
+  "peak_rss_kib_linux": 141600,
+  "completed_days": 1.0
+}

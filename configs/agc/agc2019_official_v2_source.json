@@ -1,0 +1,19 @@
+{
+  "title": "Autonomous Greenhouse Challenge, Second Edition (2019)",
+  "doi": "10.4121/uuid:88d22c60-21b3-4ea8-90db-20249a5be2a7",
+  "figshare_article_id": 12764777,
+  "figshare_version": 2,
+  "figshare_file_id": 24757220,
+  "archive_name": "AutonomousGreenhouseChallenge_edition2.7z",
+  "archive_bytes": 8418715,
+  "archive_md5": "2a0c7f3332881caef54ca8f4dc60c9a3",
+  "licence": "CC0",
+  "comparison": {
+    "common_files": 44,
+    "byte_identical": 1,
+    "csv_line_endings_only": 43,
+    "content_mismatch": 0,
+    "official_only": ["ReadMe.pdf"],
+    "mirror_only": ["README.md"]
+  }
+}

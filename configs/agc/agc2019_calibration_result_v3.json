@@ -1,0 +1,94 @@
+{
+  "candidate_id": "observed-pipe-capacity-v3-cdgh-0.20",
+  "gates": {
+    "co2InPpm": 361.0,
+    "rhIn": 8.5,
+    "tAir": 2.04
+  },
+  "maximum_implied_demands_w_m2": {
+    "grow": 29.359963013606954,
+    "rail": 117.51870715892265
+  },
+  "next_step_boundary": "Do not access holdout. Apply only independently source-derived model corrections and repeat the frozen calibration gate.",
+  "per_group": {
+    "AICU": {
+      "passes_all_gates": false,
+      "rmse": {
+        "co2InPpm": 295.07261623208575,
+        "rhIn": 3.687196968785601,
+        "tAir": 2.226453325640768
+      }
+    },
+    "Automatoes": {
+      "passes_all_gates": false,
+      "rmse": {
+        "co2InPpm": 301.76887972913516,
+        "rhIn": 4.402210579297563,
+        "tAir": 2.0702886668863685
+      }
+    },
+    "Digilog": {
+      "passes_all_gates": false,
+      "rmse": {
+        "co2InPpm": 183.58108989235984,
+        "rhIn": 5.19611203000927,
+        "tAir": 2.046839869004607
+      }
+    },
+    "IUACAAS": {
+      "passes_all_gates": false,
+      "rmse": {
+        "co2InPpm": 157.5941040144249,
+        "rhIn": 5.659360997950519,
+        "tAir": 2.297076664419385
+      }
+    },
+    "Reference": {
+      "passes_all_gates": false,
+      "rmse": {
+        "co2InPpm": 220.2992965996744,
+        "rhIn": 5.635493610663665,
+        "tAir": 2.1156080886851587
+      }
+    },
+    "TheAutomators": {
+      "passes_all_gates": false,
+      "rmse": {
+        "co2InPpm": 216.1510902048532,
+        "rhIn": 3.8672890984758985,
+        "tAir": 2.137516103908248
+      }
+    },
+    "pooled": {
+      "passes_all_gates": false,
+      "rmse": {
+        "co2InPpm": 231.23872157792505,
+        "rhIn": 4.884223101371733,
+        "tAir": 2.145296223267061
+      }
+    }
+  },
+  "physical_violations": {
+    "co2InPpm": 0,
+    "rhIn": 0,
+    "tAir": 0
+  },
+  "residual_diagnosis": {
+    "interpretation": "The sign reversal motivated an audit of lighting area normalization; it is diagnostic evidence, not a fitted correction.",
+    "lights_off": {
+      "n": 332,
+      "tAir_bias_c": -1.971,
+      "tAir_rmse_c": 2.486
+    },
+    "lights_on": {
+      "n": 868,
+      "tAir_bias_c": 0.625,
+      "tAir_rmse_c": 2.0
+    }
+  },
+  "result_sha256": "04f1a1bfe08e186b76faae1c0b83ff6e2a764453884c461faea77d631e2e42dd",
+  "sample_count": 1200,
+  "sequence_count": 21,
+  "solver_completion_fraction": 1.0,
+  "status": "failed frozen full-calibration gate; holdout remains unopened"
+}

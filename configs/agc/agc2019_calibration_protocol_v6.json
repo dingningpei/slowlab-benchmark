@@ -1,0 +1,49 @@
+{
+  "protocol_id": "agc2019-observed-boundary-initialization-v6",
+  "status": "frozen before v6 trajectory outcomes",
+  "holdout_start": "2020-04-01",
+  "holdout_policy": "No outcome or trajectory at or after holdout_start may be read until the full calibration gate passes and a final candidate is frozen.",
+  "predecessor_result": "v5 pooled temperature RMSE was 2.061 C; AICU and TheAutomators passed, while four compartments failed. Capacity, RH, CO2, solver, and physical checks passed.",
+  "candidate": "Reuse the frozen v5 cDgh=0.15, lPipe=1.3375, lGroPipe=0.56 candidate and v1 floor-normalized lighting without parameter refitting.",
+  "fixed_initialization_policy": {
+    "observed_indoor_air_states": [
+      "tAir",
+      "tCan",
+      "tTop",
+      "tThScr",
+      "tBlScr",
+      "tFlr",
+      "tLamp",
+      "tIntLamp",
+      "tLed"
+    ],
+    "observed_outdoor_air_states": [
+      "tCovE"
+    ],
+    "indoor_outdoor_midpoint_states": [
+      "tCovIn"
+    ],
+    "observed_humidity_and_co2_states": [
+      "vpAir",
+      "co2Air"
+    ],
+    "observed_pipe_states": [
+      "tPipe",
+      "tGroPipe"
+    ],
+    "unchanged_unobserved_states": [
+      "soil layers",
+      "crop carbon states other than the existing frozen LAI initialization"
+    ],
+    "reason": "Short replay segments must estimate fast thermally coupled states at entry. Indoor- and outdoor-adjacent temperatures provide fixed boundary-consistent values; no state value is optimized against subsequent trajectory error.",
+    "root_zone_boundary": "Observed rockwool slab temperature is not assigned to GreenLight soil layers because the elevated slab is not the greenhouse floor or deep soil."
+  },
+  "calibration_check": "Run the same 21 pre-holdout sequences and apply the frozen gate pooled and to every compartment.",
+  "eligibility": {
+    "solver_completion_fraction": 1.0,
+    "sampled_physical_violations": 0,
+    "maximum_implied_active_rail_pipe_demand_w_m2": 180.0,
+    "maximum_implied_active_grow_pipe_demand_w_m2": 30.0
+  },
+  "outcome_rule": "If the full calibration gate fails, do not access holdout and do not tune initial temperatures."
+}

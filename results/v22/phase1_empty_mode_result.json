@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "scope": "active 300s then empty 600s; fixed weather; no full cleanup simulated",
+  "checks": [
+    {
+      "clock": 22200.0,
+      "zero_crop_flux_max": 4.9960036108132044e-15,
+      "delivered_heat_w_m2": 48.0
+    },
+    {
+      "clock": 22500.0,
+      "zero_crop_flux_max": 4.9960036108132044e-15,
+      "delivered_heat_w_m2": 48.0
+    }
+  ],
+  "facility_continuity_at_stop": true,
+  "premature_replant_rejected": true,
+  "elapsed_seconds": 7.982332666986622,
+  "source_sha256": "c3dd46ce7864e58df9a47bea4ce6722012ff1e8ced686546efc546cd80f115a5",
+  "limitations": [
+    "Replant transition tested separately with synthetic boundary state, not a two-day physical rollout.",
+    "Resource ledger and multicompartment scheduler not implemented."
+  ]
+}

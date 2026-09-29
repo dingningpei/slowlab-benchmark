@@ -1,0 +1,7 @@
+{
+  "scope": "two independent replicas, same executed prefix, different unexecuted future command plans",
+  "state_count": 28,
+  "prefix_steps": 2,
+  "exactly_equal": true,
+  "limitation": "adapter boundary only; not the complete future weather/agent pipeline"
+}

@@ -1,0 +1,71 @@
+{
+  "status": "evidence_only_not_a_greenlight_override",
+  "source": "Hemming et al., Sensors 2020, 20(22):6430, section 2.1, https://doi.org/10.3390/s20226430",
+  "floor_area_m2": 96,
+  "paper_crop_growing_area_m2": 76.8,
+  "official_readme_growing_area_m2": 62.5,
+  "area_basis_status": "unresolved_conflict",
+  "roof_vent_opening_area_per_floor_area": 0.3,
+  "roof_vent_insect_net": true,
+  "hps_lamps": 6,
+  "hps_lamp_rated_w": 1000,
+  "hps_capacity_umol_m2_s": 100,
+  "led_lamps": 8,
+  "led_max_total_umol_m2_s": 109,
+  "led_max_far_red_umol_m2_s": 12,
+  "led_requires_hps_power": true,
+  "lighting_geometry_status": "The paper identifies six HPS fixtures and eight Elixia multispectrum LED fixtures but does not report a GreenLight-compatible top-lamp/interlight geometry or fixture heat partition. Do not map the LEDs to GreenLight interlighting solely because a second lamp channel is available.",
+  "rail_pipe_peak_w_m2": 180,
+  "grow_pipe_peak_w_m2": 30,
+  "energy_screen_product": "LUXOUS 1547 D FR",
+  "blackout_screen_product": "OBSCURA 9950 FR W",
+  "fogging_max_g_m2_h": 330,
+  "co2_supply_max_g_m2_h": 15,
+  "processed_par_coefficients_from_official_readme_not_independent_measurements": {
+    "cover_transmission": 0.5,
+    "energy_screen_transmission": 0.75,
+    "blackout_screen_transmission": 0.02
+  },
+  "processed_electricity_coefficients_w_m2_from_official_readme": {
+    "hps": 81.0,
+    "led_blue": 7.27,
+    "led_red": 25.3,
+    "led_far_red": 6.23,
+    "led_white": 22.72,
+    "area_denominator": "not explicitly resolved against 96 m2 floor, 76.8 m2 paper crop area, and 62.5 m2 ReadMe growing area"
+  },
+  "greenlight_default_gap_audit": "scripts/audit_agc2019_greenlight_parameters.py",
+  "unresolved_for_greenlight": [
+    "2019 roof slope, cover area, and greenhouse/lower-air heights (the later same-facility footprint is 10 x 9.6 m)",
+    "thermal coupling to the south exterior facade, east/west corridors, and north neighboring compartment",
+    "structure, floor, and pipe thermal capacities",
+    "compartment orientation/pressure coefficients beyond the reported south facade, insect-net resistance, and two-window mapping",
+    "screen optical, leakage, and thermal coefficients",
+    "HPS and LED placement, electrical-to-radiative conversion, fixture heat partition, and floor/crop area denominator",
+    "irrigation pump flow and relevant area denominator",
+    "crop initial state and cultivar response parameters"
+  ],
+  "safety_note": "Do not copy these fields individually over GreenLight's default 40000 m2 facility and claim a calibrated AGC replay.",
+  "compartment_identity_2019": {
+    "source": "Hemming et al., Sensors 2020, 20(22):6430, https://doi.org/10.3390/s20226430",
+    "mapping": {
+      "TheAutomators": "301",
+      "AICU": "302",
+      "Reference": "303",
+      "IUACAAS": "304",
+      "Digilog": "305",
+      "Automatoes": "306"
+    }
+  },
+  "later_same_facility_footprint_evidence": {
+    "source": "WUR Report WPR-1329, Licht en groei: duurzaam sturen met licht I, https://edepot.wur.nl/661490",
+    "reported_floor_dimensions_m": [
+      10.0,
+      9.6
+    ],
+    "reported_floor_area_m2": 96.0,
+    "gutter_count_including_edge_gutters": 7,
+    "boundary_topology": "one exterior facade on the south, corridors on east and west, and a neighboring compartment on the north",
+    "use_boundary": "This later report is strong evidence for the footprint and block topology of WUR Bleiswijk 96 m2 compartments, but it does not establish that 2019 heights, materials, corridor climate, or thermal properties were unchanged."
+  }
+}

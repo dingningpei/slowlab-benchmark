@@ -1,0 +1,65 @@
+{
+  "status": "passed_four_unit_structural_audit",
+  "scope": "fixed-policy runtime, clock, lifecycle and accounting structure only; no independent tick trace, empirical greenhouse validation or LLM benchmark",
+  "result_sha256": "045940258fe8c9e59c789625db13d969c18539f2913203fdf92f715096fc088a",
+  "progress_sha256": "8e645219b9ba64a418c6ea4ea3a3cd36b9f1a162e38b4bd734615e522c2a352d",
+  "contract_sha256": "ad55ca8a771cdc46de6e90500a9e7c74b34ab85e34b2ea702ba2d9e7dfd9143a",
+  "days": 18,
+  "steps": 5184,
+  "wall_seconds": 480.6275047319941,
+  "peak_rss_bytes": 153169920,
+  "phase_days": {
+    "0": {
+      "active": 16,
+      "cleanup": 2,
+      "idle": 0
+    },
+    "1": {
+      "active": 18,
+      "cleanup": 0,
+      "idle": 0
+    },
+    "2": {
+      "active": 18,
+      "cleanup": 0,
+      "idle": 0
+    },
+    "3": {
+      "active": 18,
+      "cleanup": 0,
+      "idle": 0
+    }
+  },
+  "events": [
+    [
+      "0",
+      "plant",
+      0
+    ],
+    [
+      "1",
+      "plant",
+      0
+    ],
+    [
+      "2",
+      "plant",
+      0
+    ],
+    [
+      "3",
+      "plant",
+      0
+    ],
+    [
+      "0",
+      "stop",
+      14
+    ],
+    [
+      "0",
+      "replant",
+      16
+    ]
+  ]
+}

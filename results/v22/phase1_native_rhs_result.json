@@ -1,0 +1,137 @@
+{
+  "status": "passed",
+  "scope": "fixed-weather development fixture, not annual or empirical validation",
+  "thresholds": {
+    "derivative_rtol": 1e-10,
+    "derivative_atol": 1e-10,
+    "state_rtol": 1e-06,
+    "state_atol": 0.001,
+    "ledger_rtol": 1e-05,
+    "ledger_atol": 1e-09
+  },
+  "comparisons": [],
+  "derivatives": [
+    {
+      "mode": "active",
+      "cases": 5,
+      "max_abs_difference": 0.0,
+      "source_sha256": "af58a35d4562622f18a9b8781bedec96f9a79377757f993b08c05471e966bb92",
+      "compiler": "Apple clang version 21.0.0 (clang-2100.3.34.2)",
+      "flags": [
+        "-O2",
+        "-fno-fast-math",
+        "-ffp-contract=off",
+        "-shared",
+        "-fPIC"
+      ]
+    },
+    {
+      "mode": "empty",
+      "cases": 5,
+      "max_abs_difference": 0.0,
+      "source_sha256": "7be0c3142914d88ae3686b16b89210fd053bddabc987a71700b56b57794c3aa1",
+      "compiler": "Apple clang version 21.0.0 (clang-2100.3.34.2)",
+      "flags": [
+        "-O2",
+        "-fno-fast-math",
+        "-ffp-contract=off",
+        "-shared",
+        "-fPIC"
+      ]
+    }
+  ],
+  "steps": 600,
+  "max_abs_state_difference": 0.0,
+  "reference_step_seconds": 34.07284416735638,
+  "native_step_seconds": 2.6173393537756056,
+  "speedup": 13.018122437277796,
+  "ledgers": [
+    {
+      "per_m2": {
+        "heat_kwh_m2": 0.09600000000000006,
+        "light_kwh_m2": 0.06666666666666667,
+        "co2_kg_m2": 0.004500000000000001,
+        "harvest_kg_m2": 8.010795974274995e-117,
+        "transpiration_kg_m2": 0.015628010192361902,
+        "days": 2.083333333333359
+      },
+      "by_phase_per_m2": {
+        "active": {
+          "heat_kwh_m2": 0.09600000000000006,
+          "light_kwh_m2": 0.06666666666666667,
+          "co2_kg_m2": 0.004500000000000001,
+          "harvest_kg_m2": 8.010795974274995e-117,
+          "transpiration_kg_m2": 0.015628010192361902,
+          "days": 0.08333333333333336
+        },
+        "cleanup": {
+          "heat_kwh_m2": 5.963180387392602e-19,
+          "light_kwh_m2": 0.0,
+          "co2_kg_m2": 0.0,
+          "harvest_kg_m2": 0.0,
+          "transpiration_kg_m2": 0.0,
+          "days": 2.0000000000000253
+        },
+        "idle": {
+          "heat_kwh_m2": 0.0,
+          "light_kwh_m2": 0.0,
+          "co2_kg_m2": 0.0,
+          "harvest_kg_m2": 0.0,
+          "transpiration_kg_m2": 0.0,
+          "days": 0.0
+        }
+      },
+      "event_cost_eur_m2": 4.5,
+      "synthetic_margin_eur": -433.5872,
+      "occupied_m2_days": 200.00000000000244,
+      "scope": "single-compartment accrued ledger; not final campaign settlement"
+    },
+    {
+      "per_m2": {
+        "heat_kwh_m2": 0.09600000000000006,
+        "light_kwh_m2": 0.06666666666666667,
+        "co2_kg_m2": 0.004500000000000001,
+        "harvest_kg_m2": 8.010795974274995e-117,
+        "transpiration_kg_m2": 0.015628010192361902,
+        "days": 2.083333333333359
+      },
+      "by_phase_per_m2": {
+        "active": {
+          "heat_kwh_m2": 0.09600000000000006,
+          "light_kwh_m2": 0.06666666666666667,
+          "co2_kg_m2": 0.004500000000000001,
+          "harvest_kg_m2": 8.010795974274995e-117,
+          "transpiration_kg_m2": 0.015628010192361902,
+          "days": 0.08333333333333336
+        },
+        "cleanup": {
+          "heat_kwh_m2": 5.963180387392602e-19,
+          "light_kwh_m2": 0.0,
+          "co2_kg_m2": 0.0,
+          "harvest_kg_m2": 0.0,
+          "transpiration_kg_m2": 0.0,
+          "days": 2.0000000000000253
+        },
+        "idle": {
+          "heat_kwh_m2": 0.0,
+          "light_kwh_m2": 0.0,
+          "co2_kg_m2": 0.0,
+          "harvest_kg_m2": 0.0,
+          "transpiration_kg_m2": 0.0,
+          "days": 0.0
+        }
+      },
+      "event_cost_eur_m2": 4.5,
+      "synthetic_margin_eur": -433.5872,
+      "occupied_m2_days": 200.00000000000244,
+      "scope": "single-compartment accrued ledger; not final campaign settlement"
+    }
+  ],
+  "elapsed_seconds": 53.18966766598169,
+  "hashes": {
+    "slowlab/v22_native_rhs.py": "857afab2c619a1e193f7fdaf2321eb8bd393d7bede9c2df7e730a7134ab092a4",
+    "slowlab/v22_greenlight_reuse.py": "dd7e046a6b6c1cf4b0b3df90aae8f61875cf8bff04c026b5078b64b2677004f9",
+    "scripts/check_v22_native_rhs.py": "e07c3b19a0a1d15b9db50c4656001d9350208524c65a1910f9feb90b29f5f31b",
+    "configs/v22_task_contract_v1.json": "d1c4d9a331e7806ba920a23cc3b40d2803723c426a5b7d7babe37c9211512b71"
+  }
+}

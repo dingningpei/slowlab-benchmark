@@ -1,0 +1,45 @@
+{
+  "protocol_id": "agc2019-observed-pipe-geometry-calibration-v1",
+  "status": "frozen after one semantic-correction baseline and before the comparative grid",
+  "holdout_start": "2020-04-01",
+  "holdout_policy": "No outcome or trajectory at or after holdout_start may be read until one final candidate is frozen.",
+  "motivation": "The official ReadMe defines PipeLow and PipeGrow as raw process temperatures, distinct from *_min_sp/vip setpoints. Replaying them exposed that AGC pipe geometry is unavailable and the inherited GreenLight lPipe is an analogue assumption.",
+  "previously_observed_baseline": {
+    "cDgh": 0.20,
+    "lPipe_m_per_m2": 1.3375,
+    "search_window_pooled_rmse": {"tAir": 2.1676847156563612, "rhIn": 5.098055849685694, "co2InPpm": 172.46206272346654}
+  },
+  "search_sequences": [
+    "AICU:2020-03-05:4d",
+    "Automatoes:2020-03-05:4d",
+    "Digilog:2020-03-05:4d",
+    "IUACAAS:2020-03-05:4d",
+    "Reference:2020-03-05:4d",
+    "TheAutomators:2020-03-05:4d"
+  ],
+  "grid": {
+    "cDgh": [0.15, 0.20, 0.25],
+    "lPipe_m_per_m2": [0.66875, 1.003125, 1.3375],
+    "candidate_count": 9,
+    "interpretation": "cDgh is the total screened-vent discharge coefficient; lPipe is an effective rail-pipe exchange length, not a claim about unreported installed geometry."
+  },
+  "fixed_parameters": {
+    "cLeakage": 0.00003,
+    "railTrackTau_seconds_for_off_state_continuity_only": 300.0,
+    "growTrackTau_seconds_for_off_state_continuity_only": 300.0,
+    "initial_lai": 3.0
+  },
+  "eligibility": {
+    "solver_completion_fraction": 1.0,
+    "sampled_physical_violations": 0,
+    "maximum_implied_active_rail_pipe_demand_w_m2": 180.0,
+    "maximum_implied_active_grow_pipe_demand_w_m2": 30.0
+  },
+  "selection_objective": {
+    "primary": "minimize the maximum RMSE divided by its frozen gate across tAir, rhIn, and co2InPpm for pooled data and every compartment",
+    "tie_breaker": "minimize the mean pooled normalized RMSE across the three channels",
+    "frozen_rmse_gates": {"tAir": 2.04, "rhIn": 8.5, "co2InPpm": 361.0}
+  },
+  "full_calibration_check": "Run exactly one selected candidate on all 21 continuous calibration sequences and require the frozen gate pooled and for every compartment before holdout access.",
+  "claim_boundary": "Observed-pipe replay is valid only for historical trajectory validation. A separate actuator model is required for counterfactual heating control."
+}

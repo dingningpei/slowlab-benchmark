@@ -8,17 +8,20 @@ import argparse, json, csv, sys, pathlib
 import numpy as np
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
-from slowlab import SlowLabEnv, TASKS
-from slowlab.registry import make_agent, available
+from slowlab import CORE_TASK_KEYS, SlowLabEnv, TASKS
+from slowlab.registry import describe, make_agent, available
 
 
 def run_episode(task_name: str, agent_name: str, seed: int) -> dict:
     env = SlowLabEnv(TASKS[task_name], seed=seed)
     agent = make_agent(agent_name)
+    specification = describe(agent_name)
     x = agent.run(env)
     r = env.submit_recommendation(x, agent_name, probes=getattr(agent, "probes", None))
     return {
         "task": task_name, "agent": agent_name, "seed": seed,
+        "protocol_version": specification["protocol_version"],
+        "privileged": specification["privileged"],
         "simple_regret": r.simple_regret,          # Outcome
         "campaign_cash": r.campaign_cash,
         "cumulative_regret": r.cumulative_regret,  # Outcome
@@ -38,17 +41,20 @@ def run_episode(task_name: str, agent_name: str, seed: int) -> dict:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--seeds", type=int, default=30)
-    ap.add_argument("--tasks", nargs="+", default=["T1", "T2", "T3", "T4"])
-    # The four reference points. The rep2 / transfer pair is a *result*, not a scale
+    ap.add_argument("--seed-start", type=int, default=0)
+    ap.add_argument("--tasks", nargs="+", default=list(CORE_TASK_KEYS),
+                    help="core tasks by default; pass Screen explicitly for experimental runs")
+    # The three deployable reference policies. The rep2 / transfer pair is a *result*, not a scale
     # marker, and is not run here.
     ap.add_argument("--agents", nargs="+",
-                    default=["random_spread", "classical_doe", "gp_ucb_rep1"])
+                    default=["random_spread", "split_plot_doe", "constraint_aware_batch_bo"])
     ap.add_argument("--out", type=str, default="results")
     args = ap.parse_args()
 
     out = pathlib.Path(args.out); out.mkdir(parents=True, exist_ok=True)
     rows = [run_episode(t, a, s)
-            for t in args.tasks for a in args.agents for s in range(args.seeds)]
+            for t in args.tasks for a in args.agents
+            for s in range(args.seed_start, args.seed_start + args.seeds)]
 
     with open(out / "episodes.csv", "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=list(rows[0])); w.writeheader(); w.writerows(rows)

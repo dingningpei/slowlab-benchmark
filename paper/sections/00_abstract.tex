@@ -1,30 +1,19 @@
-\providecommand{\pending}[1]{\textcolor{gray}{\textsc{#1}}}
 \begin{abstract}
-Benchmarks for automated experimental design make experiments instantaneous, free, and
-infinitely repeatable. Real experiments are none of these. We introduce \slowlab, an
-executable benchmark under four conditions that hold at once: feedback is slow, noise is
-irreducible, trials are priced in the objective's own units, and commitments cannot be
-rolled back. An agent runs a greenhouse --- it designs experiments, commits them, waits out
-a growing cycle, and repeats. Ground truth is a published mechanistic crop model, so the
-difficulty is not ours to tune, and everything is denominated in net profit per square metre
-per day. Beside realised regret we report the regret a perfect reasoner would still carry
-given the same design, computed from an instance distribution no agent sees. The gap
-separates a campaign that could not have answered the question from one that could and did
-not, and scores an agent against what was achievable rather than against a baseline we
-happened to implement.
-
-Across five models, four tasks and $800$ episodes, no arm reaches the regret a perfect
-reasoner would carry having run no experiment at all, and the campaigns fail at the design
-and at the decision separately. $99\%$ of six-factor screens cannot separate the effects
-they were commissioned to separate, because the median design replicates two distinct
-treatments across the whole facility whatever the task needs: under a hard parallelism cap
-precision and coverage compete for the same physical units, and these agents buy precision.
-This is the opposite of the failure we expected. On the two higher-dimensional tasks the
-recommendations then use a twentieth of what even those designs did support, and in $44\%$
-of episodes the first cycle of data leaves the recommendation worse than the one the model
-gave for free. Supplying standard tools moves the two measures in opposite directions ---
-the designs improve and the campaigns end worse in sixteen of twenty cells, because the
-inference tool is fitted to the agent's own design, inherits its deficiency, and is deferred
-to in proportion to how wrong it is. Under these conditions an agent cannot afford the cycle
-it would take to find that out.
+Scientific-agent benchmarks rarely test whether an agent can allocate a fixed set of
+physical units, use evidence that arrives during long-running trials, and commit to a
+final operating recommendation whose experimental cost is paid in the objective itself.
+We introduce \slowlab, an executable controlled-environment horticulture benchmark with
+split-plot controls, capped parallel capacity, correlated noise, irreversible 210-day
+crop cycles, time-appropriate interim observations, and separate design and
+recommendation actions. We evaluate final and cumulative regret and use a common-history
+Bayes-risk decomposition to separate what an executed design supports from how a reader
+uses that evidence. Across 928 episodes under a frozen protocol, neither design nor
+inference aids significantly changed final regret for Luna on 56 paired sites, and an
+inference aid did not improve Sol on 24 further sites. A fresh 384-episode extension found
+the same null result at twice the observation noise and a harmful design-aid effect at half
+noise ($\Delta=0.0113$, 95\% CI $[0.0053,0.0184]$, adjusted $p=0.0096$). In a prospective
+post-primary 288-episode same-site extension, the inference aid showed no detectable change for Luna, was
+directionally favorable but uncertain for DeepSeek V4.1 Flash, and reduced Qwen 3.8 27B
+final regret by $0.0146$ (95\% CI $[0.0091,0.0201]$; BH $p<0.001$), showing that tool value
+is model dependent under the tested interfaces.
 \end{abstract}

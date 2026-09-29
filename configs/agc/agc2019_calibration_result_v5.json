@@ -1,0 +1,117 @@
+{
+  "candidate_id": "floor-normalized-lighting-v5-cdgh-0.15",
+  "gates": {
+    "co2InPpm": 361.0,
+    "rhIn": 8.5,
+    "tAir": 2.04
+  },
+  "lai2_diagnostic": "Lowering LAI from 3 to 2 on the shared search window improved temperature RMSE only modestly and materially shifted RH; LAI scanning is not pursued as the next correction.",
+  "maximum_implied_demands_w_m2": {
+    "grow": 29.303696940760858,
+    "rail": 117.95235981282757
+  },
+  "next_step_boundary": "Do not access holdout. Correct the acknowledged incomplete internal thermal-state initialization without fitting values to outcomes.",
+  "per_group": {
+    "AICU": {
+      "bias": {
+        "co2InPpm": 183.00581865369344,
+        "rhIn": -0.3924402048337454,
+        "tAir": 0.02286121052162471
+      },
+      "passes_all_gates": true,
+      "rmse": {
+        "co2InPpm": 346.9788389642568,
+        "rhIn": 3.3886179153629965,
+        "tAir": 1.3965629230940164
+      }
+    },
+    "Automatoes": {
+      "bias": {
+        "co2InPpm": 124.7938038316277,
+        "rhIn": -0.3051955882848885,
+        "tAir": -1.7793779422476073
+      },
+      "passes_all_gates": false,
+      "rmse": {
+        "co2InPpm": 330.07245181464157,
+        "rhIn": 4.060999872629613,
+        "tAir": 2.2894160742489356
+      }
+    },
+    "Digilog": {
+      "bias": {
+        "co2InPpm": 103.77657940130048,
+        "rhIn": 3.2252107606246176,
+        "tAir": -1.3382210765124618
+      },
+      "passes_all_gates": false,
+      "rmse": {
+        "co2InPpm": 220.89039829121137,
+        "rhIn": 6.024070447876069,
+        "tAir": 2.204374743108513
+      }
+    },
+    "IUACAAS": {
+      "bias": {
+        "co2InPpm": -60.95279068837059,
+        "rhIn": -1.9734367872498766,
+        "tAir": -1.7551603634236093
+      },
+      "passes_all_gates": false,
+      "rmse": {
+        "co2InPpm": 134.1909023427501,
+        "rhIn": 4.898553226769265,
+        "tAir": 2.461501232799768
+      }
+    },
+    "Reference": {
+      "bias": {
+        "co2InPpm": 75.78077684825361,
+        "rhIn": -2.7022244032860816,
+        "tAir": -1.162137707735786
+      },
+      "passes_all_gates": false,
+      "rmse": {
+        "co2InPpm": 224.8103520278922,
+        "rhIn": 4.883559095075057,
+        "tAir": 2.0988920802138065
+      }
+    },
+    "TheAutomators": {
+      "bias": {
+        "co2InPpm": 132.71315176945942,
+        "rhIn": 0.09616680250767509,
+        "tAir": -0.25863695435937933
+      },
+      "passes_all_gates": true,
+      "rmse": {
+        "co2InPpm": 251.495296389781,
+        "rhIn": 4.0075842170962455,
+        "tAir": 1.5952941247992531
+      }
+    },
+    "pooled": {
+      "bias": {
+        "co2InPpm": 89.33965127069091,
+        "rhIn": -0.47281962723722953,
+        "tAir": -1.0791231033733548
+      },
+      "passes_all_gates": false,
+      "rmse": {
+        "co2InPpm": 255.08948239641055,
+        "rhIn": 4.66904564315596,
+        "tAir": 2.0607924883599242
+      }
+    }
+  },
+  "physical_violations": {
+    "co2InPpm": 0,
+    "rhIn": 0,
+    "tAir": 0
+  },
+  "result_sha256": "e26ad6a6ffe32c7238d6d7bd73b090e6a4c14e7339b104c2b8d804a6597bb3b2",
+  "sample_count": 1200,
+  "sequence_count": 21,
+  "solver_completion_fraction": 1.0,
+  "status": "failed frozen full-calibration temperature gate; holdout remains unopened"
+}

@@ -1,0 +1,51 @@
+{
+  "id": "slowlab-v22-private-weather-generator-candidate-v2",
+  "status": "phase1_candidate_not_fitted_not_confirmatory_frozen",
+  "source_partition": "configs/v22_weather_partition_v0.json",
+  "fit_years": [
+    2017,
+    2018
+  ],
+  "selection_year": 2019,
+  "untouched_weather_diagnostic_year": 2020,
+  "cadence_seconds": 600,
+  "campaign_days": 365,
+  "channels": [
+    "outdoor_temperature_c",
+    "outdoor_dewpoint_c",
+    "wind_m_s",
+    "shortwave_w_m2",
+    "downward_longwave_w_m2"
+  ],
+  "joint_generation": {
+    "daily_level": "Fit a shared two-harmonic day-of-year mean and regularized multivariate VAR(1) to five daily aggregates using only fit years; resample or draw innovations jointly, never independently by channel.",
+    "intraday_shape": "Use two same-season source-day analogues within plus/minus 14 calendar days, selected without replacement among the three closest daily shortwave totals, and blend their five-channel 10-minute profiles with second-analogue weight uniformly 0.20-0.40. Recenter temperature/dewpoint/wind/longwave; scale shortwave by bounded 0.85-1.10 cloudiness factor derived from latent solar level. No post-hoc output clipping.",
+    "continuity": "Blend non-solar fields across midnight with a 60-minute transition; preserve 10-minute cadence and solar nighttime zeros.",
+    "hard_support": "Reject nonfinite values, negative wind or radiation, dewpoint more than 1 C above temperature, shortwave above 1500 W/m2, and longwave outside 100-600 W/m2; do not silently clip a generated path into eligibility.",
+    "selection": "Tune only fixed generator hyperparameters on 2019 weather diagnostics, without using crop or agent outcomes. Document every candidate and selection rule before opening 2020 simulator results."
+  },
+  "similarity_audit": {
+    "reference_years": [
+      2017,
+      2018,
+      2019,
+      2020
+    ],
+    "normalization": "Per-channel standard deviation fitted from 2017-2018 only; freeze with generator hash.",
+    "daily_window_rows": 144,
+    "daily_window_stride_rows": 144,
+    "six_hour_window_rows": 36,
+    "six_hour_window_stride_rows": 36,
+    "exact_rmse_max": 1e-12,
+    "near_duplicate_standardized_rmse_below": 0.08,
+    "method": "For every generated 24h and 6h window compare against every source window of matching length using all five channels. Reject the complete generated site if any distance is below threshold; record counts and nearest distance, not just accepted sites. Development diagnostic permits at most 20 sequential attempts and reports every physical-support and similarity rejection; no crop outcomes enter selection.",
+    "source_halo": "Exclude the prior-year initial 10-minute bootstrap from fit and report it separately."
+  },
+  "private_seeds": {
+    "generation": "Generate only after generator implementation, fit statistics, exclusions and similarity audit are frozen.",
+    "storage": "Outside Git and provider payloads until formal matrix lock; never encode in public campaign_id.",
+    "commitment": "Record SHA-256 of a salted canonical seed list and generator/config hashes before execution; reveal list and salt only after final matrix lock."
+  },
+  "claims": "Generated paths are private reality-informed simulation forcing, not measured or validated greenhouse trajectories.",
+  "revision_from": "candidate-v1 fixed physical shortwave support (0 of first 7 attempts failed), but 6 of first 7 support-valid candidates failed the unchanged 6h non-replay threshold. v2 jointly blends two similar-season/sunlight analogue days rather than lowering the threshold."
+}

@@ -1,0 +1,66 @@
+{
+  "version": 2,
+  "scope": "AGC 2019 irrigation counter and Grodan root-zone observations",
+  "source_dataset": {
+    "title": "Autonomous Greenhouse Challenge, Second Edition (2019)",
+    "doi": "10.4121/uuid:88d22c60-21b3-4ea8-90db-20249a5be2a7",
+    "official_release_checksum_status": "Version 2 MD5 verified; 43 common CSVs differ only by CRLF-to-LF conversion; one common file byte-identical"
+  },
+  "time": {
+    "excel_epoch": "1899-12-30T00:00:00",
+    "timezone": "not declared by the source; timestamps remain timezone-naive",
+    "sample_interval_minutes": 5
+  },
+  "irrigation_counter": {
+    "field": "Cum_irr",
+    "unit": "L/m2",
+    "scheduled_reset_hours_excel_clock": [0.5833333333333334, 2.0833333333333335],
+    "reset_tolerance_minutes": 3,
+    "discard_before_first_observed_reset": true,
+    "missing_block_rule": "retain the last valid counter and difference against the first resumed reading",
+    "unscheduled_decrease_rule": "flag as counter correction, retain the previous high-water mark, and do not create an irrigation event",
+    "boundary_rule": "report first and final campaign days separately from interior-day reconciliation"
+  },
+  "root_zone_sensor_bounds": {
+    "WC_slab1_pct": [0.01, 100.0],
+    "WC_slab2_pct": [0.01, 100.0],
+    "EC_slab1_ds_m": [0.01, 20.0],
+    "EC_slab2_ds_m": [0.01, 20.0],
+    "t_slab1_c": [-5.0, 60.0],
+    "t_slab2_c": [-5.0, 60.0]
+  },
+  "measured_climate_bounds": {
+    "Tair_c": [0.0, 60.0],
+    "Rhair_pct": [0.01, 100.0],
+    "CO2air_ppm": [0.01, 5000.0]
+  },
+  "digilog_zero_audit": {
+    "zero_rows": 28,
+    "zero_values": 98,
+    "by_field": {
+      "WC_slab1": 24,
+      "WC_slab2": 23,
+      "EC_slab1": 25,
+      "EC_slab2": 26
+    },
+    "simultaneous_failure_block": {
+      "start": "2020-01-16T14:19:59.808000",
+      "end": "2020-01-16T16:20:00.384000",
+      "rows": 25
+    },
+    "decision": "zero WC/EC values are equipment-failure sentinels and are retained as missing with field-level flags"
+  },
+  "production_date_repair": {
+    "compartment": "Reference",
+    "source_excel_day": 43510,
+    "corrected_excel_day": 43875,
+    "reason": "only out-of-campaign harvest; exactly 365 days before 2020-02-14, matching the first harvest date in another compartment",
+    "rule": "retain raw serial, add corrected serial and explicit source_year_offset_plus_365_days flag"
+  },
+  "not_covered": [
+    "requested-setpoint semantics and sentinels",
+    "fruit-quality metric semantics",
+    "imputation",
+    "causal crop-response fitting"
+  ]
+}

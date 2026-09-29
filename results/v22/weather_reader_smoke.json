@@ -1,0 +1,63 @@
+{
+  "status": "passed_bounded_dynamic_weather_smoke",
+  "scope": "49 month boundary queries; six 300s GreenLight steps with lc1 weather; not full campaign or agent-visible causality validation",
+  "months_checked": 49,
+  "registered_inputs": [
+    "cmdCo2",
+    "cmdDay",
+    "cmdHeat",
+    "cmdLamp",
+    "cmdScreen",
+    "cmdVent",
+    "iGlob",
+    "tOut",
+    "tSky",
+    "vpOut",
+    "wind"
+  ],
+  "steps": [
+    {
+      "start_seconds": 28800.0,
+      "iGlob": 2.4229588508605957,
+      "tOut": -0.10001220703122726,
+      "tAir_endpoint": 14.793324308437569,
+      "input_rows": 1
+    },
+    {
+      "start_seconds": 29100.0,
+      "iGlob": 2.4229588508605957,
+      "tOut": -0.10001220703122726,
+      "tAir_endpoint": 13.279581868416672,
+      "input_rows": 1
+    },
+    {
+      "start_seconds": 29400.0,
+      "iGlob": 5.031959533691406,
+      "tOut": -0.10001220703122726,
+      "tAir_endpoint": 12.255741535547088,
+      "input_rows": 1
+    },
+    {
+      "start_seconds": 29700.0,
+      "iGlob": 5.031959533691406,
+      "tOut": -0.10001220703122726,
+      "tAir_endpoint": 11.588691122881452,
+      "input_rows": 1
+    },
+    {
+      "start_seconds": 30000.0,
+      "iGlob": 9.05943489074707,
+      "tOut": -0.10001220703122726,
+      "tAir_endpoint": 11.188651288546236,
+      "input_rows": 1
+    },
+    {
+      "start_seconds": 30300.0,
+      "iGlob": 9.05943489074707,
+      "tOut": -0.10001220703122726,
+      "tAir_endpoint": 10.896028589722446,
+      "input_rows": 1
+    }
+  ],
+  "model_load_count": 1
+}

@@ -1,0 +1,33 @@
+{
+  "id": "slowlab-v22-component-evidence-v0",
+  "status": "phase1_assumption_register_not_empirical_validation",
+  "evidence_classes": ["observed", "literature_constrained", "assumed", "unsupported"],
+  "components": [
+    {"id": "external_weather", "class": "observed", "source": "configs/v22_weather_gapfilled_quality_audit.json", "scope": "Cabauw lc1 external forcing with documented replacement/gap-filling; no greenhouse trajectory calibration", "core_use": true},
+    {"id": "climate_equations", "class": "literature_constrained", "source": "configs/v22_greenlight_model_family.json", "scope": "pinned GreenLight Vanthoor/Katzin climate equations, not identified for the 96 m2 compartment", "core_use": true},
+    {"id": "crop_equations", "class": "literature_constrained", "source": "configs/v22_greenlight_model_family.json", "scope": "pinned simplified tomato model, no cultivar- or water-stress calibration", "core_use": true},
+    {"id": "compartment_geometry", "class": "assumed", "source": "configs/v22_task_contract_v3.json", "scope": "declared 96 m2 idealized geometry; only selected scale cues come from AGC", "core_use": true, "sensitivity": "boundary and geometry sensitivity required before strong physical claims"},
+    {"id": "equipment_capacities", "class": "literature_constrained", "source": "configs/v22_task_contract_v3.json", "scope": "AGC2024 capacity references and native LED group define a synthetic configuration, not realised actuator trajectories", "core_use": true},
+    {"id": "central_supply", "class": "assumed", "source": "configs/v22_task_contract_v3.json", "scope": "adequate shared supply, no cross-compartment curtailment", "core_use": true, "sensitivity": "report dependence on adequacy; any central bottleneck needs a new contract"},
+    {"id": "adjacent_boundary", "class": "assumed", "source": "docs/v22_boundary_approximation_decision.md", "scope": "effective sensible-heat correction and fixed adjacent temperatures are not measured heat fluxes", "core_use": true, "sensitivity": "predeclared Ueff and boundary-offset scenarios in task contract"},
+    {"id": "deep_soil_boundary", "class": "assumed", "source": "docs/v22_deep_soil_boundary_audit.md", "scope": "20 C model default for approximately 2 m external soil; Cabauw 0-50 cm outdoor soil is not a greenhouse measurement", "core_use": true, "sensitivity": "paired annual 8 C versus 20 C after numerical fault resolution"},
+    {"id": "root_zone_nonlimiting", "class": "assumed", "source": "configs/v22_task_contract_v3.json", "scope": "non-limiting water and nutrients; no drought/EC response or irrigation optimization claim", "core_use": true, "sensitivity": "limit generalization; no root-zone treatment in this paper"},
+    {"id": "sensor_noise_and_latency", "class": "assumed", "source": "configs/v22_task_contract_v3.json", "scope": "deterministic zero-delay virtual sensors in v0, not a measured sensor-error or command-delay distribution", "core_use": true, "sensitivity": "separate declared noise and delay stress tests; never describe as calibrated"},
+    {"id": "harvest_conversion", "class": "assumed", "source": "configs/v22_task_contract_v3.json", "scope": "native carbohydrate harvest flux converted by fixed dry-matter fraction; no marketable-quality model", "core_use": true, "sensitivity": "predeclared 0.05, 0.06, 0.07 dry-matter fractions"},
+    {"id": "prices_and_margin", "class": "assumed", "source": "configs/v22_task_contract_v3.json", "scope": "fixed synthetic EUR rates, excluding rent and capex; not current market profit", "core_use": true, "sensitivity": "report physical outputs separately and vary prices before economic generalization"},
+    {"id": "fogging_flux", "class": "unsupported", "source": "configs/reality_constraints_v2_2.json", "scope": "no realised fogging input identified; absent from formal core", "core_use": false},
+    {"id": "irrigation_ec_response", "class": "unsupported", "source": "configs/reality_constraints_v2_2.json", "scope": "observed EC inputs do not identify dynamic yield response; absent from formal core", "core_use": false}
+  ],
+  "annual_soil_sensitivity": {
+    "status": "completed_paired_scenario_not_calibration",
+    "precondition": "day-240 numerical fault resolved and stable annual reference established",
+    "weather_year": 2017,
+    "compartment": "single-unit fixed-policy paired replay before any multi-unit expansion",
+    "soil_boundary_c": [8, 20],
+    "same_everything_else": ["contract v3", "weather file hashes", "policy", "calendar", "initial state", "solver tolerances"],
+    "compare": ["daily indoor temperature", "daily RH", "cumulative harvest", "heating", "lighting", "CO2 dosing", "numerical failure"],
+    "decision_rule": "report differences even if small or unfavorable; no post-hoc site exclusion or claim of calibration",
+    "result": "configs/v22_soil_annual_sensitivity_audit.json",
+    "default_boundary_selection": "pending independent physical justification; scenario comparison alone cannot identify the actual approximately 2 m greenhouse soil temperature"
+  }
+}
