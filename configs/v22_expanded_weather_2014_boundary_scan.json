@@ -19,6 +19,11 @@
     "201411": 0.0,
     "201412": 0.0
   },
+  "independent_matrix_comparison": {
+    "rows": 52560,
+    "max_abs_difference": 0.0,
+    "archive_sha256": "752d386094be9bc3b745da513d66e233bb460216b1f9400971a26c0f38e5eef7"
+  },
   "plan_sha256": "c93a8543fa191b05834a23605df5715eb1ba70cb4992284200c43d31020fca63",
   "audit_sha256": "9a4a416a824b6a1cfebd59f2bea42df0c6abc1d9dd3ea0c875fb4a8b1366a49e"
 }
