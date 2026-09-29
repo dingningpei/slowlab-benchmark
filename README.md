@@ -34,18 +34,18 @@ facility capacities and executor sensitivities, while the failed audit remains a
 external-validity result.
 
 The evidence classes, source roles, supported ranges and unsupported actuator fluxes are
-frozen in [`configs/reality_constraints_v2_2.json`](configs/reality_constraints_v2_2.json)
+frozen in [`configs/v22/reality_constraints_v2_2.json`](configs/v22/reality_constraints_v2_2.json)
 and explained in
-[`docs/reality_constraints_v2_2.md`](docs/reality_constraints_v2_2.md). Formal Version 2.2
-records must pass `scripts/audit_reality_support.py`; passing that range audit does not
+[`docs/v22/reality_constraints_v2_2.md`](docs/v22/reality_constraints_v2_2.md). Formal Version 2.2
+records must pass `scripts/v22/audit_reality_support.py`; passing that range audit does not
 establish causal or counterfactual validity.
 
 Formal model calls are additionally governed by
-[`configs/simulation_blinding_v2_2.json`](configs/simulation_blinding_v2_2.json). Public
+[`configs/v22/simulation_blinding_v2_2.json`](configs/v22/simulation_blinding_v2_2.json). Public
 datasets define aggregate constraints but are not replayed as confirmatory outcomes. Site
 seeds, simulator identity, latent parameters, oracle values and future records are blocked
 from provider messages by a fail-closed prompt firewall; see
-[`docs/simulation_blinding_v2_2.md`](docs/simulation_blinding_v2_2.md).
+[`docs/v22/simulation_blinding_v2_2.md`](docs/v22/simulation_blinding_v2_2.md).
 
 ---
 
@@ -175,26 +175,54 @@ and [`results/phase5_model_extension_summary_env2.1.0.json`](results/phase5_mode
 
 ## Repository layout
 
-```
-slowlab/        the Version 2 environment and evaluators
-  env.py          episode loop, commitment, timing, feasibility
-  tasks.py        three core tasks plus the experimental Screen configuration
-  world.py        P_Theta: a seed draws a site (climate, prices, crop parameters)
-  tomgro.py       reduced state-variable TOMGRO
-  economics.py    greenhouse gross-margin model
-  facility.py     chambers and loops; the control hierarchy
-  design.py       the submitted design and rejection semantics
-  history_risk.py common-history Bayes-risk evaluator
-  eventlog.py     timestamped execution records
-  agents.py       four scripted reference strategies
-  llm.py          the language-model harness (prompt, retry loop, tools)
-  providers.py    chat APIs over urllib; no SDK required
+Three generations of work live here. The frozen Version 2.1 stack stays flat, because its
+scripts, results and paper are a fixed artifact. The Version 2.2 redesign and the retired
+AGC calibration line each have their own sub-tree.
 
-scripts/        every number in the paper has a script here
-tests/          regression, protocol and claim-verification tests
-paper/          the LaTeX source
-results/        summary JSON per model and task
 ```
+slowlab/            frozen Version 2.1 environment and evaluators
+  env.py              episode loop, commitment, timing, feasibility
+  tasks.py            three core tasks plus the experimental Screen configuration
+  world.py            P_Theta: a seed draws a site (climate, prices, crop parameters)
+  tomgro.py           reduced state-variable TOMGRO
+  economics.py        greenhouse gross-margin model
+  facility.py         chambers and loops; the control hierarchy
+  design.py           the submitted design and rejection semantics
+  history_risk.py     common-history Bayes-risk evaluator
+  eventlog.py         timestamped execution records
+  agents.py           scripted reference strategies
+  llm.py              the language-model harness (prompt, retry loop, tools)
+  providers.py        chat APIs over urllib; no SDK required
+slowlab/v22/        the Version 2.2 event-driven greenhouse campaign
+  task_contract.py    policy schema and contract validation
+  campaign_executor.py four-compartment executor with a JSON-only dispatch surface
+  controller.py, resources.py, feedback_view.py, online_observations.py, sensor_bridge.py
+  greenlight_reuse.py, cached_solver.py, native_rhs.py, greenlight_adapter.py   pinned GreenLight
+  cabauw_weather.py   historical weather forcing (Cabauw lc1)
+  prompt_firewall.py, reality_constraints.py, frozen_paths.py
+slowlab/archive/    retired directions kept for the appendix: AGC 2019 calibration
+                    (agc_*, greenhouse_data, greenlight_sequence), root-zone modules and the
+                    failed private weather generators (private_weather*, weather_similarity)
+scripts/            Version 2.1 reproduction path (table below)
+scripts/v22/        Version 2.2 integration checks, audits, pilots and verifiers
+scripts/agc/        AGC 2019/2023/2024 audit, calibration and holdout scripts
+configs/            frozen Version 2.1 protocols (phase4_*, phase5_*, block_aware_gp_phase3)
+configs/v22/        Version 2.2 inputs: task contracts v0-v3, campaign example, model family,
+                    reality constraints, blinding policy, weather plans and protocols
+configs/agc/        AGC contracts, calibration protocols and their recorded results
+results/            frozen Version 2.1 summaries (inputs to the paper build)
+results/v22/        Version 2.2 pilot results, structural audits and daily progress traces
+docs/               Version 2 protocol documents (observation, history risk, task scope, phases)
+docs/v22/           Version 2.2 design decisions and the Phase 0-1 lab notebook
+docs/agc/           AGC feasibility and audit write-ups
+tests/              Version 2.1 regression, protocol and claim tests
+tests/v22/, tests/archive/   tests for the two sub-trees above
+paper/              the LaTeX source
+```
+
+Frozen JSON artifacts under `configs/v22/`, `configs/agc/` and `results/v22/` are byte-identical
+to their registration and may still name files by the earlier flat paths (`configs/v22_*.json`).
+`slowlab.v22.frozen_paths` resolves those names; verifiers use it rather than editing hashed files.
 
 **`scripts/` is the reproduction path.** Nothing in the paper is a one-off analysis:
 

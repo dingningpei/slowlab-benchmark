@@ -15,7 +15,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from slowlab import SlowLabEnv, TASKS
 from slowlab.llm import LLMAgent, WithinCycleLLMAgent, zero_shot_recommendation, scripted_completer
-from slowlab.prompt_firewall import blinded_completer
+from slowlab.v22.prompt_firewall import blinded_completer
 from slowlab import llm as llm_module
 
 

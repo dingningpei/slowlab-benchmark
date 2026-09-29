@@ -22,7 +22,7 @@ analysis = ["matplotlib>=3.7"]
 slowlab-run = "scripts.run_baselines:main"
 
 [tool.setuptools]
-packages = ["slowlab"]
+packages = ["slowlab", "slowlab.v22", "slowlab.archive"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
