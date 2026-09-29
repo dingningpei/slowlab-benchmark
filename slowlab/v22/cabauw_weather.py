@@ -237,3 +237,34 @@ class CabauwLc1ExpandedDevelopmentWeather(CabauwLc1Weather):
         self._month_data = None
         self.require_duplicate_swd_match = False
         self.last_duplicate_swd_max_abs = None
+
+
+# ── Whole-year source matrices ────────────────────────────────────────────
+# Used by the inter-annual reference audit (resampling a real year as the
+# baseline that every synthetic generator was compared against).
+ROWS_PER_DAY = 144
+CHANNELS = ('outdoor_temperature_c', 'outdoor_dewpoint_c', 'wind_m_s',
+            'shortwave_w_m2', 'downward_longwave_w_m2')
+
+
+def read_source_year(cache: Path, plan: Path, year: int) -> np.ndarray:
+    """Read one declared lc1 year as a (days*144, 5) matrix in CHANNELS order."""
+    if year not in (2017, 2018, 2019, 2020):
+        raise ValueError('year outside audited source partition')
+    reader = CabauwLc1Weather(cache, plan)
+    months = []
+    for month in range(1, 13):
+        reader._load_month(f'{year}{month:02d}')
+        met = reader._month_data['meteo']
+        rad = reader._month_data['radiation']
+        matrix = np.column_stack((met['TA002'] - 273.15,
+                                  met['TD002'] - 273.15,
+                                  met['F010'], np.maximum(rad['SWD'], 0),
+                                  rad['LWD']))
+        if len(matrix) != calendar.monthrange(year, month)[1] * ROWS_PER_DAY:
+            raise ValueError('source month length changed')
+        months.append(matrix)
+    result = np.concatenate(months)
+    if not np.isfinite(result).all():
+        raise ValueError('nonfinite archived weather')
+    return result

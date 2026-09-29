@@ -201,8 +201,7 @@ slowlab/v22/        the Version 2.2 event-driven greenhouse campaign
   cabauw_weather.py   historical weather forcing (Cabauw lc1)
   prompt_firewall.py, reality_constraints.py, frozen_paths.py
 slowlab/archive/    retired directions kept for the appendix: AGC 2019 calibration
-                    (agc_*, greenhouse_data, greenlight_sequence), root-zone modules and the
-                    failed private weather generators (private_weather*, weather_similarity)
+                    (agc_*, greenhouse_data, greenlight_sequence) and the root-zone modules
 scripts/            Version 2.1 reproduction path (table below)
 scripts/v22/        Version 2.2 integration checks, audits, pilots and verifiers
 scripts/agc/        AGC 2019/2023/2024 audit, calibration and holdout scripts

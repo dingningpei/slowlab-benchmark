@@ -17,9 +17,7 @@ _AGC_DOCS = {'agc2019_greenlight_feasibility.md', 'agc2023_development_audit.md'
              'agc2024_input_feasibility.md', 'greenlight_original_validation_preflight.md'}
 _V22_FLAT = ('reality_constraints_v2_2', 'simulation_blinding_v2_2')
 _ARCHIVE_MODULES = {'agc_lighting', 'agc_temperature_residual', 'agc_greenlight_weather', 'greenhouse_data',
-                    'greenlight_sequence', 'root_zone', 'root_zone_response', 'v22_private_weather',
-                    'v22_private_weather_v3', 'v22_private_weather_v3a', 'v22_private_weather_v3c',
-                    'v22_weather_similarity'}
+                    'greenlight_sequence', 'root_zone', 'root_zone_response'}
 _V22_MODULES = {'v22_cabauw_weather', 'v22_cached_solver', 'v22_campaign_executor', 'v22_controller',
                 'v22_feedback_view', 'v22_greenlight_reuse', 'v22_greenlight_smoke', 'v22_native_rhs',
                 'v22_public_sensors', 'v22_resources', 'online_observations', 'task_contract_v22',

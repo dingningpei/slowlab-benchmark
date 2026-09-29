@@ -11,7 +11,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
-from slowlab.archive.private_weather import CHANNELS, ROWS_PER_DAY, read_source_year
+from slowlab.v22.cabauw_weather import CHANNELS, ROWS_PER_DAY, read_source_year
 
 
 def features(path, np, year):
