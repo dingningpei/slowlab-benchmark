@@ -1,161 +1,150 @@
-# v2.2 handoff — 2026-09-25
+# SlowLab Version 2.2 — status
 
-## Current redesign — 2026-09-27
+Last restructured 2026-09-29. Branch `codex/v2.1`, worktree `worktrees/slowlab-v2-observation`.
+The plan of record is `V2_2_EXPERIMENT_REDESIGN_TODO.md` (three experiments, Phase 0–7);
+edits to it beyond checkbox flips need the user's sign-off (`CLAUDE.md`). Repository layout
+is described in `README.md`. This file records **what is frozen, what has passed, what is
+open and what was abandoned**, so that a new agent does not re-derive or re-litigate it.
+Earlier chronological handoff notes are in the Git history of this file before `4fb4c93`.
 
-## Latest Phase 1 update — 2026-09-28
+Nothing here is an LLM result or a physical-greenhouse validation. No formal Version 2.2
+model call has been made; no formal sites or seeds exist; nothing has been pushed.
 
-Latest numerical follow-up: the day-240.7569 overflow was an intermediate `exp` overflow inside a condensation sigmoid. Python reference and old native final derivatives were finite and agreed within 7.63e-17. Stable algebraic emission passed the exact-state replay and a 600-step native/reference trajectory regression. The bounded **four-unit fixed-policy annual run passed all 365 days** on Tokyo: 105,120 synchronized steps, 8,343.18 s, peak RSS 252,141,568 bytes under the 350 MB cap. An independent structural audit passed clocks, lifecycle events, resource accounting, final states and limits. This is a fixed-policy stability/resource gate, not a complete event-driven LLM campaign or physical greenhouse validation. See `results/v22/remote_four_unit_annual_stable_result.json` and `results/v22/remote_four_unit_annual_stable_audit.json`.
+---
 
-Latest weather follow-up: the v2 2020 monthly diagnostic had a leap-month grouping bug; corrected maximum is 1.672 training SD, and the independent wind daily-variance failure remains. V3a multiday blocks had 48/48 near-replay rejections. V3b cross-year intraday blending passed 8/8/6/9 of 12 candidates across four development folds but 2020 distribution coverage and energy score remain weak. Do not freeze v3b. After explicit user authorization, 2012/2013/2014/2016 development weather was downloaded within the exact 13,027,903-byte net-new cap. Full audit found 89 consecutive missing 2012-12 LWD records; 2013/2014/2016 are complete development years, with substantial meteo/radiation SWD product disagreement disclosed and radiation SWD selected a priori. No 2015/2025 holdout files were downloaded. See `docs/v22/weather_v3_development_acquisition.md` and `results/v22/weather_v3_development_full_audit.json`.
+## 1. Frozen
 
-After the annual pilot passed, v3c ran an outcome-blind seven-fold weather-only development pilot on 2013/2014/2016/2017–2020 (12 fixed attempts per fold). It passed physical support 84/84 and the current aligned-window non-replay check 75/84, but its sample-size-corrected energy score was worse than simply resampling a real training year in **all seven folds**. Do not freeze v3c or download 2015/2025 holdouts for it. See `docs/v22/weather_v3c_development_result.md` and `results/v22/weather_v3c_sevenfold_development_pilot.json`. A real historical-weather boundary with blinded identity/future is the leading alternative, subject to a separately designed site/parameter distribution and weather-year blocking.
+Frozen means byte-identical and hash-locked. Do not edit; add a new version instead.
+Records under `configs/v22/`, `configs/agc/` and `results/v22/` may name files by the
+pre-carve-up flat paths; `slowlab.v22.frozen_paths.frozen_path` resolves them.
 
-Newest blocker: candidate-v2 private weather generator FAILED its locked 2020 cross-year distribution diagnostic (monthly mean 1.631 training SD > 1.25; minimum daily variance ratio 0.451 < 0.50, wind). Physical support and non-replay passed. Preserve `configs/v22/weather_generator_2020_diagnostic_lock.json`, `results/v22/weather_candidate_v2_2020_diagnostic.json`, and `results/v22/weather_candidate_v2_2020_gate.json`; do not retune v2 on 2020 and continue calling 2020 untouched. Candidate-v3 needs a new independent diagnostic source and versioned rules. No formal private sites/seeds are frozen.
+| Item | File | Status |
+| --- | --- | --- |
+| Research object and three experiments | `V2_2_EXPERIMENT_REDESIGN_TODO.md` §1–9 | plan of record |
+| Task contract v3 (four 96 m² compartments, 180-day crops, 365-day campaign, 2-day cleanup, six policy fields, adequately sized central supply, independent per-compartment caps) | `configs/v22/task_contract_v3.json`; v0–v2 kept with `supersedes` chain | development contract, not a preregistration |
+| Campaign example (logical schedule) | `configs/v22/campaign_example_v0.json` | verified by `scripts/v22/verify_task_contract.py` |
+| Model family: GreenLight `fa502eddae5f9eff7b3380c88037d9b5f3f14bf5`, `main_katzin_2021.json`, four source-file hashes | `configs/v22/greenlight_model_family.json` | static selection; native coefficients are literature assumptions, not AGC-calibrated |
+| Reality-constraint ledger (evidence classes, supported ranges, unsupported actuator fluxes) | `configs/v22/reality_constraints_v2_2.json` + `.sha256`; `docs/v22/reality_constraints_v2_2.md` | verified by `scripts/v22/verify_phase0_reality_contract.py` |
+| Simulation-blinding policy | `configs/v22/simulation_blinding_v2_2.json` + `.sha256`; `docs/v22/simulation_blinding_v2_2.md`; `slowlab/v22/prompt_firewall.py` | keyword firewall is a prototype, not proof of isolation |
+| 14-component evidence register (observed / literature-constrained / assumed / unsupported) | `configs/v22/component_evidence_v0.json` | verified by `scripts/v22/verify_component_evidence.py` |
+| Source-weather partition v0 (2017–2018 fit, 2019 selection, 2020 out-of-year diagnostic) | `configs/v22/weather_partition_v0.json` | development record only; 2020 is no longer untouched |
+| Historical-weather route: real Cabauw years as external forcing, shared weather year across arms, CET fixed clock, leap-year rule, new holdout years unsealed only after code/site/metric freeze | `docs/v22/historical_weather_boundary_protocol.md` | route decision, not a formal weather set |
+| Standby policy (10 °C protective heating, 30 °C ventilation, lamps and CO₂ off) and sampled thermal screen | contract v1/v2 derivations; `docs/v22/phase1_standby.md`, `docs/v22/phase1_sampled_screen.md` | |
+| Deep-soil boundary: explicit `tSoOut` scenario input; default remains native 20 °C | `docs/v22/deep_soil_boundary_audit.md` | choice of default still open (§3) |
+| Error-attribution rules for four failure classes | `docs/v22/phase1_error_attribution.md` | protocol only |
+| AGC GreenLight v8 temporal holdout: FAILED (see §4) | `configs/agc/agc2019_holdout_result_v8.json` | final; do not refit |
 
-A real GreenLight/Cabauw four-unit 577-tick dynamic campaign prefix passed staggered starts, early stop, two-day cleanup, replant, causal public observation and private tick-trace digest checks (`results/v22/campaign_dynamic_prefix_result.json`). Full 365-day stability and process-level API isolation remain open. The four-unit event-driven campaign executor has a JSON-only public dispatch surface, Full/Endpoint observation filtering, staggered planting, stop/cleanup/replant, safety stop, resource accounting and optional streamed private trace. Lightweight injected-backend tests pass; no complete GreenLight campaign has been run through this executor. A 14-component evidence register classifies observed, literature-constrained, assumed and unsupported mechanisms. The annual 8°C/20°C deep-soil sensitivity remains planned, not passed. This is not a frozen site distribution; quality thresholds, formal site partition and seed commitment remain. See `docs/v22/phase1_parallel_work.md` and the current weather acquisition update above. No LLM API call or Git push in this update.
+Data outside Git (never commit): Cabauw lb1 (98 files, 21,770,259 B) and lc1 gap-filled
+(98 files, 18,413,090 B) 2016-12–2020 under `/private/tmp`; 2013/2014/2016 development
+years (13,027,903 B net new); AGC raw data and replay trajectories. Every acquisition was
+individually approved by the user and is hash-audited (`results/v22/weather_quality_audit.json`,
+`results/v22/weather_gapfilled_quality_audit.json`, `results/v22/weather_v3_development_full_audit.json`).
+2015 and 2025 have not been downloaded. Any further download needs prior approval of the
+exact size and scope.
 
+---
 
-LATEST: Approved Cabauw lb1 98-file/21,770,259-byte and lc1 gapfilled
-98-file/18,413,090-byte acquisitions completed into separate Git-external
-/private/tmp caches. Both sets have SHA-256/size audited. Full reports:
-results/v22/weather_quality_audit.json and
-results/v22/weather_gapfilled_quality_audit.json; interpretation:
-docs/v22/weather_feasibility.md and docs/v22/weather_lc1_audit.md.
-Original lb1 joint required-channel missingness is 2.31–6.33% per year with
-multi-day gaps; lc1 2017–2020 has zero joint missing across 210,384 10-min
-intervals. This is gapfilled/merged external weather, NOT original continuous
-measurement nor greenhouse validation. lc1 TA002/TD002 are labeled degC but
-actual values are K-scale and match lb1 K at valid anchors. Source indices vary,
-and nighttime SWD includes small negatives. Dataset-specific fail-closed conversion now exists in
-slowlab/v22/cabauw_weather.py; optional weather channels are registered before
-GreenLight compilation and supply only one current input row per 300s step.
-results/v22/weather_reader_smoke.json passed 49-month boundary reads and six
-short dynamic steps; 10 focused existing tests passed. This is NOT annual or
-agent-observation causality validation. Weather protocol, CO2/soil assumptions,
-independent partition remain unfrozen. Prior sampled-screen v2 601-step test passed (89 light tests);
-A six-step weather→controller→GreenLight→OnlineObservations→ledger bridge now
-passes with fixed CET midnight origin; 10-min exterior means release only at
-right endpoints, while 300s interior endpoints release after solving. Public
-indoor and private controller weather channels are separate. See
-scripts/v22/check_online_weather.py, results/v22/online_weather_bridge_smoke.json
-and docs/v22/online_weather_bridge.md. This remains one active compartment;
-shared capacities, complete public channels/permissions, lifecycle campaign,
-noise and annual validation remain open. Phase 1 incomplete. No LLM API
-experiment or Git push this turn.
+## 2. Passed (Phase 1 engineering gates)
 
-Deep-soil boundary audit: native `tSoOut` is fixed 20°C and represents ~2 m external soil. Cabauw field soil product reaches only 50 cm and has NOT been downloaded. Explicit constant scenario input and a six-step 8°C/20°C sensitivity check are implemented; no detectable 30-minute room-climate difference is not evidence about an annual campaign. See `docs/v22/deep_soil_boundary_audit.md` and `results/v22/deep_soil_boundary_short_sensitivity.json`. Annual deep-soil boundary and sensitivity remain open.
+All of these are scripted integration or structural checks on a pinned runtime. None is an
+LLM experiment, a formal site, or evidence that GreenLight reproduces a real greenhouse.
 
-Four-compartment capacity gap: v2 defines only per-compartment heat/CO2/lamp maxima, no central supply caps or allocation rule. Do not claim shared contention or invent central limits. Recommended main environment: independently capped compartments with adequately sized central supply; version contract before full scheduler. See `docs/v22/shared_capacity_gap.md`.
+**Executor and model reuse**
 
-Latest Phase 1: User approved adequately sized central supply; versioned contract v3 retains independent per-compartment limits. Four active units on one clock passed a six-step Cabauw weather gate, all eight public sensors and Full/Endpoint running permissions, with measured heat/CO2/lamp fluxes at but not over per-unit maxima. Fixed non-midnight origin clock bug: controller and model now use the same fixed-CET offset. One unit passed two-day weather-driven stop/cleanup/replant with run-specific Endpoint accounting. Compiled RHS made the short lifecycle 11.67s, with 8.30s model loading and 3.36s two-day empty stepping; linear four-unit annual projection is ~0.68h, ~698 worker-hours for 1024 planned campaigns before overhead. Compute feasibility remains open. See `docs/v22/phase1_four_unit_weather_and_runtime.md`; 80 focused tests pass. No new data download or LLM API call.
+- `ReusableGreenLight` parses once and registers all command channels before compilation;
+  six 300 s steps match the reload reference on all 28 states, including forced command
+  switches; independent replicas with the same executed prefix and different unexecuted
+  futures match exactly. Parse 3.75 s; reused step 0.047–0.103 s (~51.8× speedup).
+  `results/v22/phase1_reuse_comparison_v1.json`, `docs/v22/phase1_reuse_audit.md`.
+- Optional compiled RHS (`slowlab/v22/native_rhs.py`) and cached solver: derivative and
+  600-step trajectory regressions pass. A day-240.76 overflow (intermediate `exp` in a
+  condensation sigmoid) was diagnosed and replaced by a stable algebraic form; exact-state
+  replay and native/reference regression pass. `docs/v22/native_overflow_fault.md`,
+  `results/v22/native_fault_fix_replay.json`.
+- Explicit empty-compartment mode (crop processes removed, zero-LAI radiation retained);
+  cleanup/idle/replant continuity on fixed weather. `docs/v22/phase1_empty_crop_gate.md`.
+- Causal observation stores: 10-minute exterior means released only at their right
+  endpoint; 300 s interior endpoints released after solving; public and controller
+  channels separate. Slotted immutable records cut a 200k-record sample from ~109 MB to
+  ~66 MB. `docs/v22/online_weather_bridge.md`, `docs/v22/observation_causality_audit.md`.
+- Four units on one clock: controller reads only arrived measurements; requested = realised
+  under the adequately-sized-supply contract; per-unit heat/CO₂/lamp fluxes at but not over
+  their maxima; Full/Endpoint permissions; fixed-CET origin bug fixed.
+  `docs/v22/phase1_four_unit_weather_and_runtime.md`.
 
-2026-09-28 runtime follow-up: Causal observation index and optional all-auxiliary array output reduced a 576-step weather-driven empty cleanup segment from 3.36s to ~2.47s. Paired frame/array short runs have identical 28 final states and resource ledger. The optimistic empty-crop extrapolation is still ~0.50h per four-unit year and ~513 single-worker hours for the old 1024-campaign draft; mature-crop annual pilot and compute budget are open. See `docs/v22/phase1_runtime_optimization.md`. Do not launch formal matrix on MacBook.
+**Annual runs (Tokyo host, 2 vCPU / 1 physical core / ~896 MB, cgroup-capped)**
 
-A seven-day early active-crop window (2016 steps) with the array-output option took 8.24s stepping; frame mode 9.61s. Final 28 states and ledger exactly matched. The early-crop linear estimate is ~0.48h per four-unit year / ~489 worker-hours for the 1024-campaign draft, still not a mature/full-year benchmark. See `docs/v22/phase1_runtime_optimization.md`.
+| Run | Result | Pointer |
+| --- | --- | --- |
+| Single compartment, 365 days, 180+2+180+2+1 lifecycle | passed; 2,119 s, peak RSS 271 MB (350 MB cap). Two earlier attempts failed on a virtual-address cap (day 59) and host OOM (day 290). | `results/v22/remote_annual_pilot_v3_result.json`, `docs/v22/remote_compute_preflight.md` |
+| Four units, fixed policy, 365 days | passed; 105,120 steps, 8,343 s, peak RSS 252 MB; structural audit passed | `results/v22/remote_four_unit_annual_stable_result.json`, `_audit.json` |
+| Four units, **event-driven** `CampaignExecutor`, 365 days, 5 plantings | passed; 7,925 s, peak RSS 261 MB. Day-14 read of 289 arrived temperature records (mean 21.705 °C) chose the next-round policy by a pre-scripted 22 °C rule; unit 0 stopped, cleaned two days, replanted day 16; units 2/3 started days 14/30; unit 3 stopped early on day 60 and settled only realised resources; remaining crops completed days 180/194/196; day-365 recommendation without fallback. Independent streaming audit of the 63 MB private tick trace passed (time continuity, requested = realised, causal releases, ledger consistency, hashes). | `results/v22/dynamic_annual_result.json`, `dynamic_annual_audit.json`, `docs/v22/phase1_event_trace.md` |
+| Deep-soil 8 °C vs 20 °C, single compartment, 2017 weather, paired | passed structural audit; 8 °C uses 7.49 % more heat and yields 1.25 % more simulated harvest | `results/v22/soil_annual_sensitivity_audit.json`, `docs/v22/deep_soil_boundary_audit.md` |
+| 2014 expanded weather reader (independent product selection, 105,121 boundary queries, zero difference against a hash-locked five-channel matrix) | passed; no greenhouse dynamics run on 2014 | `results/v22/expanded_weather_2014_boundary_scan.json` |
 
-Remote preflight 2026-09-28: a private Tokyo Linux host has 2 vCPU (one physical core), ~896 MB RAM, Python 3.11 and GCC. A checksum-verified code bundle, isolated numerical venv, and, with user authorization, the audited 98-file/18,413,090-byte Cabauw lc1 product were transferred; no .env, keys, or reviews. Same-server six-step GCC-versus-reference check agreed to <7.23e-10 absolute state difference; a seven-day active-crop run took 37.27s stepping / 49.80s total, ~4.5× the Mac stepping time. Same-server DataFrame/array seven-day outputs matched exactly, but Mac-versus-Linux closed-loop seven-day final state max relative difference was ~1.59e-4 and heat-ledger relative difference ~0.175%. In 77/2,016 steps at least one controller command differed by >0.01; replaying the Mac command trace on Tokyo made the heat ledger identical and all final states agree within 2.33e-11 relative. Thus feedback amplifies tiny platform numerical differences. Pin one runtime for formal comparisons; the initial difference source remains open. The server is suitable for single-worker pilot, not a fast 1024-campaign matrix. See `docs/v22/remote_compute_preflight.md`.
+**Cross-platform note.** Mac versus Linux closed-loop seven-day runs differ by up to
+1.59e-4 relative in final state and 0.175 % in heat ledger because feedback amplifies
+platform rounding (77/2,016 steps had a command differing by >0.01); replaying the Mac
+command trace on Linux agrees to 2.33e-11. Pin one runtime for every formal comparison.
 
-Annual follow-up: user approved a single-compartment 365-day pilot with 3-hour/600 MB maximum. First run with a stricter *virtual address-space* cap segfaulted after day 59; second used a true 600 MB cgroup but host-wide OOM killed it after day 290 (896 MB host, no swap). `OnlineObservations` had a redundant global identity dictionary: removing it and using slotted immutable records reduced a 200k-record Mac sample from ~109 MB to ~66 MB; focused tests pass and old/new one-day state and ledger match exactly. Third run used an even safer 350 MB cgroup and **passed all 365 days / 105,120 steps**, including 180+2+180+2+1-day lifecycle. Wall time 2,119.19s (35.32min), peak RSS 271.22 MB; old/new first 290 daily harvest totals match exactly. Result and all three daily progress traces are in `configs/v22_remote_annual_pilot_*`; interpretation in `docs/v22/remote_compute_preflight.md`. A naive four-unit serial projection is ~2.35 worker-hours/campaign, or ~2,411 worker-hours for the draft 1,024 campaigns before LLM/evaluation/retries. Simultaneous four-unit memory/runtime remains untested, and no LLM or formal matrix has run.
+**Tests.** `python3 -m pytest -q`: 378 passed, 4 skipped (2026-09-29). GreenLight is not
+importable in the development environment; scripts that need it run only on the pinned host
+with `--source <GreenLight checkout>`.
 
-Four-compartment runtime follow-up (2026-09-28): same-clock 1-day and 7-day gates passed; 7-day object and packed observation stores have identical four-unit final states and ledgers. A staggered 18-day lifecycle prefix passed under a 350 MB cgroup: 5,184 shared steps, 480.63s, peak RSS 153.17 MB; unit 0 stopped day 14, stayed in cleanup for two days, and replanted day 16 with no cleanup harvest. Full 365-day four-unit pilot FAILED at day 240.7569 / 69,338 steps with native RHS floating-point overflow flag 8; wall 5,488.11s, peak RSS 220.43MB, so neither cap caused it. Original failure artifacts are preserved; a bounded 241-day diagnostic replay with exact failing RHS state/input capture and reference RHS comparison has started; see `docs/v22/remote_compute_preflight.md`. No formal LLM matrix or API calls.
+---
 
-2026-09-28 independent Phase 1 work while the detached annual pilot runs: source-weather partition v0 is now machine-verified (2017–2018 development/fit, 2019 selection, 2020 out-of-year diagnostic; **not** formal private confirmatory weather). The 18-day four-unit artifact has a reproducible structural audit. A private optional per-tick gzip trace and fault-injection-tested audit were added to the bounded 1–7-day runner, but its dynamic trace gate has not yet run; the ongoing annual pilot contains only daily summaries and must not be called a complete executor activity log. See `docs/v22/weather_partition_protocol.md` and `docs/v22/phase1_event_trace.md`.
+## 3. Open (ordered by how hard each blocks a submission)
 
-Phase 1 dynamic-input registration is FIXED. ReusableGreenLight loads a single current
-bootstrap CSV before compilation, registering all five command channels. Six 300s steps
-match all 28 states of the reload reference exactly, including forced command switches.
-See `results/v22/phase1_reuse_comparison_v1.json` and `docs/v22/phase1_reuse_audit.md`;
-the earlier failure artifact remains unchanged. One parse: 3.75s; reused steps: 0.047–0.103s,
-~51.8x stepping speedup excluding initialization. Independent replicas with the same
-executed prefix and different unexecuted future plans also matched exactly.
-This is a bounded fixed-weather adapter test, NOT completion of Phase 1. Next implement
-lifecycle/resource accounting and full event/permission integration, then bounded dynamic
-checks. No long-season runs, API calls or data downloads were performed.
+1. **No site distribution.** All runs use identical native GreenLight parameters, one
+   weather year and one price scenario. Experiment 1 needs N private sites drawn from a
+   frozen generator with development/pilot/test partition and seed commitment (Phase 3).
+2. **No agent interface, BO baseline, pre-experiment recommendation, fixed reference or
+   evaluator** (Phase 2–3). `CampaignExecutor.dispatch` is a JSON action surface only;
+   process isolation, the public tool set with independent randomness, the
+   "same public history + different private seed → identical prompt" test, hard-stop on
+   firewall block and outbound payload persistence are all unimplemented. The old TOMGRO
+   harness `slowlab/llm.py` and `scripts/v22/run_callable_matrix.py` must not launch the
+   new study.
+3. **Compute budget.** ~2.2 worker-hours per four-unit annual campaign on the Tokyo host;
+   the 1,024-campaign draft is ~2,400 worker-hours before LLM calls, evaluation and
+   retries. Formal N, tick size, parallel workers and host are undecided. Do not run the
+   matrix on the MacBook.
+4. **Sensor noise is zero.** `slowlab/v22/sensor_bridge.py` records deterministic virtual
+   sensors. Freeze a measurement-noise and missingness model independent of site truth,
+   then implement sample-once caching per (compartment, channel, time).
+5. **Executor generality.** `CampaignExecutor` hard-codes four units and dict policies;
+   simultaneous four-unit memory on other hosts is untested.
+6. **Deep-soil default.** Annual 8/20 °C sensitivity passed; which boundary the main
+   scenario uses, and how it is disclosed, is not frozen.
+7. **Range audit refinement.** `scripts/v22/audit_reality_support.py` must distinguish
+   physical error, source extrapolation and declared assumption instead of dropping sites.
+8. **Blinding and compute feasibility are unverified for varying sites and weather years.**
+9. Phase 4–7: fake-model pilot, exact model IDs and routing, cost accounting, preregistration
+   lock, formal runs, Experiment 3 packets, paper rewrite.
 
-New Phase 0 is COMPLETE as a development task contract, not a dynamic validation.
-See `docs/v22/task_contract_v0.md`, `configs/v22/task_contract_v0.json` and the
-logical example `configs/v22/campaign_example_v0.json`.
-Four 96 m² compartments, 180-day crops, 365-day campaigns, 2-day cleanup;
-six management variables; non-limiting root zone; fixed synthetic cost scenario.
-All unsupported geometry/boundary/economic values are explicitly model assumptions.
-39 focused tests passed. Run `scripts/v22/verify_task_contract.py` for the logical
-schedule/unit check; it does NOT simulate harvest or energy.
-Phase 0 was completed and handed over; the user subsequently authorized Phase 1 (current status above).
-Its gates include physical response, scaling/boundary sensitivity, controller causality,
-idle/cleanup/replant continuity, Full/Endpoint permissions and runtime. No API calls,
-new data downloads or numerical greenhouse runs in this phase-completion step.
-Version any necessary Phase 1 revisions before pilot/test; no silent parameter changes.
-The main runtime remains TOMGRO until the new executor is implemented.
+---
 
-The authoritative plan is now `V2_2_EXPERIMENT_REDESIGN_TODO.md`, rewritten around
-three studies: end-to-end experimental performance, Full versus Endpoint feedback,
-and fixed-history reader replacement. Its new Phase 0–7 numbering replaces the previous
-planning sequence. The old four-tool-arm matrix runner must not launch the new study.
-Historical Phase 0 completion below refers only to the earlier evidence-ledger work;
-it does not certify the new environment or experiments. Historical validation artifacts
-and their failed gate remain unchanged.
+## 4. Abandoned (report only in the appendix)
 
-The existing keyword firewall is a prototype, not proof of information isolation.
-Public-state-only tool interfaces, independent tool randomness, numerical noninterference
-tests, hard-stop handling and persisted outbound payload audits remain required by the
-new plan. A model may be told it is operating in simulation; the generating mechanism,
-private site parameters and future outcomes must remain inaccessible.
+| Direction | Outcome | Evidence kept |
+| --- | --- | --- |
+| AGC 2019 GreenLight calibration v0–v8 with observed-action temporal holdout | **Failed the trajectory gate**: 8 sequences, 137 compartment-days, 3,288 hourly samples; solver completion 100 %, 0 sampled physical violations; pooled temperature RMSE 2.579 °C (limit 2.04), RH RMSE 9.983 pp (limit 8.5), CO₂ 211.8 ppm (limit 361, pass). Heterogeneous failures (cold bias in Automatoes/Digilog, humidity in AICU/TheAutomators). Public AGC files do not identify enough boundary conditions for post-hoc corrections. Do not refit v8 or reinterpret the holdout as development data. | `configs/agc/`, `scripts/agc/`, `docs/agc/agc2019_greenlight_feasibility.md`, `slowlab/archive/` |
+| Private weather generator candidate v2 | failed locked 2020 cross-year diagnostic (monthly mean 1.631 → 1.672 training SD after the leap-month erratum, limit 1.25; wind daily-variance ratio 0.451, limit 0.50) | `configs/v22/weather_generator_2020_diagnostic_lock.json`, `results/v22/weather_candidate_v2_2020_*.json`, `scripts/v22/verify_weather_2020_diagnostic.py` |
+| Block generators v3a / v3b / v3c | v3a 48/48 near-replay rejections; v3b partial non-replay pass but weak 2020 coverage; v3c seven-fold pilot 84/84 physical support, 75/84 non-replay, but worse energy score than resampling a real year in all seven folds | `results/v22/weather_v3a_development_pilot.json`, `weather_v3b_development_pilot.json`, `weather_v3c_sevenfold_development_pilot.json`, `docs/v22/weather_v3c_development_result.md` |
+| Generator code | deleted 2026-09-29 (`49011fe`); the whole-year source reader survives as `slowlab.v22.cabauw_weather.read_source_year` | Git history |
+| Cabauw 0–50 cm field soil as greenhouse deep-soil boundary | not downloaded; not a valid stand-in for ~2 m soil under a greenhouse | `docs/v22/deep_soil_boundary_audit.md` |
+| Cross-compartment central-supply contention | not modelled; contract v3 declares adequately sized central supply | `docs/v22/shared_capacity_gap.md` |
+| Old four-tool-arm matrix (bare/design/reader/both) as the main experiment | superseded by the three-experiment design | `scripts/v22/run_callable_matrix.py` is a historical draft |
 
-## Branch and latest state
+---
 
-Worktree: `worktrees/slowlab-v2-observation` (repository carved into `slowlab/v22`, `slowlab/archive`, `scripts/v22`, `scripts/agc`, `configs/v22`, `configs/agc`, `results/v22`, `docs/v22`, `docs/agc` on 2026-09-29; frozen JSON artifacts keep their earlier internal path strings, resolved by `slowlab.v22.frozen_paths`)  
-Branch: `codex/v2.1`
+## 5. Operating constraints
 
-Phase 0 is complete. It reached the pre-registered temporal holdout and the frozen v8 hybrid model failed the real-trajectory gate. Do not refit v8 or reinterpret this holdout as development data while retaining a validation claim. Version 2.2 proceeds as a reality-constrained simulation benchmark under `configs/v22/reality_constraints_v2_2.json`.
-
-## Frozen holdout result
-
-- 8 sequences, 137 compartment-days, 3,288 hourly samples.
-- Solver completion: 100%; sampled physical violations: 0.
-- Pooled corrected temperature RMSE: 2.579 °C (limit 2.04; fail).
-- Pooled raw RH RMSE: 9.983 percentage points (limit 8.5; fail).
-- Pooled raw CO2 RMSE: 211.8 ppm (limit 361; pass).
-- Every-compartment requirement failed; exact values and audit trail are in `configs/agc/agc2019_holdout_result_v8.json`.
-
-## Scientific interpretation
-
-The calibration-only residual layer transferred poorly to the late temporal holdout. Failures are heterogeneous: Automatoes and Digilog have large cold biases; AICU and TheAutomators have high humidity errors; Automatoes also fails CO2. Public AGC files do not identify enough physical boundary conditions to justify post-hoc compartment corrections. v8 is not evidence of an AGC digital twin and does not validate counterfactual policies.
-
-A valid next attempt must be called a new prospective version and reserve a new untouched validation source. Preferred data are independent greenhouse trajectories containing aligned weather, realized actuator states, indoor climate, facility geometry, and actuator capacities. Otherwise narrow the paper to a synthetic benchmark and report AGC as a failed external-validity audit.
-
-## Reproducibility assets
-
-- Gate: `configs/agc/agc2019_climate_validation_gate_v0.json`
-- Holdout contract: `configs/agc/agc2019_holdout_execution_v0.json`
-- Residual protocol/model: `configs/agc/agc2019_calibration_protocol_v8.json`, `configs/agc/agc2019_temperature_residual_model_v8.json`
-- Calibration outputs: `configs/agc/agc2019_calibration_result_v7.json`, `configs/agc/agc2019_calibration_result_v8.json`
-- Holdout result: `configs/agc/agc2019_holdout_result_v8.json`
-- Runner: `scripts/agc/run_agc2019_holdout_validation.py`
-- Interpretation: `docs/agc/agc2019_greenlight_feasibility.md`
-- Version 2.2 evidence and support contract: `configs/v22/reality_constraints_v2_2.json`
-- Range-support auditor: `scripts/v22/audit_reality_support.py`
-- Frozen conclusion verifier: `scripts/v22/verify_phase0_reality_contract.py`
-- Simulation-blinding policy: `configs/v22/simulation_blinding_v2_2.json`
-- Outbound prompt firewall: `slowlab/v22/prompt_firewall.py`
-
-Formal Version 2.2 model calls must use `--blinding-policy configs/v22/simulation_blinding_v2_2.json`.
-The firewall blocks benchmark/source identity, simulator names, site/environment seeds,
-latent state, oracle values and future outcomes before a provider call. OpenRouter app
-attribution headers are disabled by default. Confirmatory sites must be newly generated
-from aggregate public-data constraints and pass a source-trajectory similarity audit;
-the private seed commitment/reveal step is still pending.
-
-Raw public data and generated replay trajectories are intentionally outside Git under `/private/tmp`. The private `output/reviews` directory must never be pushed.
-
-## Working tree caution
-
-This worktree already contained uncommitted changes in `scripts/run_baselines.py`,
-`scripts/run_llm.py`, `slowlab/llm.py`, `slowlab/providers.py`, `tests/test_llm.py`,
-`tests/test_providers.py`, and untracked `scripts/v22/run_callable_matrix.py`. The v2.2
-blinding implementation now intentionally adds changes to `scripts/run_llm.py`,
-`slowlab/providers.py`, `tests/test_providers.py`, and the draft matrix runner. Review the
-complete diffs and stage by hunk before committing so earlier unrelated work is preserved.
-
-## Execution notes
-
-The first holdout attempt exposed a runner-only candidate JSON wrapper bug; the fix is commit `afc286b`. Some workers had read initial sequence states, but no trajectory metrics were produced. A later command typo also stopped before observation access. Neither event changed the frozen model, identities, features, lambda, physical parameters, or thresholds. The completed retry followed the same frozen contract.
+- Frozen JSON is never edited. Private `output/reviews/` is never pushed. Keys live only in `.env`.
+- Every data download and every LLM API spend needs prior, specific user approval.
+- Single worker, single-threaded numerics by default; time any long computation first and
+  report a budget; never leave the MacBook under sustained load.
+- The pinned runtime for formal comparisons is one Linux host and one GreenLight commit;
+  record RSS, wall time and hashes for every run, and keep failed runs with their identity.
+- A firewall block during a formal call is an infrastructure error, not a model format
+  failure; it must abort and be logged, never retried into a result.
