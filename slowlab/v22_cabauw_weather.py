@@ -100,6 +100,8 @@ class CabauwLc1Weather:
         self.manifest = manifest['files']
         self._month_key = None
         self._month_data = None
+        self.require_duplicate_swd_match = True
+        self.last_duplicate_swd_max_abs = None
 
     def _load_month(self, ym: str):
         data = {}
@@ -158,8 +160,10 @@ class CabauwLc1Weather:
                         raise ValueError(f'{path.name}: unknown source index {key}')
         if np.max(abs(data['meteo']['time_bnds'] - data['radiation']['time_bnds'])) * 3600 > 1:
             raise ValueError(f'{ym}: meteo/radiation time mismatch')
-        if not np.array_equal(data['meteo']['SWD'], data['radiation']['SWD']):
+        swd_difference = float(np.max(abs(data['meteo']['SWD'] - data['radiation']['SWD'])))
+        if self.require_duplicate_swd_match and swd_difference != 0:
             raise ValueError(f'{ym}: inconsistent duplicate SWD channels')
+        self.last_duplicate_swd_max_abs = swd_difference
         self._month_key, self._month_data = ym, data
 
     def at_utc(self, when: datetime) -> WeatherForcing:
@@ -192,3 +196,44 @@ class CabauwLc1Weather:
                               (lwd / SIGMA) ** 0.25 - 273.15, max(0.0, swd),
                               swd, max(0.0, -swd), lwd,
                               float(met['RH002'][index]), indices)
+
+
+class CabauwLc1ExpandedDevelopmentWeather(CabauwLc1Weather):
+    """Audited 2012/13/14/16 development files; radiation SWD is authoritative.
+
+    A complete 2014 campaign has the required 2013-12 bootstrap month. The
+    2012-12 LWD gap and missing 2015-12 prevent treating every listed year as
+    a complete executable campaign. This reader is private executor code.
+    """
+
+    def __init__(self, cache: Path, plan: Path, audit: Path):
+        self.cache = Path(cache)
+        plan_bytes = Path(plan).read_bytes()
+        definition = json.loads(plan_bytes)['stages']['development']
+        report = json.loads(Path(audit).read_text())
+        months = {f'{year}{month:02d}' for year in (2012, 2013, 2014, 2016)
+                  for month in range(1, 13)}
+        expected_keys = {(dataset, ym) for dataset in (MET, RAD) for ym in months}
+        self.files = {(f['dataset'], f['filename'][-9:-3]): f for f in definition['files']}
+        if (set(self.files) != expected_keys or len(definition['files']) != 96
+                or set(definition['years']) != {2012, 2013, 2014, 2016}
+                or report['plan_sha256'] != hashlib.sha256(plan_bytes).hexdigest()
+                or report['complete_years'] != [2013, 2014, 2016]
+                or set(report['incomplete_years']) != {'2012'}
+                or set(report['months']) != months):
+            raise ValueError('expanded development weather audit/plan mismatch')
+        manifest = json.loads((self.cache / 'manifest-v3-development.json').read_text())
+        if set(manifest['files']) != {entry['filename'] for entry in definition['files']}:
+            raise ValueError('expanded development weather manifest incomplete')
+        for (dataset, ym), entry in self.files.items():
+            role = 'meteo' if dataset == MET else 'radiation'
+            name = entry['filename']
+            if (name != f'{dataset}_v1.0_{ym}.nc' or entry['size'] <= 0
+                    or manifest['files'][name]['bytes'] != entry['size']
+                    or manifest['files'][name]['sha256'] != report['months'][ym][role]['sha256']):
+                raise ValueError('expanded development weather file identity mismatch: ' + name)
+        self.manifest = manifest['files']
+        self._month_key = None
+        self._month_data = None
+        self.require_duplicate_swd_match = False
+        self.last_duplicate_swd_max_abs = None

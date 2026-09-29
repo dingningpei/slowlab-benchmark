@@ -110,6 +110,8 @@ def main() -> None:
         controller = OnlineObservations(contract['observations']['controller_channels'])
         public = OnlineObservations(contract['observations']['public_channels'])
         record_at_endpoint(lifecycle.engine, weather, origin, controller, public, '0', ledger)
+        day_air_c = []
+        day_rh_pct = []
         with args.progress.open('w') as progress:
             for tick in range(total_steps):
                 if tick in (active_end_1, active_end_2):
@@ -142,6 +144,13 @@ def main() -> None:
                 state = lifecycle.step(command, now + 300)
                 if any(not math.isfinite(value) for value in state.values()):
                     raise AssertionError('nonfinite physical state')
+                air_c = state['tAir']
+                saturation_pa = 610.78 * math.exp(17.2694 * air_c / (air_c + 238.3))
+                rh_pct = 100.0 * state['vpAir'] / saturation_pa
+                if not math.isfinite(rh_pct):
+                    raise AssertionError('nonfinite indoor relative humidity')
+                day_air_c.append(air_c)
+                day_rh_pct.append(rh_pct)
                 ledger.add_segment(lifecycle.engine.model.full_sol, now, now + 300, phase)
                 record_at_endpoint(lifecycle.engine, weather, origin, controller, public, '0', ledger)
                 completed_steps = tick + 1
@@ -151,13 +160,20 @@ def main() -> None:
                     if rss_bytes() > args.max_rss_bytes:
                         raise MemoryError('pilot exceeded RSS bound')
                 if completed_steps % 288 == 0:
+                    cumulative = ledger.summary()['per_m2']
                     entry = {'day': completed_steps // 288, 'phase': phase,
                              'elapsed_seconds': time.monotonic() - started,
                              'rss_bytes': rss_bytes(), 'vmsize_bytes': vmsize_bytes(),
                              'clock_seconds': lifecycle.engine.clock,
-                             'harvest_kg_m2': ledger.summary()['per_m2']['harvest_kg_m2']}
+                             'air_c_mean': sum(day_air_c) / len(day_air_c),
+                             'air_c_min': min(day_air_c), 'air_c_max': max(day_air_c),
+                             'rh_pct_mean': sum(day_rh_pct) / len(day_rh_pct),
+                             'rh_pct_min': min(day_rh_pct), 'rh_pct_max': max(day_rh_pct),
+                             'cumulative_per_m2': cumulative}
                     progress.write(json.dumps(entry) + '\n')
                     progress.flush()
+                    day_air_c.clear()
+                    day_rh_pct.clear()
         if completed_steps != total_steps or lifecycle.engine.clock != args.pilot_days * 86400:
             raise AssertionError('incomplete annual schedule')
         if args.pilot_days == campaign_days:

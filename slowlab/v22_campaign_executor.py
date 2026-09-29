@@ -45,7 +45,7 @@ class CampaignExecutor:
                  feedback_mode: str, fallback_policy: dict,
                  origin_utc: datetime = datetime(2016, 12, 31, 23, tzinfo=timezone.utc),
                  lifecycle_factory=CropLifecycle, sample_endpoint=None,
-                 native_rhs: bool = True, trace_sink=None):
+                 native_rhs: bool = True, trace_sink=None, progress_hook=None):
         if feedback_mode not in ('full', 'endpoint'):
             raise ValueError('invalid feedback mode')
         validate_policy(contract, fallback_policy)
@@ -70,6 +70,7 @@ class CampaignExecutor:
         self._starts = 0
         self._failed = None
         self._trace_sink = trace_sink
+        self._progress_hook = progress_hook
         self._trace_sha256 = hashlib.sha256()
         self._trace_ticks = 0
         self.clock = 0
@@ -219,6 +220,8 @@ class CampaignExecutor:
                 if self._lifecycles[unit].mode == 'active':
                     self._stop(unit, 'stop')
             self._refresh_idle()
+        if self._progress_hook is not None and self.clock % 86400 == 0:
+            self._progress_hook(self)
 
     def _advance(self, target: int) -> dict:
         if target < self.clock:

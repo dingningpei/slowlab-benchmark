@@ -184,3 +184,14 @@ def test_identical_public_history_masks_different_private_state():
         {'action': 'observe', 'unit': 0, 'variable': 'air_temperature_c'},
     ]
     assert [left.dispatch(action) for action in actions] == [right.dispatch(action) for action in actions]
+
+
+def test_private_progress_hook_runs_only_after_completed_day():
+    x = executor()
+    x.contract['budget']['campaign_days'] = 1
+    x.deadline_seconds = 86400
+    x.contract['budget']['crop_days'] = 2
+    seen = []
+    x._progress_hook = lambda campaign: seen.append((campaign.clock, campaign._trace_ticks))
+    x.dispatch({'action': 'advance', 'day': 1})
+    assert seen == [(86400, 288)]
