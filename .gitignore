@@ -51,3 +51,4 @@ Thumbs.db
 # ── Internal lab notebook, not part of the release ──────────────────────
 CHANGELOG_*.md
 /output/reviews/
+/output/private/
