@@ -271,8 +271,17 @@ class CampaignExecutor:
     def _advance(self, target: int) -> dict:
         if target < self.clock:
             raise ValueError('cannot rewind')
-        while self.clock < target:
-            self._step()
+        try:
+            while self.clock < target:
+                self._step()
+        except Exception as exc:
+            # Once physical time is moving, any error is an infrastructure
+            # failure, never an agent mistake: pause and record it.
+            if self._failed is None:
+                self._failed = {'unit': None, 'clock': self.clock,
+                                'error': type(exc).__name__ + ': ' + str(exc)}
+                self.event_log.append({'event': 'infrastructure_failure', **self._failed})
+            raise
         return {'event': 'advance', 'clock': self.clock,
                 'status': [self._view().operational_status(unit) for unit in self.units]}
 

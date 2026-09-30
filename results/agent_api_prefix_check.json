@@ -1,0 +1,36 @@
+{
+  "status": "passed_agent_api_process_boundary_check",
+  "date": "2026-09-30",
+  "host": "developer MacBook (arm64); Python 3.12.5, numpy 1.26.4, scipy 1.14.1, pandas 2.2.3",
+  "claim": "Running a campaign through CampaignProcess -> slowlab.executor_server changes nothing physical: the private trace digests equal those of direct executor runs of the same actions.",
+  "runs": [
+    {
+      "status": "passed_agent_api_prefix",
+      "scope": "real-GreenLight four-unit 577-tick prefix through the process boundary; no LLM",
+      "noise_seed": null,
+      "server_exit_code": 0,
+      "trace_ticks": 577,
+      "trace_uncompressed_sha256": "cabc5e05ea819cfc0af83ca6122d8499861b2076ce8f2bba0d93cba6552136a4",
+      "reference_trace_sha256": "cabc5e05ea819cfc0af83ca6122d8499861b2076ce8f2bba0d93cba6552136a4",
+      "settlement_status": "closed_before_deadline",
+      "first_observation_records": 2,
+      "public_exchanges": 10,
+      "public_transcript_passes_firewall": true,
+      "elapsed_seconds": 35.4
+    },
+    {
+      "status": "passed_agent_api_prefix",
+      "scope": "real-GreenLight four-unit 577-tick prefix through the process boundary; no LLM",
+      "noise_seed": 20260929,
+      "server_exit_code": 0,
+      "trace_ticks": 577,
+      "trace_uncompressed_sha256": "7011904fc3ce45f780f7698dca5819391834fea0a7cde830ca0a21f78a6215da",
+      "reference_trace_sha256": "7011904fc3ce45f780f7698dca5819391834fea0a7cde830ca0a21f78a6215da",
+      "settlement_status": "closed_before_deadline",
+      "first_observation_records": 2,
+      "public_exchanges": 10,
+      "public_transcript_passes_firewall": true,
+      "elapsed_seconds": 34.1
+    }
+  ]
+}
