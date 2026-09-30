@@ -1,0 +1,71 @@
+{
+  "gate": "pass",
+  "rule": {
+    "id": "weather-repair-v0",
+    "max_run_records": 6,
+    "max_repairs_per_month": 12,
+    "channels": {
+      "meteo": [
+        "TA002",
+        "TD002",
+        "F010"
+      ],
+      "radiation": [
+        "SWD",
+        "LWD"
+      ]
+    }
+  },
+  "scope": "sample months, each repaired alone",
+  "units": {
+    "200201": {
+      "files": {
+        "meteo": {
+          "filename": "cesar_surface_meteo_lc1_t10_v1.0_200201.nc",
+          "sha256": "bfc22efc6a15ec5a13afc5e58050aaaad7e1081fd89c585b01b03987ed591df5",
+          "origin": "formal download",
+          "unrepaired_other_fields_invalid": {}
+        },
+        "radiation": {
+          "filename": "cesar_surface_radiation_lc1_t10_v1.0_200201.nc",
+          "sha256": "72f52229fdc961fef6615d683bfd217340d0765b57994b5da2d10ab671db48e4",
+          "origin": "formal download",
+          "unrepaired_other_fields_invalid": {}
+        }
+      },
+      "repairs": [],
+      "problems": [],
+      "status": "clean"
+    },
+    "201501": {
+      "files": {
+        "meteo": {
+          "filename": "cesar_surface_meteo_lc1_t10_v1.0_201501.nc",
+          "sha256": "4acfa5a1b8b98c16846a21798a594b2e66d9b29715ad5f4ae63f4a01f7e18f1a",
+          "origin": "formal download",
+          "unrepaired_other_fields_invalid": {}
+        },
+        "radiation": {
+          "filename": "cesar_surface_radiation_lc1_t10_v1.0_201501.nc",
+          "sha256": "60de9f94b4d89aa067137937bb116b7ada5030a7de0c68400c397f231edb689c",
+          "origin": "formal download",
+          "unrepaired_other_fields_invalid": {}
+        }
+      },
+      "repairs": [
+        {
+          "month": "201501",
+          "role": "radiation",
+          "channel": "SWD",
+          "index": 1956,
+          "original": -93.8817138671875,
+          "repaired": 63.433128356933594
+        }
+      ],
+      "problems": [],
+      "status": "repaired"
+    }
+  },
+  "issues": [],
+  "plan_sha256": "6656707f57161f386779818d0ff0a7c7eda7914fe61ddf82cffd29a1aa6597e0"
+}
