@@ -1,0 +1,51 @@
+{
+  "status": "passed_parallel_annual_confirmation",
+  "date": "2026-09-30",
+  "code_commit": "0df43c9",
+  "host": "developer Windows desktop, WSL2 Ubuntu 24.04.5 (glibc 2.39), i7-10700K, Python 3.12.3, gcc 13.3.0, numpy 1.26.4, scipy 1.14.1, pandas 2.2.3",
+  "workload": "twelve simultaneous four-unit annual campaigns, contract v4, sensor noise v0 seed 20260929 (identical for all twelve), 2017 weather, scripted actions",
+  "results": {
+    "campaigns_passed": 12,
+    "audits_passed": 12,
+    "distinct_trace_sha256": 1,
+    "trace_sha256": "0dde5c0c445d257c089498360ca6de3615e3dfb1a999d64da82e3d166abb08e7",
+    "per_campaign_seconds_mean": 1861.4,
+    "per_campaign_seconds_range": [
+      1847.7,
+      1879.3
+    ],
+    "batch_wall_seconds_shell_clock": 1733,
+    "audit_wall_seconds": 42,
+    "peak_rss_mb_max": 298,
+    "dropped_readings_per_campaign": 14888,
+    "campaigns_per_hour": 23.2,
+    "days_for_1024_campaigns": 1.84
+  },
+  "projection_check": {
+    "projected_hours": 0.51,
+    "measured_hours": 0.517,
+    "projected_campaigns_per_hour": 23.8
+  },
+  "determinism": "All twelve concurrent runs produced byte-identical private traces: no cross-process interference on this host.",
+  "cross_platform": {
+    "reference": "results/noise_annual_result.json (Tokyo, commit ca0d04a before the two numerically identical speed-ups, gcc 10, Python 3.11)",
+    "identical_fields": [
+      "day-14 decision records and mean",
+      "events and starts",
+      "unit-0 heat 117.45066037586294 kWh/m2"
+    ],
+    "unit0_harvest_kg_m2": {
+      "tokyo": 37.52389307492334,
+      "wsl": 37.523892980842106
+    },
+    "trace_identical": false,
+    "interpretation": "Last-digit platform differences (relative 2.5e-9 in harvest) change the trace hash. Formal comparisons must use one pinned runtime."
+  },
+  "clock_note": "Per-campaign times use the process monotonic clock and exceed the shell wall-clock span of the batch; a WSL clock resynchronisation (an SSH timeout was seen at the same time) is the likely cause. The larger per-process figure is used for planning.",
+  "files": [
+    "results/annual12_wsl_w1_result.json",
+    "results/annual12_wsl_w1_audit.json",
+    "results/annual12_wsl_w1_progress.jsonl"
+  ],
+  "private_traces": "kept on the WSL host"
+}

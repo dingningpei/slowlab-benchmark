@@ -1,0 +1,352 @@
+{
+  "status": "passed_annual_dynamic_campaign",
+  "scope": "four-unit 2017 weather annual event-driven integration pilot; fixed scripted actions; no LLM, no formal site, no real greenhouse validation",
+  "pilot_days": 365,
+  "max_seconds": 13000,
+  "max_rss_bytes": 2000000000,
+  "weather_year": 2017,
+  "sensor_noise": {
+    "noise_id": "slowlab-sensor-noise-v0",
+    "setting": "main",
+    "seed": 20260929,
+    "config": "configs/sensor_noise_v0.json",
+    "config_sha256": "ae93e8477969c148f348776d9308c98e24b9a5cc45a815d2ad5689d95fcc8216",
+    "seed_scope": "development seed; not a formal site"
+  },
+  "contract_id": "slowlab-v23-task-v4",
+  "midway_decision": {
+    "observed_at_day": 14,
+    "record_count": 287,
+    "observed_mean_air_c": 21.565505226480838,
+    "predeclared_threshold_c": 22,
+    "selected_next_policy": "policy_c"
+  },
+  "settlement": {
+    "clock": 31536000,
+    "ledger_by_unit": {
+      "0": {
+        "per_m2": {
+          "heat_kwh_m2": 117.45066037586294,
+          "light_kwh_m2": 77.46666666666565,
+          "co2_kg_m2": 12.076354819878166,
+          "harvest_kg_m2": 37.523892980842106,
+          "transpiration_kg_m2": 461.4185488786696,
+          "days": 365.0000000003988
+        },
+        "by_phase_per_m2": {
+          "active": {
+            "heat_kwh_m2": 117.20994095385288,
+            "light_kwh_m2": 77.46666666666565,
+            "co2_kg_m2": 12.076354819878166,
+            "harvest_kg_m2": 37.523892980842106,
+            "transpiration_kg_m2": 461.4185488786696,
+            "days": 194.00000000022393
+          },
+          "cleanup": {
+            "heat_kwh_m2": 0.00027071669049331514,
+            "light_kwh_m2": 0.0,
+            "co2_kg_m2": 0.0,
+            "harvest_kg_m2": 0.0,
+            "transpiration_kg_m2": 0.0,
+            "days": 4.000000000000082
+          },
+          "idle": {
+            "heat_kwh_m2": 0.2404487053195619,
+            "light_kwh_m2": 0.0,
+            "co2_kg_m2": 0.0,
+            "harvest_kg_m2": 0.0,
+            "transpiration_kg_m2": 0.0,
+            "days": 167.00000000017482
+          }
+        },
+        "event_cost_eur_m2": 5.0,
+        "synthetic_margin_eur": 4447.083583667639,
+        "occupied_m2_days": 19008.000000021508,
+        "scope": "single-compartment accrued ledger; not final campaign settlement"
+      },
+      "1": {
+        "per_m2": {
+          "heat_kwh_m2": 131.99798170992037,
+          "light_kwh_m2": 84.77777777778257,
+          "co2_kg_m2": 12.417992517235493,
+          "harvest_kg_m2": 36.212915739102044,
+          "transpiration_kg_m2": 440.95917547104216,
+          "days": 365.0000000004024
+        },
+        "by_phase_per_m2": {
+          "active": {
+            "heat_kwh_m2": 131.74640952758176,
+            "light_kwh_m2": 84.77777777778257,
+            "co2_kg_m2": 12.417992517235493,
+            "harvest_kg_m2": 36.212915739102044,
+            "transpiration_kg_m2": 440.95917547104216,
+            "days": 180.00000000019847
+          },
+          "cleanup": {
+            "heat_kwh_m2": 1.3940641157227271e-31,
+            "light_kwh_m2": 0.0,
+            "co2_kg_m2": 0.0,
+            "harvest_kg_m2": 0.0,
+            "transpiration_kg_m2": 0.0,
+            "days": 2.0000000000000253
+          },
+          "idle": {
+            "heat_kwh_m2": 0.2515721823386043,
+            "light_kwh_m2": 0.0,
+            "co2_kg_m2": 0.0,
+            "harvest_kg_m2": 0.0,
+            "transpiration_kg_m2": 0.0,
+            "days": 183.00000000020393
+          }
+        },
+        "event_cost_eur_m2": 2.5,
+        "synthetic_margin_eur": 4273.442057821104,
+        "occupied_m2_days": 17472.000000019056,
+        "scope": "single-compartment accrued ledger; not final campaign settlement"
+      },
+      "2": {
+        "per_m2": {
+          "heat_kwh_m2": 131.69910674142622,
+          "light_kwh_m2": 98.66666666668252,
+          "co2_kg_m2": 14.66919474259061,
+          "harvest_kg_m2": 39.13536141311784,
+          "transpiration_kg_m2": 480.78769907314455,
+          "days": 365.0000000004024
+        },
+        "by_phase_per_m2": {
+          "active": {
+            "heat_kwh_m2": 131.25591861775484,
+            "light_kwh_m2": 98.66666666668252,
+            "co2_kg_m2": 14.66919474259061,
+            "harvest_kg_m2": 39.13536141311784,
+            "transpiration_kg_m2": 480.78769907314455,
+            "days": 180.00000000019847
+          },
+          "cleanup": {
+            "heat_kwh_m2": 1.8591183812949859e-25,
+            "light_kwh_m2": 0.0,
+            "co2_kg_m2": 0.0,
+            "harvest_kg_m2": 0.0,
+            "transpiration_kg_m2": 0.0,
+            "days": 2.0000000000000253
+          },
+          "idle": {
+            "heat_kwh_m2": 0.4431881236713848,
+            "light_kwh_m2": 0.0,
+            "co2_kg_m2": 0.0,
+            "harvest_kg_m2": 0.0,
+            "transpiration_kg_m2": 0.0,
+            "days": 183.00000000020393
+          }
+        },
+        "event_cost_eur_m2": 2.5,
+        "synthetic_margin_eur": 4578.735405118656,
+        "occupied_m2_days": 17472.000000019056,
+        "scope": "single-compartment accrued ledger; not final campaign settlement"
+      },
+      "3": {
+        "per_m2": {
+          "heat_kwh_m2": 30.891254477273392,
+          "light_kwh_m2": 19.7000000000018,
+          "co2_kg_m2": 1.1305700385267952,
+          "harvest_kg_m2": 6.789331727361555e-63,
+          "transpiration_kg_m2": 35.63707767905066,
+          "days": 365.00000000047197
+        },
+        "by_phase_per_m2": {
+          "active": {
+            "heat_kwh_m2": 30.041798234851555,
+            "light_kwh_m2": 19.7000000000018,
+            "co2_kg_m2": 1.1305700385267952,
+            "harvest_kg_m2": 6.789331727361555e-63,
+            "transpiration_kg_m2": 35.63707767905066,
+            "days": 29.999999999995193
+          },
+          "cleanup": {
+            "heat_kwh_m2": 1.237850410736007e-07,
+            "light_kwh_m2": 0.0,
+            "co2_kg_m2": 0.0,
+            "harvest_kg_m2": 0.0,
+            "transpiration_kg_m2": 0.0,
+            "days": 2.0000000000000253
+          },
+          "idle": {
+            "heat_kwh_m2": 0.8494561186367967,
+            "light_kwh_m2": 0.0,
+            "co2_kg_m2": 0.0,
+            "harvest_kg_m2": 0.0,
+            "transpiration_kg_m2": 0.0,
+            "days": 333.00000000047675
+          }
+        },
+        "event_cost_eur_m2": 2.5,
+        "synthetic_margin_eur": -722.4649662306481,
+        "occupied_m2_days": 3071.9999999995407,
+        "scope": "single-compartment accrued ledger; not final campaign settlement"
+      }
+    },
+    "recommendation": {
+      "day_temperature_c": 21,
+      "night_temperature_c": 17,
+      "co2_target_ppm": 700,
+      "supplemental_light_hours": 10,
+      "vent_temperature_offset_c": 4,
+      "vent_rh_threshold_pct": 85
+    },
+    "recommendation_fallback": false,
+    "starts": 5,
+    "tool_calls": 14,
+    "decision_calls": 9,
+    "trace_ticks": 105120,
+    "trace_sha256": "0dde5c0c445d257c089498360ca6de3615e3dfb1a999d64da82e3d166abb08e7",
+    "trace_complete": true,
+    "sensor_noise": {
+      "noise_id": "slowlab-sensor-noise-v0",
+      "setting": "main"
+    },
+    "deep_soil_boundary_c": 20.0
+  },
+  "event_log": [
+    {
+      "event": "campaign_open",
+      "clock": 0
+    },
+    {
+      "event": "start",
+      "unit": "0",
+      "clock": 0,
+      "run_index": 1,
+      "policy": {
+        "day_temperature_c": 22,
+        "night_temperature_c": 18,
+        "co2_target_ppm": 800,
+        "supplemental_light_hours": 12,
+        "vent_temperature_offset_c": 4,
+        "vent_rh_threshold_pct": 85
+      }
+    },
+    {
+      "event": "start",
+      "unit": "1",
+      "clock": 0,
+      "run_index": 1,
+      "policy": {
+        "day_temperature_c": 21,
+        "night_temperature_c": 17,
+        "co2_target_ppm": 700,
+        "supplemental_light_hours": 10,
+        "vent_temperature_offset_c": 4,
+        "vent_rh_threshold_pct": 85
+      }
+    },
+    {
+      "event": "observe",
+      "unit": "0",
+      "clock": 1209600,
+      "mode": "full"
+    },
+    {
+      "event": "stop",
+      "unit": "0",
+      "clock": 1209600
+    },
+    {
+      "event": "start",
+      "unit": "2",
+      "clock": 1209600,
+      "run_index": 1,
+      "policy": {
+        "day_temperature_c": 22,
+        "night_temperature_c": 18,
+        "co2_target_ppm": 800,
+        "supplemental_light_hours": 12,
+        "vent_temperature_offset_c": 4,
+        "vent_rh_threshold_pct": 85
+      }
+    },
+    {
+      "event": "cleanup_complete",
+      "unit": "0",
+      "clock": 1382400
+    },
+    {
+      "event": "start",
+      "unit": "0",
+      "clock": 1382400,
+      "run_index": 2,
+      "policy": {
+        "day_temperature_c": 20,
+        "night_temperature_c": 16,
+        "co2_target_ppm": 600,
+        "supplemental_light_hours": 8,
+        "vent_temperature_offset_c": 4,
+        "vent_rh_threshold_pct": 85
+      }
+    },
+    {
+      "event": "start",
+      "unit": "3",
+      "clock": 2592000,
+      "run_index": 1,
+      "policy": {
+        "day_temperature_c": 21,
+        "night_temperature_c": 17,
+        "co2_target_ppm": 700,
+        "supplemental_light_hours": 10,
+        "vent_temperature_offset_c": 4,
+        "vent_rh_threshold_pct": 85
+      }
+    },
+    {
+      "event": "stop",
+      "unit": "3",
+      "clock": 5184000
+    },
+    {
+      "event": "cleanup_complete",
+      "unit": "3",
+      "clock": 5356800
+    },
+    {
+      "event": "normal_completion",
+      "unit": "1",
+      "clock": 15552000
+    },
+    {
+      "event": "cleanup_complete",
+      "unit": "1",
+      "clock": 15724800
+    },
+    {
+      "event": "normal_completion",
+      "unit": "2",
+      "clock": 16761600
+    },
+    {
+      "event": "normal_completion",
+      "unit": "0",
+      "clock": 16934400
+    },
+    {
+      "event": "cleanup_complete",
+      "unit": "2",
+      "clock": 16934400
+    },
+    {
+      "event": "cleanup_complete",
+      "unit": "0",
+      "clock": 17107200
+    },
+    {
+      "event": "recommend",
+      "clock": 31536000,
+      "fallback": false
+    }
+  ],
+  "trace_ticks": 105120,
+  "trace_sha256": "0dde5c0c445d257c089498360ca6de3615e3dfb1a999d64da82e3d166abb08e7",
+  "final_clock": 31536000,
+  "elapsed_seconds": 1849.4702057199993,
+  "peak_rss_kib_linux": 297560,
+  "completed_days": 365.0
+}
