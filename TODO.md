@@ -14,7 +14,7 @@
 - [x] 在 `pyproject.toml` 声明 GreenLight 为 pinned 可选依赖（git+commit）；保留 `--source` 路径方式 → `slowlab/greenlight_source.py`、`tests/test_greenlight_source.py`
 - [x] 清点 `scripts/`：删除已被全年运行取代的一次性短测脚本，保留 verify/audit/annual 三类 → 45 个减为 23 个，`docs/` 14 篇减为 12 篇
 
-验收：不用 LLM，脚本可完成含中途观察、改变下一实验、停止/重种的整场活动，并在不利结果下完整结算（已通过）；噪声与通用执行器补齐后重新跑一次四隔间全年并审计。
+验收：不用 LLM，脚本可完成含中途观察、改变下一实验、停止/重种的整场活动，并在不利结果下完整结算（已通过）；噪声与通用执行器补齐后重新跑一次四隔间全年并审计（**已通过，2026-09-30** → `results/noise_annual_result.json`、`results/noise_annual_audit.json`）。**Phase 1 完成。**
 
 ## Phase 2：算力预算、代理接口与强基线
 
