@@ -34,6 +34,29 @@ def _seconds(day: Real, limit_days: Real, tick_seconds: int) -> int:
     return int(rounded)
 
 
+NATIVE_SOIL_BOUNDARY_C = 20.0
+
+
+def resolve_soil_boundary(contract: dict, site_value=None) -> float:
+    """Deep-soil boundary for one campaign (contract v4 ``facility.deep_soil_boundary``).
+
+    Without a site value the development default applies (the pinned native
+    20 C for contracts that predate v4). A site value must lie inside the
+    contract's declared site range; it is private site information.
+    """
+    spec = contract['facility'].get('deep_soil_boundary')
+    if site_value is None:
+        return float(spec['development_default_c']) if spec else NATIVE_SOIL_BOUNDARY_C
+    if isinstance(site_value, bool) or not isinstance(site_value, Real) or not math.isfinite(site_value):
+        raise ValueError('deep-soil boundary must be a finite number')
+    if spec is None:
+        raise ValueError('this contract declares no deep-soil site parameter')
+    low, high = spec['site_parameter']['range_c']
+    if not low <= site_value <= high:
+        raise ValueError(f'deep-soil boundary outside the declared site range [{low}, {high}] C')
+    return float(site_value)
+
+
 class CampaignExecutor:
     """Executor-owned physical campaign, with a JSON-only public dispatch surface.
 
@@ -47,10 +70,11 @@ class CampaignExecutor:
                  origin_utc: datetime = datetime(2016, 12, 31, 23, tzinfo=timezone.utc),
                  lifecycle_factory=CropLifecycle, sample_endpoint=None,
                  native_rhs: bool = True, trace_sink=None, progress_hook=None,
-                 sensor_noise=None):
+                 sensor_noise=None, soil_boundary_c=None):
         if feedback_mode not in ('full', 'endpoint'):
             raise ValueError('invalid feedback mode')
         validate_policy(contract, fallback_policy)
+        self.soil_boundary_c = resolve_soil_boundary(contract, soil_boundary_c)
         self._noise = sensor_noise
         self._sensor_detail = {}
         if sensor_noise is not None:
@@ -99,7 +123,7 @@ class CampaignExecutor:
             self._lifecycles[unit] = lifecycle_factory(
                 contract, source, start=0, cached_solver=True, native_rhs=native_rhs,
                 weather=weather, weather_origin_utc=origin_utc,
-                soil_boundary_c=20., array_output=True, initially_empty=True)
+                soil_boundary_c=self.soil_boundary_c, array_output=True, initially_empty=True)
             self._ledgers[unit] = ResourceLedger(contract, 0)
         for unit in self.units:
             self._sample_endpoint(self._lifecycles[unit].engine, weather, origin_utc,
@@ -335,4 +359,5 @@ class CampaignExecutor:
                 'trace_ticks': self._trace_ticks,
                 'trace_sha256': self._trace_sha256.hexdigest() if self._trace_sink is not None else None,
                 'trace_complete': self._trace_sink is not None,
-                'sensor_noise': self._noise.describe() if self._noise is not None else None}
+                'sensor_noise': self._noise.describe() if self._noise is not None else None,
+                'deep_soil_boundary_c': self.soil_boundary_c}

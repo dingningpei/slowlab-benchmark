@@ -8,7 +8,7 @@
 已通过：模型复用、编译 RHS、空隔间模式、因果观测、四隔间同步、单/四隔间全年、事件驱动全年活动、深土壤全年配对、2014 天气读取。剩余：
 
 - [x] 冻结独立于 site/天气真值的测量噪声与缺测假设；实现同一 (隔间, 通道, 时刻) 只采样一次、可重复查询的缓存与审计 → `configs/sensor_noise_v0.json`、`results/sensor_noise_v0_prefix_check.json`
-- [ ] 冻结深土壤默认边界（8 或 20 °C）及其披露方式；写入合同 v4
+- [x] 冻结深土壤默认边界（8 或 20 °C）及其披露方式；写入合同 v4 → `configs/task_contract_v4.json`（开发期沿用原生 20 °C；Phase 3 起为 8–20 °C 私有 site 参数）
 - [ ] 执行器去掉四单元硬编码，policy 改为 schema 对象；从合同读取隔间数
 - [ ] 范围审计改为区分物理错误、来源外推、声明假设三类，不靠删 site 通过
 - [ ] 在 `pyproject.toml` 声明 GreenLight 为 pinned 可选依赖（git+commit）；保留 `--source` 路径方式
@@ -32,7 +32,7 @@
 
 ## Phase 3：site 分布、生成与评分协议冻结
 
-- [ ] 定义 site = {设施参数扰动, 作物参数扰动, 价格情景, 天气年份块, 噪声种子}；写 `configs/site_distribution_v0.json`；保留 prior 很强的合理 sites
+- [ ] 定义 site = {设施参数扰动, 作物参数扰动, 深土壤边界温度（8–20 °C，合同 v4）, 价格情景, 天气年份块, 噪声种子}；写 `configs/site_distribution_v0.json`；保留 prior 很强的合理 sites
 - [ ] 分开开发 / pilot / test sites；记录全部生成、排除与版本信息
 - [ ] 私有 seed 带盐 commitment；artifact、文件名、日志附件防泄漏检查
 - [ ] 隔离的推荐评测器：独立天气副本；Monte Carlo 误差小于要报告的差异
