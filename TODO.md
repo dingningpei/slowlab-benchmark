@@ -21,7 +21,7 @@
 - [x] 实测四隔间全年耗时与并行扩展（改为本地 i7-10700K WSL2，不租服务器）：两项不改数值的优化后每场约 0.52 h，12 worker 约 23 场/小时，1,024 场约 1.84 天 → `results/annual12_wsl_20260930_0df43c9.json`、`results/compute_scaling_wsl_20260930_0df43c9.json`
 - [ ] Phase 3 定出 N 后，给出 N × 隔间 × 副本（含评测副本、pilot、重跑）的算力表
 - [x] `slowlab/agent_api.py`：子进程 + JSON 行协议包住 `CampaignExecutor.dispatch`；代理拿不到任何 Python 对象、文件、网络 → `slowlab/agent_protocol.py`、`executor_server.py`、`agent_client.py`，`tests/test_agent_api.py`，`results/agent_api_prefix_check.json`
-- [ ] 公共工具集（查询、汇总、GP 拟合、候选预测）：独立工具随机种子；输入输出与数值预算冻结
+- [x] 公共工具集（查询、汇总、GP 拟合、候选预测）：独立工具随机种子；输入输出与数值预算冻结 → `slowlab/tools.py`（analysis-tools-v1，最终锁定在 Phase 4）、`tests/test_tools.py`
 - [ ] 测试：公开历史相同、私有 seed/latent/future 不同 → prompt 与工具输出逐字节相同
 - [ ] 防火墙阻断改为硬错误并持久化；出站 payload 审计副本、hash、协议版本
 - [ ] 实现支持过程观测、错峰启动/停止和资源约束的 GP/BO 策略；只在开发集调参

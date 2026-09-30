@@ -287,13 +287,17 @@ class CampaignExecutor:
 
     def _observe(self, unit: str, action: dict) -> dict:
         view = self._view()
+        run_index = action.get('run_index')
+        if run_index is not None and (type(run_index) is not int or run_index < 1):
+            raise ValueError('run_index must be a positive integer')
         payload = {'event': 'observe', 'clock': self.clock,
-                   'status': view.operational_status(unit)}
+                   'status': view.operational_status(unit),
+                   # Both conditions receive closed-crop totals; Full adds records.
+                   'final_aggregate': view.final_aggregate(unit, run_index)}
         if self.feedback_mode == 'endpoint':
             if any(key in action for key in ('variable', 'start_day', 'end_day')):
                 raise PermissionError('endpoint cannot request science history')
-            payload['final_aggregate'] = view.final_aggregate(unit)
-        else:
+        elif 'variable' in action:
             variable = action.get('variable')
             if variable not in self.contract['observations']['public_channels']:
                 raise ValueError('unknown public variable')
@@ -349,7 +353,7 @@ class CampaignExecutor:
                 raise ValueError('invalid stop fields')
             return self._stop(self._unit(action['unit']), 'stop')
         if kind == 'observe':
-            if not set(action) <= {'action', 'unit', 'variable', 'start_day', 'end_day'} or 'unit' not in action:
+            if not set(action) <= {'action', 'unit', 'variable', 'start_day', 'end_day', 'run_index'} or 'unit' not in action:
                 raise ValueError('invalid observation fields')
             return self._observe(self._unit(action['unit']), action)
         if kind == 'advance':

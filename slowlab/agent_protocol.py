@@ -46,7 +46,8 @@ def _finite(value) -> bool:
 ACTION_SCHEMAS = {
     'start': {'unit': 'integer compartment index', 'policy': 'object with exactly the policy fields'},
     'observe': {'unit': 'integer compartment index',
-                'variable': 'full feedback only: a public channel name',
+                'run_index': 'optional: which crop of this compartment (1 = first); default the latest closed one',
+                'variable': 'full feedback only, optional: a public channel name',
                 'start_day': 'full feedback only: optional, day number at a 300-second boundary',
                 'end_day': 'full feedback only: optional, day number at a 300-second boundary, not in the future'},
     'advance': {'day': 'target day number at a 300-second boundary, not earlier than now'},
