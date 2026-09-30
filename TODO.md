@@ -25,6 +25,8 @@
 - [ ] 测试：公开历史相同、私有 seed/latent/future 不同 → prompt 与工具输出逐字节相同
 - [ ] 防火墙阻断改为硬错误并持久化；出站 payload 审计副本、hash、协议版本
 - [ ] 实现支持过程观测、错峰启动/停止和资源约束的 GP/BO 策略；只在开发集调参
+  - [x] gp-bo-v2：两波与错峰两种调度，种植季节入 GP，EI 与推荐针对合同 v5 的两季平均评分 → `slowlab/bo_agent.py`、`results/bo_dev_runs_20260930.json`
+  - [ ] 过程感知部分：用 Phase 3 开发 site 训练过程预测器后接入错峰调度（2026-09-30 决定；「至今毛利」在第 90 天几乎无信息）
 - [ ] 实现实验前推荐与固定管理参照；不调用私有 oracle
 - [ ] 实现同一初始快照的 Full/Endpoint 分支与匹配预算；科学观测严格隔离
 - [ ] 新的 LLM 循环（不复用 `legacy/v2.1` 的 TOMGRO harness）：决策点调用、上下文管理、失败处理
@@ -34,6 +36,7 @@
 ## Phase 3：site 分布、生成与评分协议冻结
 
 - [ ] 定义 site = {设施参数扰动, 作物参数扰动, 深土壤边界温度（8–20 °C，合同 v4）, 价格情景, 天气年份块, 噪声种子}；写 `configs/site_distribution_v0.json`；保留 prior 很强的合理 sites
+- [ ] 用开发 site 训练过程预测器（在季内记录→整季毛利），并作为公共工具提供给 LLM；BO 的错峰调度使用同一预测器
 - [ ] 分开开发 / pilot / test sites；记录全部生成、排除与版本信息
 - [ ] 私有 seed 带盐 commitment；artifact、文件名、日志附件防泄漏检查
 - [ ] 隔离的推荐评测器：独立天气副本；Monte Carlo 误差小于要报告的差异

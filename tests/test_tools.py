@@ -13,7 +13,7 @@ from slowlab.prompt_firewall import assert_outbound_messages_safe, load_blinding
 from slowlab.tools import LIMITS, PublicHistory, ToolError, Toolbox, contribution_margin
 
 ROOT = Path(__file__).resolve().parents[1]
-CONTRACT = json.loads((ROOT / 'configs/task_contract_v4.json').read_text())
+CONTRACT = json.loads((ROOT / 'configs/task_contract_v5.json').read_text())
 POLICIES = json.loads((ROOT / 'configs/campaign_example_v0.json').read_text())
 TASK = public_task_view(CONTRACT, 'full')
 TICK_DAY = 300 / 86400
@@ -78,9 +78,11 @@ def test_tool_outputs_are_identical_across_private_inputs_and_repeatable(tmp_pat
 # ── pure-function tests with a stub session ──────────────────────────────
 
 def stub_session(runs):
-    """runs: list of (policy, margin-like harvest) turned into a public transcript."""
-    transcript, clock = [], 0
-    for index, (policy, harvest) in enumerate(runs):
+    """runs: list of (policy, harvest[, start_day]) turned into a public transcript."""
+    transcript = []
+    for index, run in enumerate(runs):
+        policy, harvest = run[0], run[1]
+        clock = (run[2] if len(run) > 2 else 0) * 86400
         unit = index % 4
         run_index = index // 4 + 1
         transcript.append({'ok': True, 'request': {'action': 'start', 'unit': unit, 'policy': policy},
@@ -120,7 +122,7 @@ def test_outcome_model_recovers_a_smooth_response_and_reports_uncertainty():
     scales = fit['length_scales_fraction_of_range']
     assert scales['day_temperature_c'] < scales['vent_rh_threshold_pct']
     test_u = [np.array([0.6, 0.3, 0.4, 0.5, 0.5, 0.5]), np.array([0.05, 0.05, 0.95, 0.5, 0.5, 0.5])]
-    pred = box.call('predict', {'policies': [policy_at(u) for u in test_u]})['result']['predictions']
+    pred = box.call('predict', {'policies': [policy_at(u) for u in test_u], 'planting_day': 0})['result']['predictions']
     assert abs(pred[0]['margin_mean_eur_m2'] - truth(test_u[0])) < 5.0
     assert pred[0]['margin_mean_eur_m2'] > pred[1]['margin_mean_eur_m2']
     assert all(p['sd_of_single_crop'] >= p['sd_of_mean'] > 0 for p in pred)
@@ -174,3 +176,27 @@ def test_catalog_and_outputs_pass_the_blinding_firewall(tmp_path):
     text = canonical([Toolbox.catalog(), box.call('runs'), box.call('fit_outcome_model')])
     assert_outbound_messages_safe([{'role': 'user', 'content': text}], blinding)
     assert LIMITS['max_calls'] == 64 and not any(math.isnan(v) for v in [])
+
+
+def test_season_is_an_input_and_predict_targets_the_scoring_rule():
+    rng = np.random.default_rng(8)
+    price = TASK['economics']['fruit_price_eur_per_kg_fresh'] - TASK['economics']['harvest_handling_eur_per_kg']
+    runs = []
+    for u in rng.random((10, len(FIELDS))):
+        runs.append((policy_at(u), truth(u) / price, 0))
+        runs.append((policy_at(u), (truth(u) - 30.0) / price, 182))
+    box = Toolbox(stub_session(runs), 5)
+    fit = box.call('fit_outcome_model')['result']
+    assert set(fit['length_scales_fraction_of_range']) == set(FIELDS) | {'planting_season_sin', 'planting_season_cos'}
+    u = np.array([0.6, 0.3, 0.4, 0.5, 0.5, 0.5])
+    scored = box.call('predict', {'policies': [policy_at(u)]})['result']
+    assert scored['scoring_planting_days'] == [0, 182]
+    p = scored['predictions'][0]
+    jan, jul = p['margin_by_planting_day']['0'], p['margin_by_planting_day']['182']
+    assert jan - jul == pytest.approx(30.0, abs=6.0)
+    assert p['scored_mean_margin_eur_m2'] == pytest.approx((jan + jul) / 2, rel=1e-5)
+    assert p['sd_of_scored_mean'] > 0
+    july = box.call('predict', {'policies': [policy_at(u)], 'planting_day': 182})['result']['predictions'][0]
+    assert july['margin_mean_eur_m2'] == pytest.approx(jul, rel=1e-5)
+    with pytest.raises(ToolError, match='planting_day'):
+        box.call('predict', {'policies': [policy_at(u)], 'planting_day': 400})

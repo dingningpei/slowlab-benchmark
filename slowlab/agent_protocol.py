@@ -92,6 +92,7 @@ def public_task_view(contract: dict, feedback_mode: str) -> dict:
             'Every call counts against max_tool_calls; start, stop, observe and recommend also count against max_decision_calls.',
             'Your recommendation is scored later on independent growing seasons; the score is never shown to you.',
         ],
+        'scoring': None,
         'feedback': {'mode': feedback_mode,
                      'description': ('Every record measured so far can be queried at any time, without advancing time.'
                                      if feedback_mode == 'full' else
@@ -112,4 +113,14 @@ def public_task_view(contract: dict, feedback_mode: str) -> dict:
                       'background_service_eur_per_m2_day': economics['background_service_eur_per_m2_day'],
                       'objective': 'contribution margin of the recommended policy over one crop cycle; fixed capital costs excluded'},
     }
+    deployment = contract['evaluation'].get('deployment')
+    if deployment:
+        view['calendar']['campaign_day_0'] = '1 January, 00:00 local standard time'
+        view['scoring'] = {'planting_calendar_days': list(deployment['plantings_calendar_day']),
+                           'aggregation': deployment['aggregation'],
+                           'rule': ('Your recommended policy is scored as the mean contribution margin per m2 of two '
+                                    'crops grown under it in new, independent years: one planted on calendar day 0 '
+                                    '(1 January) and one planted on calendar day 182 (2 July), each running crop_days. '
+                                    'The score is never shown to you.')}
+        view['rules'][-1] = view['scoring']['rule']
     return view

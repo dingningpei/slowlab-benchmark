@@ -41,6 +41,12 @@ def _path(value) -> Path | None:
 def build_executor(spec: dict):
     from .campaign_executor import CampaignExecutor
     contract = json.loads(_path(spec['contract']).read_text())
+    origin = datetime.fromisoformat(spec['origin_utc'])
+    if contract['evaluation'].get('deployment'):
+        # Campaign day 0 is 1 January, 00:00 CET (UTC+1) for every site.
+        if (origin.utcoffset() is None or origin.utcoffset().total_seconds() != 0
+                or (origin.month, origin.day, origin.hour, origin.minute) != (12, 31, 23, 0)):
+            raise ValueError('origin_utc must be 31 December 23:00 UTC (1 January 00:00 CET)')
     kwargs = dict(feedback_mode=spec['feedback_mode'], fallback_policy=spec['fallback_policy'],
                   origin_utc=datetime.fromisoformat(spec['origin_utc']),
                   soil_boundary_c=spec.get('soil_boundary_c'))

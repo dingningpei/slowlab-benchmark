@@ -18,8 +18,11 @@ Schedules (choose on development sites only):
   improvement; under Endpoint feedback, continue the space-filling design. The
   second wave is chosen as in ``two_waves``.
 
-The final recommendation maximises the GP posterior mean over the candidate
-pool and every completed policy.
+Completed crops enter the GP with their planting date (position in the year).
+Second-wave expected improvement and the final recommendation target the
+scoring rule of the task: the mean margin over its planting dates (contract
+v5: 1 January and 2 July). The final recommendation maximises that posterior
+mean over the candidate pool and every completed policy.
 """
 from __future__ import annotations
 
@@ -28,9 +31,9 @@ from dataclasses import asdict, dataclass
 
 import numpy as np
 
-from .tools import OutcomeModel, contribution_margin
+from .tools import OutcomeModel, contribution_margin, scoring_days, season_features
 
-BO_VERSION = 'gp-bo-v1'
+BO_VERSION = 'gp-bo-v2'
 CUMULATIVE = ('cumulative_harvest_fresh_equivalent', 'heating_energy', 'lighting_energy', 'co2_dosed')
 
 
@@ -78,6 +81,9 @@ class GPBOAgent:
         spec = self.task['policy']['fields']
         return np.array([(policy[k] - spec[k]['min']) / (spec[k]['max'] - spec[k]['min']) for k in self.fields])
 
+    def _row(self, policy, planting_day):
+        return np.concatenate([self._scale(policy), season_features(planting_day)])
+
     def _make_pool(self):
         from scipy.stats import qmc
         spec = self.task['policy']['fields']
@@ -110,7 +116,7 @@ class GPBOAgent:
         run = next(r for r in self.started if r['unit'] == unit and r['run_index'] == run_index)
         if aggregate and aggregate['reason'] == 'normal_completion':
             margin = contribution_margin(aggregate['accrued'], aggregate['event_cost_eur_m2'], self.task['economics'])
-            self.completed.append((self._scale(run['policy']), margin, run['policy']))
+            self.completed.append((self._row(run['policy'], run['start_day']), margin, run['policy']))
             run['margin'] = margin
         run['closed'] = aggregate['reason'] if aggregate else None
 
@@ -151,12 +157,10 @@ class GPBOAgent:
         return chosen
 
     def _batch_ei(self, model, best, n, pending=()):
+        """Policy-only model (interim margins of same-season crops)."""
         if model is None:
             return self._space_filling(n)
         available = self._unused()
-        if pending:
-            mean, _, _ = model.predict(np.array(pending))
-            model = model.with_fantasies(pending, mean)
         chosen = []
         for _ in range(n):
             xs = self._pool_x[available]
@@ -168,6 +172,32 @@ class GPBOAgent:
                                    'predicted_mean': float(mean[j]), 'predicted_sd': float(sd[j])}))
             model = model.with_fantasies([self._pool_x[index]], [mean[j]])
             best = max(best, float(mean[j]))
+        return chosen
+
+    def _scored_ei(self, model, n, planting_day, pending=()):
+        """Batch EI on the scored objective (mean over scoring plantings), kriging believer."""
+        if model is None:
+            return self._space_filling(n)
+        days = scoring_days(self.task)
+        if pending:
+            mean, _, _ = model.predict(np.array(pending))
+            model = model.with_fantasies(pending, mean)
+        available = self._unused()
+        chosen = []
+        for _ in range(n):
+            tried = np.array([self._scale(p) for _, _, p in self.completed] +
+                             [self._pool_x[i] for i, _ in chosen])
+            incumbent = float(model.predict_average(tried, days)[0].max())
+            mean, sd, _ = model.predict_average(self._pool_x[available], days)
+            ei = expected_improvement(mean, sd, incumbent, self.config.xi)
+            j = int(np.argmax(ei))
+            index = available.pop(j)
+            chosen.append((index, {'basis': 'expected_improvement', 'ei': float(ei[j]),
+                                   'predicted_mean': float(mean[j]), 'predicted_sd': float(sd[j]),
+                                   'objective': 'scored_mean_over_plantings'}))
+            row = np.concatenate([self._pool_x[index], season_features(planting_day)])
+            believed, _, _ = model.predict(row[None, :])
+            model = model.with_fantasies([row], believed)
         return chosen
 
     def _start(self, units, picks):
@@ -210,9 +240,8 @@ class GPBOAgent:
             for run in [r for r in self.started if r['unit'] in first]:
                 self._collect_final(run['unit'], run['run_index'])
             model = self._fit([x for x, _, _ in self.completed], [m for _, m, _ in self.completed])
-            best = max((m for _, m, _ in self.completed), default=0.0)
-            pending = [self._scale(r['policy']) for r in self.started if 'closed' not in r]
-            self._start(first, self._batch_ei(model, best, len(first), pending))
+            pending = [self._row(r['policy'], r['start_day']) for r in self.started if 'closed' not in r]
+            self._start(first, self._scored_ei(model, len(first), self.clock_day, pending))
 
         self._advance(end)
         for run in [r for r in self.started if 'closed' not in r]:
@@ -235,7 +264,7 @@ class GPBOAgent:
         if model is None:
             best = max(self.completed, key=lambda row: row[1])
             return dict(best[2]), {'basis': 'best_observed', 'observed_margin': best[1]}
-        mean, sd, _ = model.predict(cand_x)
+        mean, sd, per_day = model.predict_average(cand_x, scoring_days(self.task))
         j = int(np.argmax(mean))
-        return dict(candidates[j]), {'basis': 'max_posterior_mean', 'predicted_mean': float(mean[j]),
-                                     'predicted_sd': float(sd[j])}
+        return dict(candidates[j]), {'basis': 'max_posterior_scored_mean', 'predicted_mean': float(mean[j]),
+                                     'predicted_sd': float(sd[j]), 'predicted_by_planting_day': per_day[j]}

@@ -8,7 +8,7 @@ from slowlab.agent_client import CampaignProcess
 from slowlab.bo_agent import BOConfig, GPBOAgent
 
 ROOT = Path(__file__).resolve().parents[1]
-CONTRACT = json.loads((ROOT / 'configs/task_contract_v4.json').read_text())
+CONTRACT = json.loads((ROOT / 'configs/task_contract_v5.json').read_text())
 POLICIES = json.loads((ROOT / 'configs/campaign_example_v0.json').read_text())
 TICK_DAY = 300 / 86400
 
@@ -51,8 +51,9 @@ def test_two_waves_completes_eight_crops_within_budget(tmp_path):
     assert settlement['tool_calls'] <= budget['max_tool_calls']
     assert all(entry['ok'] for entry in transcript)
     rec = summary['log'][-1]
-    assert rec['basis'] == 'max_posterior_mean'
-    assert rec['predicted_mean'] >= sum(m for _, m, _ in agent.completed) / len(agent.completed)
+    assert rec['basis'] == 'max_posterior_scored_mean'
+    assert len(rec['predicted_by_planting_day']) == 2
+    assert all(e.get('objective') == 'scored_mean_over_plantings' for e in starts[4:])
 
 
 def test_same_seed_repeats_and_other_seed_differs(tmp_path):

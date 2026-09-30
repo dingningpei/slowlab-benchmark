@@ -36,13 +36,17 @@ CATALOG = {
                        'args': {'unit': 'integer compartment index', 'variable': 'public channel name',
                                 'start_day': 'optional first day', 'end_day': 'optional last day'}},
     'fit_outcome_model': {'description': 'Fit a Gaussian-process model of contribution margin per m2 over one full '
-                                         'crop cycle as a function of the policy, using completed crops only. '
-                                         'Returns the number of crops used, fitted length scales per policy field '
-                                         '(larger means less sensitive), noise level and leave-one-out error.',
+                                         'crop cycle as a function of the policy and the planting date (as a '
+                                         'position in the year), using completed crops only. Returns the number of '
+                                         'crops used, fitted length scales per input (larger means less sensitive), '
+                                         'noise level and leave-one-out error.',
                           'args': {}},
-    'predict': {'description': 'Predicted contribution margin per m2 over one crop cycle, with standard deviation, '
-                               'for up to 32 policies, from the model fitted to your completed crops.',
-                'args': {'policies': 'list of policy objects'}},
+    'predict': {'description': 'Predicted contribution margin per m2 over one crop cycle for up to 32 policies, from '
+                               'the model fitted to your completed crops. By default: one prediction per planting '
+                               'date of the scoring rule and their mean, which is what your recommendation is scored '
+                               'on. With planting_day: that planting date only.',
+                'args': {'policies': 'list of policy objects',
+                         'planting_day': 'optional calendar day of planting (0-364)'}},
     'space_filling_candidates': {'description': 'Up to 64 feasible policies spread evenly over the allowed ranges, '
                                                 'optionally holding some fields fixed.',
                                  'args': {'n': 'number of policies', 'fixed': 'optional object of field: value'}},
@@ -113,6 +117,20 @@ def contribution_margin(accrued: dict, event_cost_eur_m2: float, economics: dict
     return revenue - costs
 
 
+SEASON_INPUTS = ('planting_season_sin', 'planting_season_cos')
+
+
+def season_features(day: float) -> list[float]:
+    """Planting date as a position in the year, scaled like the policy inputs to [0, 1]."""
+    angle = 2.0 * math.pi * (float(day) % 365.0) / 365.0
+    return [0.5 * (1.0 + math.sin(angle)), 0.5 * (1.0 + math.cos(angle))]
+
+
+def scoring_days(task: dict) -> list:
+    scoring = task.get('scoring')
+    return list(scoring['planting_calendar_days']) if scoring else [0]
+
+
 def _matern52(a, b, lengthscales):
     diff = (a[:, None, :] - b[None, :, :]) / lengthscales
     r = np.sqrt(np.maximum((diff ** 2).sum(-1), 0.0))
@@ -172,6 +190,25 @@ class OutcomeModel:
         var = np.maximum(self.sf2 - np.einsum('ij,jk,ik->i', ks, self.k_inv, ks), 1e-12)
         return mean * self.y_std + self.y_mean, np.sqrt(var) * self.y_std, np.sqrt(var + self.sn2) * self.y_std
 
+    def predict_joint(self, xs):
+        """Posterior mean and latent covariance (original units) at several inputs."""
+        ks = self.sf2 * _matern52(xs, self.x, self.lengthscales)
+        cov = self.sf2 * _matern52(xs, xs, self.lengthscales) - ks @ self.k_inv @ ks.T
+        return (ks @ self.alpha) * self.y_std + self.y_mean, cov * self.y_std ** 2
+
+    def predict_average(self, policies_x, days):
+        """Mean over planting days of each policy's margin: mean, sd of that mean, per-day means."""
+        seasons = [season_features(d) for d in days]
+        means, sds, per_day = [], [], []
+        for x in np.asarray(policies_x, dtype=float):
+            rows = np.array([list(x) + s for s in seasons])
+            mean, cov = self.predict_joint(rows)
+            weights = np.full(len(days), 1.0 / len(days))
+            means.append(float(weights @ mean))
+            sds.append(math.sqrt(max(float(weights @ cov @ weights), 1e-12)))
+            per_day.append(mean.tolist())
+        return np.array(means), np.array(sds), per_day
+
 
 class Toolbox:
     def __init__(self, session, tool_seed: int, *, max_calls: int = LIMITS['max_calls']):
@@ -223,8 +260,8 @@ class Toolbox:
     def _completed(self, task, history):
         rows = []
         for run in history.runs.values():
-            if run.get('reason') == 'normal_completion' and run.get('policy'):
-                rows.append((self._scale(task, run['policy']),
+            if run.get('reason') == 'normal_completion' and run.get('policy') and run.get('start_day') is not None:
+                rows.append((self._scale(task, run['policy']) + season_features(run['start_day']),
                              contribution_margin(run['accrued'], run['event_cost_eur_m2'], task['economics']), run))
         rows.sort(key=lambda row: (row[2]['unit'], row[2]['run_index']))
         return rows
@@ -272,7 +309,8 @@ class Toolbox:
         model, rows = self._model(task, history)
         return {'completed_crops_used': len(rows),
                 'mean_margin_eur_m2': model.y_mean,
-                'length_scales_fraction_of_range': dict(zip(self._fields(task), model.lengthscales.tolist())),
+                'length_scales_fraction_of_range': dict(zip(list(self._fields(task)) + list(SEASON_INPUTS),
+                                                            model.lengthscales.tolist())),
                 'noise_sd_eur_m2': math.sqrt(model.sn2) * model.y_std,
                 'leave_one_out_rmse_eur_m2': model.loo_rmse}
 
@@ -282,11 +320,22 @@ class Toolbox:
             raise ToolError(f"predict needs 1 to {LIMITS['max_predict_policies']} policies")
         xs = np.array([self._scale(task, p) for p in policies], dtype=float)
         model, rows = self._model(task, history)
-        mean, sd_mean, sd_obs = model.predict(xs)
-        return {'completed_crops_used': len(rows),
-                'predictions': [{'policy': p, 'margin_mean_eur_m2': float(m), 'sd_of_mean': float(a),
-                                 'sd_of_single_crop': float(b)}
-                                for p, m, a, b in zip(policies, mean, sd_mean, sd_obs)]}
+        day = args.get('planting_day')
+        if day is not None:
+            if isinstance(day, bool) or not isinstance(day, (int, float)) or not 0 <= day < 365:
+                raise ToolError('planting_day must be a calendar day from 0 to 364')
+            rows_x = np.array([list(x) + season_features(day) for x in xs])
+            mean, sd_mean, sd_obs = model.predict(rows_x)
+            return {'completed_crops_used': len(rows), 'planting_day': day,
+                    'predictions': [{'policy': p, 'margin_mean_eur_m2': float(m), 'sd_of_mean': float(a),
+                                     'sd_of_single_crop': float(b)}
+                                    for p, m, a, b in zip(policies, mean, sd_mean, sd_obs)]}
+        days = scoring_days(task)
+        mean, sd, per_day = model.predict_average(xs, days)
+        return {'completed_crops_used': len(rows), 'scoring_planting_days': days,
+                'predictions': [{'policy': p, 'scored_mean_margin_eur_m2': float(m), 'sd_of_scored_mean': float(s),
+                                 'margin_by_planting_day': dict(zip([str(d) for d in days], pd))}
+                                for p, m, s, pd in zip(policies, mean, sd, per_day)]}
 
     def _space_filling_candidates(self, task, history, args):
         from scipy.stats import qmc

@@ -12,7 +12,7 @@ from slowlab.executor_server import serve
 from slowlab.prompt_firewall import assert_outbound_messages_safe, load_blinding_policy
 
 ROOT = Path(__file__).resolve().parents[1]
-CONTRACT = json.loads((ROOT / 'configs/task_contract_v4.json').read_text())
+CONTRACT = json.loads((ROOT / 'configs/task_contract_v5.json').read_text())
 POLICIES = json.loads((ROOT / 'configs/campaign_example_v0.json').read_text())
 BLINDING = load_blinding_policy(ROOT / 'configs/simulation_blinding_v2_2.json')
 TICK_DAY = 300 / 86400
@@ -135,3 +135,11 @@ def test_malformed_requests_end_the_server_with_a_protocol_error(tmp_path):
     out = io.StringIO()
     code = serve(spec, io.StringIO(canonical({'protocol': PROTOCOL, 'id': 2, 'op': 'hello'}) + '\n'), out)
     assert code == 2
+
+
+def test_sites_must_start_on_1_january(tmp_path):
+    from slowlab.agent_client import CampaignProcess
+    spec, folder = site_spec(tmp_path, 'a', origin='2016-06-30T23:00:00+00:00')
+    with pytest.raises(InfrastructureFailure):
+        CampaignProcess(spec, private_log=folder / 'server.log')
+    assert '1 January' in (folder / 'server.log').read_text()

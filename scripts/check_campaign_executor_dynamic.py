@@ -32,7 +32,7 @@ def main():
                         help='development sensor-noise seed; omit for deterministic virtual sensors')
     parser.add_argument('--noise-config', type=Path, default=ROOT / 'configs/sensor_noise_v0.json')
     parser.add_argument('--noise-setting', default='main')
-    parser.add_argument('--contract', type=Path, default=ROOT / 'configs/task_contract_v4.json')
+    parser.add_argument('--contract', type=Path, default=ROOT / 'configs/task_contract_v5.json')
     args = parser.parse_args()
     contract = json.loads(args.contract.read_text())
     pinned_noise = contract['observations'].get('noise')
