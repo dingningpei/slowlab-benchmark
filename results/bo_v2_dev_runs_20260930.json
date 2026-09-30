@@ -161,7 +161,8 @@
           },
           "margin_eur_m2": 24.147507220322183
         }
-      ]
+      ],
+      "same_started_policies_note": "compared as a set; for seed 2 two second-wave policies went to different compartments"
     },
     "two_full_s2": {
       "bo_seed": 2,
@@ -204,7 +205,7 @@
         "vent_temperature_offset_c": 2.35
       },
       "season_blind_v1_predicted": 50.50819036804169,
-      "same_started_policies_as_v1": false,
+      "same_started_policies_as_v1": true,
       "completed_crops": [
         {
           "unit": 0,
@@ -318,7 +319,8 @@
           },
           "margin_eur_m2": 30.144676557486445
         }
-      ]
+      ],
+      "same_started_policies_note": "compared as a set; for seed 2 two second-wave policies went to different compartments"
     }
   },
   "findings": [
