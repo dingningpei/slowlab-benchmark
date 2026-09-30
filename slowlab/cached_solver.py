@@ -1,17 +1,43 @@
 """Cached compilation for the pinned numpy/LSODA GreenLight configuration.
 
-Retains all equations and all auxiliary outputs. No timestep/cadence changes.
-Uses the already hash-verified parser commands, never agent-provided code.
+Retains all equations. By default every auxiliary output is evaluated; with
+``outputs`` (array-output mode) only the named outputs and their dependency
+closure are, by the same statements in the same order, so the retained values
+are identical. No timestep/cadence changes. Uses the already hash-verified
+parser commands, never agent-provided code.
 """
 import math
+import re
 import warnings
+
+_NAME = re.compile(r'[A-Za-z_][A-Za-z0-9_]*')
+
+
+def output_closure(model, outputs):
+    """Names in ``model.solving_order`` needed to evaluate ``outputs``."""
+    definitions = {k: model.variables_formatted[k] for k in model.solving_order}
+    unknown = [k for k in outputs if k not in definitions and k != 'Time'
+               and k not in model.states and k not in model.inputs]
+    if unknown:
+        raise ValueError('requested outputs are not model variables: ' + ', '.join(sorted(unknown)))
+    needed, stack = set(), [k for k in outputs if k in definitions]
+    while stack:
+        key = stack.pop()
+        if key in needed:
+            continue
+        needed.add(key)
+        stack.extend(name for name in _NAME.findall(definitions[key])
+                     if name in definitions and name not in needed)
+    return [k for k in model.solving_order if k in needed]
 
 
 class CachedGreenLightSolver:
-    def __init__(self, model, *, array_output=False):
+    def __init__(self, model, *, array_output=False, outputs=None):
         import numpy as np
         self.model=model
         self.array_output=bool(array_output)
+        if outputs is not None and not self.array_output:
+            raise ValueError('selected outputs require array output')
         expected={'formatting_mode':'numpy','expand_variables':'False','solving_method':'solve_ivp_from_str',
                   'interpolation':'left','solver':'LSODA','t_eval':'None','clip_large_nums':'False','nans_to_zeros':'False'}
         if any(model.options[k]!=v for k,v in expected.items()):
@@ -27,7 +53,9 @@ class CachedGreenLightSolver:
                 ''.join('    '+command+'\n' for command in model.commands)+'    return dy\n')
         scope={'np':np};exec(compile(source,'<cached-greenlight-rhs>','exec'),scope)
         self.rhs=scope['rhs']
-        self.output_code=compile('\n'.join(k+' = '+model.variables_formatted[k] for k in model.solving_order),
+        evaluated=list(model.solving_order) if outputs is None else output_closure(model,tuple(outputs))
+        self.evaluated=tuple(evaluated)
+        self.output_code=compile('\n'.join(k+' = '+model.variables_formatted[k] for k in evaluated),
                                  '<cached-greenlight-aux>','exec')
 
     def _signature(self):
@@ -83,7 +111,7 @@ class CachedGreenLightSolver:
         values.update({k:sol.y[i] for i,k in enumerate(m.states)})
         values.update({k:np.full(len(sol.t),current(k)) for k in columns[1:]})
         exec(self.output_code,values)
-        order=['Time',*m.states,*columns[1:],*(k for k in m.solving_order if k in m.aux and k!='Time')]
+        order=['Time',*m.states,*columns[1:],*(k for k in self.evaluated if k in m.aux and k!='Time')]
         if self.array_output:
             # All native states and auxiliaries were still evaluated above; skip
             # only pandas packaging for the short-lived internal step result.

@@ -79,7 +79,7 @@ class ReusableGreenLight:
     COMMANDS = {'uBoil':'cmdHeat','uRoof':'cmdVent','uExtCo2':'cmdCo2','uLamp':'cmdLamp'}
 
     def __init__(self, contract, source: Path | None, start=21600., mode="active", cached_solver=False, native_rhs=False, *, weather=None, weather_origin_utc: datetime | None = None, soil_boundary_c: float | None = None, local_clock_offset_seconds: float = 0,
-                 array_output: bool = False):
+                 array_output: bool = False, outputs=None):
         if mode not in ("active", "empty"):
             raise ValueError("mode must be active or empty")
         if native_rhs and not cached_solver:
@@ -164,7 +164,7 @@ class ReusableGreenLight:
         self._cached_solver = None
         if cached_solver:
             from .cached_solver import CachedGreenLightSolver
-            self._cached_solver = CachedGreenLightSolver(self.model,array_output=array_output)
+            self._cached_solver = CachedGreenLightSolver(self.model,array_output=array_output,outputs=outputs)
             if native_rhs:
                 from .native_rhs import NativeRHS
                 self._cached_solver.rhs = NativeRHS(self.model)
@@ -223,13 +223,14 @@ class CropLifecycle:
     Costs and harvested output must be settled by the campaign ledger separately.
     """
     def __init__(self, contract, source, start=21600., cached_solver=False, native_rhs=False, *,
-                 weather=None, weather_origin_utc=None, soil_boundary_c=None, local_clock_offset_seconds=0, array_output=False, initially_empty=False):
+                 weather=None, weather_origin_utc=None, soil_boundary_c=None, local_clock_offset_seconds=0, array_output=False, initially_empty=False,
+                 outputs=None):
         self.engines = {m: ReusableGreenLight(contract, source, start, m, cached_solver=cached_solver,
                                               native_rhs=native_rhs, weather=weather,
                                               weather_origin_utc=weather_origin_utc,
                                               soil_boundary_c=soil_boundary_c,
                                               local_clock_offset_seconds=local_clock_offset_seconds,
-                                              array_output=array_output)
+                                              array_output=array_output, outputs=outputs)
                         for m in ('active', 'empty')}
         self.mode = 'empty' if initially_empty else 'active'
         self.crop_initial = {k: self.engines['active'].state[k] for k in CROP_STATES}

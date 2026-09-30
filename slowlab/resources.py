@@ -84,6 +84,10 @@ class ResourceLedger:
                 'scope':'single-compartment accrued ledger; not final campaign settlement'}
 
 
+# Model outputs integrated by ResourceLedger.add_segment.
+LEDGER_FLUXES = ('hBoilPipe', 'qLampIn', 'mcExtAir', 'mcFruitHar', 'mvCanAir')
+
+
 def realise_independent_commands(contract, requested):
     """Validate one synchronous tick of every compartment under explicitly adequate supply.
 

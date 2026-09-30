@@ -18,6 +18,10 @@ from datetime import timedelta
 from .public_sensors import public_endpoint_measurements
 
 
+# Model outputs read at the raw solver endpoint by ``indoor``.
+SENSOR_OUTPUTS = ('rhIn', 'co2InPpm')
+
+
 def indoor(engine):
     """Deterministic virtual indoor sensors read from the engine endpoint."""
     state = engine.state

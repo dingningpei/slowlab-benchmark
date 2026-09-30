@@ -19,8 +19,12 @@ from .policy import Policy
 from .controller import commands_from_observations
 from .feedback_view import FeedbackView
 from .greenlight_reuse import CropLifecycle
-from .resources import ResourceLedger, realise_independent_commands
-from .sensor_bridge import record_at_endpoint
+from .resources import LEDGER_FLUXES, ResourceLedger, realise_independent_commands
+from .sensor_bridge import SENSOR_OUTPUTS, record_at_endpoint
+
+# The only GreenLight outputs the executor reads; everything else in the model
+# still runs inside the ODE right-hand side.
+EXECUTOR_OUTPUTS = LEDGER_FLUXES + SENSOR_OUTPUTS
 
 
 def _seconds(day: Real, limit_days: Real, tick_seconds: int) -> int:
@@ -69,7 +73,7 @@ class CampaignExecutor:
                  origin_utc: datetime = datetime(2016, 12, 31, 23, tzinfo=timezone.utc),
                  lifecycle_factory=CropLifecycle, sample_endpoint=None,
                  native_rhs: bool = True, trace_sink=None, progress_hook=None,
-                 sensor_noise=None, soil_boundary_c=None):
+                 sensor_noise=None, soil_boundary_c=None, all_model_outputs: bool = False):
         if feedback_mode not in ('full', 'endpoint'):
             raise ValueError('invalid feedback mode')
         fallback_policy = Policy.from_payload(contract, fallback_policy)
@@ -123,7 +127,8 @@ class CampaignExecutor:
             self._lifecycles[unit] = lifecycle_factory(
                 contract, source, start=0, cached_solver=True, native_rhs=native_rhs,
                 weather=weather, weather_origin_utc=origin_utc,
-                soil_boundary_c=self.soil_boundary_c, array_output=True, initially_empty=True)
+                soil_boundary_c=self.soil_boundary_c, array_output=True, initially_empty=True,
+                outputs=None if all_model_outputs else EXECUTOR_OUTPUTS)
             self._ledgers[unit] = ResourceLedger(contract, 0)
         for unit in self.units:
             self._sample_endpoint(self._lifecycles[unit].engine, weather, origin_utc,
