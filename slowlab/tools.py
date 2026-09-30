@@ -14,6 +14,7 @@ agent: there is deliberately no acquisition optimiser here.
 """
 from __future__ import annotations
 
+import copy
 import hashlib
 import math
 
@@ -147,11 +148,23 @@ class OutcomeModel:
                 best = fit
         theta = best.x
         self.lengthscales, self.sf2, self.sn2 = np.exp(theta[:self.dim]), math.exp(theta[-2]), math.exp(theta[-1])
+        self._condition(x, z)
+        loo = z - self.alpha / np.diag(self.k_inv)
+        self.loo_rmse = float(np.sqrt(np.mean((z - loo) ** 2)) * self.y_std)
+
+    def _condition(self, x, z):
+        self.x = x
         k = self.sf2 * _matern52(x, x, self.lengthscales) + (self.sn2 + 1e-9) * np.eye(len(x))
         self.k_inv = np.linalg.inv(k)
         self.alpha = self.k_inv @ z
-        loo = z - self.alpha / np.diag(self.k_inv)
-        self.loo_rmse = float(np.sqrt(np.mean((z - loo) ** 2)) * self.y_std)
+        self.z = z
+
+    def with_fantasies(self, xs, ys) -> 'OutcomeModel':
+        """Same hyperparameters, conditioned on extra (x, y) pairs (kriging believer)."""
+        other = copy.copy(self)
+        zs = (np.asarray(ys, dtype=float) - self.y_mean) / self.y_std
+        other._condition(np.vstack([self.x, np.asarray(xs, dtype=float)]), np.concatenate([self.z, zs]))
+        return other
 
     def predict(self, xs):
         ks = self.sf2 * _matern52(xs, self.x, self.lengthscales)

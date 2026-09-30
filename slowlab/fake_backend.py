@@ -34,8 +34,13 @@ class FakeLifecycle:
         self.clock = float(end)
         self.state['tAir'] = 20.0 + commands['uBoil'] - commands['uRoof']
         zero = [0.0, 0.0]
-        self.model.full_sol = {'Time': [start, end], 'hBoilPipe': [10.0, 10.0], 'qLampIn': list(zero),
-                               'mcExtAir': list(zero), 'mcFruitHar': ([1.0, 1.0] if self.mode == 'active' else zero),
+        # Policy-dependent toy harvest: peaks near 20.6 C and rises with CO2 dosing,
+        # so tests can tell better policies from worse ones. Not a crop model.
+        harvest = (max(0.0, 1.0 - ((self.state['tAir'] - 20.6) / 0.8) ** 2) * (1.0 + 0.5 * commands['uExtCo2'])
+                   if self.mode == 'active' else 0.0)
+        heat = 10.0 + 40.0 * commands['uBoil']
+        self.model.full_sol = {'Time': [start, end], 'hBoilPipe': [heat, heat], 'qLampIn': list(zero),
+                               'mcExtAir': [50.0 * commands['uExtCo2']] * 2, 'mcFruitHar': [harvest, harvest],
                                'mvCanAir': ([1e-6, 1e-6] if self.mode == 'active' else zero)}
         return dict(self.state)
 
