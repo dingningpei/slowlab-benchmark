@@ -1,0 +1,329 @@
+{
+  "status": "development_bo_runs",
+  "date": "2026-09-30",
+  "code_commit": "6822860",
+  "bo_version": "gp-bo-v2",
+  "site": "development: 2017 Cabauw weather, native 20 C soil, sensor noise v0 seed 20260929, contract v5; not a formal site",
+  "comparison": "results/bo_dev_runs_20260930.json (gp-bo-v1, same seeds, identical first wave)",
+  "campaigns": {
+    "two_full_s1": {
+      "bo_seed": 1,
+      "elapsed_seconds": 1303.6,
+      "decision_calls": 17,
+      "recommendation": {
+        "co2_target_ppm": 632.13,
+        "day_temperature_c": 18.14,
+        "night_temperature_c": 15.09,
+        "supplemental_light_hours": 14.59,
+        "vent_rh_threshold_pct": 79.8,
+        "vent_temperature_offset_c": 4.05
+      },
+      "recommendation_basis": {
+        "day": 365.0,
+        "action": "recommend",
+        "policy": {
+          "co2_target_ppm": 632.13,
+          "day_temperature_c": 18.14,
+          "night_temperature_c": 15.09,
+          "supplemental_light_hours": 14.59,
+          "vent_rh_threshold_pct": 79.8,
+          "vent_temperature_offset_c": 4.05
+        },
+        "basis": "max_posterior_scored_mean",
+        "predicted_mean": 35.13656199092061,
+        "predicted_sd": 2.1087967149374394,
+        "predicted_by_planting_day": [
+          44.6285660444392,
+          25.644557937402023
+        ],
+        "fallback": false
+      },
+      "season_blind_v1_recommendation": {
+        "co2_target_ppm": 593.57,
+        "day_temperature_c": 18.4,
+        "night_temperature_c": 16.27,
+        "supplemental_light_hours": 7.74,
+        "vent_rh_threshold_pct": 84.19,
+        "vent_temperature_offset_c": 2.82
+      },
+      "season_blind_v1_predicted": 44.70789880579193,
+      "same_started_policies_as_v1": true,
+      "completed_crops": [
+        {
+          "unit": 0,
+          "run": 1,
+          "start_day": 0.0,
+          "policy": {
+            "co2_target_ppm": 748.69,
+            "day_temperature_c": 25.87,
+            "night_temperature_c": 20.93,
+            "supplemental_light_hours": 12.76,
+            "vent_rh_threshold_pct": 89.99,
+            "vent_temperature_offset_c": 3.16
+          },
+          "margin_eur_m2": 6.797968891744041
+        },
+        {
+          "unit": 0,
+          "run": 2,
+          "start_day": 182.0,
+          "policy": {
+            "co2_target_ppm": 834.85,
+            "day_temperature_c": 18.03,
+            "night_temperature_c": 16.46,
+            "supplemental_light_hours": 1.04,
+            "vent_rh_threshold_pct": 73.25,
+            "vent_temperature_offset_c": 2.58
+          },
+          "margin_eur_m2": 16.76955005688298
+        },
+        {
+          "unit": 1,
+          "run": 1,
+          "start_day": 0.0,
+          "policy": {
+            "co2_target_ppm": 961.92,
+            "day_temperature_c": 21.78,
+            "night_temperature_c": 17.38,
+            "supplemental_light_hours": 1.81,
+            "vent_rh_threshold_pct": 75.65,
+            "vent_temperature_offset_c": 5.73
+          },
+          "margin_eur_m2": 35.81516816016002
+        },
+        {
+          "unit": 1,
+          "run": 2,
+          "start_day": 182.0,
+          "policy": {
+            "co2_target_ppm": 881.2,
+            "day_temperature_c": 18.41,
+            "night_temperature_c": 17.55,
+            "supplemental_light_hours": 10.31,
+            "vent_rh_threshold_pct": 71.93,
+            "vent_temperature_offset_c": 5.84
+          },
+          "margin_eur_m2": 22.903973671034144
+        },
+        {
+          "unit": 2,
+          "run": 1,
+          "start_day": 0.0,
+          "policy": {
+            "co2_target_ppm": 1105.34,
+            "day_temperature_c": 22.44,
+            "night_temperature_c": 19.42,
+            "supplemental_light_hours": 10.7,
+            "vent_rh_threshold_pct": 70.17,
+            "vent_temperature_offset_c": 4.26
+          },
+          "margin_eur_m2": 34.523463847021034
+        },
+        {
+          "unit": 2,
+          "run": 2,
+          "start_day": 182.0,
+          "policy": {
+            "co2_target_ppm": 550.33,
+            "day_temperature_c": 19.23,
+            "night_temperature_c": 18.37,
+            "supplemental_light_hours": 0.2,
+            "vent_rh_threshold_pct": 70.14,
+            "vent_temperature_offset_c": 4.11
+          },
+          "margin_eur_m2": 12.350331051166425
+        },
+        {
+          "unit": 3,
+          "run": 1,
+          "start_day": 0.0,
+          "policy": {
+            "co2_target_ppm": 593.57,
+            "day_temperature_c": 18.4,
+            "night_temperature_c": 16.27,
+            "supplemental_light_hours": 7.74,
+            "vent_rh_threshold_pct": 84.19,
+            "vent_temperature_offset_c": 2.82
+          },
+          "margin_eur_m2": 44.70791573111874
+        },
+        {
+          "unit": 3,
+          "run": 2,
+          "start_day": 182.0,
+          "policy": {
+            "co2_target_ppm": 465.38,
+            "day_temperature_c": 18.58,
+            "night_temperature_c": 17.27,
+            "supplemental_light_hours": 14.06,
+            "vent_rh_threshold_pct": 72.92,
+            "vent_temperature_offset_c": 4.68
+          },
+          "margin_eur_m2": 24.147507220322183
+        }
+      ]
+    },
+    "two_full_s2": {
+      "bo_seed": 2,
+      "elapsed_seconds": 1284.8,
+      "decision_calls": 17,
+      "recommendation": {
+        "co2_target_ppm": 708.45,
+        "day_temperature_c": 18.23,
+        "night_temperature_c": 18.2,
+        "supplemental_light_hours": 10.97,
+        "vent_rh_threshold_pct": 86.39,
+        "vent_temperature_offset_c": 3.92
+      },
+      "recommendation_basis": {
+        "day": 365.0,
+        "action": "recommend",
+        "policy": {
+          "co2_target_ppm": 708.45,
+          "day_temperature_c": 18.23,
+          "night_temperature_c": 18.2,
+          "supplemental_light_hours": 10.97,
+          "vent_rh_threshold_pct": 86.39,
+          "vent_temperature_offset_c": 3.92
+        },
+        "basis": "max_posterior_scored_mean",
+        "predicted_mean": 39.18840820304109,
+        "predicted_sd": 2.1861547237365073,
+        "predicted_by_planting_day": [
+          48.232196057706645,
+          30.14462034837554
+        ],
+        "fallback": false
+      },
+      "season_blind_v1_recommendation": {
+        "co2_target_ppm": 1133.27,
+        "day_temperature_c": 24.6,
+        "night_temperature_c": 15.21,
+        "supplemental_light_hours": 15.17,
+        "vent_rh_threshold_pct": 86.91,
+        "vent_temperature_offset_c": 2.35
+      },
+      "season_blind_v1_predicted": 50.50819036804169,
+      "same_started_policies_as_v1": false,
+      "completed_crops": [
+        {
+          "unit": 0,
+          "run": 1,
+          "start_day": 0.0,
+          "policy": {
+            "co2_target_ppm": 738.24,
+            "day_temperature_c": 24.79,
+            "night_temperature_c": 20.09,
+            "supplemental_light_hours": 5.19,
+            "vent_rh_threshold_pct": 71.11,
+            "vent_temperature_offset_c": 4.65
+          },
+          "margin_eur_m2": 19.447223616003903
+        },
+        {
+          "unit": 0,
+          "run": 2,
+          "start_day": 182.0,
+          "policy": {
+            "co2_target_ppm": 1132.37,
+            "day_temperature_c": 18.08,
+            "night_temperature_c": 17.16,
+            "supplemental_light_hours": 3.72,
+            "vent_rh_threshold_pct": 81.32,
+            "vent_temperature_offset_c": 5.77
+          },
+          "margin_eur_m2": 24.05267626274299
+        },
+        {
+          "unit": 1,
+          "run": 1,
+          "start_day": 0.0,
+          "policy": {
+            "co2_target_ppm": 1153.59,
+            "day_temperature_c": 18.26,
+            "night_temperature_c": 16.66,
+            "supplemental_light_hours": 14.22,
+            "vent_rh_threshold_pct": 84.06,
+            "vent_temperature_offset_c": 2.52
+          },
+          "margin_eur_m2": 50.16032528266882
+        },
+        {
+          "unit": 1,
+          "run": 2,
+          "start_day": 182.0,
+          "policy": {
+            "co2_target_ppm": 532.3,
+            "day_temperature_c": 18.11,
+            "night_temperature_c": 15.96,
+            "supplemental_light_hours": 8.47,
+            "vent_rh_threshold_pct": 74.39,
+            "vent_temperature_offset_c": 2.8
+          },
+          "margin_eur_m2": 22.406098597411578
+        },
+        {
+          "unit": 2,
+          "run": 1,
+          "start_day": 0.0,
+          "policy": {
+            "co2_target_ppm": 842.76,
+            "day_temperature_c": 23.82,
+            "night_temperature_c": 21.05,
+            "supplemental_light_hours": 3.54,
+            "vent_rh_threshold_pct": 87.7,
+            "vent_temperature_offset_c": 3.82
+          },
+          "margin_eur_m2": 22.708241497307068
+        },
+        {
+          "unit": 2,
+          "run": 2,
+          "start_day": 182.0,
+          "policy": {
+            "co2_target_ppm": 908.57,
+            "day_temperature_c": 18.2,
+            "night_temperature_c": 15.68,
+            "supplemental_light_hours": 1.23,
+            "vent_rh_threshold_pct": 79.45,
+            "vent_temperature_offset_c": 4.89
+          },
+          "margin_eur_m2": 20.822269069893565
+        },
+        {
+          "unit": 3,
+          "run": 1,
+          "start_day": 0.0,
+          "policy": {
+            "co2_target_ppm": 452.21,
+            "day_temperature_c": 21.36,
+            "night_temperature_c": 17.51,
+            "supplemental_light_hours": 8.56,
+            "vent_rh_threshold_pct": 77.44,
+            "vent_temperature_offset_c": 5.95
+          },
+          "margin_eur_m2": 32.42906320366427
+        },
+        {
+          "unit": 3,
+          "run": 2,
+          "start_day": 182.0,
+          "policy": {
+            "co2_target_ppm": 708.45,
+            "day_temperature_c": 18.23,
+            "night_temperature_c": 18.2,
+            "supplemental_light_hours": 10.97,
+            "vent_rh_threshold_pct": 86.39,
+            "vent_temperature_offset_c": 3.92
+          },
+          "margin_eur_m2": 30.144676557486445
+        }
+      ]
+    }
+  },
+  "findings": [
+    "With only January crops completed, the season inputs are constant, so the GP cannot learn the season effect before the second wave: gp-bo-v2 started exactly the same second-wave policies as gp-bo-v1.",
+    "After the July crops complete, the season-aware model separates the plantings (seed 1: 44.6 January, 25.6 July; seed 2: 48.2 and 30.1), consistent with observed July outcomes of about 12-30. The predicted scored value of the recommendation falls from 44.7/50.5 (season-blind) to 35.1/39.2.",
+    "Learning the season effect earlier would require planting in another season before day 182, e.g. a staggered start; this is a genuine scheduling trade-off for agents."
+  ]
+}
