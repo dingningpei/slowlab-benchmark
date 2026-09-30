@@ -41,7 +41,15 @@ def _path(value) -> Path | None:
 
 def build_weather(w: dict, origin: datetime):
     """Private weather reader from a spec: the development archive, or one audited formal year."""
-    from .cabauw_weather import CabauwLc1FormalWeather, CabauwLc1Weather
+    from .cabauw_weather import CabauwLc1ExpandedDevelopmentWeather, CabauwLc1FormalWeather, CabauwLc1Weather
+    if w.get('kind') == 'development_expanded':
+        # Only 2014 is a complete campaign year here: 2013 needs the invalid 2012-12
+        # longwave month and 2016 needs 2015-12, which belongs to the formal set.
+        if origin.year != 2013:
+            raise ValueError('expanded development weather serves the 2014 campaign year only')
+        return CabauwLc1ExpandedDevelopmentWeather(
+            _path(w['cache']), _path(w.get('plan', 'configs/weather_v3_expanded_acquisition_proposal.json')),
+            _path(w.get('audit', 'results/weather_v3_development_full_audit.json')))
     if w.get('kind') == 'formal':
         if origin.year != int(w['year']) - 1:
             raise ValueError('origin_utc does not start the formal weather year')

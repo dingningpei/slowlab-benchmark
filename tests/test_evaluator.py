@@ -75,3 +75,18 @@ def test_script_evaluates_a_settlement_on_a_sampled_site(tmp_path):
 def test_script_records_failures(tmp_path):
     code, record = run_script(tmp_path, {'policy': dict(POLICIES['policy_a'], night_temperature_c=99)})
     assert code == 3 and record['status'] == 'failed' and 'traceback' in record
+
+
+def test_batch_runner_runs_and_resumes(tmp_path):
+    (tmp_path / 'c.json').write_text(json.dumps(small_contract()))
+    out = tmp_path / 'out'
+    jobs = [{'id': f'j{i}', 'year': 2004 + i, 'policy': POLICIES['policy_a' if i else 'policy_b']} for i in range(3)]
+    jobs.append({'id': 'bad', 'year': 2004, 'policy': dict(POLICIES['policy_a'], night_temperature_c=99)})
+    batch = {'out_dir': str(out), 'common': {'backend': 'fake', 'contract': str(tmp_path / 'c.json')}, 'jobs': jobs}
+    (tmp_path / 'batch.json').write_text(json.dumps(batch))
+    cmd = [sys.executable, str(ROOT / 'scripts/run_evaluation_batch.py'), str(tmp_path / 'batch.json'), '--workers', '2']
+    first = subprocess.run(cmd, capture_output=True, text=True, check=True).stdout
+    assert json.loads((out / 'DONE').read_text()) == {'j0': 'completed', 'j1': 'completed', 'j2': 'completed', 'bad': 'failed'}
+    second = subprocess.run(cmd, capture_output=True, text=True, check=True).stdout
+    assert all(json.loads(line)['seconds'] == 0.0 for line in second.splitlines())
+    assert first != second
