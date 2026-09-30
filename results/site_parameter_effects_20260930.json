@@ -1,0 +1,476 @@
+{
+  "scope": "mechanism check: one January crop per compartment, policy_a, 2017 weather, no noise",
+  "purpose": "mechanism check only; distribution ranges come from the literature or are declared assumptions and are not tuned on these results",
+  "source_commit": "66c82e0",
+  "host": "WSL desktop (i7-10700K), six processes in parallel",
+  "elapsed_seconds": [
+    752.0,
+    744.4,
+    743.9,
+    746.3,
+    756.9,
+    753.2
+  ],
+  "default_compartments": 6,
+  "defaults_identical": true,
+  "default": {
+    "per_m2": {
+      "heat_kwh_m2": 135.47432495619347,
+      "light_kwh_m2": 104.07777777779793,
+      "co2_kg_m2": 13.738764314026211,
+      "harvest_kg_m2": 37.46898826011713,
+      "transpiration_kg_m2": 454.4436555148742,
+      "days": 180.00000000019847
+    },
+    "margin_eur_m2": 43.631391329941806
+  },
+  "effects": [
+    {
+      "label": "cover_transmission_low",
+      "parameters": {
+        "tauRfPar": 0.75,
+        "tauRfNir": 0.75
+      },
+      "margin_eur_m2": 41.181778566405825,
+      "margin_delta_eur_m2": -2.4496127635359812,
+      "per_m2_delta": {
+        "co2_kg_m2": -0.061321663924658765,
+        "days": 0.0,
+        "harvest_kg_m2": -1.2516284227076042,
+        "heat_kwh_m2": 0.4240334408216029,
+        "light_kwh_m2": 0.0,
+        "transpiration_kg_m2": -12.243981000385872
+      },
+      "per_m2_relative": {
+        "co2_kg_m2": -0.0044634046063410605,
+        "days": 0.0,
+        "harvest_kg_m2": -0.03340438268625115,
+        "heat_kwh_m2": 0.0031299911696088313,
+        "light_kwh_m2": 0.0,
+        "transpiration_kg_m2": -0.026942792251139967
+      }
+    },
+    {
+      "label": "cover_transmission_high",
+      "parameters": {
+        "tauRfPar": 0.88,
+        "tauRfNir": 0.88
+      },
+      "margin_eur_m2": 44.11252212327952,
+      "margin_delta_eur_m2": 0.48113079333771225,
+      "per_m2_delta": {
+        "co2_kg_m2": 0.00889392009378831,
+        "days": 0.0,
+        "harvest_kg_m2": 0.2457029077667201,
+        "heat_kwh_m2": -0.07577814422708684,
+        "light_kwh_m2": 0.0,
+        "transpiration_kg_m2": 3.720369500959748
+      },
+      "per_m2_relative": {
+        "co2_kg_m2": 0.0006473595361635477,
+        "days": 0.0,
+        "harvest_kg_m2": 0.006557500460407468,
+        "heat_kwh_m2": -0.0005593542854086205,
+        "light_kwh_m2": 0.0,
+        "transpiration_kg_m2": 0.008186646365971719
+      }
+    },
+    {
+      "label": "leakage_low",
+      "parameters": {
+        "cLeakage": 5e-05
+      },
+      "margin_eur_m2": 43.92472664062555,
+      "margin_delta_eur_m2": 0.2933353106837444,
+      "per_m2_delta": {
+        "co2_kg_m2": -0.4171646258319548,
+        "days": 0.0,
+        "harvest_kg_m2": -0.011356608574786264,
+        "heat_kwh_m2": -4.640955444763591,
+        "light_kwh_m2": 0.0,
+        "transpiration_kg_m2": -1.426149302314741
+      },
+      "per_m2_relative": {
+        "co2_kg_m2": -0.030364057225005462,
+        "days": 0.0,
+        "harvest_kg_m2": -0.0003030935475478132,
+        "heat_kwh_m2": -0.03425708484810148,
+        "light_kwh_m2": 0.0,
+        "transpiration_kg_m2": -0.0031382312966806557
+      }
+    },
+    {
+      "label": "leakage_high",
+      "parameters": {
+        "cLeakage": 0.0002
+      },
+      "margin_eur_m2": 42.897985240250335,
+      "margin_delta_eur_m2": -0.7334060896914707,
+      "per_m2_delta": {
+        "co2_kg_m2": 0.7338795969677108,
+        "days": 0.0,
+        "harvest_kg_m2": -0.04541052260901779,
+        "heat_kwh_m2": 9.96159302420699,
+        "light_kwh_m2": 0.0,
+        "transpiration_kg_m2": 2.9462370600012946
+      },
+      "per_m2_relative": {
+        "co2_kg_m2": 0.053416710571159355,
+        "days": 0.0,
+        "harvest_kg_m2": -0.001211949527266895,
+        "heat_kwh_m2": 0.07353122466141196,
+        "light_kwh_m2": 0.0,
+        "transpiration_kg_m2": 0.006483173489710789
+      }
+    },
+    {
+      "label": "ventilation_coefficients_low",
+      "parameters": {
+        "cDgh": 0.6000000000000001,
+        "cWgh": 0.072
+      },
+      "margin_eur_m2": 42.85798818968621,
+      "margin_delta_eur_m2": -0.7734031402555956,
+      "per_m2_delta": {
+        "co2_kg_m2": -0.41131880768740103,
+        "days": 0.0,
+        "harvest_kg_m2": -0.5800951345028196,
+        "heat_kwh_m2": -5.510372209748311,
+        "light_kwh_m2": 0.0,
+        "transpiration_kg_m2": -2.861542014635063
+      },
+      "per_m2_relative": {
+        "co2_kg_m2": -0.029938559122633504,
+        "days": 0.0,
+        "harvest_kg_m2": -0.015482006892625026,
+        "heat_kwh_m2": -0.04067466076343342,
+        "light_kwh_m2": 0.0,
+        "transpiration_kg_m2": -0.00629680265068945
+      }
+    },
+    {
+      "label": "ventilation_coefficients_high",
+      "parameters": {
+        "cDgh": 0.8999999999999999,
+        "cWgh": 0.108
+      },
+      "margin_eur_m2": 44.05758091976588,
+      "margin_delta_eur_m2": 0.4261895898240766,
+      "per_m2_delta": {
+        "co2_kg_m2": 0.31917095518945615,
+        "days": 0.0,
+        "harvest_kg_m2": 0.3805679465058489,
+        "heat_kwh_m2": 5.041674296489077,
+        "light_kwh_m2": 0.0,
+        "transpiration_kg_m2": 2.4170308166611107
+      },
+      "per_m2_relative": {
+        "co2_kg_m2": 0.023231416442860687,
+        "days": 0.0,
+        "harvest_kg_m2": 0.010156878105805017,
+        "heat_kwh_m2": 0.03721498002015759,
+        "light_kwh_m2": 0.0,
+        "transpiration_kg_m2": 0.005318658952170144
+      }
+    },
+    {
+      "label": "led_efficacy_low",
+      "parameters": {
+        "etaLampPar": 0.45
+      },
+      "margin_eur_m2": 40.4385692043136,
+      "margin_delta_eur_m2": -3.1928221256282043,
+      "per_m2_delta": {
+        "co2_kg_m2": -0.3906915771109478,
+        "days": 0.0,
+        "harvest_kg_m2": -1.7636866747192883,
+        "heat_kwh_m2": -3.364571493044167,
+        "light_kwh_m2": 0.0,
+        "transpiration_kg_m2": -5.670486110085619
+      },
+      "per_m2_relative": {
+        "co2_kg_m2": -0.028437170052628538,
+        "days": 0.0,
+        "harvest_kg_m2": -0.047070571067343116,
+        "heat_kwh_m2": -0.024835491847862122,
+        "light_kwh_m2": 0.0,
+        "transpiration_kg_m2": -0.012477863957988562
+      }
+    },
+    {
+      "label": "led_efficacy_high",
+      "parameters": {
+        "etaLampPar": 0.6
+      },
+      "margin_eur_m2": 45.10394271298037,
+      "margin_delta_eur_m2": 1.4725513830385637,
+      "per_m2_delta": {
+        "co2_kg_m2": 0.17805692887251823,
+        "days": 0.0,
+        "harvest_kg_m2": 0.8253967336880095,
+        "heat_kwh_m2": 2.027217237570966,
+        "light_kwh_m2": 0.0,
+        "transpiration_kg_m2": 2.6692906820587723
+      },
+      "per_m2_relative": {
+        "co2_kg_m2": 0.012960185123107173,
+        "days": 0.0,
+        "harvest_kg_m2": 0.02202879693355855,
+        "heat_kwh_m2": 0.014963848229001916,
+        "light_kwh_m2": 0.0,
+        "transpiration_kg_m2": 0.00587375497416622
+      }
+    },
+    {
+      "label": "temperature_window_shift_low",
+      "parameters": {
+        "tCan24Min": 13.5,
+        "tCan24Max": 23.0
+      },
+      "margin_eur_m2": 26.929589097807323,
+      "margin_delta_eur_m2": -16.701802232134483,
+      "per_m2_delta": {
+        "co2_kg_m2": -0.21095490046473309,
+        "days": 0.0,
+        "harvest_kg_m2": -8.605172762870819,
+        "heat_kwh_m2": -0.7218735074131928,
+        "light_kwh_m2": 0.0,
+        "transpiration_kg_m2": -5.051067215055582
+      },
+      "per_m2_relative": {
+        "co2_kg_m2": -0.015354721548674106,
+        "days": 0.0,
+        "harvest_kg_m2": -0.22966119883280559,
+        "heat_kwh_m2": -0.005328489421494556,
+        "light_kwh_m2": 0.0,
+        "transpiration_kg_m2": -0.011114837128340672
+      }
+    },
+    {
+      "label": "temperature_window_shift_high",
+      "parameters": {
+        "tCan24Min": 16.5,
+        "tCan24Max": 26.0
+      },
+      "margin_eur_m2": 50.28379127174046,
+      "margin_delta_eur_m2": 6.652399941798656,
+      "per_m2_delta": {
+        "co2_kg_m2": 0.024563620730807756,
+        "days": 0.0,
+        "harvest_kg_m2": 3.4113990858638346,
+        "heat_kwh_m2": -0.10168897020656686,
+        "light_kwh_m2": 0.0,
+        "transpiration_kg_m2": 0.0003573146665871718
+      },
+      "per_m2_relative": {
+        "co2_kg_m2": 0.001787906115088546,
+        "days": 0.0,
+        "harvest_kg_m2": 0.0910459354328232,
+        "heat_kwh_m2": -0.0007506143340404071,
+        "light_kwh_m2": 0.0,
+        "transpiration_kg_m2": 7.862683574762256e-07
+      }
+    },
+    {
+      "label": "photosynthetic_capacity_low",
+      "parameters": {
+        "j25LeafMax": 178.5
+      },
+      "margin_eur_m2": 42.05274235658124,
+      "margin_delta_eur_m2": -1.5786489733605649,
+      "per_m2_delta": {
+        "co2_kg_m2": -0.0644413961117749,
+        "days": 0.0,
+        "harvest_kg_m2": -0.8236655553441139,
+        "heat_kwh_m2": -0.2922116067620095,
+        "light_kwh_m2": 0.0,
+        "transpiration_kg_m2": -0.80701540658373
+      },
+      "per_m2_relative": {
+        "co2_kg_m2": -0.004690479772331872,
+        "days": 0.0,
+        "harvest_kg_m2": -0.021982593968806006,
+        "heat_kwh_m2": -0.0021569519306075015,
+        "light_kwh_m2": 0.0,
+        "transpiration_kg_m2": -0.0017758316059433158
+      }
+    },
+    {
+      "label": "photosynthetic_capacity_high",
+      "parameters": {
+        "j25LeafMax": 241.49999999999997
+      },
+      "margin_eur_m2": 44.63572488737763,
+      "margin_delta_eur_m2": 1.004333557435821,
+      "per_m2_delta": {
+        "co2_kg_m2": 0.03663702514696077,
+        "days": 0.0,
+        "harvest_kg_m2": 0.5237328292643397,
+        "heat_kwh_m2": 0.19236109200511464,
+        "light_kwh_m2": 0.0,
+        "transpiration_kg_m2": 0.5165666729188843
+      },
+      "per_m2_relative": {
+        "co2_kg_m2": 0.0026666899809582737,
+        "days": 0.0,
+        "harvest_kg_m2": 0.013977768111284,
+        "heat_kwh_m2": 0.00141990810485541,
+        "light_kwh_m2": 0.0,
+        "transpiration_kg_m2": 0.0011367012536100346
+      }
+    },
+    {
+      "label": "fruit_growth_potential_low",
+      "parameters": {
+        "rgFruit": 0.2788
+      },
+      "margin_eur_m2": 35.476208161865095,
+      "margin_delta_eur_m2": -8.15518316807671,
+      "per_m2_delta": {
+        "co2_kg_m2": -0.0174317618232962,
+        "days": 0.0,
+        "harvest_kg_m2": -4.1756910158248814,
+        "heat_kwh_m2": 0.3214407916572668,
+        "light_kwh_m2": 0.0,
+        "transpiration_kg_m2": 0.69737411423597
+      },
+      "per_m2_relative": {
+        "co2_kg_m2": -0.0012688012855348078,
+        "days": 0.0,
+        "harvest_kg_m2": -0.1114439222867831,
+        "heat_kwh_m2": 0.002372706354220306,
+        "light_kwh_m2": 0.0,
+        "transpiration_kg_m2": 0.0015345667296110914
+      }
+    },
+    {
+      "label": "fruit_growth_potential_high",
+      "parameters": {
+        "rgFruit": 0.3772
+      },
+      "margin_eur_m2": 50.544919783849366,
+      "margin_delta_eur_m2": 6.91352845390756,
+      "per_m2_delta": {
+        "co2_kg_m2": -0.004411833520169495,
+        "days": 0.0,
+        "harvest_kg_m2": 3.5340410474035124,
+        "heat_kwh_m2": -0.42532089533338535,
+        "light_kwh_m2": 0.0,
+        "transpiration_kg_m2": -0.8794666820525094
+      },
+      "per_m2_relative": {
+        "co2_kg_m2": -0.00032112302237147743,
+        "days": 0.0,
+        "harvest_kg_m2": 0.09431909457681377,
+        "heat_kwh_m2": -0.003139494479643399,
+        "light_kwh_m2": 0.0,
+        "transpiration_kg_m2": -0.0019352601172440045
+      }
+    },
+    {
+      "label": "earliness_low",
+      "parameters": {
+        "tEndSum": 931.5
+      },
+      "margin_eur_m2": 44.150313103333666,
+      "margin_delta_eur_m2": 0.5189217733918596,
+      "per_m2_delta": {
+        "co2_kg_m2": -0.017773415207845034,
+        "days": 0.0,
+        "harvest_kg_m2": 0.25477332652729956,
+        "heat_kwh_m2": -0.3711820724410302,
+        "light_kwh_m2": 0.0,
+        "transpiration_kg_m2": -0.5539789208057186
+      },
+      "per_m2_relative": {
+        "co2_kg_m2": -0.0012936691249372228,
+        "days": 0.0,
+        "harvest_kg_m2": 0.006799578487644575,
+        "heat_kwh_m2": -0.002739870248927643,
+        "light_kwh_m2": 0.0,
+        "transpiration_kg_m2": -0.001219026636378218
+      }
+    },
+    {
+      "label": "earliness_high",
+      "parameters": {
+        "tEndSum": 1138.5
+      },
+      "margin_eur_m2": 43.05396845452966,
+      "margin_delta_eur_m2": -0.5774228754121467,
+      "per_m2_delta": {
+        "co2_kg_m2": 0.0075833545620138665,
+        "days": 0.0,
+        "harvest_kg_m2": -0.2894331711256868,
+        "heat_kwh_m2": 0.23023041609334882,
+        "light_kwh_m2": 0.0,
+        "transpiration_kg_m2": 0.36471501910136794
+      },
+      "per_m2_relative": {
+        "co2_kg_m2": 0.0005519677307712346,
+        "days": 0.0,
+        "harvest_kg_m2": -0.007724605989261959,
+        "heat_kwh_m2": 0.0016994394780545713,
+        "light_kwh_m2": 0.0,
+        "transpiration_kg_m2": 0.0008025527800320025
+      }
+    },
+    {
+      "label": "max_lai_low",
+      "parameters": {
+        "laiMax": 2.5
+      },
+      "margin_eur_m2": 36.44023081194638,
+      "margin_delta_eur_m2": -7.191160517995428,
+      "per_m2_delta": {
+        "co2_kg_m2": -0.7324108034292447,
+        "days": 0.0,
+        "harvest_kg_m2": -4.133607653238137,
+        "heat_kwh_m2": -14.45784490266179,
+        "light_kwh_m2": 0.0,
+        "transpiration_kg_m2": -49.54296945225025
+      },
+      "per_m2_relative": {
+        "co2_kg_m2": -0.053309801863440524,
+        "days": 0.0,
+        "harvest_kg_m2": -0.11032077046067577,
+        "heat_kwh_m2": -0.10672018411855407,
+        "light_kwh_m2": 0.0,
+        "transpiration_kg_m2": -0.1090189484461373
+      }
+    },
+    {
+      "label": "max_lai_high",
+      "parameters": {
+        "laiMax": 3.5
+      },
+      "margin_eur_m2": 47.66078880149865,
+      "margin_delta_eur_m2": 4.029397471556841,
+      "per_m2_delta": {
+        "co2_kg_m2": 0.48768784770887486,
+        "days": 0.0,
+        "harvest_kg_m2": 2.543873185660715,
+        "heat_kwh_m2": 16.67235341879561,
+        "light_kwh_m2": 0.0,
+        "transpiration_kg_m2": 42.46161501295427
+      },
+      "per_m2_relative": {
+        "co2_kg_m2": 0.035497213327328386,
+        "days": 0.0,
+        "harvest_kg_m2": 0.067892764224127,
+        "heat_kwh_m2": 0.12306651776406138,
+        "light_kwh_m2": 0.0,
+        "transpiration_kg_m2": 0.09343647886303141
+      }
+    }
+  ],
+  "observations": [
+    "All six default compartments give identical ledgers, so compartments do not interfere.",
+    "Every parameter changes the ledgers in its expected direction; none is inert.",
+    "Largest margin effects at the range ends: temperature-window shift (-16.7 / +6.7 EUR/m2), fruit growth potential (-8.2 / +6.9), maximum LAI (-7.2 / +4.0), LED efficacy (-3.2 / +1.5).",
+    "The temperature-window effect is asymmetric under this fixed policy: a 1.5 C lower window costs 23% of harvest, a higher one adds 9%.",
+    "Leakage and ventilation mainly move heat and CO2 use (up to +7.4% heat) with small margin effects under current prices.",
+    "Earliness (tEndSum +/-10%) has the smallest effect (about 0.5 EUR/m2).",
+    "Ranges are not changed on the basis of these results."
+  ]
+}
