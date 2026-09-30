@@ -1,0 +1,40 @@
+{
+  "status": "measured_wsl_scaling_projection",
+  "date": "2026-09-30",
+  "code_commit": "f20212d",
+  "supersedes_for_planning": "results/compute_scaling_wsl_20260930.json (commit 094b41e, before the numerically identical speed-up)",
+  "host": "developer Windows desktop, WSL2 Ubuntu 24.04.5, i7-10700K (8 cores / 16 threads), 31 GB visible; Python 3.12.3, numpy 1.26.4, scipy 1.14.1, pandas 2.2.3, gcc 13.3.0",
+  "workload": "four-unit event-driven campaign, contract v4, sensor noise v0 seed 20260929, 2017 weather, scripted actions; seven-day prefixes",
+  "method": "Per-worker stepping cost = (elapsed at day 7 - elapsed at day 1) / 6, which excludes model parsing and RHS compilation. Annual time projected by scaling the audited Tokyo annual run of the same code, seed and actions (results/noise_annual_progress.jsonl) by the ratio of per-day stepping over the same days. Assumes the early-crop parallel slowdown holds over the whole season; not yet checked with a parallel annual run.",
+  "tokyo_reference": {
+    "annual_seconds": 8249.4,
+    "stepping_s_per_day_days_2_7": 21.9
+  },
+  "scaling": [
+    {
+      "workers": 1,
+      "per_worker_stepping_s_per_day": 4.76,
+      "before_optimisation_s_per_day": 13.8,
+      "speedup": 2.9,
+      "first_day_seconds_including_setup": 74.8,
+      "projected_annual_campaign_hours": 0.5,
+      "campaigns_per_hour": 2.01,
+      "days_for_1024_campaigns": 21.3
+    },
+    {
+      "workers": 12,
+      "per_worker_stepping_s_per_day": 7.69,
+      "before_optimisation_s_per_day": 22.2,
+      "speedup": 2.89,
+      "first_day_seconds_including_setup": 115.2,
+      "projected_annual_campaign_hours": 0.8,
+      "campaigns_per_hour": 14.91,
+      "days_for_1024_campaigns": 2.9
+    }
+  ],
+  "all_runs_passed": true,
+  "caveats": [
+    "Projection from seven-day prefixes; a parallel annual run has not yet confirmed it.",
+    "Excludes evaluation replicas, pilots, retries and LLM waiting time."
+  ]
+}
