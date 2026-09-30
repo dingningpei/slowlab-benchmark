@@ -11,11 +11,12 @@ The frozen Version 2.1 environment (TOMGRO, synchronous rounds) and its paper li
 """
 from .task_contract import validate_policy
 from .campaign_executor import CampaignExecutor
+from .policy import Policy
 from .feedback_view import FeedbackView
 from .online_observations import OnlineObservations, PackedOnlineObservations
 from .resources import ResourceLedger
 from .frozen_paths import frozen_path
 
 __version__ = "2.3.0.dev0"
-__all__ = ["validate_policy", "CampaignExecutor", "FeedbackView", "OnlineObservations",
+__all__ = ["validate_policy", "Policy", "CampaignExecutor", "FeedbackView", "OnlineObservations",
            "PackedOnlineObservations", "ResourceLedger", "frozen_path", "__version__"]

@@ -1,4 +1,4 @@
-"""Phase-1 event-driven four-compartment campaign executor.
+"""Event-driven multi-compartment campaign executor.
 
 Only ``dispatch`` results belong in an agent tool response. The executor and
 its private lifecycle, weather, controller store and ledger must stay in a
@@ -7,7 +7,6 @@ sandboxing or physical fidelity of GreenLight.
 """
 from __future__ import annotations
 
-import copy
 import hashlib
 import json
 import math
@@ -16,7 +15,7 @@ from numbers import Real
 from pathlib import Path
 
 from .online_observations import PackedOnlineObservations
-from .task_contract import validate_policy
+from .policy import Policy
 from .controller import commands_from_observations
 from .feedback_view import FeedbackView
 from .greenlight_reuse import CropLifecycle
@@ -73,7 +72,7 @@ class CampaignExecutor:
                  sensor_noise=None, soil_boundary_c=None):
         if feedback_mode not in ('full', 'endpoint'):
             raise ValueError('invalid feedback mode')
-        validate_policy(contract, fallback_policy)
+        fallback_policy = Policy.from_payload(contract, fallback_policy)
         self.soil_boundary_c = resolve_soil_boundary(contract, soil_boundary_c)
         self._noise = sensor_noise
         self._sensor_detail = {}
@@ -90,13 +89,14 @@ class CampaignExecutor:
         self.weather = weather
         self.origin_utc = origin_utc
         self._sample_endpoint = sample_endpoint
-        self.units = tuple(str(i) for i in range(contract['facility']['compartments']))
-        if self.units != ('0', '1', '2', '3'):
-            raise ValueError('four units required by this executor')
+        count = contract['facility']['compartments']
+        if isinstance(count, bool) or not isinstance(count, int) or count < 1:
+            raise ValueError('contract must declare a positive integer number of compartments')
+        self.units = tuple(str(i) for i in range(count))
         self.tick_seconds = contract['controller']['tick_seconds']
         self.deadline_seconds = contract['budget']['campaign_days'] * 86400
         self.feedback_mode = feedback_mode
-        self._fallback_policy = copy.deepcopy(fallback_policy)
+        self._fallback_policy = fallback_policy
         self._recommendation = None
         self._recommendation_fallback = False
         self._tool_calls = 0
@@ -143,8 +143,8 @@ class CampaignExecutor:
             raise ValueError('unknown compartment')
         return str(value)
 
-    def _start(self, unit: str, policy: dict) -> dict:
-        validate_policy(self.contract, policy)
+    def _start(self, unit: str, payload) -> dict:
+        policy = Policy.from_payload(self.contract, payload)
         if self.clock > self.contract['budget']['latest_start_day'] * 86400:
             raise ValueError('latest start passed')
         if self._starts >= self.contract['budget']['max_starts']:
@@ -157,13 +157,13 @@ class CampaignExecutor:
         ledger.record_event('plant', self.clock)
         for view in (self._full, self._endpoint):
             view.executor_set_status(unit, 'active', 'start', ledger=ledger)
-        self._policies[unit] = copy.deepcopy(policy)
+        self._policies[unit] = policy
         self._start_times[unit] = self.clock
         self._unsafe_seconds[unit] = 0
         self._starts += 1
         self.event_log.append({'event': 'start', 'unit': unit, 'clock': self.clock,
                                'run_index': self._view().operational_status(unit)['run_index'],
-                               'policy': copy.deepcopy(policy)})
+                               'policy': policy.as_dict()})
         return {'event': 'start', 'unit': unit, 'clock': self.clock,
                 'run_index': self._view().operational_status(unit)['run_index']}
 
@@ -298,12 +298,12 @@ class CampaignExecutor:
         if self.clock != self.deadline_seconds:
             raise ValueError('recommendation is due at campaign deadline')
         try:
-            validate_policy(self.contract, policy)
+            accepted = Policy.from_payload(self.contract, policy)
         except ValueError:
-            self._recommendation = copy.deepcopy(self._fallback_policy)
+            self._recommendation = self._fallback_policy
             self._recommendation_fallback = True
         else:
-            self._recommendation = copy.deepcopy(policy)
+            self._recommendation = accepted
             self._recommendation_fallback = False
         self.event_log.append({'event': 'recommend', 'clock': self.clock,
                                'fallback': self._recommendation_fallback})
@@ -351,7 +351,7 @@ class CampaignExecutor:
             raise ValueError('campaign has not reached a valid deadline')
         return {'clock': self.clock,
                 'ledger_by_unit': {unit: ledger.summary() for unit, ledger in self._ledgers.items()},
-                'recommendation': copy.deepcopy(self._recommendation or self._fallback_policy),
+                'recommendation': (self._recommendation or self._fallback_policy).as_dict(),
                 'recommendation_fallback': self._recommendation is None or self._recommendation_fallback,
                 'starts': self._starts,
                 'tool_calls': self._tool_calls,

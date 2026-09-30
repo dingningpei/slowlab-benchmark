@@ -100,7 +100,7 @@ def main():
                 digest.update(line.encode())
                 frame = json.loads(line, parse_constant=lambda value: (_ for _ in ()).throw(ValueError(value)))
                 assert frame['tick'] == seen and frame['start'] == seen * 300 and frame['end'] == (seen + 1) * 300
-                assert set(frame['units']) == {'0', '1', '2', '3'}
+                assert set(frame['units']) == set(campaign.units)
                 for unit, entry in frame['units'].items():
                     assert entry['model_input_rows'] == 1
                     assert entry['requested'] == entry['realised']

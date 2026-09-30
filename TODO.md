@@ -9,7 +9,7 @@
 
 - [x] 冻结独立于 site/天气真值的测量噪声与缺测假设；实现同一 (隔间, 通道, 时刻) 只采样一次、可重复查询的缓存与审计 → `configs/sensor_noise_v0.json`、`results/sensor_noise_v0_prefix_check.json`
 - [x] 冻结深土壤默认边界（8 或 20 °C）及其披露方式；写入合同 v4 → `configs/task_contract_v4.json`（开发期沿用原生 20 °C；Phase 3 起为 8–20 °C 私有 site 参数）
-- [ ] 执行器去掉四单元硬编码，policy 改为 schema 对象；从合同读取隔间数
+- [x] 执行器去掉四单元硬编码，policy 改为 schema 对象；从合同读取隔间数 → `slowlab/policy.py`、`tests/test_policy_and_units.py`
 - [ ] 范围审计改为区分物理错误、来源外推、声明假设三类，不靠删 site 通过
 - [ ] 在 `pyproject.toml` 声明 GreenLight 为 pinned 可选依赖（git+commit）；保留 `--source` 路径方式
 - [ ] 清点 `scripts/`：删除已被全年运行取代的一次性短测脚本，保留 verify/audit/annual 三类

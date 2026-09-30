@@ -14,7 +14,6 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from slowlab.sensor_noise import SensorNoise, verify_trace_row  # noqa: E402
 
-UNITS = {'0', '1', '2', '3'}
 FLUX_KEYS = ('heat_kwh_m2', 'light_kwh_m2', 'co2_kg_m2',
              'harvest_kg_m2', 'transpiration_kg_m2', 'days')
 
@@ -34,6 +33,8 @@ def audit(result_path: Path, progress_path: Path, trace_path: Path) -> dict:
     assert result['elapsed_seconds'] < result['max_seconds']
     assert result['peak_rss_kib_linux'] * 1024 < result['max_rss_bytes']
     settlement = result['settlement']
+    UNITS = set(settlement['ledger_by_unit'])
+    assert UNITS == {str(i) for i in range(len(UNITS))} and UNITS
     assert settlement['clock'] == 365 * 86400
     assert settlement['trace_complete'] is True
     assert settlement['trace_ticks'] == result['trace_ticks'] == 365 * 288

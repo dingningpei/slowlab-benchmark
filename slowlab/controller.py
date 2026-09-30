@@ -1,6 +1,7 @@
 """Common sampled controller; accepts available sensor records, not model state."""
 import math
 from .task_contract import validate_policy
+from .policy import Policy
 from .greenlight_smoke import held_commands
 from .resources import standby_commands
 
@@ -29,7 +30,9 @@ def commands_from_observations(contract, observations, compartment, *, phase, po
     if phase not in ('active','cleanup','idle'):raise ValueError('invalid controller phase')
     if isinstance(local_clock_offset_seconds,bool) or not isinstance(local_clock_offset_seconds,(int,float)) or not math.isfinite(local_clock_offset_seconds) or not 0<=local_clock_offset_seconds<86400:
         raise ValueError('invalid local clock offset')
-    if phase=='active':validate_policy(contract,policy)
+    if phase=='active':
+        if isinstance(policy,Policy):policy.require_contract(contract)
+        else:validate_policy(contract,policy)
     names=['air_temperature_c','relative_humidity_pct','outdoor_temperature_c']
     if phase=='active':names+=['co2_ppm','solar_radiation_w_m2']
     now=observations.clock;records={};values={}

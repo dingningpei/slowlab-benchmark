@@ -52,7 +52,7 @@ def validate_contract(c):
         for name, required in minimum.items():
             value = supply.get(name)
             if not finite(value) or value + 1e-8 < required:
-                raise ValueError('central supply cannot meet four simultaneous maxima: ' + name)
+                raise ValueError('central supply cannot meet all simultaneous per-compartment maxima: ' + name)
     if b['latest_start_day'] + b['crop_days'] + b['cleanup_days'] > b['campaign_days']:
         raise ValueError('latest start cannot finish crop and cleanup')
     if c['evaluation']['horizon_days'] != b['crop_days']:

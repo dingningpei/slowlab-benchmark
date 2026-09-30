@@ -85,7 +85,7 @@ class ResourceLedger:
 
 
 def realise_independent_commands(contract, requested):
-    """Validate a synchronous four-unit tick under explicitly adequate supply.
+    """Validate one synchronous tick of every compartment under explicitly adequate supply.
 
     Copies exact per-unit fractional requests. GreenLight scales each fraction by
     its own pinned equipment capacity; no unsupported central curtailment exists.
