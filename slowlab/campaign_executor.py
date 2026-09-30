@@ -46,10 +46,20 @@ class CampaignExecutor:
                  feedback_mode: str, fallback_policy: dict,
                  origin_utc: datetime = datetime(2016, 12, 31, 23, tzinfo=timezone.utc),
                  lifecycle_factory=CropLifecycle, sample_endpoint=None,
-                 native_rhs: bool = True, trace_sink=None, progress_hook=None):
+                 native_rhs: bool = True, trace_sink=None, progress_hook=None,
+                 sensor_noise=None):
         if feedback_mode not in ('full', 'endpoint'):
             raise ValueError('invalid feedback mode')
         validate_policy(contract, fallback_policy)
+        self._noise = sensor_noise
+        self._sensor_detail = {}
+        if sensor_noise is not None:
+            if sample_endpoint is not None:
+                raise ValueError('sensor noise applies only to the built-in sensor bridge')
+            unknown = set(contract['observations']['public_channels']) - sensor_noise.channels - sensor_noise.exact_channels
+            if unknown:
+                raise ValueError('public channel without a declared measurement model: ' + ', '.join(sorted(unknown)))
+            sample_endpoint = self._sample_noisy
         if sample_endpoint is None:
             sample_endpoint = record_at_endpoint
         self.contract = contract
@@ -95,6 +105,11 @@ class CampaignExecutor:
             self._sample_endpoint(self._lifecycles[unit].engine, weather, origin_utc,
                                   self._controller, self._public, unit, self._ledgers[unit])
         self.event_log.append({'event': 'campaign_open', 'clock': 0})
+
+    def _sample_noisy(self, engine, weather, origin, controller, public, unit, ledger):
+        *_, detail = record_at_endpoint(engine, weather, origin, controller, public, unit, ledger,
+                                        sensor_noise=self._noise, return_detail=True)
+        self._sensor_detail[unit] = detail
 
     def _view(self):
         return self._full if self.feedback_mode == 'full' else self._endpoint
@@ -198,7 +213,8 @@ class CampaignExecutor:
                                      'ledger_increment': increments[unit],
                                      'public_endpoint': {name: self._public.latest(unit, name)
                                                          for name in self.contract['observations']['public_channels']},
-                                     'model_input_rows': len(self._lifecycles[unit].engine.model.input_data)}
+                                     'model_input_rows': len(self._lifecycles[unit].engine.model.input_data),
+                                     **(self._sensor_detail[unit] if self._noise is not None else {})}
                                for unit in self.units}}
             encoded = json.dumps(frame, separators=(',', ':'), allow_nan=False) + '\n'
             self._trace_sha256.update(encoded.encode())
@@ -318,4 +334,5 @@ class CampaignExecutor:
                 'decision_calls': self._decision_calls,
                 'trace_ticks': self._trace_ticks,
                 'trace_sha256': self._trace_sha256.hexdigest() if self._trace_sink is not None else None,
-                'trace_complete': self._trace_sink is not None}
+                'trace_complete': self._trace_sink is not None,
+                'sensor_noise': self._noise.describe() if self._noise is not None else None}

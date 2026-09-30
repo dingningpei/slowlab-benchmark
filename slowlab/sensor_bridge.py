@@ -4,6 +4,11 @@
 controller store (private) and the public store (agent-visible). Indoor sensors
 are read from the raw solver endpoint; archived exterior 10-minute interval
 means are released only at their right endpoint, never ahead of time.
+
+With a ``SensorNoise`` model, each indoor reading is perturbed once and the same
+observed value is written to both stores: the controller and the agent read one
+physical sensor. A dropped reading is absent from both. Without a model the
+readings are the deterministic virtual values used by all earlier results.
 """
 from __future__ import annotations
 
@@ -34,24 +39,41 @@ def indoor(engine):
     return {'air_temperature_c': t, 'relative_humidity_pct': rh, 'co2_ppm': co2}
 
 
-def record_at_endpoint(engine, weather, origin, controller, public, compartment, ledger):
-    """Record indoor and (at 10-minute boundaries) outdoor measurements at ``engine.clock``."""
+def record_at_endpoint(engine, weather, origin, controller, public, compartment, ledger,
+                       *, sensor_noise=None, return_detail=False):
+    """Record indoor and (at 10-minute boundaries) outdoor measurements at ``engine.clock``.
+
+    Returns ``(inside_truth, outdoor)``; with ``return_detail`` a third element
+    ``{'sensor_truth': ..., 'sensor_dropped': [...]}`` for the private trace.
+    """
     now = engine.clock
     controller.advance_to(now)
     public.advance_to(now)
     inside = indoor(engine)
-    for name, value in inside.items():
-        controller.record(compartment, name, measurement_time=now, available_at=now, value=value)
-    for name, value in public_endpoint_measurements(engine, ledger, inside).items():
+    truth = public_endpoint_measurements(engine, ledger, inside)
+    if sensor_noise is None:
+        observed, dropped = truth, ()
+    else:
+        observed, dropped = sensor_noise.observe(compartment, now, truth)
+    for name in inside:
+        if name in observed:
+            controller.record(compartment, name, measurement_time=now, available_at=now,
+                              value=observed[name])
+    for name, value in observed.items():
         public.record(compartment, name, measurement_time=now, available_at=now, value=value)
     outdoor = None
     if now % 600 == 0:
         # Archived interval means are delivered only at the right endpoint.
-        observed = weather.at_utc(origin + timedelta(seconds=now, microseconds=-1))
-        if observed.interval_end_utc != origin + timedelta(seconds=now):
+        station = weather.at_utc(origin + timedelta(seconds=now, microseconds=-1))
+        if station.interval_end_utc != origin + timedelta(seconds=now):
             raise AssertionError('weather observation interval ends after delivery')
-        outdoor = {'outdoor_temperature_c': observed.t_out_c,
-                   'solar_radiation_w_m2': observed.i_glob_w_m2}
+        outdoor = {'outdoor_temperature_c': station.t_out_c,
+                   'solar_radiation_w_m2': station.i_glob_w_m2}
         for name, value in outdoor.items():
             controller.record(compartment, name, measurement_time=now, available_at=now, value=value)
+    if return_detail:
+        noisy = sensor_noise.channels if sensor_noise is not None else ()
+        detail = {'sensor_truth': {name: truth[name] for name in sorted(noisy)},
+                  'sensor_dropped': list(dropped)}
+        return inside, outdoor, detail
     return inside, outdoor

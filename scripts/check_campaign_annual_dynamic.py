@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import gzip
+import hashlib
 import json
 import math
 import resource
@@ -18,6 +19,7 @@ sys.path.insert(0, str(ROOT))
 
 from slowlab.cabauw_weather import CabauwLc1Weather
 from slowlab.campaign_executor import CampaignExecutor
+from slowlab.sensor_noise import SensorNoise
 
 
 def rss_bytes() -> int:
@@ -37,6 +39,10 @@ def main() -> None:
     parser.add_argument('--pilot-days', type=int, default=365)
     parser.add_argument('--max-seconds', type=int, default=10800)
     parser.add_argument('--max-rss-bytes', type=int, default=350_000_000)
+    parser.add_argument('--noise-seed', type=int, default=None,
+                        help='development sensor-noise seed; omit for deterministic virtual sensors')
+    parser.add_argument('--noise-config', type=Path, default=ROOT / 'configs/sensor_noise_v0.json')
+    parser.add_argument('--noise-setting', default='main')
     args = parser.parse_args()
     if not 1 <= args.pilot_days <= 365 or args.max_seconds <= 0 or args.max_rss_bytes <= 0:
         raise ValueError('invalid pilot or resource bound')
@@ -47,10 +53,18 @@ def main() -> None:
                     co2_target_ppm=600, supplemental_light_hours=8)
     weather = CabauwLc1Weather(args.cache, ROOT / 'configs/weather_gapfilled_plan.json')
     origin = datetime(2016, 12, 31, 23, tzinfo=timezone.utc)
+    noise = (SensorNoise.from_file(args.noise_config, args.noise_seed, args.noise_setting)
+             if args.noise_seed is not None else None)
+    noise_record = (None if noise is None else
+                    {**noise.describe(), 'seed': args.noise_seed,
+                     'config': str(args.noise_config.relative_to(ROOT)),
+                     'config_sha256': hashlib.sha256(args.noise_config.read_bytes()).hexdigest(),
+                     'seed_scope': 'development seed; not a formal site'})
     began = time.monotonic()
     result = {'status': 'running', 'scope': 'four-unit 2017 weather annual event-driven integration pilot; fixed scripted actions; no LLM, no formal site, no real greenhouse validation',
               'pilot_days': args.pilot_days, 'max_seconds': args.max_seconds,
-              'max_rss_bytes': args.max_rss_bytes, 'weather_year': 2017}
+              'max_rss_bytes': args.max_rss_bytes, 'weather_year': 2017,
+              'sensor_noise': noise_record}
     campaign = None
     try:
         with args.progress.open('w') as progress, gzip.open(args.trace, 'wt', encoding='utf-8') as trace:
@@ -75,7 +89,7 @@ def main() -> None:
             campaign = CampaignExecutor(contract, args.source, weather,
                                         feedback_mode='full', fallback_policy=policies['policy_a'],
                                         origin_utc=origin, trace_sink=trace,
-                                        progress_hook=daily_progress)
+                                        progress_hook=daily_progress, sensor_noise=noise)
             campaign.dispatch({'action': 'start', 'unit': 0, 'policy': policies['policy_a']})
             campaign.dispatch({'action': 'start', 'unit': 1, 'policy': policies['policy_b']})
             if args.pilot_days >= 14:

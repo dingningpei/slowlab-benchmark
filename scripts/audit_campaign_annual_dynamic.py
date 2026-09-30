@@ -7,7 +7,12 @@ import gzip
 import hashlib
 import json
 import math
+import sys
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from slowlab.sensor_noise import SensorNoise, verify_trace_row  # noqa: E402
 
 UNITS = {'0', '1', '2', '3'}
 FLUX_KEYS = ('heat_kwh_m2', 'light_kwh_m2', 'co2_kg_m2',
@@ -47,6 +52,15 @@ def audit(result_path: Path, progress_path: Path, trace_path: Path) -> dict:
         last_elapsed = row['elapsed_seconds']
     assert abs(progress[-1]['elapsed_seconds'] - result['elapsed_seconds']) < 3
 
+    noise_record = result.get('sensor_noise')
+    noise = None
+    if noise_record is not None:
+        config_path = ROOT / noise_record['config']
+        assert hashlib.sha256(config_path.read_bytes()).hexdigest() == noise_record['config_sha256']
+        noise = SensorNoise.from_file(config_path, noise_record['seed'], noise_record['setting'])
+        assert settlement['sensor_noise'] == noise.describe()
+    previous = {}
+    dropped_readings = 0
     plain_digest = hashlib.sha256()
     accrued = {unit: {key: 0.0 for key in FLUX_KEYS} for unit in UNITS}
     ticks = 0
@@ -63,8 +77,13 @@ def audit(result_path: Path, progress_path: Path, trace_path: Path) -> dict:
                 assert set(entry['ledger_increment']) == set(FLUX_KEYS)
                 assert all(rec['available_at'] <= frame['start']
                            for rec in entry['controller_records'].values())
+                noisy = noise.channels if noise is not None else frozenset()
                 assert all(rec['available_at'] == frame['end']
-                           for rec in entry['public_endpoint'].values())
+                           for name, rec in entry['public_endpoint'].items() if name not in noisy)
+                if noise is not None:
+                    verify_trace_row(noise, unit, frame['end'], entry, previous.get(unit))
+                    dropped_readings += len(entry['sensor_dropped'])
+                    previous[unit] = entry
                 for key in FLUX_KEYS:
                     value = entry['ledger_increment'][key]
                     assert math.isfinite(value)
@@ -91,6 +110,7 @@ def audit(result_path: Path, progress_path: Path, trace_path: Path) -> dict:
     return {'status': 'passed_annual_dynamic_structural_audit',
             'scope': 'mechanical causality/resource/settlement audit only; no real-greenhouse validation',
             'days': 365, 'ticks': ticks, 'starts': settlement['starts'],
+            'sensor_noise': noise_record, 'dropped_readings': dropped_readings if noise else None,
             'wall_seconds': result['elapsed_seconds'],
             'peak_rss_bytes': result['peak_rss_kib_linux'] * 1024,
             'result_sha256': sha256(result_path),

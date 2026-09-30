@@ -1,0 +1,94 @@
+{
+  "noise_id": "slowlab-sensor-noise-v0",
+  "status": "development_assumption_not_calibrated",
+  "date": "2026-09-29",
+  "applies_to_contract": "slowlab-v22-task-v3",
+  "claim": "Declared virtual-sensor measurement model. Magnitudes are of the order of typical stated accuracies for greenhouse climate sensors and canopy imaging; they are not fitted to any dataset and are not a calibration claim. The main setting is used for all formal runs; the sensitivity setting is reported separately.",
+  "independence": "Every random draw is a pure function of (noise seed, component, channel or sensor group, compartment, integer measurement time in seconds). Draws never depend on site parameters, weather, physical state, actions, query order, query count or feedback condition. Only the transform applied to a draw uses the true value (relative scale, clipping, rounding).",
+  "rng": {
+    "method": "blake2b digest_size=16, key=noise_seed as 8-byte big-endian unsigned, person=b'slowlab-noise-v0'; message='component|name|compartment|time_seconds' in UTF-8; first 8 digest bytes big-endian -> top 53 bits -> u=(k+0.5)/2**53 in (0,1); standard normal z=statistics.NormalDist().inv_cdf(u)",
+    "noise_seed_range": [0, 18446744073709551615],
+    "seed_role": "Part of the private site. Independent of tool-randomness seeds and provider generation seeds. Never enters an agent payload."
+  },
+  "time_rules": {
+    "day_index": "floor(measurement_time_seconds / 86400); the campaign clock starts at local midnight (fixed CET)",
+    "no_dropout_at": "measurement_time_seconds == 0, so the controller always has a first reading (contract controller.first_measurement)",
+    "missing_reading": "A dropped reading is absent from both the controller store and the public store. The controller holds the last available reading (contract controller.missing_sensor); the agent sees a gap."
+  },
+  "settings": {
+    "main": {
+      "sensor_groups": {
+        "climate_box": {
+          "channels": ["air_temperature_c", "relative_humidity_pct", "co2_ppm"],
+          "dropout_probability": 0.005,
+          "rationale": "One aspirated measuring box per compartment; a lost reading loses all three channels together."
+        },
+        "canopy_camera": {
+          "channels": ["canopy_lai_proxy"],
+          "dropout_probability": 0.02,
+          "rationale": "Image-based canopy proxy; occasional failed acquisitions."
+        }
+      },
+      "channels": {
+        "air_temperature_c": {
+          "model": "additive",
+          "reading_sd_abs": 0.2,
+          "reading_sd_rel": 0.0,
+          "sensor_bias_sd_abs": 0.0,
+          "decimals": 1,
+          "clip": [null, null]
+        },
+        "relative_humidity_pct": {
+          "model": "additive",
+          "reading_sd_abs": 2.0,
+          "reading_sd_rel": 0.0,
+          "sensor_bias_sd_abs": 0.0,
+          "decimals": 1,
+          "clip": [0.0, 100.0]
+        },
+        "co2_ppm": {
+          "model": "additive",
+          "reading_sd_abs": 10.0,
+          "reading_sd_rel": 0.02,
+          "sensor_bias_sd_abs": 0.0,
+          "decimals": 0,
+          "clip": [0.0, null]
+        },
+        "canopy_lai_proxy": {
+          "model": "log_multiplicative",
+          "reading_sd_log": 0.03,
+          "day_sd_log": 0.10,
+          "decimals": 2,
+          "clip": [0.0, null],
+          "rationale": "Median-unbiased multiplicative error. The day component is shared by all readings of one compartment in one campaign day, so averaging the 288 daily readings does not remove it; days are independent."
+        }
+      },
+      "exact_channels": {
+        "cumulative_harvest_fresh_equivalent": "metered accounting total (weighed harvest); recorded exactly so cumulative series stay monotone",
+        "heating_energy": "metered accounting total",
+        "lighting_energy": "metered accounting total",
+        "co2_dosed": "metered accounting total"
+      },
+      "unperturbed_controller_channels": {
+        "outdoor_temperature_c": "archived real station record; carries its own measurement error; not re-noised",
+        "solar_radiation_w_m2": "archived real station record; carries its own measurement error; not re-noised"
+      }
+    },
+    "sensitivity_sensor_bias": {
+      "inherits": "main",
+      "overrides": {
+        "air_temperature_c": {"sensor_bias_sd_abs": 0.3},
+        "relative_humidity_pct": {"sensor_bias_sd_abs": 3.0},
+        "co2_ppm": {"sensor_bias_sd_abs": 20.0}
+      },
+      "rationale": "Constant per-compartment calibration offset drawn once per (site, compartment, channel). Because the shared controller reads the same biased sensor, bias shifts the realised climate away from the submitted target. Reported only as a sensitivity analysis, never mixed into the main statistics."
+    }
+  },
+  "not_modelled_in_v0": [
+    "multi-hour sensor outages and drift over a campaign",
+    "delivery delay (contract observations.delivery_delay_seconds remains 0)",
+    "noise on archived outdoor weather",
+    "harvest weighing error"
+  ],
+  "biological_variation_notice": "Measurement noise in v0 is deliberately small for climate channels: white 5-minute noise averages out within hours. The dominant between-compartment and between-site variability must come from the site distribution (crop and facility parameter perturbations), defined separately in Phase 3."
+}

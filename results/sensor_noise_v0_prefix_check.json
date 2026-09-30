@@ -1,0 +1,117 @@
+{
+  "status": "passed_sensor_noise_v0_real_greenlight_prefix",
+  "scope": "Four-unit real-GreenLight 577-tick (2 days + 1 tick) dynamic campaign prefix on 2017 Cabauw weather with scripted actions. Checks the noise implementation end to end; not an LLM run, not a formal site, not a calibration of sensor error.",
+  "date": "2026-09-29",
+  "runtime": {
+    "host": "developer MacBook",
+    "platform": "macOS-27.0-arm64-arm-64bit",
+    "python": "3.12.5",
+    "numpy": "1.26.4",
+    "scipy": "1.14.1",
+    "pandas": "2.2.3",
+    "greenlight_commit": "fa502eddae5f9eff7b3380c88037d9b5f3f14bf5",
+    "threads": 1
+  },
+  "noise_config_sha256": "ae93e8477969c148f348776d9308c98e24b9a5cc45a815d2ad5689d95fcc8216",
+  "no_noise_regression": {
+    "claim": "With sensor_noise=None the executor is byte-identical to the pre-change commit on the same host.",
+    "pre_change_commit": "b9cc51c",
+    "pre_change_trace_sha256": "cabc5e05ea819cfc0af83ca6122d8499861b2076ce8f2bba0d93cba6552136a4",
+    "post_change_trace_sha256": "cabc5e05ea819cfc0af83ca6122d8499861b2076ce8f2bba0d93cba6552136a4",
+    "identical_trace": true,
+    "identical_ledgers": true,
+    "heat_kwh_m2_by_unit": {
+      "0": 0.010585889421135905,
+      "1": 0.9183579141710202,
+      "2": 0.834403715674899,
+      "3": 0.0005992786600553263
+    },
+    "note": "Differs from results/campaign_dynamic_prefix_result.json, which was produced before the native-RHS overflow fix and on another host."
+  },
+  "noise_runs": {
+    "20260929": {
+      "status": "passed_dynamic_campaign_prefix",
+      "trace_audit": "passed_causal_tick_order_digest_and_sensor_noise_rederivation",
+      "trace_ticks": 577,
+      "dropped_readings": 90,
+      "elapsed_seconds": 41.14,
+      "trace_uncompressed_sha256": "7011904fc3ce45f780f7698dca5819391834fea0a7cde830ca0a21f78a6215da",
+      "observed_minus_truth": {
+        "air_temperature_c": {
+          "mean": -0.0046,
+          "sd": 0.1995,
+          "n": 2294
+        },
+        "relative_humidity_pct": {
+          "mean": 0.0247,
+          "sd": 2.0109,
+          "n": 2294
+        },
+        "co2_ppm": {
+          "mean": -0.116,
+          "sd": 14.0664,
+          "n": 2294
+        }
+      },
+      "heat_kwh_m2_by_unit": {
+        "0": 0.010397556186325527,
+        "1": 0.9310952793645803,
+        "2": 0.8504278107414481,
+        "3": 0.0020139788151753123
+      },
+      "sensor_noise": {
+        "noise_id": "slowlab-sensor-noise-v0",
+        "setting": "main",
+        "seed": 20260929,
+        "config": "configs/sensor_noise_v0.json",
+        "config_sha256": "ae93e8477969c148f348776d9308c98e24b9a5cc45a815d2ad5689d95fcc8216",
+        "seed_scope": "development seed; not a formal site"
+      }
+    },
+    "20260930": {
+      "status": "passed_dynamic_campaign_prefix",
+      "trace_audit": "passed_causal_tick_order_digest_and_sensor_noise_rederivation",
+      "trace_ticks": 577,
+      "dropped_readings": 84,
+      "elapsed_seconds": 40.82,
+      "trace_uncompressed_sha256": "833f8a8c4db491c540f8f61f63ed33997a673e2986fb34e24d7280161daae319",
+      "observed_minus_truth": {
+        "air_temperature_c": {
+          "mean": -0.0046,
+          "sd": 0.2027,
+          "n": 2298
+        },
+        "relative_humidity_pct": {
+          "mean": 0.001,
+          "sd": 2.0182,
+          "n": 2298
+        },
+        "co2_ppm": {
+          "mean": 0.2994,
+          "sd": 14.1207,
+          "n": 2298
+        }
+      },
+      "heat_kwh_m2_by_unit": {
+        "0": 0.010159912953241784,
+        "1": 0.9359922121348154,
+        "2": 0.8661754109519022,
+        "3": 0.0004892040166549482
+      },
+      "sensor_noise": {
+        "noise_id": "slowlab-sensor-noise-v0",
+        "setting": "main",
+        "seed": 20260930,
+        "config": "configs/sensor_noise_v0.json",
+        "config_sha256": "ae93e8477969c148f348776d9308c98e24b9a5cc45a815d2ad5689d95fcc8216",
+        "seed_scope": "development seed; not a formal site"
+      }
+    }
+  },
+  "findings": [
+    "Every public reading in every trace row was re-derived from the recorded truth, the frozen config and the seed; dropouts, held records and controller/public agreement all matched.",
+    "Measurement noise enters the physics through the shared controller: active-unit heat use rose by about 1.4-3.8 percent over the no-noise run in this 2-day window.",
+    "Noise adds no measurable runtime (about 41 s per run versus 41-44 s without noise)."
+  ],
+  "private_traces": "kept outside Git; hashes above"
+}
