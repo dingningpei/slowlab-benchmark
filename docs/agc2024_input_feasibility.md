@@ -1,5 +1,7 @@
 # AGC 2024 input-only feasibility audit
 
+> Status (2026-09-29): the replay route assessed here was not pursued; the benchmark is a reality-constrained simulation, not an AGC replay. This audit remains the source of the facility capacities (heating, CO2, lighting) used in the task contract and is cited by `configs/reality_constraints_v2_2.json`.
+
 ## Decision
 
 The public AGC 2024 dwarf-tomato archive is substantially better suited than AGC 2019 to a prospective observed-action climate replay. It receives a provisional **B** rating: all six compartments expose nearly complete five-minute weather and realised equipment-state traces, and the accompanying paper reports much of the equipment and geometry needed to construct a source-grounded replay. A model, reconstruction rules, uncertainty bounds, identities and pass/fail gate must still be frozen before indoor temperature, humidity or CO2 values are read.

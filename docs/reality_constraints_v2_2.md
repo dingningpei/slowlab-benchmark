@@ -75,6 +75,27 @@ An evidence envelope describes data coverage, not a physical limit. The audit ne
 clips or reweights a record or a site; extrapolation is disclosed instead. Passing
 establishes neither causal nor counterfactual validity.
 
+## Attributing a failure
+
+The evidence class of a quantity (observed, literature-constrained, assumed, unsupported)
+says where its value comes from. When a run misbehaves, the *problem type* is a separate
+label. One failure can carry more than one.
+
+| Problem type | Test | Handling | Example |
+| --- | --- | --- | --- |
+| Execution or numerical error | Non-finite state, broken clock, resource ledger not conserved, compiled and reference RHS disagree, or infrastructure failure under identical inputs | Keep the failed identity, replay minimally, fix, add a regression. Never delete the scenario and never count it as an agent failure | The day-240 intermediate `exp` overflow in a condensation sigmoid of the native RHS, fixed algebraically with exact-state and 600-step regressions |
+| Source extrapolation | An equation, device or external series with a real source is applied to a different target | List source and target domains, run conditional sensitivity, claim no target-domain validation without matching real trajectories | GreenLight and AGC material applied to an idealised 96 m² compartment; Cabauw outdoor weather applied to the proposed greenhouse; the simplified tomato model applied to a cultivar |
+| Declared assumption | A boundary, capacity, noise level, price or unmodelled mechanism set explicitly by the contract without observation | Freeze the value and range, report sensitivity or narrow the claim; never present a default as a measurement | Deep-soil boundary, adequate central supply, no root-zone stress, zero sensor delay, synthetic prices |
+| Not yet attributable | A deviation from real trajectories or an anomalous simulated return without evidence to decompose it | Keep implementation, source and assumption open as causes; do controlled replay and boundary sensitivity first | No matched real actuator and indoor trajectories exist, so no unexplained deviation can be uniquely attributed |
+
+Order of work: check inputs, clock, state and ledger; rule out implementation differences with
+a same-action reference path or exact replay; run paired sensitivity over the declared
+boundary and structural parameters; only then compare with real greenhouse trajectories that
+have matching control inputs. Without actuator ground truth, that last step cannot separate
+controller or actuator error from climate or crop equation error. Passing every Phase 1
+numerical and timing check supports only in-simulator reliability plus the identified
+limits of external validity.
+
 The frozen Phase 0 conclusion can be checked without the external raw archives:
 
 ```bash

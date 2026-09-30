@@ -29,7 +29,7 @@ configs/           frozen inputs: task contracts v0–v3, campaign example, mode
                    reality constraints, blinding policy, weather plans and protocols
 configs/agc/       frozen AGC contracts, protocols and recorded results
 results/           frozen pilot results, structural audits and daily progress traces
-docs/              living protocol and decision documents (14 files)
+docs/              protocol, decision and data-provenance documents (12 files)
 tests/, tests/archive/
 legacy/v2.1/       the frozen Version 2.1 study: TOMGRO environment, scripts, results, tests, paper
 ```

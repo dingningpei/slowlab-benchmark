@@ -2,6 +2,8 @@
 
 日期：2026-09-27。结论：**选定模型族；设施尺度及完整任务合同尚未冻结。**
 
+> 现状（2026-09-29）：文末提出的设施尺度问题已解决。实验单元定为 96 m² 独立模拟隔间（`docs/experimental_unit_scale.md`），几何、边界和设备容量逐项写入任务合同，现行版本为 `configs/task_contract_v4.json`。下文保留当时的记录。
+
 ## 选择
 
 采用官方 GreenLight **v2.0.5 / fa502eddae5f9eff7b3380c88037d9b5f3f14bf5** 的 `main_katzin_2021.json` 组合，保持官方加载顺序：

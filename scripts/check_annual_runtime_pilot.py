@@ -21,7 +21,7 @@ from slowlab.cabauw_weather import CabauwLc1Weather
 from slowlab.controller import commands_from_observations
 from slowlab.greenlight_reuse import CROP_STATES, CropLifecycle
 from slowlab.resources import ResourceLedger
-from check_online_weather import record_at_endpoint
+from slowlab.sensor_bridge import record_at_endpoint
 
 
 def rss_bytes() -> int:

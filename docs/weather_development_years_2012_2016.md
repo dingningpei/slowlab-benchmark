@@ -1,4 +1,6 @@
-# Cabauw v3 开发天气：分阶段获取与产品差异
+# Cabauw 2012–2016 开发年天气：分阶段获取与产品差异
+
+> 现状（2026-09-29）：当初为 v3 合成天气生成器获取这些年份，该生成器已放弃。2013、2014、2016 现作为真实历史天气强迫的开发年使用（见 `docs/historical_weather_boundary_protocol.md`），2014 已有独立读取器与全年边界扫描。下文提到的矩阵构建脚本 `build_weather_v3_development_matrices.py` 随生成器一并删除，可用 `git show 4fb4c93:scripts/v22/build_weather_v3_development_matrices.py` 找回。
 
 2026-09-28。用户授权仅获取 2012、2013、2014、2016 四个开发年，最多新增 13,027,903 字节；2015/2025 保留年不在本次授权内。目录元数据、96 个文件身份、两阶段下载和精确字节上限见 `configs/weather_v3_expanded_acquisition_proposal.json` 与 `scripts/download_weather_v3_development.py`。这仍是同一个 Cabauw 站点的天气年份，不是四个独立温室。
 
