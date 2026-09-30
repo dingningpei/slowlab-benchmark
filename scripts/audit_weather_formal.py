@@ -75,7 +75,7 @@ def load_month(src: Source, ym: str, issues: list):
         b = arrays['time_bnds']
         if (len(arrays['time']) != n or b.shape != (n, 2)
                 or units['time'] != f'hours since {ym[:4]}-{ym[4:]}-01 00:00:00 0:00'
-                or abs(b[0, 0]) > 1e-6 or abs(b[-1, 1] - n / 6) > 1e-5
+                or abs(b[0, 0]) * 3600 > 1 or abs(b[-1, 1] - n / 6) * 3600 > 1  # float32 hours: 1 s tolerance
                 or np.max(np.abs((b[:, 1] - b[:, 0]) * 3600 - 600)) > 1
                 or np.max(np.abs((b[1:, 0] - b[:-1, 1]) * 3600)) > 1
                 or np.max(np.abs((arrays['time'] - b[:, 0]) * 3600)) > 1):
