@@ -1,0 +1,43 @@
+{
+  "status": "measured_wsl_scaling_projection",
+  "date": "2026-09-30",
+  "code_commit": "0df43c9",
+  "supersedes_for_planning": [
+    "results/compute_scaling_wsl_20260930.json",
+    "results/compute_scaling_wsl_20260930_f20212d.json"
+  ],
+  "host": "developer Windows desktop, WSL2 Ubuntu 24.04.5, i7-10700K (8 cores / 16 threads), 31 GB visible; Python 3.12.3, numpy 1.26.4, scipy 1.14.1, pandas 2.2.3, gcc 13.3.0",
+  "workload": "four-unit event-driven campaign, contract v4, sensor noise v0 seed 20260929, 2017 weather, scripted actions; seven-day prefixes",
+  "method": "Per-worker stepping from days 2-7 of seven-day four-unit noisy campaigns. Annual time = setup (first-day time minus one day of stepping) + 365 x stepping x seasonal factor, where the seasonal factor is the audited Tokyo annual run of the same code path, seed and actions divided by 365 days of its day-2-7 stepping rate.",
+  "tokyo_seasonal_factor": 1.019,
+  "scaling": [
+    {
+      "workers": 1,
+      "per_worker_stepping_s_per_day": 2.79,
+      "original_s_per_day": 13.8,
+      "after_first_optimisation_s_per_day": 4.76,
+      "cumulative_speedup": 4.95,
+      "setup_seconds": 69.8,
+      "projected_annual_campaign_hours": 0.31,
+      "campaigns_per_hour": 3.3,
+      "days_for_1024_campaigns": 13.1
+    },
+    {
+      "workers": 12,
+      "per_worker_stepping_s_per_day": 4.59,
+      "original_s_per_day": 22.2,
+      "after_first_optimisation_s_per_day": 7.69,
+      "cumulative_speedup": 4.84,
+      "setup_seconds": 112.3,
+      "projected_annual_campaign_hours": 0.51,
+      "campaigns_per_hour": 23.8,
+      "days_for_1024_campaigns": 1.8
+    }
+  ],
+  "all_runs_passed": true,
+  "numerics": "Both optimisations (f20212d, 0df43c9) leave every numerical result unchanged; verified by byte-identical traces and array-by-array comparison.",
+  "caveats": [
+    "Projection from seven-day prefixes; a parallel annual run has not yet confirmed it.",
+    "Excludes evaluation replicas, pilots, retries and LLM waiting time."
+  ]
+}
