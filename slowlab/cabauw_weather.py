@@ -268,3 +268,93 @@ def read_source_year(cache: Path, plan: Path, year: int) -> np.ndarray:
     if not np.isfinite(result).all():
         raise ValueError('nonfinite archived weather')
     return result
+
+
+# ── Formal campaign years (repair rule v0) ────────────────────────────────
+REQUIRED_UNITS = {'TA002': 'degC', 'TD002': 'degC', 'F010': 'm s-1', 'SWD': 'W m-2', 'LWD': 'W m-2'}
+
+
+class CabauwLc1FormalWeather(CabauwLc1Weather):
+    """One formal campaign year from the audit written by scripts/audit_weather_formal.py.
+
+    Serves the previous December and the twelve months of ``year``. Every file
+    must match the SHA-256 the audit recorded; the audit's repairs for this year
+    (rule v0, slowlab/weather_repair.py) are applied and then every forcing
+    channel must be valid. Fields the model does not use are kept as metadata:
+    invalid relative humidity becomes NaN and invalid source indices become -1.
+    Time bounds are float32 hours in the archive, so they are checked to 1 s.
+    """
+
+    def __init__(self, cache: Path, audit: Path, year: int, dev_cache: Path | None = None):
+        from .weather_repair import REQUIRED
+        report = json.loads(Path(audit).read_text())
+        if (report.get('gate') != 'pass' or report['rule']['id'] != 'weather-repair-v0'
+                or not report['scope'].startswith('complete campaign years')):
+            raise ValueError('not a passing formal year audit under repair rule v0')
+        unit = report['units'].get(str(int(year)))
+        if unit is None:
+            raise ValueError(f'year {year} is not in the formal audit')
+        if unit['status'] == 'excluded':
+            raise ValueError(f'year {year} is excluded by repair rule v0')
+        expected = [f'{year - 1}12'] + [f'{year}{m:02d}' for m in range(1, 13)]
+        if list(unit['files']) != expected:
+            raise ValueError('formal audit month list mismatch')
+        self.cache, self.dev_cache, self.year = Path(cache), Path(dev_cache) if dev_cache else None, int(year)
+        self.month_files = unit['files']
+        self.repairs = {}
+        for r in unit['repairs']:
+            if r['channel'] not in REQUIRED[r['role']]:
+                raise ValueError('repair outside the forcing channels')
+            self.repairs.setdefault((r['month'], r['role']), []).append((r['channel'], int(r['index']), float(r['repaired'])))
+        self.required = REQUIRED
+        self._month_key = None
+        self._month_data = None
+        self.require_duplicate_swd_match = False
+        self.last_duplicate_swd_max_abs = None
+
+    def _load_month(self, ym: str):
+        from .weather_repair import invalid_mask
+        record = self.month_files.get(ym)
+        if record is None:
+            raise ValueError(f'outside formal campaign year {self.year}: {ym}')
+        days = calendar.monthrange(int(ym[:4]), int(ym[4:]))[1]
+        n = days * 144
+        data = {}
+        for role, dataset in (('meteo', MET), ('radiation', RAD)):
+            entry = record[role]
+            base = self.dev_cache if entry['origin'] == 'development cache' else self.cache
+            if base is None:
+                raise ValueError('development cache required for ' + entry['filename'])
+            path = base / dataset / entry['filename']
+            if entry['filename'] != f'{dataset}_v1.0_{ym}.nc' or hashlib.sha256(path.read_bytes()).hexdigest() != entry['sha256']:
+                raise ValueError(f'formal weather hash mismatch: {path.name}')
+            arrays, units, fills = _read(path, {'time', 'time_bnds', 'valid_dates', *FIELDS[role]})
+            b = arrays['time_bnds']
+            if (len(arrays['time']) != n or b.shape != (n, 2)
+                    or units['time'] != f'hours since {ym[:4]}-{ym[4:]}-01 00:00:00 0:00'
+                    or abs(b[0, 0]) * 3600 > 1 or abs(b[-1, 1] - n / 6) * 3600 > 1
+                    or np.max(abs((b[:, 1] - b[:, 0]) * 3600 - 600)) > 1
+                    or np.max(abs((b[1:, 0] - b[:-1, 1]) * 3600)) > 1
+                    or np.max(abs(arrays['time'] - b[:, 0])) * 3600 > 1):
+                raise ValueError(f'{path.name}: time grid')
+            if len(arrays['valid_dates']) != days or not np.all(arrays['valid_dates'] == 1):
+                raise ValueError(f'{path.name}: invalid date coverage')
+            for channel, index, value in self.repairs.get((ym, role), ()):
+                arrays[channel] = arrays[channel].copy()
+                arrays[channel][index] = value
+            for channel in self.required[role]:
+                if units[channel] != REQUIRED_UNITS[channel]:
+                    raise ValueError(f'{path.name}: {channel} unit-label drift')
+                if invalid_mask(channel, arrays[channel], fills.get(channel)).any():
+                    raise ValueError(f'{path.name}: invalid {channel} after audited repairs')
+            for key in FIELDS[role]:
+                if key in self.required[role]:
+                    continue
+                bad = ~np.isfinite(arrays[key]) | (arrays[key] == fills.get(key, np.nan))
+                if bad.any():
+                    arrays[key] = np.where(bad, -1.0 if key.startswith('I') else np.nan, arrays[key])
+            data[role] = arrays
+        if np.max(abs(data['meteo']['time_bnds'] - data['radiation']['time_bnds'])) * 3600 > 1:
+            raise ValueError(f'{ym}: meteo/radiation time mismatch')
+        self.last_duplicate_swd_max_abs = float(np.nanmax(abs(data['meteo']['SWD'] - data['radiation']['SWD'])))
+        self._month_key, self._month_data = ym, data
