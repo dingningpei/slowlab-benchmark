@@ -1,0 +1,56 @@
+{
+  "status": "passed_annual_dynamic_structural_audit",
+  "scope": "mechanical causality/resource/settlement audit only; no real-greenhouse validation",
+  "days": 365,
+  "ticks": 105120,
+  "starts": 5,
+  "sensor_noise": {
+    "noise_id": "slowlab-sensor-noise-v0",
+    "setting": "main",
+    "seed": 20260929,
+    "config": "configs/sensor_noise_v0.json",
+    "config_sha256": "ae93e8477969c148f348776d9308c98e24b9a5cc45a815d2ad5689d95fcc8216",
+    "seed_scope": "development seed; not a formal site"
+  },
+  "dropped_readings": 14888,
+  "wall_seconds": 8249.445187392179,
+  "peak_rss_bytes": 265576448,
+  "result_sha256": "2b635f81528a8ff2d4199d5186e1e3ebcaa40c515135a835863bbdb1b3f8c51f",
+  "progress_sha256": "82c27acd380bc1df9389cf28deda3e4ea6849c2a64059a26c682d1063faebc30",
+  "trace_compressed_sha256": "04bddfd6a809b8cbc0d4898eee1513963fa5e4607fd751bcf68784d07878b827",
+  "trace_uncompressed_sha256": "2799ce81dafe60a2b00038b0ea292c8eae14e6c586ce627a433afcf5e547fa52",
+  "per_unit_per_m2": {
+    "0": {
+      "heat_kwh_m2": 117.45066037586294,
+      "light_kwh_m2": 77.46666666666565,
+      "co2_kg_m2": 12.076354819878166,
+      "harvest_kg_m2": 37.52389307492334,
+      "transpiration_kg_m2": 461.4185471035786,
+      "days": 365.0000000003988
+    },
+    "1": {
+      "heat_kwh_m2": 131.99798170992037,
+      "light_kwh_m2": 84.77777777778257,
+      "co2_kg_m2": 12.417992517235493,
+      "harvest_kg_m2": 36.212915715210066,
+      "transpiration_kg_m2": 440.95917177913145,
+      "days": 365.00000000040245
+    },
+    "2": {
+      "heat_kwh_m2": 131.69910674142622,
+      "light_kwh_m2": 98.66666666668252,
+      "co2_kg_m2": 14.66919474259061,
+      "harvest_kg_m2": 39.13536124619961,
+      "transpiration_kg_m2": 480.7877005456345,
+      "days": 365.00000000040245
+    },
+    "3": {
+      "heat_kwh_m2": 30.891254477273396,
+      "light_kwh_m2": 19.7000000000018,
+      "co2_kg_m2": 1.1305700385267952,
+      "harvest_kg_m2": 6.789331724464114e-63,
+      "transpiration_kg_m2": 35.63707767582661,
+      "days": 365.00000000047197
+    }
+  }
+}
