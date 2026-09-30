@@ -36,26 +36,42 @@ class CachedGreenLightSolver:
                 tuple((k,m.variables_formatted[k]) for k in m.solving_order),
                 tuple(sorted((k,v) for k,v in m.options.items() if k not in ('t_start','t_end'))))
 
-    def solve(self):
+    def solve(self, row=None):
+        """Solve one segment. ``row`` (array-output mode) supplies the single
+        current input row directly instead of through ``model.input_data``;
+        the input matrix holds the same float64 values either way."""
         import numpy as np
         import pandas as pd
         from scipy.integrate import solve_ivp
         m=self.model
         if self._signature()!=self.signature:raise ValueError('compiled model changed; rebuild required')
         columns=['Time']+[k for k in m.inputs if k!='Time']
-        d=m.input_data[columns].to_numpy()
+        if row is None:
+            d=m.input_data[columns].to_numpy()
+            current=lambda k: float(m.input_data.iloc[0][k])
+        else:
+            if not self.array_output:raise ValueError('direct input rows require array output')
+            d=np.array([[float(row[k]) for k in columns]],dtype=np.float64)
+            current=lambda k: float(row[k])
         if len(d)!=1:raise ValueError('cached adapter requires one present input row')
         t0,t1=float(m.options['t_start']),float(m.options['t_end'])
         if d[0,0]!=t0:raise ValueError('input timestamp must match current step')
         caught=[]
-        def rhs(t,y):
-            with np.errstate(all='warn'),warnings.catch_warnings(record=True) as logs:
-                warnings.simplefilter('always');out=self.rhs(t,y,d)
-            for w in logs:
-                message=f'{w.category.__name__} encountered at time t={t}: {w.message}'
-                caught.append(message)
-                if m.options['warn_runtime'].lower()=='true':warnings.warn(message,w.category)
-            return out
+        if getattr(self.rhs,'emits_numpy_warnings',True) is False:
+            # Compiled RHS: nothing inside can raise a numpy warning, so the
+            # capture below would always record nothing.
+            native=self.rhs
+            def rhs(t,y):
+                return native(t,y,d)
+        else:
+            def rhs(t,y):
+                with np.errstate(all='warn'),warnings.catch_warnings(record=True) as logs:
+                    warnings.simplefilter('always');out=self.rhs(t,y,d)
+                for w in logs:
+                    message=f'{w.category.__name__} encountered at time t={t}: {w.message}'
+                    caught.append(message)
+                    if m.options['warn_runtime'].lower()=='true':warnings.warn(message,w.category)
+                return out
         try:first=float(m.options['first_step'])
         except ValueError:first=None
         sol=solve_ivp(rhs,[t0,t1],np.array([m.init[k] for k in m.states]),method='LSODA',
@@ -65,20 +81,26 @@ class CachedGreenLightSolver:
         if not sol.success:raise RuntimeError(sol.message)
         values={'Time':sol.t,'np':np}
         values.update({k:sol.y[i] for i,k in enumerate(m.states)})
-        values.update({k:np.full(len(sol.t),float(m.input_data.iloc[0][k])) for k in columns[1:]})
+        values.update({k:np.full(len(sol.t),current(k)) for k in columns[1:]})
         exec(self.output_code,values)
         order=['Time',*m.states,*columns[1:],*(k for k in m.solving_order if k in m.aux and k!='Time')]
         if self.array_output:
             # All native states and auxiliaries were still evaluated above; skip
             # only pandas packaging for the short-lived internal step result.
             arrays={}
+            points=len(sol.t)
             for key in order:
                 value=np.asarray(values[key],dtype=float)
                 if value.ndim==0:
-                    value=np.full(len(sol.t),float(value))
-                if value.shape!=(len(sol.t),) or not np.isfinite(value).all():
+                    value=np.full(points,float(value))
+                if value.shape!=(points,):
                     raise RuntimeError('invalid model output array: '+key)
                 arrays[key]=value
+            # One finiteness check over every output instead of one per array;
+            # on failure name the first offending key, as before.
+            if not np.isfinite(np.concatenate(tuple(arrays.values()))).all():
+                bad=next(k for k,v in arrays.items() if not np.isfinite(v).all())
+                raise RuntimeError('invalid model output array: '+bad)
             m.full_sol=arrays
         else:
             m.full_sol=pd.DataFrame({k:values[k] for k in order})

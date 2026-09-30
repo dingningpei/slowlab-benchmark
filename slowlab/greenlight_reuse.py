@@ -12,9 +12,25 @@ import os
 from datetime import datetime, timedelta
 from pathlib import Path
 
+import numpy as np
+
 from .greenlight_adapter import greenlight_raw_endpoint
 from .greenlight_source import resolve_greenlight_source
 from .greenlight_smoke import model_override, _nodes
+
+
+class CurrentInputRow:
+    """The single present input row held by a model in array-output mode."""
+    __slots__ = ('row',)
+
+    def __init__(self, row):
+        self.row = dict(row)
+
+    def __len__(self):
+        return 1
+
+    def to_dict(self):
+        return dict(self.row)
 
 
 def require_dynamic_inputs(model, required):
@@ -173,17 +189,24 @@ class ReusableGreenLight:
             # Historical interval means are hidden simulator forcing, never
             # agent-visible observations at the interval's left edge.
             row.update(self._weather.at_utc(self._weather_origin_utc + timedelta(seconds=self.clock)).greenlight_inputs())
-        mdl.input_data=pd.DataFrame([row])
         mdl.options.update(t_start=str(self.clock),t_end=str(end_time))
         mdl.init.update(self.state)
-        mdl.full_sol=pd.DataFrame(columns=["Time"])
         mdl.log=''  # Retain this segment separately, not an ever-growing log.
         before=dict(self.state)
-        with open(os.devnull,'w') as sink,contextlib.redirect_stdout(sink):
-            if self._cached_solver is None:
-                mdl.solve()
-            else:
-                self._cached_solver.solve()
+        if self._cached_solver is not None and self._cached_solver.array_output:
+            # Executor path: the cached solver reads the row directly and prints
+            # nothing, so no per-step DataFrame or stdout redirection is needed.
+            mdl.input_data=CurrentInputRow(row)
+            mdl.full_sol={'Time':np.empty(0)}
+            self._cached_solver.solve(row=row)
+        else:
+            mdl.input_data=pd.DataFrame([row])
+            mdl.full_sol=pd.DataFrame(columns=["Time"])
+            with open(os.devnull,'w') as sink,contextlib.redirect_stdout(sink):
+                if self._cached_solver is None:
+                    mdl.solve()
+                else:
+                    self._cached_solver.solve()
         self.segment_log=mdl.log
         after=greenlight_raw_endpoint(mdl.states_sol,self.names,self.names,expected_time=end_time)
         if any(float(mdl.states_sol.y[i][0]) != before[name] for i,name in enumerate(self.names)):

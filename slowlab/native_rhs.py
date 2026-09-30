@@ -86,6 +86,15 @@ feclearexcept(FE_ALL_EXCEPT);
 '''+f'double a[{len(model.solving_order)}]={{0}};\n'+statements+'''
 return fetestexcept(FE_INVALID|FE_DIVBYZERO|FE_OVERFLOW);
 }
+/* Checked entry point: the same rhs() above, bracketed by finiteness checks.
+   isfinite() only classifies values and raises no floating-point exception. */
+int rhs_checked(const double *y,const double *d,double *dy,int ny,int nd) {
+for (int i=0;i<ny;i++) if (!isfinite(y[i])) return -1;
+for (int i=0;i<nd;i++) if (!isfinite(d[i])) return -1;
+int flags=rhs(y,d,dy);
+for (int i=0;i<ny;i++) if (!isfinite(dy[i])) return flags | (1<<30);
+return flags;
+}
 '''
         self.source_sha256=hashlib.sha256(source.encode()).hexdigest()
         self._temporary=tempfile.TemporaryDirectory(prefix='slowlab-native-rhs-')
@@ -104,24 +113,40 @@ return fetestexcept(FE_INVALID|FE_DIVBYZERO|FE_OVERFLOW);
         subprocess.run([self.compiler_path,*self.compiler_flags,str(src),'-o',str(lib),*link_flags],
                        check=True,capture_output=True,timeout=30)
         self.compiler_version=subprocess.run([self.compiler_path,'--version'],check=True,capture_output=True,text=True).stdout.splitlines()[0]
-        self.library=ctypes.CDLL(str(lib));self.function=self.library.rhs
-        array=np.ctypeslib.ndpointer(dtype=np.float64,ndim=1,flags='C_CONTIGUOUS')
-        self.function.argtypes=[array,array,array];self.function.restype=ctypes.c_int
+        self.library=ctypes.CDLL(str(lib));self.function=self.library.rhs_checked
+        self.function.argtypes=[ctypes.c_void_p]*3+[ctypes.c_int]*2;self.function.restype=ctypes.c_int
+        self._allocate()
+
+    def _allocate(self):
+        """Persistent buffers with prebuilt pointers: a call copies y and the
+        current input row into them instead of converting three numpy
+        arrays through ctypes each time. The arithmetic in rhs() is unchanged."""
+        import numpy as np
+        self._y=np.zeros(self.states,dtype=np.float64);self._d=np.zeros(self.inputs,dtype=np.float64)
+        self._out=np.zeros(self.states,dtype=np.float64)
+        self._pointers=tuple(ctypes.c_void_p(a.ctypes.data) for a in (self._y,self._d,self._out))
+        self._sizes=(ctypes.c_int(self.states),ctypes.c_int(self.inputs))
+
+    # C code raises no numpy floating-point warnings, so the cached solver may
+    # call this without its per-call numpy warning capture.
+    emits_numpy_warnings = False
 
     def __call__(self,t,y,d_matrix):
-        import numpy as np
-        y=np.ascontiguousarray(y,dtype=np.float64);d=np.ascontiguousarray(d_matrix[0],dtype=np.float64)
-        if y.shape!=(self.states,) or d.shape!=(self.inputs,):raise ValueError('native RHS shape mismatch')
-        if not np.isfinite(y).all() or not np.isfinite(d).all():raise ValueError('nonfinite native input')
-        out=np.zeros(self.states,dtype=np.float64)
-        flags=self.function(y,d,out)
-        output_finite = bool(np.isfinite(out).all())
-        if flags or not output_finite:
+        row=d_matrix[0]
+        if y.shape!=(self.states,) or row.shape!=(self.inputs,):raise ValueError('native RHS shape mismatch')
+        # Copy the input row on every call: callers may mutate d_matrix in place.
+        self._d[:]=row
+        self._y[:]=y
+        self._out[:]=0.0
+        code=self.function(*self._pointers,*self._sizes)
+        if code==-1:raise ValueError('nonfinite native input')
+        if code:
+            flags=code & ~(1<<30);output_finite=not code & (1<<30)
             # Preserve the exact failed LSODA trial evaluation for diagnosis.
             # This is executor-private and never included in agent payloads.
             self.last_fault = {'time': float(t), 'flags': int(flags),
                                'derivative_all_finite': output_finite,
-                               'state': y.tolist(), 'inputs': d.tolist(),
-                               'derivative': [float(value) if np.isfinite(value) else None for value in out]}
+                               'state': self._y.tolist(), 'inputs': self._d.tolist(),
+                               'derivative': [float(v) if v==v and abs(v)!=float('inf') else None for v in self._out.tolist()]}
             raise FloatingPointError(f'native RHS arithmetic fault: {flags}; derivative_finite={output_finite}')
-        return out
+        return self._out.copy()

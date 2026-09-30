@@ -23,12 +23,32 @@ def test_arithmetic_fault_preserves_finite_trial_diagnostic():
     rhs = NativeRHS.__new__(NativeRHS)
     rhs.states = 2
     rhs.inputs = 2
-    rhs.function = lambda state, inputs, derivative: 8
+    rhs._allocate()
+    rhs.function = lambda *pointers_and_sizes: 8
     with pytest.raises(FloatingPointError, match='derivative_finite=True'):
         rhs(300.0, np.array([1.0, 2.0]), np.array([[0.0, 3.0]]))
     assert rhs.last_fault['flags'] == 8
     assert rhs.last_fault['state'] == [1.0, 2.0]
+    assert rhs.last_fault['inputs'] == [0.0, 3.0]
     assert rhs.last_fault['derivative_all_finite'] is True
+
+
+def test_checked_entry_codes_map_to_the_original_errors():
+    import numpy as np
+    from slowlab.native_rhs import NativeRHS
+    rhs = NativeRHS.__new__(NativeRHS)
+    rhs.states = 2
+    rhs.inputs = 1
+    rhs._allocate()
+    rhs.function = lambda *args: -1
+    with pytest.raises(ValueError, match='nonfinite native input'):
+        rhs(0.0, np.array([1.0, 2.0]), np.array([[0.0]]))
+    rhs.function = lambda *args: 1 << 30
+    with pytest.raises(FloatingPointError, match='derivative_finite=False'):
+        rhs(0.0, np.array([1.0, 2.0]), np.array([[0.0]]))
+    assert rhs.last_fault['flags'] == 0 and rhs.last_fault['derivative_all_finite'] is False
+    with pytest.raises(ValueError, match='shape mismatch'):
+        rhs(0.0, np.array([1.0, 2.0, 3.0]), np.array([[0.0]]))
 
 
 def test_logistic_inverse_is_emitted_stably():
@@ -47,3 +67,22 @@ def test_native_logistic_extremes_are_finite_without_false_overflow():
     rhs = NativeRHS(model)
     assert rhs(0., np.array([1000.]), np.array([[0.]]))[0] == 0.
     assert rhs(0., np.array([-1000.]), np.array([[0.]]))[0] == 1.
+
+
+def test_input_row_is_reread_on_every_call_even_if_mutated_in_place():
+    import numpy as np
+    from slowlab.native_rhs import NativeRHS
+    rhs = NativeRHS.__new__(NativeRHS)
+    rhs.states = 1
+    rhs.inputs = 1
+    rhs._allocate()
+    seen = []
+    def fake(*args):
+        seen.append(float(rhs._d[0]))
+        return 0
+    rhs.function = fake
+    d = np.array([[1.0]])
+    rhs(0.0, np.array([0.0]), d)
+    d[0, 0] = 2.0
+    rhs(0.0, np.array([0.0]), d)
+    assert seen == [1.0, 2.0]
