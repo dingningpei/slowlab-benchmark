@@ -18,6 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from slowlab.cabauw_weather import CabauwLc1Weather
+from slowlab.greenlight_source import resolve_greenlight_source
 from slowlab.campaign_executor import CampaignExecutor
 from slowlab.sensor_noise import SensorNoise
 
@@ -31,7 +32,8 @@ def rss_bytes() -> int:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument('--source', type=Path, required=True)
+    parser.add_argument('--source', type=Path, default=None,
+                        help='GreenLight checkout at the pinned commit; default: the installed [greenlight] extra')
     parser.add_argument('--cache', type=Path, required=True)
     parser.add_argument('--trace', type=Path, required=True)
     parser.add_argument('--out', type=Path, required=True)
@@ -46,8 +48,8 @@ def main() -> None:
     args = parser.parse_args()
     if not 1 <= args.pilot_days <= 365 or args.max_seconds <= 0 or args.max_rss_bytes <= 0:
         raise ValueError('invalid pilot or resource bound')
-    sys.path.insert(0, str(args.source))
     contract = json.loads((ROOT / 'configs/task_contract_v3.json').read_text())
+    args.source = resolve_greenlight_source(args.source, contract)
     policies = json.loads((ROOT / 'configs/campaign_example_v0.json').read_text())
     policy_c = dict(policies['policy_b'], day_temperature_c=20, night_temperature_c=16,
                     co2_target_ppm=600, supplemental_light_hours=8)

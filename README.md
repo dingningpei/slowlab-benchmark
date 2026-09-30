@@ -49,9 +49,16 @@ python3 scripts/verify_component_evidence.py
 python3 scripts/verify_phase0_reality_contract.py
 ```
 
-Runs that step the physical model need a checkout of GreenLight at commit
-`fa502eddae5f9eff7b3380c88037d9b5f3f14bf5` passed as `--source`, plus the audited Cabauw
-weather cache (kept outside Git). See `configs/greenlight_model_family.json` and
+Runs that step the physical model need GreenLight at commit
+`fa502eddae5f9eff7b3380c88037d9b5f3f14bf5` and the audited Cabauw weather cache (kept outside
+Git). Either install the pinned engine and numerical stack:
+
+```bash
+pip install -e '.[greenlight]'
+```
+
+or pass a checkout at that commit with `--source`. Both routes verify the four model
+definition hashes before loading. See `configs/greenlight_model_family.json` and
 `docs/historical_weather_boundary_protocol.md`.
 
 ## The frozen Version 2.1 study

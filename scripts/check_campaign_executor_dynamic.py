@@ -15,6 +15,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from slowlab.cabauw_weather import CabauwLc1Weather
+from slowlab.greenlight_source import resolve_greenlight_source
 from slowlab.campaign_executor import CampaignExecutor
 from slowlab.feedback_view import FeedbackView
 from slowlab.sensor_noise import SensorNoise, verify_trace_row
@@ -22,7 +23,8 @@ from slowlab.sensor_noise import SensorNoise, verify_trace_row
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--source', type=Path, required=True)
+    parser.add_argument('--source', type=Path, default=None,
+                        help='GreenLight checkout at the pinned commit; default: the installed [greenlight] extra')
     parser.add_argument('--cache', type=Path, required=True)
     parser.add_argument('--trace', type=Path, required=True)
     parser.add_argument('--out', type=Path, required=True)
@@ -31,8 +33,8 @@ def main():
     parser.add_argument('--noise-config', type=Path, default=ROOT / 'configs/sensor_noise_v0.json')
     parser.add_argument('--noise-setting', default='main')
     args = parser.parse_args()
-    sys.path.insert(0, str(args.source))
     contract = json.loads((ROOT / 'configs/task_contract_v3.json').read_text())
+    args.source = resolve_greenlight_source(args.source, contract)
     policies = json.loads((ROOT / 'configs/campaign_example_v0.json').read_text())
     weather = CabauwLc1Weather(args.cache, ROOT / 'configs/weather_gapfilled_plan.json')
     origin = datetime(2016, 12, 31, 23, tzinfo=timezone.utc)

@@ -13,6 +13,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 from .greenlight_adapter import greenlight_raw_endpoint
+from .greenlight_source import resolve_greenlight_source
 from .greenlight_smoke import model_override, _nodes
 
 
@@ -61,7 +62,7 @@ def empty_crop_override(definitions, contract):
 class ReusableGreenLight:
     COMMANDS = {'uBoil':'cmdHeat','uRoof':'cmdVent','uExtCo2':'cmdCo2','uLamp':'cmdLamp'}
 
-    def __init__(self, contract, source: Path, start=21600., mode="active", cached_solver=False, native_rhs=False, *, weather=None, weather_origin_utc: datetime | None = None, soil_boundary_c: float | None = None, local_clock_offset_seconds: float = 0,
+    def __init__(self, contract, source: Path | None, start=21600., mode="active", cached_solver=False, native_rhs=False, *, weather=None, weather_origin_utc: datetime | None = None, soil_boundary_c: float | None = None, local_clock_offset_seconds: float = 0,
                  array_output: bool = False):
         if mode not in ("active", "empty"):
             raise ValueError("mode must be active or empty")
@@ -86,6 +87,7 @@ class ReusableGreenLight:
         sampled_screen = contract['controller'].get('thermal_screen', {}).get('implementation') == 'external_sample_and_hold'
         if sampled_screen:
             self.COMMANDS['uThScr'] = 'cmdScreen'
+        source = resolve_greenlight_source(source, contract)
         from greenlight import GreenLight
         definitions, override = model_override(contract, source)
         self.crop_flows = ()

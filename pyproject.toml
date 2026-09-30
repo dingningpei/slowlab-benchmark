@@ -14,7 +14,16 @@ dependencies = ["numpy>=1.24", "scipy>=1.10"]
 [project.optional-dependencies]
 figures = ["matplotlib>=3.7"]
 weather = ["h5py>=3.8"]
-llm = ["certifi"]        # needed by python.org builds of Python on macOS to verify TLS certificates
+llm = ["certifi"]
+# The pinned physical engine and the numerical stack of the reference runtime.
+# The model definitions ship with the package; slowlab verifies their hashes at load time.
+greenlight = [
+    "GreenLight @ git+https://github.com/davkat1/GreenLight@fa502eddae5f9eff7b3380c88037d9b5f3f14bf5",
+    "numpy==1.26.4",
+    "scipy==1.14.1",
+    "pandas==2.2.3",
+    "numexpr==2.10.1",
+]        # needed by python.org builds of Python on macOS to verify TLS certificates
 dev = ["pytest>=7.0"]
 analysis = ["matplotlib>=3.7"]
 
