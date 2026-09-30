@@ -45,10 +45,15 @@ def main() -> None:
                         help='development sensor-noise seed; omit for deterministic virtual sensors')
     parser.add_argument('--noise-config', type=Path, default=ROOT / 'configs/sensor_noise_v0.json')
     parser.add_argument('--noise-setting', default='main')
+    parser.add_argument('--contract', type=Path, default=ROOT / 'configs/task_contract_v4.json')
     args = parser.parse_args()
     if not 1 <= args.pilot_days <= 365 or args.max_seconds <= 0 or args.max_rss_bytes <= 0:
         raise ValueError('invalid pilot or resource bound')
-    contract = json.loads((ROOT / 'configs/task_contract_v3.json').read_text())
+    contract = json.loads(args.contract.read_text())
+    pinned_noise = contract['observations'].get('noise')
+    if args.noise_seed is not None and isinstance(pinned_noise, dict):
+        if hashlib.sha256(args.noise_config.read_bytes()).hexdigest() != pinned_noise['sha256']:
+            raise ValueError('noise config differs from the one pinned by the contract')
     args.source = resolve_greenlight_source(args.source, contract)
     policies = json.loads((ROOT / 'configs/campaign_example_v0.json').read_text())
     policy_c = dict(policies['policy_b'], day_temperature_c=20, night_temperature_c=16,
@@ -66,7 +71,8 @@ def main() -> None:
     result = {'status': 'running', 'scope': 'four-unit 2017 weather annual event-driven integration pilot; fixed scripted actions; no LLM, no formal site, no real greenhouse validation',
               'pilot_days': args.pilot_days, 'max_seconds': args.max_seconds,
               'max_rss_bytes': args.max_rss_bytes, 'weather_year': 2017,
-              'sensor_noise': noise_record}
+              'sensor_noise': noise_record,
+              'contract_id': contract['contract_id']}
     campaign = None
     try:
         with args.progress.open('w') as progress, gzip.open(args.trace, 'wt', encoding='utf-8') as trace:

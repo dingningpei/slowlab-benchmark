@@ -32,8 +32,13 @@ def main():
                         help='development sensor-noise seed; omit for deterministic virtual sensors')
     parser.add_argument('--noise-config', type=Path, default=ROOT / 'configs/sensor_noise_v0.json')
     parser.add_argument('--noise-setting', default='main')
+    parser.add_argument('--contract', type=Path, default=ROOT / 'configs/task_contract_v4.json')
     args = parser.parse_args()
-    contract = json.loads((ROOT / 'configs/task_contract_v3.json').read_text())
+    contract = json.loads(args.contract.read_text())
+    pinned_noise = contract['observations'].get('noise')
+    if args.noise_seed is not None and isinstance(pinned_noise, dict):
+        if hashlib.sha256(args.noise_config.read_bytes()).hexdigest() != pinned_noise['sha256']:
+            raise ValueError('noise config differs from the one pinned by the contract')
     args.source = resolve_greenlight_source(args.source, contract)
     policies = json.loads((ROOT / 'configs/campaign_example_v0.json').read_text())
     weather = CabauwLc1Weather(args.cache, ROOT / 'configs/weather_gapfilled_plan.json')
@@ -47,7 +52,8 @@ def main():
                      'seed_scope': 'development seed; not a formal site'})
     began = time.monotonic()
     result = {'status': 'running', 'scope': 'four-unit real-GreenLight 2-day-plus-one-tick dynamic campaign prefix; no formal site or LLM',
-              'sensor_noise': noise_record}
+              'sensor_noise': noise_record,
+              'contract_id': contract['contract_id']}
 
     def kept(unit, times):
         if noise is None:
