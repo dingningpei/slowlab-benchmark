@@ -73,7 +73,8 @@ def parse_reply(text: str) -> dict:
         reply = json.loads(stripped[start:end + 1])
     except json.JSONDecodeError as exc:
         raise FormatError(f'invalid JSON: {exc.msg}') from None
-    if not isinstance(reply, dict) or reply.get('type') not in ('campaign', 'tool', 'initial_recommendation'):
+    if not isinstance(reply, dict) or reply.get('type') not in ('campaign', 'tool', 'initial_recommendation',
+                                                                  'design_complete'):
         raise FormatError('type must be "campaign" or "tool"')
     if reply['type'] == 'campaign' and not isinstance(reply.get('action'), dict):
         raise FormatError('a campaign reply needs an "action" object')
@@ -128,18 +129,30 @@ def initial_recommendation(task: dict, complete, attempts: int = 3) -> tuple[dic
     return None, log
 
 
+DAY_ZERO_INSTRUCTION = ('Day-0 design: start crops with start actions and use analysis tools if useful. Reply '
+                        '{"type": "design_complete"} when your day-0 design is finished. No other campaign action '
+                        'is possible before the design is complete.')
+
+
 class LLMCampaignAgent:
-    def __init__(self, session, toolbox: Toolbox, complete, config: LLMConfig = LLMConfig()):
+    """``task`` overrides the session's view (the condition-free view for the shared day-0
+    design); ``history``, ``counts`` and ``notice`` continue a conversation after a branch."""
+
+    def __init__(self, session, toolbox: Toolbox, complete, config: LLMConfig = LLMConfig(), *,
+                 task: dict | None = None, history: list | None = None, counts: dict | None = None,
+                 notice: dict | None = None):
         self.session = session
         self.toolbox = toolbox
         self.complete = complete
         self.config = config
-        self.task = session.task
-        self.history: list[dict] = []          # {'reply': str, 'feedback': dict}
+        self.task = task if task is not None else session.task
+        self.history: list[dict] = [dict(entry) for entry in history or []]   # {'reply': str, 'feedback': dict}
         self.counts = {'llm_calls': 0, 'format_errors': 0, 'invalid_actions': 0, 'tool_calls': 0,
                        'tool_errors': 0, 'forced_advance': False, 'recommended': False}
+        if counts:
+            self.counts.update({k: v for k, v in counts.items() if k not in ('forced_advance', 'recommended')})
         self.log: list[dict] = []
-        self._harness_note = None
+        self._harness_note = notice
 
     # ── public state ───────────────────────────────────────────────────────
     def _latest(self):
@@ -253,6 +266,51 @@ class LLMCampaignAgent:
                                              'campaign to the final day.', 'result': result}
         return self._latest()[0] >= end and (low or self.counts['forced_advance'])
 
+    def run_day_zero_design(self, max_calls: int = 24) -> dict:
+        """Shared prefix before branching: only start actions and analysis tools, until the model
+        declares the design complete, every compartment is in use, or max_calls is reached."""
+        compartments = len(self.task['compartments'])
+        started, ended_by = 0, 'max_calls'
+        for _ in range(max_calls):
+            if started >= compartments:
+                ended_by = 'all_compartments_started'
+                break
+            text = self._ask(DAY_ZERO_INSTRUCTION)
+            try:
+                reply = parse_reply(text)
+                if reply['type'] == 'design_complete':
+                    self._record(self._reply_text(reply), {'kind': 'design_complete_acknowledged'})
+                    ended_by = 'design_complete'
+                    break
+                if reply['type'] == 'initial_recommendation' or (
+                        reply['type'] == 'campaign' and reply['action'].get('action') != 'start'):
+                    raise FormatError('only start actions, analysis tools or design_complete during the day-0 design')
+            except FormatError as exc:
+                self.counts['format_errors'] += 1
+                self._record(text[:2000], {'kind': 'format_error', 'message': str(exc)})
+                continue
+            reply_text = self._reply_text(reply)
+            if reply['type'] == 'tool':
+                self.counts['tool_calls'] += 1
+                try:
+                    out = self.toolbox.call(reply['name'], reply.get('args', {}))
+                    self._record(reply_text, {'kind': 'tool_result', 'result': out['result']})
+                except ToolError as exc:
+                    self.counts['tool_errors'] += 1
+                    self._record(reply_text, {'kind': 'tool_error', 'message': str(exc)})
+                continue
+            try:
+                result = self.session.dispatch(reply['action'])
+            except InvalidAction as exc:
+                self.counts['invalid_actions'] += 1
+                self._record(reply_text, {'kind': 'invalid_action', 'message': str(exc)})
+                continue
+            started += 1
+            self._record(reply_text, {'kind': 'campaign_result', 'result': result})
+            self.log.append({'day': 0.0, 'action': reply['action'], 'phase': 'shared_day_0'})
+        return {'ended_by': ended_by, 'starts': started, 'counts': dict(self.counts),
+                'history': [dict(e) for e in self.history], 'log': list(self.log)}
+
     def run(self) -> dict:
         normal = 'Choose your next step.'
         only_recommend = ('The campaign is at its final day and the call budget is nearly spent. Reply only '
@@ -262,7 +320,7 @@ class LLMCampaignAgent:
             text = self._ask(only_recommend if restricted else normal)
             try:
                 reply = parse_reply(text)
-                if reply['type'] == 'initial_recommendation':
+                if reply['type'] in ('initial_recommendation', 'design_complete'):
                     raise FormatError('type must be "campaign" or "tool"')
                 if restricted and not (reply['type'] == 'campaign' and reply['action'].get('action') == 'recommend'):
                     raise FormatError('only a recommend action is possible now')

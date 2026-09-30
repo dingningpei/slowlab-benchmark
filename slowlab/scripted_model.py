@@ -46,13 +46,20 @@ class ScriptedModel:
         self.call_records = []
 
     def __call__(self, messages) -> str:
-        final = json.loads(messages[-1]['content'])
+        try:
+            final = json.loads(messages[-1]['content'])
+        except json.JSONDecodeError:
+            return _reply('initial_recommendation', policy=FIRST_WAVE[0], reason='scripted prior')
         state, instruction = final['state'], final['instruction']
         crops = state['crops']
         closed = [c for c in crops if c.get('contribution_margin_eur_m2') is not None]
         best = (max(closed, key=lambda c: c['contribution_margin_eur_m2'])['policy'] if closed
                 else FIRST_WAVE[0])
         end = self.cal['campaign_days']
+        if instruction.startswith('Day-0 design'):
+            if len(crops) < len(FIRST_WAVE):
+                return _reply('campaign', action={'action': 'start', 'unit': len(crops), 'policy': FIRST_WAVE[len(crops)]})
+            return _reply('design_complete')
         if 'Reply only' in instruction or state['days_left'] <= 1e-9 and not self._unread(crops):
             return _reply('campaign', action={'action': 'recommend', 'policy': best})
         unread = self._unread(crops)

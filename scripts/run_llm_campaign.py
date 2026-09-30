@@ -41,6 +41,8 @@ def main() -> None:
     parser.add_argument('--source', type=Path, default=None)
     parser.add_argument('--contract', default='configs/task_contract_v5.json')
     parser.add_argument('--feedback', choices=('full', 'endpoint'), default='full')
+    parser.add_argument('--branched', action='store_true',
+                        help='formal protocol: shared day-0 design, then Full and Endpoint branches')
     parser.add_argument('--tool-seed', type=int, required=True)
     parser.add_argument('--noise-seed', type=int, default=20260929)
     parser.add_argument('--origin-utc', default='2016-12-31T23:00:00+00:00')
@@ -55,27 +57,49 @@ def main() -> None:
     if args.model == 'scripted':
         provider = ScriptedModel(task)
     else:
+        provider = None
+    if provider is None:
         from slowlab.providers import openai_compatible
         provider = openai_compatible(args.model, temperature=args.temperature, max_tokens=args.max_tokens,
                                      generation_seed=args.generation_seed, json_mode=args.json_mode)
     audit_path = args.out.with_suffix('.audit.jsonl')
     began = time.monotonic()
+    base = {'backend': args.backend, 'contract': args.contract, 'origin_utc': args.origin_utc, 'soil_boundary_c': None}
+    if args.backend == 'greenlight':
+        base.update(weather={'cache': str(args.cache.resolve()), 'plan': 'configs/weather_gapfilled_plan.json'},
+                    greenlight_source=str(args.source.resolve()) if args.source else None,
+                    sensor_noise={'config': 'configs/sensor_noise_v0.json', 'seed': args.noise_seed, 'setting': 'main'})
+    if args.branched:
+        from slowlab.branching import run_branched_campaign
+        completers = []
+
+        def make(label):
+            completers.append(AuditedCompleter(provider, blinding, audit_path, label=label))
+            return completers[-1]
+        result = run_branched_campaign(contract, base, private,  make, tool_seed=args.tool_seed,
+                                       default_policy=json.loads((ROOT / 'configs/campaign_example_v0.json').read_text())['policy_a'])
+        audit_bytes = audit_path.read_bytes() if audit_path.exists() else b''
+        out = {'status': 'completed' if all(result[m]['server_exit_code'] == 0 for m in ('full', 'endpoint')) else 'failed',
+               'protocol': 'branched: shared day-0 design, then full and endpoint', 'model': args.model,
+               'tool_seed': args.tool_seed, 'generation_seed': args.generation_seed, **result,
+               'outbound_audit': {'path': audit_path.name, 'sha256': hashlib.sha256(audit_bytes).hexdigest(),
+                                  'model_calls': sum(c.calls for c in completers)},
+               'provider_call_records': getattr(provider, 'call_records', []),
+               'elapsed_seconds': round(time.monotonic() - began, 1)}
+        args.out.write_text(json.dumps(out, indent=2) + '\n')
+        print(json.dumps({'status': out['status'], 'model': args.model, 'elapsed_seconds': out['elapsed_seconds'],
+                          'full': result['full']['summary']['counts'], 'endpoint': result['endpoint']['summary']['counts']}))
+        return
 
     initial_complete = AuditedCompleter(provider, blinding, audit_path, label='initial_recommendation')
-    initial, initial_log = (initial_recommendation(task, initial_complete) if args.model != 'scripted'
-                            else (json.loads((ROOT / 'configs/campaign_example_v0.json').read_text())['policy_a'], []))
+    initial, initial_log = initial_recommendation(task, initial_complete)
     fallback_frozen = initial is None
     if initial is None:
         initial = json.loads((ROOT / 'configs/campaign_example_v0.json').read_text())['policy_a']
 
-    spec = {'backend': args.backend, 'contract': args.contract, 'feedback_mode': args.feedback,
-            'fallback_policy': initial, 'origin_utc': args.origin_utc, 'soil_boundary_c': None,
+    spec = {**base, 'feedback_mode': args.feedback, 'fallback_policy': initial,
             'trace': str(private / 'trace.jsonl.gz'), 'settlement_out': str(private / 'settlement.json'),
             'failure_out': str(private / 'failure.json')}
-    if args.backend == 'greenlight':
-        spec.update(weather={'cache': str(args.cache.resolve()), 'plan': 'configs/weather_gapfilled_plan.json'},
-                    greenlight_source=str(args.source.resolve()) if args.source else None,
-                    sensor_noise={'config': 'configs/sensor_noise_v0.json', 'seed': args.noise_seed, 'setting': 'main'})
     (private / 'site.json').write_text(json.dumps(spec, indent=2))
 
     campaign_complete = AuditedCompleter(provider, blinding, audit_path, label='campaign')

@@ -56,9 +56,13 @@ ACTION_SCHEMAS = {
 }
 
 
-def public_task_view(contract: dict, feedback_mode: str) -> dict:
-    """The task description an agent may see: an explicit allowlist of contract fields."""
-    if feedback_mode not in ('full', 'endpoint'):
+def public_task_view(contract: dict, feedback_mode: str | None) -> dict:
+    """The task description an agent may see: an explicit allowlist of contract fields.
+
+    ``feedback_mode=None`` gives the condition-free view used for the shared
+    day-0 design before a campaign branches into Full and Endpoint.
+    """
+    if feedback_mode not in ('full', 'endpoint', None):
         raise ValueError('invalid feedback mode')
     facility, budget = contract['facility'], contract['budget']
     observations, economics = contract['observations'], contract['economics']
@@ -93,10 +97,14 @@ def public_task_view(contract: dict, feedback_mode: str) -> dict:
             'Your recommendation is scored later on independent growing seasons; the score is never shown to you.',
         ],
         'scoring': None,
-        'feedback': {'mode': feedback_mode,
-                     'description': ('Every record measured so far can be queried at any time, without advancing time.'
-                                     if feedback_mode == 'full' else
-                                     'While a crop runs you receive operational status only; each closed crop releases its accrued totals.')},
+        'feedback': ({'mode': 'assigned_after_day_0_design',
+                      'description': ('Which records you may read while crops grow is assigned after you finish '
+                                      'your day-0 design; closed crops always release their accrued totals.')}
+                     if feedback_mode is None else
+                     {'mode': feedback_mode,
+                      'description': ('Every record measured so far can be queried at any time, without advancing time.'
+                                      if feedback_mode == 'full' else
+                                      'While a crop runs you receive operational status only; each closed crop releases its accrued totals.')}),
         'observations': {'channels': dict(observations['public_channels']),
                          'cadence_seconds': observations['cadence_seconds'],
                          'notes': ['canopy_lai_proxy is an image-based canopy estimate with measurement error.',
