@@ -1,0 +1,35 @@
+{
+  "status": "measured_tokyo_projection",
+  "date": "2026-09-30",
+  "code_commit": "0df43c9",
+  "host": "Tokyo Linux host (2 vCPU / 1 physical core, ~896 MB RAM, shared with other services); Python 3.11.13, numpy 1.26.4, scipy 1.14.1, pandas 2.2.3; each worker under a 350 MB cgroup",
+  "workload": "four-unit event-driven campaign, contract v4, sensor noise v0 seed 20260929, 2017 weather, scripted actions; seven-day prefixes",
+  "before_optimisation": {
+    "stepping_s_per_day": 21.9,
+    "measured_annual_hours": 2.29
+  },
+  "speedup_one_worker": 3.85,
+  "seasonal_factor": 1.019,
+  "scaling": [
+    {
+      "workers": 1,
+      "per_worker_stepping_s_per_day": 5.7,
+      "setup_seconds": 91.8,
+      "projected_annual_campaign_hours": 0.61,
+      "campaigns_per_hour": 1.63,
+      "days_for_1024_campaigns": 26.2,
+      "peak_rss_mb": 135
+    },
+    {
+      "workers": 2,
+      "per_worker_stepping_s_per_day": 9.78,
+      "setup_seconds": 181.1,
+      "projected_annual_campaign_hours": 1.06,
+      "campaigns_per_hour": 1.89,
+      "days_for_1024_campaigns": 22.6,
+      "peak_rss_mb": 131
+    }
+  ],
+  "all_runs_passed": true,
+  "conclusion": "Suitable for development runs and single audited campaigns, not for the formal matrix."
+}
