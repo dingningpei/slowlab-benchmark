@@ -22,14 +22,14 @@
 - [ ] Phase 3 定出 N 后，给出 N × 隔间 × 副本（含评测副本、pilot、重跑）的算力表
 - [x] `slowlab/agent_api.py`：子进程 + JSON 行协议包住 `CampaignExecutor.dispatch`；代理拿不到任何 Python 对象、文件、网络 → `slowlab/agent_protocol.py`、`executor_server.py`、`agent_client.py`，`tests/test_agent_api.py`，`results/agent_api_prefix_check.json`
 - [x] 公共工具集（查询、汇总、GP 拟合、候选预测）：独立工具随机种子；输入输出与数值预算冻结 → `slowlab/tools.py`（analysis-tools-v1，最终锁定在 Phase 4）、`tests/test_tools.py`
-- [ ] 测试：公开历史相同、私有 seed/latent/future 不同 → prompt 与工具输出逐字节相同
-- [ ] 防火墙阻断改为硬错误并持久化；出站 payload 审计副本、hash、协议版本
+- [x] 测试：公开历史相同、私有 seed/latent/future 不同 → prompt 与工具输出逐字节相同 → `tests/test_llm_agent.py`、`tests/test_tools.py`、`tests/test_agent_api.py`
+- [x] 防火墙阻断改为硬错误并持久化；出站 payload 审计副本、hash、协议版本 → `slowlab/outbound_audit.py`
 - [ ] 实现支持过程观测、错峰启动/停止和资源约束的 GP/BO 策略；只在开发集调参
   - [x] gp-bo-v2：两波与错峰两种调度，种植季节入 GP，EI 与推荐针对合同 v5 的两季平均评分 → `slowlab/bo_agent.py`、`results/bo_dev_runs_20260930.json`
   - [ ] 过程感知部分：用 Phase 3 开发 site 训练过程预测器后接入错峰调度（2026-09-30 决定；「至今毛利」在第 90 天几乎无信息）
 - [ ] 实现实验前推荐与固定管理参照；不调用私有 oracle
 - [ ] 实现同一初始快照的 Full/Endpoint 分支与匹配预算；科学观测严格隔离
-- [ ] 新的 LLM 循环（不复用 `legacy/v2.1` 的 TOMGRO harness）：决策点调用、上下文管理、失败处理
+- [x] 新的 LLM 循环（不复用 `legacy/v2.1` 的 TOMGRO harness）：决策点调用、上下文管理、失败处理 → `slowlab/llm_agent.py`、`scripts/run_llm_campaign.py`
 
 验收：完全相同的公开历史下更换隐藏真值不改变 prompt/tool output；全部方法通过相同设施验证器。
 

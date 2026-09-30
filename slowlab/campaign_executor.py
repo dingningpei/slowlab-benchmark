@@ -328,8 +328,21 @@ class CampaignExecutor:
         return {'event': 'recommend', 'clock': self.clock,
                 'fallback': self._recommendation_fallback}
 
+    def budget_status(self) -> dict:
+        budget = self.contract['budget']
+        return {'tool_calls_used': self._tool_calls, 'tool_calls_max': budget['max_tool_calls'],
+                'decision_calls_used': self._decision_calls, 'decision_calls_max': budget['max_decision_calls']}
+
     def dispatch(self, action: dict) -> dict:
-        """Return only JSON-serializable public fields, never private objects."""
+        """Return only JSON-serializable public fields, never private objects.
+
+        Every successful result carries the public call budget used so far.
+        """
+        result = self._dispatch(action)
+        result['budget'] = self.budget_status()
+        return result
+
+    def _dispatch(self, action: dict) -> dict:
         if self._failed is not None:
             raise RuntimeError('campaign paused after infrastructure failure')
         if not isinstance(action, dict) or not isinstance(action.get('action'), str):

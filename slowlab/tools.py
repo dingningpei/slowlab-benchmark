@@ -226,7 +226,8 @@ class Toolbox:
     # ── plumbing ───────────────────────────────────────────────────────────
     def call(self, name: str, args: dict | None = None) -> dict:
         if name not in CATALOG:
-            raise ToolError(f'unknown tool: {name}')
+            # Never echo model-supplied text back; see the catalog for valid names.
+            raise ToolError('unknown tool; use a name from the tool catalog')
         args = {} if args is None else args
         if not isinstance(args, dict) or not set(args) <= set(CATALOG[name]['args']):
             raise ToolError(f'invalid arguments for {name}')
