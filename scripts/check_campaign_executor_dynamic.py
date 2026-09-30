@@ -19,6 +19,7 @@ from slowlab.greenlight_source import resolve_greenlight_source
 from slowlab.campaign_executor import CampaignExecutor
 from slowlab.feedback_view import FeedbackView
 from slowlab.sensor_noise import SensorNoise, verify_trace_row
+from slowlab.site_parameters import site_contract
 
 
 def main():
@@ -33,8 +34,11 @@ def main():
     parser.add_argument('--noise-config', type=Path, default=ROOT / 'configs/sensor_noise_v0.json')
     parser.add_argument('--noise-setting', default='main')
     parser.add_argument('--contract', type=Path, default=ROOT / 'configs/task_contract_v5.json')
+    parser.add_argument('--site-json', type=Path, default=None,
+                        help='private site values: prices, boundary_ueff_w_m2_k, unit_parameters')
     args = parser.parse_args()
-    contract = json.loads(args.contract.read_text())
+    site = json.loads(args.site_json.read_text()) if args.site_json else {}
+    contract = site_contract(json.loads(args.contract.read_text()), site)
     pinned_noise = contract['observations'].get('noise')
     if args.noise_seed is not None and isinstance(pinned_noise, dict):
         if hashlib.sha256(args.noise_config.read_bytes()).hexdigest() != pinned_noise['sha256']:
@@ -63,7 +67,8 @@ def main():
         with gzip.open(args.trace, 'wt', encoding='utf-8') as trace:
             campaign = CampaignExecutor(contract, args.source, weather,
                                         feedback_mode='full', fallback_policy=policies['policy_a'],
-                                        origin_utc=origin, trace_sink=trace, sensor_noise=noise)
+                                        origin_utc=origin, trace_sink=trace, sensor_noise=noise,
+                                        unit_parameters=site.get('unit_parameters'))
             campaign.dispatch({'action': 'start', 'unit': 0, 'policy': policies['policy_a']})
             campaign.dispatch({'action': 'start', 'unit': 1, 'policy': policies['policy_b']})
             campaign.dispatch({'action': 'advance', 'day': 300 / 86400})

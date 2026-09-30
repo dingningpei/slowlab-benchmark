@@ -26,6 +26,7 @@ from datetime import datetime
 from pathlib import Path
 
 from .agent_protocol import PROTOCOL, canonical, parse, public_task_view
+from .site_parameters import site_contract
 
 ROOT = Path(__file__).resolve().parents[1]
 AGENT_ERRORS = (ValueError, PermissionError)
@@ -40,7 +41,8 @@ def _path(value) -> Path | None:
 
 def build_executor(spec: dict):
     from .campaign_executor import CampaignExecutor
-    contract = json.loads(_path(spec['contract']).read_text())
+    site = spec.get('site') or {}
+    contract = site_contract(json.loads(_path(spec['contract']).read_text()), site)
     origin = datetime.fromisoformat(spec['origin_utc'])
     if contract['evaluation'].get('deployment'):
         # Campaign day 0 is 1 January, 00:00 CET (UTC+1) for every site.
@@ -49,7 +51,8 @@ def build_executor(spec: dict):
             raise ValueError('origin_utc must be 31 December 23:00 UTC (1 January 00:00 CET)')
     kwargs = dict(feedback_mode=spec['feedback_mode'], fallback_policy=spec['fallback_policy'],
                   origin_utc=datetime.fromisoformat(spec['origin_utc']),
-                  soil_boundary_c=spec.get('soil_boundary_c'))
+                  soil_boundary_c=spec.get('soil_boundary_c'),
+                  unit_parameters=site.get('unit_parameters'))
     trace_path = _path(spec.get('trace'))
     trace = gzip.open(trace_path, 'wt', encoding='utf-8') if trace_path else None
     kwargs['trace_sink'] = trace

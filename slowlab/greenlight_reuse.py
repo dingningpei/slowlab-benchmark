@@ -16,6 +16,7 @@ import numpy as np
 
 from .greenlight_adapter import greenlight_raw_endpoint
 from .greenlight_source import resolve_greenlight_source
+from .site_parameters import validate_model_parameters
 from .greenlight_smoke import model_override, _nodes
 
 
@@ -79,7 +80,7 @@ class ReusableGreenLight:
     COMMANDS = {'uBoil':'cmdHeat','uRoof':'cmdVent','uExtCo2':'cmdCo2','uLamp':'cmdLamp'}
 
     def __init__(self, contract, source: Path | None, start=21600., mode="active", cached_solver=False, native_rhs=False, *, weather=None, weather_origin_utc: datetime | None = None, soil_boundary_c: float | None = None, local_clock_offset_seconds: float = 0,
-                 array_output: bool = False, outputs=None):
+                 array_output: bool = False, outputs=None, parameter_overrides=None):
         if mode not in ("active", "empty"):
             raise ValueError("mode must be active or empty")
         if native_rhs and not cached_solver:
@@ -106,6 +107,11 @@ class ReusableGreenLight:
         source = resolve_greenlight_source(source, contract)
         from greenlight import GreenLight
         definitions, override = model_override(contract, source)
+        # Site (or compartment) values of allow-listed model constants; applied
+        # before the empty-crop override so crop removal always wins.
+        self.parameter_overrides = validate_model_parameters(parameter_overrides)
+        for name, value in self.parameter_overrides.items():
+            override[name] = {'definition': repr(value)}
         self.crop_flows = ()
         if mode == "empty":
             empty, self.crop_flows = empty_crop_override(definitions, contract)
@@ -224,13 +230,14 @@ class CropLifecycle:
     """
     def __init__(self, contract, source, start=21600., cached_solver=False, native_rhs=False, *,
                  weather=None, weather_origin_utc=None, soil_boundary_c=None, local_clock_offset_seconds=0, array_output=False, initially_empty=False,
-                 outputs=None):
+                 outputs=None, parameter_overrides=None):
         self.engines = {m: ReusableGreenLight(contract, source, start, m, cached_solver=cached_solver,
                                               native_rhs=native_rhs, weather=weather,
                                               weather_origin_utc=weather_origin_utc,
                                               soil_boundary_c=soil_boundary_c,
                                               local_clock_offset_seconds=local_clock_offset_seconds,
-                                              array_output=array_output, outputs=outputs)
+                                              array_output=array_output, outputs=outputs,
+                                              parameter_overrides=parameter_overrides)
                         for m in ('active', 'empty')}
         self.mode = 'empty' if initially_empty else 'active'
         self.crop_initial = {k: self.engines['active'].state[k] for k in CROP_STATES}

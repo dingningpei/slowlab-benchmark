@@ -21,6 +21,7 @@ from .feedback_view import FeedbackView
 from .greenlight_reuse import CropLifecycle
 from .resources import LEDGER_FLUXES, ResourceLedger, realise_independent_commands
 from .sensor_bridge import SENSOR_OUTPUTS, record_at_endpoint
+from .site_parameters import validate_model_parameters
 
 # The only GreenLight outputs the executor reads; everything else in the model
 # still runs inside the ODE right-hand side.
@@ -73,7 +74,8 @@ class CampaignExecutor:
                  origin_utc: datetime = datetime(2016, 12, 31, 23, tzinfo=timezone.utc),
                  lifecycle_factory=CropLifecycle, sample_endpoint=None,
                  native_rhs: bool = True, trace_sink=None, progress_hook=None,
-                 sensor_noise=None, soil_boundary_c=None, all_model_outputs: bool = False):
+                 sensor_noise=None, soil_boundary_c=None, all_model_outputs: bool = False,
+                 unit_parameters: dict | None = None):
         if feedback_mode not in ('full', 'endpoint'):
             raise ValueError('invalid feedback mode')
         fallback_policy = Policy.from_payload(contract, fallback_policy)
@@ -97,6 +99,10 @@ class CampaignExecutor:
         if isinstance(count, bool) or not isinstance(count, int) or count < 1:
             raise ValueError('contract must declare a positive integer number of compartments')
         self.units = tuple(str(i) for i in range(count))
+        unit_parameters = {str(k): v for k, v in (unit_parameters or {}).items()}
+        if set(unit_parameters) - set(self.units):
+            raise ValueError('unit parameters for an unknown compartment')
+        self.unit_parameters = {u: validate_model_parameters(unit_parameters.get(u)) for u in self.units}
         self.tick_seconds = contract['controller']['tick_seconds']
         self.deadline_seconds = contract['budget']['campaign_days'] * 86400
         self.feedback_mode = feedback_mode
@@ -128,7 +134,8 @@ class CampaignExecutor:
                 contract, source, start=0, cached_solver=True, native_rhs=native_rhs,
                 weather=weather, weather_origin_utc=origin_utc,
                 soil_boundary_c=self.soil_boundary_c, array_output=True, initially_empty=True,
-                outputs=None if all_model_outputs else EXECUTOR_OUTPUTS)
+                outputs=None if all_model_outputs else EXECUTOR_OUTPUTS,
+                **({'parameter_overrides': self.unit_parameters[unit]} if self.unit_parameters[unit] else {}))
             self._ledgers[unit] = ResourceLedger(contract, 0)
         for unit in self.units:
             self._sample_endpoint(self._lifecycles[unit].engine, weather, origin_utc,
@@ -391,4 +398,5 @@ class CampaignExecutor:
                 'trace_sha256': self._trace_sha256.hexdigest() if self._trace_sink is not None else None,
                 'trace_complete': self._trace_sink is not None,
                 'sensor_noise': self._noise.describe() if self._noise is not None else None,
-                'deep_soil_boundary_c': self.soil_boundary_c}
+                'deep_soil_boundary_c': self.soil_boundary_c,
+                'unit_parameters': self.unit_parameters}
