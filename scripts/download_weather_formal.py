@@ -28,7 +28,9 @@ PLAN = ROOT / 'configs/weather_formal_acquisition_proposal_v0.json'
 SAMPLE_MONTHS = ('200201', '201501')
 YEARS = set(range(2002, 2012)) | {2015}
 PAUSE_SECONDS = 6.0  # the anonymous KNMI key is shared and rate-limited
-SAMPLE_AUDIT = ROOT / 'results/weather_formal_sample_audit.json'
+# The first sample audit (results/weather_formal_sample_audit.json) failed on one
+# 2015 record; the gate is the re-audit under repair rule v0.
+SAMPLE_AUDIT = ROOT / 'results/weather_formal_sample_audit_repair_v0.json'
 
 
 def approved_rows(plan):
