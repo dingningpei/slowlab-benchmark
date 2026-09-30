@@ -58,10 +58,22 @@ Every Version 2.2 value covered by a reality claim must carry a `constraint_id`.
 python3 scripts/audit_reality_support.py proposed_records.json
 ```
 
-The auditor fails closed on unknown constraints, formal use of unsupported quantities and
-out-of-range values. An out-of-support value can be retained only with
-`analysis_role="sensitivity"` and a nonempty justification; it remains visible as a
-warning. Passing means range support only. It does not establish causal validity.
+The audit follows [`configs/reality_audit_policy_v1.json`](../configs/reality_audit_policy_v1.json),
+which supersedes the manifest's original out-of-range rule. Each record falls into exactly
+one category:
+
+| Category | Meaning | Fails |
+| --- | --- | --- |
+| within support | inside the observed or literature envelope | no |
+| source extrapolation | physically feasible, outside the evidence envelope; counted per site | no |
+| declared assumption | assumed or unsupported quantity whose value is set by a named frozen file (`declared_in`), in an allowed analysis role | no |
+| physical error | violates a physical law, a declared equipment capacity or the pinned model's validity domain, or is not finite | yes |
+| undeclared assumption | assumption-type quantity without an existing declaring file, or a sensitivity-only quantity (executor delay, executor failure rate, fogging) used in the main analysis | yes |
+| unknown constraint | no such `constraint_id` | yes |
+
+An evidence envelope describes data coverage, not a physical limit. The audit never removes,
+clips or reweights a record or a site; extrapolation is disclosed instead. Passing
+establishes neither causal nor counterfactual validity.
 
 The frozen Phase 0 conclusion can be checked without the external raw archives:
 

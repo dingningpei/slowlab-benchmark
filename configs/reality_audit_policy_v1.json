@@ -1,0 +1,175 @@
+{
+  "policy_id": "slowlab-reality-audit-policy-v1",
+  "status": "development_policy",
+  "date": "2026-09-29",
+  "applies_to_manifest": {
+    "protocol_id": "slowlab-v2.2-reality-constraints-0.1",
+    "path": "configs/reality_constraints_v2_2.json",
+    "sha256": "2c810645f235a0f2cf775a75418d0315e091c142a9bb1cbc9b5cec665fedebe2"
+  },
+  "supersedes": {
+    "field": "formal_support_policy.out_of_range and formal_support_policy.unsupported of the manifest above",
+    "change": "An observed or literature envelope describes data coverage, not a physical limit. A value outside it is reported as source extrapolation and never fails the audit or removes a site. Only physical errors, undeclared assumptions and unknown constraints fail. The manifest itself is unchanged."
+  },
+  "categories": {
+    "within_support": {
+      "fails": false,
+      "meaning": "inside the observed or literature envelope of an evidence-backed constraint"
+    },
+    "source_extrapolation": {
+      "fails": false,
+      "meaning": "physically feasible but outside the evidence envelope; counted and reported per site, never dropped or clipped"
+    },
+    "declared_assumption": {
+      "fails": false,
+      "meaning": "a quantity without evidence support whose value is set by a named frozen repository file, used in an allowed analysis role"
+    },
+    "physical_error": {
+      "fails": true,
+      "meaning": "violates a physical law, a declared equipment capacity or the declared validity domain of the pinned model, or is not a finite number; treated as a simulator or implementation failure"
+    },
+    "undeclared_assumption": {
+      "fails": true,
+      "meaning": "an assumption-type quantity without a declaring file, or used in a role its evidence does not allow"
+    },
+    "unknown_constraint": {
+      "fails": true,
+      "meaning": "the record names no constraint in the manifest"
+    }
+  },
+  "no_exclusion_rule": "The audit never removes, clips or reweights records or sites. Every record appears in exactly one category of the report.",
+  "analysis_roles": {
+    "allowed": [
+      "main",
+      "sensitivity"
+    ],
+    "aliases": {
+      "formal": "main"
+    },
+    "default": "main"
+  },
+  "assumption_rules": {
+    "requires_declaration": "evidence_class in {assumed, unsupported}, or formal_eligible is false",
+    "declared_in": "repository-relative path of the frozen config or document that sets the value; older flat paths are resolved with slowlab.frozen_paths",
+    "sensitivity_only": {
+      "unsupported.executor_delay": "manifest: delay distributions may appear only as a declared sensitivity assumption",
+      "unsupported.executor_failure_rate": "manifest: failure rates may appear only as declared sensitivity assumptions",
+      "unsupported.fogging_realised_flow": "fogging is not an action of the contract; any use is a sensitivity analysis",
+      "agc2024.fogging_capacity": "fogging is not an action of the contract; any use is a sensitivity analysis"
+    }
+  },
+  "physical_bounds": {
+    "basis": {
+      "law": "physical definition of the quantity",
+      "capacity": "declared equipment capacity of the facility in the task contract",
+      "model_domain": "range in which the pinned GreenLight greenhouse model is applied; values outside indicate numerical failure rather than climate"
+    },
+    "unit_defaults": {
+      "percent": {
+        "min": 0.0,
+        "max": 100.0,
+        "basis": "law"
+      },
+      "fraction": {
+        "min": 0.0,
+        "max": 1.0,
+        "basis": "law"
+      },
+      "probability": {
+        "min": 0.0,
+        "max": 1.0,
+        "basis": "law"
+      },
+      "binary": {
+        "values": [
+          0,
+          1
+        ],
+        "basis": "law"
+      },
+      "ppm": {
+        "min": 0.0,
+        "basis": "law"
+      },
+      "degC": {
+        "min": -273.15,
+        "basis": "law"
+      },
+      "seconds": {
+        "min": 0.0,
+        "basis": "law"
+      },
+      "minutes": {
+        "min": 0.0,
+        "basis": "law"
+      },
+      "days": {
+        "min": 0.0,
+        "basis": "law"
+      },
+      "m2": {
+        "min": 0.0,
+        "basis": "law"
+      },
+      "kg_s": {
+        "min": 0.0,
+        "basis": "law"
+      },
+      "kg_m2_s": {
+        "min": 0.0,
+        "basis": "law"
+      },
+      "g_m2_h": {
+        "min": 0.0,
+        "basis": "law"
+      },
+      "g_m3": {
+        "min": 0.0,
+        "basis": "law"
+      },
+      "W_m2": {
+        "min": 0.0,
+        "basis": "law"
+      },
+      "umol_m2_s": {
+        "min": 0.0,
+        "basis": "law"
+      },
+      "dS_m": {
+        "min": 0.0,
+        "basis": "law"
+      }
+    },
+    "constraints": {
+      "agc2023.indoor_temperature": {
+        "min": -30.0,
+        "max": 60.0,
+        "basis": "model_domain"
+      },
+      "agc2023.rail_pipe_temperature": {
+        "min": -30.0,
+        "max": 100.0,
+        "basis": "model_domain",
+        "note": "unpressurised heating water"
+      },
+      "agc2024.heating_capacity": {
+        "min": 0.0,
+        "max": 120.0,
+        "basis": "capacity",
+        "source": "configs/task_contract_v4.json facility.capacity.heating_w_m2"
+      },
+      "agc2024.co2_capacity": {
+        "min": 0.0,
+        "max": 7.5,
+        "basis": "capacity",
+        "source": "configs/task_contract_v4.json facility.capacity.co2_g_m2_h"
+      },
+      "agc2024.lighting_capacity": {
+        "min": 0.0,
+        "max": 200.0,
+        "basis": "capacity",
+        "note": "0 is lamps off; the literature support 20-200 describes dimmable output when on"
+      }
+    }
+  }
+}
