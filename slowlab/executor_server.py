@@ -39,6 +39,16 @@ def _path(value) -> Path | None:
     return path if path.is_absolute() else ROOT / path
 
 
+def build_weather(w: dict, origin: datetime):
+    """Private weather reader from a spec: the development archive, or one audited formal year."""
+    from .cabauw_weather import CabauwLc1FormalWeather, CabauwLc1Weather
+    if w.get('kind') == 'formal':
+        if origin.year != int(w['year']) - 1:
+            raise ValueError('origin_utc does not start the formal weather year')
+        return CabauwLc1FormalWeather(_path(w['cache']), _path(w['audit']), int(w['year']), _path(w.get('dev_cache')))
+    return CabauwLc1Weather(_path(w['cache']), _path(w['plan']))
+
+
 def build_executor(spec: dict):
     from .campaign_executor import CampaignExecutor
     site = spec.get('site') or {}
@@ -62,18 +72,10 @@ def build_executor(spec: dict):
         executor = CampaignExecutor(contract, None, None, lifecycle_factory=lifecycle,
                                     sample_endpoint=fake_backend.sample_endpoint, **kwargs)
     elif spec['backend'] == 'greenlight':
-        from .cabauw_weather import CabauwLc1FormalWeather, CabauwLc1Weather
         from .greenlight_source import resolve_greenlight_source
         from .sensor_noise import SensorNoise
         source = resolve_greenlight_source(_path(spec.get('greenlight_source')), contract)
-        w = spec['weather']
-        if w.get('kind') == 'formal':
-            if origin.year != int(w['year']) - 1:
-                raise ValueError('origin_utc does not start the formal weather year')
-            weather = CabauwLc1FormalWeather(_path(w['cache']), _path(w['audit']), int(w['year']),
-                                             _path(w.get('dev_cache')))
-        else:
-            weather = CabauwLc1Weather(_path(w['cache']), _path(w['plan']))
+        weather = build_weather(spec['weather'], origin)
         noise_spec = spec.get('sensor_noise')
         noise = (SensorNoise.from_file(_path(noise_spec['config']), noise_spec['seed'], noise_spec.get('setting', 'main'))
                  if noise_spec else None)

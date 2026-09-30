@@ -83,21 +83,60 @@ def sample_site(distribution: dict, master_seed: int, site_index: int, n_units: 
             if target not in PRICE_FIELDS:
                 raise ValueError(f'unknown price target: {target}')
             prices[target] = _apply(rule, x)
-    units = {}
-    for unit in range(n_units):
-        values = dict(model)
-        for name, spec in distribution['compartment_level'].items():
-            x = draws[f'unit{unit}/{name}'] = x_of(f'unit{unit}/{name}', spec)
-            for target, rule in spec['applies_to'].items():
-                values[target] = _apply(rule, x, model.get(target))
-        units[str(unit)] = validate_model_parameters(values)
+    units = _compartments(distribution, model, n_units, lambda c, spec: x_of(c, spec), draws, prefix='')
     noise = draw(distribution['sensor_noise_seed']['distribution'],
                  component_rng(did, master_seed, site_index, 'sensor_noise_seed'))
     site = {'prices': prices, 'unit_parameters': units}
     if 'boundary_ueff_w_m2_k' in extra:
         site['boundary_ueff_w_m2_k'] = extra['boundary_ueff_w_m2_k']
     return {'distribution_id': did, 'site_index': int(site_index), 'draws': draws, 'site': site,
-            'soil_boundary_c': extra.get('soil_boundary_c'), 'sensor_noise_seed': noise}
+            'site_model_parameters': model, 'soil_boundary_c': extra.get('soil_boundary_c'),
+            'sensor_noise_seed': noise}
+
+
+def _compartments(distribution, model, n_units, x_of, draws, prefix):
+    units = {}
+    for unit in range(n_units):
+        values = dict(model)
+        for name, spec in distribution['compartment_level'].items():
+            component = f'{prefix}unit{unit}/{name}'
+            x = draws[component] = x_of(component, spec)
+            for target, rule in spec['applies_to'].items():
+                values[target] = _apply(rule, x, model.get(target))
+        units[str(unit)] = validate_model_parameters(values)
+    return units
+
+
+def evaluation_draws(distribution: dict, master_seed: int, site_index: int, year: int, n_units: int = 4) -> dict:
+    """Fresh compartment effects and a sensor-noise seed for one evaluation weather year.
+
+    The site-level values are the site's own; only the unobservable
+    compartment differences are redrawn, so the evaluation averages over them.
+    Streams are separate from the campaign's, keyed by the evaluation year.
+    """
+    did = distribution['distribution_id']
+    model = sample_site(distribution, master_seed, site_index, n_units)['site_model_parameters']
+    draws = {}
+    prefix = f'evaluation/{int(year)}/'
+    units = _compartments(distribution, model, n_units,
+                          lambda c, spec: draw(spec['distribution'], component_rng(did, master_seed, site_index, c)),
+                          draws, prefix)
+    noise = draw(distribution['sensor_noise_seed']['distribution'],
+                 component_rng(did, master_seed, site_index, prefix + 'sensor_noise_seed'))
+    return {'year': int(year), 'draws': draws, 'unit_parameters': units, 'sensor_noise_seed': noise}
+
+
+def assign_weather_years(distribution: dict, master_seed: int, site_index: int, pool, n_evaluation: int) -> dict:
+    """Campaign year and evaluation years for one site, drawn without replacement from ``pool``.
+
+    Every method run on the site uses this same assignment.
+    """
+    pool = sorted({int(y) for y in pool})
+    if n_evaluation < 1 or n_evaluation + 1 > len(pool):
+        raise ValueError('pool too small for one campaign year and the evaluation years')
+    rng = component_rng(distribution['distribution_id'], master_seed, site_index, 'weather_years')
+    order = [pool[i] for i in rng.permutation(len(pool))]
+    return {'campaign_year': order[0], 'evaluation_years': sorted(order[1:1 + n_evaluation]), 'pool': pool}
 
 
 def check_site(contract: dict, sampled: dict) -> dict:

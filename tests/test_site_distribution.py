@@ -109,3 +109,29 @@ def test_sampled_site_runs_through_the_server_and_stays_private(tmp_path):
         campaign.close()
     settlement = json.loads((tmp_path / 's.json').read_text())
     assert settlement['unit_parameters'] == s['site']['unit_parameters']
+
+
+def test_evaluation_draws_keep_site_values_and_redraw_compartments():
+    from slowlab.site_distribution import evaluation_draws
+    s = sample_site(DIST, 5, 2)
+    a, b = evaluation_draws(DIST, 5, 2, 2003), evaluation_draws(DIST, 5, 2, 2004)
+    assert a == evaluation_draws(DIST, 5, 2, 2003) and a['unit_parameters'] != b['unit_parameters']
+    for unit, values in a['unit_parameters'].items():
+        site = s['site_model_parameters']
+        assert values['tauRfPar'] == site['tauRfPar'] and values['j25LeafMax'] == site['j25LeafMax']
+        assert 0.95 * site['rgFruit'] <= values['rgFruit'] <= 1.05 * site['rgFruit']
+        assert values['rgFruit'] != s['site']['unit_parameters'][unit]['rgFruit']
+    assert a['sensor_noise_seed'] not in (b['sensor_noise_seed'], s['sensor_noise_seed'])
+
+
+def test_weather_years_are_disjoint_deterministic_and_site_specific():
+    from slowlab.site_distribution import assign_weather_years
+    pool = list(range(2002, 2012)) + [2015]
+    a = assign_weather_years(DIST, 9, 0, pool, 3)
+    assert a == assign_weather_years(DIST, 9, 0, reversed(pool), 3)
+    assert a['campaign_year'] not in a['evaluation_years'] and len(set(a['evaluation_years'])) == 3
+    assert set(a['evaluation_years']) | {a['campaign_year']} <= set(pool)
+    campaign_years = {assign_weather_years(DIST, 9, i, pool, 3)['campaign_year'] for i in range(40)}
+    assert len(campaign_years) >= 8
+    with pytest.raises(ValueError):
+        assign_weather_years(DIST, 9, 0, [2003, 2004], 2)

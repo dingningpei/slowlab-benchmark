@@ -384,6 +384,10 @@ class CampaignExecutor:
             raise ValueError('invalid recommendation fields')
         return self._recommend(action['policy'])
 
+    def private_crop_totals(self) -> list[dict]:
+        """Every closed crop's accrued totals (exact ledger values), for the private evaluator."""
+        return [dict(record) for _, record in sorted(self._full._released.items())]
+
     def settlement(self) -> dict:
         if self.clock != self.deadline_seconds or self._failed is not None:
             raise ValueError('campaign has not reached a valid deadline')
