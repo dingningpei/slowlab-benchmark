@@ -70,3 +70,40 @@ def progress_writer(out: Path):
     def hook(executor):
         path.write_text(json.dumps({'day': executor.clock / 86400, 'wall_seconds': round(time.monotonic() - began, 1)}))
     return hook
+
+
+DEVELOPMENT_YEARS = (2014, 2017, 2018, 2019, 2020)
+FORMAL_AUDIT = 'results/weather_formal_year_audit_v0.json'
+
+
+def weather_spec(year: int, dev_cache: str, formal_cache: str | None = None) -> dict:
+    """Weather reader spec for a campaign or evaluation year (development or audited formal year)."""
+    year = int(year)
+    if year == 2014:
+        return {'kind': 'development_expanded', 'cache': dev_cache}
+    if year in (2017, 2018, 2019, 2020):
+        return {'cache': dev_cache, 'plan': 'configs/weather_gapfilled_plan.json'}
+    if formal_cache is None:
+        raise ValueError(f'year {year} needs the formal weather cache')
+    return {'kind': 'formal', 'cache': formal_cache, 'audit': FORMAL_AUDIT, 'year': year, 'dev_cache': dev_cache}
+
+
+def campaign_spec(*, site: dict, year: int, contract: str, feedback_mode, fallback_policy: dict, private_dir: Path,
+                  dev_cache: str, formal_cache: str | None = None, noise_config: str = 'configs/sensor_noise_v0.json',
+                  backend: str = 'greenlight', trace: bool = True) -> dict:
+    """Executor-server spec for a campaign on a sampled site: the site's campaign draws (not its evaluation draws)."""
+    from .site_distribution import sample_site
+    from .executor_server import _path
+    distribution = json.loads(_path(site['distribution']).read_text())
+    units = json.loads(_path(contract).read_text())['facility']['compartments']
+    sampled = sample_site(distribution, site['master_seed'], site['site_index'], units)
+    private_dir = Path(private_dir)
+    spec = {'backend': backend, 'contract': contract, 'feedback_mode': feedback_mode,
+            'fallback_policy': fallback_policy, 'origin_utc': f'{int(year) - 1}-12-31T23:00:00+00:00',
+            'soil_boundary_c': sampled['soil_boundary_c'], 'site': sampled['site'],
+            'trace': str(private_dir / 'trace.jsonl.gz') if trace else None,
+            'settlement_out': str(private_dir / 'settlement.json'), 'failure_out': str(private_dir / 'failure.json')}
+    if backend == 'greenlight':
+        spec['weather'] = weather_spec(year, dev_cache, formal_cache)
+        spec['sensor_noise'] = {'config': noise_config, 'seed': sampled['sensor_noise_seed'], 'setting': 'main'}
+    return spec

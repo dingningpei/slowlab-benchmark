@@ -90,3 +90,20 @@ def test_batch_runner_runs_and_resumes(tmp_path):
     second = subprocess.run(cmd, capture_output=True, text=True, check=True).stdout
     assert all(json.loads(line)['seconds'] == 0.0 for line in second.splitlines())
     assert first != second
+
+
+def test_weather_and_campaign_specs_follow_the_site(tmp_path):
+    from slowlab.private_runs import campaign_spec, weather_spec
+    from slowlab.site_distribution import sample_site
+    assert weather_spec(2014, 'dev')['kind'] == 'development_expanded'
+    assert weather_spec(2018, 'dev')['plan'] == 'configs/weather_gapfilled_plan.json'
+    formal = weather_spec(2009, 'dev', 'formal')
+    assert formal['kind'] == 'formal' and formal['year'] == 2009 and formal['dev_cache'] == 'dev'
+    with pytest.raises(ValueError):
+        weather_spec(2003, 'dev')
+    site = {'distribution': 'configs/site_distribution_v1.json', 'master_seed': 5, 'site_index': 2}
+    spec = campaign_spec(site=site, year=2009, contract='configs/task_contract_v8.json', feedback_mode='full',
+                         fallback_policy=POLICIES['policy_a'], private_dir=tmp_path, dev_cache='dev', formal_cache='formal')
+    sampled = sample_site(json.loads((ROOT / 'configs/site_distribution_v1.json').read_text()), 5, 2)
+    assert spec['origin_utc'] == '2008-12-31T23:00:00+00:00' and spec['site'] == sampled['site']
+    assert spec['sensor_noise']['seed'] == sampled['sensor_noise_seed'] and spec['weather']['year'] == 2009
