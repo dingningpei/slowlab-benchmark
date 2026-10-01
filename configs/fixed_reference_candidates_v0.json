@@ -1,0 +1,37 @@
+{
+  "candidates_id": "slowlab-fixed-reference-candidates-v0",
+  "date": "2026-10-01",
+  "decision": "RESEARCH_PLAN decision 2026-10-01",
+  "selection_rule": "the candidate with the highest mean evaluated score over the development sites (distribution v1, development master seed 20260930, sites 0-7, three development evaluation years each); ties by lower energy use; the winner is frozen and applied to every test site",
+  "candidates": {
+    "policy_a": {
+      "day_temperature_c": 22,
+      "night_temperature_c": 18,
+      "co2_target_ppm": 800,
+      "supplemental_light_hours": 12,
+      "vent_temperature_offset_c": 4,
+      "vent_rh_threshold_pct": 85
+    },
+    "policy_b": {
+      "day_temperature_c": 21,
+      "night_temperature_c": 17,
+      "co2_target_ppm": 700,
+      "supplemental_light_hours": 10,
+      "vent_temperature_offset_c": 4,
+      "vent_rh_threshold_pct": 85
+    },
+    "grower_standard": {
+      "day_temperature_c": 21.0,
+      "night_temperature_c": 17.0,
+      "co2_target_ppm": 800.0,
+      "supplemental_light_hours": 12.0,
+      "vent_temperature_offset_c": 3.0,
+      "vent_rh_threshold_pct": 85.0
+    }
+  },
+  "provenance": {
+    "policy_a": "configs/campaign_example_v0.json",
+    "policy_b": "configs/campaign_example_v0.json",
+    "grower_standard": "declared typical grower settings (assumption, not fitted)"
+  }
+}
