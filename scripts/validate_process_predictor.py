@@ -62,10 +62,10 @@ def main():
     sites = [i['site'] for i in info]
     true_margin = np.array([margin(i['final'], i['event_cost'], economics_for(contract, i['prices'])) for i in info])
     folds = group_folds(sites, args.folds)
-    preds = {}
-    # naive: scale the so-far totals to the full crop
-    naive = np.array([[i['so_far'][t] * (180.0 / i['day'] - 1.0) for t in TARGETS] for i in info])  # 'all' reads every total
-    preds['naive_extrapolation'] = naive
+    preds = {}  # name -> (predictions, feature set whose bookkeeping prices them)
+    # naive: scale the so-far totals to the full crop (reads every total, like 'all')
+    naive = np.array([[i['so_far'][t] * (180.0 / i['day'] - 1.0) for t in TARGETS] for i in info])
+    preds['naive_extrapolation'] = (naive, 'all')
     for fs in ('prior', 'harvest_lai', 'all'):
         x, y, _ = sets[fs]
         for pen in penalties:
@@ -73,7 +73,7 @@ def main():
             for test in folds:
                 te = np.array([s in test for s in sites])
                 p[te] = QuadraticRidge(pen).fit(x[~te], y[~te]).predict(x[te])
-            preds[f'ridge_{fs}_pen{pen:g}'] = p
+            preds[f'ridge_{fs}_pen{pen:g}'] = (p, fs)
     if args.gp:
         from slowlab.tools import OutcomeModel
         x, y, _ = sets['all']
@@ -88,19 +88,21 @@ def main():
                 for j in range(len(TARGETS)):
                     model = OutcomeModel(scale(x[tr_d]), y[tr_d, j], np.random.default_rng([d, j]), 2)
                     p[te_d, j] = model.predict(scale(x[te_d]))[0]
-        preds['gp_all_per_day'] = p
+        preds['gp_all_per_day'] = (p, 'all')
     report = {'records': len(records), 'crops': sum(len(r['crops']) for r in records), 'sites': len(set(sites)),
               'days': days, 'folds': args.folds, 'true_margin_sd_by_day': {}, 'candidates': {}}
     day_of = np.array([i['day'] for i in info])
     for d in days:
         report['true_margin_sd_by_day'][str(d)] = float(true_margin[day_of == d].std())
-    for name, p in preds.items():
-        m = margins(p, info, contract)
+    for name, (p, fs) in preds.items():
+        _, y_fs, info_fs = sets[fs]
+        m = margins(p, info_fs, contract)
         err = m - true_margin
-        entry = {'margin_rmse_by_day': {str(d): float(np.sqrt(np.mean(err[day_of == d] ** 2))) for d in days},
+        entry = {'feature_set': fs,
+                 'margin_rmse_by_day': {str(d): float(np.sqrt(np.mean(err[day_of == d] ** 2))) for d in days},
                  'margin_rmse': float(np.sqrt(np.mean(err ** 2))),
-                 'total_rmse_by_target': {t: float(np.sqrt(np.mean((p[:, j] - y_all[:, j]) ** 2)))
-                                          for j, t in enumerate(TARGETS)}}
+                 'target_rmse_by_target': {t: float(np.sqrt(np.mean((p[:, j] - y_fs[:, j]) ** 2)))
+                                           for j, t in enumerate(TARGETS)}}
         report['candidates'][name] = entry
     args.report.write_text(json.dumps(report, indent=2) + '\n')
     best = sorted(report['candidates'].items(), key=lambda kv: kv[1]['margin_rmse'])
