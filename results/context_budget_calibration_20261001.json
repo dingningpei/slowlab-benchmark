@@ -1,0 +1,313 @@
+{
+  "purpose": "calibration of the contract-v7 context budget with scripted reading habits",
+  "backend": "toy (record formats as in the real executor; no sensor dropouts)",
+  "results": {
+    "frugal@2000000": {
+      "habit": {
+        "every_days": 30,
+        "channels": [
+          "cumulative_harvest_fresh_equivalent",
+          "canopy_lai_proxy"
+        ],
+        "window_days": 0.0,
+        "predict": true
+      },
+      "llm_calls": 88,
+      "input_chars": 1914513,
+      "output_chars": 11700,
+      "observe_calls": 51,
+      "records_received": 47,
+      "tool_calls": 20,
+      "truncated_results": 0,
+      "context_exhausted": true,
+      "forced_advance": true,
+      "recommended": true,
+      "budget": {
+        "max_input_chars_per_campaign": 2000000,
+        "max_prompt_chars": 80000,
+        "raw_result_turns": 6,
+        "notes_max_chars": 2000
+      },
+      "share_of_budget_used": 0.9572565,
+      "budget_exhausted_on_day": 210.0
+    },
+    "heavy@2000000": {
+      "habit": {
+        "every_days": 7,
+        "channels": [
+          "cumulative_harvest_fresh_equivalent",
+          "canopy_lai_proxy",
+          "heating_energy",
+          "air_temperature_c",
+          "co2_ppm"
+        ],
+        "window_days": 1.7743055555555556,
+        "predict": false
+      },
+      "llm_calls": 33,
+      "input_chars": 1976250,
+      "output_chars": 5143,
+      "observe_calls": 25,
+      "records_received": 12800,
+      "tool_calls": 0,
+      "truncated_results": 20,
+      "context_exhausted": true,
+      "forced_advance": true,
+      "recommended": true,
+      "budget": {
+        "max_input_chars_per_campaign": 2000000,
+        "max_prompt_chars": 80000,
+        "raw_result_turns": 6,
+        "notes_max_chars": 2000
+      },
+      "share_of_budget_used": 0.988125,
+      "budget_exhausted_on_day": 21.0
+    },
+    "frugal@3000000": {
+      "habit": {
+        "every_days": 30,
+        "channels": [
+          "cumulative_harvest_fresh_equivalent",
+          "canopy_lai_proxy"
+        ],
+        "window_days": 0.0,
+        "predict": true
+      },
+      "llm_calls": 115,
+      "input_chars": 2927488,
+      "output_chars": 15345,
+      "observe_calls": 75,
+      "records_received": 71,
+      "tool_calls": 20,
+      "truncated_results": 0,
+      "context_exhausted": true,
+      "forced_advance": true,
+      "recommended": true,
+      "budget": {
+        "max_input_chars_per_campaign": 3000000,
+        "max_prompt_chars": 80000,
+        "raw_result_turns": 6,
+        "notes_max_chars": 2000
+      },
+      "share_of_budget_used": 0.9758293333333333,
+      "budget_exhausted_on_day": 300.0
+    },
+    "heavy@3000000": {
+      "habit": {
+        "every_days": 7,
+        "channels": [
+          "cumulative_harvest_fresh_equivalent",
+          "canopy_lai_proxy",
+          "heating_energy",
+          "air_temperature_c",
+          "co2_ppm"
+        ],
+        "window_days": 1.7743055555555556,
+        "predict": false
+      },
+      "llm_calls": 46,
+      "input_chars": 2956226,
+      "output_chars": 7076,
+      "observe_calls": 38,
+      "records_received": 19456,
+      "tool_calls": 0,
+      "truncated_results": 30,
+      "context_exhausted": true,
+      "forced_advance": true,
+      "recommended": true,
+      "budget": {
+        "max_input_chars_per_campaign": 3000000,
+        "max_prompt_chars": 80000,
+        "raw_result_turns": 6,
+        "notes_max_chars": 2000
+      },
+      "share_of_budget_used": 0.9854086666666667,
+      "budget_exhausted_on_day": 21.0
+    },
+    "frugal@4000000": {
+      "habit": {
+        "every_days": 30,
+        "channels": [
+          "cumulative_harvest_fresh_equivalent",
+          "canopy_lai_proxy"
+        ],
+        "window_days": 0.0,
+        "predict": true
+      },
+      "llm_calls": 138,
+      "input_chars": 3928854,
+      "output_chars": 18216,
+      "observe_calls": 95,
+      "records_received": 88,
+      "tool_calls": 20,
+      "truncated_results": 0,
+      "context_exhausted": true,
+      "forced_advance": false,
+      "recommended": true,
+      "budget": {
+        "max_input_chars_per_campaign": 4000000,
+        "max_prompt_chars": 80000,
+        "raw_result_turns": 6,
+        "notes_max_chars": 2000
+      },
+      "share_of_budget_used": 0.9822135,
+      "budget_exhausted_on_day": null
+    },
+    "heavy@4000000": {
+      "habit": {
+        "every_days": 7,
+        "channels": [
+          "cumulative_harvest_fresh_equivalent",
+          "canopy_lai_proxy",
+          "heating_energy",
+          "air_temperature_c",
+          "co2_ppm"
+        ],
+        "window_days": 1.7743055555555556,
+        "predict": false
+      },
+      "llm_calls": 59,
+      "input_chars": 3937134,
+      "output_chars": 8904,
+      "observe_calls": 50,
+      "records_received": 25600,
+      "tool_calls": 0,
+      "truncated_results": 40,
+      "context_exhausted": true,
+      "forced_advance": true,
+      "recommended": true,
+      "budget": {
+        "max_input_chars_per_campaign": 4000000,
+        "max_prompt_chars": 80000,
+        "raw_result_turns": 6,
+        "notes_max_chars": 2000
+      },
+      "share_of_budget_used": 0.9842835,
+      "budget_exhausted_on_day": 28.0
+    },
+    "frugal@5000000": {
+      "habit": {
+        "every_days": 30,
+        "channels": [
+          "cumulative_harvest_fresh_equivalent",
+          "canopy_lai_proxy"
+        ],
+        "window_days": 0.0,
+        "predict": true
+      },
+      "llm_calls": 139,
+      "input_chars": 4009272,
+      "output_chars": 18296,
+      "observe_calls": 96,
+      "records_received": 88,
+      "tool_calls": 20,
+      "truncated_results": 0,
+      "context_exhausted": false,
+      "forced_advance": false,
+      "recommended": true,
+      "budget": {
+        "max_input_chars_per_campaign": 5000000,
+        "max_prompt_chars": 80000,
+        "raw_result_turns": 6,
+        "notes_max_chars": 2000
+      },
+      "share_of_budget_used": 0.8018544,
+      "budget_exhausted_on_day": null
+    },
+    "heavy@5000000": {
+      "habit": {
+        "every_days": 7,
+        "channels": [
+          "cumulative_harvest_fresh_equivalent",
+          "canopy_lai_proxy",
+          "heating_energy",
+          "air_temperature_c",
+          "co2_ppm"
+        ],
+        "window_days": 1.7743055555555556,
+        "predict": false
+      },
+      "llm_calls": 72,
+      "input_chars": 4915042,
+      "output_chars": 10757,
+      "observe_calls": 62,
+      "records_received": 31744,
+      "tool_calls": 0,
+      "truncated_results": 49,
+      "context_exhausted": true,
+      "forced_advance": true,
+      "recommended": true,
+      "budget": {
+        "max_input_chars_per_campaign": 5000000,
+        "max_prompt_chars": 80000,
+        "raw_result_turns": 6,
+        "notes_max_chars": 2000
+      },
+      "share_of_budget_used": 0.9830084,
+      "budget_exhausted_on_day": 35.0
+    },
+    "frugal@6000000": {
+      "habit": {
+        "every_days": 30,
+        "channels": [
+          "cumulative_harvest_fresh_equivalent",
+          "canopy_lai_proxy"
+        ],
+        "window_days": 0.0,
+        "predict": true
+      },
+      "llm_calls": 139,
+      "input_chars": 4009272,
+      "output_chars": 18296,
+      "observe_calls": 96,
+      "records_received": 88,
+      "tool_calls": 20,
+      "truncated_results": 0,
+      "context_exhausted": false,
+      "forced_advance": false,
+      "recommended": true,
+      "budget": {
+        "max_input_chars_per_campaign": 6000000,
+        "max_prompt_chars": 80000,
+        "raw_result_turns": 6,
+        "notes_max_chars": 2000
+      },
+      "share_of_budget_used": 0.668212,
+      "budget_exhausted_on_day": null
+    },
+    "heavy@6000000": {
+      "habit": {
+        "every_days": 7,
+        "channels": [
+          "cumulative_harvest_fresh_equivalent",
+          "canopy_lai_proxy",
+          "heating_energy",
+          "air_temperature_c",
+          "co2_ppm"
+        ],
+        "window_days": 1.7743055555555556,
+        "predict": false
+      },
+      "llm_calls": 86,
+      "input_chars": 5971381,
+      "output_chars": 12814,
+      "observe_calls": 76,
+      "records_received": 38912,
+      "tool_calls": 0,
+      "truncated_results": 60,
+      "context_exhausted": true,
+      "forced_advance": true,
+      "recommended": true,
+      "budget": {
+        "max_input_chars_per_campaign": 6000000,
+        "max_prompt_chars": 80000,
+        "raw_result_turns": 6,
+        "notes_max_chars": 2000
+      },
+      "share_of_budget_used": 0.9952301666666666,
+      "budget_exhausted_on_day": 35.0
+    }
+  },
+  "finding": "Per-call overhead (system message, state digest, recent turns) is about 20-28 thousand characters, so the budget mostly limits the number of turns. A frugal habit (monthly current readings of each running crop plus the predictor) needs about 4.0 million characters over 139 calls for a full campaign; the heavy habit (weekly 512-record windows) is stopped within the first five weeks at every budget from 2 to 6 million. The contract-v7 value of 2 million stops the frugal habit on day 210.",
+  "code": "harness with compact endgame prompt and exhaustion-day logging (this commit)"
+}

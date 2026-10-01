@@ -253,6 +253,8 @@ class LLMCampaignAgent:
         system = {'role': 'system', 'content': system_message(self.task)}
         final_feedback = self.history[-1]['feedback'] if self.history else {
             'kind': 'start', 'message': 'The campaign is at day 0. No compartment is in use.'}
+        if compact:
+            final_feedback = self._stub(final_feedback)
         if self._harness_note is not None:
             final_feedback = {'harness': self._harness_note, 'previous': final_feedback}
 
@@ -329,7 +331,7 @@ class LLMCampaignAgent:
         if day < end and low and tools_left >= 1:
             result = self.session.dispatch({'action': 'advance', 'day': end})
             self.counts['forced_advance'] = True
-            self.log.append({'day': end, 'event': 'forced_advance_to_final_day',
+            self.log.append({'day': end, 'event': 'forced_advance_to_final_day', 'from_day': day,
                              'cause': 'context_budget' if low_context else 'call_budget'})
             self._harness_note = {'kind': 'harness_forced_advance',
                                   'message': ('The prompt character budget is nearly spent' if low_context else
