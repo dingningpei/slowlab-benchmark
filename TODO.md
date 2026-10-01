@@ -44,7 +44,7 @@
 - [x] 私有 seed 带盐 commitment；artifact、文件名、日志附件防泄漏检查。证据：`configs/seed_commitment_pilot_v1.json`、`configs/seed_commitment_test_v1.json`；防泄漏扫描 `scripts/check_public_leaks.py`
 - [x] 隔离的推荐评测器：独立天气副本；Monte Carlo 误差小于要报告的差异（设计已定，见决定记录 2026-09-30）；评测年数定为 3 年。证据：`results/evaluator_check_20260930.json`、`results/evaluation_error_study_20260930.json`
 - [ ] best-known feasible reference 的数值搜索与搜索误差报告
-- [ ] 冻结统计单位、主检验族、次要指标、CI、失败与缺失处理
+- [x] 冻结统计单位、主检验族、次要指标、CI、失败与缺失处理。见 RESEARCH_PLAN §5 与决定记录 2026-10-01
 - [ ] 用开发/pilot 方差做功效或精度分析，确定 N；冻结 E3 packet 选择规则与诊断 Reader
 
 验收：在看正式结果前，能写出每个 figure 的输入、统计量与解释边界。
