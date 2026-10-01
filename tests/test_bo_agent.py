@@ -8,18 +8,20 @@ from slowlab.agent_client import CampaignProcess
 from slowlab.bo_agent import BOConfig, GPBOAgent
 
 ROOT = Path(__file__).resolve().parents[1]
-CONTRACT = json.loads((ROOT / 'configs/task_contract_v5.json').read_text())
+CONTRACT = json.loads((ROOT / 'configs/task_contract_v6.json').read_text())
 POLICIES = json.loads((ROOT / 'configs/campaign_example_v0.json').read_text())
 TICK_DAY = 300 / 86400
 
 
-def run_bo(tmp_path, name, *, mode='full', seed=3, config=BOConfig()):
-    """Real-calendar structure at 1/15 scale: crop 12 ticks, cleanup 1, latest start 13, campaign 26."""
+def run_bo(tmp_path, name, *, mode='full', seed=3, config=BOConfig(), real_calendar=False):
+    """Real-calendar structure at 1/15 scale (crop 12 ticks, cleanup 1, latest start 13, campaign 26),
+    or the real calendar, which the process predictor needs (readings at least 10 days into a crop)."""
     folder = tmp_path / name
     folder.mkdir()
     contract = copy.deepcopy(CONTRACT)
-    contract['budget'].update(campaign_days=26 * TICK_DAY, crop_days=12 * TICK_DAY,
-                              cleanup_days=1 * TICK_DAY, latest_start_day=13 * TICK_DAY)
+    if not real_calendar:
+        contract['budget'].update(campaign_days=26 * TICK_DAY, crop_days=12 * TICK_DAY,
+                                  cleanup_days=1 * TICK_DAY, latest_start_day=13 * TICK_DAY)
     (folder / 'contract.json').write_text(json.dumps(contract))
     spec = {'backend': 'fake', 'contract': str(folder / 'contract.json'), 'feedback_mode': mode,
             'fallback_policy': POLICIES['policy_a'], 'origin_utc': '2016-12-31T23:00:00+00:00',
@@ -73,13 +75,17 @@ def test_two_waves_behaves_identically_under_both_feedback_conditions(tmp_path):
 
 def test_staggered_uses_process_information_only_under_full_feedback(tmp_path):
     config = BOConfig(schedule='staggered', initial_units=2, stagger_fraction=0.5)
-    full, full_transcript, full_settlement, _ = run_bo(tmp_path, 'full', mode='full', config=config)
+    full, full_transcript, full_settlement, _ = run_bo(tmp_path, 'full', mode='full', config=config, real_calendar=True)
     endpoint, endpoint_transcript, _, _ = run_bo(tmp_path, 'endpoint', mode='endpoint', config=config)
     late_full = [e for e in full['log'] if e['action'] == 'start'][2:4]
     late_endpoint = [e for e in endpoint['log'] if e['action'] == 'start'][2:4]
     assert all(e['basis'] == 'expected_improvement' for e in late_full)
     assert all(e['basis'] == 'space_filling' for e in late_endpoint)
-    assert any(e['action'] == 'interim_margins' for e in full['log'])
+    predicted = [e for e in full['log'] if e['action'] == 'predicted_final_margins']
+    assert len(predicted) == 1 and len(predicted[0]['values']) == 2 and all(e > 0 for e in predicted[0]['typical_error'])
+    read = {r['variable'] for r in requests(full_transcript, 'observe') if 'variable' in r}
+    assert read == {'cumulative_harvest_fresh_equivalent', 'heating_energy', 'lighting_energy', 'co2_dosed',
+                    'canopy_lai_proxy'}
     assert any('variable' in r for r in requests(full_transcript, 'observe'))
     assert not any('variable' in r for r in requests(endpoint_transcript, 'observe'))
     # 2 early compartments crop twice; 2 late ones once

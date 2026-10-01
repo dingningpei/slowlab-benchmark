@@ -1,4 +1,4 @@
-"""GP/BO baseline agent (gp-bo-v1): a fixed scheduling and acquisition policy.
+"""GP/BO baseline agent (gp-bo-v3): a fixed scheduling and acquisition policy.
 
 It acts only through a ``PublicSession`` (the same interface as a language
 model) and uses the same Gaussian-process component as the public toolbox.
@@ -13,10 +13,12 @@ Schedules (choose on development sites only):
   runs behave identically.
 * ``staggered``: start ``initial_units`` compartments at day 0 and keep the
   rest free until ``stagger_fraction`` of a crop cycle has passed. Then, under
-  Full feedback, fit a GP to each running crop's contribution margin so far
-  (from cumulative metered channels) and choose the late policies by expected
-  improvement; under Endpoint feedback, continue the space-filling design. The
-  second wave is chosen as in ``two_waves``.
+  Full feedback, read each running crop's cumulative channels and canopy proxy,
+  predict its final contribution margin with the public process predictor (the
+  same component as the predict_crop_outcome tool), fit a GP to those
+  predictions and choose the late policies by expected improvement; under
+  Endpoint feedback, continue the space-filling design. The second wave is
+  chosen as in ``two_waves``.
 
 Completed crops enter the GP with their planting date (position in the year).
 Second-wave expected improvement and the final recommendation target the
@@ -31,10 +33,12 @@ from dataclasses import asdict, dataclass
 
 import numpy as np
 
-from .tools import OutcomeModel, contribution_margin, scoring_days, season_features
+from .process_predictor import predict_from_history
+from .tools import OutcomeModel, PublicHistory, _predictor, contribution_margin, scoring_days, season_features
 
-BO_VERSION = 'gp-bo-v2'
-CUMULATIVE = ('cumulative_harvest_fresh_equivalent', 'heating_energy', 'lighting_energy', 'co2_dosed')
+BO_VERSION = 'gp-bo-v3'
+READINGS = ('cumulative_harvest_fresh_equivalent', 'heating_energy', 'lighting_energy', 'co2_dosed',
+            'canopy_lai_proxy')
 
 
 @dataclass(frozen=True)
@@ -120,25 +124,16 @@ class GPBOAgent:
             run['margin'] = margin
         run['closed'] = aggregate['reason'] if aggregate else None
 
-    def _cumulative_now(self, unit):
+    def _predicted_final_margin(self, run):
+        """Read every predictor channel now, then predict the crop's final margin (public predictor)."""
         now = self.clock_day
-        values = {}
-        for channel in CUMULATIVE:
-            records = self.session.dispatch({'action': 'observe', 'unit': unit, 'variable': channel,
-                                             'start_day': now, 'end_day': now})['records']
-            values[channel] = records[-1]['value']
-        return values
+        for channel in READINGS:
+            self.session.dispatch({'action': 'observe', 'unit': run['unit'], 'variable': channel,
+                                   'start_day': now, 'end_day': now})
+        prediction = predict_from_history(self.task, PublicHistory(self.session.transcript), run['unit'],
+                                          run['run_index'], _predictor())
+        return prediction['predicted_contribution_margin_eur_m2'], prediction['typical_error']['margin_eur_m2']
 
-    def _margin_so_far(self, unit, start_day):
-        if start_day != 0:
-            raise ValueError('interim margins assume crops started at day 0')
-        c = self._cumulative_now(unit)
-        e = self.task['economics']
-        accrued = {'harvest_kg_m2': c['cumulative_harvest_fresh_equivalent'], 'heat_kwh_m2': c['heating_energy'],
-                   'light_kwh_m2': c['lighting_energy'], 'co2_kg_m2': c['co2_dosed'], 'days': self.clock_day - start_day}
-        return contribution_margin(accrued, e['planting_eur_per_m2'], e)
-
-    # ── decisions ──────────────────────────────────────────────────────────
     def _fit(self, xs, ys):
         if len(xs) < 2:
             return None
@@ -223,12 +218,12 @@ class GPBOAgent:
             stagger_day = self._align(min(self.config.stagger_fraction * crop, latest))
             self._advance(stagger_day)
             if full:
-                interim = [(self._scale(r['policy']), self._margin_so_far(r['unit'], r['start_day']))
-                           for r in self.started]
-                self.log.append({'day': self.clock_day, 'action': 'interim_margins',
-                                 'values': [round(m, 6) for _, m in interim]})
-                model = self._fit([x for x, _ in interim], [m for _, m in interim])
-                best = max(m for _, m in interim)
+                predicted = [(self._scale(r['policy']), *self._predicted_final_margin(r)) for r in self.started]
+                self.log.append({'day': self.clock_day, 'action': 'predicted_final_margins',
+                                 'values': [round(m, 6) for _, m, _ in predicted],
+                                 'typical_error': [round(e, 6) for _, _, e in predicted]})
+                model = self._fit([x for x, _, _ in predicted], [m for _, m, _ in predicted])
+                best = max(m for _, m, _ in predicted)
                 picks = self._batch_ei(model, best, len(late))
             else:
                 picks = self._space_filling(len(late))
