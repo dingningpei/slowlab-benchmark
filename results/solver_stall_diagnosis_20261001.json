@@ -1,0 +1,287 @@
+{
+  "purpose": "diagnosis of the two predictor-data runs that never finished (code 37b5a8d, WSL desktop)",
+  "normal_busiest_step_rhs_calls": "about 400-1700 over the first 300 days of both runs",
+  "cap_rhs_calls_per_step": 200000,
+  "finding": "Both stalls are in compartment 1, second crop, early November morning (about 120-135 days after planting) under hot policies (day 25.2-25.5 C, night 19.2-21.5 C) with low CO2 targets. The carbohydrate buffer cBuf is negative (-42 and -202 mg/m2) with derivatives of order -1e5, and co2Air changes at order 3e4 per second: the crop respires more than it assimilates in low light, the buffer is exhausted, and the pinned model has no guard below zero, so LSODA steps collapse to about 1e-10 s.",
+  "contract_v5_rule": "numerical_failure: pause infrastructure and preserve identity/log; do not impute poor method performance or silently drop site",
+  "runs": {
+    "site107_run1_2018": {
+      "status": "stall",
+      "label": "unit 1 active",
+      "day": 303.2516086867025,
+      "calls": 200001,
+      "step": [
+        26200800.0,
+        26201100.0
+      ],
+      "policy": {
+        "day_temperature_c": 25.547,
+        "night_temperature_c": 19.238,
+        "co2_target_ppm": 452.618,
+        "supplemental_light_hours": 13.438,
+        "vent_temperature_offset_c": 5.997,
+        "vent_rh_threshold_pct": 86.816
+      },
+      "unit_parameters": {
+        "tCan24Min": 13.581465584849363,
+        "tCan24Max": 23.08146558484936,
+        "j25LeafMax": 223.7926575521167,
+        "rgFruit": 0.3451327733385775,
+        "tEndSum": 1063.6395201493408,
+        "laiMax": 2.5059260926468294,
+        "tauRfPar": 0.8429158021796652,
+        "tauRfNir": 0.8429158021796652,
+        "cLeakage": 6.794135127197336e-05,
+        "cDgh": 0.7709465280476357,
+        "cWgh": 0.09251358336571629,
+        "etaLampPar": 0.5090117811901983
+      },
+      "largest_relative_derivative": [
+        {
+          "state": "cBuf",
+          "y": -42.023793957636286,
+          "dy": -83731.82743780714
+        },
+        {
+          "state": "co2Air",
+          "y": 758.5146622367799,
+          "dy": 29240.00014859269
+        },
+        {
+          "state": "co2Top",
+          "y": 766.7808205652113,
+          "dy": -1.1672849644135121
+        },
+        {
+          "state": "tPipe",
+          "y": 20.778110941771804,
+          "dy": 0.010262831229845549
+        },
+        {
+          "state": "tCan",
+          "y": 15.976206980261008,
+          "dy": -0.003762719301076101
+        },
+        {
+          "state": "tIntLamp",
+          "y": 17.922740820296674,
+          "dy": -0.0026311574186010135
+        },
+        {
+          "state": "tAir",
+          "y": 17.91130100543319,
+          "dy": -0.002578010214813955
+        },
+        {
+          "state": "tTop",
+          "y": 17.18148745247988,
+          "dy": -0.0023707073760911917
+        },
+        {
+          "state": "tCovE",
+          "y": 7.837836334165318,
+          "dy": 0.0008028917128815143
+        },
+        {
+          "state": "tCovIn",
+          "y": 8.404447515793974,
+          "dy": 0.000754589987952031
+        },
+        {
+          "state": "tLamp",
+          "y": 30.256589748273175,
+          "dy": -0.002361982454509004
+        },
+        {
+          "state": "tThScr",
+          "y": 13.619078443806867,
+          "dy": 0.0003262251723731281
+        }
+      ],
+      "largest_states": [
+        {
+          "state": "cFruit",
+          "y": 11402.595619090565
+        },
+        {
+          "state": "tCanSum",
+          "y": 3245.7109399519622
+        },
+        {
+          "state": "cStem",
+          "y": 3047.4162391280556
+        },
+        {
+          "state": "cLeaf",
+          "y": 1495.9974276189723
+        },
+        {
+          "state": "vpAir",
+          "y": 1030.7193690447723
+        },
+        {
+          "state": "vpTop",
+          "y": 1027.8520807921047
+        },
+        {
+          "state": "co2Top",
+          "y": 766.7808205652113
+        },
+        {
+          "state": "co2Air",
+          "y": 758.5146622367799
+        }
+      ],
+      "wall_seconds": 1473.0,
+      "spec": {
+        "year": 2018,
+        "layout": "two_wave",
+        "layout_seed": 778470161395376382,
+        "site": {
+          "distribution": "configs/site_distribution_v0.json",
+          "master_seed": 20260930,
+          "site_index": 107
+        }
+      }
+    },
+    "site112_run2_2020": {
+      "status": "stall",
+      "label": "unit 1 active",
+      "day": 317.2522118855892,
+      "calls": 200001,
+      "step": [
+        27410400.0,
+        27410700.0
+      ],
+      "policy": {
+        "day_temperature_c": 25.167,
+        "night_temperature_c": 21.507,
+        "co2_target_ppm": 504.118,
+        "supplemental_light_hours": 7.652,
+        "vent_temperature_offset_c": 4.946,
+        "vent_rh_threshold_pct": 84.475
+      },
+      "unit_parameters": {
+        "tCan24Min": 13.90151702886487,
+        "tCan24Max": 23.40151702886487,
+        "j25LeafMax": 185.4334498605432,
+        "rgFruit": 0.2755675654572844,
+        "tEndSum": 1032.7522747099974,
+        "laiMax": 2.9262941628810593,
+        "tauRfPar": 0.8018001351804817,
+        "tauRfNir": 0.8018001351804817,
+        "cLeakage": 0.00010303891675740095,
+        "cDgh": 0.7808087974173962,
+        "cWgh": 0.09369705569008754,
+        "etaLampPar": 0.515944142299395
+      },
+      "largest_relative_derivative": [
+        {
+          "state": "cBuf",
+          "y": -202.44981898121642,
+          "dy": -102379.82363527249
+        },
+        {
+          "state": "co2Air",
+          "y": 818.1573954853734,
+          "dy": 35752.307241693394
+        },
+        {
+          "state": "co2Top",
+          "y": 823.709865786168,
+          "dy": -0.8010827084019406
+        },
+        {
+          "state": "tPipe",
+          "y": 28.556381665711427,
+          "dy": 0.009073474683251799
+        },
+        {
+          "state": "tCan",
+          "y": 16.95773471549394,
+          "dy": -0.0018806833315006845
+        },
+        {
+          "state": "tIntLamp",
+          "y": 18.847118220867284,
+          "dy": -0.0017680954219124344
+        },
+        {
+          "state": "tAir",
+          "y": 18.839430849467664,
+          "dy": -0.001737139479226676
+        },
+        {
+          "state": "tTop",
+          "y": 18.108327714683288,
+          "dy": -0.0016475489897111754
+        },
+        {
+          "state": "tLamp",
+          "y": 31.013391905331083,
+          "dy": -0.0015980089951245448
+        },
+        {
+          "state": "tCovIn",
+          "y": 9.422881411930225,
+          "dy": -0.00015951939688020798
+        },
+        {
+          "state": "tCovE",
+          "y": 8.847033206658445,
+          "dy": -0.0001170990383800791
+        },
+        {
+          "state": "tGroPipe",
+          "y": 22.082210371246408,
+          "dy": -0.0002536352641285204
+        }
+      ],
+      "largest_states": [
+        {
+          "state": "cFruit",
+          "y": 11007.265383945145
+        },
+        {
+          "state": "tCanSum",
+          "y": 4660.435060245363
+        },
+        {
+          "state": "cStem",
+          "y": 3088.3929639674484
+        },
+        {
+          "state": "cLeaf",
+          "y": 1061.2099398437667
+        },
+        {
+          "state": "vpAir",
+          "y": 1000.8000441235281
+        },
+        {
+          "state": "vpTop",
+          "y": 998.060340093674
+        },
+        {
+          "state": "co2Top",
+          "y": 823.709865786168
+        },
+        {
+          "state": "co2Air",
+          "y": 818.1573954853734
+        }
+      ],
+      "wall_seconds": 1467.2,
+      "spec": {
+        "year": 2020,
+        "layout": "single",
+        "layout_seed": 489512325276712998,
+        "site": {
+          "distribution": "configs/site_distribution_v0.json",
+          "master_seed": 20260930,
+          "site_index": 112
+        }
+      }
+    }
+  }
+}
