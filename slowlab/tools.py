@@ -22,7 +22,7 @@ import numpy as np
 
 from .agent_protocol import canonical
 
-TOOLBOX_VERSION = 'analysis-tools-v1'
+TOOLBOX_VERSION = 'analysis-tools-v2'
 LIMITS = {'max_calls': 64, 'max_predict_policies': 32, 'max_candidates': 64,
           'gp_restarts': 8, 'min_completed_runs_for_model': 3, 'max_summary_days': 400}
 
@@ -47,10 +47,32 @@ CATALOG = {
                                'on. With planting_day: that planting date only.',
                 'args': {'policies': 'list of policy objects',
                          'planting_day': 'optional calendar day of planting (0-364)'}},
+    'predict_crop_outcome': {'description': 'Predicted final harvest, heating, lighting and CO2 per m2 and the '
+                                            'contribution margin (EUR per m2, at the public prices) of one running '
+                                            'crop, from readings you have already received: cumulative harvest and '
+                                            'the canopy proxy read at the same time, at least 10 days after planting '
+                                            '(required); heating, lighting and CO2 read then too (optional, used if '
+                                            'all three are present). For a crop planted after day 0 you also need '
+                                            'those channels read on its planting day. The model was fitted on other '
+                                            'greenhouses before this campaign; typical_error is its usual error at '
+                                            'this crop age.',
+                             'args': {'unit': 'integer compartment index', 'run_index': 'crop number in that compartment'}},
     'space_filling_candidates': {'description': 'Up to 64 feasible policies spread evenly over the allowed ranges, '
                                                 'optionally holding some fields fixed.',
                                  'args': {'n': 'number of policies', 'fixed': 'optional object of field: value'}},
 }
+
+
+_PREDICTOR = {}
+
+
+def _predictor():
+    """The frozen process predictor (configs/process_predictor_v0.json), loaded once."""
+    if 'config' not in _PREDICTOR:
+        from pathlib import Path
+        from .process_predictor import PREDICTOR_PATH, load_predictor
+        _PREDICTOR['config'] = load_predictor(Path(__file__).resolve().parents[1] / PREDICTOR_PATH)
+    return _PREDICTOR['config']
 
 
 class ToolError(ValueError):
@@ -337,6 +359,16 @@ class Toolbox:
                 'predictions': [{'policy': p, 'scored_mean_margin_eur_m2': float(m), 'sd_of_scored_mean': float(s),
                                  'margin_by_planting_day': dict(zip([str(d) for d in days], pd))}
                                 for p, m, s, pd in zip(policies, mean, sd, per_day)]}
+
+    def _predict_crop_outcome(self, task, history, args):
+        from .process_predictor import PredictorInputError, predict_from_history
+        unit, run_index = args.get('unit'), args.get('run_index')
+        if type(unit) is not int or type(run_index) is not int:
+            raise ToolError('predict_crop_outcome needs integer unit and run_index')
+        try:
+            return predict_from_history(task, history, unit, run_index, _predictor())
+        except PredictorInputError as error:
+            raise ToolError(str(error)) from None
 
     def _space_filling_candidates(self, task, history, args):
         from scipy.stats import qmc

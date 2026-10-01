@@ -1,0 +1,106 @@
+{
+  "records": 118,
+  "crops": 788,
+  "sites": 40,
+  "days": [
+    15,
+    30,
+    45,
+    60,
+    90,
+    120,
+    150
+  ],
+  "folds": 5,
+  "true_margin_sd_by_day": {
+    "15": 22.327483254345463,
+    "30": 22.327483254345463,
+    "45": 22.327483254345463,
+    "60": 22.327483254345463,
+    "90": 22.327483254345463,
+    "120": 22.327483254345463,
+    "150": 22.327483254345463
+  },
+  "candidates": {
+    "naive_extrapolation": {
+      "feature_set": "all",
+      "margin_rmse_by_day": {
+        "15": 54.76029638934589,
+        "30": 54.517215217299146,
+        "45": 50.00206143101525,
+        "60": 42.20664754742657,
+        "90": 26.46771769043044,
+        "120": 14.202213012961373,
+        "150": 6.037051499867162
+      },
+      "margin_rmse": 39.984127181491715,
+      "target_rmse_by_target": {
+        "harvest_kg_m2": 19.702463648581546,
+        "heat_kwh_m2": 87.06980888503213,
+        "light_kwh_m2": 21.42086377436891,
+        "co2_kg_m2": 4.016721040326793
+      }
+    },
+    "ridge_prior_pen10": {
+      "feature_set": "prior",
+      "margin_rmse_by_day": {
+        "15": 10.125258834866765,
+        "30": 10.125258834866766,
+        "45": 10.125258834866766,
+        "60": 10.125258834866766,
+        "90": 10.125258834866766,
+        "120": 10.125258834866766,
+        "150": 10.125258834866766
+      },
+      "margin_rmse": 10.125258834866766,
+      "target_rmse_by_target": {
+        "harvest_kg_m2": 5.46307866154012,
+        "heat_kwh_m2": 19.621790465948223,
+        "light_kwh_m2": 3.9954815487664286,
+        "co2_kg_m2": 1.1779873206008435
+      }
+    },
+    "ridge_harvest_lai_pen10": {
+      "feature_set": "harvest_lai",
+      "margin_rmse_by_day": {
+        "15": 8.995762864577515,
+        "30": 8.992564870606934,
+        "45": 8.237971350217295,
+        "60": 7.750096180787745,
+        "90": 6.894151420406228,
+        "120": 5.535719613588357,
+        "150": 4.23774307819064
+      },
+      "margin_rmse": 7.424381812560522,
+      "target_rmse_by_target": {
+        "harvest_kg_m2": 3.9179400464304184,
+        "heat_kwh_m2": 16.329992991726783,
+        "light_kwh_m2": 3.991217844541842,
+        "co2_kg_m2": 1.07847645043425
+      }
+    },
+    "ridge_all_pen10": {
+      "feature_set": "all",
+      "margin_rmse_by_day": {
+        "15": 9.044518917712663,
+        "30": 8.948696821630866,
+        "45": 8.257112123867696,
+        "60": 7.738327613804518,
+        "90": 6.734686564705379,
+        "120": 5.352181196887523,
+        "150": 4.079106095712909
+      },
+      "margin_rmse": 7.373553760106285,
+      "target_rmse_by_target": {
+        "harvest_kg_m2": 3.8738383339112787,
+        "heat_kwh_m2": 11.856160025567133,
+        "light_kwh_m2": 3.0272170292944725,
+        "co2_kg_m2": 0.7829216920061286
+      }
+    }
+  },
+  "purpose": "site-grouped 5-fold validation of process-predictor candidates (development sites 100-139), corrected",
+  "supersedes": "results/process_predictor_validation_20261001.json for the prior and harvest_lai candidates",
+  "correction": "The earlier file added the true resource use so far to the predictions of candidates that do not read those resources, which made the prior and harvest_lai results optimistic. Here unread resources are predicted as whole-crop totals and each candidate is priced with its own feature set. The all-readings candidate is unchanged.",
+  "validation_code": "1390e4f"
+}

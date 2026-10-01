@@ -171,10 +171,11 @@ def predict_from_history(task: dict, history, unit: int, run_index: int, config:
     def series(channel):
         return history.records.get((unit, channel), {})
 
-    harvest = {t: v for t, v in series(CUMULATIVE['harvest_kg_m2']).items() if t > t0}
-    if not harvest:
-        raise PredictorInputError('observe cumulative_harvest_fresh_equivalent for this compartment first')
-    now = max(harvest)
+    required = (CUMULATIVE['harvest_kg_m2'], LAI)
+    times = [t for channel in required for t in series(channel) if t0 < t < t0 + crop_days * 86400.0]
+    if not times:
+        raise PredictorInputError('observe cumulative_harvest_fresh_equivalent and canopy_lai_proxy for this crop first')
+    now = max(times)
     day = (now - t0) / 86400.0
     if day < MIN_DAY:
         raise PredictorInputError(f'readings must be at least {MIN_DAY:g} days after planting')
@@ -186,7 +187,7 @@ def predict_from_history(task: dict, history, unit: int, run_index: int, config:
         near = [t for t in values if abs(t - now) <= SAME_TIME_SECONDS]
         if not near:
             if required:
-                raise PredictorInputError(f'observe {channel} within one day of the latest harvest reading')
+                raise PredictorInputError(f'observe {channel} within one day of your latest reading of this crop')
             return None
         return values[max(near, key=lambda t: (-abs(t - now), t))]
 
@@ -199,7 +200,7 @@ def predict_from_history(task: dict, history, unit: int, run_index: int, config:
         raise PredictorInputError(f'observe {channel} on the planting day of this crop (needed as its starting value)')
 
     lai = reading_at(LAI, True)
-    so_far = {'harvest_kg_m2': harvest[now] - baseline(CUMULATIVE['harvest_kg_m2'])}
+    so_far = {'harvest_kg_m2': reading_at(CUMULATIVE['harvest_kg_m2'], True) - baseline(CUMULATIVE['harvest_kg_m2'])}
     optional = {t: reading_at(CUMULATIVE[t], False) for t in ('heat_kwh_m2', 'light_kwh_m2', 'co2_kg_m2')}
     feature_set = 'all' if all(v is not None for v in optional.values()) else 'harvest_lai'
     if feature_set == 'all':
