@@ -1,0 +1,121 @@
+{
+  "purpose": "evaluator check on the pinned GreenLight model (WSL desktop, code d3999fc, two runs in parallel)",
+  "reproduction": {
+    "what": "model defaults, no sensor noise, 2017 weather, policy A: 1 January compartments vs the season-long effect check default",
+    "effect_check_margin_eur_m2": 43.631391329941806,
+    "evaluator_margin_eur_m2": 43.631391329941806,
+    "identical": true
+  },
+  "default_2017": {
+    "status": "completed",
+    "year": 2017,
+    "score_eur_m2": 35.5668023203691,
+    "all_normal_completion": true,
+    "elapsed_seconds": 1119.2,
+    "peak_rss_mb": 281.8,
+    "identity": {
+      "contract_sha256": "059025b62e61dfdc3d17a1f8665fa2f60eaabbfff1d5beb9166d46e647a0b2ca",
+      "year": 2017
+    },
+    "spec_sha256": "da6d5cb8ce2b3f4c8fbd75af217c083e263a82f3bb2f792fc7546146177e98bf",
+    "sensor_noise": null,
+    "soil_boundary_c": 20.0,
+    "plantings": [
+      {
+        "planting_day": 0.0,
+        "mean_margin_eur_m2": 43.631391329941806,
+        "crops": [
+          {
+            "unit": 0,
+            "reason": "normal_completion",
+            "margin_eur_m2": 43.631391329941806,
+            "harvest_kg_m2": 37.46898826011713
+          },
+          {
+            "unit": 1,
+            "reason": "normal_completion",
+            "margin_eur_m2": 43.631391329941806,
+            "harvest_kg_m2": 37.46898826011713
+          }
+        ]
+      },
+      {
+        "planting_day": 182.0,
+        "mean_margin_eur_m2": 27.502213310796396,
+        "crops": [
+          {
+            "unit": 2,
+            "reason": "normal_completion",
+            "margin_eur_m2": 27.502213310796396,
+            "harvest_kg_m2": 30.41265446050805
+          },
+          {
+            "unit": 3,
+            "reason": "normal_completion",
+            "margin_eur_m2": 27.502213310796396,
+            "harvest_kg_m2": 30.41265446050805
+          }
+        ]
+      }
+    ]
+  },
+  "development_site0_2018": {
+    "status": "completed",
+    "year": 2018,
+    "score_eur_m2": 0.45932037780301904,
+    "all_normal_completion": true,
+    "elapsed_seconds": 1157.4,
+    "peak_rss_mb": 284.8,
+    "identity": {
+      "contract_sha256": "059025b62e61dfdc3d17a1f8665fa2f60eaabbfff1d5beb9166d46e647a0b2ca",
+      "year": 2018,
+      "distribution_sha256": "c2e214feb1190b094940794d20f8cc4f4f1561a3a45cb39948bfe2eb76c0e13d",
+      "site_index": 0
+    },
+    "spec_sha256": "e7a537984efda1395b758fea8d2ba8c885d43228d1ca22787645ca84f8c19122",
+    "sensor_noise": {
+      "noise_id": "slowlab-sensor-noise-v0",
+      "setting": "main"
+    },
+    "soil_boundary_c": 13.85342074508331,
+    "plantings": [
+      {
+        "planting_day": 0.0,
+        "mean_margin_eur_m2": 10.157748822825567,
+        "crops": [
+          {
+            "unit": 0,
+            "reason": "normal_completion",
+            "margin_eur_m2": 9.128180201992173,
+            "harvest_kg_m2": 27.79639183404106
+          },
+          {
+            "unit": 1,
+            "reason": "normal_completion",
+            "margin_eur_m2": 11.187317443658962,
+            "harvest_kg_m2": 28.91054636834064
+          }
+        ]
+      },
+      {
+        "planting_day": 182.0,
+        "mean_margin_eur_m2": -9.23910806721953,
+        "crops": [
+          {
+            "unit": 2,
+            "reason": "normal_completion",
+            "margin_eur_m2": -9.371658491587105,
+            "harvest_kg_m2": 17.30983041215582
+          },
+          {
+            "unit": 3,
+            "reason": "normal_completion",
+            "margin_eur_m2": -9.106557642851953,
+            "harvest_kg_m2": 17.431209263136683
+          }
+        ]
+      }
+    ],
+    "note": "development master seed 20260930, site 0, policy A, sensor noise on; unfavourable draw (temperature window -1.25 C, fruit growth x0.85, energy prices x1.51)"
+  }
+}
