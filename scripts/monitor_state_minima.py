@@ -28,10 +28,11 @@ def main():
     parser.add_argument('spec', type=Path)
     parser.add_argument('--states', default='cBuf')
     parser.add_argument('--cap', type=int, default=200_000)
-    parser.add_argument('--out', type=Path, required=True)
+    parser.add_argument('--out', type=Path, default=None, help='default: the spec\'s "out"')
     args = parser.parse_args()
     states = args.states.split(',')
     spec = json.loads(args.spec.read_text())
+    args.out = args.out or Path(spec['out'])
     p = prepare(spec)
     daily = []
     began = time.monotonic()
