@@ -1,0 +1,2253 @@
+{
+  "gate": "pass",
+  "rule": {
+    "id": "weather-repair-v0",
+    "max_run_records": 6,
+    "max_repairs_per_month": 12,
+    "channels": {
+      "meteo": [
+        "TA002",
+        "TD002",
+        "F010"
+      ],
+      "radiation": [
+        "SWD",
+        "LWD"
+      ]
+    }
+  },
+  "scope": "complete campaign years: previous December plus twelve months",
+  "units": {
+    "2002": {
+      "status": "clean",
+      "problems": [],
+      "repairs": [],
+      "repairs_per_month": {},
+      "files": {
+        "200112": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200112.nc",
+            "sha256": "d37d4fa05d5610d37058de146e483b7e1be2a97905c564a0328179fe4b2a5797",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200112.nc",
+            "sha256": "27593258cc2db54f40b034b15156bb123eeb2e94ea6e238cc98cc804f7694a39",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200201": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200201.nc",
+            "sha256": "bfc22efc6a15ec5a13afc5e58050aaaad7e1081fd89c585b01b03987ed591df5",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200201.nc",
+            "sha256": "72f52229fdc961fef6615d683bfd217340d0765b57994b5da2d10ab671db48e4",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200202": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200202.nc",
+            "sha256": "f85ca1fa94e0f4433a01b8dfbabd1076ad0a53f6dd9a0ae2938901e8b52d404e",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200202.nc",
+            "sha256": "42a1f9da71ee9e9227b448a33d53871ea0397306245eeee03a7c9a088b873adf",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200203": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200203.nc",
+            "sha256": "f21aff0e1466c08c9f9af4219e992193856bd2630a3b504b93a3a407aa3cfb11",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200203.nc",
+            "sha256": "10f1e964fc5e6fc337bba66e7f54134c3ba2e20557a6b2632b42cb4cedd02464",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200204": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200204.nc",
+            "sha256": "2e98aef6dcb233b96f173cb0a2d79d48030ccf10e370f42cdd84ea6178a92448",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200204.nc",
+            "sha256": "2e8039fc56779e3abcdcfe1da6fc82d9615baa38867ae504a70206f0968382f9",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200205": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200205.nc",
+            "sha256": "bff8159c9634603a73be899d2041c4ffdd9a9ac0fc69926997ab885a086cb0b5",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200205.nc",
+            "sha256": "b1bb8e6faf89fd1d9fafa65f4b0db10f6945351160d71267dddb092eacfdf71f",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200206": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200206.nc",
+            "sha256": "7043841b3d28877ddc11c59dfb961b05ba34619c438922c333c3fecf55a69e12",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200206.nc",
+            "sha256": "d0185c9d6d8b07c48ccc65e201a5f9e4baf8bab9acd1a3c25c325f2ae7b07ae7",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200207": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200207.nc",
+            "sha256": "7733641693a81a09421b45f080af265867ab301bc221546ddb250abb24a31671",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200207.nc",
+            "sha256": "8590cf31264c058aced53e48012d73eaa26a64a59dfe2335caca1fbe5aeb5669",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200208": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200208.nc",
+            "sha256": "06a3f181a4e25237b801308f5ff707953d504527037851e5445188f6eefa2eb8",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200208.nc",
+            "sha256": "4a0b420276ebc8f0a399d6f4daa7f52125f5c9fbe0cd5bae22fc20d47bb648f5",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200209": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200209.nc",
+            "sha256": "784999b06bbdc8986af1f72460962b4d83eb058e9371d5f2a0d20c105bf342a1",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200209.nc",
+            "sha256": "f59c386febacb8591d4c06c8f8cc4256048934428badc0a385922fd834de752b",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200210": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200210.nc",
+            "sha256": "97242178350548f7eeb9770447678be512534c14c381274f92a33711f55bb2c4",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200210.nc",
+            "sha256": "e061a231d47a86ce44d2d1afaaade18f96fba2e1306241426a40a3764a050a5a",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200211": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200211.nc",
+            "sha256": "69fbbd3b2ce454c618d6775b540d9312dc1b5785d8cd52cb0a668e40f9560753",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200211.nc",
+            "sha256": "75ae907cb5672c9d1c9e579529f887c2738e766b3a9c34a9a4e2210e8de7059a",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200212": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200212.nc",
+            "sha256": "47ea43b10638faa1247054349e5e2795c3ed5e11749b2982e0d2bbeb0209ae51",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200212.nc",
+            "sha256": "c8b5a7e8678ca7b7fef22fb9c6e8f0a032821e4c43ff12d156b7ab730dde9cc6",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        }
+      },
+      "summary_after_repair": {
+        "mean_air_temperature_c": 10.746065104933109,
+        "mean_dewpoint_c": 7.866158023526509,
+        "mean_wind_m_s": 4.425674459875471,
+        "shortwave_sum_mj_m2": 3767.3292246341307,
+        "mean_longwave_w_m2": 324.14326896144917
+      }
+    },
+    "2003": {
+      "status": "clean",
+      "problems": [],
+      "repairs": [],
+      "repairs_per_month": {},
+      "files": {
+        "200212": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200212.nc",
+            "sha256": "47ea43b10638faa1247054349e5e2795c3ed5e11749b2982e0d2bbeb0209ae51",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200212.nc",
+            "sha256": "c8b5a7e8678ca7b7fef22fb9c6e8f0a032821e4c43ff12d156b7ab730dde9cc6",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200301": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200301.nc",
+            "sha256": "92d9645ada8d67aed78a312e0577fcf4a77a66bcd045f5d24427c294a74ecdca",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200301.nc",
+            "sha256": "251d5514c3a228a9259534245e4f83e4cc3701492e13d884d0a2141d37539c99",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200302": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200302.nc",
+            "sha256": "9fc559b5710b45f7d051316bbcc6997a81699aa15f4152375956d993219c952d",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200302.nc",
+            "sha256": "2bde2a65606cb3afb9ed0128fedff5de2b028e8cdf3ab5261ef0299de15755a6",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200303": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200303.nc",
+            "sha256": "abbfb8121b3876652277655b66fcf3e44d0cb59ca54ff633d0b847da78056d0a",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200303.nc",
+            "sha256": "1b8c2e749e8e2ae4f44513b312e817db1f4841f2a4847231b857fb0720587f6e",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200304": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200304.nc",
+            "sha256": "c6de0b8b32234d6f6e17e66cf3d31f3a60b6bce71f85e37636faced5daed30a3",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200304.nc",
+            "sha256": "c70325320674740b070fecaeab10a0d3b6a14dbd949c1910c82def4f57578f67",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200305": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200305.nc",
+            "sha256": "23d56ac6a0fde2fb3f3ded6635bcf1ef019d411dd7a6911f832e50677d31b88d",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200305.nc",
+            "sha256": "743f924a387b1a418060347844e3d3ffdf89ec9d11d7bd446c3886eab4277799",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200306": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200306.nc",
+            "sha256": "55e9ecc3478903859040560ece04d4a0a9545ca0193929425e0f4aa8555a61db",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200306.nc",
+            "sha256": "5001b7716327f3cf139f0148597d85f0584b25f020cadc8efc3d7200f046ed63",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200307": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200307.nc",
+            "sha256": "47202065de58f477e2f8248249bb6cd99d5fa1b813908727bcc331332a9a9346",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200307.nc",
+            "sha256": "c6d2834eab4b3ddb31898b4626860373ee069b88e16e75a6e7503e7f2516ecd8",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200308": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200308.nc",
+            "sha256": "4be55248b025c8a4064f42acf39ceb7a9683817c3cb691c77bfaa440fff423fb",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200308.nc",
+            "sha256": "8fbca18b2a8e490c4687d41128b97cbf9dd48ee113be89f78b8714124acc9390",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200309": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200309.nc",
+            "sha256": "1800b6f18937b59dc0d356cf30373bf04c8cc243c6a846c18aa4527f722a6b78",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200309.nc",
+            "sha256": "d10a80086ab666e4620d416aa0b94579876a6ebab3d83465280b557901c611b0",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200310": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200310.nc",
+            "sha256": "314be4dafa7611f479222629c9f2481e8efe42598444b0d62dea934eaac132c9",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200310.nc",
+            "sha256": "d8b65f267b4f255ea26640e5aff5257985a30e67fdd6f27164c8d264bd658b8e",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200311": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200311.nc",
+            "sha256": "4bf47189e98e32092452e7166d70cd84245dc11d36749636118fc2bc19856080",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200311.nc",
+            "sha256": "a98a6122a0e1fc8a4b786ca36eae4be072ed4a005b95ee75d12c0d41ef82f29a",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200312": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200312.nc",
+            "sha256": "78372d920a2a86c1576800ffdfd1272c7fe2f2aa27819a1a06812df5e57bee1b",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200312.nc",
+            "sha256": "fea042fb22b795794d1e8b2f91250fe56da848d813e8b22718cf7189a7b3ecef",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        }
+      },
+      "summary_after_repair": {
+        "mean_air_temperature_c": 10.4469336110526,
+        "mean_dewpoint_c": 7.1460760328504875,
+        "mean_wind_m_s": 3.9349786953935033,
+        "shortwave_sum_mj_m2": 4169.421842513404,
+        "mean_longwave_w_m2": 320.2074964172038
+      }
+    },
+    "2004": {
+      "status": "clean",
+      "problems": [],
+      "repairs": [],
+      "repairs_per_month": {},
+      "files": {
+        "200312": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200312.nc",
+            "sha256": "78372d920a2a86c1576800ffdfd1272c7fe2f2aa27819a1a06812df5e57bee1b",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200312.nc",
+            "sha256": "fea042fb22b795794d1e8b2f91250fe56da848d813e8b22718cf7189a7b3ecef",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200401": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200401.nc",
+            "sha256": "f9283cc1a546882bf3104d0c64a4dcdc1d7211723aaf9b37f7b0b487fb73be8e",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200401.nc",
+            "sha256": "b213a55658df5c4a5f610197327fa15903d872d5ed2faaa90fe92f1e55d3efcc",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200402": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200402.nc",
+            "sha256": "e05a6595142e945c9fba319d5bbfb6105d8b3d1f691846c1ec227c2191682099",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200402.nc",
+            "sha256": "1e5a29b6d787c1433a54917f1e3cf3dbcd6c83fc684528d6590381bc4954cf3e",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200403": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200403.nc",
+            "sha256": "9d197254d624a89c0d387281b3cad1bdc72988201bbca43f3294bc77bc926d54",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200403.nc",
+            "sha256": "3fee6c3720bcd6417ef4194adf2f25fbe554ace80f3b0657ca256349b677f1c3",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200404": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200404.nc",
+            "sha256": "8709abfe96d9469c23180e373323d48f7e78452f41067819c5c89f50c909d7ae",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200404.nc",
+            "sha256": "b90f0596708973f04f5d67f273fab288132106e2d2fae2ff340517cce99369cb",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200405": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200405.nc",
+            "sha256": "ab16598f9bab67ffd927e7e0fc48a3f6392a0abac61b962299a21d5f881d4223",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200405.nc",
+            "sha256": "301de4a4f5baeeb4ddef9fa5bd6e58e21a9b31b12fbb9c5c484746ec9e2d9a55",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200406": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200406.nc",
+            "sha256": "49d531ec80a17c4f4963b25e9a00dcd60e332f2f3e9a7474e23d497013701854",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200406.nc",
+            "sha256": "da8f5bd170a2dabb777a61b6e9bbedbd8e3bd1914ba65fdc9c4de2084243ba70",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200407": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200407.nc",
+            "sha256": "e9395329875700ce233eaa1c2f5212690640ba7411a4c38063413b3b238cb8be",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200407.nc",
+            "sha256": "544037ae374f5d253257fe3290ffbfd6fbf98ef003579fb177fe98eead556437",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200408": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200408.nc",
+            "sha256": "7036427fe0c4e6315bb880f68b1de48aa8d740f09ffe7d8f013bef7d19af28ac",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200408.nc",
+            "sha256": "1d49a2a61bcf938bad07dcb0d9ab8d6e9582fc25262c6ab1853c70e92be50dcc",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200409": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200409.nc",
+            "sha256": "edd37a0cd339add23c8839e83a7bc3683378e10a9efcb5958a18564b92f49c01",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200409.nc",
+            "sha256": "95cd4c13ee094e6551380b31d916cc09562b8b0e151c7ba028d7e47776299676",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200410": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200410.nc",
+            "sha256": "e4c9f4892f9a6438165a2cc134078edf760b84bef8a4d71c40548d2fa7eb5ce6",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200410.nc",
+            "sha256": "66d902fa9b429536a5b05ee40e8ec870b2e070fb70df1465a659290db7202bb0",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200411": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200411.nc",
+            "sha256": "77059da880b79558d86aacaeee636782782406e3548cc981daad7fb7401b6421",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200411.nc",
+            "sha256": "b1349f0897f077018042ffeff2418e1c299ea71bb97319f6679aa01c7d375e72",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200412": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200412.nc",
+            "sha256": "c45f838a54e51f09b62b577c420ae6178b9569473ab54bd33fc81f6598561898",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200412.nc",
+            "sha256": "75e943384b8f4e05483410a7933bb97d1c10a5c4e3667397624184adcb43d260",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        }
+      },
+      "summary_after_repair": {
+        "mean_air_temperature_c": 10.315622711413255,
+        "mean_dewpoint_c": 7.505916517983849,
+        "mean_wind_m_s": 4.272145310806353,
+        "shortwave_sum_mj_m2": 3808.887155747914,
+        "mean_longwave_w_m2": 325.79655798667113
+      }
+    },
+    "2005": {
+      "status": "clean",
+      "problems": [],
+      "repairs": [],
+      "repairs_per_month": {},
+      "files": {
+        "200412": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200412.nc",
+            "sha256": "c45f838a54e51f09b62b577c420ae6178b9569473ab54bd33fc81f6598561898",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200412.nc",
+            "sha256": "75e943384b8f4e05483410a7933bb97d1c10a5c4e3667397624184adcb43d260",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200501": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200501.nc",
+            "sha256": "d83d6fd2a033dfd7a2f4403f1957dbe229b87e6b73368256864de4f0dfaff6e0",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200501.nc",
+            "sha256": "cfb4a678682b3a378a14437d5f483f98ed9a48b248228e17d4e4b40ddcb53845",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200502": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200502.nc",
+            "sha256": "a50435e8c6ecb2c2790afa545d994b07daa30eee29d4ca1b947feea147aca340",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200502.nc",
+            "sha256": "51cf05a864dbb9d7f1a64f63a31178f899b3c473f1891c94b9606c23d8679f48",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200503": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200503.nc",
+            "sha256": "0f1edf5037d2fdbf2733520fc66ea33b6e190df7a5a1a20a8ff6f6525f090f42",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200503.nc",
+            "sha256": "0c6bf1c2f477a7d404c3a4aa3c3182d7dbfdeaea2a6b92d36c3278d160f384be",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200504": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200504.nc",
+            "sha256": "73ead9d9275a547c0164ea445283db2e241237d387e90a095dc0761a383d9fee",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200504.nc",
+            "sha256": "380c37b9274b10167cfc4a7907f36f05ab169e200edf48cda04d7726735a1c3d",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200505": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200505.nc",
+            "sha256": "0361739e7501755dcb819e585e9c0e1e4e06be92d8c3d68ed6a85738ca4297af",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200505.nc",
+            "sha256": "8bef25a6512a5c78d40f2e2251f91f0df7e49c49f06492b3cbb16c20948cfaa2",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200506": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200506.nc",
+            "sha256": "add13fdf74cf6b458b8f1e27191d62763d9862dd773e31dec791053d9546dec3",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200506.nc",
+            "sha256": "793742c04d4b6cc4a43007a6538446a665057dc704d14953f704f2e50d5d79dd",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200507": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200507.nc",
+            "sha256": "f4d33e9848178aac8262e2376078d4bdf59471ed1f78b769c3708f294241b0ed",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200507.nc",
+            "sha256": "69163ebf5f767e1ccd2c5288ece5edd929c44a7dd859520f643cfe81cea722b6",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200508": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200508.nc",
+            "sha256": "85c7075ba9f5795d76290cfb9a404a54d5fdf683cb2216d75e7584482b22e221",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200508.nc",
+            "sha256": "3767de7595ff97d55d7beb1e7adb9d28856b4be16ad45848529668e340235852",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200509": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200509.nc",
+            "sha256": "99ef9280ce2d75cb8c458a9d5353ee6154e180bcfbd0c4f32dcd16c68226c8e9",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200509.nc",
+            "sha256": "e9d9ab2f084162413a0c238e1b9dff054d4e960354216dbb1fb1fff5e87ebcae",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200510": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200510.nc",
+            "sha256": "480795ea5c17ca6196389c0b9873d16753fcc6e5798c0b83ca2bec4cc3e99b58",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200510.nc",
+            "sha256": "1db371f2e6a5892e03c5ef79003b1322405631c0d24e71ff3b35a6c0dc17036f",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200511": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200511.nc",
+            "sha256": "be48ffb5a233ba23e2753d74e65ff9e471f0fb249e98d66046b46fe7da84a1f0",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200511.nc",
+            "sha256": "f512465b6a4a956bb218bc2f8ad93806e482d0e98e3e84cc32135a47dfcecb2c",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200512": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200512.nc",
+            "sha256": "a65648426f6af2e1f3c54ebb811d1788b782189b421369d819e5b0001066a397",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200512.nc",
+            "sha256": "1a7e2d6407655d16205daa7f9008bd2432ebee17830cf2b9e53820c5d087fe6f",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        }
+      },
+      "summary_after_repair": {
+        "mean_air_temperature_c": 10.585673100255235,
+        "mean_dewpoint_c": 7.759757962509923,
+        "mean_wind_m_s": 4.072006233536697,
+        "shortwave_sum_mj_m2": 3967.782088676044,
+        "mean_longwave_w_m2": 325.391486722113
+      }
+    },
+    "2006": {
+      "status": "clean",
+      "problems": [],
+      "repairs": [],
+      "repairs_per_month": {},
+      "files": {
+        "200512": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200512.nc",
+            "sha256": "a65648426f6af2e1f3c54ebb811d1788b782189b421369d819e5b0001066a397",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200512.nc",
+            "sha256": "1a7e2d6407655d16205daa7f9008bd2432ebee17830cf2b9e53820c5d087fe6f",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200601": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200601.nc",
+            "sha256": "5746af8d7b979bfa719bef553562e2ec6d09dcccdbf7edc2cffc363b8ebc2ce5",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200601.nc",
+            "sha256": "821e6265b011636e5f9f095e1809e4451a7d8f9cae01a560a58092a5250d7b75",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200602": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200602.nc",
+            "sha256": "36ed0d6d42ca95073705869a4a45e6e037f7c0439f4e31772f757f3e45aa1c4b",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200602.nc",
+            "sha256": "818dc9ab3e4ae61c6c8ff814bfee47ac31196bf54ba63f226ac085e0360a9f39",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200603": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200603.nc",
+            "sha256": "db4af32e2f111ceda3fbe8b08222891b6bef812c149fef27b06fd654bde525fd",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200603.nc",
+            "sha256": "8ca99c66d02f1faba19e3420d7f4432e25c75ace13f0c9567f772729543cf0f8",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200604": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200604.nc",
+            "sha256": "b0fb0af6a0be5b5ac184323c0e880133a8a4de456b677bf391bc03bad6cdce54",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200604.nc",
+            "sha256": "0b479202bf9ecabdc62e43e2d2f19335b23e5212f128eb39ef1b6d4accb6edd4",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200605": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200605.nc",
+            "sha256": "de6c2d24d0af1ccb26a62a9a749bdddfff9c74c26cbfa61c58e73224aba69a68",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200605.nc",
+            "sha256": "946d281056a7f506baaf3b5c466b2cc9548268df37d7b8fcfdbd210c86808bab",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200606": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200606.nc",
+            "sha256": "cb0574f6df38497fd06b5e83786fb17a6b6f5f3f37887e1f757ec88295f42f14",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200606.nc",
+            "sha256": "6d2de774d0360509d75f13b5bfa618cfdb00e27daf07d7aa46ee357cab26999f",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200607": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200607.nc",
+            "sha256": "8e637291b263e351c232159bf7e05f0fe14223c1329cc23025bb051d5da8a3dc",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200607.nc",
+            "sha256": "a90898cbdcc98c7ed6306ccc5253366845fbad2480ca990fc808fae83be1d4cc",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200608": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200608.nc",
+            "sha256": "a828b08799fc22b6c02c8d59809c4427e76fe2ebe13ed5853d7e60e1e04032f6",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200608.nc",
+            "sha256": "c880077025f5dc2d8046428d1ebc0adddf2bd6f116f65c9a0377d37076d9993e",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200609": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200609.nc",
+            "sha256": "fc2e65d3bc76fa0ff5a9ae01d015839d14d302670950ca9f8a74700189cab0e3",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200609.nc",
+            "sha256": "61edfe0045a400aad890ea3dd222a44da8693930ce68481551ff2f8f313ff447",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200610": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200610.nc",
+            "sha256": "940d0b07ee7ad2d973f49344eaf2c43d0f88564a67ac7332e9a7fed2f3006e0c",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200610.nc",
+            "sha256": "b199c1a8164845a1076dc569d58252ca037d91c4177534e96768576ffca85bba",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200611": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200611.nc",
+            "sha256": "c383909c90791c147b470077c0798f2421d2be33a5d790ce3880fc234cbe7e70",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200611.nc",
+            "sha256": "dacbe6e950329fa18bb011032457e0fb9c267be246fd88a11f41d9f719f34b59",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200612": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200612.nc",
+            "sha256": "3d9ced178d157f171c79ad5dc2d59ee45b559777e4f7ae1025072b5efe0750a1",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200612.nc",
+            "sha256": "c6c6ad75f4b1cdfcf40ab1c2efed2265dd303f5f57bee2564004324ee44ec97c",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        }
+      },
+      "summary_after_repair": {
+        "mean_air_temperature_c": 11.022177130410341,
+        "mean_dewpoint_c": 7.756799693811615,
+        "mean_wind_m_s": 4.323555284712954,
+        "shortwave_sum_mj_m2": 3937.262366643086,
+        "mean_longwave_w_m2": 328.8427167474407
+      }
+    },
+    "2007": {
+      "status": "clean",
+      "problems": [],
+      "repairs": [],
+      "repairs_per_month": {},
+      "files": {
+        "200612": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200612.nc",
+            "sha256": "3d9ced178d157f171c79ad5dc2d59ee45b559777e4f7ae1025072b5efe0750a1",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200612.nc",
+            "sha256": "c6c6ad75f4b1cdfcf40ab1c2efed2265dd303f5f57bee2564004324ee44ec97c",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200701": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200701.nc",
+            "sha256": "7a7dc9e7bbce1e6cea8f51452418e7a3c540f3181f5836b4b68063bcf7498b00",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200701.nc",
+            "sha256": "4e0c8e0656f914e3ab2b799ef2f814a067079e9d80a4cbee7be7f38f9b6f27f0",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200702": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200702.nc",
+            "sha256": "52f666139d8093c33dce8f14d19ced2ade3ea533acb2fd19427b5ff30abdd365",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200702.nc",
+            "sha256": "7ee0946abc8080853d780e86bd8fb4a962270817afc0f57dec5be0b68f2d7cfa",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200703": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200703.nc",
+            "sha256": "ce36d905ff29ace19a723cb36e9484867f74f46925e0404ebcbb2be64f23fd62",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200703.nc",
+            "sha256": "5d41512306ad2f1b48e5c26a74091f6b0c50c16c9d316af9894c000194b48231",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200704": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200704.nc",
+            "sha256": "15e8654f72b0090064121076dab76507712b7e66bc822b6cd93b0c992067584a",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200704.nc",
+            "sha256": "b39f3736fae4d68d62affdb83f1a816306a617d90108d5db0791c6f7121bdebd",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200705": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200705.nc",
+            "sha256": "b5f6f78ec236dd8e58c07e76295e5e1b4c3d77dbf0fda05cb84a50bd75ace88e",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200705.nc",
+            "sha256": "12d7369e6526119dba1920657c13e11ee76fc55f52d98703882042d0ab43423e",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200706": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200706.nc",
+            "sha256": "197aa899efcc82afb5a2de0cb56135dae3ca266c75efe9190eab6049e47f1047",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200706.nc",
+            "sha256": "431d0ae8033c633bcb60296155946559e52b794261a4b3aaf56753965d48b802",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200707": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200707.nc",
+            "sha256": "f8147ba2eb2a169afacbce0222e6d4f9d0b5a7947e1ba371d1b9fd903fc15586",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200707.nc",
+            "sha256": "446ce4ce9410184d9af691107db77cc9021af23b7aedfcb5c72ca30db70dc0d5",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200708": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200708.nc",
+            "sha256": "aebca718204acff0b5982ad0cdb2256bef2908f9fbe045ac306967467a531924",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200708.nc",
+            "sha256": "97433dcb0c45fcfe8baa7adeca0e68f029e4d7441d33f624594c19440a04b6b0",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200709": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200709.nc",
+            "sha256": "42bd7fe7733b6f701f55480c83b1ea424eacbdae945420d00396610465761126",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200709.nc",
+            "sha256": "307ee77274587b574ae9a5806b963633b0fc2739136f1bcb02d9ee8950e5f206",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200710": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200710.nc",
+            "sha256": "cf6ee0691a79bd8e1e41cf6f832cc1702eb7c8a6754aaebb559d0d99330bea5d",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200710.nc",
+            "sha256": "4357964578816673010d79e855b39b6764ca6e6cccd62a105796115c40f91f82",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200711": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200711.nc",
+            "sha256": "4dde823df66d3dfff9340075ca83be90aed07c5ea03c43be931751722dfa7a99",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200711.nc",
+            "sha256": "61ef94cd1cdc897a8477d8565a328110674713f87561a377ba7f05acaaac6ab9",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200712": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200712.nc",
+            "sha256": "c4a61babda0636b3e0476e2efa67cecc824b247ca61cc2179d084540fa15a769",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200712.nc",
+            "sha256": "0b12fef1b34bbf78120fea211947419751b47ec41eec24b999b59e04184e85cc",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        }
+      },
+      "summary_after_repair": {
+        "mean_air_temperature_c": 11.043078031496407,
+        "mean_dewpoint_c": 8.203369235266678,
+        "mean_wind_m_s": 4.284484611762669,
+        "shortwave_sum_mj_m2": 3789.526232344022,
+        "mean_longwave_w_m2": 328.6442658748075
+      }
+    },
+    "2008": {
+      "status": "clean",
+      "problems": [],
+      "repairs": [],
+      "repairs_per_month": {},
+      "files": {
+        "200712": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200712.nc",
+            "sha256": "c4a61babda0636b3e0476e2efa67cecc824b247ca61cc2179d084540fa15a769",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200712.nc",
+            "sha256": "0b12fef1b34bbf78120fea211947419751b47ec41eec24b999b59e04184e85cc",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200801": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200801.nc",
+            "sha256": "c5b07841da80cc5b691dc9a56485cf4ea707dafc592e2ce5e624c411b9366f75",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200801.nc",
+            "sha256": "187f74882e3558bcbddaf22887f7814908d01c5988103aac131123640acbda75",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200802": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200802.nc",
+            "sha256": "873500701a6a50a824df9e3126776ca70540c1bc5ad0a3c08578aae707efed89",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200802.nc",
+            "sha256": "a16da6e0164180c09761e021e8fbf402f83c009a47c73dd3356ffcb8066dc0e0",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200803": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200803.nc",
+            "sha256": "685103de88ea5a99e5f44d3be9caeb6dd2f804f7781a1b3439ef172ab06a7192",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200803.nc",
+            "sha256": "1a84b0f40d5dd7a3892c033e174da29a43ac23c243b01c165e73f1ad89913052",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200804": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200804.nc",
+            "sha256": "15a6ca5630e11b14dd56af35110b83eb4bc2aa16d7756e2fa96962953663f5d6",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200804.nc",
+            "sha256": "f028b18abb6cf14b5cdd7b61dd1db347cd65066a58f7af71e99cd39a3e93a015",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200805": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200805.nc",
+            "sha256": "0c7da59073bbbe041aae737434bc34e63db243c937e3f4a74f53975a1ae6fbb4",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200805.nc",
+            "sha256": "05a53d1c39abdfbad89551ad36a7f4f0d3f981f8835e55732d8221e4439eec0a",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200806": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200806.nc",
+            "sha256": "291a6391ce80d214f1c0b7a810ba55f405c057e9d85e01829f33859fb705b4d0",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200806.nc",
+            "sha256": "71256efde7c2315412f59f85ee33e9a25cb1917aa21c7ac975d7b63bca7182c6",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200807": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200807.nc",
+            "sha256": "4630f11a7e3d2ed32744159f52f9e9ed7df3599f807438940432591ec1dc8916",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200807.nc",
+            "sha256": "7d265f0c32fa56284f844db0157018627ab95d71fac5788840a8d9c467c23030",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200808": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200808.nc",
+            "sha256": "29e838292f752ad584b33be93d1e1bcc58d0ae6fbc822595004460ca1c3b6220",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200808.nc",
+            "sha256": "a916601882d621324979aca7b1f6888dd9f5e440df0bcbfa90bbcc8cd94e6a98",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200809": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200809.nc",
+            "sha256": "0e7b2324f0accac7874306957659f06f1c275fea525f893278b22521b09f9877",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200809.nc",
+            "sha256": "6f16759f4437db857fb4436084ab603ae3c9ce20f5587b4012c4f6c5dee30509",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200810": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200810.nc",
+            "sha256": "f62a3304ec24a1c93171eeb0e44f25037eb21b5fa277ad521a531e5e09a382ba",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200810.nc",
+            "sha256": "ca05ab48c0946004f9e13b63701f710f168c14095a5f414fa4a4c66fb219420c",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200811": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200811.nc",
+            "sha256": "6033cb09854364da9704f1de616366c34584c213ed2cc2d9591ba42ac8a8b02e",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200811.nc",
+            "sha256": "337e4e2bc46dace22b6e63bbb881b70bae333c66ae631c14adcd6be1c616f315",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200812": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200812.nc",
+            "sha256": "ad5e974c2ee89d47714ad560182c8507cf7015df4b05d747b92a5c1bf2027b63",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200812.nc",
+            "sha256": "7356b88b14431cda860be71dceb26d62f1a3247ab503aad20a575d588ef7f39e",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        }
+      },
+      "summary_after_repair": {
+        "mean_air_temperature_c": 10.470585308410818,
+        "mean_dewpoint_c": 7.3651536856988855,
+        "mean_wind_m_s": 4.389367014204893,
+        "shortwave_sum_mj_m2": 3861.0219935462264,
+        "mean_longwave_w_m2": 324.5964181847332
+      }
+    },
+    "2009": {
+      "status": "repaired",
+      "problems": [],
+      "repairs": [
+        {
+          "month": "200909",
+          "role": "radiation",
+          "channel": "SWD",
+          "index": 928,
+          "original": -69.69441223144531,
+          "repaired": 919.4129028320312
+        },
+        {
+          "month": "200909",
+          "role": "radiation",
+          "channel": "SWD",
+          "index": 929,
+          "original": -16.938249588012695,
+          "repaired": 678.5069580078125
+        },
+        {
+          "month": "200909",
+          "role": "radiation",
+          "channel": "SWD",
+          "index": 931,
+          "original": -21.547557830810547,
+          "repaired": 465.00953674316406
+        },
+        {
+          "month": "200909",
+          "role": "radiation",
+          "channel": "SWD",
+          "index": 941,
+          "original": -11.759082794189453,
+          "repaired": 771.9359436035156
+        },
+        {
+          "month": "200909",
+          "role": "radiation",
+          "channel": "SWD",
+          "index": 1080,
+          "original": -54.85053634643555,
+          "repaired": 521.2382405598959
+        },
+        {
+          "month": "200909",
+          "role": "radiation",
+          "channel": "SWD",
+          "index": 1081,
+          "original": -64.45833587646484,
+          "repaired": 522.6973063151041
+        }
+      ],
+      "repairs_per_month": {
+        "200909": 6
+      },
+      "files": {
+        "200812": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200812.nc",
+            "sha256": "ad5e974c2ee89d47714ad560182c8507cf7015df4b05d747b92a5c1bf2027b63",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200812.nc",
+            "sha256": "7356b88b14431cda860be71dceb26d62f1a3247ab503aad20a575d588ef7f39e",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200901": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200901.nc",
+            "sha256": "e56b965f051acb1f7d248e89c94f2727f4a9a63ce2c8278639daca06e5556421",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200901.nc",
+            "sha256": "86f354f1d8a1fae680eeacd9253366eb8ec0e47689ba8a183c3a18d280abcf08",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200902": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200902.nc",
+            "sha256": "2a5ab08421e00ff569c180cbd8944ad7cf371214c315484a43e41159096eac2f",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200902.nc",
+            "sha256": "67857791430c7d1b18c88bcf3e276f3fbaec0a314061250187c83002eac536c2",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200903": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200903.nc",
+            "sha256": "7f2233e1da03a630a4145b339c5074bebf387d93722a113f55bddbc21ca3d77f",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200903.nc",
+            "sha256": "333451c149aefaf8617d400e57baa7ffe28ed65c1803affae332c15189eda115",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200904": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200904.nc",
+            "sha256": "b33e6ed2844d38bebf1cb5d6ed3eaa58b607218300749dd73dfc133390020573",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200904.nc",
+            "sha256": "1bc79d6196635fef437500910c96a4b396e64f279ed0d2f4617bdabe498a732f",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200905": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200905.nc",
+            "sha256": "2145de9e4d371ea576c1c086225417b293c326a0d030c33cd77281e660ddfcf5",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200905.nc",
+            "sha256": "faba7fa78fe713f0cc091cb16e14585827fd9a3c82e1d26b85108c048e60ba8d",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200906": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200906.nc",
+            "sha256": "114376f87715b16bf48947fd0d5bc6542ee67cdd32808ef57cbeb2976011017e",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200906.nc",
+            "sha256": "73c5ff4ca407e093c96c5ce268e2a5f28fc00a6f5f3f3f10f726dd4814259103",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200907": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200907.nc",
+            "sha256": "1e386fb5dd45907eb469f31c21e252d7045749d2bb1e02e81d055b808019f94f",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200907.nc",
+            "sha256": "dab653d352e74968f2ac0f4d29089b4dd7f84c41e9456220546a7ebaaf14fcdf",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200908": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200908.nc",
+            "sha256": "182f652e4f51991b44eb7b2882e6de16e3d7af2e3c57e6a473f0bad1df8ee9d1",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200908.nc",
+            "sha256": "51cbed8e84b1895f9f8fe8beff10bc875fd79aea833d8e954e5f489ae6bffd0e",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200909": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200909.nc",
+            "sha256": "cefe773610e4511a2890ccef89a1f0873b46ebd776c01bdb95b994a727e23558",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200909.nc",
+            "sha256": "bdbfc644f66aaf1db9e2e884570f22c00344950fd3720d6b369e9ec15114a0f2",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200910": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200910.nc",
+            "sha256": "54a38d6c3b66e93b5d8176e17d23882c7b2b4fae85ef42c87d4dfcad2cb45dfe",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200910.nc",
+            "sha256": "ee243a7e73fe41ec44e55fddee86882505af1273fc66eb5198dbc1c6b95d5200",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200911": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200911.nc",
+            "sha256": "9cfa36acb74ad230a152bd57ce183ae622757a2bf24179ec631a9caa36105a63",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200911.nc",
+            "sha256": "77032ad4a604834fdfdb2a12c7a14f26ff0015fa4ea7e8857816dd33d278981c",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "200912": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200912.nc",
+            "sha256": "d611f38607114e452177f6657f53200982f81a30a938b4ea7c41dda4dcc6fb04",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200912.nc",
+            "sha256": "e1b4a1f757c9452f6bd97d1bedc30e64a7836b628077a3c9ffcef0d420152510",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        }
+      },
+      "summary_after_repair": {
+        "mean_air_temperature_c": 10.42789635099416,
+        "mean_dewpoint_c": 7.184115282404207,
+        "mean_wind_m_s": 4.106220775414925,
+        "shortwave_sum_mj_m2": 4160.0488381361665,
+        "mean_longwave_w_m2": 323.6474626843062
+      }
+    },
+    "2010": {
+      "status": "clean",
+      "problems": [],
+      "repairs": [],
+      "repairs_per_month": {},
+      "files": {
+        "200912": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_200912.nc",
+            "sha256": "d611f38607114e452177f6657f53200982f81a30a938b4ea7c41dda4dcc6fb04",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_200912.nc",
+            "sha256": "e1b4a1f757c9452f6bd97d1bedc30e64a7836b628077a3c9ffcef0d420152510",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "201001": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201001.nc",
+            "sha256": "0648ce2e5826e2bcfe6309a7c65cf80ec7e2bf3dce765fe800d47eb124e22072",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201001.nc",
+            "sha256": "2e32e4e545991827f28b149d6c504e1dd6007494264f7230434a604c043491a1",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "201002": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201002.nc",
+            "sha256": "e6056a6041e5746c0882e12476c2480e54363581df64663c4543e481e7674221",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201002.nc",
+            "sha256": "840e089f3706f6869dbbe619f225dc43ba85ee0e3e417b26d88f2691678b1e9f",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "201003": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201003.nc",
+            "sha256": "f416148784c74d3f337bd7f95af43de4da83103873dda8bedf8accd06e97c9b1",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201003.nc",
+            "sha256": "6044dee6f2b0ead0751aa5af0ca72606c935f0d9f0c8eb57a8eae1de93eb3194",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "201004": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201004.nc",
+            "sha256": "a2d8449dcda2b8797cbb4a550cd83ee2a0f7db409032b382de53dfb2d4bc29d9",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201004.nc",
+            "sha256": "1aebe7ca89cbb317b1e7307cfff7c2a7bcbb98c742b236fe9cb2c529413ed5da",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "201005": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201005.nc",
+            "sha256": "a4d398521aaca92e6f522a4981994f39c108109b40879abc3f98db0dd394561d",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201005.nc",
+            "sha256": "c2296ede9596473522c7727b1050c309c0c7616f473f769aa3548efd8b09e693",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "201006": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201006.nc",
+            "sha256": "f25ea7e90b3c7f4ccbc44a8947872d6373320ffde684c624d83b6368a1da25eb",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201006.nc",
+            "sha256": "4f35153f810e21414e64b0d0ae9716a00e79e5567ac782fc053d2a03070bac3a",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "201007": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201007.nc",
+            "sha256": "7c1c05d156756223fb658bb0c0eb8a80c06e15381852bba94d48da7a8531602c",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201007.nc",
+            "sha256": "6799b41e3f2e3a5ba40d5cfe937501f7aaa9dce89b8bb4743c8776851dc78edd",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "201008": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201008.nc",
+            "sha256": "1005a42303e6d7926df21ac187aa086dd6b0fc3da8fd260da7c99899576293d9",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201008.nc",
+            "sha256": "f6a332301ff950b29683c4cca79d8e3955d470ff82eb6403e401ef424e6d8b31",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "201009": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201009.nc",
+            "sha256": "89a382d59fb03cfd1c2a59744ec1f817b73f6d0c6090ed561d6576ed95173b49",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201009.nc",
+            "sha256": "a2073b3b8949a9650e5d48f22caac739267dcca6b430ed505d98df6209fdb966",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "201010": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201010.nc",
+            "sha256": "d30b0a904146588f68dc25e5255b6089b655ca0733dfce520873fb1ecd3097ac",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201010.nc",
+            "sha256": "fe2e6b92215d9f96ad387d12bb05cb58859a98ab841c1b0caf6a9dd1615104fd",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "201011": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201011.nc",
+            "sha256": "5a05727738b395f4708d908075dea110e005f724e6a18250652f16eae70e0d34",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201011.nc",
+            "sha256": "b2c8c5bde29330549b675b30335efa5e447a4c9f880d777ba9a836ce739eba9c",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "201012": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201012.nc",
+            "sha256": "ebe00b01f7531401b8acce5db32753f4ea404bae9cffc89042a0d1687f883e1b",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201012.nc",
+            "sha256": "9a1c8c956f277633bd58179129c747be2055882a974fa304be8f84b2a4dc4343",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        }
+      },
+      "summary_after_repair": {
+        "mean_air_temperature_c": 9.00769173202633,
+        "mean_dewpoint_c": 6.26511813066503,
+        "mean_wind_m_s": 3.8403334786452756,
+        "shortwave_sum_mj_m2": 4009.621018031873,
+        "mean_longwave_w_m2": 319.8272592948089
+      }
+    },
+    "2011": {
+      "status": "clean",
+      "problems": [],
+      "repairs": [],
+      "repairs_per_month": {},
+      "files": {
+        "201012": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201012.nc",
+            "sha256": "ebe00b01f7531401b8acce5db32753f4ea404bae9cffc89042a0d1687f883e1b",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201012.nc",
+            "sha256": "9a1c8c956f277633bd58179129c747be2055882a974fa304be8f84b2a4dc4343",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "201101": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201101.nc",
+            "sha256": "47103d34d0f924ce6f6250d909e074f6a7180b5a15c7a2685155a69e7e5764ac",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201101.nc",
+            "sha256": "f91e9d0b293840e4061b6d1e95cb47ccef7b18250dc2611079959871e38225c1",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "201102": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201102.nc",
+            "sha256": "4356f7b48e03cf12e9fae29c36de460f4ff4c45fa0c7f5589002446b2182694b",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201102.nc",
+            "sha256": "1d599abec90291cecbcd3f4dbf9aba581ec5a142be0000ade63cf9a3dfdb1b6c",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "201103": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201103.nc",
+            "sha256": "9cf1dcf8d501c0c6ec7228dfc240f34c7bafe7a5d7633d32e317303b337c6698",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201103.nc",
+            "sha256": "6640ee8bee363e90db4f9d91393e430107613eeb3de5e5f487c6b278657200f7",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "201104": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201104.nc",
+            "sha256": "1e698f5badf2c24c9d5f8770b48dc52187942c9325caf689fcca77ad3391c32d",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201104.nc",
+            "sha256": "776e1e8addd6e4868d3f1d300a02883327124d6d64d7fe33f8c1c059da15b2d3",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "201105": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201105.nc",
+            "sha256": "0e5a0003722d511c8fe87e35e3c09c49ff2f38e25a524a696ab6c2a520929867",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201105.nc",
+            "sha256": "821b4f1e76bdbea26fc35b89dfffa9250e80d6c5d2f5dc2d6f0679e45f036ef7",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "201106": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201106.nc",
+            "sha256": "d0f7cb9d5922bd86e014ca85372fe2770fc7c7f6d890ca0c14c1037d3b8f80e4",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201106.nc",
+            "sha256": "dcc75b970a33c76bcfd3e62427e776bdfca3f77af4e560a044c422952638fdc2",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "201107": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201107.nc",
+            "sha256": "5a7800424bf86b9b27774632d9cc62a761233ad678833099b9f6310b41a1f5d9",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201107.nc",
+            "sha256": "306b5084299040b4e31d2ddd360cace7d3cbd54db83d366025ba157e6e8889a6",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "201108": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201108.nc",
+            "sha256": "368801035045307a6abae8e33d84a16c04b2cdc0def92af4749990b336a457c2",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201108.nc",
+            "sha256": "7247f841445a18b71e4e0c031d7ac9ed836f3b659bb53b3f8eea4fe9cac99804",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "201109": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201109.nc",
+            "sha256": "beade1c5f1b347793a9abd133cadb5b5a2cce092dddb843b5766d9897f717ad2",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201109.nc",
+            "sha256": "88971873dbc127cb2aa0ee1b7455d2caad1cd8dcbbd363782b9374542b4ea162",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "201110": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201110.nc",
+            "sha256": "10422dae34b22175013ddf24749f4ffe5594442e79326b26fbecc098a42ca530",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201110.nc",
+            "sha256": "0d9e48e391259c878092fe3728a5a142841bf9f53876bbe177b06bf6ba186239",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "201111": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201111.nc",
+            "sha256": "1460b1af6a7df03ae5ba1c46fc33af28ea389b6a2266b6f7d2ae00ab66ef5ef9",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201111.nc",
+            "sha256": "413244f1e526d7b5aa1f291fbea9afa6b39937cb706cc1299953ed5438ec9ae0",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "201112": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201112.nc",
+            "sha256": "6cfb1a0b2c6324f0594cf109889e9b740e4df055ce25becba1e8a5ff7180d563",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201112.nc",
+            "sha256": "b61ea22e058bcc986c07a9b5335c954051c1b9cfc08ac2b0a4d66bd400697e32",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        }
+      },
+      "summary_after_repair": {
+        "mean_air_temperature_c": 10.853169229005232,
+        "mean_dewpoint_c": 7.7565846325600205,
+        "mean_wind_m_s": 4.263127660322112,
+        "shortwave_sum_mj_m2": 3939.8968488010482,
+        "mean_longwave_w_m2": 326.7211704666393
+      }
+    },
+    "2015": {
+      "status": "repaired",
+      "problems": [],
+      "repairs": [
+        {
+          "month": "201501",
+          "role": "radiation",
+          "channel": "SWD",
+          "index": 1956,
+          "original": -93.8817138671875,
+          "repaired": 63.433128356933594
+        }
+      ],
+      "repairs_per_month": {
+        "201501": 1
+      },
+      "files": {
+        "201412": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201412.nc",
+            "sha256": "a9a08aba22d81cc554cb95e1ae9307992e853a66c1c94d550a7d77d8d438b68f",
+            "origin": "development cache",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201412.nc",
+            "sha256": "b476c0bc7e07fae21d01a8c8146c338dc36af4ae0898b63b55c726ae8914393b",
+            "origin": "development cache",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "201501": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201501.nc",
+            "sha256": "4acfa5a1b8b98c16846a21798a594b2e66d9b29715ad5f4ae63f4a01f7e18f1a",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201501.nc",
+            "sha256": "60de9f94b4d89aa067137937bb116b7ada5030a7de0c68400c397f231edb689c",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "201502": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201502.nc",
+            "sha256": "30961fdd4f87649f6b6afb238ad87fe585f7e645709cc89288291b005e0ff1a1",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201502.nc",
+            "sha256": "b8ac690b77e37e119a7d9b5e143fba602908ea9ccbdb1cbb1066989a7ed2465c",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "201503": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201503.nc",
+            "sha256": "8b0e32f9ab9841a1a1966e9e2b9cd0f397a6a7c7a35324da0bd5966912b00889",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201503.nc",
+            "sha256": "9c61054ad2b027c757d4eba87890cc3e29911089e4d11c21b84c749e0e26eb0b",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "201504": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201504.nc",
+            "sha256": "74dba4ba6f042193fc49b43b513716e159ca2bafb9ad7eb63af9b84deb87a3f8",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201504.nc",
+            "sha256": "655b3080c7c63956f9fac2c9c060a330ab6ef288c889ad7e574d606817ad3f88",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "201505": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201505.nc",
+            "sha256": "d825994d75abbda6210c727a8f366c5c6c772d79c737884ca0ac0cec235a5d22",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201505.nc",
+            "sha256": "058b2824e15b0ae7450899b761a82658cbee44d5e4c518dd4f7b79e4594b42e6",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "201506": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201506.nc",
+            "sha256": "0a659ff40559c5743f9415c9a72325b0fadf2109f005cb50784492d312bbba51",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201506.nc",
+            "sha256": "ad17a94182d9e831bc7bbc4f8ed22993a9d6ffa9bc66c5f1f2d91c2f61c6b1ed",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "201507": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201507.nc",
+            "sha256": "272f02fa877bc1829f5ab8cf34347358b953f8520692019300c543865fc644a9",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201507.nc",
+            "sha256": "fe308c7ec1e90016d8de0fc281a6f63ede40691c12cb81fffce84a7e8474d7f5",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "201508": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201508.nc",
+            "sha256": "ee99dda0d47d7ca9816f38d3a4d404a04ab94f3eb064e756e12e758714c74506",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201508.nc",
+            "sha256": "c88ce56292842e149f48d0909c055c530112c4327173f487026dc37377136e81",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "201509": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201509.nc",
+            "sha256": "7464a145f61d94f422d57137e147a9b4c839fc446d3f0b28ad41dcb3ecb0737c",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201509.nc",
+            "sha256": "cfd9fc3b5928280c56fd4b362197ab5dd277118f099100ce081298c3e303191b",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "201510": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201510.nc",
+            "sha256": "8f108a84e988c75a7040992f4aead6921ec4997849d03b9fdb36ff1a8624b375",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201510.nc",
+            "sha256": "77e5d3805c64972ff999cf3b186cda7a82cd4899ad6de142071d2f5303569a1b",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "201511": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201511.nc",
+            "sha256": "21e97a3d155bfc9596a35d13d346e4f4d1b2484be2817f80123f895541b679ad",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201511.nc",
+            "sha256": "479d15ff6e7fed71bcea3686ed60b3b5533ffbdb2fbe87da2771c12baaab865d",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        },
+        "201512": {
+          "meteo": {
+            "filename": "cesar_surface_meteo_lc1_t10_v1.0_201512.nc",
+            "sha256": "827f5ca26509aac0a02538930517e892a842b87711f9cc31881527ba55d7b9d4",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          },
+          "radiation": {
+            "filename": "cesar_surface_radiation_lc1_t10_v1.0_201512.nc",
+            "sha256": "c410b9fae4f9219de3812a5b1cbcc60033468094bd0ab948ff4628e1d2e19cb7",
+            "origin": "formal download",
+            "unrepaired_other_fields_invalid": {}
+          }
+        }
+      },
+      "summary_after_repair": {
+        "mean_air_temperature_c": 10.723902828036557,
+        "mean_dewpoint_c": 7.826740920997281,
+        "mean_wind_m_s": 4.4453759644747555,
+        "shortwave_sum_mj_m2": 4018.5318032564937,
+        "mean_longwave_w_m2": 320.9758053249783
+      }
+    }
+  },
+  "issues": [],
+  "plan_sha256": "6656707f57161f386779818d0ff0a7c7eda7914fe61ddf82cffd29a1aa6597e0"
+}
