@@ -82,7 +82,11 @@ def public_task_view(contract: dict, feedback_mode: str | None) -> dict:
                      'cleanup_days': budget['cleanup_days'], 'latest_start_day': budget['latest_start_day'],
                      'time_step_seconds': contract['controller']['tick_seconds']},
         'budget': {'max_starts': budget['max_starts'], 'max_decision_calls': budget['max_decision_calls'],
-                   'max_tool_calls': budget['max_tool_calls'], 'max_context_tokens': budget['max_context_tokens']},
+                   'max_tool_calls': budget['max_tool_calls'],
+                   **({'max_context_tokens': budget['max_context_tokens']} if 'max_context_tokens' in budget else {}),
+                   **({'context': {k: budget['context'][k] for k in ('max_input_chars_per_campaign', 'max_prompt_chars',
+                                                                       'raw_result_turns', 'notes_max_chars')}}
+                      if 'context' in budget else {})},
         'policy': {'fields': fields,
                    'constraints': ['night_temperature_c <= day_temperature_c'],
                    'fixed_while_running': True},
@@ -131,6 +135,23 @@ def public_task_view(contract: dict, feedback_mode: str | None) -> dict:
                                     '(1 January) and one planted on calendar day 182 (2 July), each running crop_days. '
                                     'The score is never shown to you.')}
         view['rules'][-1] = view['scoring']['rule']
+    decision_actions = budget.get('decision_call_actions')
+    if decision_actions is not None:
+        rule = ('Every call counts against max_tool_calls; ' + ', '.join(decision_actions[:-1]) + ' and '
+                + decision_actions[-1] + ' also count against max_decision_calls. Reading records does not.')
+        view['rules'] = [rule if r.startswith('Every call counts against max_tool_calls') else r for r in view['rules']]
+    if 'context' in budget:
+        c = budget['context']
+        view['rules'].append(
+            f"Your prompts may use at most {c['max_input_chars_per_campaign']:,} characters in total over the campaign "
+            f"(each prompt at most {c['max_prompt_chars']:,}). Results stay in full for your {c['raw_result_turns']} "
+            f"most recent steps, then only a one-line note remains. You may keep notes of at most "
+            f"{c['notes_max_chars']:,} characters, shown to you every turn. When the character budget is nearly "
+            'spent, the campaign is advanced to the final day and you are asked only for your recommendation.')
+    if 'daily_summary' in observations and feedback_mode != 'endpoint':
+        view['actions']['observe']['resolution'] = ("full feedback only, optional: 'raw' (default, five-minute "
+                                                    "records, at most 512) or 'daily' (per-day count, mean, "
+                                                    "minimum and maximum; at most 400 days)")
     stall = contract['events'].get('solver_stall')
     if stall:
         safety = view['rules'].index('If indoor air stays below 5 C or above 40 C for one hour, the crop is stopped for safety.')

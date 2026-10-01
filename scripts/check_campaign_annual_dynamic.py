@@ -45,7 +45,7 @@ def main() -> None:
                         help='development sensor-noise seed; omit for deterministic virtual sensors')
     parser.add_argument('--noise-config', type=Path, default=ROOT / 'configs/sensor_noise_v0.json')
     parser.add_argument('--noise-setting', default='main')
-    parser.add_argument('--contract', type=Path, default=ROOT / 'configs/task_contract_v6.json')
+    parser.add_argument('--contract', type=Path, default=ROOT / 'configs/task_contract_v7.json')
     args = parser.parse_args()
     if not 1 <= args.pilot_days <= 365 or args.max_seconds <= 0 or args.max_rss_bytes <= 0:
         raise ValueError('invalid pilot or resource bound')

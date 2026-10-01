@@ -76,7 +76,8 @@ def run_branched_campaign(contract: dict, base_spec: dict, private_dir: Path, ma
         prefix_tool_calls = toolbox.calls
         view = campaign.session.task
         agent = LLMCampaignAgent(campaign.session, toolbox, make_completer('full'), config, task=view,
-                                 history=prefix['history'], counts=prefix['counts'], notice=assignment_notice(view))
+                                 history=prefix['history'], counts=prefix['counts'], notice=assignment_notice(view),
+                                 notes=prefix.get('notes', ''))
         out['full'] = {'summary': agent.run(), 'transcript': campaign.session.transcript}
         out['full']['server_exit_code'] = campaign.close()
     out['shared_day_0'] = {'ended_by': prefix['ended_by'], 'starts': prefix['starts'], 'counts': prefix['counts'],
@@ -88,7 +89,8 @@ def run_branched_campaign(contract: dict, base_spec: dict, private_dir: Path, ma
         toolbox.calls = prefix_tool_calls
         view = campaign.session.task
         agent = LLMCampaignAgent(campaign.session, toolbox, make_completer('endpoint'), config, task=view,
-                                 history=prefix['history'], counts=prefix['counts'], notice=assignment_notice(view))
+                                 history=prefix['history'], counts=prefix['counts'], notice=assignment_notice(view),
+                                 notes=prefix.get('notes', ''))
         out['endpoint'] = {'summary': agent.run(), 'transcript': campaign.session.transcript}
         out['endpoint']['server_exit_code'] = campaign.close()
     return out

@@ -326,9 +326,30 @@ class CampaignExecutor:
                    'status': view.operational_status(unit),
                    # Both conditions receive closed-crop totals; Full adds records.
                    'final_aggregate': view.final_aggregate(unit, run_index)}
+        resolution = action.get('resolution', 'raw')
+        if resolution not in ('raw', 'daily'):
+            raise ValueError("resolution must be 'raw' or 'daily'")
+        if resolution == 'daily' and ('variable' not in action
+                                      or 'daily_summary' not in self.contract['observations']):
+            raise ValueError('daily resolution needs a variable and is not offered by this contract')
         if self.feedback_mode == 'endpoint':
-            if any(key in action for key in ('variable', 'start_day', 'end_day')):
+            if any(key in action for key in ('variable', 'start_day', 'end_day', 'resolution')):
                 raise PermissionError('endpoint cannot request science history')
+        elif 'variable' in action and resolution == 'daily':
+            variable = action['variable']
+            if variable not in self.contract['observations']['public_channels']:
+                raise ValueError('unknown public variable')
+            start = _seconds(action.get('start_day', 0), self.contract['budget']['campaign_days'], self.tick_seconds)
+            end = _seconds(action.get('end_day', self.clock / 86400),
+                           self.contract['budget']['campaign_days'], self.tick_seconds)
+            if (end - start) / 86400 > self.contract['observations']['daily_summary']['max_days']:
+                raise ValueError('daily summary window exceeds max_days')
+            days = {}
+            for record in view.history(unit, variable, start=start, end=end):
+                days.setdefault(int(record['measurement_time'] // 86400), []).append(record['value'])
+            payload['daily'] = [{'day': d, 'n': len(v), 'mean': sum(v) / len(v), 'min': min(v), 'max': max(v)}
+                                for d, v in sorted(days.items())]
+            payload['variable'] = variable
         elif 'variable' in action:
             variable = action.get('variable')
             if variable not in self.contract['observations']['public_channels']:
@@ -385,7 +406,7 @@ class CampaignExecutor:
         if kind not in self.contract['events']['allowed']:
             raise ValueError('unsupported action')
         self._tool_calls += 1
-        if kind in ('start', 'stop', 'observe', 'recommend'):
+        if kind in self.contract['budget'].get('decision_call_actions', ('start', 'stop', 'observe', 'recommend')):
             if self._decision_calls >= self.contract['budget']['max_decision_calls']:
                 raise ValueError('decision-call budget exhausted')
             self._decision_calls += 1
@@ -398,7 +419,8 @@ class CampaignExecutor:
                 raise ValueError('invalid stop fields')
             return self._stop(self._unit(action['unit']), 'stop')
         if kind == 'observe':
-            if not set(action) <= {'action', 'unit', 'variable', 'start_day', 'end_day', 'run_index'} or 'unit' not in action:
+            if not set(action) <= {'action', 'unit', 'variable', 'start_day', 'end_day', 'run_index', 'resolution'} \
+                    or 'unit' not in action:
                 raise ValueError('invalid observation fields')
             return self._observe(self._unit(action['unit']), action)
         if kind == 'advance':
