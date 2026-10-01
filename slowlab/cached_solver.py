@@ -31,6 +31,15 @@ def output_closure(model, outputs):
     return [k for k in model.solving_order if k in needed]
 
 
+class SolverStall(RuntimeError):
+    """The integrator needed more right-hand-side evaluations in one control step than allowed."""
+
+    def __init__(self, t0, t1, t, y, states, calls, dy=None, label=None):
+        self.t0, self.t1, self.t, self.y, self.states, self.calls = t0, t1, t, y, states, calls
+        self.dy, self.label = dy, label
+        super().__init__(f'solver stall ({label}): {calls} RHS evaluations in step [{t0}, {t1}] at t={t}')
+
+
 class CachedGreenLightSolver:
     def __init__(self, model, *, array_output=False, outputs=None):
         import numpy as np
@@ -100,12 +109,25 @@ class CachedGreenLightSolver:
                     caught.append(message)
                     if m.options['warn_runtime'].lower()=='true':warnings.warn(message,w.category)
                 return out
+        cap=getattr(self,'max_rhs_calls_per_step',None)
+        if cap is not None:
+            # Counting only: results are unchanged unless the cap is exceeded.
+            inner=rhs
+            calls=[0]
+            def rhs(t,y):
+                calls[0]+=1
+                if calls[0]>cap:
+                    raise SolverStall(t0,t1,t,np.array(y,dtype=float),list(m.states),calls[0],
+                                      dy=np.array(inner(t,y),dtype=float),label=getattr(self,'stall_label',None))
+                return inner(t,y)
         try:first=float(m.options['first_step'])
         except ValueError:first=None
         sol=solve_ivp(rhs,[t0,t1],np.array([m.init[k] for k in m.states]),method='LSODA',
                       max_step=float(m.options['max_step']),first_step=first,
                       atol=float(m.options['atol']),rtol=float(m.options['rtol']))
         m.states_sol=sol
+        if cap is not None:
+            self.max_rhs_calls_seen=max(getattr(self,'max_rhs_calls_seen',0),calls[0])
         if not sol.success:raise RuntimeError(sol.message)
         values={'Time':sol.t,'np':np}
         values.update({k:sol.y[i] for i,k in enumerate(m.states)})
