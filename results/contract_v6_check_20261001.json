@@ -1,0 +1,82 @@
+{
+ "purpose": "contract v6 checks on the pinned model (WSL desktop, code 32e6e0e)",
+ "normal_run_unchanged": {
+  "what": "default parameters, no noise, 2017, policy A evaluation",
+  "v5_score": 35.5668023203691,
+  "v6_score": 35.5668023203691,
+  "identical": true
+ },
+ "stalled_run_now_completes": {
+  "spec": "predictor-data site107_run1_2018 under v6",
+  "status": "completed",
+  "elapsed_seconds": 1167.0,
+  "peak_rss_mb": 291.5,
+  "crops": [
+   {
+    "unit": 0,
+    "run_index": 1,
+    "planting_day": 0.0,
+    "final_reason": "normal_completion",
+    "harvest_kg_m2": 34.520055634591095,
+    "days": 180.00000000019847
+   },
+   {
+    "unit": 1,
+    "run_index": 1,
+    "planting_day": 0.0,
+    "final_reason": "normal_completion",
+    "harvest_kg_m2": 22.75622978653861,
+    "days": 180.00000000019847
+   },
+   {
+    "unit": 2,
+    "run_index": 1,
+    "planting_day": 0.0,
+    "final_reason": "normal_completion",
+    "harvest_kg_m2": 19.393152926589504,
+    "days": 180.00000000019847
+   },
+   {
+    "unit": 3,
+    "run_index": 1,
+    "planting_day": 0.0,
+    "final_reason": "normal_completion",
+    "harvest_kg_m2": 9.825918845537199,
+    "days": 180.00000000019847
+   },
+   {
+    "unit": 0,
+    "run_index": 2,
+    "planting_day": 182.0,
+    "final_reason": "normal_completion",
+    "harvest_kg_m2": 8.692595088093512,
+    "days": 180.00000000032736
+   },
+   {
+    "unit": 1,
+    "run_index": 2,
+    "planting_day": 182.0,
+    "final_reason": "safety_stop",
+    "harvest_kg_m2": 0.0,
+    "days": 121.2500000002205
+   },
+   {
+    "unit": 2,
+    "run_index": 2,
+    "planting_day": 182.0,
+    "final_reason": "normal_completion",
+    "harvest_kg_m2": 0.0,
+    "days": 180.00000000032736
+   },
+   {
+    "unit": 3,
+    "run_index": 2,
+    "planting_day": 182.0,
+    "final_reason": "normal_completion",
+    "harvest_kg_m2": 0.0,
+    "days": 180.00000000032736
+   }
+  ]
+ },
+ "note": "Under v5 this run stalled at day 303.25 and was killed after hours; under v6 compartment 1 second crop ends with a safety stop after 121.25 days and the run finishes in 19.5 min. Zero-harvest crops are rare in the training data (5 of 788, all planted on day 60 or later)."
+}
