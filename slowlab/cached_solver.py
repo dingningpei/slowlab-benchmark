@@ -132,8 +132,9 @@ class CachedGreenLightSolver:
         if tracked:
             # Observation only: running minimum over the integrator's step points.
             minima=self.__dict__.setdefault('state_minima',{})
+            order=list(m.states)  # the integrator's state order (see the initial vector above)
             for name in tracked:
-                low=float(np.min(sol.y[m.states.index(name)]))
+                low=float(np.min(sol.y[order.index(name)]))
                 minima[name]=min(minima.get(name,low),low)
         if not sol.success:raise RuntimeError(sol.message)
         values={'Time':sol.t,'np':np}
