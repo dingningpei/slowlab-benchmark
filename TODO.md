@@ -35,8 +35,8 @@
 
 ## Phase 3：site 分布、生成与评分协议冻结
 
-- [ ] 定义 site = {设施参数扰动, 作物参数扰动, 深土壤边界温度（8–20 °C，合同 v4）, 价格情景, 天气年份块, 噪声种子}；写 `configs/site_distribution_v0.json`；分布只依据物理与经济合理性事先定义；生成后不按任何与结果相关的性质（prior 强弱、学习空间、方法表现）筛选或调整；排除只按预注册的数值或机械规则进行，并全部报告
-  - [ ] 每个参数范围对照原始文献注明来源；无来源者标为声明假设
+- [x] 定义 site = {设施参数扰动, 作物参数扰动, 深土壤边界温度（8–20 °C，合同 v4）, 价格情景, 天气年份块, 噪声种子}；写 `configs/site_distribution_v0.json`；分布只依据物理与经济合理性事先定义；生成后不按任何与结果相关的性质（prior 强弱、学习空间、方法表现）筛选或调整；排除只按预注册的数值或机械规则进行，并全部报告。定稿为 `configs/site_distribution_v1.json`（决定记录 2026-10-01）
+  - [x] 每个参数范围对照原始文献注明来源；无来源者标为声明假设。证据：`configs/site_distribution_v1.json`（每项 evidence 字段）
   - [x] 新的未触碰天气年份（2002–2011、2015，另含 2001-12 边界月；2021–2024 在 lc1 目录中缺月，不可用）：清单见 `configs/weather_formal_acquisition_proposal_v0.json`，已获批；样本月审计发现 2015-01 一条损坏记录，修复规则 v0 已获批（见决定记录），按该规则下载其余并审计。证据：`results/weather_formal_year_audit_v0.json`
 - [x] 用开发 site 训练过程预测器（在季内记录→整季毛利），并作为公共工具提供给 LLM；BO 的错峰调度使用同一预测器（数据与验证已完成：40 个开发 site、788 茬；保留简单岭回归，见决定记录 2026-10-01；剩余：公共工具与 BO 接入）。证据：`results/process_predictor_validation_v2_20261001.json`、`results/bo_staggered_predictor_check_20261001.json`
 - [x] 合同 v7 与 LLM 框架 v2（读取不计决策次数、最近 6 轮保留原始结果、2,000 字符笔记、按日汇总读取；见决定记录 2026-10-01），并用节制与大量读取两种 scripted 模型校准预算；校准后定为合同 v8（每场 500 万字符）。证据：`results/context_budget_calibration_20261001.json`

@@ -135,3 +135,19 @@ def test_weather_years_are_disjoint_deterministic_and_site_specific():
     assert len(campaign_years) >= 8
     with pytest.raises(ValueError):
         assign_weather_years(DIST, 9, 0, [2003, 2004], 2)
+
+
+def test_v1_keeps_every_range_and_assigns_formal_weather():
+    import hashlib
+    from slowlab.site_distribution import formal_weather_years
+    v1 = json.loads((ROOT / 'configs/site_distribution_v1.json').read_text())
+    assert v1['supersedes']['sha256'] == hashlib.sha256((ROOT / 'configs/site_distribution_v0.json').read_bytes()).hexdigest()
+    for section in ('site_level', 'prices_public', 'compartment_level', 'sensor_noise_seed'):
+        assert v1[section] == DIST[section]
+    assert v1['applies_to_contract'] == json.loads((ROOT / 'configs/task_contract_v8.json').read_text())['contract_id']
+    audit = json.loads((ROOT / 'results/weather_formal_year_audit_v0.json').read_text())
+    assert {str(y) for y in v1['weather']['formal_pool']} == set(audit['units'])
+    years = formal_weather_years(v1, 123, 5)
+    assert years['campaign_year'] in v1['weather']['formal_pool'] and len(years['evaluation_years']) == 3
+    assert years['campaign_year'] not in years['evaluation_years']
+    assert sample_site(v1, 7, 3)['draws'] != sample_site(DIST, 7, 3)['draws']

@@ -1,0 +1,301 @@
+{
+  "distribution_id": "slowlab-site-distribution-v1",
+  "status": "approved_2026-10-01",
+  "date": "2026-10-01",
+  "applies_to_contract": "slowlab-v23-task-v8",
+  "principle": "Defined from physical and economic plausibility before any outcome is seen. Generated sites are never selected, reweighted or adjusted by any outcome-related property (prior strength, learning space, method performance). Exclusion only by pre-registered numerical or mechanical rules, all reported.",
+  "sampling": {
+    "method": "Each site draws every component independently from its own stream: numpy Generator seeded with the first 8 bytes of SHA-256 over distribution_id, master_seed, site_index and the component name. Applied values: value = x; times = base * x; plus = base + x; times_site_value = the site value of that parameter (which the site level must set) * x.",
+    "master_seed": "committed with a salt before the formal sites are generated; development and pilot seeds are separate"
+  },
+  "site_level": {
+    "temperature_window_shift_c": {
+      "distribution": {
+        "type": "uniform",
+        "low": -1.5,
+        "high": 1.5
+      },
+      "applies_to": {
+        "tCan24Min": {
+          "op": "plus",
+          "base": 15.0
+        },
+        "tCan24Max": {
+          "op": "plus",
+          "base": 24.5
+        }
+      },
+      "evidence": "assumed",
+      "note": "Cultivars differ in temperature response; optimum night temperatures for fruit set are commonly reported between 15 and 20 C. A +/-1.5 C shift of the model's 24 h inhibition window is a declared assumption, not a fitted cultivar range."
+    },
+    "photosynthetic_capacity_factor": {
+      "distribution": {
+        "type": "uniform",
+        "low": 0.85,
+        "high": 1.15
+      },
+      "applies_to": {
+        "j25LeafMax": {
+          "op": "times",
+          "base": 210.0
+        }
+      },
+      "evidence": "assumed",
+      "note": "Leaf electron-transport capacity varies with cultivar and leaf physiology; +/-15% around the model value is a declared assumption."
+    },
+    "fruit_growth_potential_factor": {
+      "distribution": {
+        "type": "uniform",
+        "low": 0.85,
+        "high": 1.15
+      },
+      "applies_to": {
+        "rgFruit": {
+          "op": "times",
+          "base": 0.328
+        }
+      },
+      "evidence": "assumed",
+      "note": "Generative sink strength differs between cultivars; declared assumption."
+    },
+    "earliness_factor": {
+      "distribution": {
+        "type": "uniform",
+        "low": 0.9,
+        "high": 1.1
+      },
+      "applies_to": {
+        "tEndSum": {
+          "op": "times",
+          "base": 1035.0
+        }
+      },
+      "evidence": "assumed",
+      "note": "Temperature sum to full generative phase; declared assumption."
+    },
+    "max_lai": {
+      "distribution": {
+        "type": "uniform",
+        "low": 2.5,
+        "high": 3.5
+      },
+      "applies_to": {
+        "laiMax": {
+          "op": "value"
+        }
+      },
+      "evidence": "assumed",
+      "note": "Canopy management and cultivar; declared assumption around the model value 3."
+    },
+    "cover_par_nir_transmission": {
+      "distribution": {
+        "type": "uniform",
+        "low": 0.75,
+        "high": 0.88
+      },
+      "applies_to": {
+        "tauRfPar": {
+          "op": "value"
+        },
+        "tauRfNir": {
+          "op": "value"
+        }
+      },
+      "evidence": "literature_constrained",
+      "sources": [
+        "https://edepot.wur.nl/468912",
+        "https://edepot.wur.nl/538065"
+      ],
+      "note": "Whole-greenhouse PAR transmission of clear-glass Venlo houses is about 0.73-0.76 in winter; single glass about 0.90; anti-reflective diffuse glass higher."
+    },
+    "leakage_coefficient": {
+      "distribution": {
+        "type": "loguniform",
+        "low": 3e-05,
+        "high": 0.0002
+      },
+      "applies_to": {
+        "cLeakage": {
+          "op": "value"
+        }
+      },
+      "evidence": "literature_constrained",
+      "sources": [
+        "https://edepot.wur.nl/195238",
+        "https://ask.ifas.ufl.edu/publication/AE030"
+      ],
+      "note": "De Zwart's model uses 0.3e-4; the pinned model uses 1e-4; closed-vent air exchange ranges from about 0.75 per hour (new glass) to 2-4 per hour (old glass in poor condition), a factor of several."
+    },
+    "ventilation_coefficient_factor": {
+      "distribution": {
+        "type": "uniform",
+        "low": 0.8,
+        "high": 1.2
+      },
+      "applies_to": {
+        "cDgh": {
+          "op": "times",
+          "base": 0.75
+        },
+        "cWgh": {
+          "op": "times",
+          "base": 0.09
+        }
+      },
+      "evidence": "assumed",
+      "note": "Vent geometry and screens change discharge and wind-pressure coefficients; +/-20% is a declared assumption."
+    },
+    "side_wall_exchange_w_m2_k": {
+      "distribution": {
+        "type": "uniform",
+        "low": 1.0,
+        "high": 3.0
+      },
+      "applies_to": {
+        "boundary_ueff_w_m2_k": {
+          "op": "value"
+        }
+      },
+      "evidence": "assumed",
+      "note": "Contract-defined boundary exchange with neighbouring spaces; the contract already lists it for sensitivity (0-4)."
+    },
+    "led_par_efficacy_fraction": {
+      "distribution": {
+        "type": "uniform",
+        "low": 0.45,
+        "high": 0.6
+      },
+      "applies_to": {
+        "etaLampPar": {
+          "op": "value"
+        }
+      },
+      "evidence": "literature_constrained",
+      "sources": [
+        "https://www.nature.com/articles/s41438-020-0283-7"
+      ],
+      "note": "With 5.4 umol PAR per J PAR this is 2.4-3.2 umol/J, within and slightly above the 2-3 umol/J typical of horticultural LED fixtures reported by Kusuma et al. (2020)."
+    },
+    "deep_soil_boundary_c": {
+      "distribution": {
+        "type": "uniform",
+        "low": 8.0,
+        "high": 20.0
+      },
+      "applies_to": {
+        "soil_boundary_c": {
+          "op": "value"
+        }
+      },
+      "evidence": "assumed",
+      "note": "Decided in contract v4; the true ~2 m soil temperature under the facility is unknown."
+    }
+  },
+  "prices_public": {
+    "energy_price_factor": {
+      "distribution": {
+        "type": "loguniform",
+        "low": 0.67,
+        "high": 2.0
+      },
+      "applies_to": {
+        "electricity_eur_per_kwh": {
+          "op": "times",
+          "base": 0.15
+        },
+        "delivered_heat_eur_per_kwh": {
+          "op": "times",
+          "base": 0.05
+        }
+      },
+      "evidence": "assumed",
+      "note": "One factor moves electricity and heat together (both driven by gas prices): electricity 0.10-0.30 EUR/kWh, heat 0.033-0.10 EUR/kWh. Scenario range, not a market forecast."
+    },
+    "fruit_price_eur_per_kg": {
+      "distribution": {
+        "type": "uniform",
+        "low": 1.5,
+        "high": 2.5
+      },
+      "applies_to": {
+        "price_eur_per_kg_fresh_equivalent": {
+          "op": "value"
+        }
+      },
+      "evidence": "assumed",
+      "note": "Scenario range around the contract value 2.0."
+    },
+    "co2_eur_per_kg": {
+      "fixed": 0.2,
+      "evidence": "assumed"
+    }
+  },
+  "compartment_level": {
+    "fruit_growth_multiplier": {
+      "distribution": {
+        "type": "uniform",
+        "low": 0.95,
+        "high": 1.05
+      },
+      "applies_to": {
+        "rgFruit": {
+          "op": "times_site_value"
+        }
+      },
+      "evidence": "assumed",
+      "note": "Unobservable compartment-to-compartment crop vigour; the true score averages over it."
+    },
+    "leakage_multiplier": {
+      "distribution": {
+        "type": "uniform",
+        "low": 0.95,
+        "high": 1.05
+      },
+      "applies_to": {
+        "cLeakage": {
+          "op": "times_site_value"
+        }
+      },
+      "evidence": "assumed",
+      "note": "Unobservable compartment-to-compartment airtightness; the true score averages over it."
+    }
+  },
+  "weather": {
+    "formal_pool": [
+      2002,
+      2003,
+      2004,
+      2005,
+      2006,
+      2007,
+      2008,
+      2009,
+      2010,
+      2011,
+      2015
+    ],
+    "campaign_years": 1,
+    "evaluation_years": 3,
+    "assignment": "per site, drawn without replacement from formal_pool by slowlab.site_distribution.formal_weather_years (stream \"weather_years\"); the campaign year and the three evaluation years are distinct and shared by every method run on the site",
+    "reader": "slowlab.cabauw_weather.CabauwLc1FormalWeather with results/weather_formal_year_audit_v0.json (repair rule v0; 2009 and 2015 contain logged repairs)",
+    "reporting": "weather year is a blocking factor; results are reported by year",
+    "note": "the formal years are older than the development years (2014, 2017-2020) except 2015; stated as a limitation"
+  },
+  "sensor_noise_seed": {
+    "distribution": {
+      "type": "integer",
+      "low": 0,
+      "high": 9223372036854775807
+    }
+  },
+  "exclusion_rules": [
+    "an infrastructure-level numerical failure under the fixed reference policy (contract events.numerical_failure, for example a stall in an empty compartment), after the pre-registered replay and retry protocol",
+    "a drawn weather year without a passing audit under weather repair rule v0",
+    "not an exclusion: a crop stopped for safety, including the contract-v6 crop collapse; it is an ordinary outcome of the policy"
+  ],
+  "supersedes": {
+    "file": "configs/site_distribution_v0.json",
+    "sha256": "c2e214feb1190b094940794d20f8cc4f4f1561a3a45cb39948bfe2eb76c0e13d",
+    "change": "Approved with every parameter range unchanged. Updated: applies_to_contract (v8), the weather rule (concrete formal pool and assignment), and the exclusion rules (contract v6 crop collapse is an outcome, not an exclusion). New distribution_id, so formal draws are separate from every development draw made with v0."
+  }
+}

@@ -144,3 +144,11 @@ def check_site(contract: dict, sampled: dict) -> dict:
     for values in sampled['site']['unit_parameters'].values():
         validate_model_parameters(values)
     return site_contract(contract, sampled['site'])
+
+
+def formal_weather_years(distribution: dict, master_seed: int, site_index: int) -> dict:
+    """Campaign and evaluation years for a formal site under a distribution with a concrete weather rule (v1)."""
+    weather = distribution['weather']
+    if weather.get('campaign_years') != 1:
+        raise ValueError('the distribution must assign exactly one campaign year')
+    return assign_weather_years(distribution, master_seed, site_index, weather['formal_pool'], weather['evaluation_years'])
