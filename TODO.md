@@ -45,7 +45,7 @@
 - [x] 隔离的推荐评测器：独立天气副本；Monte Carlo 误差小于要报告的差异（设计已定，见决定记录 2026-09-30）；评测年数定为 3 年。证据：`results/evaluator_check_20260930.json`、`results/evaluation_error_study_20260930.json`
 - [ ] best-known feasible reference 的数值搜索与搜索误差报告
 - [x] 冻结统计单位、主检验族、次要指标、CI、失败与缺失处理。见 RESEARCH_PLAN §5 与决定记录 2026-10-01
-- [ ] 用开发/pilot 方差做功效或精度分析，确定 N；冻结 E3 packet 选择规则与诊断 Reader
+- [ ] 用开发/pilot 方差做功效或精度分析，确定 N；冻结 E3 packet 选择规则与诊断 Reader（E3 规则已冻结，见决定记录 2026-10-01 与 `slowlab/history_packet.py`；开发方差研究运行中，最终 N 待 Phase 4 pilot 的 LLM 方差）
 
 验收：在看正式结果前，能写出每个 figure 的输入、统计量与解释边界。
 
