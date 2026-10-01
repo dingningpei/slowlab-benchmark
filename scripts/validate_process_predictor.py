@@ -51,7 +51,7 @@ def main():
     parser.add_argument('--gp', action='store_true', help='also fit per-checkpoint Gaussian processes (slow)')
     parser.add_argument('--report', type=Path, required=True)
     args = parser.parse_args()
-    contract = json.loads((ROOT / 'configs/task_contract_v5.json').read_text())
+    contract = json.loads((ROOT / 'configs/task_contract_v6.json').read_text())
     fields = contract['policy']['fields']
     records = [json.loads(Path(f).read_text()) for f in sorted(glob.glob(args.data))]
     records = [r for r in records if r.get('status') == 'completed']

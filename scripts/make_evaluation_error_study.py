@@ -38,7 +38,7 @@ def main():
                              'site': {'distribution': 'configs/site_distribution_v0.json',
                                       'master_seed': args.master_seed, 'site_index': site}})
     batch = {'out_dir': args.out_dir, 'purpose': 'evaluation Monte Carlo error study, development sites',
-             'common': {'backend': 'greenlight', 'contract': 'configs/task_contract_v5.json',
+             'common': {'backend': 'greenlight', 'contract': 'configs/task_contract_v6.json',
                         'sensor_noise': {'config': 'configs/sensor_noise_v0.json', 'setting': 'main'}},
              'jobs': jobs}
     args.batch.write_text(json.dumps(batch, indent=1))

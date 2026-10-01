@@ -131,4 +131,8 @@ def public_task_view(contract: dict, feedback_mode: str | None) -> dict:
                                     '(1 January) and one planted on calendar day 182 (2 July), each running crop_days. '
                                     'The score is never shown to you.')}
         view['rules'][-1] = view['scoring']['rule']
+    stall = contract['events'].get('solver_stall')
+    if stall:
+        safety = view['rules'].index('If indoor air stays below 5 C or above 40 C for one hour, the crop is stopped for safety.')
+        view['rules'].insert(safety + 1, stall['public_rule'])
     return view

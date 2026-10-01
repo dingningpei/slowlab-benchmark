@@ -40,7 +40,7 @@ def main():
                                   'master_seed': args.master_seed, 'site_index': site}})
     batch = {'out_dir': args.out_dir, 'script': 'scripts/generate_predictor_data.py',
              'purpose': 'process predictor training data, development sites',
-             'common': {'backend': 'greenlight', 'contract': 'configs/task_contract_v5.json',
+             'common': {'backend': 'greenlight', 'contract': 'configs/task_contract_v6.json',
                         'sensor_noise': {'config': 'configs/sensor_noise_v0.json', 'setting': 'main'}},
              'jobs': jobs}
     args.batch.write_text(json.dumps(batch, indent=1))

@@ -19,6 +19,7 @@ from .policy import Policy
 from .controller import commands_from_observations
 from .feedback_view import FeedbackView
 from .greenlight_reuse import CropLifecycle
+from .cached_solver import SolverStall
 from .resources import LEDGER_FLUXES, ResourceLedger, realise_independent_commands
 from .sensor_bridge import SENSOR_OUTPUTS, record_at_endpoint
 from .site_parameters import validate_model_parameters
@@ -137,6 +138,15 @@ class CampaignExecutor:
                 outputs=None if all_model_outputs else EXECUTOR_OUTPUTS,
                 **({'parameter_overrides': self.unit_parameters[unit]} if self.unit_parameters[unit] else {}))
             self._ledgers[unit] = ResourceLedger(contract, 0)
+        stall = contract.get('events', {}).get('solver_stall')
+        self._stall_cap = stall['max_rhs_evaluations_per_control_step'] if stall else None
+        if self._stall_cap is not None:
+            for unit, life in self._lifecycles.items():
+                for mode, engine in getattr(life, 'engines', {}).items():
+                    solver = getattr(engine, '_cached_solver', None)
+                    if solver is not None:
+                        solver.max_rhs_calls_per_step = self._stall_cap
+                        solver.stall_label = f'unit {unit} {mode}'
         for unit in self.units:
             self._sample_endpoint(self._lifecycles[unit].engine, weather, origin_utc,
                                   self._controller, self._public, unit, self._ledgers[unit])
@@ -226,7 +236,22 @@ class CampaignExecutor:
         increments = {}
         for unit, life in self._lifecycles.items():
             try:
-                state = life.step(realised[unit], start + self.tick_seconds)
+                try:
+                    state = life.step(realised[unit], start + self.tick_seconds)
+                except SolverStall as stall:
+                    if self._stall_cap is None or life.mode != 'active':
+                        raise
+                    # Contract events.solver_stall: the crop is stopped for safety at the
+                    # start of this step; the compartment then runs the step as cleanup.
+                    self.event_log.append({'event': 'crop_collapse_solver_stall', 'unit': unit, 'clock': start,
+                                           'rhs_evaluations': stall.calls, 'stalled_at': stall.t})
+                    self._stop(unit, 'safety_stop')
+                    requested[unit], decision = commands_from_observations(
+                        self.contract, self._controller, unit, phase='cleanup', policy=None)
+                    decisions[unit] = {'phase': 'cleanup', 'sensor_records': decision['sensor_records']}
+                    realised = dict(realised)
+                    realised[unit] = realise_independent_commands(self.contract, requested)[unit]
+                    state = life.step(realised[unit], start + self.tick_seconds)
                 if any(not math.isfinite(value) for value in state.values()):
                     raise FloatingPointError('nonfinite physical state')
                 increments[unit] = self._ledgers[unit].add_segment(

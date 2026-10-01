@@ -33,7 +33,7 @@ def main():
                         help='development sensor-noise seed; omit for deterministic virtual sensors')
     parser.add_argument('--noise-config', type=Path, default=ROOT / 'configs/sensor_noise_v0.json')
     parser.add_argument('--noise-setting', default='main')
-    parser.add_argument('--contract', type=Path, default=ROOT / 'configs/task_contract_v5.json')
+    parser.add_argument('--contract', type=Path, default=ROOT / 'configs/task_contract_v6.json')
     parser.add_argument('--site-json', type=Path, default=None,
                         help='private site values: prices, boundary_ueff_w_m2_k, unit_parameters')
     args = parser.parse_args()

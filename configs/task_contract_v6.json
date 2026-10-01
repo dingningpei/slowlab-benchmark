@@ -1,0 +1,374 @@
+{
+ "contract_id": "slowlab-v23-task-v6",
+ "status": "development_contract_not_confirmatory_preregistration",
+ "date": "2026-10-01",
+ "claim": "Reality-informed synthetic automated greenhouse experimentation; no AGC digital-twin or trajectory-validation claim.",
+ "model": {
+  "repository": "https://github.com/davkat1/GreenLight",
+  "commit": "fa502eddae5f9eff7b3380c88037d9b5f3f14bf5",
+  "entrypoint": "main_katzin_2021.json",
+  "files": {
+   "main_katzin_2021.json": "760baaeddb8d696e16895d901899536243a3ec40f5c71913e06fb2403719eb60",
+   "vanthoor_2011/greenhouse_vanthoor_2011_chapter_8.json": "c0fb7a025533f15b80cb6cd60aafdc19be9fe42df6b8183cf97b83fc086138b3",
+   "vanthoor_2011/crop_vanthoor_2011_chapter_9_simplified.json": "272a589edf0bb40d1a91b34e883f8e94b9adf747a576be4620c50296c03d7033",
+   "extension_greenhouse_katzin_2021_vanthoor_2011.json": "244837fca1796620edeb3c1a67d561471dff1f63ffba9b09cf21f50abbb42551"
+  },
+  "inheritance": "Unchanged coefficients inherit the pinned model, as literature/model assumptions, not AGC-calibrated parameters."
+ },
+ "facility": {
+  "unit": "independently controlled simulated compartment",
+  "floor_area_m2": 96,
+  "compartments": 4,
+  "geometry": {
+   "width_m": 9.6,
+   "length_m": 10.0,
+   "roof_spans": 2,
+   "eave_height_m": 4.5,
+   "screen_height_m": 4.2,
+   "roof_slope_deg": 22.0,
+   "ridge_rise_m": 0.9696629420043763,
+   "mean_height_m": 4.984831471002188,
+   "roof_area_m2": 103.53933529704801,
+   "wall_lower_area_m2": {
+    "south": 40.32,
+    "north": 40.32,
+    "east": 42.0,
+    "west": 42.0
+   },
+   "wall_upper_area_m2": {
+    "south": 7.534382121621004,
+    "north": 7.534382121621004,
+    "east": 2.9999999999999982,
+    "west": 2.9999999999999982
+   },
+   "reference_cover_area_m2": 289.24809954029,
+   "provenance": {
+    "width_length": "AGC scale reference",
+    "roof_slope": "Katzin model assumption",
+    "eave_screen_spans": "declared idealized geometry, not dimensions certified from Figure A1"
+   }
+  },
+  "boundary": {
+   "form": "deltaQ=Ueff*A*(Tboundary-Tout); add deltaQ/floor_area to selected air-layer heat-flow numerator",
+   "radiation": "retain native lumped approximation; no new wall radiation or storage states",
+   "south": "outdoor reference",
+   "north_temperature_c": 20,
+   "east_temperature_c": 16,
+   "west_temperature_c": 16,
+   "ueff_w_m2_k": 2,
+   "provenance": "fixed synthetic development scenario; no measured boundary calibration",
+   "air_moisture_co2_transfer_between_compartments": false,
+   "sensitivity_ueff_w_m2_k": [
+    0,
+    1,
+    2,
+    4
+   ],
+   "sensitivity_boundary_offset_c": [
+    -2,
+    0,
+    2
+   ]
+  },
+  "capacity": {
+   "heating_w_m2": 120,
+   "heating_w": 11520,
+   "roof_vent_area_m2": 28.8,
+   "co2_g_m2_h": 7.5,
+   "co2_mg_s": 200,
+   "lamp_electric_w_m2": 66.66666666666667,
+   "lamp_source": "native Katzin LED efficacy and heat partition retained as a group",
+   "heating_vent_co2_source": "AGC2024 capacity references; synthetic configuration, not hardware replay",
+   "interlighting": false,
+   "fogging": false,
+   "mechanical_cooling": false,
+   "grow_pipes": false
+  },
+  "area_convention": "All crop states, LAI, harvest and economic rates use greenhouse floor area. No AGC net-growing-area conversion or integer plant replication.",
+  "crop": "native simplified Vanthoor tomato; continuous canopy, fixed density regime implicit in native initial states",
+  "root_zone": "non-limiting supply; no root-zone stress module, irrigation or EC optimisation",
+  "screen": "Native response curves evaluated by shared sampled controller from available measurements; held cmdScreen for 300s; no agent screen action.",
+  "initial_state": "At campaign start use pinned native state initials for all copies. Between crops retain climate/facility state; reset crop carbon states and tCanSum to native initials, tCan24 to current tAir and tCan to current tAir. Zero-crop idle mode must be implemented and checked in Phase 1.",
+  "central_supply": {
+   "model": "adequately_sized_no_cross_compartment_contention",
+   "heating_w_min": 46080,
+   "co2_mg_s_min": 800,
+   "lamp_electric_w_min": 25600,
+   "interpretation": "Explicit synthetic adequacy assumption: four independently capped units may all request full output simultaneously. Minimum adequacy is not measured central equipment rating. No central bottleneck or pro-rata allocator in main environment.",
+   "provenance": "User-approved Phase 1 design choice 2026-09-27; per-unit maxima from v2 model contract."
+  },
+  "deep_soil_boundary": {
+   "greenlight_input": "tSoOut",
+   "physical_meaning": "Constant temperature of the soil about 2 m below the greenhouse (outer boundary of the fifth GreenLight soil layer).",
+   "development_default_c": 20.0,
+   "development_provenance": "Unchanged pinned GreenLight native constant, following model.inheritance. Used for all Phase 1 development runs so they stay comparable. Not a Cabauw or greenhouse measurement.",
+   "site_parameter": {
+    "from_phase": 3,
+    "range_c": [
+     8.0,
+     20.0
+    ],
+    "level": "site: shared by the four compartments of a site, by every compared method and feedback arm, and by that site's evaluation replicas",
+    "distribution": "shape frozen with the Phase 3 site distribution; not chosen or tuned on method performance",
+    "rationale": "The true deep-soil temperature under the facility is unknown. Drawing it per site states that uncertainty openly and adds genuine between-site variation.",
+    "private": true
+   },
+   "input_rule": "Supplied as an explicit constant GreenLight input for a whole campaign; never changes within a campaign.",
+   "evidence": {
+    "annual_paired_audit": "results/soil_annual_sensitivity_audit.json",
+    "scope": "single compartment, 2017 Cabauw weather, fixed policy",
+    "heat_relative_8_minus_20": 0.0749,
+    "harvest_relative_8_minus_20": 0.0125
+   }
+  }
+ },
+ "policy": {
+  "fields": {
+   "day_temperature_c": {
+    "min": 18,
+    "max": 26,
+    "unit": "degC",
+    "target": "tSpDay"
+   },
+   "night_temperature_c": {
+    "min": 15,
+    "max": 22,
+    "unit": "degC",
+    "target": "tSpNight"
+   },
+   "co2_target_ppm": {
+    "min": 400,
+    "max": 1200,
+    "unit": "ppm",
+    "target": "co2SpDay"
+   },
+   "supplemental_light_hours": {
+    "min": 0,
+    "max": 16,
+    "unit": "h/day",
+    "target": "causal fixed-window lamp controller"
+   },
+   "vent_temperature_offset_c": {
+    "min": 2,
+    "max": 6,
+    "unit": "degC",
+    "target": "heatDeadZone"
+   },
+   "vent_rh_threshold_pct": {
+    "min": 70,
+    "max": 90,
+    "unit": "percent",
+    "target": "rhMax"
+   }
+  },
+  "constraints": [
+   "night_temperature_c <= day_temperature_c"
+  ],
+  "immutable_while_running": true,
+  "range_provenance": "development design bounds; must pass Phase 1 numerical/domain checks, not agronomic optimum claims"
+ },
+ "controller": {
+  "tick_seconds": 300,
+  "timezone": "fixed site local standard time, no DST",
+  "day_interval_hours": [
+   6,
+   22
+  ],
+  "lamp_rule": "06:00 <= local_hour < 06:00+supplemental_light_hours, current available iGlob <400 W/m2, and available air temperature <35 C; all other times off",
+  "day_night_rule": "fixed clock interval, independent of future solar radiation or lamp switching",
+  "co2_rule": "native proportional injection band; target active only when current available iGlob>20 W/m2 or lamp command is on, otherwise injection off",
+  "heat_vent_rule": "native proportional bands with submitted temperature/RH targets; targets are not guaranteed realised states",
+  "time_information": "Controller uses last available sensor values only, held until next tick. No actual full-day dayRadSum or future measured endpoint. Native lampNoCons/smoothLamp/day classification must be overridden consistently.",
+  "first_measurement": "sensor event at t=0 before first control update",
+  "missing_sensor": "hold last available valid measurement; if no measurement exists, pause as infrastructure error, not hidden-state fallback",
+  "standby": {
+   "heating_target_c": 10.0,
+   "heating_band_c": -1.0,
+   "ventilation_target_c": 30.0,
+   "ventilation_band_c": 4.0,
+   "lighting_fraction": 0.0,
+   "co2_fraction": 0.0,
+   "tick_seconds": 300,
+   "sensor_rule": "latest available air temperature; missing/nonfinite temperature is an infrastructure error",
+   "scope": "common controller for cleanup and idle; immutable to agent; no active crop policy retained",
+   "provenance": "development assumptions, not measured operational settings or safety certification",
+   "sensitivity_heating_targets_c": [
+    5.0,
+    10.0,
+    15.0
+   ],
+   "sensitivity_ventilation_targets_c": [
+    25.0,
+    30.0,
+    35.0
+   ],
+   "humidity_rule": "No independent humidity control while empty; report condensation/climate limitations."
+  },
+  "thermal_screen": {
+   "implementation": "external_sample_and_hold",
+   "outdoor_day_target_c": 5.0,
+   "outdoor_night_target_c": 10.0,
+   "cold_band_c": -1.0,
+   "heat_dead_zone_c": 4.0,
+   "rh_offset_pct": -2.0,
+   "rh_band_pct": 10.0,
+   "vent_cold_offset_c": 1.0,
+   "vent_cold_band_c": -1.0,
+   "standby_rh_target_pct": 87.0,
+   "active_targets": "submitted day/night temperature and ventilation RH target",
+   "standby_targets": "standby heating target and fixed 87 percent screen RH target",
+   "day_rule": "same fixed 06:00-22:00 local standard-time interval as all shared controls",
+   "provenance": "Native Katzin screen response constants retained; coupling to submitted targets and standby targets is a disclosed development integration choice, not measured calibration."
+  }
+ },
+ "budget": {
+  "campaign_days": 365,
+  "crop_days": 180,
+  "cleanup_days": 2,
+  "latest_start_day": 183,
+  "max_starts": 16,
+  "max_decision_calls": 32,
+  "max_tool_calls": 128,
+  "max_context_tokens": 32768,
+  "physical_caps": "Four independent per-compartment equipment maxima and calendar/compartment occupancy; central supply assumed sufficient for simultaneous full output; report realised energy and cost. No additional hidden spending limit.",
+  "provenance": "explicit benchmark resource assumptions, not measured farming schedules; compute feasibility checked in Phase 1; LLM cost authorization still pending"
+ },
+ "observations": {
+  "cadence_seconds": 300,
+  "delivery_delay_seconds": 0,
+  "noise": {
+   "model": "configs/sensor_noise_v0.json",
+   "sha256": "ae93e8477969c148f348776d9308c98e24b9a5cc45a815d2ad5689d95fcc8216",
+   "setting": "main",
+   "sensitivity_settings": [
+    "sensitivity_sensor_bias"
+   ],
+   "seed_role": "private site component, independent of tool and provider seeds",
+   "cache": "each (compartment, channel, measurement time) is sampled once and stored immutably"
+  },
+  "public_channels": {
+   "air_temperature_c": "degC",
+   "relative_humidity_pct": "percent",
+   "co2_ppm": "ppm",
+   "canopy_lai_proxy": "m2_leaf/m2_floor",
+   "cumulative_harvest_fresh_equivalent": "kg/m2_floor",
+   "heating_energy": "kWh/m2_floor",
+   "lighting_energy": "kWh/m2_floor",
+   "co2_dosed": "kg/m2_floor"
+  },
+  "lai_notice": "synthetic sensor proxy, not direct access to all hidden crop states",
+  "full": "all allowed past records, queried at any current time without advancing physical time",
+  "endpoint": "operational confirmations and coarse safety flags only while running; normal completion releases final aggregates; early stop releases accrued harvest and consumed-resource totals only, never hidden trajectory or counterfactual yield",
+  "stop_release_notice": "Endpoint can buy an early endpoint by destroying a crop; stop cost and resource use must be reported",
+  "private": [
+   "model equations",
+   "site parameters",
+   "crop carbon pools",
+   "future weather",
+   "evaluation replicas",
+   "seeds"
+  ],
+  "controller_channels": {
+   "air_temperature_c": "degC",
+   "relative_humidity_pct": "percent",
+   "co2_ppm": "ppm",
+   "outdoor_temperature_c": "degC",
+   "solar_radiation_w_m2": "W/m2"
+  }
+ },
+ "economics": {
+  "primary_unit": "synthetic EUR/m2_floor/180-day deployment",
+  "fruit_dry_matter_fraction": 0.06,
+  "fresh_equivalent_rule": "integral(mcFruitHar dt)*1e-6/0.06; standing cFruit is not cumulative harvest",
+  "yield_basis": "native CH2O-as-dry-matter proxy, following official greenlight_example.py; no marketable-quality model",
+  "price_eur_per_kg_fresh_equivalent": 2,
+  "electricity_eur_per_kwh": 0.15,
+  "delivered_heat_eur_per_kwh": 0.05,
+  "co2_eur_per_kg": 0.2,
+  "planting_eur_per_m2": 2,
+  "cleanup_eur_per_m2": 0.5,
+  "background_service_eur_per_m2_day": 0.01,
+  "harvest_handling_eur_per_kg": 0.05,
+  "fixed_capex_or_rent_included": false,
+  "source": "All prices/cost rates are fixed synthetic scenario assumptions, not current market estimates. Dry-matter fraction follows pinned official example.",
+  "margin_rule": "(fruit_price-handling)*fresh_equivalent - electricity_price*light_kwh - delivered_heat_price*heat_kwh - co2_price*co2_kg - planting - cleanup - background_daily*active_days",
+  "water": "report integrated positive transpiration separately; do not call it measured irrigation; background service is fixed and no nutrient flux model is claimed",
+  "unharvested_salvage_eur": 0,
+  "dry_matter_sensitivity": [
+   0.05,
+   0.06,
+   0.07
+  ],
+  "official_example_sha256": "f36f9db841298eb6e9d0c8ec11eaebf22ac56c730cd0a8f086a8b2e4ca761bbd"
+ },
+ "events": {
+  "allowed": [
+   "start",
+   "observe",
+   "advance",
+   "stop",
+   "recommend"
+  ],
+  "forbidden": [
+   "modify_running_policy",
+   "rewind",
+   "clone_crop_state",
+   "read_future",
+   "read_truth",
+   "optimise_density_or_facility_or_root_zone"
+  ],
+  "completion": "At start+180d close crop automatically; charge cleanup, occupy unit for 2d; retain realised harvest only.",
+  "stop": "Immediately cease treatment, pay cleanup, discard standing crop with zero salvage, retain only already harvested output and incurred costs; cleanup occupies 2d.",
+  "deadline": "At day365 stop all still-active crops, settle accrued output/cost and mandatory cleanup fee, record pending cleanup obligation; never simulate future harvest for campaign observations.",
+  "resource_accounting": "area-time includes active crop and cleanup; all crop receipts and costs recorded separately from quality of recommended policy; between-run physical standby energy is recorded at campaign level, cannot be hidden as free energy.",
+  "safety": "Tair<5C or >40C continuously for 3600s triggers crop safety stop; public event only in Endpoint. This is a benchmark safeguard, not a validated crop-death model.",
+  "numerical_failure": "pause infrastructure and preserve identity/log for any numerical failure not covered by solver_stall (including stalls of an empty compartment); do not impute poor method performance or silently drop site",
+  "recommendation": "one feasible policy at deadline; fallback to frozen valid initial recommendation if absent or invalid; flag fallback",
+  "solver_stall": {
+   "max_rhs_evaluations_per_control_step": 200000,
+   "applies_to": "an active crop",
+   "action": "safety_stop at the start of the control step in which the stall occurs; the compartment then runs that step and the following cleanup like any stopped crop",
+   "public_event": "the same crop safety stop as the air-temperature rule; no cause beyond the public rule text is released",
+   "statement": "If integrating an active crop needs more than max_rhs_evaluations_per_control_step right-hand-side evaluations within one 300 s control step, the crop is stopped for safety. In development runs this occurred only when the crop carbohydrate buffer collapsed under warm, low-light, low-CO2 conditions late in autumn; normal steps needed at most about 1,700 evaluations (results/solver_stall_diagnosis_20261001.json). This is a benchmark safeguard, not a validated crop-death model.",
+   "public_rule": "A crop that fails physiologically, for example when its carbohydrate reserves collapse under warm, low-light conditions, is also stopped for safety.",
+   "evidence": "results/solver_stall_diagnosis_20261001.json"
+  }
+ },
+ "evaluation": {
+  "horizon_days": 180,
+  "outside_campaign_budget": true,
+  "independent_weather_replicas": true,
+  "common_replicas_across_methods": true,
+  "replica_count": "Phase3 freeze from numerical precision study",
+  "truth_not_returned": true,
+  "site_statistical_unit": true,
+  "reference": "no exact global oracle claim",
+  "prices_fixed_in_v0": true,
+  "deployment": {
+   "plantings_calendar_day": [
+    0,
+    182
+   ],
+   "aggregation": "mean",
+   "statement": "A recommended policy is scored as the mean contribution margin (EUR/m2 of floor) of two crops grown under it on independent weather years: one planted on calendar day 0 (the same calendar date as the campaign's first day, 1 January) and one planted on calendar day 182 (2 July). Each crop runs horizon_days.",
+   "public": true,
+   "rationale": "Each compartment can complete at most one crop per half-year in a campaign; scoring both plantings makes both waves directly informative and asks for one policy that holds across seasons. Development runs showed the planting season changes margins as much as the policy (results/bo_dev_runs_20260930.json).",
+   "campaign_day_0": "1 January, 00:00 local standard time (all sites; the weather year stays private)"
+  }
+ },
+ "phase1_gates": [
+  "resolve all controller overrides and derived sensor equations",
+  "idle/cleanup/replant continuity",
+  "dynamic temperature/RH/CO2 response and boundary sensitivity",
+  "harvest and resource integrals",
+  "causal controller and Full/Endpoint permissions",
+  "single-worker runtime/memory before full season",
+  "adequate harvest and meaningful adaptive-decision opportunity without selecting sites by method performance"
+ ],
+ "revision_rule": "v0 is frozen for implementation, not final study registration. Failure in Phase1 requires an explicit versioned change and reason before pilot/test; never tune on confirmatory outcomes.",
+ "supersedes": {
+  "contract_id": "slowlab-v23-task-v5",
+  "sha256": "059025b62e61dfdc3d17a1f8665fa2f60eaabbfff1d5beb9166d46e647a0b2ca",
+  "change": "Add the crop-collapse safety stop for solver stalls (events.solver_stall), add its public rule, and restrict events.numerical_failure to failures not covered by it. No other field changes."
+ }
+}
