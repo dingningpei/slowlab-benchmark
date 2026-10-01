@@ -31,7 +31,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from slowlab.evaluator import evaluate_year  # noqa: E402
 from slowlab.executor_server import _path  # noqa: E402
-from slowlab.private_runs import prepare, sha  # noqa: E402
+from slowlab.private_runs import prepare, progress_writer, sha  # noqa: E402
 
 
 def run(spec: dict) -> dict:
@@ -40,6 +40,7 @@ def run(spec: dict) -> dict:
     else:
         policy = spec['policy']
     p = prepare(spec)
+    p['executor_kwargs']['progress_hook'] = progress_writer(_path(spec['out']))
     result = evaluate_year(p['contract'], policy, site=p['site'], unit_parameters=p['unit_parameters'],
                            weather=p['weather'], source=p['source'], year=p['year'],
                            soil_boundary_c=p['soil_boundary_c'], sensor_noise=p['sensor_noise'],

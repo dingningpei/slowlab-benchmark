@@ -20,7 +20,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from slowlab.executor_server import _path  # noqa: E402
 from slowlab.predictor_data import collect  # noqa: E402
-from slowlab.private_runs import prepare, sha  # noqa: E402
+from slowlab.private_runs import prepare, progress_writer, sha  # noqa: E402
 
 
 def main():
@@ -30,6 +30,7 @@ def main():
     began = time.monotonic()
     try:
         p = prepare(spec)
+        p['executor_kwargs']['progress_hook'] = progress_writer(out)
         result = collect(p['contract'], layout=spec['layout'], layout_seed=int(spec['layout_seed']), year=p['year'],
                          weather=p['weather'], source=p['source'], site_unit_parameters=p['unit_parameters'],
                          soil_boundary_c=p['soil_boundary_c'], sensor_noise=p['sensor_noise'],

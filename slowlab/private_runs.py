@@ -59,3 +59,14 @@ def prepare(spec: dict) -> dict:
     return {'contract': contract, 'year': year, 'site': site, 'unit_parameters': unit_parameters,
             'soil_boundary_c': soil, 'sensor_noise': noise, 'weather': weather, 'source': source,
             'executor_kwargs': kwargs, 'identity': identity}
+
+
+def progress_writer(out: Path):
+    """Executor progress hook: write the simulated day and wall time beside the output, once per day."""
+    import time
+    path = Path(out).with_suffix('.progress')
+    began = time.monotonic()
+
+    def hook(executor):
+        path.write_text(json.dumps({'day': executor.clock / 86400, 'wall_seconds': round(time.monotonic() - began, 1)}))
+    return hook

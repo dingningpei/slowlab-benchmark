@@ -86,3 +86,17 @@ def test_input_row_is_reread_on_every_call_even_if_mutated_in_place():
     d[0, 0] = 2.0
     rhs(0.0, np.array([0.0]), d)
     assert seen == [1.0, 2.0]
+
+
+def test_compiled_library_is_shared_through_the_cache(tmp_path, monkeypatch):
+    import numpy as np
+    from types import SimpleNamespace
+    from slowlab.native_rhs import NativeRHS
+    monkeypatch.setenv('SLOWLAB_NATIVE_CACHE', str(tmp_path))
+    model = SimpleNamespace(states=['x'], inputs=['Time'], solving_order=['a0'],
+                            commands=['a[0] = 2 * y[0] + 1', 'dy[0] = a[0]'])
+    first, second = NativeRHS(model), NativeRHS(model)
+    assert not first.library_cache_hit and second.library_cache_hit
+    assert first.library_sha256 == second.library_sha256 and len(list(tmp_path.iterdir())) == 1
+    y = np.array([0.25])
+    assert first(0., y, np.array([[0.]]))[0] == second(0., y, np.array([[0.]]))[0] == 1.5

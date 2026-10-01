@@ -5,6 +5,7 @@ with a pinned local clang or GCC path, no fast-math/FMA contraction. Reference s
 """
 import ast
 import ctypes
+import os
 import hashlib
 import math
 import platform
@@ -110,10 +111,24 @@ return flags;
         self.compiler_path=str(Path(compiler).resolve())
         self.compiler_flags=['-O2','-fno-fast-math','-ffp-contract=off','-shared','-fPIC']
         link_flags=['-lm'] if system=='Linux' else []
-        subprocess.run([self.compiler_path,*self.compiler_flags,str(src),'-o',str(lib),*link_flags],
-                       check=True,capture_output=True,timeout=30)
         self.compiler_version=subprocess.run([self.compiler_path,'--version'],check=True,capture_output=True,text=True).stdout.splitlines()[0]
-        self.library=ctypes.CDLL(str(lib));self.function=self.library.rhs_checked
+        # Compile once per (source, compiler, flags) and share the library between
+        # processes: twelve simultaneous compilations under full load timed out.
+        key=hashlib.sha256('\0'.join([source,self.compiler_path,self.compiler_version,*self.compiler_flags,*link_flags]).encode()).hexdigest()
+        cache=Path(os.environ.get('SLOWLAB_NATIVE_CACHE',Path.home()/'.cache'/'slowlab-native-rhs'))
+        cached=cache/(key+lib.suffix)
+        self.library_cache_hit=cached.is_file()
+        if not self.library_cache_hit:
+            subprocess.run([self.compiler_path,*self.compiler_flags,str(src),'-o',str(lib),*link_flags],
+                           check=True,capture_output=True,timeout=300)
+            try:
+                cache.mkdir(parents=True,exist_ok=True)
+                staged=cache/f'{key}.{os.getpid()}.tmp'
+                shutil.copyfile(lib,staged);os.replace(staged,cached)
+            except OSError:
+                cached=lib
+        self.library_sha256=hashlib.sha256(Path(cached).read_bytes()).hexdigest()
+        self.library=ctypes.CDLL(str(cached));self.function=self.library.rhs_checked
         self.function.argtypes=[ctypes.c_void_p]*3+[ctypes.c_int]*2;self.function.restype=ctypes.c_int
         self._allocate()
 
