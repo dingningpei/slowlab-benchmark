@@ -1,0 +1,197 @@
+{
+  "purpose": "real-model check of the BO staggered schedule with the public process predictor (gp-bo-v3)",
+  "setup": "contract v6, model defaults, 2017 weather, sensor noise v0 (seed 20260929), Full feedback, BO seed 7, WSL desktop, code a6091d6",
+  "status": "completed",
+  "elapsed_seconds": 1083.8,
+  "predicted_at_day_90": {
+    "values": [
+      33.203159,
+      33.659256
+    ],
+    "typical_error": [
+      6.61617,
+      6.61617
+    ]
+  },
+  "actual_final_margins": [
+    {
+      "unit": "0",
+      "run_index": 1,
+      "reason": "normal_completion",
+      "margin_eur_m2": 38.84699141371819
+    },
+    {
+      "unit": "1",
+      "run_index": 1,
+      "reason": "normal_completion",
+      "margin_eur_m2": 33.64296584772625
+    },
+    {
+      "unit": "2",
+      "run_index": 1,
+      "reason": "normal_completion",
+      "margin_eur_m2": 52.38163820201051
+    },
+    {
+      "unit": "3",
+      "run_index": 1,
+      "reason": "normal_completion",
+      "margin_eur_m2": 54.58137537317229
+    },
+    {
+      "unit": "0",
+      "run_index": 2,
+      "reason": "normal_completion",
+      "margin_eur_m2": 11.305838162630302
+    },
+    {
+      "unit": "1",
+      "run_index": 2,
+      "reason": "normal_completion",
+      "margin_eur_m2": -4.522403407991334
+    }
+  ],
+  "prediction_errors_first_wave": [
+    -5.644,
+    0.016
+  ],
+  "decision_calls_used": {
+    "decision_calls_max": 32,
+    "decision_calls_used": 23,
+    "tool_calls_max": 128,
+    "tool_calls_used": 26
+  },
+  "earlier_failure": "the first attempt (code 179cfd5) read the canopy proxy at a single instant and hit a 2% camera dropout; fixed by reading a two-hour window",
+  "log": [
+    {
+      "day": 0.0,
+      "action": "start",
+      "unit": 0,
+      "policy": {
+        "co2_target_ppm": 411.54,
+        "day_temperature_c": 18.88,
+        "night_temperature_c": 15.32,
+        "supplemental_light_hours": 3.29,
+        "vent_rh_threshold_pct": 87.47,
+        "vent_temperature_offset_c": 4.34
+      },
+      "basis": "space_filling"
+    },
+    {
+      "day": 0.0,
+      "action": "start",
+      "unit": 1,
+      "policy": {
+        "co2_target_ppm": 860.21,
+        "day_temperature_c": 22.38,
+        "night_temperature_c": 20.38,
+        "supplemental_light_hours": 8.42,
+        "vent_rh_threshold_pct": 71.0,
+        "vent_temperature_offset_c": 3.17
+      },
+      "basis": "space_filling"
+    },
+    {
+      "day": 90.0,
+      "action": "predicted_final_margins",
+      "values": [
+        33.203159,
+        33.659256
+      ],
+      "typical_error": [
+        6.61617,
+        6.61617
+      ]
+    },
+    {
+      "day": 90.0,
+      "action": "start",
+      "unit": 2,
+      "policy": {
+        "co2_target_ppm": 1151.07,
+        "day_temperature_c": 21.35,
+        "night_temperature_c": 20.1,
+        "supplemental_light_hours": 10.49,
+        "vent_rh_threshold_pct": 71.09,
+        "vent_temperature_offset_c": 4.01
+      },
+      "basis": "expected_improvement",
+      "ei": 0.01927445157657761,
+      "predicted_mean": 33.43294180048551,
+      "predicted_sd": 0.22803914432866818
+    },
+    {
+      "day": 90.0,
+      "action": "start",
+      "unit": 3,
+      "policy": {
+        "co2_target_ppm": 1141.33,
+        "day_temperature_c": 21.22,
+        "night_temperature_c": 20.6,
+        "supplemental_light_hours": 6.83,
+        "vent_rh_threshold_pct": 74.77,
+        "vent_temperature_offset_c": 2.21
+      },
+      "basis": "expected_improvement",
+      "ei": 0.019018066536436985,
+      "predicted_mean": 33.43132573283276,
+      "predicted_sd": 0.22804570790399353
+    },
+    {
+      "day": 182.0,
+      "action": "start",
+      "unit": 0,
+      "policy": {
+        "co2_target_ppm": 400.83,
+        "day_temperature_c": 20.69,
+        "night_temperature_c": 17.9,
+        "supplemental_light_hours": 0.87,
+        "vent_rh_threshold_pct": 75.3,
+        "vent_temperature_offset_c": 3.65
+      },
+      "basis": "expected_improvement",
+      "ei": 0.07841222932734918,
+      "predicted_mean": 36.25917365923752,
+      "predicted_sd": 0.19767623190982425,
+      "objective": "scored_mean_over_plantings"
+    },
+    {
+      "day": 182.0,
+      "action": "start",
+      "unit": 1,
+      "policy": {
+        "co2_target_ppm": 416.52,
+        "day_temperature_c": 24.73,
+        "night_temperature_c": 18.08,
+        "supplemental_light_hours": 7.15,
+        "vent_rh_threshold_pct": 78.6,
+        "vent_temperature_offset_c": 4.94
+      },
+      "basis": "expected_improvement",
+      "ei": 0.07812392522034994,
+      "predicted_mean": 36.25891286404925,
+      "predicted_sd": 0.19727905273009783,
+      "objective": "scored_mean_over_plantings"
+    },
+    {
+      "day": 365.0,
+      "action": "recommend",
+      "policy": {
+        "co2_target_ppm": 988.91,
+        "day_temperature_c": 18.13,
+        "night_temperature_c": 17.61,
+        "supplemental_light_hours": 4.53,
+        "vent_rh_threshold_pct": 75.5,
+        "vent_temperature_offset_c": 4.72
+      },
+      "basis": "max_posterior_scored_mean",
+      "predicted_mean": 29.550032849213494,
+      "predicted_sd": 3.4540836729122346,
+      "predicted_by_planting_day": [
+        39.38498842089094,
+        19.715077277536043
+      ],
+      "fallback": false
+    }
+  ]
+}
