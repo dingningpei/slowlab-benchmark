@@ -37,6 +37,7 @@ from .process_predictor import predict_from_history
 from .tools import OutcomeModel, PublicHistory, _predictor, contribution_margin, scoring_days, season_features
 
 BO_VERSION = 'gp-bo-v3'
+READ_WINDOW_DAYS = 2 / 24
 READINGS = ('cumulative_harvest_fresh_equivalent', 'heating_energy', 'lighting_energy', 'co2_dosed',
             'canopy_lai_proxy')
 
@@ -127,9 +128,12 @@ class GPBOAgent:
     def _predicted_final_margin(self, run):
         """Read every predictor channel now, then predict the crop's final margin (public predictor)."""
         now = self.clock_day
+        # A two-hour window: single readings can be missing (sensor dropouts), and the
+        # predictor uses the latest reading within a day, as in its training data.
+        start = self._align(max(now - READ_WINDOW_DAYS, run['start_day']))
         for channel in READINGS:
             self.session.dispatch({'action': 'observe', 'unit': run['unit'], 'variable': channel,
-                                   'start_day': now, 'end_day': now})
+                                   'start_day': start, 'end_day': now})
         prediction = predict_from_history(self.task, PublicHistory(self.session.transcript), run['unit'],
                                           run['run_index'], _predictor())
         return prediction['predicted_contribution_margin_eur_m2'], prediction['typical_error']['margin_eur_m2']
