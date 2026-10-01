@@ -37,7 +37,7 @@ def main() -> None:
     began = time.monotonic()
     with tempfile.TemporaryDirectory(prefix='agent-api-check-') as private:
         private = Path(private)
-        spec = {'backend': 'greenlight', 'contract': 'configs/task_contract_v7.json', 'feedback_mode': 'full',
+        spec = {'backend': 'greenlight', 'contract': 'configs/task_contract_v8.json', 'feedback_mode': 'full',
                 'fallback_policy': policies['policy_a'], 'origin_utc': '2016-12-31T23:00:00+00:00',
                 'weather': {'cache': str(args.cache.resolve()), 'plan': 'configs/weather_gapfilled_plan.json'},
                 'greenlight_source': str(args.source.resolve()) if args.source else None,

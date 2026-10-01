@@ -108,7 +108,7 @@ def main():
     results = {}
     with tempfile.TemporaryDirectory() as tmp:
         for budget in (int(b) for b in args.budgets.split(',')):
-            contract = json.loads((ROOT / 'configs/task_contract_v7.json').read_text())
+            contract = json.loads((ROOT / 'configs/task_contract_v8.json').read_text())
             contract['budget']['context']['max_input_chars_per_campaign'] = budget
             path = Path(tmp) / f'contract_{budget}.json'
             path.write_text(json.dumps(contract))

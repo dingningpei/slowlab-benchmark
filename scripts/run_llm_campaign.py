@@ -39,7 +39,7 @@ def main() -> None:
     parser.add_argument('--backend', choices=('greenlight', 'fake'), default='greenlight')
     parser.add_argument('--cache', type=Path, default=None, help='weather cache (greenlight backend)')
     parser.add_argument('--source', type=Path, default=None)
-    parser.add_argument('--contract', default='configs/task_contract_v7.json')
+    parser.add_argument('--contract', default='configs/task_contract_v8.json')
     parser.add_argument('--feedback', choices=('full', 'endpoint'), default='full')
     parser.add_argument('--branched', action='store_true',
                         help='formal protocol: shared day-0 design, then Full and Endpoint branches')

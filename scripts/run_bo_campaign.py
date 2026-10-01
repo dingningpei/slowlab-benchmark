@@ -36,7 +36,7 @@ def main() -> None:
     private = args.private_dir.resolve()
     private.mkdir(parents=True, exist_ok=True)
     policies = json.loads((ROOT / 'configs/campaign_example_v0.json').read_text())
-    spec = {'backend': 'greenlight', 'contract': 'configs/task_contract_v7.json', 'feedback_mode': args.feedback,
+    spec = {'backend': 'greenlight', 'contract': 'configs/task_contract_v8.json', 'feedback_mode': args.feedback,
             'fallback_policy': policies['policy_a'], 'origin_utc': args.origin_utc,
             'weather': {'cache': str(args.cache.resolve()), 'plan': 'configs/weather_gapfilled_plan.json'},
             'greenlight_source': str(args.source.resolve()) if args.source else None,

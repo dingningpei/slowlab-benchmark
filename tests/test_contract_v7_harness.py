@@ -160,3 +160,17 @@ def test_day_zero_notes_continue_after_the_branch(tmp_path):
                                  counts=prefix['counts'], notes=prefix['notes'])
         assert 'day-0 plan' in agent.messages('next')[-2]['content']
         campaign.close()
+
+
+def test_v8_changes_only_the_campaign_character_budget():
+    v7_path = ROOT / 'configs/task_contract_v7.json'
+    v8 = json.loads((ROOT / 'configs/task_contract_v8.json').read_text())
+    assert v8['supersedes']['sha256'] == hashlib.sha256(v7_path.read_bytes()).hexdigest()
+    old, new = copy.deepcopy(V7), copy.deepcopy(v8)
+    for c in (old, new):
+        for key in ('contract_id', 'date', 'supersedes'):
+            c.pop(key)
+        c['budget']['context'].pop('max_input_chars_per_campaign')
+        c['budget']['context'].pop('calibration')
+    assert old == new and v8['budget']['context']['max_input_chars_per_campaign'] == 5_000_000
+    assert public_task_view(v8, 'full')['budget']['context']['max_input_chars_per_campaign'] == 5_000_000
