@@ -1,0 +1,46 @@
+{
+  "partition_id": "slowlab-site-partition-v1",
+  "date": "2026-10-01",
+  "decision": "RESEARCH_PLAN decision 2026-10-01",
+  "distribution": {
+    "file": "configs/site_distribution_v1.json",
+    "sha256": "65e17fd29fe5965383dd6814ac2521591c6f4bddf824dec082ef1a22aea53a95",
+    "distribution_id": "slowlab-site-distribution-v1"
+  },
+  "contract": {
+    "file": "configs/task_contract_v8.json",
+    "sha256": "679ab9286c3aba6821ad38471c4b7f6e44e6582a9de5a01acf8a9c676326b2b9"
+  },
+  "partitions": {
+    "development": {
+      "master_seed": 20260930,
+      "public": true,
+      "weather_pool": [
+        2014,
+        2017,
+        2018,
+        2019,
+        2020
+      ],
+      "use": "method and tool development, variance studies, fixed-reference selection; never reported as test results",
+      "earlier_use": "distribution v0 with the same master seed generated the error-study sites (0-7) and the predictor-data sites (100-139); those draws differ from v1 draws"
+    },
+    "pilot": {
+      "n_sites": 8,
+      "indices": "0-7",
+      "commitment": "configs/seed_commitment_pilot_v1.json",
+      "weather": "formal pool via slowlab.site_distribution.formal_weather_years",
+      "use": "Phase 4 pilot; its variance informs the power analysis; not part of the test set",
+      "commitment_sha256": "83c2b722a059cf89add33be08dd2c35705275c26fd186c6edc42139e4f1fe0de"
+    },
+    "test": {
+      "n_sites": "set by the frozen power analysis before any test campaign",
+      "indices": "0 to N-1 in order; no index is skipped except by the preregistered exclusion rules of the distribution",
+      "commitment": "configs/seed_commitment_test_v1.json",
+      "weather": "formal pool via slowlab.site_distribution.formal_weather_years",
+      "commitment_sha256": "2d3845b39abb32455756cbc6b18431a833bbf0857c676ebf12cc6b11ba502f69"
+    }
+  },
+  "reveal": "pilot and test master seeds are revealed (with salts) only after the formal matrix is locked; openings are kept in output/private (not in Git) and backed up by the user",
+  "log": "every generated site, exclusion and version is recorded in the run records of the batch that uses it"
+}
