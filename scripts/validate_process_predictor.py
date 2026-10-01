@@ -37,7 +37,7 @@ def economics_for(contract, prices, cache={}):
 def margins(pred_remaining, info, contract):
     out = []
     for p, i in zip(pred_remaining, info):
-        totals = {t: i['so_far'][t] + max(float(v), 0.0) for t, v in zip(TARGETS, p)}
+        totals = {t: (i['so_far'][t] if t in i['read'] else 0.0) + max(float(v), 0.0) for t, v in zip(TARGETS, p)}
         out.append(margin(totals, i['event_cost'], economics_for(contract, i['prices'])))
     return np.array(out)
 
@@ -64,7 +64,7 @@ def main():
     folds = group_folds(sites, args.folds)
     preds = {}
     # naive: scale the so-far totals to the full crop
-    naive = np.array([[i['so_far'][t] * (180.0 / i['day'] - 1.0) for t in TARGETS] for i in info])
+    naive = np.array([[i['so_far'][t] * (180.0 / i['day'] - 1.0) for t in TARGETS] for i in info])  # 'all' reads every total
     preds['naive_extrapolation'] = naive
     for fs in ('prior', 'harvest_lai', 'all'):
         x, y, _ = sets[fs]

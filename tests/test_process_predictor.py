@@ -51,3 +51,9 @@ def test_ridge_fits_a_quadratic_and_round_trips():
 def test_site_folds_partition_sites():
     folds = group_folds([3, 1, 2, 3, 5, 8, 1], 3)
     assert set().union(*folds) == {1, 2, 3, 5, 8} and sum(len(f) for f in folds) == 5
+
+
+def test_unread_resources_are_whole_crop_targets():
+    x, y, info = examples([record(1)], FIELDS, [60], 'harvest_lai')
+    assert info[0]['read'] == {'harvest_kg_m2'}
+    assert y[0].tolist() == pytest.approx([20.0, 100.0, 50.0, 10.0])
