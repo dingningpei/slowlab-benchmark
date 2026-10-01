@@ -128,6 +128,13 @@ class CachedGreenLightSolver:
         m.states_sol=sol
         if cap is not None:
             self.max_rhs_calls_seen=max(getattr(self,'max_rhs_calls_seen',0),calls[0])
+        tracked=getattr(self,'track_state_minima',None)
+        if tracked:
+            # Observation only: running minimum over the integrator's step points.
+            minima=self.__dict__.setdefault('state_minima',{})
+            for name in tracked:
+                low=float(np.min(sol.y[m.states.index(name)]))
+                minima[name]=min(minima.get(name,low),low)
         if not sol.success:raise RuntimeError(sol.message)
         values={'Time':sol.t,'np':np}
         values.update({k:sol.y[i] for i,k in enumerate(m.states)})
