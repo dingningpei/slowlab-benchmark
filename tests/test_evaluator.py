@@ -107,3 +107,37 @@ def test_weather_and_campaign_specs_follow_the_site(tmp_path):
     sampled = sample_site(json.loads((ROOT / 'configs/site_distribution_v1.json').read_text()), 5, 2)
     assert spec['origin_utc'] == '2008-12-31T23:00:00+00:00' and spec['site'] == sampled['site']
     assert spec['sensor_noise']['seed'] == sampled['sensor_noise_seed'] and spec['weather']['year'] == 2009
+
+
+def test_two_policies_share_one_run_and_each_gets_both_plantings():
+    from slowlab.evaluator import evaluate_policies_year
+    r = evaluate_policies_year(small_contract(), [POLICIES['policy_a'], POLICIES['policy_b']], site=None,
+                               unit_parameters=None, weather=None, source=None, year=2017, executor_kwargs=FAKE)
+    single = {name: evaluate_year(small_contract(), POLICIES[name], site=None, unit_parameters=None, weather=None,
+                                  source=None, year=2017, executor_kwargs=FAKE)['score_eur_m2']
+              for name in ('policy_a', 'policy_b')}
+    assert [x['policy'] for x in r['results']] == [POLICIES['policy_a'], POLICIES['policy_b']]
+    for x, name in zip(r['results'], ('policy_a', 'policy_b')):
+        assert len(x['by_planting_eur_m2']) == 2 and x['score_eur_m2'] == pytest.approx(single[name])
+    with pytest.raises(ValueError):
+        evaluate_policies_year(small_contract(), [POLICIES['policy_a']] * 3, site=None, unit_parameters=None,
+                               weather=None, source=None, year=2017, executor_kwargs=FAKE)
+
+
+def test_reference_search_runs_end_to_end_on_the_toy_backend(tmp_path):
+    contract = small_contract()
+    contract['evaluation']['deployment']['plantings_calendar_day'] = [0, 13 * TICK]
+    (tmp_path / 'c.json').write_text(json.dumps(contract))
+    site = json.dumps({'distribution': 'configs/site_distribution_v1.json', 'master_seed': 20260930, 'site_index': 1})
+    subprocess.run([sys.executable, str(ROOT / 'scripts/search_reference_policy.py'), '--site', site,
+                    '--years', '2017,2018', '--weather', '{"2017": null, "2018": null}', '--contract',
+                    str(tmp_path / 'c.json'), '--backend', 'fake', '--initial', '4', '--rounds', '1', '--batch', '2',
+                    '--final-top', '2', '--workers', '4', '--run-dir', str(tmp_path / 'runs'), '--out',
+                    str(tmp_path / 'search.json')], check=True, capture_output=True, cwd=ROOT)
+    out = json.loads((tmp_path / 'search.json').read_text())
+    assert len(out['candidates']) == 6 and out['evaluation_runs'] == 3 + 4
+    best = out['best']
+    assert best['final_mean'] == max(f['final_mean'] for f in out['finalists'])
+    assert set(best['final_by_year']) == {'2017', '2018'}
+    searched = {json.dumps(c['policy'], sort_keys=True) for c in out['candidates']}
+    assert len(searched) == 6
