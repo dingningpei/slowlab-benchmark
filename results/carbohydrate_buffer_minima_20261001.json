@@ -1,0 +1,1244 @@
+{
+ "purpose": "minimum carbohydrate buffer per crop in replays of predictor-data runs (observation only)",
+ "scope": "stopped early by decision: 24 of 120 runs replayed",
+ "code": "23b20d2",
+ "crops": 152,
+ "crops_with_min_le_0": 60,
+ "all_normal_completion": true,
+ "quantiles_min_cBuf": {
+  "min": -52.581228899058004,
+  "p01": -43.86872460801778,
+  "p05": -35.715191123782525,
+  "p50": 11.560423510904704,
+  "max": 101.92415901118154
+ },
+ "not_completed": [
+  {
+   "run": "site107_run1_2018",
+   "status": "stall",
+   "day": 303.2516086867025,
+   "stalled_states": {
+    "cBuf": -42.023793957636286
+   }
+  }
+ ],
+ "crop_minima": [
+  {
+   "run": "site100_run0_2014",
+   "unit": 0,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 74.55735215423906
+  },
+  {
+   "run": "site100_run0_2014",
+   "unit": 1,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 50.14147796006859
+  },
+  {
+   "run": "site100_run0_2014",
+   "unit": 2,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 24.32557287062482
+  },
+  {
+   "run": "site100_run0_2014",
+   "unit": 3,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 65.50575821073392
+  },
+  {
+   "run": "site100_run0_2014",
+   "unit": 0,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -18.091626843685418
+  },
+  {
+   "run": "site100_run0_2014",
+   "unit": 1,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -33.214028317755286
+  },
+  {
+   "run": "site100_run0_2014",
+   "unit": 2,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -0.3631936584705887
+  },
+  {
+   "run": "site100_run0_2014",
+   "unit": 3,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -5.922378910315128
+  },
+  {
+   "run": "site100_run1_2018",
+   "unit": 0,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 25.694073750704852
+  },
+  {
+   "run": "site100_run1_2018",
+   "unit": 1,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -15.159869577190916
+  },
+  {
+   "run": "site100_run1_2018",
+   "unit": 2,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 99.65414342014435
+  },
+  {
+   "run": "site100_run1_2018",
+   "unit": 3,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 96.101267860331
+  },
+  {
+   "run": "site100_run1_2018",
+   "unit": 0,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 1.5079965241985283
+  },
+  {
+   "run": "site100_run1_2018",
+   "unit": 1,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 4.756391813208553
+  },
+  {
+   "run": "site100_run1_2018",
+   "unit": 2,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -29.600501740442624
+  },
+  {
+   "run": "site100_run1_2018",
+   "unit": 3,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -33.258510775876054
+  },
+  {
+   "run": "site100_run2_2019",
+   "unit": 1,
+   "run_index": 1,
+   "planting_day": 26.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 18.765771897259558
+  },
+  {
+   "run": "site100_run2_2019",
+   "unit": 0,
+   "run_index": 1,
+   "planting_day": 45.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 47.73696170395416
+  },
+  {
+   "run": "site100_run2_2019",
+   "unit": 2,
+   "run_index": 1,
+   "planting_day": 47.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 40.11969066698836
+  },
+  {
+   "run": "site100_run2_2019",
+   "unit": 3,
+   "run_index": 1,
+   "planting_day": 171.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -15.044469602356902
+  },
+  {
+   "run": "site101_run0_2014",
+   "unit": 0,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 35.47702027957296
+  },
+  {
+   "run": "site101_run0_2014",
+   "unit": 1,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 28.65937979182901
+  },
+  {
+   "run": "site101_run0_2014",
+   "unit": 2,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -7.901676745395458
+  },
+  {
+   "run": "site101_run0_2014",
+   "unit": 3,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 76.5374532244641
+  },
+  {
+   "run": "site101_run0_2014",
+   "unit": 0,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 9.891726610831826
+  },
+  {
+   "run": "site101_run0_2014",
+   "unit": 1,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 79.17026076735654
+  },
+  {
+   "run": "site101_run0_2014",
+   "unit": 2,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 24.991926046107704
+  },
+  {
+   "run": "site101_run0_2014",
+   "unit": 3,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -37.416182450705406
+  },
+  {
+   "run": "site101_run1_2017",
+   "unit": 0,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 12.225326402136623
+  },
+  {
+   "run": "site101_run1_2017",
+   "unit": 1,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -8.745481232050297
+  },
+  {
+   "run": "site101_run1_2017",
+   "unit": 2,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 26.62105273916564
+  },
+  {
+   "run": "site101_run1_2017",
+   "unit": 3,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 17.311146778888258
+  },
+  {
+   "run": "site101_run1_2017",
+   "unit": 0,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 14.941698415116456
+  },
+  {
+   "run": "site101_run1_2017",
+   "unit": 1,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 41.17814816333398
+  },
+  {
+   "run": "site101_run1_2017",
+   "unit": 2,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -17.19840659585709
+  },
+  {
+   "run": "site101_run1_2017",
+   "unit": 3,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -39.93281238880705
+  },
+  {
+   "run": "site101_run2_2020",
+   "unit": 3,
+   "run_index": 1,
+   "planting_day": 38.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 48.26725370695425
+  },
+  {
+   "run": "site101_run2_2020",
+   "unit": 0,
+   "run_index": 1,
+   "planting_day": 117.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 5.456562024761933
+  },
+  {
+   "run": "site101_run2_2020",
+   "unit": 2,
+   "run_index": 1,
+   "planting_day": 152.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -25.215379509325373
+  },
+  {
+   "run": "site101_run2_2020",
+   "unit": 1,
+   "run_index": 1,
+   "planting_day": 172.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 16.865748356837226
+  },
+  {
+   "run": "site102_run0_2017",
+   "unit": 0,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -0.6723445677904242
+  },
+  {
+   "run": "site102_run0_2017",
+   "unit": 1,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 30.139949168975395
+  },
+  {
+   "run": "site102_run0_2017",
+   "unit": 2,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 17.096978049136464
+  },
+  {
+   "run": "site102_run0_2017",
+   "unit": 3,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 4.400336364829657
+  },
+  {
+   "run": "site102_run0_2017",
+   "unit": 0,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -37.638084258112656
+  },
+  {
+   "run": "site102_run0_2017",
+   "unit": 1,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -52.581228899058004
+  },
+  {
+   "run": "site102_run0_2017",
+   "unit": 2,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -40.7972329779957
+  },
+  {
+   "run": "site102_run0_2017",
+   "unit": 3,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 1.0803346146176136
+  },
+  {
+   "run": "site102_run1_2019",
+   "unit": 0,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -7.588175732521723
+  },
+  {
+   "run": "site102_run1_2019",
+   "unit": 1,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -12.008665524147101
+  },
+  {
+   "run": "site102_run1_2019",
+   "unit": 2,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 81.81345127328552
+  },
+  {
+   "run": "site102_run1_2019",
+   "unit": 3,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 79.17796371203085
+  },
+  {
+   "run": "site102_run1_2019",
+   "unit": 0,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -4.510926816772952
+  },
+  {
+   "run": "site102_run1_2019",
+   "unit": 1,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -12.735479999846643
+  },
+  {
+   "run": "site102_run1_2019",
+   "unit": 2,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 12.29072452213325
+  },
+  {
+   "run": "site102_run1_2019",
+   "unit": 3,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 21.86511068845046
+  },
+  {
+   "run": "site102_run2_2014",
+   "unit": 1,
+   "run_index": 1,
+   "planting_day": 10.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -3.117930572087241
+  },
+  {
+   "run": "site102_run2_2014",
+   "unit": 3,
+   "run_index": 1,
+   "planting_day": 92.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -2.812674770413925
+  },
+  {
+   "run": "site102_run2_2014",
+   "unit": 0,
+   "run_index": 1,
+   "planting_day": 112.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -18.151020566923037
+  },
+  {
+   "run": "site102_run2_2014",
+   "unit": 2,
+   "run_index": 1,
+   "planting_day": 154.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -19.312154433207606
+  },
+  {
+   "run": "site103_run0_2014",
+   "unit": 0,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 30.369333507874604
+  },
+  {
+   "run": "site103_run0_2014",
+   "unit": 1,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 16.570571146890533
+  },
+  {
+   "run": "site103_run0_2014",
+   "unit": 2,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 26.844499247847835
+  },
+  {
+   "run": "site103_run0_2014",
+   "unit": 3,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 6.891185172026538
+  },
+  {
+   "run": "site103_run0_2014",
+   "unit": 0,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 32.543032527249835
+  },
+  {
+   "run": "site103_run0_2014",
+   "unit": 1,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -32.83995723583763
+  },
+  {
+   "run": "site103_run0_2014",
+   "unit": 2,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -9.530862983312288
+  },
+  {
+   "run": "site103_run0_2014",
+   "unit": 3,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 20.891901779183968
+  },
+  {
+   "run": "site103_run1_2017",
+   "unit": 0,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 8.07043856260962
+  },
+  {
+   "run": "site103_run1_2017",
+   "unit": 1,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 87.52338645043478
+  },
+  {
+   "run": "site103_run1_2017",
+   "unit": 2,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 64.77918019997782
+  },
+  {
+   "run": "site103_run1_2017",
+   "unit": 3,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 17.22750895809477
+  },
+  {
+   "run": "site103_run1_2017",
+   "unit": 0,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 64.18955125065212
+  },
+  {
+   "run": "site103_run1_2017",
+   "unit": 1,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -13.221324603504897
+  },
+  {
+   "run": "site103_run1_2017",
+   "unit": 2,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -19.073049163445848
+  },
+  {
+   "run": "site103_run1_2017",
+   "unit": 3,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -16.187423989699877
+  },
+  {
+   "run": "site103_run2_2020",
+   "unit": 2,
+   "run_index": 1,
+   "planting_day": 53.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 25.162038020772755
+  },
+  {
+   "run": "site103_run2_2020",
+   "unit": 0,
+   "run_index": 1,
+   "planting_day": 75.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 19.121913771017663
+  },
+  {
+   "run": "site103_run2_2020",
+   "unit": 1,
+   "run_index": 1,
+   "planting_day": 105.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 88.63445240134406
+  },
+  {
+   "run": "site103_run2_2020",
+   "unit": 3,
+   "run_index": 1,
+   "planting_day": 139.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 101.8607455319789
+  },
+  {
+   "run": "site104_run0_2018",
+   "unit": 0,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -10.877509668286907
+  },
+  {
+   "run": "site104_run0_2018",
+   "unit": 1,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 39.02376605112947
+  },
+  {
+   "run": "site104_run0_2018",
+   "unit": 2,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 36.48983771070944
+  },
+  {
+   "run": "site104_run0_2018",
+   "unit": 3,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 54.385312684458576
+  },
+  {
+   "run": "site104_run0_2018",
+   "unit": 0,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -16.501135265757217
+  },
+  {
+   "run": "site104_run0_2018",
+   "unit": 1,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 32.26319989674194
+  },
+  {
+   "run": "site104_run0_2018",
+   "unit": 2,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 22.285764672791938
+  },
+  {
+   "run": "site104_run0_2018",
+   "unit": 3,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -8.286853303224762
+  },
+  {
+   "run": "site104_run1_2020",
+   "unit": 0,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 56.84648541768555
+  },
+  {
+   "run": "site104_run1_2020",
+   "unit": 1,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 13.682587733537789
+  },
+  {
+   "run": "site104_run1_2020",
+   "unit": 2,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 12.353856788213063
+  },
+  {
+   "run": "site104_run1_2020",
+   "unit": 3,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 24.398373527062336
+  },
+  {
+   "run": "site104_run1_2020",
+   "unit": 0,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -3.2957366156215415
+  },
+  {
+   "run": "site104_run1_2020",
+   "unit": 1,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 21.238988628371704
+  },
+  {
+   "run": "site104_run1_2020",
+   "unit": 2,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -25.428359139226796
+  },
+  {
+   "run": "site104_run1_2020",
+   "unit": 3,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 87.33556443746652
+  },
+  {
+   "run": "site104_run2_2017",
+   "unit": 1,
+   "run_index": 1,
+   "planting_day": 30.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 43.221137974577886
+  },
+  {
+   "run": "site104_run2_2017",
+   "unit": 3,
+   "run_index": 1,
+   "planting_day": 87.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 17.88536509804418
+  },
+  {
+   "run": "site104_run2_2017",
+   "unit": 2,
+   "run_index": 1,
+   "planting_day": 89.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 27.91315366090448
+  },
+  {
+   "run": "site104_run2_2017",
+   "unit": 0,
+   "run_index": 1,
+   "planting_day": 136.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 67.28580877917159
+  },
+  {
+   "run": "site105_run0_2018",
+   "unit": 0,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 44.34674722069093
+  },
+  {
+   "run": "site105_run0_2018",
+   "unit": 1,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 6.617823712758902
+  },
+  {
+   "run": "site105_run0_2018",
+   "unit": 2,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -4.787127709479775
+  },
+  {
+   "run": "site105_run0_2018",
+   "unit": 3,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -6.74178149851384
+  },
+  {
+   "run": "site105_run0_2018",
+   "unit": 0,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -18.346390336410824
+  },
+  {
+   "run": "site105_run0_2018",
+   "unit": 1,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -30.458838728410345
+  },
+  {
+   "run": "site105_run0_2018",
+   "unit": 2,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 26.5487676004148
+  },
+  {
+   "run": "site105_run0_2018",
+   "unit": 3,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 26.108709436145343
+  },
+  {
+   "run": "site105_run1_2020",
+   "unit": 0,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 14.251836634526509
+  },
+  {
+   "run": "site105_run1_2020",
+   "unit": 1,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 53.10787890750314
+  },
+  {
+   "run": "site105_run1_2020",
+   "unit": 2,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 21.170238312196073
+  },
+  {
+   "run": "site105_run1_2020",
+   "unit": 3,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -11.494065214226314
+  },
+  {
+   "run": "site105_run1_2020",
+   "unit": 0,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 10.703700698705424
+  },
+  {
+   "run": "site105_run1_2020",
+   "unit": 1,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 24.781287514689787
+  },
+  {
+   "run": "site105_run1_2020",
+   "unit": 2,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 6.057159665831044
+  },
+  {
+   "run": "site105_run1_2020",
+   "unit": 3,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 8.503697129073734
+  },
+  {
+   "run": "site105_run2_2019",
+   "unit": 1,
+   "run_index": 1,
+   "planting_day": 34.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 26.50098937115127
+  },
+  {
+   "run": "site105_run2_2019",
+   "unit": 3,
+   "run_index": 1,
+   "planting_day": 80.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 101.92415901118154
+  },
+  {
+   "run": "site105_run2_2019",
+   "unit": 2,
+   "run_index": 1,
+   "planting_day": 100.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -14.67765155197224
+  },
+  {
+   "run": "site105_run2_2019",
+   "unit": 0,
+   "run_index": 1,
+   "planting_day": 141.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -11.84043632454286
+  },
+  {
+   "run": "site106_run0_2014",
+   "unit": 0,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 11.560423510904704
+  },
+  {
+   "run": "site106_run0_2014",
+   "unit": 1,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 0.005954870868735011
+  },
+  {
+   "run": "site106_run0_2014",
+   "unit": 2,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -19.490295578356996
+  },
+  {
+   "run": "site106_run0_2014",
+   "unit": 3,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -4.4448694344325625
+  },
+  {
+   "run": "site106_run0_2014",
+   "unit": 0,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -22.880075938093103
+  },
+  {
+   "run": "site106_run0_2014",
+   "unit": 1,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -1.4405373212443333
+  },
+  {
+   "run": "site106_run0_2014",
+   "unit": 2,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -37.334158911006014
+  },
+  {
+   "run": "site106_run0_2014",
+   "unit": 3,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -20.590874138165248
+  },
+  {
+   "run": "site106_run1_2018",
+   "unit": 0,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -3.1251317511493335
+  },
+  {
+   "run": "site106_run1_2018",
+   "unit": 1,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 50.79944588615321
+  },
+  {
+   "run": "site106_run1_2018",
+   "unit": 2,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 17.47651896899983
+  },
+  {
+   "run": "site106_run1_2018",
+   "unit": 3,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 35.83313713983229
+  },
+  {
+   "run": "site106_run1_2018",
+   "unit": 0,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -30.294432946128186
+  },
+  {
+   "run": "site106_run1_2018",
+   "unit": 1,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -6.06980577690397
+  },
+  {
+   "run": "site106_run1_2018",
+   "unit": 2,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 5.787422016614634
+  },
+  {
+   "run": "site106_run1_2018",
+   "unit": 3,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 10.007266866653948
+  },
+  {
+   "run": "site106_run2_2020",
+   "unit": 3,
+   "run_index": 1,
+   "planting_day": 103.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -26.28691162060622
+  },
+  {
+   "run": "site106_run2_2020",
+   "unit": 1,
+   "run_index": 1,
+   "planting_day": 115.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -12.571680161229418
+  },
+  {
+   "run": "site106_run2_2020",
+   "unit": 0,
+   "run_index": 1,
+   "planting_day": 142.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -11.380880786375807
+  },
+  {
+   "run": "site106_run2_2020",
+   "unit": 2,
+   "run_index": 1,
+   "planting_day": 167.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -43.86872460801778
+  },
+  {
+   "run": "site107_run0_2017",
+   "unit": 0,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 64.18974218613162
+  },
+  {
+   "run": "site107_run0_2017",
+   "unit": 1,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -11.478104783676654
+  },
+  {
+   "run": "site107_run0_2017",
+   "unit": 2,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 21.13034871215439
+  },
+  {
+   "run": "site107_run0_2017",
+   "unit": 3,
+   "run_index": 1,
+   "planting_day": 0.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 60.03682666302785
+  },
+  {
+   "run": "site107_run0_2017",
+   "unit": 0,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -22.724146275534586
+  },
+  {
+   "run": "site107_run0_2017",
+   "unit": 1,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 61.34283800478287
+  },
+  {
+   "run": "site107_run0_2017",
+   "unit": 2,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -35.715191123782525
+  },
+  {
+   "run": "site107_run0_2017",
+   "unit": 3,
+   "run_index": 2,
+   "planting_day": 182.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 84.26042890016288
+  },
+  {
+   "run": "site107_run2_2020",
+   "unit": 3,
+   "run_index": 1,
+   "planting_day": 33.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 28.058684670429802
+  },
+  {
+   "run": "site107_run2_2020",
+   "unit": 1,
+   "run_index": 1,
+   "planting_day": 41.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 42.69709822907631
+  },
+  {
+   "run": "site107_run2_2020",
+   "unit": 0,
+   "run_index": 1,
+   "planting_day": 123.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": -8.117592428521732
+  },
+  {
+   "run": "site107_run2_2020",
+   "unit": 2,
+   "run_index": 1,
+   "planting_day": 126.0,
+   "final_reason": "normal_completion",
+   "min_cBuf_mg_m2": 52.66597420951585
+  }
+ ],
+ "conclusion": "A cBuf <= 0 trigger would stop about 40% of normally completing crops; contract v6 triggers on solver stalls instead."
+}
