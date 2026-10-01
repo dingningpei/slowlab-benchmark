@@ -3,7 +3,7 @@
 
     python3 scripts/run_evaluation_batch.py BATCH.json --workers 12
 
-BATCH: {"out_dir": ..., "common": {spec fields shared by all jobs},
+BATCH: {"out_dir": ..., "script": optional runner (default evaluate_recommendation.py), "common": {spec fields shared by all jobs},
         "jobs": [{"id": ..., <spec fields: site, year, policy, weather, ...>}]}
 A job whose output already records status "completed" is skipped; failed jobs
 are kept with their identity and rerun only with --retry-failed.
@@ -44,8 +44,9 @@ def main():
         path = out_dir / 'specs' / f"{job['id']}.json"
         path.write_text(json.dumps(spec, indent=2))
         began = time.monotonic()
+        script = ROOT / batch.get('script', 'scripts/evaluate_recommendation.py')
         with (out_dir / f"{job['id']}.log").open('w') as log:
-            subprocess.run([sys.executable, '-B', str(ROOT / 'scripts/evaluate_recommendation.py'), str(path)],
+            subprocess.run([sys.executable, '-B', str(script), str(path)],
                            cwd=ROOT, stdout=log, stderr=subprocess.STDOUT)
         status = json.loads(out.read_text()).get('status') if out.exists() else 'no_output'
         return job['id'], status, time.monotonic() - began
