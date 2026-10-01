@@ -41,7 +41,7 @@
 - [ ] 用开发 site 训练过程预测器（在季内记录→整季毛利），并作为公共工具提供给 LLM；BO 的错峰调度使用同一预测器
 - [ ] 分开开发 / pilot / test sites；记录全部生成、排除与版本信息
 - [ ] 私有 seed 带盐 commitment；artifact、文件名、日志附件防泄漏检查
-- [ ] 隔离的推荐评测器：独立天气副本；Monte Carlo 误差小于要报告的差异（设计已定，见决定记录 2026-09-30）
+- [x] 隔离的推荐评测器：独立天气副本；Monte Carlo 误差小于要报告的差异（设计已定，见决定记录 2026-09-30）；评测年数定为 3 年。证据：`results/evaluator_check_20260930.json`、`results/evaluation_error_study_20260930.json`
 - [ ] best-known feasible reference 的数值搜索与搜索误差报告
 - [ ] 冻结统计单位、主检验族、次要指标、CI、失败与缺失处理
 - [ ] 用开发/pilot 方差做功效或精度分析，确定 N；冻结 E3 packet 选择规则与诊断 Reader
