@@ -1,0 +1,71 @@
+{
+  "sites": 8,
+  "seeds": [
+    0,
+    1
+  ],
+  "recommendation_scores": {
+    "0_0_endpoint": -3.704880045966215,
+    "0_0_full": 2.789304997890478,
+    "0_1_endpoint": -16.559580044205138,
+    "0_1_full": 2.501571963520172,
+    "1_0_endpoint": 30.318583256186944,
+    "1_0_full": 31.766000638127327,
+    "1_1_endpoint": 20.94592755001794,
+    "1_1_full": -7.583946297994519,
+    "2_0_endpoint": 47.53401434557677,
+    "2_0_full": 38.760472402037784,
+    "2_1_endpoint": 34.52371424599583,
+    "2_1_full": 48.99459078657213,
+    "3_0_endpoint": 48.969394619064474,
+    "3_0_full": 43.11069509973637,
+    "3_1_endpoint": 29.222308815391163,
+    "3_1_full": 30.456303905698462,
+    "4_0_endpoint": 26.18630097243047,
+    "4_0_full": 32.51288251728162,
+    "4_1_endpoint": 4.155750213920214,
+    "4_1_full": 24.322376720585527,
+    "5_0_endpoint": 35.15851503236316,
+    "5_0_full": 41.45598939378515,
+    "5_1_endpoint": 38.00485010230572,
+    "5_1_full": 38.70091416219804,
+    "6_0_endpoint": 45.356501370480714,
+    "6_0_full": 45.35650137048071,
+    "6_1_endpoint": 39.71852046171423,
+    "6_1_full": 28.08084721067622,
+    "7_0_endpoint": 32.418875510664385,
+    "7_0_full": 41.613386764944345,
+    "7_1_endpoint": 29.58655797454935,
+    "7_1_full": 6.900235000633768
+  },
+  "e2_staggered_bo": {
+    "mean_full_minus_endpoint": 0.49392326598022285,
+    "between_site_sd": 0.0,
+    "within_site_seed_sd": 13.743001917660981,
+    "site_mean_sd_with_repeats": 9.450698313474666
+  },
+  "bo_full_minus_fixed_reference": {
+    "reference": "grower_standard",
+    "mean": -6.811236696863045,
+    "between_site_sd": 0.0,
+    "within_site_seed_sd": 14.559142030382763,
+    "site_mean_sd_with_repeats": 7.915495752865916
+  },
+  "preliminary_site_counts": {
+    "e2_staggered_bo": {
+      "sd_used": 9.450698313474666,
+      "sites_for_2_eur_alpha_0.05": 178,
+      "sites_for_2_eur_holm_worst_alpha_0.05_over_7": 283
+    },
+    "bo_full_minus_fixed_reference": {
+      "sd_used": 7.915495752865916,
+      "sites_for_2_eur_alpha_0.05": 125,
+      "sites_for_2_eur_holm_worst_alpha_0.05_over_7": 200
+    }
+  },
+  "note": "BO only: the LLM campaign spread is unknown until the Phase 4 pilot; the final N uses the pilot variance. Development sites, development years.",
+  "study": "development variance study: staggered BO, 8 development sites (distribution v1, seed 20260930), 2 BO seeds x Full/Endpoint, 3 development evaluation years per recommendation",
+  "code": "f0206bd (campaigns, evaluations); analysis 61ed18f-pilot code",
+  "reference": "configs/fixed_reference_v1.json (grower_standard)",
+  "reading": "Between-site variance of the differences is about zero; within-site (between-seed) spread dominates, so power depends on the total number of campaigns (sites x repeats)."
+}

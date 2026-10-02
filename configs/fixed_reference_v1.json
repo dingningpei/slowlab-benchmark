@@ -1,0 +1,25 @@
+{
+  "reference_id": "slowlab-fixed-reference-v1",
+  "date": "2026-10-02",
+  "decision": "RESEARCH_PLAN decision 2026-10-01 (frozen selection rule)",
+  "name": "grower_standard",
+  "policy": {
+    "day_temperature_c": 21.0,
+    "night_temperature_c": 17.0,
+    "co2_target_ppm": 800.0,
+    "supplemental_light_hours": 12.0,
+    "vent_temperature_offset_c": 3.0,
+    "vent_rh_threshold_pct": 85.0
+  },
+  "selected_from": {
+    "file": "configs/fixed_reference_candidates_v0.json",
+    "sha256": "d5aac005aeb7df9bfded23c2f55a868c072f203fc9f99c52726820d556136130"
+  },
+  "evidence": "results/fixed_reference_selection_20261002.json",
+  "means_eur_m2": {
+    "policy_a": 30.41042473711932,
+    "policy_b": 32.00296373231798,
+    "grower_standard": 34.919869611623895
+  },
+  "use": "evaluated on every test site with the same three evaluation years as the methods; zero-experiment deployable reference"
+}

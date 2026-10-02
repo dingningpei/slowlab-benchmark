@@ -1,0 +1,60 @@
+{
+  "rule": "the candidate with the highest mean evaluated score over the development sites (distribution v1, development master seed 20260930, sites 0-7, three development evaluation years each); ties by lower energy use; the winner is frozen and applied to every test site",
+  "candidates": {
+    "policy_a": {
+      "sites": 8,
+      "mean_score_eur_m2": 30.41042473711932,
+      "site_means": {
+        "0": -2.8915228131643596,
+        "1": 28.36741407434999,
+        "2": 44.645333841480145,
+        "3": 38.77346025121161,
+        "4": 30.988955184178945,
+        "5": 33.177519667583766,
+        "6": 31.235453263659267,
+        "7": 38.98678442765521
+      },
+      "mean_energy_kwh_m2_per_crop": 265.4481463758438
+    },
+    "policy_b": {
+      "sites": 8,
+      "mean_score_eur_m2": 32.00296373231798,
+      "site_means": {
+        "0": 1.0688408126849094,
+        "1": 29.542028954949874,
+        "2": 43.04678455451895,
+        "3": 38.88193528831453,
+        "4": 33.07111101374882,
+        "5": 38.530563755534736,
+        "6": 33.977942734941074,
+        "7": 37.904502743850934
+      },
+      "mean_energy_kwh_m2_per_crop": 231.66896520385527
+    },
+    "grower_standard": {
+      "sites": 8,
+      "mean_score_eur_m2": 34.919869611623895,
+      "site_means": {
+        "0": 0.8372313539943749,
+        "1": 31.53464430980954,
+        "2": 46.32546031965105,
+        "3": 42.38157104987196,
+        "4": 37.31997290468018,
+        "5": 42.15382492830209,
+        "6": 37.01583747577498,
+        "7": 41.79041455090698
+      },
+      "mean_energy_kwh_m2_per_crop": 250.36351861839944
+    }
+  },
+  "failed_runs": [],
+  "winner": "grower_standard",
+  "winner_policy": {
+    "day_temperature_c": 21.0,
+    "night_temperature_c": 17.0,
+    "co2_target_ppm": 800.0,
+    "supplemental_light_hours": 12.0,
+    "vent_temperature_offset_c": 3.0,
+    "vent_rh_threshold_pct": 85.0
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "purpose": "best-known reference search on development site 0 with two seeds (search-error estimate)",
+  "code": "d2a3fee",
+  "site": {
+    "distribution": "configs/site_distribution_v1.json",
+    "master_seed": 20260930,
+    "site_index": 0
+  },
+  "years": [
+    2014,
+    2018,
+    2020
+  ],
+  "budget": {
+    "initial": 12,
+    "rounds": 2,
+    "batch": 12,
+    "final_top": 3
+  },
+  "per_seed": [
+    {
+      "seed": 0,
+      "evaluation_runs": 27,
+      "elapsed_hours": 2.022,
+      "best_final_mean": 11.287584934958048,
+      "best_by_year": {
+        "2014": 12.52265745701525,
+        "2018": 9.454710381098009,
+        "2020": 11.885386966760883
+      },
+      "best_policy": {
+        "day_temperature_c": 19.412,
+        "night_temperature_c": 15.195,
+        "co2_target_ppm": 1102.27,
+        "supplemental_light_hours": 0.457,
+        "vent_temperature_offset_c": 5.006,
+        "vent_rh_threshold_pct": 89.582
+      },
+      "finalist_means": [
+        11.287584934958048,
+        8.810729155259558,
+        8.386816027327358
+      ]
+    },
+    {
+      "seed": 1,
+      "evaluation_runs": 27,
+      "elapsed_hours": 1.903,
+      "best_final_mean": 9.322767397069857,
+      "best_by_year": {
+        "2014": 10.581334521994494,
+        "2018": 7.361856566775489,
+        "2020": 10.025111102439586
+      },
+      "best_policy": {
+        "day_temperature_c": 19.234,
+        "night_temperature_c": 16.768,
+        "co2_target_ppm": 919.237,
+        "supplemental_light_hours": 0.856,
+        "vent_temperature_offset_c": 5.333,
+        "vent_rh_threshold_pct": 87.559
+      },
+      "finalist_means": [
+        9.322767397069857,
+        8.382290694732172,
+        8.308657459509861
+      ]
+    }
+  ],
+  "search_error_estimate_eur_m2": 1.964817537888191,
+  "fixed_reference_on_this_site_eur_m2": 0.8372313539943749
+}
