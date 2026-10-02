@@ -1,0 +1,2762 @@
+{
+  "summary_by_model": {
+    "deepseek-v4.1-flash": {
+      "campaigns": 16,
+      "any_stop": 0,
+      "same_later_schedule": 9,
+      "identical_recommendation": 5,
+      "mean_recommendation_distance": 0.12400883465664636,
+      "mean_full_reads_before_first_later_start": 6.6875,
+      "mean_full_predictor_calls": 0,
+      "campaigns_with_non_two_wave_schedule": 2
+    },
+    "glm-5.3-flash": {
+      "campaigns": 16,
+      "any_stop": 0,
+      "same_later_schedule": 11,
+      "identical_recommendation": 2,
+      "mean_recommendation_distance": 0.14319694147559395,
+      "mean_full_reads_before_first_later_start": 7.25,
+      "mean_full_predictor_calls": 2.25,
+      "campaigns_with_non_two_wave_schedule": 0
+    },
+    "mimo-v2.6-flash": {
+      "campaigns": 16,
+      "any_stop": 0,
+      "same_later_schedule": 10,
+      "identical_recommendation": 1,
+      "mean_recommendation_distance": 0.1690353681340251,
+      "mean_full_reads_before_first_later_start": 9.9375,
+      "mean_full_predictor_calls": 5.6875,
+      "campaigns_with_non_two_wave_schedule": 0
+    }
+  },
+  "campaigns": [
+    {
+      "job": "site00_deepseek-v4.1-flash_r0",
+      "model": "deepseek-v4.1-flash",
+      "site": 0,
+      "repeat": 0,
+      "later_starts_full": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          183.0,
+          0
+        ],
+        [
+          183.0,
+          1
+        ],
+        [
+          183.0,
+          2
+        ],
+        [
+          183.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 11,
+      "full_reads_before_first_later_start": 8,
+      "full_read_days": [
+        30,
+        60,
+        90,
+        180,
+        362
+      ],
+      "full_predictor_calls": 0,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.39958408470729967,
+      "same_later_schedule": false,
+      "recommendation_distance": 0.0,
+      "identical_recommendation": true
+    },
+    {
+      "job": "site00_deepseek-v4.1-flash_r1",
+      "model": "deepseek-v4.1-flash",
+      "site": 0,
+      "repeat": 1,
+      "later_starts_full": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 10,
+      "full_reads_before_first_later_start": 6,
+      "full_read_days": [
+        30,
+        60,
+        180,
+        362
+      ],
+      "full_predictor_calls": 0,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.16227337772941028,
+      "same_later_schedule": false,
+      "recommendation_distance": 0.09278843611976129,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site00_glm-5.3-flash_r0",
+      "model": "glm-5.3-flash",
+      "site": 0,
+      "repeat": 0,
+      "later_starts_full": [
+        [
+          183.0,
+          0
+        ],
+        [
+          183.0,
+          1
+        ],
+        [
+          183.0,
+          2
+        ],
+        [
+          183.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          183.0,
+          0
+        ],
+        [
+          183.0,
+          1
+        ],
+        [
+          183.0,
+          2
+        ],
+        [
+          183.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 20,
+      "full_reads_before_first_later_start": 16,
+      "full_read_days": [
+        60,
+        120,
+        243
+      ],
+      "full_predictor_calls": 11,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.20553528986569972,
+      "same_later_schedule": true,
+      "recommendation_distance": 0.0,
+      "identical_recommendation": true
+    },
+    {
+      "job": "site00_glm-5.3-flash_r1",
+      "model": "glm-5.3-flash",
+      "site": 0,
+      "repeat": 1,
+      "later_starts_full": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 8,
+      "full_reads_before_first_later_start": 4,
+      "full_read_days": [
+        180,
+        362
+      ],
+      "full_predictor_calls": 0,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.09509078933865217,
+      "same_later_schedule": true,
+      "recommendation_distance": 0.09623271556086156,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site00_mimo-v2.6-flash_r0",
+      "model": "mimo-v2.6-flash",
+      "site": 0,
+      "repeat": 0,
+      "later_starts_full": [
+        [
+          183.0,
+          0
+        ],
+        [
+          183.0,
+          1
+        ],
+        [
+          183.0,
+          2
+        ],
+        [
+          183.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          183.0,
+          0
+        ],
+        [
+          183.0,
+          1
+        ],
+        [
+          183.0,
+          2
+        ],
+        [
+          183.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 14,
+      "full_reads_before_first_later_start": 10,
+      "full_read_days": [
+        30,
+        180,
+        363
+      ],
+      "full_predictor_calls": 4,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.16951366176468274,
+      "same_later_schedule": true,
+      "recommendation_distance": 0.16337903272248044,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site00_mimo-v2.6-flash_r1",
+      "model": "mimo-v2.6-flash",
+      "site": 0,
+      "repeat": 1,
+      "later_starts_full": [
+        [
+          183.0,
+          0
+        ],
+        [
+          183.0,
+          1
+        ],
+        [
+          183.0,
+          2
+        ],
+        [
+          183.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 19,
+      "full_reads_before_first_later_start": 19,
+      "full_read_days": [
+        30,
+        90,
+        180
+      ],
+      "full_predictor_calls": 13,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.12594102832211337,
+      "same_later_schedule": false,
+      "recommendation_distance": 0.0,
+      "identical_recommendation": true
+    },
+    {
+      "job": "site01_deepseek-v4.1-flash_r0",
+      "model": "deepseek-v4.1-flash",
+      "site": 1,
+      "repeat": 0,
+      "later_starts_full": [
+        [
+          183.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 6,
+      "full_reads_before_first_later_start": 4,
+      "full_read_days": [
+        30,
+        60,
+        180,
+        183,
+        365
+      ],
+      "full_predictor_calls": 0,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.1460960946690603,
+      "same_later_schedule": false,
+      "recommendation_distance": 0.0,
+      "identical_recommendation": true
+    },
+    {
+      "job": "site01_deepseek-v4.1-flash_r1",
+      "model": "deepseek-v4.1-flash",
+      "site": 1,
+      "repeat": 1,
+      "later_starts_full": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 19,
+      "full_reads_before_first_later_start": 15,
+      "full_read_days": [
+        30,
+        60,
+        90,
+        120,
+        180,
+        362
+      ],
+      "full_predictor_calls": 0,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.10239765088494743,
+      "same_later_schedule": true,
+      "recommendation_distance": 0.1833888869139497,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site01_glm-5.3-flash_r0",
+      "model": "glm-5.3-flash",
+      "site": 1,
+      "repeat": 0,
+      "later_starts_full": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 0,
+      "full_reads_before_first_later_start": 0,
+      "full_read_days": [],
+      "full_predictor_calls": 0,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.19466226706954104,
+      "same_later_schedule": true,
+      "recommendation_distance": 0.27587214824420164,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site01_glm-5.3-flash_r1",
+      "model": "glm-5.3-flash",
+      "site": 1,
+      "repeat": 1,
+      "later_starts_full": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 10,
+      "full_reads_before_first_later_start": 6,
+      "full_read_days": [
+        90,
+        180,
+        362
+      ],
+      "full_predictor_calls": 0,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.10485537268117448,
+      "same_later_schedule": true,
+      "recommendation_distance": 0.11750192229575353,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site01_mimo-v2.6-flash_r0",
+      "model": "mimo-v2.6-flash",
+      "site": 1,
+      "repeat": 0,
+      "later_starts_full": [
+        [
+          183.0,
+          0
+        ],
+        [
+          183.0,
+          1
+        ],
+        [
+          183.0,
+          2
+        ],
+        [
+          183.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 18,
+      "full_reads_before_first_later_start": 10,
+      "full_read_days": [
+        30,
+        60,
+        183,
+        363
+      ],
+      "full_predictor_calls": 12,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.3480222110189487,
+      "same_later_schedule": false,
+      "recommendation_distance": 0.2122923154777025,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site01_mimo-v2.6-flash_r1",
+      "model": "mimo-v2.6-flash",
+      "site": 1,
+      "repeat": 1,
+      "later_starts_full": [
+        [
+          183.0,
+          0
+        ],
+        [
+          183.0,
+          1
+        ],
+        [
+          183.0,
+          2
+        ],
+        [
+          183.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          183.0,
+          0
+        ],
+        [
+          183.0,
+          1
+        ],
+        [
+          183.0,
+          2
+        ],
+        [
+          183.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 8,
+      "full_reads_before_first_later_start": 4,
+      "full_read_days": [
+        180,
+        363
+      ],
+      "full_predictor_calls": 1,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.2784259064744791,
+      "same_later_schedule": true,
+      "recommendation_distance": 0.240712916839403,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site02_deepseek-v4.1-flash_r0",
+      "model": "deepseek-v4.1-flash",
+      "site": 2,
+      "repeat": 0,
+      "later_starts_full": [
+        [
+          30.0,
+          3
+        ],
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          183.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 13,
+      "full_reads_before_first_later_start": 0,
+      "full_read_days": [
+        30,
+        60,
+        90,
+        180,
+        182,
+        210,
+        362
+      ],
+      "full_predictor_calls": 0,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.17888932145170822,
+      "same_later_schedule": false,
+      "recommendation_distance": 0.4849455576428668,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site02_deepseek-v4.1-flash_r1",
+      "model": "deepseek-v4.1-flash",
+      "site": 2,
+      "repeat": 1,
+      "later_starts_full": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 9,
+      "full_reads_before_first_later_start": 7,
+      "full_read_days": [
+        14,
+        30,
+        90,
+        180,
+        365
+      ],
+      "full_predictor_calls": 0,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.31624133544399435,
+      "same_later_schedule": true,
+      "recommendation_distance": 0.0,
+      "identical_recommendation": true
+    },
+    {
+      "job": "site02_glm-5.3-flash_r0",
+      "model": "glm-5.3-flash",
+      "site": 2,
+      "repeat": 0,
+      "later_starts_full": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 12,
+      "full_reads_before_first_later_start": 8,
+      "full_read_days": [
+        90,
+        180,
+        362
+      ],
+      "full_predictor_calls": 0,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.3982500083173921,
+      "same_later_schedule": true,
+      "recommendation_distance": 0.3583313557926765,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site02_glm-5.3-flash_r1",
+      "model": "glm-5.3-flash",
+      "site": 2,
+      "repeat": 1,
+      "later_starts_full": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 8,
+      "full_reads_before_first_later_start": 0,
+      "full_read_days": [
+        182,
+        363
+      ],
+      "full_predictor_calls": 0,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.27587214824420164,
+      "same_later_schedule": true,
+      "recommendation_distance": 0.05705443307345481,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site02_mimo-v2.6-flash_r0",
+      "model": "mimo-v2.6-flash",
+      "site": 2,
+      "repeat": 0,
+      "later_starts_full": [
+        [
+          183.0,
+          0
+        ],
+        [
+          183.0,
+          1
+        ],
+        [
+          183.0,
+          2
+        ],
+        [
+          183.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          183.0,
+          0
+        ],
+        [
+          183.0,
+          1
+        ],
+        [
+          183.0,
+          2
+        ],
+        [
+          183.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 9,
+      "full_reads_before_first_later_start": 5,
+      "full_read_days": [
+        30,
+        180,
+        363
+      ],
+      "full_predictor_calls": 2,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.14912233516311646,
+      "same_later_schedule": true,
+      "recommendation_distance": 0.2122923154777025,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site02_mimo-v2.6-flash_r1",
+      "model": "mimo-v2.6-flash",
+      "site": 2,
+      "repeat": 1,
+      "later_starts_full": [
+        [
+          183.0,
+          3
+        ],
+        [
+          183.0,
+          0
+        ],
+        [
+          183.0,
+          1
+        ],
+        [
+          183.0,
+          2
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          183.0,
+          0
+        ],
+        [
+          183.0,
+          1
+        ],
+        [
+          183.0,
+          2
+        ],
+        [
+          183.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 10,
+      "full_reads_before_first_later_start": 7,
+      "full_read_days": [
+        60,
+        180,
+        363
+      ],
+      "full_predictor_calls": 4,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.12910714102242213,
+      "same_later_schedule": false,
+      "recommendation_distance": 0.2183396296542408,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site03_deepseek-v4.1-flash_r0",
+      "model": "deepseek-v4.1-flash",
+      "site": 3,
+      "repeat": 0,
+      "later_starts_full": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 10,
+      "full_reads_before_first_later_start": 6,
+      "full_read_days": [
+        60,
+        180,
+        365
+      ],
+      "full_predictor_calls": 0,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.03108398085049284,
+      "same_later_schedule": true,
+      "recommendation_distance": 0.00019391793797033627,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site03_deepseek-v4.1-flash_r1",
+      "model": "deepseek-v4.1-flash",
+      "site": 3,
+      "repeat": 1,
+      "later_starts_full": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 10,
+      "full_reads_before_first_later_start": 9,
+      "full_read_days": [
+        30,
+        90,
+        180,
+        365
+      ],
+      "full_predictor_calls": 0,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.22390276256719804,
+      "same_later_schedule": false,
+      "recommendation_distance": 0.051031036307982884,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site03_glm-5.3-flash_r0",
+      "model": "glm-5.3-flash",
+      "site": 3,
+      "repeat": 0,
+      "later_starts_full": [],
+      "later_starts_endpoint": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 5,
+      "full_reads_before_first_later_start": 5,
+      "full_read_days": [
+        30,
+        184
+      ],
+      "full_predictor_calls": 0,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": null,
+      "same_later_schedule": false,
+      "recommendation_distance": 0.13086780277333723,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site03_glm-5.3-flash_r1",
+      "model": "glm-5.3-flash",
+      "site": 3,
+      "repeat": 1,
+      "later_starts_full": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 0,
+      "full_reads_before_first_later_start": 0,
+      "full_read_days": [],
+      "full_predictor_calls": 0,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.364450350597859,
+      "same_later_schedule": true,
+      "recommendation_distance": 0.08822467767013938,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site03_mimo-v2.6-flash_r0",
+      "model": "mimo-v2.6-flash",
+      "site": 3,
+      "repeat": 0,
+      "later_starts_full": [
+        [
+          183.0,
+          0
+        ],
+        [
+          183.0,
+          1
+        ],
+        [
+          183.0,
+          2
+        ],
+        [
+          183.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          183.0,
+          0
+        ],
+        [
+          183.0,
+          1
+        ],
+        [
+          183.0,
+          2
+        ],
+        [
+          183.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 10,
+      "full_reads_before_first_later_start": 6,
+      "full_read_days": [
+        150,
+        180,
+        363
+      ],
+      "full_predictor_calls": 3,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.36011371207647175,
+      "same_later_schedule": true,
+      "recommendation_distance": 0.24294466210134652,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site03_mimo-v2.6-flash_r1",
+      "model": "mimo-v2.6-flash",
+      "site": 3,
+      "repeat": 1,
+      "later_starts_full": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          183.0,
+          0
+        ],
+        [
+          183.0,
+          1
+        ],
+        [
+          183.0,
+          2
+        ],
+        [
+          183.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 8,
+      "full_reads_before_first_later_start": 4,
+      "full_read_days": [
+        180,
+        362
+      ],
+      "full_predictor_calls": 0,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.1446499036511022,
+      "same_later_schedule": false,
+      "recommendation_distance": 0.1484829750427672,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site04_deepseek-v4.1-flash_r0",
+      "model": "deepseek-v4.1-flash",
+      "site": 4,
+      "repeat": 0,
+      "later_starts_full": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 12,
+      "full_reads_before_first_later_start": 8,
+      "full_read_days": [
+        30,
+        60,
+        90,
+        180,
+        362
+      ],
+      "full_predictor_calls": 0,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.11944813670756337,
+      "same_later_schedule": true,
+      "recommendation_distance": 0.0,
+      "identical_recommendation": true
+    },
+    {
+      "job": "site04_deepseek-v4.1-flash_r1",
+      "model": "deepseek-v4.1-flash",
+      "site": 4,
+      "repeat": 1,
+      "later_starts_full": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 16,
+      "full_reads_before_first_later_start": 12,
+      "full_read_days": [
+        30,
+        60,
+        180,
+        362
+      ],
+      "full_predictor_calls": 0,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.22146511521291382,
+      "same_later_schedule": true,
+      "recommendation_distance": 0.5759381824633028,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site04_glm-5.3-flash_r0",
+      "model": "glm-5.3-flash",
+      "site": 4,
+      "repeat": 0,
+      "later_starts_full": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 43,
+      "full_reads_before_first_later_start": 39,
+      "full_read_days": [
+        30,
+        60,
+        179,
+        180,
+        362
+      ],
+      "full_predictor_calls": 9,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.15666313206356466,
+      "same_later_schedule": true,
+      "recommendation_distance": 0.10520317644127165,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site04_glm-5.3-flash_r1",
+      "model": "glm-5.3-flash",
+      "site": 4,
+      "repeat": 1,
+      "later_starts_full": [
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ],
+        [
+          182.0,
+          0
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 8,
+      "full_reads_before_first_later_start": 0,
+      "full_read_days": [
+        182,
+        365
+      ],
+      "full_predictor_calls": 0,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.15225162368740283,
+      "same_later_schedule": false,
+      "recommendation_distance": 0.028055232817343956,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site04_mimo-v2.6-flash_r0",
+      "model": "mimo-v2.6-flash",
+      "site": 4,
+      "repeat": 0,
+      "later_starts_full": [
+        [
+          183.0,
+          0
+        ],
+        [
+          183.0,
+          1
+        ],
+        [
+          183.0,
+          2
+        ],
+        [
+          183.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 24,
+      "full_reads_before_first_later_start": 20,
+      "full_read_days": [
+        30,
+        180,
+        363
+      ],
+      "full_predictor_calls": 15,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.1368205922808425,
+      "same_later_schedule": false,
+      "recommendation_distance": 0.2057126839388698,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site04_mimo-v2.6-flash_r1",
+      "model": "mimo-v2.6-flash",
+      "site": 4,
+      "repeat": 1,
+      "later_starts_full": [
+        [
+          183.0,
+          0
+        ],
+        [
+          183.0,
+          1
+        ],
+        [
+          183.0,
+          2
+        ],
+        [
+          183.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          183.0,
+          0
+        ],
+        [
+          183.0,
+          1
+        ],
+        [
+          183.0,
+          2
+        ],
+        [
+          183.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 28,
+      "full_reads_before_first_later_start": 24,
+      "full_read_days": [
+        100,
+        180,
+        363
+      ],
+      "full_predictor_calls": 9,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.11023667521289991,
+      "same_later_schedule": true,
+      "recommendation_distance": 0.08408617926994714,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site05_deepseek-v4.1-flash_r0",
+      "model": "deepseek-v4.1-flash",
+      "site": 5,
+      "repeat": 0,
+      "later_starts_full": [
+        [
+          183.0,
+          0
+        ],
+        [
+          183.0,
+          1
+        ],
+        [
+          183.0,
+          2
+        ],
+        [
+          183.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 11,
+      "full_reads_before_first_later_start": 5,
+      "full_read_days": [
+        30,
+        60,
+        90,
+        183,
+        210,
+        270
+      ],
+      "full_predictor_calls": 0,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.40951974693106147,
+      "same_later_schedule": false,
+      "recommendation_distance": 0.0,
+      "identical_recommendation": true
+    },
+    {
+      "job": "site05_deepseek-v4.1-flash_r1",
+      "model": "deepseek-v4.1-flash",
+      "site": 5,
+      "repeat": 1,
+      "later_starts_full": [
+        [
+          30.0,
+          2
+        ],
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          30.0,
+          2
+        ],
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 7,
+      "full_reads_before_first_later_start": 0,
+      "full_read_days": [
+        30,
+        60,
+        150,
+        180,
+        242
+      ],
+      "full_predictor_calls": 0,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.09686917088014538,
+      "same_later_schedule": true,
+      "recommendation_distance": 0.051031036307982884,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site05_glm-5.3-flash_r0",
+      "model": "glm-5.3-flash",
+      "site": 5,
+      "repeat": 0,
+      "later_starts_full": [
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 30,
+      "full_reads_before_first_later_start": 10,
+      "full_read_days": [
+        30,
+        90,
+        182,
+        272,
+        362
+      ],
+      "full_predictor_calls": 12,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.17165375546408088,
+      "same_later_schedule": false,
+      "recommendation_distance": 0.0,
+      "identical_recommendation": true
+    },
+    {
+      "job": "site05_glm-5.3-flash_r1",
+      "model": "glm-5.3-flash",
+      "site": 5,
+      "repeat": 1,
+      "later_starts_full": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 16,
+      "full_reads_before_first_later_start": 12,
+      "full_read_days": [
+        30,
+        180,
+        362
+      ],
+      "full_predictor_calls": 0,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.23747969336893038,
+      "same_later_schedule": true,
+      "recommendation_distance": 0.21599147477822073,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site05_mimo-v2.6-flash_r0",
+      "model": "mimo-v2.6-flash",
+      "site": 5,
+      "repeat": 0,
+      "later_starts_full": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 9,
+      "full_reads_before_first_later_start": 5,
+      "full_read_days": [
+        80,
+        180,
+        362
+      ],
+      "full_predictor_calls": 0,
+      "endpoint_predictor_calls": 2,
+      "second_wave_policy_distance": 0.14816556418504584,
+      "same_later_schedule": true,
+      "recommendation_distance": 0.10206207261596577,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site05_mimo-v2.6-flash_r1",
+      "model": "mimo-v2.6-flash",
+      "site": 5,
+      "repeat": 1,
+      "later_starts_full": [
+        [
+          183.0,
+          0
+        ],
+        [
+          183.0,
+          1
+        ],
+        [
+          183.0,
+          2
+        ],
+        [
+          183.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          183.0,
+          0
+        ],
+        [
+          183.0,
+          1
+        ],
+        [
+          183.0,
+          2
+        ],
+        [
+          183.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 24,
+      "full_reads_before_first_later_start": 20,
+      "full_read_days": [
+        15,
+        60,
+        180,
+        363
+      ],
+      "full_predictor_calls": 15,
+      "endpoint_predictor_calls": 1,
+      "second_wave_policy_distance": 0.309535785788537,
+      "same_later_schedule": true,
+      "recommendation_distance": 0.10206207261596577,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site06_deepseek-v4.1-flash_r0",
+      "model": "deepseek-v4.1-flash",
+      "site": 6,
+      "repeat": 0,
+      "later_starts_full": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 10,
+      "full_reads_before_first_later_start": 8,
+      "full_read_days": [
+        30,
+        60,
+        90,
+        120,
+        180,
+        365
+      ],
+      "full_predictor_calls": 0,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.13945552998625374,
+      "same_later_schedule": true,
+      "recommendation_distance": 0.10497850937395901,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site06_deepseek-v4.1-flash_r1",
+      "model": "deepseek-v4.1-flash",
+      "site": 6,
+      "repeat": 1,
+      "later_starts_full": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 9,
+      "full_reads_before_first_later_start": 7,
+      "full_read_days": [
+        10,
+        30,
+        60,
+        180,
+        365
+      ],
+      "full_predictor_calls": 0,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.3373440302339735,
+      "same_later_schedule": true,
+      "recommendation_distance": 0.32896666833822397,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site06_glm-5.3-flash_r0",
+      "model": "glm-5.3-flash",
+      "site": 6,
+      "repeat": 0,
+      "later_starts_full": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 14,
+      "full_reads_before_first_later_start": 6,
+      "full_read_days": [
+        30,
+        90,
+        120,
+        182,
+        364
+      ],
+      "full_predictor_calls": 0,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.15045031916897822,
+      "same_later_schedule": true,
+      "recommendation_distance": 0.25129871003780874,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site06_glm-5.3-flash_r1",
+      "model": "glm-5.3-flash",
+      "site": 6,
+      "repeat": 1,
+      "later_starts_full": [
+        [
+          183.0,
+          0
+        ],
+        [
+          183.0,
+          1
+        ],
+        [
+          183.0,
+          2
+        ],
+        [
+          183.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 0,
+      "full_reads_before_first_later_start": 0,
+      "full_read_days": [],
+      "full_predictor_calls": 0,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.1648405994590239,
+      "same_later_schedule": false,
+      "recommendation_distance": 0.08198523470484702,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site06_mimo-v2.6-flash_r0",
+      "model": "mimo-v2.6-flash",
+      "site": 6,
+      "repeat": 0,
+      "later_starts_full": [
+        [
+          183.0,
+          0
+        ],
+        [
+          183.0,
+          1
+        ],
+        [
+          183.0,
+          2
+        ],
+        [
+          183.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          183.0,
+          0
+        ],
+        [
+          183.0,
+          1
+        ],
+        [
+          183.0,
+          2
+        ],
+        [
+          183.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 10,
+      "full_reads_before_first_later_start": 2,
+      "full_read_days": [
+        150,
+        183,
+        363
+      ],
+      "full_predictor_calls": 2,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.32737333789708173,
+      "same_later_schedule": true,
+      "recommendation_distance": 0.26173560554667447,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site06_mimo-v2.6-flash_r1",
+      "model": "mimo-v2.6-flash",
+      "site": 6,
+      "repeat": 1,
+      "later_starts_full": [
+        [
+          183.0,
+          0
+        ],
+        [
+          183.0,
+          1
+        ],
+        [
+          183.0,
+          2
+        ],
+        [
+          183.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          183.0,
+          0
+        ],
+        [
+          183.0,
+          1
+        ],
+        [
+          183.0,
+          2
+        ],
+        [
+          183.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 8,
+      "full_reads_before_first_later_start": 4,
+      "full_read_days": [
+        180,
+        363
+      ],
+      "full_predictor_calls": 0,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.41567355219833835,
+      "same_later_schedule": true,
+      "recommendation_distance": 0.28564358174645227,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site07_deepseek-v4.1-flash_r0",
+      "model": "deepseek-v4.1-flash",
+      "site": 7,
+      "repeat": 0,
+      "later_starts_full": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 9,
+      "full_reads_before_first_later_start": 7,
+      "full_read_days": [
+        30,
+        60,
+        90,
+        180,
+        362
+      ],
+      "full_predictor_calls": 0,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.2085227928672001,
+      "same_later_schedule": true,
+      "recommendation_distance": 0.0049836059892874466,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site07_deepseek-v4.1-flash_r1",
+      "model": "deepseek-v4.1-flash",
+      "site": 7,
+      "repeat": 1,
+      "later_starts_full": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          3
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 9,
+      "full_reads_before_first_later_start": 5,
+      "full_read_days": [
+        30,
+        180,
+        362
+      ],
+      "full_predictor_calls": 0,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.21639624462158288,
+      "same_later_schedule": false,
+      "recommendation_distance": 0.10589551711105476,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site07_glm-5.3-flash_r0",
+      "model": "glm-5.3-flash",
+      "site": 7,
+      "repeat": 0,
+      "later_starts_full": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 10,
+      "full_reads_before_first_later_start": 6,
+      "full_read_days": [
+        90,
+        180,
+        362
+      ],
+      "full_predictor_calls": 4,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.1778373606699694,
+      "same_later_schedule": true,
+      "recommendation_distance": 0.21618208500602223,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site07_glm-5.3-flash_r1",
+      "model": "glm-5.3-flash",
+      "site": 7,
+      "repeat": 1,
+      "later_starts_full": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          183.0,
+          0
+        ],
+        [
+          183.0,
+          1
+        ],
+        [
+          183.0,
+          2
+        ],
+        [
+          183.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 7,
+      "full_reads_before_first_later_start": 4,
+      "full_read_days": [
+        180,
+        362
+      ],
+      "full_predictor_calls": 0,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.10502632259118863,
+      "same_later_schedule": false,
+      "recommendation_distance": 0.268350094413564,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site07_mimo-v2.6-flash_r0",
+      "model": "mimo-v2.6-flash",
+      "site": 7,
+      "repeat": 0,
+      "later_starts_full": [
+        [
+          183.0,
+          0
+        ],
+        [
+          183.0,
+          1
+        ],
+        [
+          183.0,
+          2
+        ],
+        [
+          183.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          183.0,
+          0
+        ],
+        [
+          183.0,
+          1
+        ],
+        [
+          183.0,
+          2
+        ],
+        [
+          183.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 12,
+      "full_reads_before_first_later_start": 8,
+      "full_read_days": [
+        30,
+        60,
+        180,
+        363
+      ],
+      "full_predictor_calls": 3,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.07857130440922352,
+      "same_later_schedule": true,
+      "recommendation_distance": 0.18399501804849683,
+      "identical_recommendation": false
+    },
+    {
+      "job": "site07_mimo-v2.6-flash_r1",
+      "model": "mimo-v2.6-flash",
+      "site": 7,
+      "repeat": 1,
+      "later_starts_full": [
+        [
+          182.0,
+          0
+        ],
+        [
+          182.0,
+          1
+        ],
+        [
+          182.0,
+          2
+        ],
+        [
+          182.0,
+          3
+        ]
+      ],
+      "later_starts_endpoint": [
+        [
+          183.0,
+          0
+        ],
+        [
+          183.0,
+          1
+        ],
+        [
+          183.0,
+          2
+        ],
+        [
+          183.0,
+          3
+        ]
+      ],
+      "stops_full": 0,
+      "stops_endpoint": 0,
+      "full_reads_total": 15,
+      "full_reads_before_first_later_start": 11,
+      "full_read_days": [
+        30,
+        180,
+        362
+      ],
+      "full_predictor_calls": 8,
+      "endpoint_predictor_calls": 0,
+      "second_wave_policy_distance": 0.23046844402732353,
+      "same_later_schedule": false,
+      "recommendation_distance": 0.0408248290463863,
+      "identical_recommendation": false
+    }
+  ]
+}

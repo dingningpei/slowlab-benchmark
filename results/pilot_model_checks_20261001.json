@@ -1,0 +1,196 @@
+{
+  "purpose": "pilot connectivity and reasoning checks (one short message per check)",
+  "date": "2026-10-01",
+  "note": "gpt-6-luna was refused with HTTP 403 (provider terms of service, also in the OpenRouter web chat) and replaced by glm-5.3-flash; final endpoints are pinned (configs/pilot_models_v3.json)",
+  "checks": {
+    "deepseek-v4.1-flash": [
+      {
+        "name": "deepseek-v4.1-flash",
+        "requested": "deepseek-flash",
+        "status": "ok",
+        "actual_model": "deepseek-flash",
+        "provider": null,
+        "finish_reason": "stop",
+        "valid_json": true,
+        "reasoning_mode": "{\"thinking\": {\"type\": \"disabled\"}}",
+        "reasoning_tokens": null,
+        "reasoning_disabled": true,
+        "usage": {
+          "prompt_tokens": 26,
+          "completion_tokens": 5,
+          "total_tokens": 31,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 26
+        },
+        "usd": 1.38e-05,
+        "file": "model_check.json"
+      }
+    ],
+    "gpt-6-luna": [
+      {
+        "name": "gpt-6-luna",
+        "requested": "openai/gpt-6-luna",
+        "status": "failed",
+        "error": "ProviderError: HTTP 403: {\"error\":{\"message\":\"The request is prohibited due to a violation of provider Terms Of Service.\",\"code\":403,\"metadata\":{\"provider_name\":null,\"previous_errors\":[{\"code\":403,\"message\":\"The request is prohibited due to a violation of provider Terms Of Service.\"}]}},\"user_id\":\"u",
+        "file": "model_check.json"
+      }
+    ],
+    "mimo-v2.6-flash": [
+      {
+        "name": "mimo-v2.6-flash",
+        "requested": "xiaomi/mimo-v2.6-flash",
+        "status": "ok",
+        "actual_model": "xiaomi/mimo-v2.6-flash",
+        "provider": "Darkbloom",
+        "finish_reason": "stop",
+        "valid_json": true,
+        "reasoning_mode": "{\"reasoning\": {\"enabled\": false}}",
+        "reasoning_tokens": 0,
+        "reasoning_disabled": true,
+        "usage": {
+          "prompt_tokens": 34,
+          "completion_tokens": 6,
+          "total_tokens": 40,
+          "cost": 4.06e-06,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 4.06e-06,
+            "upstream_inference_prompt_cost": 2.38e-06,
+            "upstream_inference_completions_cost": 1.68e-06
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "usd": 4.06e-06,
+        "file": "model_check.json"
+      },
+      {
+        "name": "mimo-v2.6-flash",
+        "requested": "xiaomi/mimo-v2.6-flash",
+        "status": "ok",
+        "actual_model": "xiaomi/mimo-v2.6-flash",
+        "provider": "Xiaomi",
+        "finish_reason": "stop",
+        "valid_json": true,
+        "reasoning_mode": "{\"reasoning\": {\"enabled\": false}}",
+        "reasoning_tokens": 0,
+        "reasoning_capped": null,
+        "reasoning_disabled": true,
+        "usage": {
+          "prompt_tokens": 34,
+          "completion_tokens": 10,
+          "total_tokens": 44,
+          "cost": 7.56e-06,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 7.56e-06,
+            "upstream_inference_prompt_cost": 4.76e-06,
+            "upstream_inference_completions_cost": 2.8e-06
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "usd": 7.56e-06,
+        "file": "model_check_v3.json"
+      }
+    ],
+    "glm-5.3-flash": [
+      {
+        "name": "glm-5.3-flash",
+        "requested": "z-ai/glm-5.3-flash",
+        "status": "ok",
+        "actual_model": "z-ai/glm-5.3-flash",
+        "provider": "Parasail",
+        "finish_reason": "stop",
+        "valid_json": true,
+        "reasoning_mode": "{\"reasoning\": {\"max_tokens\": 1024}}",
+        "reasoning_tokens": 0,
+        "reasoning_disabled": false,
+        "usage": {
+          "prompt_tokens": 34,
+          "completion_tokens": 7,
+          "total_tokens": 41,
+          "cost": 8.6e-06,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 8.6e-06,
+            "upstream_inference_prompt_cost": 5.1e-06,
+            "upstream_inference_completions_cost": 3.5e-06
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "usd": 8.6e-06,
+        "file": "model_check_glm.json"
+      },
+      {
+        "name": "glm-5.3-flash",
+        "requested": "z-ai/glm-5.3-flash",
+        "status": "ok",
+        "actual_model": "z-ai/glm-5.3-flash",
+        "provider": "Z.AI",
+        "finish_reason": "stop",
+        "valid_json": true,
+        "reasoning_mode": "{\"reasoning\": {\"max_tokens\": 1024}}",
+        "reasoning_tokens": 0,
+        "reasoning_capped": 1024,
+        "reasoning_disabled": false,
+        "usage": {
+          "prompt_tokens": 34,
+          "completion_tokens": 7,
+          "total_tokens": 41,
+          "cost": 8.6e-06,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 8.6e-06,
+            "upstream_inference_prompt_cost": 5.1e-06,
+            "upstream_inference_completions_cost": 3.5e-06
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "usd": 8.6e-06,
+        "file": "model_check_v3.json"
+      }
+    ]
+  }
+}
