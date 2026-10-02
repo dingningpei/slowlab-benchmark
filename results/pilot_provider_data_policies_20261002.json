@@ -1,0 +1,13 @@
+{
+  "purpose": "Phase 4 check of the data-sending settings of the pilot model endpoints",
+  "retrieved": "2026-10-02",
+  "source": "https://openrouter.ai/docs/guides/privacy/provider-logging (provider data retention and training table)",
+  "endpoints": {
+    "glm-5.3-flash": {"endpoint": "Z.ai via OpenRouter (provider pinned)", "retention": "zero retention", "training": "does not train"},
+    "mimo-v2.6-flash": {"endpoint": "Xiaomi via OpenRouter (provider pinned)", "retention": "retained for 30 days", "training": "does not train"},
+    "deepseek-v4.1-flash": {"endpoint": "DeepSeek official API", "retention": "prompts retained for an unknown period (OpenRouter table for the DeepSeek provider; same company)", "training": "may train"}
+  },
+  "what_is_sent": "only the chat messages built by the harness (public task view, tool catalog, public results); no benchmark name (blinding firewall), no private site values, seeds or paths (leak scanner); no project-identifying headers; OpenRouter attaches the account's user id",
+  "risk": "DeepSeek may train on the prompts, so the task text and environment responses could enter future DeepSeek training data; to be stated in the paper. Avoidable only by routing DeepSeek through a zero-retention provider instead of the official API.",
+  "status": "documented; no change made (the official DeepSeek API was the user's choice)"
+}
