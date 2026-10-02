@@ -334,7 +334,8 @@ class CampaignExecutor:
             raise ValueError('daily resolution needs a variable and is not offered by this contract')
         if self.feedback_mode == 'endpoint':
             if any(key in action for key in ('variable', 'start_day', 'end_day', 'resolution')):
-                raise PermissionError('endpoint cannot request science history')
+                raise PermissionError('in the endpoint feedback condition observe returns only the compartment status '
+                                      "and closed crops' totals; omit variable, start_day, end_day and resolution")
         elif 'variable' in action and resolution == 'daily':
             variable = action['variable']
             if variable not in self.contract['observations']['public_channels']:
@@ -367,7 +368,8 @@ class CampaignExecutor:
 
     def _recommend(self, policy) -> dict:
         if self.clock != self.deadline_seconds:
-            raise ValueError('recommendation is due at campaign deadline')
+            raise ValueError(f"recommend is allowed only at the final day (day {self.deadline_seconds / 86400:g}); "
+                             'advance there first')
         try:
             accepted = Policy.from_payload(self.contract, policy)
         except ValueError:

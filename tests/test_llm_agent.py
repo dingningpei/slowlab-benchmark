@@ -201,3 +201,10 @@ def test_format_errors_show_the_expected_reply():
         with pytest.raises(FormatError) as err:
             parse_reply(bad)
         assert needle in str(err.value) and 'GreenLight' not in str(err.value)
+
+
+def test_json_errors_point_at_the_problem_without_echoing_text():
+    bad = '{"action": {"action": "recommend", "policy": {"a": 1}, "reason": "x", "type": "campaign"}'
+    with pytest.raises(FormatError) as err:
+        parse_reply(bad)
+    assert 'at character' in str(err.value) and 'closed in order' in str(err.value) and '"x"' not in str(err.value)

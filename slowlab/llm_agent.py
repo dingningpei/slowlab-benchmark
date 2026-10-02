@@ -90,7 +90,11 @@ def parse_reply(text: str) -> dict:
     try:
         reply = json.loads(stripped[start:end + 1])
     except json.JSONDecodeError as exc:
-        hint = ('; reply with exactly one JSON object and nothing after it' if exc.msg == 'Extra data' else '')
+        if exc.msg == 'Extra data':
+            hint = '; reply with exactly one JSON object and nothing after it'
+        else:
+            hint = (f' at character {exc.pos} of {end + 1 - start}; check that every {{ and [ is closed in order: '
+                    'the "action" object must end with }} before "reason" and "type" follow')
         raise FormatError(f'invalid JSON: {exc.msg}{hint}') from None
     if not isinstance(reply, dict) or reply.get('type') not in ('campaign', 'tool', 'initial_recommendation',
                                                                   'design_complete'):

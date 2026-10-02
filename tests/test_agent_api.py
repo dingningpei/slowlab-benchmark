@@ -95,7 +95,7 @@ def test_endpoint_sessions_cannot_read_running_science(tmp_path):
     with CampaignProcess(spec, private_log=folder / 'server.log') as campaign:
         session = campaign.session
         session.dispatch({'action': 'start', 'unit': 0, 'policy': POLICIES['policy_a']})
-        with pytest.raises(InvalidAction, match='endpoint cannot request science history'):
+        with pytest.raises(InvalidAction, match='endpoint feedback condition'):
             session.dispatch({'action': 'observe', 'unit': 0, 'variable': 'air_temperature_c'})
 
 
