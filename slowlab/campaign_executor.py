@@ -399,12 +399,13 @@ class CampaignExecutor:
         if self._failed is not None:
             raise RuntimeError('campaign paused after infrastructure failure')
         if not isinstance(action, dict) or not isinstance(action.get('action'), str):
-            raise ValueError('invalid action payload')
+            raise ValueError('an action is one object whose "action" field names it, plus that action\'s fields, '
+                             'e.g. {"action": "advance", "day": 30}')
         if self._tool_calls >= self.contract['budget']['max_tool_calls']:
             raise ValueError('tool-call budget exhausted')
         kind = action['action']
         if kind not in self.contract['events']['allowed']:
-            raise ValueError('unsupported action')
+            raise ValueError('unsupported action; the actions are start, observe, advance, stop and recommend')
         self._tool_calls += 1
         if kind in self.contract['budget'].get('decision_call_actions', ('start', 'stop', 'observe', 'recommend')):
             if self._decision_calls >= self.contract['budget']['max_decision_calls']:
@@ -412,23 +413,23 @@ class CampaignExecutor:
             self._decision_calls += 1
         if kind == 'start':
             if set(action) != {'action', 'unit', 'policy'}:
-                raise ValueError('invalid start fields')
+                raise ValueError('start takes exactly the fields action, unit and policy')
             return self._start(self._unit(action['unit']), action['policy'])
         if kind == 'stop':
             if set(action) != {'action', 'unit'}:
-                raise ValueError('invalid stop fields')
+                raise ValueError('stop takes exactly the fields action and unit')
             return self._stop(self._unit(action['unit']), 'stop')
         if kind == 'observe':
             if not set(action) <= {'action', 'unit', 'variable', 'start_day', 'end_day', 'run_index', 'resolution'} \
                     or 'unit' not in action:
-                raise ValueError('invalid observation fields')
+                raise ValueError('observe takes action and unit, optionally run_index, variable, start_day, end_day and resolution')
             return self._observe(self._unit(action['unit']), action)
         if kind == 'advance':
             if set(action) != {'action', 'day'}:
-                raise ValueError('invalid advance fields')
+                raise ValueError('advance takes exactly the fields action and day')
             return self._advance(_seconds(action['day'], self.contract['budget']['campaign_days'], self.tick_seconds))
         if set(action) != {'action', 'policy'}:
-            raise ValueError('invalid recommendation fields')
+            raise ValueError('recommend takes exactly the fields action and policy')
         return self._recommend(action['policy'])
 
     def private_crop_totals(self) -> list[dict]:

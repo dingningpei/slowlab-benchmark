@@ -55,9 +55,11 @@ class FormatError(ValueError):
 
 REPLY_FORMAT = (
     'Reply with exactly one JSON object and nothing else. Either\n'
-    '{"type": "campaign", "action": {...}, "reason": "..."} to send one campaign action '
-    '(start, observe, advance, stop, recommend; see actions), or\n'
-    '{"type": "tool", "name": "...", "args": {...}, "reason": "..."} to run one analysis tool.\n'
+    '{"type": "campaign", "action": {"action": "<name>", ...}, "reason": "..."} to send one campaign action '
+    '(start, observe, advance, stop, recommend; see actions and action_format), for example\n'
+    '{"type": "campaign", "action": {"action": "advance", "day": 30}, "reason": "let the crops establish"}, or\n'
+    '{"type": "tool", "name": "...", "args": {...}, "reason": "..."} to run one analysis tool, for example\n'
+    '{"type": "tool", "name": "runs", "args": {}}.\n'
     'The reason is optional, at most a few sentences. Analysis tools only analyse data you already '
     'received and do not advance time or spend campaign calls; they have their own call limit.\n'
     'Any reply may also carry "notes": "..." to replace your notes (the length limit is in the task budget). '
@@ -357,6 +359,9 @@ class LLMCampaignAgent:
                     self._record(self._reply_text(reply), {'kind': 'design_complete_acknowledged'})
                     ended_by = 'design_complete'
                     break
+                if reply['type'] == 'campaign' and 'action' not in reply['action']:
+                    raise FormatError('the action object needs an "action" field naming it, for example '
+                                      '{"type": "campaign", "action": {"action": "start", "unit": 0, "policy": {...}}}')
                 if reply['type'] == 'initial_recommendation' or (
                         reply['type'] == 'campaign' and reply['action'].get('action') != 'start'):
                     raise FormatError('only start actions, analysis tools or design_complete during the day-0 design')

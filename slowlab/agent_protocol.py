@@ -44,16 +44,18 @@ def _finite(value) -> bool:
 
 
 ACTION_SCHEMAS = {
-    'start': {'unit': 'integer compartment index', 'policy': 'object with exactly the policy fields'},
-    'observe': {'unit': 'integer compartment index',
+    'start': {'action': '"start"', 'unit': 'integer compartment index', 'policy': 'object with exactly the policy fields'},
+    'observe': {'action': '"observe"', 'unit': 'integer compartment index',
                 'run_index': 'optional: which crop of this compartment (1 = first); default the latest closed one',
                 'variable': 'full feedback only, optional: a public channel name',
                 'start_day': 'full feedback only: optional, day number at a 300-second boundary',
                 'end_day': 'full feedback only: optional, day number at a 300-second boundary, not in the future'},
-    'advance': {'day': 'target day number at a 300-second boundary, not earlier than now'},
-    'stop': {'unit': 'integer compartment index'},
-    'recommend': {'policy': 'object with exactly the policy fields; allowed only at the final day'},
+    'advance': {'action': '"advance"', 'day': 'target day number at a 300-second boundary, not earlier than now'},
+    'stop': {'action': '"stop"', 'unit': 'integer compartment index'},
+    'recommend': {'action': '"recommend"', 'policy': 'object with exactly the policy fields; allowed only at the final day'},
 }
+ACTION_FORMAT = ('Each action is one JSON object whose "action" field names it, plus exactly that action\'s fields, '
+                 'for example {"action": "start", "unit": 0, "policy": {...}} or {"action": "advance", "day": 30}.')
 
 
 def public_task_view(contract: dict, feedback_mode: str | None) -> dict:
@@ -91,6 +93,7 @@ def public_task_view(contract: dict, feedback_mode: str | None) -> dict:
                    'constraints': ['night_temperature_c <= day_temperature_c'],
                    'fixed_while_running': True},
         'actions': copy.deepcopy(ACTION_SCHEMAS),
+        'action_format': ACTION_FORMAT,
         'rules': [
             'A started crop runs for crop_days and then closes automatically; the compartment is then cleaned for cleanup_days.',
             'stop ends a running crop immediately: the standing crop is discarded with no salvage value, cleaning costs are paid, and only produce already harvested counts.',
