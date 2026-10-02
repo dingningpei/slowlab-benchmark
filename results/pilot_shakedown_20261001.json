@@ -1,0 +1,22 @@
+{
+  "purpose": "Phase 4 pilot interface shakedown: seven branched LLM campaigns on pilot sites before the interface was final (interface before commit ceeb0a9); archived, not part of the pilot data",
+  "models": "configs/pilot_models_v3.json (DeepSeek official API; MiMo on Xiaomi; GLM on Z.AI, reasoning capped at 1,024)",
+  "outcome": "all seven completed both branches, recommended without fallback, eight starts per branch; 90-100 minutes each",
+  "spend_usd": {"first_start_interrupted": 0.0516, "shakedown_campaigns": 0.372, "ledger_total": 0.424},
+  "per_campaign": [
+    {"model": "deepseek-v4.1-flash", "calls": 51, "usd": 0.041, "full_chars": 500000, "endpoint_chars": 510000, "format_errors": 1, "invalid_actions": 3},
+    {"model": "deepseek-v4.1-flash", "calls": 64, "usd": 0.124, "full_chars": 1400000, "endpoint_chars": 590000, "format_errors": 1, "invalid_actions": 3},
+    {"model": "glm-5.3-flash", "calls": 79, "usd": 0.043, "reasoning_tokens": 3000, "full_chars": 990000, "endpoint_chars": 660000, "format_errors": 6, "invalid_actions": 9},
+    {"model": "glm-5.3-flash", "calls": 51, "usd": 0.027, "reasoning_tokens": 2000, "full_chars": 480000, "endpoint_chars": 540000, "format_errors": 2, "invalid_actions": 5},
+    {"model": "mimo-v2.6-flash", "calls": 196, "usd": 0.070, "full_chars": 1400000, "endpoint_chars": 4980000, "format_errors": 126, "invalid_actions": 15, "note": "endpoint branch exhausted the character budget repeating one unclosed JSON object 73 times"},
+    {"model": "mimo-v2.6-flash", "calls": 59, "usd": 0.027, "full_chars": 740000, "endpoint_chars": 430000, "format_errors": 2, "invalid_actions": 4},
+    {"model": "mimo-v2.6-flash", "calls": 63, "usd": 0.040, "full_chars": 900000, "endpoint_chars": 510000, "format_errors": 5, "invalid_actions": 4}],
+  "interface_issues_fixed": [
+    "action objects without an \"action\" field or keyed by the action name: schemas, action_format line and reply examples added; field errors list the expected fields (commit "Make the action format explicit to models")",
+    "missing \"type\", native <tool_call> syntax, trailing text after the JSON: format errors now show the expected reply (d4b479c)",
+    "notes shown after the model's own turn invited imitation: notes are now a JSON field of the latest reply (d4b479c)",
+    "bare JSON parser messages: position and bracket hint (ceeb0a9)",
+    "premature recommend and endpoint science reads: errors say what to do (ceeb0a9)"],
+  "behaviour_seen": "Full branches read few raw records; DeepSeek and MiMo used daily summaries; GLM and MiMo called predict_crop_outcome; every model ran two waves of four crops in both branches",
+  "decision": "fix only interface text (Phase 4 rule), archive the shakedown, restart the pilot with one interface version"
+}
