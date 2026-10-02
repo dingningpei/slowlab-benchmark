@@ -45,3 +45,16 @@ def test_unaffordable_campaigns_are_skipped_and_bo_still_runs(tmp_path):
     done, ledger = setup(tmp_path, cap=0.004)
     assert sorted(done['skipped_budget']) == ['llm0', 'llm1'] and done['status']['bo0'] == 'completed'
     assert done['spent_usd'] == 0 and not ledger.exists()
+
+
+def test_costs_use_billed_amounts_cache_hits_or_token_prices():
+    from slowlab.spend import call_cost, worst_case_campaign_cost
+    deepseek = {'input': 0.30, 'input_cache_hit': 0.006, 'output': 1.20}
+    assert call_cost({'usage': {'cost': 0.0123, 'prompt_tokens': 10 ** 6}}, deepseek) == 0.0123
+    rec = {'usage': {'prompt_tokens': 1_000_000, 'prompt_cache_hit_tokens': 600_000, 'prompt_cache_miss_tokens': 400_000,
+                     'completion_tokens': 100_000}}
+    assert abs(call_cost(rec, deepseek) - (0.6 * 0.006 + 0.4 * 0.30 + 0.1 * 1.20)) < 1e-12
+    assert abs(call_cost({'usage': {'prompt_tokens': 10 ** 6, 'completion_tokens': 0}}, {'input': 0.1, 'output': 0.5}) - 0.1) < 1e-12
+    worst = worst_case_campaign_cost(deepseek, max_input_chars_per_branch=5_000_000, max_llm_calls_per_branch=200,
+                                     max_tokens=2048)
+    assert 2.4 < worst < 2.6

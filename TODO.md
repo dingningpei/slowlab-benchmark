@@ -52,7 +52,7 @@
 ## Phase 4：小型 pilot 与运行预算
 
 - [x] fake-model 全路径测试，覆盖所有动作与失败路径。证据：`tests/test_full_path.py`（经 pilot 入口 `scripts/run_campaign_job.py`）
-- [ ] 核验候选模型精确 ID、provider 路由、数据发送设置；禁用 provider 端隐藏推理（模型与精确 ID 已定并按 OpenRouter 公开列表核对，见 `configs/pilot_models_v0.json`；待密钥到位后用 `scripts/check_models.py` 做连通与推理关闭检查）
+- [ ] 核验候选模型精确 ID、provider 路由、数据发送设置；禁用 provider 端隐藏推理（模型与精确 ID 已定并按 OpenRouter 公开列表核对，见 `configs/pilot_models_v1.json`（DeepSeek 走官方 API）；待密钥到位后用 `scripts/check_models.py` 做连通与推理关闭检查）
 - [ ] 在少量 pilot sites 上核算每 campaign 调用、token、费用、格式失败与执行耗时
 - [ ] 检查过程反馈是否有可操作的决策机会；只按接口/任务逻辑修复，不按 arm 输赢调参
 - [ ] 预算表包含 pilot、重试、Reader 会话、初始推荐、离线评测；硬暂停策略；取得执行授权

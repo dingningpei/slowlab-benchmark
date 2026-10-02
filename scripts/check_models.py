@@ -23,7 +23,7 @@ MESSAGE = [{'role': 'system', 'content': 'You answer with JSON only.'},
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--models', default='configs/pilot_models_v0.json')
+    ap.add_argument('--models', default='configs/pilot_models_v1.json')
     ap.add_argument('--ledger', type=Path, required=True)
     ap.add_argument('--out', type=Path, required=True)
     args = ap.parse_args()
@@ -45,7 +45,8 @@ def main():
             row.update(status='ok', actual_model=rec.get('actual_model'), provider=rec.get('provider'),
                        finish_reason=rec.get('finish_reason'), reply=text[:120], valid_json=parsed == {'ok': True},
                        reasoning_mode=rec.get('reasoning_mode'), reasoning_tokens=details.get('reasoning_tokens'),
-                       reasoning_disabled=json.loads(rec.get('reasoning_mode') or '{}') == {'reasoning': {'enabled': False}}
+                       reasoning_disabled=json.loads(rec.get('reasoning_mode') or '{}') in (
+                           {'reasoning': {'enabled': False}}, {'thinking': {'type': 'disabled'}})
                        and not details.get('reasoning_tokens'),
                        usage=usage, usd=call_cost(rec, m['price']))
             with args.ledger.open('a') as f:

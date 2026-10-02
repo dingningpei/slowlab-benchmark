@@ -21,6 +21,10 @@ def call_cost(record: dict, price: dict) -> float:
         return float(usage['cost'])
     prompt = usage.get('prompt_tokens') or 0
     completion = usage.get('completion_tokens') or 0
+    hit = usage.get('prompt_cache_hit_tokens')
+    if hit is not None and 'input_cache_hit' in price:  # DeepSeek reports cache hits and misses separately
+        miss = usage.get('prompt_cache_miss_tokens', prompt - hit)
+        return (hit * price['input_cache_hit'] + miss * price['input'] + completion * price['output']) / 1e6
     return (prompt * price['input'] + completion * price['output']) / 1e6
 
 

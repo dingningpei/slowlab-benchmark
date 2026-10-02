@@ -1,0 +1,68 @@
+{
+  "models_id": "slowlab-pilot-models-v1",
+  "date": "2026-10-01",
+  "decision": "user, 2026-10-01: DeepSeek V4.1 Flash via the official DeepSeek API; GPT-6 Luna and MiMo V2.6 Flash via OpenRouter; hard cap USD 10",
+  "route": "DeepSeek: official API (DEEPSEEK_API_KEY), request {\"thinking\": {\"type\": \"disabled\"}}; others: OpenRouter (OPENROUTER_API_KEY), request {\"reasoning\": {\"enabled\": false}}; every call records its reasoning mode and usage",
+  "generation": {
+    "temperature": 0.7,
+    "max_tokens": 2048,
+    "json_mode": false,
+    "generation_seed": "per job: 9000 + 10 * site_index + repeat"
+  },
+  "prices_usd_per_million_tokens": {
+    "deepseek": "official API pricing page, peak rates",
+    "others": "https://openrouter.ai/api/v1/models, checked 2026-10-01"
+  },
+  "models": [
+    {
+      "name": "deepseek-v4.1-flash",
+      "llm": {
+        "model": "deepseek-flash",
+        "temperature": 0.7,
+        "max_tokens": 2048
+      },
+      "price": {
+        "input": 0.3,
+        "input_cache_hit": 0.006,
+        "output": 1.2
+      },
+      "price_source": "https://api-docs.deepseek.com/quick_start/pricing (checked 2026-10-01); peak rates applied at all hours (off-peak is half), so booked spend never understates the bill",
+      "model_version": "DeepSeek-V4.1-Flash"
+    },
+    {
+      "name": "gpt-6-luna",
+      "llm": {
+        "model": "openai/gpt-6-luna",
+        "temperature": 0.7,
+        "max_tokens": 2048
+      },
+      "price": {
+        "input": 0.1,
+        "output": 0.5
+      },
+      "openrouter_created": "2026-09-22"
+    },
+    {
+      "name": "mimo-v2.6-flash",
+      "llm": {
+        "model": "xiaomi/mimo-v2.6-flash",
+        "temperature": 0.7,
+        "max_tokens": 2048
+      },
+      "price": {
+        "input": 0.14,
+        "output": 0.28
+      },
+      "openrouter_created": "2026-09-21"
+    }
+  ],
+  "budget": {
+    "hard_cap_usd": 10.0,
+    "rule": "a campaign starts only if spent + worst-case reserve of running campaigns + its own worst case <= hard cap; connectivity tests and initial recommendations count"
+  },
+  "supersedes": {
+    "file": "configs/pilot_models_v0.json",
+    "sha256": "4b2c58c011eeb64507883b7a9e772f8921a2b57d81fe423cf8eace9ec6db9b2a",
+    "change": "DeepSeek through the official API (model deepseek-flash = DeepSeek-V4.1-Flash, thinking disabled) instead of OpenRouter; user decision 2026-10-01, cap unchanged at USD 10"
+  }
+}
