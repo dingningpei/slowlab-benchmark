@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the pilot campaign batch under a hard API spend cap (configs/pilot_models_v2.json).
+"""Run the pilot campaign batch under a hard API spend cap (configs/pilot_models_v3.json).
 
 An LLM campaign starts only if spent + the worst-case reserve of every running
 LLM campaign + its own worst case stays within the cap, so the cap holds even
@@ -36,7 +36,7 @@ def ledger_total(path: Path) -> float:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('batch', type=Path)
-    ap.add_argument('--models', default='configs/pilot_models_v2.json')
+    ap.add_argument('--models', default='configs/pilot_models_v3.json')
     ap.add_argument('--ledger', type=Path, required=True)
     ap.add_argument('--env-file', default=None, help='private file with the provider key (SLOWLAB_ENV_FILE)')
     ap.add_argument('--workers', type=int, default=12)

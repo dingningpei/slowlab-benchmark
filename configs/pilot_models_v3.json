@@ -1,0 +1,79 @@
+{
+  "models_id": "slowlab-pilot-models-v3",
+  "date": "2026-10-01",
+  "decision": "user, 2026-10-01: DeepSeek V4.1 Flash (official DeepSeek API), MiMo V2.6 Flash (Xiaomi endpoint) and GLM-5.3 Flash (Z.AI endpoint) via OpenRouter; official endpoints only; GLM with capped mandatory reasoning; hard cap USD 10",
+  "route": "DeepSeek: official API (DEEPSEEK_API_KEY), request {\"thinking\": {\"type\": \"disabled\"}}; others: OpenRouter (OPENROUTER_API_KEY), request {\"reasoning\": {\"enabled\": false}}; every call records its reasoning mode and usage",
+  "generation": {
+    "temperature": 0.7,
+    "max_tokens": 2048,
+    "json_mode": false,
+    "generation_seed": "per job: 9000 + 10 * site_index + repeat"
+  },
+  "prices_usd_per_million_tokens": {
+    "deepseek": "official API pricing page, peak rates",
+    "others": "https://openrouter.ai/api/v1/models, checked 2026-10-01"
+  },
+  "models": [
+    {
+      "name": "deepseek-v4.1-flash",
+      "llm": {
+        "model": "deepseek-flash",
+        "temperature": 0.7,
+        "max_tokens": 2048
+      },
+      "price": {
+        "input": 0.3,
+        "input_cache_hit": 0.006,
+        "output": 1.2
+      },
+      "price_source": "https://api-docs.deepseek.com/quick_start/pricing (checked 2026-10-01); peak rates applied at all hours (off-peak is half), so booked spend never understates the bill",
+      "model_version": "DeepSeek-V4.1-Flash"
+    },
+    {
+      "name": "mimo-v2.6-flash",
+      "llm": {
+        "model": "xiaomi/mimo-v2.6-flash",
+        "temperature": 0.7,
+        "max_tokens": 2048,
+        "provider_only": [
+          "xiaomi"
+        ],
+        "expected_provider": "Xiaomi"
+      },
+      "price": {
+        "input": 0.14,
+        "output": 0.28
+      },
+      "openrouter_created": "2026-09-21",
+      "endpoint": "Xiaomi (xiaomi/fp8), USD 0.14 / 0.28 per million tokens"
+    },
+    {
+      "name": "glm-5.3-flash",
+      "llm": {
+        "model": "z-ai/glm-5.3-flash",
+        "temperature": 0.7,
+        "max_tokens": 2048,
+        "provider_only": [
+          "z-ai"
+        ],
+        "expected_provider": "Z.AI"
+      },
+      "price": {
+        "input": 0.15,
+        "output": 0.5
+      },
+      "openrouter_created": null,
+      "endpoint": "Z.AI (z-ai/fp8), USD 0.15 / 0.50 per million tokens",
+      "reasoning": "mandatory on the Z.AI endpoint (checked 2026-10-01): requests fall back to {\"reasoning\": {\"max_tokens\": 1024}}; every call records the mode and reasoning tokens"
+    }
+  ],
+  "budget": {
+    "hard_cap_usd": 10.0,
+    "rule": "a campaign starts only if spent + worst-case reserve of running campaigns + its own worst case <= hard cap; connectivity tests and initial recommendations count"
+  },
+  "supersedes": {
+    "file": "configs/pilot_models_v2.json",
+    "sha256": "7e9b3981e21547952a3f6ebfc44a377a8464df3028e32c80246efe4f390445a2",
+    "change": "pin every model to its maker's own endpoint (OpenRouter provider only, no fallbacks, provider checked on every reply); GLM reasoning is mandatory and runs capped at 1,024 tokens per call, recorded per call; user decision 2026-10-01"
+  }
+}

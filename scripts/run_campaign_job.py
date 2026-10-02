@@ -62,7 +62,8 @@ def run_llm(spec, server, private, out, default_policy):
         load_dotenv()
         provider = _PROVIDER['provider'] = openai_compatible(llm['model'], temperature=llm.get('temperature', 0.7),
                                      max_tokens=llm.get('max_tokens', 2048), generation_seed=llm.get('generation_seed'),
-                                     json_mode=llm.get('json_mode', False), reasoning_effort=llm.get('reasoning_effort'))
+                                     json_mode=llm.get('json_mode', False), reasoning_effort=llm.get('reasoning_effort'),
+                                     provider_only=llm.get('provider_only'), expected_provider=llm.get('expected_provider'))
     blinding = load_blinding_policy(ROOT / 'configs/simulation_blinding_v2_2.json')
     audit_path = out.with_suffix('.audit.jsonl')
     completers = []

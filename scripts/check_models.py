@@ -23,7 +23,7 @@ MESSAGE = [{'role': 'system', 'content': 'You answer with JSON only.'},
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--models', default='configs/pilot_models_v2.json')
+    ap.add_argument('--models', default='configs/pilot_models_v3.json')
     ap.add_argument('--only', default=None, help='comma-separated model names to check')
     ap.add_argument('--ledger', type=Path, required=True)
     ap.add_argument('--out', type=Path, required=True)
@@ -36,7 +36,8 @@ def main():
         row = {'name': m['name'], 'requested': m['llm']['model']}
         try:
             complete = openai_compatible(m['llm']['model'], temperature=m['llm'].get('temperature', 0.7), max_tokens=256,
-                                         max_attempts=2)
+                                         max_attempts=2, provider_only=m['llm'].get('provider_only'),
+                                         expected_provider=m['llm'].get('expected_provider'))
             text = complete(MESSAGE)
             rec = complete.call_records[-1]
             usage = rec.get('usage') or {}
@@ -48,6 +49,7 @@ def main():
             row.update(status='ok', actual_model=rec.get('actual_model'), provider=rec.get('provider'),
                        finish_reason=rec.get('finish_reason'), reply=text[:120], valid_json=parsed == {'ok': True},
                        reasoning_mode=rec.get('reasoning_mode'), reasoning_tokens=details.get('reasoning_tokens'),
+                       reasoning_capped=json.loads(rec.get('reasoning_mode') or '{}').get('reasoning', {}).get('max_tokens'),
                        reasoning_disabled=json.loads(rec.get('reasoning_mode') or '{}') in (
                            {'reasoning': {'enabled': False}}, {'thinking': {'type': 'disabled'}})
                        and not details.get('reasoning_tokens'),
@@ -58,7 +60,7 @@ def main():
             row.update(status='failed', error=f'{type(error).__name__}: {error}'[:300])
         results.append(row)
         print(json.dumps({k: row.get(k) for k in ('name', 'status', 'actual_model', 'provider', 'valid_json',
-                                                   'reasoning_disabled', 'reasoning_tokens', 'usd', 'error')}))
+                                                   'reasoning_disabled', 'reasoning_capped', 'reasoning_tokens', 'usd', 'error')}))
     args.out.write_text(json.dumps({'checked_models': results}, indent=2) + '\n')
 
 
