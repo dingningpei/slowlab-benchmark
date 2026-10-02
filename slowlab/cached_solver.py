@@ -31,6 +31,20 @@ def output_closure(model, outputs):
     return [k for k in model.solving_order if k in needed]
 
 
+END_TIME_TOLERANCE_S=1e-3
+
+
+def snap_end_time(sol, t1) -> bool:
+    """LSODA occasionally ends a few microseconds past (or short of) the step end in floating
+    point (seen once in the pilot: +2.7e-5 s at t = 1.38e7 s). Snap the last point to the step
+    end and report it; steps that end exactly, and gaps larger than the tolerance, are left alone."""
+    import numpy as np
+    if not (sol.success and len(sol.t)) or sol.t[-1]==t1 or abs(sol.t[-1]-t1)>END_TIME_TOLERANCE_S:
+        return False
+    sol.t=np.array(sol.t,dtype=float);sol.t[-1]=t1
+    return True
+
+
 class SolverStall(RuntimeError):
     """The integrator needed more right-hand-side evaluations in one control step than allowed."""
 
@@ -125,6 +139,8 @@ class CachedGreenLightSolver:
         sol=solve_ivp(rhs,[t0,t1],np.array([m.init[k] for k in m.states]),method='LSODA',
                       max_step=float(m.options['max_step']),first_step=first,
                       atol=float(m.options['atol']),rtol=float(m.options['rtol']))
+        if snap_end_time(sol,t1):
+            self.end_time_snaps=getattr(self,'end_time_snaps',0)+1
         m.states_sol=sol
         if cap is not None:
             self.max_rhs_calls_seen=max(getattr(self,'max_rhs_calls_seen',0),calls[0])

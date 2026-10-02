@@ -453,4 +453,7 @@ class CampaignExecutor:
                 'trace_complete': self._trace_sink is not None,
                 'sensor_noise': self._noise.describe() if self._noise is not None else None,
                 'deep_soil_boundary_c': self.soil_boundary_c,
+                'solver_end_time_snaps': sum(getattr(getattr(engine, '_cached_solver', None), 'end_time_snaps', 0)
+                                             for life in self._lifecycles.values()
+                                             for engine in getattr(life, 'engines', {}).values()),
                 'unit_parameters': self.unit_parameters}

@@ -85,3 +85,16 @@ def test_executor_requests_only_its_consumed_outputs_unless_asked_for_all():
                          all_model_outputs=everything)
         assert seen == [expected] * 4
     assert set(EXECUTOR_OUTPUTS) == {'hBoilPipe', 'qLampIn', 'mcExtAir', 'mcFruitHar', 'mvCanAir', 'rhIn', 'co2InPpm'}
+
+
+def test_solver_end_time_snap_is_bounded():
+    import numpy as np
+    from types import SimpleNamespace
+    from slowlab.cached_solver import snap_end_time
+    t1 = 13787400.0
+    for offset, expect in ((2.744e-5, True), (-5e-4, True), (0.0, False), (5e-3, False)):
+        sol = SimpleNamespace(success=True, t=np.array([t1 - 300.0, t1 + offset]))
+        assert snap_end_time(sol, t1) is expect
+        assert bool(sol.t[-1] == t1) is (expect or offset == 0.0)
+    failed = SimpleNamespace(success=False, t=np.array([0.0, 300.00001]))
+    assert snap_end_time(failed, 300.0) is False and bool(failed.t[-1] != 300.0)

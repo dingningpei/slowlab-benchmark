@@ -1,0 +1,8 @@
+{
+  "purpose": "diagnosis of the pilot campaign that failed twice at the same point (DeepSeek, pilot site 3, repeat 1, Full branch, compartment 0, campaign second 13,787,100 = day 159.6)",
+  "method": "deterministic replay of the model's campaign actions from the outbound audit (scripts/diagnose_campaign_failure.py)",
+  "finding": "not a crop collapse: the carbohydrate buffer was 15,826 mg/m2 (minimum since planting -18.8), all state rates ordinary, smallest integrator step 0.0064 s. LSODA reported success but ended the 300 s step at 13,787,400.0000274 s, 2.7e-5 s past the step end, and the sensor bridge requires the solver end to equal the sensor event time exactly.",
+  "attempts": "attempt 1 and attempt 2 failed identically because the fixed generation seed reproduced the same model decisions",
+  "fix": "slowlab.cached_solver.snap_end_time: an end time within 1e-3 s of the step end is snapped to it and counted (settlement field solver_end_time_snaps); steps that end exactly are untouched, so every run that completed before is unchanged; gaps above 1e-3 s still stop the campaign as an infrastructure failure",
+  "contract": "no contract change (the user had approved contract v9 only if the cause were a crop collapse)"
+}
