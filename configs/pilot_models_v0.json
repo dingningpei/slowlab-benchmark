@@ -1,0 +1,61 @@
+{
+  "models_id": "slowlab-pilot-models-v0",
+  "date": "2026-10-01",
+  "decision": "user, 2026-10-01: DeepSeek V4.1 Flash, OpenAI GPT-6 Luna, Xiaomi MiMo V2.6 Flash; hard cap USD 10 for the whole pilot",
+  "route": "OpenRouter (one key); hidden reasoning disabled per request ({\"reasoning\": {\"enabled\": false}}); every call records its reasoning mode and billed cost",
+  "generation": {
+    "temperature": 0.7,
+    "max_tokens": 2048,
+    "json_mode": false,
+    "generation_seed": "per job: 9000 + 10 * site_index + repeat"
+  },
+  "prices_usd_per_million_tokens": {
+    "source": "https://openrouter.ai/api/v1/models",
+    "checked": "2026-10-01"
+  },
+  "models": [
+    {
+      "name": "deepseek-v4.1-flash",
+      "llm": {
+        "model": "deepseek/deepseek-v4.1-flash",
+        "temperature": 0.7,
+        "max_tokens": 2048
+      },
+      "price": {
+        "input": 0.03,
+        "output": 0.5
+      },
+      "openrouter_created": "2026-09-09"
+    },
+    {
+      "name": "gpt-6-luna",
+      "llm": {
+        "model": "openai/gpt-6-luna",
+        "temperature": 0.7,
+        "max_tokens": 2048
+      },
+      "price": {
+        "input": 0.1,
+        "output": 0.5
+      },
+      "openrouter_created": "2026-09-22"
+    },
+    {
+      "name": "mimo-v2.6-flash",
+      "llm": {
+        "model": "xiaomi/mimo-v2.6-flash",
+        "temperature": 0.7,
+        "max_tokens": 2048
+      },
+      "price": {
+        "input": 0.14,
+        "output": 0.28
+      },
+      "openrouter_created": "2026-09-21"
+    }
+  ],
+  "budget": {
+    "hard_cap_usd": 10.0,
+    "rule": "a campaign starts only if spent + worst-case reserve of running campaigns + its own worst case <= hard cap; connectivity tests and initial recommendations count"
+  }
+}

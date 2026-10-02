@@ -76,3 +76,17 @@ class Broken:
             from slowlab.providers import ProviderError
             raise ProviderError('simulated provider outage')
         return 'no json'
+
+
+class Billed(Exerciser):
+    """Exerciser that leaves provider-style call records (tokens only), for the spend-guard test."""
+
+    def __init__(self, task):
+        super().__init__(task)
+        self.call_records = []
+
+    def __call__(self, messages):
+        text = super().__call__(messages)
+        chars = sum(len(m['content']) for m in messages)
+        self.call_records.append({'usage': {'prompt_tokens': chars // 4, 'completion_tokens': len(text) // 4}})
+        return text

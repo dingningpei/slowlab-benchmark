@@ -30,6 +30,9 @@ from slowlab.executor_server import _path  # noqa: E402
 from slowlab.private_runs import campaign_spec, sha  # noqa: E402
 
 
+_PROVIDER = {}
+
+
 class _Done(Exception):
     def __init__(self, record, code):
         self.record, self.code = record, code
@@ -57,7 +60,7 @@ def run_llm(spec, server, private, out, default_policy):
     else:
         from slowlab.providers import load_dotenv, openai_compatible
         load_dotenv()
-        provider = openai_compatible(llm['model'], temperature=llm.get('temperature', 0.7),
+        provider = _PROVIDER['provider'] = openai_compatible(llm['model'], temperature=llm.get('temperature', 0.7),
                                      max_tokens=llm.get('max_tokens', 2048), generation_seed=llm.get('generation_seed'),
                                      json_mode=llm.get('json_mode', False), reasoning_effort=llm.get('reasoning_effort'))
     blinding = load_blinding_policy(ROOT / 'configs/simulation_blinding_v2_2.json')
@@ -118,6 +121,8 @@ def main():
         record, exit_code = done.record, done.code
     except Exception as error:
         record = {'status': 'failed', 'error': f'{type(error).__name__}: {error}', 'traceback': traceback.format_exc()}
+        if 'provider' in _PROVIDER:  # calls made before the failure were billed: keep them for the spend ledger
+            record['provider_call_records'] = getattr(_PROVIDER['provider'], 'call_records', [])
         exit_code = 3
     rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
     record.update(spec_sha256=sha(spec_path), elapsed_seconds=round(time.monotonic() - began, 1),

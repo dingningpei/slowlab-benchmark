@@ -46,7 +46,8 @@ def load_dotenv(path: str | Path | None = None) -> None:
     .env is in .gitignore, so keys are never committed. If the file is absent this
     silently does nothing.
     """
-    p = Path(path) if path else Path(__file__).resolve().parents[1] / ".env"
+    # SLOWLAB_ENV_FILE points at a private key file outside the repository (run hosts).
+    p = Path(path) if path else Path(os.environ.get("SLOWLAB_ENV_FILE") or Path(__file__).resolve().parents[1] / ".env")
     if not p.exists():
         return
     for line in p.read_text(encoding="utf-8").splitlines():
@@ -138,6 +139,8 @@ def openai_compatible(model: str, *, base_url: str | None = None,
             d["seed"] = int(generation_seed)
         if json_mode:
             d["response_format"] = {"type": "json_object"}
+        if "openrouter" in url:
+            d["usage"] = {"include": True}   # OpenRouter returns the billed cost per call
         if provider_only:
             if "openrouter" not in url:
                 raise ValueError("provider_only is supported only for OpenRouter routes")
@@ -184,6 +187,7 @@ def openai_compatible(model: str, *, base_url: str | None = None,
                     "temperature": temperature,
                     "max_tokens": max_tokens,
                     "reasoning_effort": reasoning_effort,
+                    "reasoning_mode": json.dumps(mode, sort_keys=True),
                     "json_mode": json_mode,
                 })
                 txt = msg.get("content") or ""

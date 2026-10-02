@@ -23,7 +23,7 @@ from slowlab.site_distribution import formal_weather_years  # noqa: E402
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--secret', type=Path, required=True, help='private pilot master-seed file')
-    ap.add_argument('--models', type=json.loads, required=True)
+    ap.add_argument('--models', required=True, help='JSON list of {"name", "llm"}, or a path to a models config')
     ap.add_argument('--sites', type=int, default=None, help='default: the committed pilot size')
     ap.add_argument('--repeats', type=int, default=2)
     ap.add_argument('--bo-seeds', type=int, default=2)
@@ -32,28 +32,37 @@ def main():
     ap.add_argument('--run-dir', type=Path, required=True)
     args = ap.parse_args()
     secret = json.loads(args.secret.read_text())
+    models = args.models
+    args.models = (json.loads((ROOT / models).read_text())['models'] if not models.lstrip().startswith('[')
+                   else json.loads(models))
     if secret['partition'] != 'pilot' or secret['distribution_id'] != 'slowlab-site-distribution-v1':
         raise SystemExit('not the pilot master seed for distribution v1')
     distribution = json.loads((ROOT / 'configs/site_distribution_v1.json').read_text())
     n = args.sites or secret['n_sites']
     jobs = []
+    sites = []
     for index in range(n):
         site = {'distribution': 'configs/site_distribution_v1.json', 'master_seed': secret['master_seed'], 'site_index': index}
-        years = formal_weather_years(distribution, secret['master_seed'], index)
-        for model in args.models:
-            for r in range(args.repeats):
+        sites.append((index, site, formal_weather_years(distribution, secret['master_seed'], index)))
+    # Order: repeat 0 of every site and model first, so a spend cap leaves complete first-round data.
+    for r in range(args.repeats):
+        for index, site, years in sites:
+            for model in args.models:
                 job = f"site{index:02d}_{model['name']}_r{r}"
-                jobs.append({'id': job, 'method': 'llm', 'llm': model['llm'], 'tool_seed': 7000 + 10 * index + r,
-                             'site': site, 'year': years['campaign_year'], 'feedback': None,
-                             'evaluation_years': years['evaluation_years'],
+                jobs.append({'id': job, 'method': 'llm', 'model_name': model['name'],
+                             'llm': {**model['llm'], 'generation_seed': 9000 + 10 * index + r},
+                             'tool_seed': 7000 + 10 * index + r, 'site': site, 'year': years['campaign_year'],
+                             'feedback': None, 'evaluation_years': years['evaluation_years'],
                              'private_dir': str(args.run_dir / 'private' / job)})
-        for seed in range(args.bo_seeds):
-            for feedback in ('full', 'endpoint'):
-                job = f'site{index:02d}_bo_s{seed}_{feedback}'
-                jobs.append({'id': job, 'method': 'bo', 'bo': {'schedule': 'staggered', 'seed': 2000 + seed},
-                             'site': site, 'year': years['campaign_year'], 'feedback': feedback,
-                             'evaluation_years': years['evaluation_years'],
-                             'private_dir': str(args.run_dir / 'private' / job)})
+        if r == 0:
+            for index, site, years in sites:
+                for seed in range(args.bo_seeds):
+                    for feedback in ('full', 'endpoint'):
+                        job = f'site{index:02d}_bo_s{seed}_{feedback}'
+                        jobs.append({'id': job, 'method': 'bo', 'bo': {'schedule': 'staggered', 'seed': 2000 + seed},
+                                     'site': site, 'year': years['campaign_year'], 'feedback': feedback,
+                                     'evaluation_years': years['evaluation_years'],
+                                     'private_dir': str(args.run_dir / 'private' / job)})
     args.run_dir.mkdir(parents=True, exist_ok=True)
     batch = {'out_dir': str(args.run_dir / 'campaigns'), 'script': 'scripts/run_campaign_job.py',
              'purpose': 'Phase 4 pilot campaigns (private)',
