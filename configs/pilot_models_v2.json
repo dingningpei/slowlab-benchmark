@@ -1,0 +1,69 @@
+{
+  "models_id": "slowlab-pilot-models-v2",
+  "date": "2026-10-01",
+  "decision": "user, 2026-10-01: DeepSeek V4.1 Flash (official API), MiMo V2.6 Flash and GLM-5.3 Flash (OpenRouter); hard cap USD 10",
+  "route": "DeepSeek: official API (DEEPSEEK_API_KEY), request {\"thinking\": {\"type\": \"disabled\"}}; others: OpenRouter (OPENROUTER_API_KEY), request {\"reasoning\": {\"enabled\": false}}; every call records its reasoning mode and usage",
+  "generation": {
+    "temperature": 0.7,
+    "max_tokens": 2048,
+    "json_mode": false,
+    "generation_seed": "per job: 9000 + 10 * site_index + repeat"
+  },
+  "prices_usd_per_million_tokens": {
+    "deepseek": "official API pricing page, peak rates",
+    "others": "https://openrouter.ai/api/v1/models, checked 2026-10-01"
+  },
+  "models": [
+    {
+      "name": "deepseek-v4.1-flash",
+      "llm": {
+        "model": "deepseek-flash",
+        "temperature": 0.7,
+        "max_tokens": 2048
+      },
+      "price": {
+        "input": 0.3,
+        "input_cache_hit": 0.006,
+        "output": 1.2
+      },
+      "price_source": "https://api-docs.deepseek.com/quick_start/pricing (checked 2026-10-01); peak rates applied at all hours (off-peak is half), so booked spend never understates the bill",
+      "model_version": "DeepSeek-V4.1-Flash"
+    },
+    {
+      "name": "mimo-v2.6-flash",
+      "llm": {
+        "model": "xiaomi/mimo-v2.6-flash",
+        "temperature": 0.7,
+        "max_tokens": 2048
+      },
+      "price": {
+        "input": 0.14,
+        "output": 0.28
+      },
+      "openrouter_created": "2026-09-21"
+    },
+    {
+      "name": "glm-5.3-flash",
+      "llm": {
+        "model": "z-ai/glm-5.3-flash",
+        "temperature": 0.7,
+        "max_tokens": 2048
+      },
+      "price": {
+        "input": 0.15,
+        "output": 0.5
+      },
+      "openrouter_created": null,
+      "note": "reasoning may be mandatory on this endpoint; the connectivity check records whether it can be disabled"
+    }
+  ],
+  "budget": {
+    "hard_cap_usd": 10.0,
+    "rule": "a campaign starts only if spent + worst-case reserve of running campaigns + its own worst case <= hard cap; connectivity tests and initial recommendations count"
+  },
+  "supersedes": {
+    "file": "configs/pilot_models_v1.json",
+    "sha256": "20d757206b348175879e138b2caeaca84e186d66a2cc55c62c7367bd08ceb50f",
+    "change": "openai/gpt-6-luna replaced by z-ai/glm-5.3-flash: OpenAI refused the OpenRouter account with HTTP 403 (provider terms of service), also in the OpenRouter web chat; user decision 2026-10-01"
+  }
+}

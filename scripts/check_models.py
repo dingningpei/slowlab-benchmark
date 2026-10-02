@@ -23,16 +23,19 @@ MESSAGE = [{'role': 'system', 'content': 'You answer with JSON only.'},
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--models', default='configs/pilot_models_v1.json')
+    ap.add_argument('--models', default='configs/pilot_models_v2.json')
+    ap.add_argument('--only', default=None, help='comma-separated model names to check')
     ap.add_argument('--ledger', type=Path, required=True)
     ap.add_argument('--out', type=Path, required=True)
     args = ap.parse_args()
     cfg = json.loads((ROOT / args.models).read_text())
     results = []
     for m in cfg['models']:
+        if args.only and m['name'] not in args.only.split(','):
+            continue
         row = {'name': m['name'], 'requested': m['llm']['model']}
         try:
-            complete = openai_compatible(m['llm']['model'], temperature=m['llm'].get('temperature', 0.7), max_tokens=64,
+            complete = openai_compatible(m['llm']['model'], temperature=m['llm'].get('temperature', 0.7), max_tokens=256,
                                          max_attempts=2)
             text = complete(MESSAGE)
             rec = complete.call_records[-1]
