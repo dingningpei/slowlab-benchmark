@@ -192,3 +192,12 @@ def test_scripted_model_runs_the_two_wave_plan_end_to_end(tmp_path):
     settlement = json.loads((folder / 'settlement.json').read_text())
     assert summary['counts']['recommended'] and summary['counts']['format_errors'] == 0
     assert settlement['starts'] == 8 and settlement['recommendation_fallback'] is False
+
+
+def test_format_errors_show_the_expected_reply():
+    for bad, needle in (('{"action": {"action": "advance", "day": 30}}', '"type": "campaign"'),
+                        ('<tool_call><function=runs></function></tool_call>', 'one JSON object only'),
+                        ('{"type": "campaign", "action": {"action": "advance", "day": 3}} NOTES {"a": 1}', 'nothing after it')):
+        with pytest.raises(FormatError) as err:
+            parse_reply(bad)
+        assert needle in str(err.value) and 'GreenLight' not in str(err.value)

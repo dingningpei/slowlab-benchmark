@@ -125,8 +125,8 @@ def test_old_results_become_notes_and_recent_ones_stay_whole(tmp_path):
 def test_notes_live_in_the_models_own_turn_and_are_bounded(tmp_path):
     summary, audit, _ = run(tmp_path, 'notes', Reader(reads=1, notes='GreenLight-looking text is the model\'s own'))
     later = audit[-1]['messages']
-    assert 'YOUR NOTES' in later[-2]['content'] and later[-2]['role'] == 'assistant'
-    assert not any('YOUR NOTES' in m['content'] for m in later if m['role'] != 'assistant')
+    assert json.loads(later[-2]['content'])['notes'].startswith('GreenLight') and later[-2]['role'] == 'assistant'
+    assert not any('GreenLight-looking' in m['content'] for m in later if m['role'] != 'assistant')
     assert all(r['firewall'] == 'pass' for r in audit) and summary['final_notes'].startswith('GreenLight')
     summary, _, _ = run(tmp_path, 'long_notes', Reader(reads=1, notes='x' * 2001))
     assert summary['counts']['format_errors'] >= 1 and summary['final_notes'] == ''

@@ -63,8 +63,12 @@ REPLY_FORMAT = (
     'The reason is optional, at most a few sentences. Analysis tools only analyse data you already '
     'received and do not advance time or spend campaign calls; they have their own call limit.\n'
     'Any reply may also carry "notes": "..." to replace your notes (the length limit is in the task budget). '
-    'Your current notes are shown after your latest reply.'
+    'Your current notes are shown as the "notes" field of your latest reply.'
 )
+
+
+REPLY_EXAMPLES = ('{"type": "campaign", "action": {"action": "advance", "day": 30}} or '
+                  '{"type": "tool", "name": "runs", "args": {}}')
 
 
 def system_message(task: dict) -> str:
@@ -81,14 +85,16 @@ def parse_reply(text: str) -> dict:
         stripped = stripped[stripped.find('\n') + 1:] if '\n' in stripped else stripped
     start, end = stripped.find('{'), stripped.rfind('}')
     if start < 0 or end <= start:
-        raise FormatError('no JSON object found')
+        raise FormatError('no JSON object found: reply with one JSON object only, for example '
+                          + REPLY_EXAMPLES)
     try:
         reply = json.loads(stripped[start:end + 1])
     except json.JSONDecodeError as exc:
-        raise FormatError(f'invalid JSON: {exc.msg}') from None
+        hint = ('; reply with exactly one JSON object and nothing after it' if exc.msg == 'Extra data' else '')
+        raise FormatError(f'invalid JSON: {exc.msg}{hint}') from None
     if not isinstance(reply, dict) or reply.get('type') not in ('campaign', 'tool', 'initial_recommendation',
                                                                   'design_complete'):
-        raise FormatError('type must be "campaign" or "tool"')
+        raise FormatError('the reply needs "type": "campaign" or "type": "tool", for example ' + REPLY_EXAMPLES)
     if reply['type'] == 'campaign' and not isinstance(reply.get('action'), dict):
         raise FormatError('a campaign reply needs an "action" object')
     if reply['type'] == 'tool' and (not isinstance(reply.get('name'), str)
@@ -272,7 +278,17 @@ class LLMCampaignAgent:
         if self.history:
             last = self.history[-1]['reply']
             if self.notes:
-                last = last + '\n\nYOUR NOTES\n' + self.notes
+                # Shown as a field of the model's own JSON reply, so the model is not invited to
+                # append free text after its JSON (it sets notes with the same "notes" field).
+                try:
+                    shown = json.loads(last)
+                    last = canonical({**shown, 'notes': self.notes}) if isinstance(shown, dict) else None
+                except json.JSONDecodeError:
+                    last = None
+                if last is None:
+                    last = canonical({'notes': self.notes})
+                    if self.history[-1]['reply'].strip():
+                        last = self.history[-1]['reply'] + '\n' + last
             last_reply = {'role': 'assistant', 'content': last}
             budget -= len(last_reply['content'])
             if not compact:
