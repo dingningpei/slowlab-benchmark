@@ -27,7 +27,7 @@
 - [ ] 实现支持过程观测、错峰启动/停止和资源约束的 GP/BO 策略；只在开发集调参
   - [x] gp-bo-v2：两波与错峰两种调度，种植季节入 GP，EI 与推荐针对合同 v5 的两季平均评分 → `slowlab/bo_agent.py`、`results/bo_dev_runs_20260930.json`
   - [ ] 过程感知部分：用 Phase 3 开发 site 训练过程预测器后接入错峰调度（2026-09-30 决定；「至今毛利」在第 90 天几乎无信息）
-  - [ ] 主基线改为带先验的局部 BO（决定记录 2026-10-03）：在开发 site 数据上拟合并冻结 GP 超参数；实现以固定参照为起点、信赖域内求 EI、只在已种方案中推荐；按预定规则在开发 site 上选初始半径并检查合格线
+  - [x] 主基线改为带先验的局部 BO（决定记录 2026-10-03）：在开发 site 数据上拟合并冻结 GP 超参数；实现以固定参照为起点、信赖域内求 EI、只在已种方案中推荐；按预定规则在开发 site 上选初始半径并检查合格线 → `configs/prior_bo_v1.json`、`results/prior_bo_radius_selection_20261004.json`
 - [ ] 实现实验前推荐与固定管理参照；不调用私有 oracle
 - [x] 实现同一初始快照的 Full/Endpoint 分支与匹配预算；科学观测严格隔离 → `slowlab/branching.py`、`tests/test_branching.py`（选项 A）
 - [x] 新的 LLM 循环（不复用 `legacy/v2.1` 的 TOMGRO harness）：决策点调用、上下文管理、失败处理 → `slowlab/llm_agent.py`、`scripts/run_llm_campaign.py`
