@@ -7,10 +7,15 @@ margin at the public prices; and every channel the method read, summarised per
 compartment and day (count, mean, minimum, maximum). It is a deterministic
 function of the public task view and transcript and contains nothing private.
 
-Selection rule (frozen): for every test site and method, the Full campaign of
-repeat 0. Readers: the method's own recommendation; the GP Reader below on
-every packet; each language model as a one-shot Reader on a random subset of
-64 packets (budget confirmed with the Phase 4 model choice).
+Selection rule (decisions 2026-10-01 and 2026-10-03): from the repeat-0 Full
+campaigns of every test site and method, a stratified random sample of 64
+packets (16 per method, committed seed). Every packet is read by every Reader:
+the method's own recommendation, the GP Reader below, and each language model
+as a one-shot Reader.
+
+GP Reader (gp-reader-v2, decision 2026-10-03): the main baseline's final step
+(configs/prior_bo_v1.json): the frozen kernel, and the tried policy with the
+highest posterior mean of the scoring rule; untried policies are never chosen.
 """
 from __future__ import annotations
 
@@ -18,10 +23,10 @@ import math
 
 import numpy as np
 
-from .tools import OutcomeModel, PublicHistory, contribution_margin, scoring_days, season_features
+from .tools import PublicHistory, contribution_margin, scoring_days, season_features
 
 PACKET_FORMAT = 'history-packet-v1'  # shown to Readers: no benchmark name
-GP_READER_VERSION = 'gp-reader-v1'
+GP_READER_VERSION = 'gp-reader-v2'
 
 
 def build_packet(task: dict, transcript: list) -> dict:
@@ -47,9 +52,10 @@ def build_packet(task: dict, transcript: list) -> dict:
     return {'format': PACKET_FORMAT, 'task_scoring_days': scoring_days(task), 'crops': crops, 'series': series}
 
 
-def gp_reader(task: dict, packet: dict, seed: int, pool_size: int = 256, restarts: int = 8) -> dict:
-    """Recommend the policy with the highest posterior mean of the scoring rule (as BO's final step)."""
-    from scipy.stats import qmc
+def gp_reader(task: dict, packet: dict, config: dict) -> dict:
+    """The main baseline's recommendation step on a packet. ``config``: a loaded prior BO config
+    (kernel, noise ratio) and the anchor policy under ``anchor_policy`` (used only without crops)."""
+    from .prior_bo import FrozenGP
     fields = task['policy']['fields']
     names = list(fields)
 
@@ -57,24 +63,16 @@ def gp_reader(task: dict, packet: dict, seed: int, pool_size: int = 256, restart
         return [(p[k] - fields[k]['min']) / (fields[k]['max'] - fields[k]['min']) for k in names]
     done = [c for c in packet['crops'] if c.get('reason') == 'normal_completion' and c.get('policy')
             and c.get('contribution_margin_eur_m2') is not None]
-    rng = np.random.default_rng([seed, 0x3E3])
-    sampler = qmc.Sobol(len(names), scramble=True, seed=rng)
-    pool = []
-    for point in sampler.random_base2(math.ceil(math.log2(4 * pool_size))):
-        p = {k: round(fields[k]['min'] + float(u) * (fields[k]['max'] - fields[k]['min']), 2) for k, u in zip(names, point)}
-        if p['night_temperature_c'] <= p['day_temperature_c']:
-            pool.append(p)
-        if len(pool) == pool_size:
-            break
-    if len(done) < 2:
-        if done:
-            return {'reader': GP_READER_VERSION, 'policy': dict(done[0]['policy']), 'basis': 'best_observed'}
-        return {'reader': GP_READER_VERSION, 'policy': pool[0], 'basis': 'no_completed_crops'}
+    if not done:
+        return {'reader': GP_READER_VERSION, 'policy': dict(config['anchor_policy']), 'basis': 'anchor_no_completed_crops'}
     x = np.array([scale(c['policy']) + season_features(c['start_day']) for c in done])
     y = np.array([c['contribution_margin_eur_m2'] for c in done])
-    model = OutcomeModel(x, y, rng, restarts)
-    candidates = pool + [c['policy'] for c in done]
-    mean, sd, per_day = model.predict_average(np.array([scale(p) for p in candidates]), packet['task_scoring_days'])
+    model = FrozenGP(x, y, config['hyperparameters']['kernel'], config['hyperparameters']['noise_ratio'])
+    tried = []
+    for c in done:
+        if c['policy'] not in tried:
+            tried.append(c['policy'])
+    mean, sd, per_day = model.predict_average(np.array([scale(p) for p in tried]), packet['task_scoring_days'])
     j = int(np.argmax(mean))
-    return {'reader': GP_READER_VERSION, 'policy': dict(candidates[j]), 'basis': 'max_posterior_scored_mean',
+    return {'reader': GP_READER_VERSION, 'policy': dict(tried[j]), 'basis': 'max_posterior_scored_mean_tried',
             'predicted_mean': float(mean[j]), 'predicted_sd': float(sd[j]), 'crops_used': len(done)}

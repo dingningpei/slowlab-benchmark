@@ -34,6 +34,10 @@ def test_packet_from_a_full_campaign_and_the_gp_reader(tmp_path):
     (tmp_path / 'public' / 'packet.json').write_text(canonical(packet))
     policy = load_blinding_policy(ROOT / 'configs/simulation_blinding_v2_2.json')
     assert scan([tmp_path / 'public'], private_needles(spec, policy))['status'] == 'pass'
-    a, b = gp_reader(task, packet, seed=1), gp_reader(task, packet, seed=1)
-    assert a == b and a['basis'] == 'max_posterior_scored_mean' and set(a['policy']) == set(task['policy']['fields'])
-    assert a['policy']['night_temperature_c'] <= a['policy']['day_temperature_c']
+    config = json.loads((ROOT / 'configs/prior_bo_v1.json').read_text())
+    config['anchor_policy'] = json.loads((ROOT / 'configs/fixed_reference_v1.json').read_text())['policy']
+    a, b = gp_reader(task, packet, config), gp_reader(task, packet, config)
+    assert a == b and a['basis'] == 'max_posterior_scored_mean_tried' and set(a['policy']) == set(task['policy']['fields'])
+    assert a['policy'] in [c['policy'] for c in packet['crops']]
+    empty = {**packet, 'crops': []}
+    assert gp_reader(task, empty, config)['policy'] == config['anchor_policy']

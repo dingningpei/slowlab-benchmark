@@ -1,0 +1,90 @@
+{
+  "models_id": "slowlab-formal-models-v1",
+  "date": "2026-10-04",
+  "decision": "user, 2026-10-04: the formal E1/E2/E3 runs use the pilot models, routes and generation settings unchanged; API hard cap USD 30 for all formal runs (RESEARCH_PLAN decisions 2026-10-04); pacing reserves and provider-side limits (user, 2026-10-04)",
+  "route": "DeepSeek: official API (DEEPSEEK_API_KEY), request {\"thinking\": {\"type\": \"disabled\"}}; others: OpenRouter (OPENROUTER_API_KEY), request {\"reasoning\": {\"enabled\": false}}; every call records its reasoning mode and usage",
+  "generation": {
+    "temperature": 0.7,
+    "max_tokens": 2048,
+    "json_mode": false,
+    "generation_seed": "per job: 19000 + 10 * site_index + repeat",
+    "tool_seed": "per job: 17000 + 10 * site_index + repeat"
+  },
+  "prices_usd_per_million_tokens": {
+    "deepseek": "official API pricing page, peak rates",
+    "others": "https://openrouter.ai/api/v1/models, checked 2026-10-01"
+  },
+  "models": [
+    {
+      "name": "deepseek-v4.1-flash",
+      "llm": {
+        "model": "deepseek-flash",
+        "temperature": 0.7,
+        "max_tokens": 2048
+      },
+      "price": {
+        "input": 0.3,
+        "input_cache_hit": 0.006,
+        "output": 1.2
+      },
+      "price_source": "https://api-docs.deepseek.com/quick_start/pricing (checked 2026-10-01); peak rates applied at all hours (off-peak is half), so booked spend never understates the bill",
+      "model_version": "DeepSeek-V4.1-Flash",
+      "reserve_usd": 0.34,
+      "reserve_basis": "3 x pilot maximum per branched campaign (0.112 USD, results/pilot_accounting_20261002.json)"
+    },
+    {
+      "name": "mimo-v2.6-flash",
+      "llm": {
+        "model": "xiaomi/mimo-v2.6-flash",
+        "temperature": 0.7,
+        "max_tokens": 2048,
+        "provider_only": [
+          "xiaomi"
+        ],
+        "expected_provider": "Xiaomi"
+      },
+      "price": {
+        "input": 0.14,
+        "output": 0.28
+      },
+      "openrouter_created": "2026-09-21",
+      "endpoint": "Xiaomi (xiaomi/fp8), USD 0.14 / 0.28 per million tokens",
+      "reserve_usd": 0.35,
+      "reserve_basis": "3 x pilot maximum per branched campaign (0.117 USD, results/pilot_accounting_20261002.json)"
+    },
+    {
+      "name": "glm-5.3-flash",
+      "llm": {
+        "model": "z-ai/glm-5.3-flash",
+        "temperature": 0.7,
+        "max_tokens": 2048,
+        "provider_only": [
+          "z-ai"
+        ],
+        "expected_provider": "Z.AI"
+      },
+      "price": {
+        "input": 0.15,
+        "output": 0.5
+      },
+      "openrouter_created": null,
+      "endpoint": "Z.AI (z-ai/fp8), USD 0.15 / 0.50 per million tokens",
+      "reasoning": "mandatory on the Z.AI endpoint (checked 2026-10-01): requests fall back to {\"reasoning\": {\"max_tokens\": 1024}}; every call records the mode and reasoning tokens",
+      "reserve_usd": 0.27,
+      "reserve_basis": "3 x pilot maximum per branched campaign (0.089 USD, results/pilot_accounting_20261002.json)"
+    }
+  ],
+  "budget": {
+    "hard_cap_usd": 30.0,
+    "provider_limits_usd": {
+      "deepseek_official_api_balance": 12.0,
+      "openrouter_key_limit": 18.0
+    },
+    "rule": "the USD 30 cap is held by provider-side limits that sum to it (set by the user 2026-10-04); the runner launches an LLM campaign only if spent + per-campaign reserves of running campaigns + its own reserve <= 30; a provider limit reached makes calls fail, and the batch pauses when more than 10% of finished jobs fail; connectivity checks and initial recommendations count"
+  },
+  "derived_from": {
+    "file": "configs/pilot_models_v3.json",
+    "sha256": "6acd9df079432017a663e1e1a2d4377a053fc39a99337067c6c5182a60eeb4ca",
+    "change": "formal identity: new generation/tool seed offsets and the USD 30 cap; models, endpoints, prices and settings unchanged"
+  }
+}

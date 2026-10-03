@@ -1,0 +1,6 @@
+{
+  "scheme": "sha256(domain \\0 label \\0 salt \\0 canonical-json(secret))",
+  "domain": "slowlab-seed-commitment-v1",
+  "label": "e3-packet-sample-v1",
+  "commitment": "5428590575b9dd3497c860120d41d5b4071874b000541228b6bae7f2837dd591"
+}
