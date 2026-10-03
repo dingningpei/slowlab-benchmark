@@ -7,9 +7,17 @@ within a campaign; each crop that completed normally gives one observation: scal
 planting-season inputs -> contribution margin under that site's public prices. Length scales and
 the noise ratio are shared by all groups; each group has its own constant mean and scale.
 
-Also reports a held-out check (5 folds over groups): for crops of held-out groups, predict each
-crop from 4 other crops of its group (campaign-sized data) with (a) the frozen hyperparameters fitted
-on the other folds, (b) the per-campaign refit GP of gp-bo-v3, (c) the mean of the 4 crops.
+Both kernel forms (``product`` and ``season_interaction``, see slowlab.prior_bo.prior_kernel) are
+fitted. Held-out checks (5 folds over groups; hyperparameters fitted on the other folds):
+
+* random: predict each crop of a held-out group from 4 other crops of that group (campaign-sized
+  data), also with the per-campaign refit GP of gp-bo-v3 and the mean of the 4 crops;
+* cross_season: in held-out two-wave groups (4 crops planted on day 0, 4 on day 182), train on the
+  day-0 crops plus one day-182 crop and predict the other day-182 crops; this is the use in a
+  campaign, where the second-wave choice and the recommendation rest on first-season crops.
+  Reported as RMSE and as pairwise ranking accuracy among the predicted crops.
+
+The kernel form is chosen by the higher cross-season ranking accuracy (ties: lower random RMSE).
 """
 from __future__ import annotations
 
@@ -60,12 +68,19 @@ def load_groups(data_dir: Path):
     return groups, digest.hexdigest(), len(files)
 
 
-def held_out_check(groups, folds, rng, train_size=4, restarts=8):
+def concordance(pred, true):
+    pairs = [(i, j) for i in range(len(true)) for j in range(i + 1, len(true)) if true[i] != true[j]]
+    return [float((pred[i] - pred[j]) * (true[i] - true[j]) > 0) for i, j in pairs]
+
+
+def held_out_check(groups, folds, rng, forms, train_size=4, restarts=8):
     order = rng.permutation(len(groups))
-    errors = {'frozen': [], 'refit': [], 'mean_of_training': []}
+    random = {name: [] for name in [*forms, 'refit_gp_bo_v3', 'mean_of_training']}
+    cross = {form: {'errors': [], 'concordant': []} for form in forms}
     for k in range(folds):
         test = set(order[k::folds].tolist())
-        hyper = fit_shared_hyperparameters([(x, y) for i, (x, y, _) in enumerate(groups) if i not in test], rng)
+        train = [(x, y) for i, (x, y, _) in enumerate(groups) if i not in test]
+        hyper = {form: fit_shared_hyperparameters(train, rng, form=form) for form in forms}
         for i in sorted(test):
             x, y, _ = groups[i]
             for j in range(len(y)):
@@ -73,13 +88,28 @@ def held_out_check(groups, folds, rng, train_size=4, restarts=8):
                 if len(others) < train_size:
                     continue
                 pick = rng.choice(others, size=train_size, replace=False)
-                frozen = FrozenGP(x[pick], y[pick], hyper['lengthscales'], hyper['noise_ratio'])
-                errors['frozen'].append(float(frozen.predict(x[j:j + 1])[0][0] - y[j]))
+                for form in forms:
+                    gp = FrozenGP(x[pick], y[pick], hyper[form]['kernel'], hyper[form]['noise_ratio'])
+                    random[form].append(float(gp.predict(x[j:j + 1])[0][0] - y[j]))
                 refit = OutcomeModel(x[pick][:, :6], y[pick], rng, restarts)
-                errors['refit'].append(float(refit.predict(x[j:j + 1, :6])[0][0] - y[j]))
-                errors['mean_of_training'].append(float(y[pick].mean() - y[j]))
-    return {name: {'rmse': float(np.sqrt(np.mean(np.square(e)))), 'mae': float(np.mean(np.abs(e))), 'n': len(e)}
-            for name, e in errors.items()}
+                random['refit_gp_bo_v3'].append(float(refit.predict(x[j:j + 1, :6])[0][0] - y[j]))
+                random['mean_of_training'].append(float(y[pick].mean() - y[j]))
+            first = [m for m in range(len(y)) if x[m, 7] > 0.99]   # cos input 1: planted on day 0
+            second = [m for m in range(len(y)) if x[m, 7] < 0.01]  # cos input near 0: planted on day 182
+            if len(first) >= 3 and len(second) >= 3:
+                anchor = int(rng.choice(second))
+                rest = [m for m in second if m != anchor]
+                train_idx = first + [anchor]
+                for form in forms:
+                    gp = FrozenGP(x[train_idx], y[train_idx], hyper[form]['kernel'], hyper[form]['noise_ratio'])
+                    pred = gp.predict(x[rest])[0]
+                    cross[form]['errors'].extend((pred - y[rest]).tolist())
+                    cross[form]['concordant'].extend(concordance(pred, y[rest]))
+    out = {'random': {name: {'rmse': float(np.sqrt(np.mean(np.square(e)))), 'n': len(e)} for name, e in random.items()},
+           'cross_season': {form: {'rmse': float(np.sqrt(np.mean(np.square(v['errors'])))),
+                                   'ranking_accuracy': float(np.mean(v['concordant'])), 'pairs': len(v['concordant'])}
+                            for form, v in cross.items()}}
+    return out
 
 
 def main():
@@ -91,16 +121,21 @@ def main():
     args = ap.parse_args()
     groups, data_sha, files = load_groups(args.data_dir)
     rng = np.random.default_rng(args.seed)
-    hyper = fit_shared_hyperparameters([(x, y) for x, y, _ in groups], rng)
-    check = held_out_check(groups, args.folds, rng)
+    forms = ('product', 'season_interaction')
+    fits = {form: fit_shared_hyperparameters([(x, y) for x, y, _ in groups], rng, form=form) for form in forms}
+    check = held_out_check(groups, args.folds, rng, forms)
+    cs = check['cross_season']
+    chosen = max(forms, key=lambda f: (cs[f]['ranking_accuracy'], -check['random'][f]['rmse']))
+    hyper = fits[chosen]
     contract = json.loads((ROOT / FIELDS_CONTRACT).read_text())
     out = {'inputs': list(contract['policy']['fields']) + ['planting_season_sin', 'planting_season_cos'],
            'input_scaling': f'policy fields scaled to [0, 1] by the bounds of {FIELDS_CONTRACT}; season as in slowlab.tools',
-           'hyperparameters': hyper, 'data': {'files': files, 'groups': len(groups),
+           'selection_rule': 'higher cross-season ranking accuracy; ties by lower random RMSE',
+           'chosen_form': chosen, 'fits': fits, 'hyperparameters': hyper, 'data': {'files': files, 'groups': len(groups),
                                               'data_files_sha256': data_sha, 'group_ids': [g for _, _, g in groups]},
            'held_out_check': check, 'seed': args.seed}
     args.out.write_text(json.dumps(out, indent=2) + '\n')
-    print(json.dumps({'hyperparameters': hyper, 'groups': len(groups), 'held_out_check': check}, indent=1))
+    print(json.dumps({'chosen_form': chosen, 'fits': fits, 'groups': len(groups), 'held_out_check': check}, indent=1))
 
 
 if __name__ == '__main__':

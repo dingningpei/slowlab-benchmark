@@ -13,11 +13,13 @@ CONTRACT = json.loads((ROOT / 'configs/task_contract_v8.json').read_text())
 POLICIES = json.loads((ROOT / 'configs/campaign_example_v0.json').read_text())
 ANCHOR = json.loads((ROOT / 'configs/fixed_reference_v1.json').read_text())['policy']
 TICK_DAY = 300 / 86400
-LENGTHSCALES = (0.6, 0.6, 0.8, 0.7, 1.0, 1.2, 0.5, 0.5)
+KERNEL = {'form': 'season_interaction', 'policy_lengthscales': [0.6, 0.6, 0.8, 0.7, 1.0, 1.2],
+          'season_lengthscale': 0.5, 'gamma': 0.3, 'tau': 2.0}
+PRODUCT = {'form': 'product', 'lengthscales': [0.6, 0.6, 0.8, 0.7, 1.0, 1.2, 0.5, 0.5]}
 
 
 def config(**kw):
-    return PriorBOConfig(anchor=ANCHOR, lengthscales=LENGTHSCALES, noise_ratio=0.1, **kw)
+    return PriorBOConfig(anchor=ANCHOR, kernel=KERNEL, noise_ratio=0.1, **kw)
 
 
 def run(tmp_path, name, *, mode='endpoint', seed=3, cfg=None, real_calendar=False):
@@ -48,10 +50,29 @@ def scaled(policy):
 def test_frozen_gp_ranking_does_not_depend_on_margin_scale_or_offset():
     rng = np.random.default_rng(0)
     x, y, xs = rng.random((5, 8)), rng.normal(size=5), rng.random((40, 8))
-    a = FrozenGP(x, y, LENGTHSCALES, 0.1)
-    b = FrozenGP(x, 7.0 * y + 30.0, LENGTHSCALES, 0.1)
-    assert np.argsort(a.predict(xs)[0]).tolist() == np.argsort(b.predict(xs)[0]).tolist()
-    assert np.allclose(b.predict(xs)[1], 7.0 * a.predict(xs)[1])
+    for kernel in (KERNEL, PRODUCT):
+        a = FrozenGP(x, y, kernel, 0.1)
+        b = FrozenGP(x, 7.0 * y + 30.0, kernel, 0.1)
+        assert np.argsort(a.predict(xs)[0]).tolist() == np.argsort(b.predict(xs)[0]).tolist()
+        assert np.allclose(b.predict(xs)[1], 7.0 * a.predict(xs)[1])
+
+
+def test_season_interaction_separates_a_season_offset_from_policy_effects():
+    # margins: a large season offset plus the same policy effect in both seasons
+    rng = np.random.default_rng(2)
+    groups = []
+    for _ in range(30):
+        pol = rng.random((4, 6))
+        rows = np.vstack([np.hstack([pol, np.tile([0.5, 1.0], (4, 1))]), np.hstack([pol, np.tile([0.5, 0.0], (4, 1))])])
+        effect = 8 * pol[:, 0]
+        groups.append((rows, np.concatenate([effect + 25, effect]) + rng.normal(0, 0.2, 8) + rng.normal(0, 3)))
+    hyper = fit_shared_hyperparameters(groups, rng, restarts=4, form='season_interaction')
+    assert hyper['kernel']['gamma'] < 0.3 and hyper['kernel']['tau'] > 1
+    # trained on day-0 crops only, it still ranks second-season outcomes by the policy effect
+    x, y = groups[0]
+    gp = FrozenGP(x[:4], y[:4], hyper['kernel'], hyper['noise_ratio'])
+    pred = gp.predict(x[4:])[0]
+    assert np.argsort(pred).tolist() == np.argsort(y[4:]).tolist()
 
 
 def test_shared_fit_finds_the_relevant_input():
@@ -61,7 +82,7 @@ def test_shared_fit_finds_the_relevant_input():
         x = rng.random((6, 8))
         groups.append((x, 10 * np.sin(3 * x[:, 0]) + rng.normal(0, 0.3, 6) + rng.normal(0, 5)))
     hyper = fit_shared_hyperparameters(groups, rng, restarts=4)
-    ls = hyper['lengthscales']
+    ls = hyper['kernel']['lengthscales']
     assert ls[0] < min(ls[1:]) and hyper['noise_ratio'] < 0.2
 
 
@@ -120,4 +141,4 @@ def test_design_is_orthogonal_and_configuration_is_checked():
         with pytest.raises(ValueError):
             config(**bad)
     with pytest.raises(ValueError):
-        PriorBOConfig(anchor=ANCHOR, lengthscales=(1.0,) * 6, noise_ratio=0.1)
+        PriorBOConfig(anchor=ANCHOR, kernel={'form': 'other'}, noise_ratio=0.1)

@@ -7,8 +7,8 @@ It starts where a grower would start and searches only nearby:
 * Perturbations come from a two-level orthogonal design (rows of an order-8 Hadamard matrix): every
   field moves by plus or minus the trust-region radius, in the scaled policy box. Row order, column
   choice and column signs are drawn from the method seed.
-* The Gaussian process has frozen hyperparameters (Matern 5/2 length scales for the six policy fields
-  and the two planting-season inputs, and a noise-to-signal ratio) fitted once on development-site data
+* The Gaussian process has a frozen kernel (form and hyperparameters, see ``prior_kernel``) and
+  noise-to-signal ratio, fitted once on development-site data
   (``scripts/fit_prior_bo_hyperparameters.py``). Within a campaign only a constant mean and a scale are
   estimated (generalised least squares and profile likelihood); neither changes the posterior mean
   ranking or the expected-improvement argmax, so nothing about the response surface is refitted from
@@ -47,15 +47,43 @@ def hadamard8():
     return h
 
 
-class FrozenGP:
-    """GP with frozen length scales and noise ratio; constant mean and scale estimated from the data."""
+KERNEL_FORMS = ('product', 'season_interaction')
 
-    def __init__(self, x, y, lengthscales, noise_ratio, *, mean=None, scale2=None):
-        self.lengthscales = np.asarray(lengthscales, dtype=float)
+
+def prior_kernel(a, b, kernel: dict):
+    """Unit-scale prior covariance between rows (six scaled policy fields, two planting-season inputs).
+
+    ``product``: Matern 5/2 over all eight inputs with one length scale each.
+    ``season_interaction``: k_p(x, x') * (1 - gamma + gamma * k_s(s, s')) + tau * k_s(s, s'), with Matern
+    5/2 k_p over the policy fields and k_s over the season inputs (one shared length scale). The tau term
+    is a season effect common to every policy, so it cancels when policies are compared; gamma is the
+    share of the policy effect that changes with the planting season.
+    """
+    a, b = np.asarray(a, dtype=float), np.asarray(b, dtype=float)
+    if kernel['form'] == 'product':
+        return _matern52(a, b, np.asarray(kernel['lengthscales'], dtype=float))
+    if kernel['form'] != 'season_interaction':
+        raise ValueError('unknown kernel form')
+    kp = _matern52(a[:, :6], b[:, :6], np.asarray(kernel['policy_lengthscales'], dtype=float))
+    ks = _matern52(a[:, 6:], b[:, 6:], np.full(2, float(kernel['season_lengthscale'])))
+    gamma, tau = float(kernel['gamma']), float(kernel['tau'])
+    return kp * (1.0 - gamma + gamma * ks) + tau * ks
+
+
+def kernel_variance(kernel: dict) -> float:
+    return 1.0 + (float(kernel['tau']) if kernel['form'] == 'season_interaction' else 0.0)
+
+
+class FrozenGP:
+    """GP with a frozen kernel and noise ratio; constant mean and scale estimated from the data."""
+
+    def __init__(self, x, y, kernel, noise_ratio, *, mean=None, scale2=None):
+        self.kernel = dict(kernel)
         self.noise_ratio = float(noise_ratio)
         self.x = np.asarray(x, dtype=float)
         self.y = np.asarray(y, dtype=float)
-        k = _matern52(self.x, self.x, self.lengthscales) + (self.noise_ratio + 1e-9) * np.eye(len(self.x))
+        self.prior_var = kernel_variance(self.kernel)
+        k = prior_kernel(self.x, self.x, self.kernel) + (self.noise_ratio + 1e-9) * np.eye(len(self.x))
         self.k_inv = np.linalg.inv(k)
         ones = np.ones(len(self.y))
         self.mean = float(ones @ self.k_inv @ self.y / (ones @ self.k_inv @ ones)) if mean is None else mean
@@ -69,19 +97,19 @@ class FrozenGP:
     def with_fantasies(self, xs, ys) -> 'FrozenGP':
         """Same mean and scale, conditioned on extra (x, y) pairs (kriging believer)."""
         return FrozenGP(np.vstack([self.x, np.asarray(xs, dtype=float)]),
-                        np.concatenate([self.y, np.asarray(ys, dtype=float)]), self.lengthscales,
+                        np.concatenate([self.y, np.asarray(ys, dtype=float)]), self.kernel,
                         self.noise_ratio, mean=self.mean, scale2=self.scale2)
 
     def predict(self, xs):
-        ks = _matern52(np.asarray(xs, dtype=float), self.x, self.lengthscales)
+        ks = prior_kernel(np.asarray(xs, dtype=float), self.x, self.kernel)
         mean = self.mean + ks @ self.alpha
-        var = np.maximum(1.0 - np.einsum('ij,jk,ik->i', ks, self.k_inv, ks), 1e-12) * self.scale2
+        var = np.maximum(self.prior_var - np.einsum('ij,jk,ik->i', ks, self.k_inv, ks), 1e-12) * self.scale2
         return mean, np.sqrt(var), np.sqrt(var + self.noise_ratio * self.scale2)
 
     def predict_joint(self, xs):
         xs = np.asarray(xs, dtype=float)
-        ks = _matern52(xs, self.x, self.lengthscales)
-        cov = (_matern52(xs, xs, self.lengthscales) - ks @ self.k_inv @ ks.T) * self.scale2
+        ks = prior_kernel(xs, self.x, self.kernel)
+        cov = (prior_kernel(xs, xs, self.kernel) - ks @ self.k_inv @ ks.T) * self.scale2
         return self.mean + ks @ self.alpha, cov
 
     def predict_average(self, policies_x, days):
@@ -96,13 +124,29 @@ class FrozenGP:
         return np.array(means), np.array(sds), per_day
 
 
-def profile_nll(theta, groups):
+def kernel_from_theta(theta, form):
+    if form == 'product':
+        return {'form': form, 'lengthscales': np.exp(theta[:8]).tolist()}, math.exp(theta[8])
+    return ({'form': form, 'policy_lengthscales': np.exp(theta[:6]).tolist(),
+             'season_lengthscale': math.exp(theta[6]), 'gamma': 1.0 / (1.0 + math.exp(-theta[7])),
+             'tau': math.exp(theta[8])}, math.exp(theta[9]))
+
+
+def theta_bounds(form):
+    ls = (math.log(0.05), math.log(20.0))
+    ratio = (math.log(1e-4), math.log(10.0))
+    if form == 'product':
+        return [ls] * 8 + [ratio]
+    return [ls] * 7 + [(-8.0, 8.0), (math.log(1e-3), math.log(100.0)), ratio]
+
+
+def profile_nll(theta, groups, form='product'):
     """Negative log likelihood summed over groups, each with its own profiled constant mean and scale."""
-    lengthscales, ratio = np.exp(theta[:-1]), math.exp(theta[-1])
+    kernel, ratio = kernel_from_theta(theta, form)
     total = 0.0
     for x, y in groups:
         n = len(y)
-        k = _matern52(x, x, lengthscales) + (ratio + 1e-9) * np.eye(n)
+        k = prior_kernel(x, x, kernel) + (ratio + 1e-9) * np.eye(n)
         try:
             chol = np.linalg.cholesky(k)
         except np.linalg.LinAlgError:
@@ -116,26 +160,27 @@ def profile_nll(theta, groups):
     return total
 
 
-def fit_shared_hyperparameters(groups, rng, restarts=16):
-    """Length scales (one per input) and noise ratio shared by all groups (maximum profile likelihood)."""
+def fit_shared_hyperparameters(groups, rng, restarts=16, form='product'):
+    """Kernel hyperparameters and noise ratio shared by all groups (maximum profile likelihood)."""
     from scipy.optimize import minimize
-    dim = groups[0][0].shape[1]
-    low = np.array([math.log(0.05)] * dim + [math.log(1e-4)])
-    high = np.array([math.log(20.0)] * dim + [math.log(10.0)])
+    bounds = theta_bounds(form)
+    low, high = np.array([b[0] for b in bounds]), np.array([b[1] for b in bounds])
     best = None
-    for start in low + rng.random((restarts, dim + 1)) * (high - low):
-        fit = minimize(profile_nll, start, args=(groups,), method='L-BFGS-B', bounds=list(zip(low, high)))
+    for start in low + rng.random((restarts, len(bounds))) * (high - low):
+        fit = minimize(profile_nll, start, args=(groups, form), method='L-BFGS-B', bounds=bounds)
         if best is None or fit.fun < best.fun:
             best = fit
-    return {'lengthscales': np.exp(best.x[:-1]).tolist(), 'noise_ratio': float(math.exp(best.x[-1])),
-            'neg_log_likelihood': float(best.fun), 'groups': len(groups),
+    kernel, ratio = kernel_from_theta(best.x, form)
+    at_bound = [i for i, (v, (lo, hi)) in enumerate(zip(best.x, bounds)) if v - lo < 1e-3 or hi - v < 1e-3]
+    return {'kernel': kernel, 'noise_ratio': ratio, 'neg_log_likelihood': float(best.fun),
+            'parameters_at_bounds': at_bound, 'groups': len(groups),
             'observations': int(sum(len(y) for _, y in groups))}
 
 
 @dataclass(frozen=True)
 class PriorBOConfig:
     anchor: dict
-    lengthscales: tuple
+    kernel: dict
     noise_ratio: float
     radius: float = 0.25
     initial_units: int = 2
@@ -145,7 +190,7 @@ class PriorBOConfig:
     turbo: dict = field(default_factory=lambda: dict(TURBO))
 
     def __post_init__(self):
-        if not 0 < self.radius <= 0.8 or len(self.lengthscales) != 8 or self.noise_ratio <= 0:
+        if not 0 < self.radius <= 0.8 or self.kernel.get('form') not in KERNEL_FORMS or self.noise_ratio <= 0:
             raise ValueError('invalid prior BO configuration')
         if not 0 < self.stagger_fraction < 1 or self.initial_units < 1 or self.pool_size < 16:
             raise ValueError('invalid prior BO configuration')
@@ -162,8 +207,8 @@ def load_prior_config(path, radius: float) -> PriorBOConfig:
     root = Path(__file__).resolve().parents[1]
     anchor = json.loads(frozen_path(root, record['anchor']['file']).read_text())['policy']
     hyper = record['hyperparameters']
-    return PriorBOConfig(anchor=anchor, lengthscales=tuple(hyper['lengthscales']),
-                         noise_ratio=hyper['noise_ratio'], radius=radius, turbo=dict(record['turbo']))
+    return PriorBOConfig(anchor=anchor, kernel=dict(hyper['kernel']), noise_ratio=hyper['noise_ratio'],
+                         radius=radius, turbo=dict(record['turbo']))
 
 
 class PriorLocalBOAgent(GPBOAgent):
@@ -226,7 +271,7 @@ class PriorLocalBOAgent(GPBOAgent):
     def _model(self, rows, ys):
         if not rows:
             return None
-        return FrozenGP(np.array(rows), np.array(ys), self.prior.lengthscales, self.prior.noise_ratio)
+        return FrozenGP(np.array(rows), np.array(ys), self.prior.kernel, self.prior.noise_ratio)
 
     def _incumbent(self, model, policies):
         """The tried policy with the highest posterior mean of the scored objective."""
