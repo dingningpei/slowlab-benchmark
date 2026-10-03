@@ -4,6 +4,7 @@
     python3 scripts/run_campaign_job.py SPEC.json
 
 SPEC: {"method": "bo", "bo": {"schedule", "seed", ...BOConfig fields},
+       or {"method": "bo", "bo": {"agent": "prior_local", "config" (a prior BO config file), "radius", "seed"}},
        or {"method": "llm", "llm": {"model" ("scripted" or a provider id), "temperature", "max_tokens",
            "generation_seed", "json_mode", "reasoning_effort"}, "tool_seed"} (branched Full/Endpoint protocol,
            "feedback" ignored),
@@ -26,6 +27,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from slowlab.agent_client import CampaignProcess  # noqa: E402
 from slowlab.bo_agent import BOConfig, GPBOAgent  # noqa: E402
+from slowlab.prior_bo import PriorLocalBOAgent, load_prior_config  # noqa: E402
 from slowlab.executor_server import _path  # noqa: E402
 from slowlab.private_runs import campaign_spec, sha  # noqa: E402
 
@@ -111,8 +113,15 @@ def main():
             raise ValueError('unknown method')
         bo = dict(spec['bo'])
         seed = bo.pop('seed')
+        agent = bo.pop('agent', 'gp-bo-v3')
         with CampaignProcess(private / 'site.json', private_log=private / 'server.log') as campaign:
-            summary = GPBOAgent(campaign.session, seed, BOConfig(**bo)).run()
+            if agent == 'prior_local':
+                summary = PriorLocalBOAgent(campaign.session, seed, load_prior_config(ROOT / bo['config'],
+                                                                                       bo['radius'])).run()
+            elif agent == 'gp-bo-v3':
+                summary = GPBOAgent(campaign.session, seed, BOConfig(**bo)).run()
+            else:
+                raise ValueError('unknown BO agent')
             transcript = campaign.session.transcript
             code = campaign.close()
         record = {'status': 'completed' if code == 0 else 'failed', 'method': 'bo', 'bo': summary,
