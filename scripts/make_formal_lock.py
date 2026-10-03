@@ -8,7 +8,9 @@ The lock lists the sha256 of every file under slowlab/ and scripts/, of the conf
 runs read, and of the rendered prompts (system message for each feedback view and the fixed
 reply format, examples and day-0 instruction), plus method versions, model identities, the
 seed commitments and the run environment. ``--verify`` recomputes the file and prompt hashes
-of the current tree and fails on any difference.
+of the current tree and fails if any locked file or prompt changed or disappeared; files added
+after the lock (later E3, reference-search and sensitivity scripts, locked in turn before they
+run) are listed but do not fail the check.
 """
 from __future__ import annotations
 
@@ -68,16 +70,18 @@ def main():
     if args.verify:
         lock = json.loads(args.verify.read_text())
         files, prompts = tree_hashes(), prompt_hashes()
-        bad = sorted(k for k in set(lock['files']) | set(files) if lock['files'].get(k) != files.get(k))
+        bad = sorted(k for k in lock['files'] if lock['files'][k] != files.get(k))
+        added = sorted(set(files) - set(lock['files']))
         bad += sorted(k for k in lock['prompts'] if lock['prompts'][k] != prompts.get(k))
         if versions() != lock['versions']:
             bad.append('versions')
-        print(json.dumps({'lock': lock['lock_id'], 'match': not bad, 'differences': bad}))
+        print(json.dumps({'lock': lock['lock_id'], 'match': not bad, 'differences': bad, 'added_files': added}))
         raise SystemExit(1 if bad else 0)
     models = json.loads((ROOT / 'configs/formal_models_v1.json').read_text())
     lock = {'lock_id': 'slowlab-formal-lock-v1', 'date': '2026-10-04',
             'decision': 'RESEARCH_PLAN decisions 2026-10-04 (N = 48, budget USD 30, pause rules)',
-            'scope': 'formal E1/E2 campaigns and evaluations, E3, best-known reference search, boundary sensitivity',
+            'scope': ('formal E1/E2 campaigns and their evaluations; E3, best-known reference search and the boundary '
+                      'sensitivity reuse these files unchanged and add their own scripts under a later lock'),
             'versions': versions(), 'prompts': prompt_hashes(),
             'models': [{'name': m['name'], 'model': m['llm']['model'],
                         'provider': m['llm'].get('expected_provider', 'DeepSeek official API'),
