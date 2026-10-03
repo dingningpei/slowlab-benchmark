@@ -27,7 +27,7 @@
 - [ ] 实现支持过程观测、错峰启动/停止和资源约束的 GP/BO 策略；只在开发集调参
   - [x] gp-bo-v2：两波与错峰两种调度，种植季节入 GP，EI 与推荐针对合同 v5 的两季平均评分 → `slowlab/bo_agent.py`、`results/bo_dev_runs_20260930.json`
   - [ ] 过程感知部分：用 Phase 3 开发 site 训练过程预测器后接入错峰调度（2026-09-30 决定；「至今毛利」在第 90 天几乎无信息）
-  - [ ] 主基线改为带先验的局部 BO（决定记录 2026-10-03）：在开发 site 数据上拟合并冻结 GP 超参数；实现以固定参照为起点、信赖域内求 EI、只在已种方案中推荐；按预定规则在开发 site 上选初始半径并检查合格线；另实现开发曲面均值变体（次要）
+  - [ ] 主基线改为带先验的局部 BO（决定记录 2026-10-03）：在开发 site 数据上拟合并冻结 GP 超参数；实现以固定参照为起点、信赖域内求 EI、只在已种方案中推荐；按预定规则在开发 site 上选初始半径并检查合格线
 - [ ] 实现实验前推荐与固定管理参照；不调用私有 oracle
 - [x] 实现同一初始快照的 Full/Endpoint 分支与匹配预算；科学观测严格隔离 → `slowlab/branching.py`、`tests/test_branching.py`（选项 A）
 - [x] 新的 LLM 循环（不复用 `legacy/v2.1` 的 TOMGRO harness）：决策点调用、上下文管理、失败处理 → `slowlab/llm_agent.py`、`scripts/run_llm_campaign.py`
@@ -44,7 +44,7 @@
 - [x] 分开开发 / pilot / test sites；记录全部生成、排除与版本信息。证据：`configs/site_partition_v1.json`（test 的 site 数待功效分析确定）
 - [x] 私有 seed 带盐 commitment；artifact、文件名、日志附件防泄漏检查。证据：`configs/seed_commitment_pilot_v1.json`、`configs/seed_commitment_test_v1.json`；防泄漏扫描 `scripts/check_public_leaks.py`
 - [x] 隔离的推荐评测器：独立天气副本；Monte Carlo 误差小于要报告的差异（设计已定，见决定记录 2026-09-30）；评测年数定为 3 年。证据：`results/evaluator_check_20260930.json`、`results/evaluation_error_study_20260930.json`
-- [ ] best-known feasible reference 的数值搜索与搜索误差报告
+- [ ] best-known feasible reference 的数值搜索与搜索误差报告（随机 8 个 test site，其中 2 个做两次；决定记录 2026-10-03）
 - [x] 冻结统计单位、主检验族、次要指标、CI、失败与缺失处理。见 RESEARCH_PLAN §5 与决定记录 2026-10-01
 - [ ] 用开发/pilot 方差做功效或精度分析，确定 N；冻结 E3 packet 选择规则与诊断 Reader（E3 规则已冻结，见决定记录 2026-10-01 与 `slowlab/history_packet.py`；开发方差研究运行中，pilot 的 LLM 方差已得（`results/pilot_evaluation_analysis_20261003.json`）；最终 N 待主基线在 pilot site 上补跑后的方差）
 
@@ -76,11 +76,11 @@
 
 ## Phase 6：E3 与必要的机制核验
 
-- [ ] 按预注册规则抽取事实 history packets（含提前停止与未完成结果）
+- [ ] 按预注册规则抽取事实 history packets（含提前停止与未完成结果）（64 个，4 个方法各 16 个，全部 Reader 读同一批；决定记录 2026-10-03）
 - [ ] 两个 Reader 使用逐字节相同证据，独立会话、随机顺序，不见来源方法与评测分数
 - [ ] 分析 Reader 替换与固定 Reader 的 history 效用；不强行做加性归因
-- [ ] 完成已注册的 Executor 敏感性；无 LLM 鲁棒性实验支持的范围不作稳健性主张
-  - [ ] 控制步长 600 s 对 300 s（2026-09-30 自 Phase 2 移入：算力已不需要更长步长；需先把写死的 300 s 改为合同参数，并区分控制频率与观测频率，用评测器比较得分与方案排序）
+- [ ] 完成已注册的敏感性：边界传热（16 个 test site × 5 个 Full 最终推荐，Ueff 0 与 4）与干物质比例（由已有结果换算）；其余敏感性不做，论文不作相应的稳健性主张
+  - [ ] 控制步长 600 s 对 300 s（2026-09-30 自 Phase 2 移入：算力已不需要更长步长；需先把写死的 300 s 改为合同参数，并区分控制频率与观测频率，用评测器比较得分与方案排序）（2026-10-03 决定不做）
 
 ## Phase 7：论文与复现材料
 
