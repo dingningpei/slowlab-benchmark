@@ -19,7 +19,7 @@
 ## Phase 2：算力预算、代理接口与强基线
 
 - [x] 实测四隔间全年耗时与并行扩展（改为本地 i7-10700K WSL2，不租服务器）：两项不改数值的优化后每场约 0.52 h，12 worker 约 23 场/小时，1,024 场约 1.84 天 → `results/annual12_wsl_20260930_0df43c9.json`、`results/compute_scaling_wsl_20260930_0df43c9.json`
-- [ ] Phase 3 定出 N 后，给出 N × 隔间 × 副本（含评测副本、pilot、重跑）的算力表
+- [x] Phase 3 定出 N 后，给出 N × 隔间 × 副本（含评测副本、pilot、重跑）的算力表 → 约 2,700 核时，见决定记录 2026-10-04
 - [x] `slowlab/agent_api.py`：子进程 + JSON 行协议包住 `CampaignExecutor.dispatch`；代理拿不到任何 Python 对象、文件、网络 → `slowlab/agent_protocol.py`、`executor_server.py`、`agent_client.py`，`tests/test_agent_api.py`，`results/agent_api_prefix_check.json`
 - [x] 公共工具集（查询、汇总、GP 拟合、候选预测）：独立工具随机种子；输入输出与数值预算冻结 → `slowlab/tools.py`（analysis-tools-v1，最终锁定在 Phase 4）、`tests/test_tools.py`
 - [x] 测试：公开历史相同、私有 seed/latent/future 不同 → prompt 与工具输出逐字节相同 → `tests/test_llm_agent.py`、`tests/test_tools.py`、`tests/test_agent_api.py`
@@ -46,7 +46,7 @@
 - [x] 隔离的推荐评测器：独立天气副本；Monte Carlo 误差小于要报告的差异（设计已定，见决定记录 2026-09-30）；评测年数定为 3 年。证据：`results/evaluator_check_20260930.json`、`results/evaluation_error_study_20260930.json`
 - [ ] best-known feasible reference 的数值搜索与搜索误差报告（随机 8 个 test site，其中 2 个做两次；决定记录 2026-10-03）
 - [x] 冻结统计单位、主检验族、次要指标、CI、失败与缺失处理。见 RESEARCH_PLAN §5 与决定记录 2026-10-01
-- [ ] 用开发/pilot 方差做功效或精度分析，确定 N；冻结 E3 packet 选择规则与诊断 Reader（E3 规则已冻结，见决定记录 2026-10-01 与 `slowlab/history_packet.py`；开发方差研究运行中，pilot 的 LLM 方差已得（`results/pilot_evaluation_analysis_20261003.json`）；最终 N 待主基线在 pilot site 上补跑后的方差）
+- [x] 用开发/pilot 方差做功效或精度分析，确定 N；冻结 E3 packet 选择规则与诊断 Reader（E3 规则已冻结，见决定记录 2026-10-01 与 `slowlab/history_packet.py`；开发方差研究运行中，pilot 的 LLM 方差已得（`results/pilot_evaluation_analysis_20261003.json`）；最终 N 待主基线在 pilot site 上补跑后的方差） → N = 48，见决定记录 2026-10-04 与 `results/pilot_evaluation_analysis_pbo_20261004.json`
 
 验收：在看正式结果前，能写出每个 figure 的输入、统计量与解释边界。
 
@@ -58,7 +58,7 @@
 - [ ] 检查过程反馈是否有可操作的决策机会；只按接口/任务逻辑修复，不按 arm 输赢调参
 - [ ] 在租用服务器上建立运行环境：核对软件版本与 GreenLight 哈希，跑全部测试，单个评测计时并与台式机结果对比（记录差异）；用户放置新的专用 API key
 - [x] 冻结后的主基线在 8 个 pilot site 上各跑 2 个种子 × Full/Endpoint 并评测，用于确定 N（只花算力，不花 API 费用） → `results/pilot_evaluation_analysis_pbo_20261004.json`
-- [ ] 预算表包含 pilot、重试、Reader 会话、初始推荐、离线评测；硬暂停策略；取得执行授权
+- [x] 预算表包含 pilot、重试、Reader 会话、初始推荐、离线评测；硬暂停策略；取得执行授权 → 决定记录 2026-10-04；用户于 2026-10-04 授权，API 硬上限 30 美元
 - [ ] 锁定代码、配置、prompts、模型、工具与预注册文档（hash）
 
 验收：预算表可由 pilot 日志重算；每个正式 identity 与暂停/恢复规则都已确定。
