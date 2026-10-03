@@ -1,0 +1,247 @@
+{
+  "inputs": [
+    "day_temperature_c",
+    "night_temperature_c",
+    "co2_target_ppm",
+    "supplemental_light_hours",
+    "vent_temperature_offset_c",
+    "vent_rh_threshold_pct",
+    "planting_season_sin",
+    "planting_season_cos"
+  ],
+  "input_scaling": "policy fields scaled to [0, 1] by the bounds of configs/task_contract_v8.json; season as in slowlab.tools",
+  "selection_rule": "higher cross-season ranking accuracy; ties by lower random RMSE",
+  "chosen_form": "season_interaction",
+  "fits": {
+    "product": {
+      "kernel": {
+        "form": "product",
+        "lengthscales": [
+          0.573887833354653,
+          1.3368815711527842,
+          2.162728671765517,
+          1.8150019208513564,
+          2.3990542099951044,
+          2.3115868986926764,
+          19.999999999999996,
+          0.05000000000000001
+        ]
+      },
+      "noise_ratio": 0.00010000000000000009,
+      "neg_log_likelihood": 1881.1567373341477,
+      "parameters_at_bounds": [
+        6,
+        7,
+        8
+      ],
+      "groups": 118,
+      "observations": 788
+    },
+    "season_interaction": {
+      "kernel": {
+        "form": "season_interaction",
+        "policy_lengthscales": [
+          0.5221961650876789,
+          1.081633310144158,
+          2.108604888685645,
+          1.446874399245908,
+          1.8855042307919951,
+          2.0176865012101373
+        ],
+        "season_lengthscale": 0.09696039308929003,
+        "gamma": 0.0003353501304664781,
+        "tau": 1.0229367121618507
+      },
+      "noise_ratio": 0.00010000000000000009,
+      "neg_log_likelihood": 1858.9678415677326,
+      "parameters_at_bounds": [
+        7,
+        9
+      ],
+      "groups": 118,
+      "observations": 788
+    }
+  },
+  "hyperparameters": {
+    "kernel": {
+      "form": "season_interaction",
+      "policy_lengthscales": [
+        0.5221961650876789,
+        1.081633310144158,
+        2.108604888685645,
+        1.446874399245908,
+        1.8855042307919951,
+        2.0176865012101373
+      ],
+      "season_lengthscale": 0.09696039308929003,
+      "gamma": 0.0003353501304664781,
+      "tau": 1.0229367121618507
+    },
+    "noise_ratio": 0.00010000000000000009,
+    "neg_log_likelihood": 1858.9678415677326,
+    "parameters_at_bounds": [
+      7,
+      9
+    ],
+    "groups": 118,
+    "observations": 788
+  },
+  "data": {
+    "files": 119,
+    "groups": 118,
+    "data_files_sha256": "6963ebe2d88534024aadd10250ef318879fb0916d6ae3b6406f560946e0ba8ab",
+    "group_ids": [
+      "site100_run0_2014",
+      "site100_run1_2018",
+      "site100_run2_2019",
+      "site101_run0_2014",
+      "site101_run1_2017",
+      "site101_run2_2020",
+      "site102_run0_2017",
+      "site102_run1_2019",
+      "site102_run2_2014",
+      "site103_run0_2014",
+      "site103_run1_2017",
+      "site103_run2_2020",
+      "site104_run0_2018",
+      "site104_run1_2020",
+      "site104_run2_2017",
+      "site105_run0_2018",
+      "site105_run1_2020",
+      "site105_run2_2019",
+      "site106_run0_2014",
+      "site106_run1_2018",
+      "site106_run2_2020",
+      "site107_run0_2017",
+      "site107_run2_2020",
+      "site108_run0_2017",
+      "site108_run1_2014",
+      "site108_run2_2018",
+      "site109_run0_2020",
+      "site109_run1_2017",
+      "site109_run2_2019",
+      "site110_run0_2019",
+      "site110_run1_2020",
+      "site110_run2_2014",
+      "site111_run0_2017",
+      "site111_run1_2014",
+      "site111_run2_2019",
+      "site112_run0_2017",
+      "site112_run1_2014",
+      "site113_run0_2018",
+      "site113_run1_2014",
+      "site113_run2_2019",
+      "site114_run0_2019",
+      "site114_run1_2017",
+      "site114_run2_2014",
+      "site115_run0_2020",
+      "site115_run1_2017",
+      "site115_run2_2014",
+      "site116_run0_2019",
+      "site116_run1_2018",
+      "site116_run2_2020",
+      "site117_run0_2014",
+      "site117_run1_2020",
+      "site117_run2_2017",
+      "site118_run0_2014",
+      "site118_run1_2017",
+      "site118_run2_2020",
+      "site119_run0_2014",
+      "site119_run1_2017",
+      "site119_run2_2020",
+      "site120_run0_2018",
+      "site120_run1_2017",
+      "site120_run2_2014",
+      "site121_run0_2014",
+      "site121_run1_2020",
+      "site121_run2_2019",
+      "site122_run0_2014",
+      "site122_run1_2019",
+      "site122_run2_2020",
+      "site123_run0_2019",
+      "site123_run1_2014",
+      "site123_run2_2018",
+      "site124_run0_2014",
+      "site124_run1_2017",
+      "site124_run2_2018",
+      "site125_run0_2019",
+      "site125_run1_2014",
+      "site125_run2_2018",
+      "site126_run0_2020",
+      "site126_run1_2019",
+      "site126_run2_2018",
+      "site127_run0_2014",
+      "site127_run1_2017",
+      "site127_run2_2018",
+      "site128_run0_2020",
+      "site128_run1_2019",
+      "site128_run2_2014",
+      "site129_run0_2019",
+      "site129_run1_2014",
+      "site129_run2_2017",
+      "site130_run0_2014",
+      "site130_run1_2019",
+      "site130_run2_2018",
+      "site131_run0_2018",
+      "site131_run1_2020",
+      "site131_run2_2014",
+      "site132_run0_2020",
+      "site132_run1_2018",
+      "site132_run2_2014",
+      "site133_run0_2018",
+      "site133_run1_2017",
+      "site133_run2_2020",
+      "site134_run0_2018",
+      "site134_run1_2020",
+      "site134_run2_2019",
+      "site135_run0_2014",
+      "site135_run1_2017",
+      "site135_run2_2018",
+      "site136_run0_2017",
+      "site136_run1_2020",
+      "site136_run2_2018",
+      "site137_run0_2020",
+      "site137_run1_2017",
+      "site137_run2_2018",
+      "site138_run0_2018",
+      "site138_run1_2014",
+      "site138_run2_2017",
+      "site139_run0_2018",
+      "site139_run1_2014",
+      "site139_run2_2020"
+    ]
+  },
+  "held_out_check": {
+    "random": {
+      "product": {
+        "rmse": 12.846043396094595,
+        "n": 632
+      },
+      "season_interaction": {
+        "rmse": 11.2914707115286,
+        "n": 632
+      },
+      "refit_gp_bo_v3": {
+        "rmse": 19.718440314191753,
+        "n": 632
+      },
+      "mean_of_training": {
+        "rmse": 18.267792325995263,
+        "n": 632
+      }
+    },
+    "cross_season": {
+      "product": {
+        "rmse": 15.157315834910328,
+        "ranking_accuracy": 0.5316455696202531,
+        "pairs": 237
+      },
+      "season_interaction": {
+        "rmse": 10.66567978750816,
+        "ranking_accuracy": 0.7974683544303798,
+        "pairs": 237
+      }
+    }
+  },
+  "seed": 20261003
+}
