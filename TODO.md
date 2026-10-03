@@ -56,6 +56,7 @@
 - [x] 核验候选模型精确 ID、provider 路由、数据发送设置；禁用 provider 端隐藏推理（模型与精确 ID 已定并按 OpenRouter 公开列表核对，见 `configs/pilot_models_v3.json`（DeepSeek 官方 API；MiMo、GLM 固定官方端点；GLM 推理必选、上限 1,024 token）；连通检查见 pilot 运行目录的 model_check 记录）。证据：`results/pilot_model_checks_20261001.json`、`results/pilot_provider_data_policies_20261002.json`
 - [x] 在少量 pilot sites 上核算每 campaign 调用、token、费用、格式失败与执行耗时。证据：`results/pilot_accounting_20261002.json`
 - [ ] 检查过程反馈是否有可操作的决策机会；只按接口/任务逻辑修复，不按 arm 输赢调参
+- [ ] 在租用服务器上建立运行环境：核对软件版本与 GreenLight 哈希，跑全部测试，单个评测计时并与台式机结果对比（记录差异）；用户放置新的专用 API key
 - [ ] 冻结后的主基线在 8 个 pilot site 上各跑 2 个种子 × Full/Endpoint 并评测，用于确定 N（只花算力，不花 API 费用）
 - [ ] 预算表包含 pilot、重试、Reader 会话、初始推荐、离线评测；硬暂停策略；取得执行授权
 - [ ] 锁定代码、配置、prompts、模型、工具与预注册文档（hash）
@@ -69,6 +70,7 @@
 - [ ] 审计缺失/重复 identity、实际模型/provider、资源会计与结果可重放性
 - [ ] 对最终/初始/固定方案做独立离线评测；保存全部不利与失败结果
 - [ ] 数据锁定后一次性计算主结果；报告协议偏离而不静默补改
+- [ ] 服务器格式化前，把全部结果、费用账本与审计记录复制回本地并核对哈希
 
 验收：E1 Full 与 E2 Full 是同一批数据；无重复计数、事后排除或跨 provider 偷换。
 
