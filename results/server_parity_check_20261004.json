@@ -1,0 +1,46 @@
+{
+  "purpose": "run environment check: one development evaluation repeated on the rented server and compared with the desktop",
+  "job": {
+    "site": {
+      "contract_sha256": "679ab9286c3aba6821ad38471c4b7f6e44e6582a9de5a01acf8a9c676326b2b9",
+      "year": 2014,
+      "distribution_sha256": "65e17fd29fe5965383dd6814ac2521591c6f4bddf824dec082ef1a22aea53a95",
+      "site_index": 0
+    },
+    "policy": {
+      "day_temperature_c": 20.7,
+      "night_temperature_c": 15.58,
+      "co2_target_ppm": 847.23,
+      "supplemental_light_hours": 5.0,
+      "vent_temperature_offset_c": 5.29,
+      "vent_rh_threshold_pct": 81.67
+    },
+    "year": 2014,
+    "desktop_run": "20261001-f0206bd-devvar site00_seed0_full_eval2014"
+  },
+  "desktop": {
+    "host": "WSL2 Ubuntu 24.04, Intel i7-10700K, gcc 13.3.0, Python 3.12.3",
+    "code_commit": "f0206bd",
+    "elapsed_seconds": 1813.8,
+    "peak_rss_mb": 285.7,
+    "load": "12 parallel workers"
+  },
+  "server": {
+    "host": "Ubuntu 22.04, 2x AMD EPYC 7B12 (128 cores), gcc 11.4.0, Python 3.12.3 (uv), numpy 1.26.4, scipy 1.14.1, GreenLight fa502ed (49 files hash-equal to the desktop)",
+    "code_commit": "50e538f",
+    "elapsed_seconds": 1791.2,
+    "peak_rss_mb": 286.5,
+    "load": "about 96 other campaign processes running",
+    "test_suite": "386 passed, 1 skipped"
+  },
+  "score_eur_m2": {
+    "desktop": 3.911772605887527,
+    "server": 3.911772605887527
+  },
+  "records_identical_except_timing": true,
+  "record_sha256_without_timing": {
+    "desktop": "4a35055f3006f03ce278cbd4c0debaf47d91583010cab8989ac479339095f026",
+    "server": "4a35055f3006f03ce278cbd4c0debaf47d91583010cab8989ac479339095f026"
+  },
+  "weather_cache": "462 files, sha256 equal on both hosts"
+}
