@@ -1,0 +1,20 @@
+{
+  "lock_id": "slowlab-formal-lock-v2",
+  "purpose": "Formal E1/E2 analysis (statistics module and analysis script), written and locked 2026-10-04 while the formal campaigns ran and before any formal score was read",
+  "base": {
+    "file": "configs/formal_lock_v1.json",
+    "sha256": "8ecf1b983a797d3e7bfe0c12a4624f16adfeac11970a643d23c630df2fbcdc19",
+    "verifier": [
+      "scripts/make_formal_lock.py",
+      "--verify",
+      "configs/formal_lock_v1.json"
+    ]
+  },
+  "added_files": {
+    "slowlab/statistics.py": "e673517275c7029f2fa584269aa1e2e9d9c96b315609ff0947012cfc4f685e8a",
+    "scripts/analyse_formal.py": "337eac6dda06a520bd4c3c47701973718b4d0528a0ecdefd95f3955dc301d6b0",
+    "tests/test_statistics.py": "f07865db4791c55a5ff4254136595142a86fca563ca4a8f174db3b44b4a46f9d",
+    "tests/test_analyse_formal.py": "5da0c7b98199212f083fafc435b136c73d7f487cd21dbfaa26dcd583686a44ce",
+    "scripts/lock_additions.py": "9e8f634dc81760bae16a9982336cabd71a3d0dd065591e029e26f863744bae83"
+  }
+}
