@@ -3,8 +3,10 @@
 
 A recommendation's score is its mean over the site's three evaluation years.
 Methods: each LLM's Full, Endpoint and repeat-0 initial recommendation, BO
-Full and Endpoint, and the fixed reference. For the seven primary tests (E1:
-each LLM Full - BO Full; E2: Full - Endpoint for the three LLMs and BO) it
+Full and Endpoint, the fixed reference, and (when given) the prior-informed local BO
+("pbo", the main baseline from 2026-10-03). For the seven primary tests (E1:
+each LLM Full - main baseline Full; E2: Full - Endpoint for the three LLMs and
+the main baseline; the main baseline is pbo when present, else bo) it
 reports the mean site-level difference, the within-site (between-repeat) SD,
 the between-site SD, and the site count for a two-sided paired t-test (power
 0.8) at alpha 0.05 and at the Holm worst case 0.05/7, for 2 and 5 EUR/m2.
@@ -24,7 +26,7 @@ import numpy as np
 from analyse_dev_variance import n_paired
 
 NAME = re.compile(r'site(\d+)_(.+?)_y(\d{4})\.json$')
-TARGET = re.compile(r'(?:(?P<llm>.+)_r(?P<r>\d)_(?P<b>full|endpoint|initial))|(?:bo_s(?P<s>\d)_(?P<bb>full|endpoint))'
+TARGET = re.compile(r'(?:(?P<llm>.+)_r(?P<r>\d)_(?P<b>full|endpoint|initial))|(?:(?P<bo>p?bo)_s(?P<s>\d)_(?P<bb>full|endpoint))'
                     r'|(?P<ref>fixed_reference)')
 
 
@@ -33,7 +35,7 @@ def method_of(target):
     if m['ref']:
         return 'fixed_reference', 0
     if m['bb']:
-        return f"bo_{m['bb']}", int(m['s'])
+        return f"{m['bo']}_{m['bb']}", int(m['s'])
     return f"{m['llm']}_{m['b']}", int(m['r'])
 
 
@@ -56,11 +58,11 @@ def components(diffs):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--evaluations', type=Path, required=True)
+    ap.add_argument('--evaluations', type=Path, nargs='+', required=True)
     ap.add_argument('--report', type=Path, required=True)
     args = ap.parse_args()
     years, reasons, statuses = defaultdict(dict), defaultdict(Counter), Counter()
-    for f in sorted(args.evaluations.glob('site*_y*.json')):
+    for f in sorted(f for d in args.evaluations for f in d.glob('site*_y*.json')):
         m = NAME.search(f.name)
         r = json.loads(f.read_text())
         statuses[r.get('status')] += 1
@@ -101,16 +103,17 @@ def main():
                 d[s] = [v - mb for v in ra.values()]
         return {s: v for s, v in d.items() if v}
 
-    llms = sorted({m[:-len('_full')] for m in methods if m.endswith('_full') and not m.startswith('bo')})
+    llms = sorted({m[:-len('_full')] for m in methods if m.endswith('_full') and not m.startswith(('bo', 'pbo'))})
+    base = 'pbo' if 'pbo_full' in methods else 'bo'
     primary = {}
     for llm in llms:
-        primary[f'E1_{llm}_full_minus_bo_full'] = components(paired(f'{llm}_full', 'bo_full', True))
-    for meth in llms + ['bo']:
+        primary[f'E1_{llm}_full_minus_{base}_full'] = components(paired(f'{llm}_full', f'{base}_full', True))
+    for meth in llms + [base]:
         primary[f'E2_{meth}_full_minus_endpoint'] = components(paired(f'{meth}_full', f'{meth}_endpoint', True))
     secondary = {}
     for llm in llms:
         secondary[f'{llm}_full_minus_initial'] = components(paired(f'{llm}_full', f'{llm}_initial', False))
-    for meth in [f'{x}_full' for x in llms] + ['bo_full']:
+    for meth in [f'{x}_full' for x in llms] + [f'{b}_full' for b in ('bo', 'pbo') if f'{b}_full' in methods]:
         secondary[f'{meth}_minus_fixed_reference'] = components(paired(meth, 'fixed_reference', False))
     by_year = defaultdict(lambda: defaultdict(list))
     for (s, meth, rep), v in years.items():
