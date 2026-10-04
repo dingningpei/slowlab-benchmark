@@ -1,0 +1,47 @@
+{
+  "purpose": "replayability: 8 formal evaluations (seeded random pick 20261005) rerun on the same host after the study",
+  "code": "code-v3 (lock v3 verified)",
+  "results": [
+    {
+      "id": "site14_glm-5.3-flash_r1_full_y2006",
+      "status": "completed",
+      "identical_except_timing": true
+    },
+    {
+      "id": "site14_mimo-v2.6-flash_r0_full_y2006",
+      "status": "completed",
+      "identical_except_timing": true
+    },
+    {
+      "id": "site20_deepseek-v4.1-flash_r1_endpoint_y2005",
+      "status": "completed",
+      "identical_except_timing": true
+    },
+    {
+      "id": "site21_glm-5.3-flash_r1_endpoint_y2005",
+      "status": "completed",
+      "identical_except_timing": true
+    },
+    {
+      "id": "site23_mimo-v2.6-flash_r0_full_y2009",
+      "status": "completed",
+      "identical_except_timing": true
+    },
+    {
+      "id": "site28_pbo_s0_endpoint_y2011",
+      "status": "completed",
+      "identical_except_timing": true
+    },
+    {
+      "id": "site41_glm-5.3-flash_r0_initial_y2015",
+      "status": "completed",
+      "identical_except_timing": true
+    },
+    {
+      "id": "site44_glm-5.3-flash_r0_initial_y2003",
+      "status": "completed",
+      "identical_except_timing": true
+    }
+  ],
+  "all_identical": true
+}
