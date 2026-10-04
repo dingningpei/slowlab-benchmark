@@ -1,0 +1,31 @@
+{
+  "format": "slowlab-formal-audit-v1",
+  "campaigns_planned": 480,
+  "campaign_records": 480,
+  "evaluations_planned": 2880,
+  "llm_calls_by_model": {
+    "deepseek-v4.1-flash": 5977,
+    "mimo-v2.6-flash": 8095,
+    "glm-5.3-flash": 5802
+  },
+  "served_models": {
+    "deepseek-flash": 5977,
+    "xiaomi/mimo-v2.6-flash": 8095,
+    "z-ai/glm-5.3-flash": 5802
+  },
+  "providers": {
+    "None": 5977,
+    "Xiaomi": 8095,
+    "Z.AI": 5802
+  },
+  "spend_from_call_records_usd": 17.273826712800002,
+  "ledger_campaign_usd": 17.2738267128,
+  "ledger_total_usd": 17.4163600388,
+  "ledger_by_kind": {
+    "connectivity": 3,
+    "campaign": 288,
+    "e3_reader": 192
+  },
+  "problems": [],
+  "passed": true
+}
