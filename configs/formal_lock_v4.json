@@ -1,0 +1,23 @@
+{
+  "lock_id": "slowlab-formal-lock-v4",
+  "purpose": "Retrospective record (written 2026-10-05, after the formal E1/E2 results): lock v1 hashed code and configs but not the preregistration documents. This records their hashes as of the lock v1 commit, which was pushed to the remote before any formal campaign started; the git commit and its push are the evidence, this file only names the hashes.",
+  "base": {
+    "file": "configs/formal_lock_v3.json",
+    "sha256": "9c524d0cb06ced85372edafabb4f43ded72fbaf0fc6a220f051f0019a05697a8",
+    "verifier": [
+      "scripts/lock_additions.py",
+      "--verify",
+      "configs/formal_lock_v3.json"
+    ]
+  },
+  "preregistration_at_lock_v1": {
+    "commit": "80cfdc9f6113e39ea8f938d3b3e97e9d0e2f453d",
+    "commit_time": "2026-10-03T14:32:26-07:00",
+    "files": {
+      "RESEARCH_PLAN.md": "8c59e8fac5707c733a04abc31ad27e411a6f6d2a2db3f7555afc476f07b77e3e",
+      "TODO.md": "f501c09959ef30aea20f73ee1af0ffcfc618bde74b5b76818e4aaa010abcdf3f"
+    },
+    "check": "git show 80cfdc9:RESEARCH_PLAN.md | sha256sum"
+  },
+  "added_files": {}
+}
