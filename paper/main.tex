@@ -1,0 +1,44 @@
+% ============================================================
+%  SlowLab v2.3 -- draft (NeurIPS Datasets & Benchmarks target).
+%  Article class for drafting; switch to the NeurIPS style file before submission.
+%  Every result number comes from paper/generated/numbers.tex (scripts/make_paper_numbers.py);
+%  scripts/verify_results_claims.py checks them against the analysis outputs.
+% ============================================================
+\documentclass[10pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[expansion=false]{microtype}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage[hidelinks]{hyperref}
+\usepackage{natbib}
+\usepackage{xcolor}
+\providecommand{\euro}{\texteuro}
+\newcommand{\eur}{EUR/m$^2$}
+\newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
+\input{generated/numbers.tex}
+
+\title{SlowLab: Can Language-Model Agents Run a Year of Irreversible, Facility-Bound Experiments?\\[2pt]
+\large Draft -- results of the preregistered E1/E2 run; E3 pending}
+\author{\todo{authors}}
+\date{}
+
+\begin{document}
+\maketitle
+\input{sections/00_abstract}
+\input{sections/01_intro}
+\input{sections/02_task}
+\input{sections/03_methods}
+\input{sections/04_protocol}
+\input{sections/05_results}
+\input{sections/06_e3}
+\input{sections/07_limitations}
+\input{sections/08_related}
+\bibliographystyle{plainnat}
+\bibliography{refs}
+\appendix
+\input{sections/A_appendix}
+\end{document}
