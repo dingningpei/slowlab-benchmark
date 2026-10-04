@@ -1,0 +1,22 @@
+{
+  "lock_id": "slowlab-formal-lock-v3",
+  "purpose": "Phase 6 code (E3 Readers with the one-shot Reader prompt e3-reader-prompt-v1, boundary sensitivity evaluation, reference-search and sensitivity site picks from the committed E3 seed in separate streams, Phase 6 analysis), written and locked 2026-10-04 before any formal score was read",
+  "base": {
+    "file": "configs/formal_lock_v2.json",
+    "sha256": "b730dc2ae759e300946630a73743531247d3b3b50b3966b1eee06b9f50343d27",
+    "verifier": [
+      "scripts/lock_additions.py",
+      "--verify",
+      "configs/formal_lock_v2.json"
+    ]
+  },
+  "added_files": {
+    "scripts/e3_readers.py": "e150417d2cbc2235e82615177752c35bd538ce44630cdd32fe0f8169bae42a74",
+    "scripts/evaluate_sensitivity.py": "3e037deae3bdf8f4dcaead27cafe457192aaca31e4535538a791ececcc48f2ba",
+    "scripts/phase6_batches.py": "8745aa74dd3fc5c8ccdbd8436393601377a754b4b8321d2c57efe8b7af593119",
+    "scripts/analyse_phase6.py": "05d5ba24d707ed31534038f5ab3e1e702e6a4e338de0b1d2a2451f6956129445",
+    "tests/test_e3_readers.py": "c543a9147f2374f698783d80912f98c4753e5e175317f08082fe35af45e569e2",
+    "tests/test_phase6_scripts.py": "713ec1f191b955bbfd8e4da3922538ff34019e2a9d9b23d6ed83ff849c25b53c",
+    "tests/test_analyse_phase6.py": "96adc74c32f8a2ecac969d4b38f58088a4372705cada72a76575c555ba0da51b"
+  }
+}
