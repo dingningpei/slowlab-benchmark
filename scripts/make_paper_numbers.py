@@ -126,9 +126,42 @@ def numbers():
                 n[f'{k}.lo'] = fmt(v['ci95_bca'][0], sign=True)
                 n[f'{k}.hi'] = fmt(v['ci95_bca'][1], sign=True)
                 n[f'{k}.p'] = p_fmt(p6['e3']['secondary_bh_with_e3'][f'E3_reader_swap_{rd}'])
+        # The preregistered secondary family includes E3: once E3 exists, BH p-values come from the joint family.
+        joint = p6['e3']['secondary_bh_with_e3']
+        for name in f['secondary']:
+            if name.endswith('_full_minus_initial'):
+                k = f"learn.{SHORT[name.split('_full_minus')[0]]}"
+            elif name.endswith('_full_minus_fixed_reference'):
+                k = f"vsfixed.{SHORT[name.split('_full_minus')[0]]}"
+            else:
+                a, b = name[len('feedback_gain_'):].split('_minus_')
+                k = f"gaindiff.{SHORT[a]}.{SHORT[b]}"
+            n[f'{k}.p'] = p_fmt(joint[name])
+        n['secondary.family'] = len(joint)
+        for rd, per in p6['e3']['reader_swap_gain'].items():
+            for src_m, v in per.items():
+                if v.get('n'):
+                    n[f"E3.{SHORT.get(rd, 'gp' if rd == 'gp-reader' else rd)}.on.{SHORT[src_m]}"] = fmt(v['mean'], sign=True)
         rs = p6['reference_search']
         if rs.get('mean_headroom_over_fixed_reference') is not None:
             n['ref.headroom'] = fmt(rs['mean_headroom_over_fixed_reference'])
+            n['ref.sites'] = len(rs['sites'])
+            errs = rs['search_error_abs_difference']
+            n['ref.err.lo'], n['ref.err.hi'] = fmt(min(errs)), fmt(max(errs))
+            import numpy as _np
+            for m in SHORT:
+                vals = [r[m] - r['fixed_reference'] for r in rs['sites'].values() if r.get(m) is not None]
+                n[f'ref.{SHORT[m]}.vsfixed'] = fmt(float(_np.mean(vals)), sign=True)
+        b = p6['boundary_sensitivity']['settings']
+        for s, v in b.items():
+            for k, x in v['differences'].items():
+                if k.endswith('_minus_baseline'):
+                    n[f"ueff.{s}.{SHORT[k[:-len('_minus_baseline')]]}"] = fmt(x['mean'], sign=True)
+        n['ueff.sites'] = len(p6['boundary_sensitivity']['sites'])
+        for f_, v in p6['dry_matter_sensitivity'].items():
+            for name, x in v.items():
+                if name.startswith('E1_'):
+                    n[f"dm.{f_}.{SHORT[name[3:].split('_full_minus')[0]]}"] = fmt(x['mean'], sign=True)
     return {k: (v if isinstance(v, str) else str(v)) for k, v in n.items()}
 
 

@@ -40,7 +40,7 @@ def main():
         if tex.name in RESULT_FILES:
             body = re.sub(r'%.*', '', text)
             body = re.sub(r'\\res\{[^}]+\}', '', body)
-            body = re.sub(r'\\(?:todo|label|ref|cite[pt]?|includegraphics(?:\[[^]]*\])?)\{[^}]*\}', '', body)
+            body = re.sub(r'\\(?:todo|label|ref|setting|cite[pt]?|includegraphics(?:\[[^]]*\])?)\{[^}]*\}', '', body)
             for m in re.finditer(r'(?<![\w.-])\d+\.\d+(?![\w.])', body):
                 problems.append(f'{tex.name}: hard-coded number {m.group(0)}')
     out = {'numbers_available': len(fresh), 'numbers_used': len(used), 'problems': problems, 'passed': not problems}
