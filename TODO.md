@@ -44,7 +44,7 @@
 - [x] 分开开发 / pilot / test sites；记录全部生成、排除与版本信息。证据：`configs/site_partition_v1.json`（test 的 site 数待功效分析确定）
 - [x] 私有 seed 带盐 commitment；artifact、文件名、日志附件防泄漏检查。证据：`configs/seed_commitment_pilot_v1.json`、`configs/seed_commitment_test_v1.json`；防泄漏扫描 `scripts/check_public_leaks.py`
 - [x] 隔离的推荐评测器：独立天气副本；Monte Carlo 误差小于要报告的差异（设计已定，见决定记录 2026-09-30）；评测年数定为 3 年。证据：`results/evaluator_check_20260930.json`、`results/evaluation_error_study_20260930.json`
-- [ ] best-known feasible reference 的数值搜索与搜索误差报告（随机 8 个 test site，其中 2 个做两次；决定记录 2026-10-03）
+- [x] best-known feasible reference 的数值搜索与搜索误差报告（随机 8 个 test site，其中 2 个做两次；决定记录 2026-10-03） → 8 个 test site，搜索误差 1.6–2.1 EUR/m²；`results/phase6_analysis_20261005.json`
 - [x] 冻结统计单位、主检验族、次要指标、CI、失败与缺失处理。见 RESEARCH_PLAN §5 与决定记录 2026-10-01
 - [x] 用开发/pilot 方差做功效或精度分析，确定 N；冻结 E3 packet 选择规则与诊断 Reader（E3 规则已冻结，见决定记录 2026-10-01 与 `slowlab/history_packet.py`；开发方差研究运行中，pilot 的 LLM 方差已得（`results/pilot_evaluation_analysis_20261003.json`）；最终 N 待主基线在 pilot site 上补跑后的方差） → N = 48，见决定记录 2026-10-04 与 `results/pilot_evaluation_analysis_pbo_20261004.json`
 
@@ -66,7 +66,7 @@
 ## Phase 5：一次性执行 E1、E2
 
 - [x] 按冻结配对与随机顺序运行正式 sites：先记录初始推荐，再从共同起点分支 → 480 场全部完成；运行顺序为 site 编号顺序而非随机顺序，见决定记录 2026-10-05（协议偏离）
-- [ ] 保存 Design、Executor、Reader、API、费用与 blinded-payload 记录
+- [x] 保存 Design、Executor、Reader、API、费用与 blinded-payload 记录 → 正式运行目录（campaign 记录与对话、出站审计、逐次调用记录、费用账本、结算、E3 Reader 记录）已拷回 `~/slowlab-data/formal-20261004/` 并核对哈希；私有模拟轨迹（60 GB）未拷回，可确定性重算
 - [ ] 审计缺失/重复 identity、实际模型/provider、资源会计与结果可重放性
 - [x] 对最终/初始/固定方案做独立离线评测；保存全部不利与失败结果 → 2,880 个评测全部完成、无失败；`results/formal_analysis_e1e2_20261005.json`
 - [x] 数据锁定后一次性计算主结果；报告协议偏离而不静默补改 → `results/formal_analysis_e1e2_20261005.json`（锁定代码 v2，运行一次）；偏离见决定记录 2026-10-05
@@ -76,10 +76,10 @@
 
 ## Phase 6：E3 与必要的机制核验
 
-- [ ] 按预注册规则抽取事实 history packets（含提前停止与未完成结果）（64 个，4 个方法各 16 个，全部 Reader 读同一批；决定记录 2026-10-03）
-- [ ] 两个 Reader 使用逐字节相同证据，独立会话、随机顺序，不见来源方法与评测分数
-- [ ] 分析 Reader 替换与固定 Reader 的 history 效用；不强行做加性归因
-- [ ] 完成已注册的敏感性：边界传热（16 个 test site × 5 个 Full 最终推荐，Ueff 0 与 4）与干物质比例（由已有结果换算）；其余敏感性不做，论文不作相应的稳健性主张
+- [x] 按预注册规则抽取事实 history packets（含提前停止与未完成结果）（64 个，4 个方法各 16 个，全部 Reader 读同一批；决定记录 2026-10-03） → 64 个（承诺种子，`scripts/e3_readers.py`）；`results/phase6_analysis_20261005.json`
+- [x] 两个 Reader 使用逐字节相同证据，独立会话、随机顺序，不见来源方法与评测分数 → 同一数据包字节送给全部 Reader，每次读取为独立无状态会话，不含方法名与得分；读取按模型 × 数据包的固定顺序并行进行（会话之间无状态，顺序不影响结果），未随机化
+- [x] 分析 Reader 替换与固定 Reader 的 history 效用；不强行做加性归因 → `results/phase6_analysis_20261005.json`（锁定代码 v3，运行一次）
+- [x] 完成已注册的敏感性：边界传热（16 个 test site × 5 个 Full 最终推荐，Ueff 0 与 4）与干物质比例（由已有结果换算）；其余敏感性不做，论文不作相应的稳健性主张 → `results/phase6_analysis_20261005.json`；最优参照搜索见同一文件
   - [ ] 控制步长 600 s 对 300 s（2026-09-30 自 Phase 2 移入：算力已不需要更长步长；需先把写死的 300 s 改为合同参数，并区分控制频率与观测频率，用评测器比较得分与方案排序）（2026-10-03 决定不做）
 
 ## Phase 7：论文与复现材料
