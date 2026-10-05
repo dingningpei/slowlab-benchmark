@@ -22,7 +22,10 @@ import numpy as np  # noqa: E402
 
 LABEL = {'deepseek-v4.1-flash': 'DeepSeek V4.1 Flash', 'glm-5.3-flash': 'GLM-5.3 Flash',
          'mimo-v2.6-flash': 'MiMo V2.6 Flash', 'pbo': 'Prior-informed local BO'}
-COLOR = {'deepseek-v4.1-flash': '#4C72B0', 'glm-5.3-flash': '#55A868', 'mimo-v2.6-flash': '#C44E52', 'pbo': '#8172B2'}
+# Categorical palette validated with the dataviz validator (light surface): CVD and normal-vision checks pass;
+# aqua is below 3:1 contrast, so every series is also named by its axis label or legend.
+COLOR = {'deepseek-v4.1-flash': '#2a78d6', 'glm-5.3-flash': '#eb6834', 'mimo-v2.6-flash': '#1baf7a', 'pbo': '#4a3aa7'}
+NEUTRAL = '#8a8984'
 
 
 def site_scores(eval_dir):
@@ -80,8 +83,14 @@ def main():
     ap.add_argument('--campaigns', type=Path, required=True)
     ap.add_argument('--report', type=Path, required=True)
     ap.add_argument('--out', type=Path, required=True)
+    ap.add_argument('--phase6', type=Path, default=None,
+                    help='Phase 6 report: secondary p-values then come from the joint family that includes E3')
     args = ap.parse_args()
     report = json.loads(args.report.read_text())
+    if args.phase6:
+        joint = json.loads(args.phase6.read_text())['e3']['secondary_bh_with_e3']
+        for name, v in report['secondary'].items():
+            v['p_bh'] = joint[name]
     batch = json.loads(args.campaigns.read_text())
     sites = sorted({j['site']['site_index'] for j in batch['jobs']})
     llms = sorted({j['model_name'] for j in batch['jobs'] if j['method'] == 'llm'})
@@ -112,7 +121,7 @@ def main():
     for i, k in enumerate(keys):
         vals = [resources[k][n] for n in names[:2]]
         axes[2].bar(np.arange(2) + i * width, vals, width, label=LABEL.get(k.replace('_full', ''), 'Fixed reference'),
-                    color=COLOR.get(k.replace('_full', ''), '#999999'))
+                    color=COLOR.get(k.replace('_full', ''), NEUTRAL))
     axes[2].set_xticks(np.arange(2) + 0.4 - width / 2)
     axes[2].set_xticklabels(['Heat', 'Light'], fontsize=8)
     axes[2].set_ylabel('kWh/m² per crop', fontsize=8)
