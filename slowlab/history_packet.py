@@ -26,7 +26,7 @@ import numpy as np
 from .tools import PublicHistory, contribution_margin, scoring_days, season_features
 
 PACKET_FORMAT = 'history-packet-v1'  # shown to Readers: no benchmark name
-GP_READER_VERSION = 'gp-reader-v2'
+GP_READER_VERSION = 'gp-reader-v2.1'
 
 
 def build_packet(task: dict, transcript: list) -> dict:
@@ -56,8 +56,11 @@ def gp_reader(task: dict, packet: dict, config: dict) -> dict:
     """The main baseline's recommendation step on a packet. ``config``: a loaded prior BO config
     (kernel, noise ratio) and the anchor policy under ``anchor_policy`` (used only without crops)."""
     from .prior_bo import FrozenGP
+    from .process_predictor import POLICY_ORDER
     fields = task['policy']['fields']
-    names = list(fields)
+    names = list(config.get('policy_order', POLICY_ORDER))   # the kernel's input order, whatever the task's key order
+    if set(names) != set(fields):
+        raise ValueError('policy fields differ from the kernel inputs')
 
     def scale(p):
         return [(p[k] - fields[k]['min']) / (fields[k]['max'] - fields[k]['min']) for k in names]

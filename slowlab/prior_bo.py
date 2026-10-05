@@ -34,9 +34,10 @@ from dataclasses import asdict, dataclass, field
 import numpy as np
 
 from .bo_agent import BOConfig, GPBOAgent, expected_improvement
+from .process_predictor import POLICY_ORDER
 from .tools import _matern52, scoring_days, season_features
 
-PRIOR_BO_VERSION = 'gp-bo-prior-v1'
+PRIOR_BO_VERSION = 'gp-bo-prior-v1.1'  # v1.1: inputs in the kernel's field order (decision 2026-10-05)
 TURBO = {'side_init_factor': 2.0, 'side_min': 0.5 ** 7, 'side_max': 1.6, 'success_tolerance': 3}
 
 
@@ -188,8 +189,12 @@ class PriorBOConfig:
     pool_size: int = 256
     xi: float = 0.0
     turbo: dict = field(default_factory=lambda: dict(TURBO))
+    # Policy input order of the frozen kernel (its length scales are per position).
+    policy_order: tuple = POLICY_ORDER
 
     def __post_init__(self):
+        if set(self.policy_order) != set(self.anchor) or len(self.policy_order) != 6:
+            raise ValueError('invalid prior BO configuration')
         if not 0 < self.radius <= 0.8 or self.kernel.get('form') not in KERNEL_FORMS or self.noise_ratio <= 0:
             raise ValueError('invalid prior BO configuration')
         if not 0 < self.stagger_fraction < 1 or self.initial_units < 1 or self.pool_size < 16:
@@ -207,8 +212,10 @@ def load_prior_config(path, radius: float) -> PriorBOConfig:
     root = Path(__file__).resolve().parents[1]
     anchor = json.loads(frozen_path(root, record['anchor']['file']).read_text())['policy']
     hyper = record['hyperparameters']
+    if 'policy_order' not in record:
+        raise ValueError('this prior BO config does not record its policy input order (v2 or later required)')
     return PriorBOConfig(anchor=anchor, kernel=dict(hyper['kernel']), noise_ratio=hyper['noise_ratio'],
-                         radius=radius, turbo=dict(record['turbo']))
+                         radius=radius, turbo=dict(record['turbo']), policy_order=tuple(record['policy_order']))
 
 
 class PriorLocalBOAgent(GPBOAgent):
@@ -217,8 +224,10 @@ class PriorLocalBOAgent(GPBOAgent):
                                                  stagger_fraction=config.stagger_fraction))
         self.prior = config
         fields = self.task['policy']['fields']
-        if set(config.anchor) != set(fields):
+        if set(config.anchor) != set(fields) or set(config.policy_order) != set(fields):
             raise ValueError('anchor policy fields do not match the task')
+        # Inputs follow the kernel's order, not the order of the task mapping (agent sessions sort keys).
+        self.fields = list(config.policy_order)
         self.anchor = {k: float(config.anchor[k]) for k in self.fields}
         design = hadamard8()[:, 1:]
         columns = self.rng.permutation(design.shape[1])[:len(self.fields)]

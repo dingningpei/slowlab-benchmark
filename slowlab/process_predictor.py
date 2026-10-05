@@ -8,6 +8,12 @@ the end of the crop (predicted final = so far + remaining); for channels not
 read, targets are whole-crop totals. The margin follows from the site's public
 prices. Feature construction here is shared by
 training, validation and the public tool.
+
+Policy features follow ``POLICY_ORDER``, the field order of the contract the
+models were trained on, whatever order a caller's ``fields`` mapping has. (Up to
+2026-10-05 the public tool used the order of the task it was given; agent
+sessions deliver that task with keys sorted, which scrambled the policy
+features. See RESEARCH_PLAN decision 2026-10-05.)
 """
 from __future__ import annotations
 
@@ -21,6 +27,9 @@ CUMULATIVE = {'harvest_kg_m2': 'cumulative_harvest_fresh_equivalent', 'heat_kwh_
               'light_kwh_m2': 'lighting_energy', 'co2_kg_m2': 'co2_dosed'}
 TARGETS = tuple(CUMULATIVE)
 LAI = 'canopy_lai_proxy'
+# Field order of the training contract (task contract v6/v8): the models' policy feature order.
+POLICY_ORDER = ('day_temperature_c', 'night_temperature_c', 'co2_target_ppm', 'supplemental_light_hours',
+                'vent_temperature_offset_c', 'vent_rh_threshold_pct')
 FEATURE_SETS = {
     'prior': (),
     'harvest_lai': ('harvest_kg_m2', LAI),
@@ -28,8 +37,15 @@ FEATURE_SETS = {
 }
 
 
+def ordered_fields(fields: dict) -> dict:
+    """``fields`` in the models' training order; the mapping must hold exactly the trained fields."""
+    if set(fields) != set(POLICY_ORDER):
+        raise ValueError('policy fields differ from the fields the process predictor was trained on')
+    return {k: fields[k] for k in POLICY_ORDER}
+
+
 def scaled_policy(fields: dict, policy: dict) -> list[float]:
-    return [(policy[k] - s['min']) / (s['max'] - s['min']) for k, s in fields.items()]
+    return [(policy[k] - s['min']) / (s['max'] - s['min']) for k, s in ordered_fields(fields).items()]
 
 
 def feature_row(fields, policy, planting_day, day, so_far, lai, feature_set, crop_days=180.0):
