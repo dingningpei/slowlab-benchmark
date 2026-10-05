@@ -1,0 +1,71 @@
+{
+  "config_id": "slowlab-prior-bo-v2",
+  "date": "2026-10-05",
+  "decision": "RESEARCH_PLAN decisions 2026-10-05 (field-order bug and repair plan)",
+  "agent_version": "gp-bo-prior-v1.1 (slowlab/prior_bo.py; inputs mapped by name into policy_order)",
+  "anchor": {
+    "file": "configs/fixed_reference_v1.json",
+    "role": "day-0 policy of one compartment and centre of the initial design"
+  },
+  "hyperparameters": {
+    "kernel": {
+      "form": "season_interaction",
+      "policy_lengthscales": [
+        0.5221961650876789,
+        1.081633310144158,
+        2.108604888685645,
+        1.446874399245908,
+        1.8855042307919951,
+        2.0176865012101373
+      ],
+      "season_lengthscale": 0.09696039308929003,
+      "gamma": 0.0003353501304664781,
+      "tau": 1.0229367121618507
+    },
+    "noise_ratio": 0.00010000000000000009
+  },
+  "mean": "constant, estimated within each campaign by generalised least squares; no development mean surface",
+  "hyperparameter_evidence": {
+    "file": "results/prior_bo_hyperparameter_fit_20261003.json",
+    "sha256": "2d988f4457c842b8e104457868fb768da0aef284423a2091422a2a105e6ff195",
+    "code_commit": "50e538f",
+    "data": "process-predictor development runs (sites 100-139, development years)",
+    "kernel_choice": "higher cross-season ranking accuracy; ties by lower random RMSE",
+    "parameters_at_bounds": "gamma near 0 (policy effect common to both seasons) and noise ratio at its 1e-4 floor"
+  },
+  "candidate_radii": [
+    0.15,
+    0.25,
+    0.35
+  ],
+  "radius_unit": "half-width of the box trust region as a fraction of each policy field range",
+  "radius_selection_rule": "highest mean evaluated score over development sites 0-7 (distribution v1, development master seed 20260930), 2 method seeds x Full/Endpoint, three development evaluation years each; ties by lower SD between seeds",
+  "acceptance": "the selected radius must score on average at least the fixed reference on the same development sites and years; the criterion never refers to language-model results",
+  "turbo": {
+    "side_init_factor": 2.0,
+    "side_min": 0.0078125,
+    "side_max": 1.6,
+    "success_tolerance": 3,
+    "failure_tolerance": "ceil(max(4/q, d/q)), q = crops in the batch, d = 6"
+  },
+  "schedule": {
+    "initial_units": 2,
+    "stagger_fraction": 0.5,
+    "pool_size": 256,
+    "xi": 0.0
+  },
+  "policy_order": [
+    "day_temperature_c",
+    "night_temperature_c",
+    "co2_target_ppm",
+    "supplemental_light_hours",
+    "vent_temperature_offset_c",
+    "vent_rh_threshold_pct"
+  ],
+  "policy_order_source": "the field order of configs/task_contract_v8.json, in which the kernel was fitted (results/prior_bo_hyperparameter_fit_20261003.json, inputs)",
+  "supersedes": {
+    "file": "configs/prior_bo_v1.json",
+    "sha256": "33a8a1786fdf9284ef4a92e3f5b809dfb21a9df3ef385665b639b49840dea81a",
+    "change": "records the kernel input order; the radius is selected again on development sites with the fixed agent (same rule and candidates)"
+  }
+}
