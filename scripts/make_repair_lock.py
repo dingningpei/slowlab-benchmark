@@ -21,7 +21,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
 from make_formal_lock import CONFIGS, prompt_hashes, versions  # noqa: E402
 
-REPAIR_CONFIGS = CONFIGS + ['configs/prior_bo_v2.json', 'configs/formal_lock_v1.json']
+REPAIR_CONFIGS = CONFIGS + ['configs/prior_bo_v2.json', 'configs/formal_lock_v1.json', 'results/repair_targets_20261005.json']
 FIXED = {'slowlab/process_predictor.py': 'policy features in the training order (POLICY_ORDER), whatever the task key order',
          'slowlab/prior_bo.py': 'kernel inputs in the recorded policy_order; config v2 required; version gp-bo-prior-v1.1',
          'slowlab/history_packet.py': 'GP Reader maps fields by name into the kernel order; version gp-reader-v2.1'}
@@ -44,6 +44,8 @@ def main():
     ap.add_argument('--environment', type=Path)
     ap.add_argument('--out', type=Path)
     ap.add_argument('--verify', type=Path)
+    ap.add_argument('--lock-id', default='slowlab-formal-lock-v5')
+    ap.add_argument('--supersedes', default=None, help='JSON: {"file": ..., "reason": ...}')
     args = ap.parse_args()
     if args.verify:
         lock = json.loads(args.verify.read_text())
@@ -63,7 +65,7 @@ def main():
     unexpected = [k for k in changed if k not in FIXED]
     if unexpected:
         raise SystemExit(f'files changed since lock v1 without a recorded reason: {unexpected}')
-    lock = {'lock_id': 'slowlab-formal-lock-v5', 'date': '2026-10-05',
+    lock = {'lock_id': args.lock_id, 'date': '2026-10-05',
             'decision': 'RESEARCH_PLAN decisions 2026-10-05 (field-order bug; repair on the original 48 test sites)',
             'scope': ('repair runs: radius re-selection on development sites, main baseline rerun, resumed LLM Full branches, '
                       'their evaluations, E3 packets with changed sources, boundary sensitivity of changed recommendations; '
@@ -72,6 +74,9 @@ def main():
             'prompts_equal_lock_v1': True, 'versions': versions(), 'prompts': prompts,
             'lock_v1_sha256': sha((ROOT / 'configs/formal_lock_v1.json').read_bytes()),
             'environment': json.loads(args.environment.read_text()) if args.environment else None, 'files': files}
+    if args.supersedes:
+        sup = json.loads(args.supersedes)
+        lock['supersedes'] = {**sup, 'sha256': sha((ROOT / sup['file']).read_bytes())}
     args.out.write_text(json.dumps(lock, indent=2) + '\n')
     print(json.dumps({'files': len(files), 'changed_since_lock_v1': changed, 'versions': lock['versions']}, indent=1))
 

@@ -1,0 +1,141 @@
+{
+  "purpose": "LLM jobs whose Full branch received a process-predictor output in the formal run (full scan of all outbound audits)",
+  "audits_scanned": 288,
+  "targets": [
+    {
+      "job": "site00_glm-5.3-flash_r0",
+      "first_prediction_full_call": 10,
+      "audit_sha256": "ac90305de26b969c3c437a6572cea8f36a6991fe99dbecc132a01461a8951aa1"
+    },
+    {
+      "job": "site03_glm-5.3-flash_r1",
+      "first_prediction_full_call": 13,
+      "audit_sha256": "60bf7e2bbf060455aa5e5e7cfa54c92f0f852ea12365fa007ff05548ccecf5c6"
+    },
+    {
+      "job": "site05_mimo-v2.6-flash_r0",
+      "first_prediction_full_call": 29,
+      "audit_sha256": "3ac2ff28698daaab1a2f6f72c296ffe2083936cd4dd2306d0f5b7fa76155abe8"
+    },
+    {
+      "job": "site06_glm-5.3-flash_r0",
+      "first_prediction_full_call": 21,
+      "audit_sha256": "e477cede26fda4abac440e41ec6d023668cef74ba570cccc26b1b37473f6d885"
+    },
+    {
+      "job": "site07_glm-5.3-flash_r0",
+      "first_prediction_full_call": 11,
+      "audit_sha256": "c41e7d3736492b309a3aa2fe9736ee344c60fc9b3fe80970f23f226a7e5c754c"
+    },
+    {
+      "job": "site08_glm-5.3-flash_r0",
+      "first_prediction_full_call": 13,
+      "audit_sha256": "06b76129a1a2fe7622547ce04e19c6f75f50368b1d38f71c67c941f049d7aec0"
+    },
+    {
+      "job": "site09_mimo-v2.6-flash_r0",
+      "first_prediction_full_call": 15,
+      "audit_sha256": "1867fd0ea7ee7e00897d1079859eb072469d74c69379e14b14ca61bf4617a2e9"
+    },
+    {
+      "job": "site14_glm-5.3-flash_r0",
+      "first_prediction_full_call": 15,
+      "audit_sha256": "468022773f1e09987a4eb167de811c6a1d81a77b1a0b72093ffd4b9aa8e6b9ce"
+    },
+    {
+      "job": "site15_deepseek-v4.1-flash_r1",
+      "first_prediction_full_call": 21,
+      "audit_sha256": "ee864f1a285f9992008479d7ddad111e48d1973d453d348a7f4cf8388513555c"
+    },
+    {
+      "job": "site15_glm-5.3-flash_r0",
+      "first_prediction_full_call": 21,
+      "audit_sha256": "fc0b912cd2e7ae2bcae39079ac8b035527ad64ae65511d3dd08143117bffef23"
+    },
+    {
+      "job": "site20_glm-5.3-flash_r0",
+      "first_prediction_full_call": 16,
+      "audit_sha256": "e0636543147fad0ae09e9f75e242fd8dbcfae774b58853240a1b9963623dd92b"
+    },
+    {
+      "job": "site22_deepseek-v4.1-flash_r1",
+      "first_prediction_full_call": 16,
+      "audit_sha256": "9a330c21ac1e457b0af536f380493bad413e0e20a96bbdbaf62fa7c65faa8540"
+    },
+    {
+      "job": "site24_glm-5.3-flash_r1",
+      "first_prediction_full_call": 12,
+      "audit_sha256": "ceb96a7c02c43d9f2bbca70b2b807e50598867d96b0fa2d90bd233bb2d643121"
+    },
+    {
+      "job": "site25_glm-5.3-flash_r0",
+      "first_prediction_full_call": 27,
+      "audit_sha256": "111614dab8aa66ba38f462ed1e27fb8282b5d8f6fd5ac2d870dd48c54f80e882"
+    },
+    {
+      "job": "site25_mimo-v2.6-flash_r0",
+      "first_prediction_full_call": 15,
+      "audit_sha256": "ee020809cae574fafffefc7b0e3920546ed2dda904d901e61f61935ee77bad6f"
+    },
+    {
+      "job": "site27_deepseek-v4.1-flash_r1",
+      "first_prediction_full_call": 24,
+      "audit_sha256": "06a8303e5997801cc3b596762c1ac6205dbe97edf33ea81f225082a978c2b8cc"
+    },
+    {
+      "job": "site27_glm-5.3-flash_r0",
+      "first_prediction_full_call": 10,
+      "audit_sha256": "9a1ad1397e795942a8d8dddeeda32351214e5d6375f9dbea719e3a1590ecee54"
+    },
+    {
+      "job": "site28_glm-5.3-flash_r0",
+      "first_prediction_full_call": 18,
+      "audit_sha256": "641e51ea7c0ef83862f53ecf1a9395a814ec78aa890561e35b7eff09ceaa847c"
+    },
+    {
+      "job": "site28_mimo-v2.6-flash_r0",
+      "first_prediction_full_call": 20,
+      "audit_sha256": "932f06c9971a37a6fd1398ef6b77d52abf94392674cc4cec909e1e6d65f60afc"
+    },
+    {
+      "job": "site29_mimo-v2.6-flash_r1",
+      "first_prediction_full_call": 17,
+      "audit_sha256": "8cade66d931c139bc015113306ad182d88e8ca0b28f27d4c9b31811cbb748ef6"
+    },
+    {
+      "job": "site32_mimo-v2.6-flash_r0",
+      "first_prediction_full_call": 14,
+      "audit_sha256": "4bb09933d250ec869292eabef10829ddec856392c2b7d25ae90dde8343084563"
+    },
+    {
+      "job": "site37_glm-5.3-flash_r1",
+      "first_prediction_full_call": 17,
+      "audit_sha256": "6ab4d71d93ac559dd680e6ab6dfb94753998230bf42b77812a19a5709fb88f71"
+    },
+    {
+      "job": "site38_glm-5.3-flash_r1",
+      "first_prediction_full_call": 25,
+      "audit_sha256": "3f6af547d1e9040ec18e0089220fb65935cda7687162f12cb7a55bc16a141793"
+    },
+    {
+      "job": "site40_mimo-v2.6-flash_r1",
+      "first_prediction_full_call": 8,
+      "audit_sha256": "6fd368abbbe285bdc185d28220d2b14f681540828b7f228ccd5bf72fd0fd5075"
+    },
+    {
+      "job": "site42_glm-5.3-flash_r1",
+      "first_prediction_full_call": 17,
+      "audit_sha256": "e0778b9f11ecabf1b503c0f0521397aa9438e2a2ccb85993e71c5284e97bee92"
+    },
+    {
+      "job": "site44_glm-5.3-flash_r0",
+      "first_prediction_full_call": 15,
+      "audit_sha256": "fb9f581f1bc3eeebbd0b83b67a1a410c37664b94cade05d84c8577832a2131a8"
+    }
+  ],
+  "by_model": {
+    "deepseek": 3,
+    "glm": 16,
+    "mimo": 7
+  }
+}

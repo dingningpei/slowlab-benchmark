@@ -30,18 +30,25 @@ PREDICTION_KEY = 'predicted_contribution_margin_eur_m2'
 UEFF = (0.0, 4.0)
 
 
-def repaired_jobs(batch, audits_dir: Path):
-    out = []
-    for job in batch['jobs']:
-        if job['method'] != 'llm':
-            continue
-        audit = audits_dir / f"{job['id']}.audit.jsonl"
-        for line in audit.read_text().splitlines():
-            rec = json.loads(line)
-            if rec['label'] == 'full' and PREDICTION_KEY in rec['messages'][-1]['content']:
-                out.append(job)
-                break
-    return out
+def received_prediction(audit: Path) -> bool:
+    for line in audit.read_text().splitlines():
+        rec = json.loads(line)
+        if rec['label'] == 'full' and PREDICTION_KEY in rec['messages'][-1]['content']:
+            return True
+    return False
+
+
+def repaired_jobs(batch, audits_dir: Path, listed=None):
+    """LLM jobs whose Full branch received a predictor output. Without ``listed`` every audit is scanned;
+    with it (the list made by a full scan, results/repair_targets_20261005.json) each listed audit is checked."""
+    llm = [j for j in batch['jobs'] if j['method'] == 'llm']
+    if listed is None:
+        return [j for j in llm if received_prediction(audits_dir / f"{j['id']}.audit.jsonl")]
+    by_id = {j['id']: j for j in llm}
+    for jid in listed:
+        if not received_prediction(audits_dir / f'{jid}.audit.jsonl'):
+            raise SystemExit(f'{jid} is listed but its Full branch never received a predictor output')
+    return [by_id[jid] for jid in listed]
 
 
 def main():
@@ -53,6 +60,7 @@ def main():
     ap.add_argument('--specs-dir', type=Path)
     ap.add_argument('--audits-dir', type=Path)
     ap.add_argument('--picks', type=Path)
+    ap.add_argument('--targets', type=Path, help='list of affected jobs from a full scan (results/repair_targets_20261005.json)')
     ap.add_argument('--env-file')
     ap.add_argument('--dev-cache', required=True)
     ap.add_argument('--formal-cache', required=True)
@@ -77,7 +85,8 @@ def main():
         print(json.dumps({'baseline_jobs': len(jobs), 'radius': radius}))
         return
     if args.stage == 'llm':
-        jobs = repaired_jobs(batch, args.audits_dir)
+        listed = [t['job'] for t in json.loads(args.targets.read_text())['targets']] if args.targets else None
+        jobs = repaired_jobs(batch, args.audits_dir, listed)
         lines = []
         for job in jobs:
             out = run / 'llm' / job['id']
