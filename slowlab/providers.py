@@ -7,6 +7,7 @@ DeepSeek, OpenAI and any OpenAI-compatible endpoint share one path; a model
 name containing "/" is routed through OpenRouter.
 """
 from __future__ import annotations
+import http.client
 import json
 import socket
 import os
@@ -235,6 +236,15 @@ def openai_compatible(model: str, *, base_url: str | None = None,
                 time.sleep(2.0 * (2 ** attempt))
             except TimeoutError as e:
                 last = e
+                time.sleep(2.0 * (2 ** attempt))
+            except (ConnectionError, http.client.HTTPException) as e:
+                # The connection dropped after the request was sent (e.g. RemoteDisconnected). urllib
+                # raises these unwrapped, so they used to escape the retry loop and end a campaign as an
+                # infrastructure failure. Retry the identical request like any other network error
+                # (decision 2026-10-05).
+                last = e
+                print(f"  [{model}] connection dropped ({type(e).__name__}), retrying "
+                      f"({attempt + 1}/{max_attempts})", flush=True)
                 time.sleep(2.0 * (2 ** attempt))
         raise ProviderError(f"still failing after {max_attempts} attempts: {last}")
 

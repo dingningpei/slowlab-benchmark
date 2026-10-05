@@ -24,7 +24,8 @@ from make_formal_lock import CONFIGS, prompt_hashes, versions  # noqa: E402
 REPAIR_CONFIGS = CONFIGS + ['configs/prior_bo_v2.json', 'configs/formal_lock_v1.json', 'results/repair_targets_20261005.json']
 FIXED = {'slowlab/process_predictor.py': 'policy features in the training order (POLICY_ORDER), whatever the task key order',
          'slowlab/prior_bo.py': 'kernel inputs in the recorded policy_order; config v2 required; version gp-bo-prior-v1.1',
-         'slowlab/history_packet.py': 'GP Reader maps fields by name into the kernel order; version gp-reader-v2.1'}
+         'slowlab/history_packet.py': 'GP Reader maps fields by name into the kernel order; version gp-reader-v2.1',
+         'slowlab/providers.py': 'dropped connections after the request was sent are retried like other network errors (decision 2026-10-05)'}
 
 
 def sha(data: bytes) -> str:
