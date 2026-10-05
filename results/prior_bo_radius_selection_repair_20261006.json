@@ -1,0 +1,88 @@
+{
+ "format": "prior-bo-radius-selection-v1",
+ "rule": "highest mean evaluated score over development sites 0-7 (distribution v1, development master seed 20260930), 2 method seeds x Full/Endpoint, three development evaluation years each; ties by lower SD between seeds",
+ "acceptance": "the selected radius must score on average at least the fixed reference on the same development sites and years; the criterion never refers to language-model results",
+ "fixed_reference_mean_eur_m2": 34.919869611623895,
+ "radii": {
+  "0.15": {
+   "recommendations": 32,
+   "mean_eur_m2": 36.380297374833326,
+   "mean_full": 36.14006098653467,
+   "mean_endpoint": 36.62053376313198,
+   "within_site_seed_sd": 6.202646941245336,
+   "full_minus_endpoint_mean": -0.4804727765973136,
+   "full_minus_endpoint_sd": 4.832783186793557,
+   "minus_fixed_reference_mean": 1.4604277632094302,
+   "share_recommending_anchor": 0.0,
+   "site_means": {
+    "0": 2.17,
+    "1": 34.141,
+    "2": 50.039,
+    "3": 45.031,
+    "4": 39.111,
+    "5": 41.404,
+    "6": 35.951,
+    "7": 43.196
+   }
+  },
+  "0.25": {
+   "recommendations": 32,
+   "mean_eur_m2": 37.78660812514255,
+   "mean_full": 37.33650538278214,
+   "mean_endpoint": 38.23671086750295,
+   "within_site_seed_sd": 6.326232890352457,
+   "full_minus_endpoint_mean": -0.9002054847208102,
+   "full_minus_endpoint_sd": 7.758145586990895,
+   "minus_fixed_reference_mean": 2.866738513518655,
+   "share_recommending_anchor": 0.03125,
+   "site_means": {
+    "0": 4.972,
+    "1": 34.342,
+    "2": 49.635,
+    "3": 46.118,
+    "4": 40.181,
+    "5": 46.5,
+    "6": 36.204,
+    "7": 44.342
+   }
+  },
+  "0.35": {
+   "recommendations": 32,
+   "mean_eur_m2": 38.12510543222712,
+   "mean_full": 37.19871437969601,
+   "mean_endpoint": 39.05149648475824,
+   "within_site_seed_sd": 7.532181405391144,
+   "full_minus_endpoint_mean": -1.852782105062234,
+   "full_minus_endpoint_sd": 7.210669491522746,
+   "minus_fixed_reference_mean": 3.205235820603228,
+   "share_recommending_anchor": 0.0625,
+   "site_means": {
+    "0": 5.851,
+    "1": 35.085,
+    "2": 45.216,
+    "3": 45.715,
+    "4": 43.064,
+    "5": 46.331,
+    "6": 40.704,
+    "7": 43.034
+   }
+  }
+ },
+ "gp_bo_v3_same_sites": {
+  "mean_eur_m2": 27.86167128177074,
+  "within_site_seed_sd": 12.166884874309327
+ },
+ "selected_radius": 0.35,
+ "accepted": true,
+ "run": {
+  "host": "rented server #2 (2x AMD EPYC 7B12)",
+  "code_commit": "a2c1306",
+  "lock": "configs/formal_lock_v6.json",
+  "config": "configs/prior_bo_v2.json",
+  "campaigns": 96,
+  "evaluations": 282,
+  "campaign_wall_hours": 5.2,
+  "evaluation_wall_hours": 9.6,
+  "note": "wall time is long because CPUs 0-63 (socket 0) of this host ran about 35x slower than CPUs 64-127 (measured 2026-10-06); results do not depend on the core"
+ }
+}

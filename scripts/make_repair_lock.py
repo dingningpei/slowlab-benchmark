@@ -21,7 +21,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
 from make_formal_lock import CONFIGS, prompt_hashes, versions  # noqa: E402
 
-REPAIR_CONFIGS = CONFIGS + ['configs/prior_bo_v2.json', 'configs/formal_lock_v1.json', 'results/repair_targets_20261005.json']
+REPAIR_CONFIGS = CONFIGS + ['configs/prior_bo_v2.json', 'configs/formal_lock_v1.json', 'results/repair_targets_20261005.json',
+                            'configs/prior_bo_v3.json', 'results/prior_bo_radius_selection_repair_20261006.json']
 FIXED = {'slowlab/process_predictor.py': 'policy features in the training order (POLICY_ORDER), whatever the task key order',
          'slowlab/prior_bo.py': 'kernel inputs in the recorded policy_order; config v2 required; version gp-bo-prior-v1.1',
          'slowlab/history_packet.py': 'GP Reader maps fields by name into the kernel order; version gp-reader-v2.1',
