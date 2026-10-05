@@ -87,5 +87,5 @@
 - [ ] 新建 `paper/`（v2.3），按 `RESEARCH_PLAN.md` §6 的图表与证据映射写作
 - [x] 每项主张可追溯到协议、日志与分析输出；`verify_results_claims` 式脚本 → `scripts/make_paper_numbers.py` 从结果文件生成全部数字，`scripts/verify_results_claims.py` 检查无手写或过时数字
 - [x] 明确新稿是模拟自动实验研究；保留 GreenLight 外部验证失败与未校准执行器说明 → `paper/sections/07_limitations.tex` 与附录 B（AGC 2019 外部检验失败）
-- [ ] 数据锁定后发布可复现代码、seed reveal 与必要数据包；不发布密钥或私人 reviews
+- [ ] 数据锁定后发布可复现代码、seed reveal 与必要数据包；不发布密钥或私人 reviews（2026-10-05 用户决定：种子开封与数据包在录用后公开；投稿时按 D&B 要求向审稿人提供匿名访问，不含种子开封文件）
 - [ ] `legacy/v2.1` 只作先导研究引用，不混入新版主统计
