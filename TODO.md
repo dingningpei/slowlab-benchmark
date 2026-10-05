@@ -55,7 +55,7 @@
 - [x] fake-model 全路径测试，覆盖所有动作与失败路径。证据：`tests/test_full_path.py`（经 pilot 入口 `scripts/run_campaign_job.py`）
 - [x] 核验候选模型精确 ID、provider 路由、数据发送设置；禁用 provider 端隐藏推理（模型与精确 ID 已定并按 OpenRouter 公开列表核对，见 `configs/pilot_models_v3.json`（DeepSeek 官方 API；MiMo、GLM 固定官方端点；GLM 推理必选、上限 1,024 token）；连通检查见 pilot 运行目录的 model_check 记录）。证据：`results/pilot_model_checks_20261001.json`、`results/pilot_provider_data_policies_20261002.json`
 - [x] 在少量 pilot sites 上核算每 campaign 调用、token、费用、格式失败与执行耗时。证据：`results/pilot_accounting_20261002.json`
-- [ ] 检查过程反馈是否有可操作的决策机会；只按接口/任务逻辑修复，不按 arm 输赢调参
+- [x] 检查过程反馈是否有可操作的决策机会；只按接口/任务逻辑修复，不按 arm 输赢调参 → 正式运行前未单独完成；用户 2026-10-05 决定以事后描述关闭：`results/formal_process_feedback_20261005.json`（无模型中途停种；约一半 campaign 的 Full 与 Endpoint 后续安排相同）
 - [x] 在租用服务器上建立运行环境：核对软件版本与 GreenLight 哈希，跑全部测试，单个评测计时并与台式机结果对比（记录差异）；用户放置新的专用 API key → `results/server_parity_check_20261004.json`；服务器全部测试通过；用户已放置专用 key（连通检查见正式运行目录 model_check.json）
 - [x] 冻结后的主基线在 8 个 pilot site 上各跑 2 个种子 × Full/Endpoint 并评测，用于确定 N（只花算力，不花 API 费用） → `results/pilot_evaluation_analysis_pbo_20261004.json`
 - [x] 预算表包含 pilot、重试、Reader 会话、初始推荐、离线评测；硬暂停策略；取得执行授权 → 决定记录 2026-10-04；用户于 2026-10-04 授权，API 硬上限 30 美元
