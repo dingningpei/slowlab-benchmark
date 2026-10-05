@@ -1,0 +1,8 @@
+{
+  "purpose": "run environment check for the repair host: one formal evaluation (site03_fixed_reference_y2002) repeated and compared with the stored formal record",
+  "host": "rented server 2 (cpolar tunnel): AMD EPYC 7B12, 128 cores, Ubuntu 22.04, gcc 11.4, Python 3.12.3; GreenLight files hash-equal",
+  "code_commit": "edcdeae (lock v5; evaluation code unchanged since the formal run)",
+  "records_identical_except_timing": true,
+  "elapsed_seconds": 1498.6,
+  "test_suite": "406 passed, 1 skipped"
+}

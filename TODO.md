@@ -73,7 +73,7 @@
 - [x] 服务器格式化前，把全部结果、费用账本与审计记录复制回本地并核对哈希 → `~/slowlab-data/formal-20261004/`（22,007 个文件，整体哈希与服务器一致，清单 MANIFEST.sha256）；代码在 Git 中；私有模拟轨迹 60 GB 未拷回（确定性可重算）（已验证：`results/formal_trace_replay_check_20261005.json`）
 - [ ] 字段顺序错误的修复与重跑（决定记录 2026-10-05）
   - [x] 修复与测试 → `ac75ed0`（`tests/test_field_order.py`）
-  - [ ] 新主机逐字节一致性检查
+  - [x] 新主机逐字节一致性检查 → `results/server2_parity_check_20261005.json`
   - [ ] 开发 site 上重选半径
   - [ ] 26 个 LLM Full 分支断点续跑（含逐字节重放验证）
   - [ ] 主基线 192 场重跑并评测
