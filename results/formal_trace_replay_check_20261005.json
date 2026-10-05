@@ -1,0 +1,123 @@
+{
+  "purpose": "trace regeneration check: 12 formal campaigns on test site 0 (3 models x repeat 0 Full/Endpoint, repeat 1 Full for two models, baseline seeds 0/1 Full/Endpoint) replayed from their public transcripts on a different host, without calling any model",
+  "hosts": {
+    "original": "rented server (AMD EPYC 7B12, gcc 11.4, Python 3.12.3)",
+    "replay": "desktop WSL2 (Intel i7-10700K, gcc 13.3, Python 3.12.3)"
+  },
+  "code_commit_replay": "2aee171 (scripts/replay_campaign_trace.py)",
+  "comparison": "decompressed trace sha256, settlement bytes, per-request response sha256",
+  "jobs": 12,
+  "all_trace_identical": true,
+  "all_settlement_identical": true,
+  "response_mismatches_total": 0,
+  "rows": {
+    "site00_deepseek-v4.1-flash_r0_endpoint": {
+      "stored_trace_sha256": "64b011d6a6df7b52aa645b73d29706125c93a642a6a9ab2796cd56c215a5f183",
+      "replayed_trace_sha256": "64b011d6a6df7b52aa645b73d29706125c93a642a6a9ab2796cd56c215a5f183",
+      "settlement_identical": true,
+      "response_mismatches": 0,
+      "requests": 29,
+      "exit_code": 0,
+      "trace_identical": true
+    },
+    "site00_deepseek-v4.1-flash_r0_full": {
+      "stored_trace_sha256": "5294ecd9e63ac05237c88e8cc764c31e7a9b416ca2bf4d3c04ea23dfec55af33",
+      "replayed_trace_sha256": "5294ecd9e63ac05237c88e8cc764c31e7a9b416ca2bf4d3c04ea23dfec55af33",
+      "settlement_identical": true,
+      "response_mismatches": 0,
+      "requests": 29,
+      "exit_code": 0,
+      "trace_identical": true
+    },
+    "site00_deepseek-v4.1-flash_r1_full": {
+      "stored_trace_sha256": "e66da72b53a21649d8760c4f0e2f7c6a4c8dc1189ce3cd682f316a859a3821fa",
+      "replayed_trace_sha256": "e66da72b53a21649d8760c4f0e2f7c6a4c8dc1189ce3cd682f316a859a3821fa",
+      "settlement_identical": true,
+      "response_mismatches": 0,
+      "requests": 29,
+      "exit_code": 0,
+      "trace_identical": true
+    },
+    "site00_glm-5.3-flash_r0_endpoint": {
+      "stored_trace_sha256": "6a1e2d5fd3cfbbe90ec4c7c5441bc52ddac8a1ff5d2d67c94fbfcf3f8485d80d",
+      "replayed_trace_sha256": "6a1e2d5fd3cfbbe90ec4c7c5441bc52ddac8a1ff5d2d67c94fbfcf3f8485d80d",
+      "settlement_identical": true,
+      "response_mismatches": 0,
+      "requests": 21,
+      "exit_code": 0,
+      "trace_identical": true
+    },
+    "site00_glm-5.3-flash_r0_full": {
+      "stored_trace_sha256": "6477aa3e8698b6eb0046c09066c14986f4d2b8359e896d7dd1403e1529daf9a2",
+      "replayed_trace_sha256": "6477aa3e8698b6eb0046c09066c14986f4d2b8359e896d7dd1403e1529daf9a2",
+      "settlement_identical": true,
+      "response_mismatches": 0,
+      "requests": 58,
+      "exit_code": 0,
+      "trace_identical": true
+    },
+    "site00_glm-5.3-flash_r1_full": {
+      "stored_trace_sha256": "f712ab8eb36bfc18a6fc751cd612373e837176dd76e70e57bd403bd4ee165d82",
+      "replayed_trace_sha256": "f712ab8eb36bfc18a6fc751cd612373e837176dd76e70e57bd403bd4ee165d82",
+      "settlement_identical": true,
+      "response_mismatches": 0,
+      "requests": 33,
+      "exit_code": 0,
+      "trace_identical": true
+    },
+    "site00_mimo-v2.6-flash_r0_endpoint": {
+      "stored_trace_sha256": "ffefa5e5918747b35731d977ffe3adff5d77977f80ca297ef17e0432521a1afe",
+      "replayed_trace_sha256": "ffefa5e5918747b35731d977ffe3adff5d77977f80ca297ef17e0432521a1afe",
+      "settlement_identical": true,
+      "response_mismatches": 0,
+      "requests": 23,
+      "exit_code": 0,
+      "trace_identical": true
+    },
+    "site00_mimo-v2.6-flash_r0_full": {
+      "stored_trace_sha256": "f978409cc3202878aec0e2485711ba6e10417b895ebf1e347a2f0d388d1a9d5d",
+      "replayed_trace_sha256": "f978409cc3202878aec0e2485711ba6e10417b895ebf1e347a2f0d388d1a9d5d",
+      "settlement_identical": true,
+      "response_mismatches": 0,
+      "requests": 31,
+      "exit_code": 0,
+      "trace_identical": true
+    },
+    "site00_pbo_s0_endpoint": {
+      "stored_trace_sha256": "2fd69360b3a73c7f0dffd8de9145db55f5f75c7969b9c5bd371cba8ed8171c8e",
+      "replayed_trace_sha256": "2fd69360b3a73c7f0dffd8de9145db55f5f75c7969b9c5bd371cba8ed8171c8e",
+      "settlement_identical": true,
+      "response_mismatches": 0,
+      "requests": 16,
+      "exit_code": 0,
+      "trace_identical": true
+    },
+    "site00_pbo_s0_full": {
+      "stored_trace_sha256": "8ab2846b71f1fc73041419228faeb03e1f44ed82e0969163012a5145fa620cd0",
+      "replayed_trace_sha256": "8ab2846b71f1fc73041419228faeb03e1f44ed82e0969163012a5145fa620cd0",
+      "settlement_identical": true,
+      "response_mismatches": 0,
+      "requests": 26,
+      "exit_code": 0,
+      "trace_identical": true
+    },
+    "site00_pbo_s1_endpoint": {
+      "stored_trace_sha256": "8a02353591f96a48cc6ef86b6167abcdc2914c99f4915086e63bf0bcad0f5ce5",
+      "replayed_trace_sha256": "8a02353591f96a48cc6ef86b6167abcdc2914c99f4915086e63bf0bcad0f5ce5",
+      "settlement_identical": true,
+      "response_mismatches": 0,
+      "requests": 16,
+      "exit_code": 0,
+      "trace_identical": true
+    },
+    "site00_pbo_s1_full": {
+      "stored_trace_sha256": "44ab2224ed66dbc807d32070bdd26d78b9db50896e4a4bda4ee65508a0103f82",
+      "replayed_trace_sha256": "44ab2224ed66dbc807d32070bdd26d78b9db50896e4a4bda4ee65508a0103f82",
+      "settlement_identical": true,
+      "response_mismatches": 0,
+      "requests": 26,
+      "exit_code": 0,
+      "trace_identical": true
+    }
+  }
+}
