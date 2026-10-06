@@ -28,6 +28,13 @@ COLOR = {'deepseek-v4.1-flash': '#2a78d6', 'glm-5.3-flash': '#eb6834', 'mimo-v2.
 NEUTRAL = '#8a8984'
 
 
+
+def p_label(p):
+    """Same rounding as the paper text (scripts/make_paper_numbers.py p_fmt)."""
+    if p < 0.001:
+        return '<0.001'
+    return '=' + (f'{p:.3f}' if p < 0.1 else f'{p:.2f}')
+
 def site_scores(eval_dir):
     years = defaultdict(dict)
     for f in eval_dir.glob('site*_y*.json'):
@@ -66,7 +73,7 @@ def interval_plot(ax, rows, report_rows, title, xlabel):
         ax.errorbar(r['mean'], y, xerr=[[r['mean'] - r['ci95_bca'][0]], [r['ci95_bca'][1] - r['mean']]], fmt='o',
                     color='black', capsize=3, ms=4)
         kind, p = ('Holm', r['p_holm']) if 'p_holm' in r else ('BH', r['p_bh'])
-        ax.text(1.01, y, f"{r['mean']:+.2f}\np$_{{{kind}}}$={p:.2g}", transform=ax.get_yaxis_transform(), va='center', fontsize=7)
+        ax.text(1.01, y, f"{r['mean']:+.2f}\np$_{{{kind}}}${p_label(p)}", transform=ax.get_yaxis_transform(), va='center', fontsize=7)
     ax.axvline(0, color='grey', lw=0.8)
     for v in (-2, 2):
         ax.axvline(v, color='grey', lw=0.6, ls=':')

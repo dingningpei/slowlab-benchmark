@@ -82,6 +82,13 @@ def experiment_numbers(f, p6, pre=''):
         n[f'{k}.lo'] = fmt(v['ci95_bca'][0], sign=True)
         n[f'{k}.hi'] = fmt(v['ci95_bca'][1], sign=True)
         n[f'{k}.p'] = p_fmt(joint[name])
+    for kind, suffix in (('learn', '_full_minus_initial'), ('initial', '_initial')):
+        if kind == 'learn':
+            vals = [v['mean'] for name, v in f['secondary'].items() if name.endswith(suffix)]
+            n[f'{pre}range.learn.lo'], n[f'{pre}range.learn.hi'] = fmt(min(vals), sign=True), fmt(max(vals), sign=True)
+        else:
+            vals = [v['mean'] for m, v in f['method_means'].items() if m.endswith(suffix)]
+            n[f'{pre}range.initial.lo'], n[f'{pre}range.initial.hi'] = fmt(min(vals)), fmt(max(vals))
     gd = [joint[name] for name in f['secondary'] if name.startswith('feedback_gain_')]
     n[f'{pre}range.gaindiff.p.lo'] = p_fmt(min(gd))
     n[f'{pre}secondary.family'] = len(joint)

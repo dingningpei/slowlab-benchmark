@@ -19,6 +19,13 @@ READERS = [('gp-reader', 'GP Reader'), ('deepseek-v4.1-flash', 'DeepSeek Reader'
 SOURCES = ['deepseek-v4.1-flash', 'glm-5.3-flash', 'mimo-v2.6-flash', 'pbo']
 
 
+
+def p_label(p):
+    """Same rounding as the paper text (scripts/make_paper_numbers.py p_fmt)."""
+    if p < 0.001:
+        return '<0.001'
+    return '=' + (f'{p:.3f}' if p < 0.1 else f'{p:.2f}')
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--report', type=Path, required=True)
@@ -32,7 +39,7 @@ def main():
         ax.errorbar(pooled['mean'], y0 + 0.3, xerr=[[pooled['mean'] - pooled['ci95_bca'][0]], [pooled['ci95_bca'][1] - pooled['mean']]],
                     fmt='D', color='black', ms=5, capsize=3, lw=1.2)
         p = e3['secondary_bh_with_e3'][f'E3_reader_swap_{reader}']
-        ax.text(1.01, y0 + 0.3, f"{pooled['mean']:+.2f}  p$_{{BH}}$={p:.2g}", transform=ax.get_yaxis_transform(), va='center', fontsize=7)
+        ax.text(1.01, y0 + 0.3, f"{pooled['mean']:+.2f}  p$_{{BH}}${p_label(p)}", transform=ax.get_yaxis_transform(), va='center', fontsize=7)
         for j, src in enumerate(SOURCES):
             v = e3['reader_swap_gain'][reader].get(src)
             if not v or not v.get('n'):
