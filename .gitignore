@@ -52,3 +52,6 @@ Thumbs.db
 CHANGELOG_*.md
 /output/reviews/
 /output/private/
+
+# ── Local private material (seed openings, reviews, build outputs) ─────
+output/
