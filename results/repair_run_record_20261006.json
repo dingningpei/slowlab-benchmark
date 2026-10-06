@@ -1,0 +1,140 @@
+{
+ "format": "repair-run-record-v1",
+ "date": "2026-10-06",
+ "decision": "RESEARCH_PLAN decisions 2026-10-05 (field-order bug; repair on the original 48 test sites; client retry fix)",
+ "host": "rented server #2 (2x AMD EPYC 7B12, Ubuntu); run dir runs/20261005-a2c1306-repair",
+ "locks": {
+  "radius_selection": "configs/formal_lock_v6.json (code a2c1306)",
+  "llm_resumes": "v6, retries after the client fix under configs/formal_lock_v7.json (391b397)",
+  "baseline_rerun_evaluations_sensitivity_e3_analysis": "configs/formal_lock_v8.json (0b9e5aa); verified before each stage",
+  "analysis_code": "unchanged from locks v2 (E1/E2) and v3 (Phase 6); their verifier reports only the four fixed modules of the base lock v1"
+ },
+ "radius_selection": {
+  "file": "results/prior_bo_radius_selection_repair_20261006.json",
+  "selected_radius": 0.35,
+  "accepted": true
+ },
+ "llm_resumes": {
+  "branches": 26,
+  "completed": 26,
+  "replayed_calls_verified": 559,
+  "live_calls": 988,
+  "failed_attempts_kept": 7,
+  "failed_attempt_causes": "dropped connections (RemoteDisconnected) before the client fix; kept under llm/failed_attempt1, failed_attempt2, client_fix_retry1"
+ },
+ "jobs": {
+  "baseline_campaigns": {
+   "n": 192,
+   "completed": 192,
+   "wall_hours": 1.68
+  },
+  "repair_evaluations": {
+   "n": 654,
+   "completed": 654,
+   "llm": 78,
+   "baseline": 576
+  },
+  "sensitivity": {
+   "n": 126,
+   "completed": 126
+  },
+  "e3_evaluations": {
+   "n": 768,
+   "completed": 768,
+   "run": 276,
+   "reused_from_original": 492
+  },
+  "e3_reader_calls": {
+   "packets_changed": 23,
+   "calls": 69,
+   "failed": 0
+  }
+ },
+ "spend_usd": {
+  "resumed_branches_all_attempts": 1.2348,
+  "e3_readers": 0.0529,
+  "total": 1.2877,
+  "approved_cap": 5.0
+ },
+ "host_cpu_anomaly": {
+  "finding": "CPUs 0-63 (socket 0) ran about 35x slower than CPUs 64-127 in a per-core benchmark (2 s pure-Python loop: median 51 vs 1,771 iterations); reported clock and temperatures normal",
+  "action": "from 2026-10-06 02:25 CST all repair jobs pinned to CPUs 64-127",
+  "parity": {
+   "site04_e1f3ce0fffdd_y2014": {
+    "identical_except_timing": false,
+    "differences": [
+     "spec_sha256"
+    ],
+    "score_slow_socket": 48.4754849998118,
+    "score_fast_socket": 48.4754849998118,
+    "elapsed_min_slow": 493.9,
+    "elapsed_min_fast": 29.0
+   },
+   "site04_e1f3ce0fffdd_y2017": {
+    "identical_except_timing": false,
+    "differences": [
+     "spec_sha256"
+    ],
+    "score_slow_socket": 46.703275087670534,
+    "score_fast_socket": 46.703275087670534,
+    "elapsed_min_slow": 118.7,
+    "elapsed_min_fast": 28.9
+   }
+  },
+  "parity_note": "only spec_sha256 differs (output path); every other field identical"
+ },
+ "platform_checks": {
+  "e3_packets_rebuilt_from_original_records": {
+   "packets_byte_identical": 64,
+   "packets_differing": [],
+   "gp_policies_differing": [],
+   "sample_identical": true
+  },
+  "e3_packets_built_on_macOS_arm64": "5 packets with unchanged sources differed in the last digit of derived margins; packets were therefore built on the server",
+  "original_e1e2_analysis_rerun": "byte-identical to results/formal_analysis_e1e2_20261005.json",
+  "original_phase6_analysis_rerun": {
+   "file": "results/phase6_analysis_original_server2_20261006.json",
+   "float_differences": 147,
+   "non_float_differences": 0,
+   "largest": [
+    {
+     "path": "/e3/reader_swap_gain/gp-reader/pbo/ci95_bca[1]",
+     "server": 1.8331615224412392,
+     "committed": 2.2914519030515486
+    },
+    {
+     "path": "/e3/reader_swap_gain/deepseek-v4.1-flash/deepseek-v4.1-flash/ci95_bca[1]",
+     "server": 2.750599284488879,
+     "committed": 2.7502721738364366
+    },
+    {
+     "path": "/e3/reader_swap_gain/deepseek-v4.1-flash/deepseek-v4.1-flash/ci95_bca[0]",
+     "server": -3.1692881871452765,
+     "committed": -3.1695586554544617
+    }
+   ],
+   "note": "the committed Phase 6 analysis was computed on macOS arm64; BCa bounds on samples with many ties are platform-sensitive; original vs repaired comparisons use the server rerun"
+  }
+ },
+ "incident": {
+  "file": "missequenced_20261006/README.txt (run dir)",
+  "summary": "a first stage-2 launch read a wrong batch path; 576 evaluations and 96 sensitivity jobs failed in under a second for missing settlements (no simulation ran); records moved aside, chain relaunched with completeness checks"
+ },
+ "assembled_dataset": {
+  "local_copy": "~/slowlab-data/repair-20261005/assembled",
+  "files": 6543,
+  "manifest_sha256": "58f27d82aa4d32bbc888856fa3a304c8ebabd02629cb29b390f04e5e0c29e8eb",
+  "verified_after_copy": true,
+  "not_copied": "private simulation traces (about 25 GB), deterministic to recompute"
+ },
+ "results": {
+  "e1e2": {
+   "file": "results/repaired_formal_analysis_e1e2_20261006.json",
+   "sha256": "8cbe444d5593e0a0e98dae8d8846c8c5994ac7c8422dc6bf18a58286169acbe3"
+  },
+  "phase6": {
+   "file": "results/repaired_phase6_analysis_20261006.json",
+   "sha256": "e65c6402c61542cc50c02905320765cc39f2348c4efc782beedb3cd6be75215b"
+  }
+ }
+}

@@ -74,11 +74,11 @@
 - [ ] 字段顺序错误的修复与重跑（决定记录 2026-10-05）
   - [x] 修复与测试 → `ac75ed0`（`tests/test_field_order.py`）
   - [x] 新主机逐字节一致性检查 → `results/server2_parity_check_20261005.json`
-  - [ ] 开发 site 上重选半径
-  - [ ] 26 个 LLM Full 分支断点续跑（含逐字节重放验证）
-  - [ ] 主基线 192 场重跑并评测
-  - [ ] E3 受影响的数据包与边界传热敏感性重做
-  - [ ] lock v5；用锁定分析代码在修复后数据上运行一次
+  - [x] 开发 site 上重选半径 → `results/prior_bo_radius_selection_repair_20261006.json`（0.35）
+  - [x] 26 个 LLM Full 分支断点续跑（含逐字节重放验证） → `results/repair_run_record_20261006.json`
+  - [x] 主基线 192 场重跑并评测 → `results/repair_run_record_20261006.json`
+  - [x] E3 受影响的数据包与边界传热敏感性重做 → `results/repaired_phase6_analysis_20261006.json`
+  - [x] lock v5；用锁定分析代码在修复后数据上运行一次 → `configs/formal_lock_v8.json`；`results/repaired_formal_analysis_e1e2_20261006.json`
   - [ ] 论文：主结果改用修复后的数据，附录报告原始运行与错误
 
 验收：E1 Full 与 E2 Full 是同一批数据；无重复计数、事后排除或跨 provider 偷换。
