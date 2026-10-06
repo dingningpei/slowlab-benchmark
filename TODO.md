@@ -71,7 +71,7 @@
 - [x] 对最终/初始/固定方案做独立离线评测；保存全部不利与失败结果 → 2,880 个评测全部完成、无失败；`results/formal_analysis_e1e2_20261005.json`
 - [x] 数据锁定后一次性计算主结果；报告协议偏离而不静默补改 → `results/formal_analysis_e1e2_20261005.json`（锁定代码 v2，运行一次）；偏离见决定记录 2026-10-05
 - [x] 服务器格式化前，把全部结果、费用账本与审计记录复制回本地并核对哈希 → `~/slowlab-data/formal-20261004/`（22,007 个文件，整体哈希与服务器一致，清单 MANIFEST.sha256）；代码在 Git 中；私有模拟轨迹 60 GB 未拷回（确定性可重算）（已验证：`results/formal_trace_replay_check_20261005.json`）
-- [ ] 字段顺序错误的修复与重跑（决定记录 2026-10-05）
+- [x] 字段顺序错误的修复与重跑（决定记录 2026-10-05） → `results/repair_run_record_20261006.json`
   - [x] 修复与测试 → `ac75ed0`（`tests/test_field_order.py`）
   - [x] 新主机逐字节一致性检查 → `results/server2_parity_check_20261005.json`
   - [x] 开发 site 上重选半径 → `results/prior_bo_radius_selection_repair_20261006.json`（0.35）
@@ -79,7 +79,7 @@
   - [x] 主基线 192 场重跑并评测 → `results/repair_run_record_20261006.json`
   - [x] E3 受影响的数据包与边界传热敏感性重做 → `results/repaired_phase6_analysis_20261006.json`
   - [x] lock v5；用锁定分析代码在修复后数据上运行一次 → `configs/formal_lock_v8.json`；`results/repaired_formal_analysis_e1e2_20261006.json`
-  - [ ] 论文：主结果改用修复后的数据，附录报告原始运行与错误
+  - [x] 论文：主结果改用修复后的数据，附录报告原始运行与错误 → `7f197aa`（附录 `app:original`）
 
 验收：E1 Full 与 E2 Full 是同一批数据；无重复计数、事后排除或跨 provider 偷换。
 
