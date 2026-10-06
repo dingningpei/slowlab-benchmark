@@ -1,0 +1,27 @@
+{
+  "format": "slowlab-repair-audit-v1",
+  "live_resume_calls_by_model": {
+    "glm-5.3-flash": 630,
+    "mimo-v2.6-flash": 282,
+    "deepseek-v4.1-flash": 76
+  },
+  "failed_attempt_calls_by_model": {
+    "mimo-v2.6-flash": 138,
+    "glm-5.3-flash": 65
+  },
+  "e3_reader_calls_by_model": {
+    "deepseek-v4.1-flash": 23,
+    "glm-5.3-flash": 23,
+    "mimo-v2.6-flash": 23
+  },
+  "spend_resume_final_usd": 0.9733526764,
+  "spend_resume_all_attempts_usd": 1.234809572,
+  "spend_e3_readers_usd": 0.05285293399999998,
+  "spend_repair_total_usd": 1.287662506,
+  "original_ledger_total_usd": 17.4163600388,
+  "total_with_repair_usd": 18.7040225448,
+  "original_llm_calls": 19874,
+  "repair_llm_calls_all_attempts": 1260,
+  "problems": [],
+  "passed": true
+}
