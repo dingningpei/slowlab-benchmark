@@ -1,0 +1,44 @@
+{
+ "format": "public-leak-scan-v1",
+ "date": "2026-10-06",
+ "tool": "scripts/check_public_leaks.py (each test site spec against the tracked results/, configs/, paper/sections/, paper/generated/)",
+ "test_sites_scanned": 48,
+ "findings_by_kind": {
+  "blinding_term": 12288,
+  "data_source": 3312,
+  "weather_year": 456,
+  "private_path": 96,
+  "unscanned_file": 672,
+  "site_value": 35
+ },
+ "distinct_findings_by_kind": {
+  "blinding_term": 256,
+  "data_source": 69,
+  "weather_year": 89,
+  "private_path": 2,
+  "unscanned_file": 14,
+  "site_value": 11
+ },
+ "classification": {
+  "blinding_term": "words hidden from agents (simulator, noise model, data source names) that are expected in the repository and paper; not site information",
+  "data_source": "mentions of KNMI/Cabauw, expected; not site information",
+  "unscanned_file": "binary or unknown files skipped (figures, PDFs)",
+  "weather_year": "the public list of formal weather years (configs/site_distribution_v1.json) and unrelated dates; which years a test site uses is not published",
+  "private_path": "mentions of the weather audit file name, not a private path",
+  "site_value": "11 distinct numeric coincidences with rounded hidden values (distribution base values, timings in seconds, development-site policies, pilot statistics); none is a test-site parameter"
+ },
+ "site_value_matches": [
+  "configs/agc/agc2024_input_feasibility_v0.json: obal\": {\n          \"changes\": 1026,\n          \"coverage\": 0.0832",
+  "configs/site_distribution_v0.json: \": \"times\",\n          \"base\": 1035.0\n        }\n      },\n      \"e",
+  "configs/site_distribution_v1.json: \": \"times\",\n          \"base\": 1035.0\n        }\n      },\n      \"e",
+  "results/bo_dev_runs_20260930.json:        \"night_temperature_c\": 17.38,\n            \"supplemental_li",
+  "results/bo_v2_dev_runs_20260930.json:        \"night_temperature_c\": 17.38,\n            \"supplemental_li",
+  "results/pilot_evaluation_analysis_20261003.json: 2.348,\n        1.817,\n        19.149,\n        -1.883,\n        9.30",
+  "results/remote_annual_pilot_v3_progress.jsonl:  \"active\", \"elapsed_seconds\": 1138.0911342340987, \"rss_bytes\": 2",
+  "results/site_parameter_effects_20260930.json: meters\": {\n        \"tEndSum\": 1138.5\n      },\n      \"margin_eur_",
+  "results/soil_20_annual_progress.jsonl:  \"active\", \"elapsed_seconds\": 1138.2924712540116, \"rss_bytes\": 2",
+  "results/soil_8_annual_progress.jsonl:  \"active\", \"elapsed_seconds\": 1026.5873518250883, \"rss_bytes\": 1",
+  "results/solver_stall_diagnosis_20261001.json: \n        \"day_temperature_c\": 25.167,\n        \"night_temperature_c"
+ ],
+ "conclusion": "no test-site parameter, seed or private record found in the tracked files"
+}

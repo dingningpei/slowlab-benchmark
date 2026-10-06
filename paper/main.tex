@@ -1,11 +1,11 @@
 % ============================================================
-%  SlowLab v2.3 -- draft (NeurIPS Datasets & Benchmarks target).
-%  Article class for drafting; switch to the NeurIPS style file before submission.
+%  SlowLab v2.3 -- arXiv preprint in the NeurIPS 2026 style ([preprint]: with author names).
+%  For the anonymous NeurIPS Evaluations & Datasets submission use \usepackage[eandd]{neurips_2026}.
 %  Every result number comes from paper/generated/numbers.tex (scripts/make_paper_numbers.py);
 %  scripts/verify_results_claims.py checks them against the analysis outputs.
 % ============================================================
-\documentclass[10pt]{article}
-\usepackage[margin=1in]{geometry}
+\documentclass{article}
+\usepackage[preprint]{neurips_2026}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[expansion=false]{microtype}
@@ -14,7 +14,6 @@
 \usepackage{booktabs}
 \usepackage{caption}
 \usepackage[hidelinks]{hyperref}
-\usepackage{natbib}
 \usepackage{xcolor}
 \providecommand{\euro}{\texteuro}
 \newcommand{\eur}{EUR/m$^2$}
@@ -22,10 +21,9 @@
 \newcommand{\setting}[1]{#1}  % a declared setting, not a result (ignored by verify_results_claims)
 \input{generated/numbers.tex}
 
-\title{SlowLab: Can Language-Model Agents Run a Year of Irreversible, Facility-Bound Experiments?\\[2pt]
-\large Draft}
-\author{Ningpei Ding}
-\date{}
+\title{SlowLab: Can Language-Model Agents Run a Year of Irreversible, Facility-Bound Experiments?}
+\author{Ningpei Ding\\
+  \texttt{dingningpei@gmail.com}}
 
 \begin{document}
 \maketitle
