@@ -25,7 +25,9 @@ SOURCES = {'formal': 'results/repaired_formal_analysis_e1e2_20261006.json', 'pha
            'pilot': 'results/pilot_evaluation_analysis_20261003.json', 'pilot_pbo': 'results/pilot_evaluation_analysis_pbo_20261004.json',
            'kernel': 'results/prior_bo_hyperparameter_fit_20261003.json', 'radius': 'results/prior_bo_radius_selection_repair_20261006.json',
            'orig_radius': 'results/prior_bo_radius_selection_20261004.json',
-           'agc': 'configs/agc/agc2019_holdout_result_v8.json', 'parity': 'results/server_parity_check_20261004.json'}
+           'agc': 'configs/agc/agc2019_holdout_result_v8.json', 'parity': 'results/server_parity_check_20261004.json',
+           'evalerr': 'results/evaluation_error_study_20260930.json', 'replay': 'results/formal_replay_check_20261005.json',
+           'trace_replay': 'results/formal_trace_replay_check_20261005.json'}
 
 
 def fmt(x, digits=2, sign=False):
@@ -74,6 +76,7 @@ def experiment_numbers(f, p6, pre=''):
     for e in ('E1', 'E2'):
         vals = [v['mean'] for name, v in f['primary'].items() if name.startswith(e + '_')]
         n[f'{pre}range.{e}.lo'], n[f'{pre}range.{e}.hi'] = fmt(min(vals), sign=True), fmt(max(vals), sign=True)
+        n[f'{pre}range.{e}.abs.lo'], n[f'{pre}range.{e}.abs.hi'] = fmt(min(abs(v) for v in vals)), fmt(max(abs(v) for v in vals))
     # The preregistered secondary family includes E3: BH p-values come from the joint family.
     joint = p6['e3']['secondary_bh_with_e3']
     for name, v in f['secondary'].items():
@@ -114,6 +117,8 @@ def experiment_numbers(f, p6, pre=''):
     n[f'{pre}range.E3.llm.hi'] = fmt(max(pooled[rd]['mean'] for rd in llm), sign=True)
     n[f'{pre}range.E3.llm.p.lo'] = p_fmt(min(joint[f'E3_reader_swap_{rd}'] for rd in llm))
     n[f'{pre}range.E3.llm.p.hi'] = p_fmt(max(joint[f'E3_reader_swap_{rd}'] for rd in llm))
+    gp_llm = [v['mean'] for m, v in p6['e3']['reader_swap_gain']['gp-reader'].items() if m in SHORT and m != 'pbo' and v.get('n')]
+    n[f'{pre}range.E3.gp.llm.hi'] = fmt(max(gp_llm), sign=True)
     for rd, per in p6['e3']['reader_swap_gain'].items():
         for src_m, v in per.items():
             if v.get('n'):
@@ -180,6 +185,14 @@ def numbers():
         n[f'fb.{SHORT[m]}.reads'] = fmt(v['mean_full_reads_before_first_later_start'], 1)
         n[f'fb.{SHORT[m]}.predictor'] = fmt(v['mean_full_predictor_calls'], 1)
     n['fb.stops.total'] = sum(v['any_stop'] for v in fbm.values())
+    # Full branches whose first later planting came only after the first wave closed (crop 180 d, cleaning 2 d).
+    waits = {}
+    for m in fbm:
+        days = [min(d for d, _ in c['later_starts_full']) for c in src['feedback']['campaigns']
+                if c['model'] == m and c['later_starts_full']]
+        waits[m] = 100 * sum(d >= 178 for d in days) / len(days)
+        n[f'fb.{SHORT[m]}.waitpct'] = fmt(waits[m], 0)
+    n['range.fb.waitpct.lo'], n['range.fb.waitpct.hi'] = fmt(min(waits.values()), 0), fmt(max(waits.values()), 0)
     for key, field in (('reads', 'mean_full_reads_before_first_later_start'), ('predictor', 'mean_full_predictor_calls')):
         vals = [v[field] for v in fbm.values()]
         n[f'range.fb.{key}.lo'], n[f'range.fb.{key}.hi'] = fmt(min(vals), 1), fmt(max(vals), 1)
@@ -204,6 +217,14 @@ def numbers():
             n[f"{pre}radius.{int(round(float(r) * 100))}.mean"] = fmt(v['mean_eur_m2'])
             n[f"{pre}radius.{int(round(float(r) * 100))}.sd"] = fmt(v['within_site_seed_sd'])
         n[f'{pre}radius.v3.mean'] = fmt(rad['gp_bo_v3_same_sites']['mean_eur_m2'])
+    mdes = [v['minimum_detectable_80'] for v in f['primary'].values()]
+    n['range.mde.lo'], n['range.mde.hi'] = fmt(min(mdes)), fmt(max(mdes))
+    n['valid.evalerr.paired'] = fmt(src['evalerr']['standard_error_by_k']['3']['paired_difference'])
+    n['valid.replay.evals'] = len(src['replay']['results'])
+    n['valid.replay.identical'] = 'bit-identical' if src['replay']['all_identical'] else 'NOT identical'
+    tr = src['trace_replay']
+    n['valid.trace.campaigns'] = tr['jobs']
+    n['valid.trace.identical'] = 'bit-identical' if tr['all_trace_identical'] and tr['all_settlement_identical'] else 'NOT identical'
     import math
     agg = src['agc']['result']['aggregate']
     total = sum(v['samples'] for v in agg.values())

@@ -20,7 +20,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
 from make_paper_numbers import numbers  # noqa: E402
 
-RESULT_FILES = ('00_abstract.tex', '05_results.tex', '06_e3.tex')
+RESULT_FILES = ('00_abstract.tex', '01_intro.tex', '05_results.tex', '06_discussion.tex', '09_conclusion.tex')
 
 
 def main():

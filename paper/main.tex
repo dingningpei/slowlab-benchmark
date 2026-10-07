@@ -15,13 +15,18 @@
 \usepackage{caption}
 \usepackage[hidelinks]{hyperref}
 \usepackage{xcolor}
+\usepackage{pifont}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning}
 \providecommand{\euro}{\texteuro}
 \newcommand{\eur}{EUR/m$^2$}
 \newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
+\newcommand{\ccby}{CC~BY~4.0}
 \newcommand{\setting}[1]{#1}  % a declared setting, not a result (ignored by verify_results_claims)
 \input{generated/numbers.tex}
 
-\title{SlowLab: Can Language-Model Agents Run a Year of Irreversible, Facility-Bound Experiments?}
+\title{SlowLab: A Benchmark for Agents Running Slow, Irreversible Experiments}
 \author{Ningpei Ding\\
   \texttt{dingningpei@gmail.com}}
 
@@ -29,14 +34,11 @@
 \maketitle
 \input{sections/00_abstract}
 \input{sections/01_intro}
-\input{sections/08_related}
-\input{sections/02_task}
-\input{sections/03_methods}
-\input{sections/04_protocol}
+\input{sections/02_related}
+\input{sections/03_benchmark}
+\input{sections/04_setup}
 \input{sections/05_results}
-\input{sections/06_e3}
-\input{sections/065_discussion}
-\input{sections/07_limitations}
+\input{sections/06_discussion}
 \input{sections/09_conclusion}
 \bibliographystyle{plainnat}
 \bibliography{refs}

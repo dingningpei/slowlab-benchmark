@@ -1,0 +1,60 @@
+\section{The SlowLab benchmark}
+\label{sec:benchmark}
+\subsection{Design principles}
+\label{sec:principles}
+SlowLab is built around six properties of experiments in physical facilities. Each is a requirement on the environment, and together they separate the benchmark from the settings in Table~\ref{tab:related}.
+\begin{enumerate}[leftmargin=*,itemsep=1pt,topsep=2pt]
+\item \textbf{Slow.} An experiment is a crop that occupies a compartment for 180 days; a 365-day campaign leaves room for about two waves.
+\item \textbf{Irreversible.} Starting a crop commits a compartment; stopping it discards the crop without salvage.
+\item \textbf{Facility-bound.} Four compartments must be scheduled in parallel and asynchronously; experiments compete for them.
+\item \textbf{Delayed, partial evidence.} A crop's margin is known only when it closes; while it grows, only noisy process measurements are available, and only under Full feedback.
+\item \textbf{Hidden site.} Cultivar, facility and price parameters are drawn per site and never shown; the agent must learn the site from its own experiments.
+\item \textbf{Private out-of-sample scoring.} The recommended policy is scored by a private evaluator in three weather years the agent never saw.
+\end{enumerate}
+
+\subsection{Task}
+\label{sec:formal}
+A site $s$ draws hidden parameters $\theta_s$ from a fixed distribution (Section~\ref{sec:env}) and a campaign weather year. The facility has $K=4$ compartments and the campaign lasts $T=365$ days. A policy $\pi\in\Pi$ fixes six set-points for a whole crop: day and night temperature, CO$_2$ target, supplemental light hours, ventilation temperature offset and ventilation humidity threshold, inside a box with night temperature not above day temperature. An experiment $(k,t_0,\pi)$ grows a crop under $\pi$ in compartment $k$ from day $t_0\le 183$ for 180 days, followed by 2 days of cleaning; a stop at $t<t_0+180$ discards it. When a crop closes, its contribution margin is released: harvest revenue minus the cost of electricity, heat, CO$_2$, planting, cleaning and daily overhead, at the site's public prices. While it runs, eight channels are measured every 300~s: air temperature, humidity, CO$_2$, an image-based canopy LAI proxy with error, and cumulative harvest, heating, lighting and CO$_2$ dosing. Under \emph{Full} feedback any record measured so far can be read at any time; under \emph{Endpoint} feedback the agent sees only each compartment's status and each crop's totals at closure. At day $T$ the agent recommends one policy $\hat\pi$. Its score is
+\[
+J_s(\hat\pi)=\frac{1}{6}\sum_{w\in W_s}\ \sum_{d\in\{\text{1 Jan},\,\text{2 Jul}\}} m\!\left(\hat\pi,d;\theta_s,w\right),
+\]
+the mean margin per m$^2$ of two crops planted on 1 January and 2 July in each of three evaluation weather years $W_s$ not used in the campaign. The rule is public; the score is not. A campaign allows at most 16 crop starts, 32 decision calls (start, stop, recommend) and 128 interface calls; a language-model agent may also send at most $5\times10^6$ prompt characters. The benchmark measures the mean of $J_s$ over unseen sites.
+
+\subsection{Environment}
+\label{sec:env}
+Each compartment is a 96~m$^2$ greenhouse, the size of research compartments used in tomato trials, simulated with the GreenLight model \citep{katzin2020greenlight} at pinned commit \texttt{fa502ed} under historical outdoor weather from the Cabauw observatory \citep{knmi_cabauw,knmi_cabauw_rad} (full specification in Appendix Table~\ref{tab:task}). A site draws cultivar parameters (temperature-window shift, photosynthetic capacity, fruit growth potential, earliness, maximum LAI), facility parameters (cover transmission, leakage, ventilation, side-wall heat exchange, LED efficacy, deep-soil temperature), prices and small unobservable per-compartment differences. The distribution was fixed from physical and economic plausibility before any method was run and is never filtered on outcomes. Each site uses one campaign year and three evaluation years drawn without replacement from eleven audited years (2002--2011, 2015); development work used separate years and a separate master seed. Crops are stopped for safety if indoor air stays below 5\,$^\circ$C or above 40\,$^\circ$C for an hour or if they fail physiologically.
+
+\subsection{Agent interface}
+\label{sec:interface}
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[font=\scriptsize,
+  box/.style={draw, rounded corners=2pt, align=center, inner sep=3pt, fill=white},
+  priv/.style={box, fill=black!6}, arr/.style={-{Stealth[length=4pt]}, thick, black!70}]
+\node[priv, text width=3.0cm] (sim) {\textbf{Private side}\\hidden site $\theta_s$, GreenLight,\\weather, private evaluator};
+\node[box, right=13mm of sim, text width=3.2cm] (ex) {\textbf{Executor interface}\\start, stop, advance, observe,\\recommend; Full or Endpoint view};
+\node[box, right=9mm of ex, text width=4.0cm] (h) {\textbf{Harness}\\prompt: task, tools, state digest,\\last 6 turns, 2{,}000-char notes;\\information firewall; outbound audit};
+\node[box, below=6mm of h, text width=4.0cm] (llm) {\textbf{Language model}\\one JSON reply per call:\\an action or a tool call (+ notes)};
+\node[box, below=6mm of ex, text width=3.2cm] (tools) {\textbf{Analysis tools}\\crop table, channel summary,\\GP fit and prediction,\\process predictor, candidates};
+\draw[arr] ([yshift=2mm]ex.west) -- node[above]{actions} ([yshift=2mm]sim.east);
+\draw[arr] ([yshift=-2mm]sim.east) -- node[below]{results} ([yshift=-2mm]ex.west);
+\draw[arr] ([yshift=2mm]h.west) -- ([yshift=2mm]ex.east);
+\draw[arr] ([yshift=-2mm]ex.east) -- ([yshift=-2mm]h.west);
+\draw[arr, {Stealth[length=4pt]}-{Stealth[length=4pt]}] (h.south west) -- (tools.north east);
+\draw[arr] ([xshift=-6mm]h.south) -- node[left]{prompt} ([xshift=-6mm]llm.north);
+\draw[arr] ([xshift=6mm]llm.north) -- node[right]{reply} ([xshift=6mm]h.south);
+\end{tikzpicture}
+\caption{The language-model agent. Each call sends the task, the tool catalogue, a digest of the campaign state, the most recent turns and the model's own notes; the model replies with one campaign action or one analysis-tool call. A firewall checks every outgoing message for hidden information, and every message is recorded with its hash.}
+\label{fig:framework}
+\end{figure}
+Agents interact only through the executor interface (Figure~\ref{fig:framework}), which accepts five actions (start, stop, advance, observe, recommend) and returns what the feedback condition allows. Public analysis tools summarise the agent's own data: a table of its crops, channel summaries, a Gaussian-process fit of margin on policy and planting date, predictions from it, a process predictor of a running crop's final margin trained on separate development sites, and a space-filling candidate generator. For language models a harness turns the interaction into a sequence of calls. Each call carries the task description, the tool catalogue, a digest of the current state (day, remaining budgets, compartments, every crop with its released margin), the six most recent turns in full and older ones as one-line stubs, and a 2{,}000-character notebook the model maintains; the model answers with one JSON object. Malformed replies and invalid actions are returned as feedback and count as the method's own result. When the call or character budget is nearly spent, the harness advances to the final day and accepts only a recommendation; a method that never recommends is scored on its pre-experiment recommendation, or on a frozen default policy if it gave none. An information firewall rejects any outgoing message that would reveal hidden site information, and an outbound audit stores every message and reply with its hash, so that every campaign can be replayed byte for byte (Appendix~\ref{app:interface}).
+
+\subsection{Scoring and reference points}
+\label{sec:refs}
+Two references bracket the scores without any agent. The \emph{fixed reference} applies a standard grower setting, chosen on development sites, without experiments. The \emph{best-known reference} is the best policy found by a numerical search on a random subset of test sites; it estimates the headroom above the fixed reference and is a lower bound on the attainable score.
+
+\subsection{Validity of the benchmark}
+\label{sec:validity}
+\paragraph{The score separates strategies.} On the test sites the fixed reference scored \res{mean.fixed.reference}~\eur{}, the main baseline (Section~\ref{sec:setup}) \res{mean.baseline.full}, and the best-known policies lay \res{ref.headroom}~\eur{} above the fixed reference on the searched sites, so the scale has room both above and below a competent method. With three evaluation years, the per-site standard error of a paired difference between two policies is \res{valid.evalerr.paired}~\eur{} on development sites, well below the 2~\eur{} smallest effect of interest; with \res{sites} sites the smallest differences detectable with 80\% power ranged from \res{range.mde.lo} to \res{range.mde.hi}~\eur{} across the primary tests.
+\paragraph{Runs are reproducible.} The simulator, the evaluator and the harness are deterministic given the recorded model replies. \res{valid.trace.campaigns} formal campaigns replayed on a different host produced \res{valid.trace.identical} traces and settlements, and \res{valid.replay.evals} formal evaluations rerun after the study were \res{valid.replay.identical}.
+\paragraph{Scope.} GreenLight failed an external check against observed greenhouse climate (Appendix~\ref{app:external}), so SlowLab is a simulated benchmark of how agents run slow, irreversible experiments, not a predictor of real greenhouse outcomes.

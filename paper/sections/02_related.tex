@@ -1,0 +1,32 @@
+\section{Related work}
+\label{sec:related}
+% Bibliography entries and characterisations of cited systems checked 2026-10-06 against arXiv, publisher and Crossref pages;
+% Table 1 cells checked 2026-10-06 against the full text of each paper.
+\begin{table}[t]
+\centering\small
+\caption{SlowLab against the closest benchmarks and environments. Columns: outcomes arrive only after a long delay during which the agent keeps acting; starting an experiment commits a resource that cannot be released without loss; a small fixed set of units must be scheduled in parallel; partial measurements are readable while an experiment runs; each instance has hidden parameters to be learned by experimenting; the final output is scored under conditions the agent never observed; a non-language-model baseline is evaluated alongside language-model agents; the evaluation was preregistered. \ding{51}: yes; $\sim$: partly; --: no; n/a: no language-model agents; ?: not reported.}
+\label{tab:related}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{@{}lcccccccc@{}}
+\toprule
+ & Delayed & Irrevers- & Parallel & Mid-run & Hidden & Unseen-con- & Non-LLM & Pre- \\
+ & outcomes & ible & units & signals & instance & dition score & baseline & registered \\
+\midrule
+BoxingGym \citep{boxinggym} & -- & -- & -- & -- & \ding{51} & $\sim$ & $\sim$ & -- \\
+SciGym \citep{scigym} & -- & -- & -- & -- & \ding{51} & \ding{51} & -- & -- \\
+CARE \citep{care2026} & -- & -- & -- & -- & $\sim$ & -- & \ding{51} & $\sim$ \\
+LLMs for BO \citep{llmbo2025} & -- & -- & $\sim$ & -- & $\sim$ & -- & \ding{51} & -- \\
+Vending-Bench \citep{vendingbench} & $\sim$ & $\sim$ & $\sim$ & \ding{51} & \ding{51} & -- & $\sim$ & -- \\
+GreenLight-Gym \citep{vanlaatum2025greenlightgym} & -- & -- & -- & \ding{51} & $\sim$ & -- & n/a & -- \\
+WOFOSTGym \citep{wofostgym} & \ding{51} & $\sim$ & $\sim$ & \ding{51} & $\sim$ & ? & n/a & -- \\
+\midrule
+SlowLab (ours) & \ding{51} & \ding{51} & \ding{51} & \ding{51} & \ding{51} & \ding{51} & \ding{51} & \ding{51} \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\paragraph{Benchmarks of experimenting agents.} BoxingGym gives language agents up to ten sequential experiments in each of ten generative probabilistic environments, scores experimental design by expected information gain, and scores model discovery by prediction error and by how well the agent's explanation lets a novice agent predict \citep{boxinggym}. SciGym asks agents to recover the missing reactions of systems-biology models by running simulated experiments in a dry lab, and scores the recovered model under perturbed conditions \citep{scigym}. In both, every experiment returns its outcome at once and costs nothing but a query (Table~\ref{tab:related}). Vending-Bench tests long-horizon coherence in a simulated business with delayed deliveries and hidden demand parameters, scored by the net worth at the end of the same run \citep{vendingbench}. SlowLab combines what these settings lack: experiments that occupy one of four units for half a year, cannot be revised, and are judged by a policy recommendation scored in weather the agent never saw.
+
+\paragraph{Language models against classical optimisers.} CARE puts a language model inside a budgeted sequential reaction-optimisation loop: the model writes an executable scoring program, and a gate conditioned on a non-LLM reference policy decides whether the program's candidate replaces the reference choice; evaluation replays recorded campaigns offline \citep{care2026}. A study of language models for Bayesian optimisation in gene-perturbation and molecular design found them insensitive to experimental feedback and below classical baselines \citep{llmbo2025}. Reaction and materials benchmarks provide noisy executable objectives and planner libraries \citep{summit,olympus,minerva}; budgeted, delayed-feedback and trust-region Bayesian optimisation address evaluation budgets, pending evaluations and local search \citep{astudillo2021budgeted,verma2022delayed,eriksson2019turbo}, and our baseline uses the last with a prior taken from a standard grower setting.
+
+\paragraph{Crop simulators and scientific agents.} Crop-simulator environments expose crop models as control problems for reinforcement learning: WOFOSTGym for field crops \citep{wofostgym} and GreenLight-Gym, built on the GreenLight greenhouse model \citep{katzin2020greenlight}, for greenhouse climate control under parametric uncertainty \citep{vanlaatum2025greenlightgym}. SlowLab uses the same simulator, but evaluates how an agent designs, monitors and reads a year of irreversible experiments rather than how it controls the climate step by step. Scientific-agent suites often start from existing data, while autonomous chemistry and materials systems connect planners to laboratory tools \citep{scienceagentbench,discoverybench,coscientist,chemcrow,szymanski2023autonomous,burger2020mobile}. An earlier synchronous-protocol version of this benchmark \citep{slowlab_v21} is a pilot study only and enters none of the statistics here.
