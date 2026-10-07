@@ -10,8 +10,8 @@ evaluation the agent never sees. Ground truth is the pinned GreenLight climateâ€
 forced by archived real weather. It is a reality-constrained simulation, not a validated
 digital twin; the failed external-validity audit is reported, not hidden.
 
-This repository accompanies the paper *SlowLab: Can Language-Model Agents Run a Year of
-Irreversible, Facility-Bound Experiments?* (Ningpei Ding, 2026; source in [`paper/`](paper/)).
+This repository accompanies the paper *SlowLab: Benchmarking Autonomous AI Agents on a Year of
+Experiments They Cannot Undo* (Ningpei Ding, 2026; source in [`paper/`](paper/)).
 In a preregistered run on 48 unseen sites, three low-cost language models ended clearly below
 a prior-informed local Bayesian-optimisation baseline, and in-season process feedback did not
 improve the final policy of any method.

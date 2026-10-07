@@ -113,7 +113,7 @@ v2.1 的论文、环境、结果已整体冻结在 `legacy/v2.1/`，不再修改
 
 | 位置 | 内容 | 证据来源 |
 | --- | --- | --- |
-| 标题 | SlowLab: A Benchmark for Agents Running Slow, Irreversible Experiments | 用户 2026-10-06 决定 |
+| 标题 | SlowLab: Benchmarking Autonomous AI Agents on a Year of Experiments They Cannot Undo | 用户 2026-10-06 决定（多角色评审后在 41 个候选中选定） |
 | §1 引言 + Figure 1 | 缺口：现有评测假设实验便宜、可重复、立即出结果。Figure 1：一场真实 campaign 的一年（种植、中途读数、决策点、收获、推荐、私有评测），角落小图为主要结果。贡献三条：基准、预注册评测协议与强基线、三个发现 | 正式运行 site 0 第 0 次重复（选取规则事先固定）；`results/repaired_formal_analysis_e1e2_20261006.json` |
 | §2 相关工作 + Table 1 | 与 7 项已有工作的 ✓/∼/× 对比：结果滞后、不可逆、设施有限且并行、中途过程信号、隐藏实例差异、私有样本外打分、非 LLM 强基线、预注册 | 各论文原文（逐格核对） |
 | §3 SlowLab 基准 | 3.1 六条设计原则；3.2 任务形式化；3.3 环境（Table 2：任务参数与假设）；3.4 智能体接口与框架（Figure 2：框架图）；3.5 打分与参照点；3.6 基准有效性（参照链、最小可检测差异、逐位可复现、评测误差、外部检验失败） | `configs/task_contract_v8.json`、`configs/site_distribution_v1.json`、`slowlab/llm_agent.py`、`results/evaluation_error_study_20260930.json`、复现检查结果、`configs/agc/agc2019_holdout_result_v8.json` |

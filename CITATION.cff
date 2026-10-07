@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-title: "SLOWLAB: a benchmark for scientific agents under slow, costly, irreversible experiments"
+title: "SlowLab: Benchmarking Autonomous AI Agents on a Year of Experiments They Cannot Undo"
 message: "If you use this software, please cite it as below."
 type: software
 version: 2.3.0
