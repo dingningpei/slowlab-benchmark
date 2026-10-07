@@ -8,5 +8,9 @@ license: MIT
 repository-code: "https://github.com/dingningpei/slowlab-benchmark"
 authors:
   - family-names: "Ding"
-    given-names: "Ningpei"
+    given-names: "Ning Pei"
     email: "dingningpei@gmail.com"
+    affiliation: "College of Informatics, Huazhong Agricultural University"
+  - family-names: "Feng"
+    given-names: "Zai Wen"
+    affiliation: "College of Informatics, Huazhong Agricultural University"
