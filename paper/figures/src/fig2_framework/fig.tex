@@ -23,6 +23,9 @@
 \draw[frame, fill=agentfill, draw=agentline] (6.85,1.90) rectangle (9.15,6.25);   % F4
 \draw[frame, fill=agentfill, draw=agentline] (9.50,1.90) rectangle (11.50,6.25);  % F5
 \draw[frame, fill=agentfill, draw=agentline] (11.85,1.90) rectangle (13.85,6.25); % F6
+% ---------- executor: the only way into the private greenhouse ----------
+\draw[dashed, inkdark, line width=0.7pt, rounded corners=4pt] (4.24,1.72) rectangle (6.76,6.36);
+\node[lblw, font=\scriptsize\bfseries, text=inkdark] at (5.50,1.72) {executor};
 % ---------- gap arrows (all five transitions) ----------
 \draw[gap] (1.85,4.40) -- (2.12,4.40);
 \draw[gap] (4.18,4.40) -- (4.47,4.40);
@@ -52,16 +55,16 @@
 \node[lbl] at (3.62,2.33) {advance};
 % ---------- F3 Grow (private greenhouse) ----------
 \node[badge, fill=inkdark] at (4.92,5.98) {3};\node[ttl, anchor=west] at (5.12,5.98) {Grow};
-\foreach \px/\py in {5.20/5.35, 5.85/5.35, 5.20/4.75, 5.85/4.75}
-  {\fill[white, rounded corners=1.5pt] (\px-0.28,\py-0.27) rectangle (\px+0.28,\py+0.27);
-   \node[ico] at (\px,\py) {\includegraphics[height=5mm]{icons/greenhouse.png}};}
-\node[lblw] at (5.525,4.28) {C1--C4};
-\node[lblw] at (5.50,3.70) {\includegraphics[height=3.6mm]{icons/hourglass.png}\ 180 d grow\\+ 2 d clean\\\textcolor{redink}{\faBan}\ no undo};
-\fill[white, rounded corners=1.5pt] (4.72,2.72) rectangle (6.28,3.20);
-\node[ico] at (5.00,2.96) {\includegraphics[height=3.8mm]{icons/dice.png}};
-\node[ico] at (5.50,2.96) {\includegraphics[height=3.8mm]{icons/server.png}};
-\node[ico] at (6.00,2.96) {\includegraphics[height=3.8mm]{icons/weather.png}};
-\node[lblw] at (5.50,2.33) {hidden: site,\\simulator,\\weather};
+\foreach \px/\py in {5.22/5.42, 5.83/5.42, 5.22/4.90, 5.83/4.90}
+  {\fill[white, rounded corners=1.5pt] (\px-0.24,\py-0.23) rectangle (\px+0.24,\py+0.23);
+   \node[ico] at (\px,\py) {\includegraphics[height=4.2mm]{icons/greenhouse.png}};}
+\node[lblw] at (5.525,4.48) {C1--C4};
+\node[lblw] at (5.50,3.78) {\includegraphics[height=3.6mm]{icons/hourglass.png}\ 180 d grow\\+ 2 d clean\\\textcolor{redink}{\faBan}\ no undo};
+\fill[white, rounded corners=1.5pt] (4.74,2.82) rectangle (6.26,3.24);
+\node[ico] at (5.00,3.03) {\includegraphics[height=3.5mm]{icons/dice.png}};
+\node[ico] at (5.50,3.03) {\includegraphics[height=3.5mm]{icons/server.png}};
+\node[ico] at (6.00,3.03) {\includegraphics[height=3.5mm]{icons/weather.png}};
+\node[lblw] at (5.50,2.30) {hidden: site,\\simulator,\\weather};
 % ---------- F4 Observe ----------
 \node[badge, fill=dsblue] at (7.30,5.98) {4};\node[ttl, anchor=west] at (7.50,5.98) {Observe};
 \draw[inkgrey, line width=0.5pt] (7.05,3.92) -- (8.95,3.92);
