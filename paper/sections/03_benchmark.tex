@@ -12,6 +12,12 @@ SlowLab is built around six properties of experiments in physical facilities. Ea
 \item \textbf{Private out-of-sample scoring.} The recommended policy is scored by a private evaluator in three weather years the agent never saw.
 \end{enumerate}
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/fig2_framework.pdf}
+\caption{One campaign through the agent's eyes. The agent plans and acts: it starts crops under six-field policies, stops them or advances time (1--2); crops grow for 180 days in four compartments it reaches only through the executor, on a site whose parameters, simulator and weather are hidden (3); under the Full condition it reads in-season records, under Endpoint only status and totals at closure (4); analysis tools cost no campaign time (5); the loop repeats within the budgets, and at day 365 one recommended policy is scored privately as the mean margin of two crops in three unseen weather years (6). Shields: every message is hash-audited; messages to the model also pass the information firewall. The harness is shown in Appendix Figure~\ref{fig:harness}. Icons: Freepik, flaticon.com.}
+\label{fig:framework}
+\end{figure}
 \subsection{Task}
 \label{sec:formal}
 A site $s$ draws hidden parameters $\theta_s$ from a fixed distribution (Section~\ref{sec:env}) and a campaign weather year. The facility has $K=4$ compartments and the campaign lasts $T=365$ days. A policy $\pi\in\Pi$ fixes six set-points for a whole crop: day and night temperature, CO$_2$ target, supplemental light hours, ventilation temperature offset and ventilation humidity threshold, inside a box with night temperature not above day temperature. An experiment $(k,t_0,\pi)$ grows a crop under $\pi$ in compartment $k$ from day $t_0\le 183$ for 180 days, followed by 2 days of cleaning; a stop at $t<t_0+180$ discards it. When a crop closes, its contribution margin is released: harvest revenue minus the cost of electricity, heat, CO$_2$, planting, cleaning and daily overhead, at the site's public prices. While it runs, eight channels (climate, a canopy proxy, cumulative harvest and resource use) are measured every 300~s. Under \emph{Full} feedback any record measured so far can be read at any time; under \emph{Endpoint} feedback the agent sees only each compartment's status and each crop's totals at closure. At day $T$ the agent recommends one policy $\hat\pi$. Its score is
@@ -26,12 +32,6 @@ Each compartment is a 96~m$^2$ greenhouse, the size of research compartments use
 
 \subsection{Agent interface}
 \label{sec:interface}
-\begin{figure}[t]
-\centering
-\includegraphics[width=\linewidth]{figures/fig2_framework.pdf}
-\caption{One campaign through the agent's eyes. The agent plans and acts: it starts crops under six-field policies, stops them or advances time (1--2); crops grow for 180 days in four compartments it reaches only through the executor, on a site whose parameters, simulator and weather are hidden (3); under the Full condition it reads in-season records, under Endpoint only status and totals at closure (4); analysis tools cost no campaign time (5); the loop repeats within the budgets, and at day 365 one recommended policy is scored privately as the mean margin of two crops in three unseen weather years (6). Shields: every message is hash-audited; messages to the model also pass the information firewall. The harness is shown in Appendix Figure~\ref{fig:harness}. Icons: Freepik, flaticon.com.}
-\label{fig:framework}
-\end{figure}
 Agents act only through the executor interface (Figure~\ref{fig:framework}): five actions, and replies that contain only what the feedback condition allows. Public analysis tools summarise the agent's own data (a crop table, channel summaries, a Gaussian-process fit of margin on policy and planting date with predictions, a process predictor of a running crop's final margin trained on development sites, and a space-filling candidate generator); they do not advance time. For language models a harness turns the interaction into calls: each carries the task, the tool catalogue, a digest of the state, the six most recent turns in full and a 2{,}000-character notebook the model maintains, and the model answers with one JSON object (Appendix~\ref{app:interface}). Malformed replies and invalid actions count as the method's own result; when the budget is nearly spent, the harness advances to the final day and accepts only a recommendation, falling back to the pre-experiment recommendation. An information firewall rejects any outgoing message that would reveal hidden site information, and an outbound audit stores every message with its hash, so every campaign replays byte for byte.
 
 \subsection{Scoring and reference points}
