@@ -9,7 +9,6 @@ repository-code: "https://github.com/dingningpei/slowlab-benchmark"
 authors:
   - family-names: "Ding"
     given-names: "Ningpei"
-    email: "dingningpei@gmail.com"
     affiliation: "College of Informatics, Huazhong Agricultural University"
   - family-names: "Feng"
     given-names: "Zai Wen"
