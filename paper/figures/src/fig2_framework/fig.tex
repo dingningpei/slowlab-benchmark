@@ -9,8 +9,8 @@
 \node[bar] at (2.125,6.64) {\textcolor{dsblue}{\faRobot}\ agent};
 \node[bar] at (5.50,6.64)  {\textcolor{inkdark}{\faLock}\ private};
 \node[bar] at (9.175,6.64) {\textcolor{dsblue}{\faRobot}\ agent};
-\node[bar, font=\tiny\bfseries] at (12.34,6.64) {\textcolor{dsblue}{\faRobot}\ agent};
-\node[bar, font=\tiny\bfseries] at (13.36,6.64) {\textcolor{inkdark}{\faLock}\ private};
+\node[bar] at (12.34,6.64) {agent};
+\node[bar] at (13.36,6.64) {private};
 % ---------- frames ----------
 \draw[frame, fill=agentfill, draw=agentline] (0.10,1.90) rectangle (1.80,6.25);   % F1
 \draw[frame, fill=agentfill, draw=agentline] (2.15,1.90) rectangle (4.15,6.25);   % F2
@@ -57,6 +57,7 @@
    \node[ico] at (\px,\py) {\includegraphics[height=5mm]{icons/greenhouse.png}};}
 \node[lblw] at (5.525,4.28) {C1--C4};
 \node[lblw] at (5.50,3.70) {\includegraphics[height=3.6mm]{icons/hourglass.png}\ 180 d grow\\+ 2 d clean\\\textcolor{redink}{\faBan}\ no undo};
+\fill[white, rounded corners=1.5pt] (4.72,2.72) rectangle (6.28,3.20);
 \node[ico] at (5.00,2.96) {\includegraphics[height=3.8mm]{icons/dice.png}};
 \node[ico] at (5.50,2.96) {\includegraphics[height=3.8mm]{icons/server.png}};
 \node[ico] at (6.00,2.96) {\includegraphics[height=3.8mm]{icons/weather.png}};
@@ -64,19 +65,20 @@
 % ---------- F4 Observe ----------
 \node[badge, fill=dsblue] at (7.30,5.98) {4};\node[ttl, anchor=west] at (7.50,5.98) {Observe};
 \draw[inkgrey, line width=0.5pt] (7.05,3.92) -- (8.95,3.92);
+\node[lblw, text=inkgrey] at (8.00,3.92) {or};
 \node[lbl] at (7.55,4.95) {\textcolor{amber}{\LARGE\faEye}};
 \node[ico] at (8.40,4.95) {\includegraphics[height=7.5mm]{icons/thermometer.png}};
 \node[lbl] at (8.00,4.30) {Full feedback: any\\record, at any time};
 \node[lbl] at (7.55,3.30) {\textcolor{inkgrey}{\LARGE\faReceipt}};
 \node[ico] at (8.40,3.30) {\includegraphics[height=7.5mm]{icons/crop.png}};
-\node[lbl] at (8.00,2.50) {Endpoint feedback: status;\\totals at closure};
+\node[lbl] at (8.00,2.50) {Endpoint feedback:\\status; totals at closure};
 % ---------- F5 Analyse ----------
 \node[badge, fill=dsblue] at (9.80,5.98) {5};\node[ttl, anchor=west] at (10.00,5.98) {Analyse};
 \node[ico] at (10.50,4.60) {\includegraphics[height=10mm]{icons/toolbox.png}};
 \node[lbl] at (10.50,3.55) {received data only\\\textcolor{dsblue}{\faClock}\ no time cost};
 % ---------- F6 Recommend (agent) with the private evaluator inside ----------
 \node[badge, fill=dsblue] at (12.05,5.98) {6};\node[ttl, anchor=west] at (12.24,5.98) {Recommend};
-\node[lbl] at (12.82,5.42) {\textcolor{dsblue}{\faFlagCheckered}\ 1 policy, day 365};
+\node[lbl] at (12.90,5.42) {\textcolor{dsblue}{\faFlagCheckered}\ 1 policy, day 365};
 \draw[-{Triangle[length=1.6mm,width=1.6mm]}, inkgrey, line width=0.7pt] (12.85,5.15) -- (12.85,4.85);
 \draw[frame, fill=privfill, draw=privline, line width=0.8pt] (11.97,2.00) rectangle (13.73,4.74);
 \node[lbl, font=\scriptsize\bfseries] at (12.85,4.46) {\textcolor{inkdark}{\faLock}\ private\\evaluator};
@@ -84,8 +86,8 @@
 \node[ico] at (12.85,3.95) {\includegraphics[height=4.2mm]{icons/weather.png}};
 \node[ico] at (13.32,3.95) {\includegraphics[height=4.2mm]{icons/weather.png}};
 \node[lbl] at (12.85,3.45) {2 crops $\times$\\3 unseen years};
-\node[ico] at (12.80,2.90) {\includegraphics[height=6.5mm]{icons/trophy.png}};
-\node[ico] at (13.14,2.68) {\includegraphics[height=3.6mm]{icons/padlock.png}};
+\node[ico] at (12.66,2.90) {\includegraphics[height=6.2mm]{icons/trophy.png}};
+\node[ico] at (13.24,2.86) {\includegraphics[height=3.6mm]{icons/padlock.png}};
 \node[lbl] at (12.85,2.28) {mean margin,\\kept private};
 % ---------- return loop (thickest stroke) ----------
 \draw[-{Triangle[length=3.4mm,width=3.2mm]}, dsblue, line width=2.4pt, rounded corners=5pt]
