@@ -109,22 +109,20 @@ v2.1 的论文、环境、结果已整体冻结在 `legacy/v2.1/`，不再修改
 
 ---
 
-## 6. 论文结构与证据映射
+## 6. 论文结构与证据映射（2026-10-06 改为以基准为主角）
 
 | 位置 | 内容 | 证据来源 |
 | --- | --- | --- |
-| Figure 1 | 一场真实的四隔间 365 天时间线：错峰启动、中途观测改变下一轮、提前停种、重种、推荐；标出私有评测器 | Phase 1 脚本化活动 trace（`results/dynamic_annual_*`）或正式 pilot |
-| Table 1 | 物理变量、干预层级、观测通道、预算、证据类别与假设 | `configs/task_contract_v4.json`、`configs/component_evidence_v0.json` |
-| Figure 2 (E1) | 各方法最终方案质量、实验前后改进、独立的资源成本面板 | Phase 5 主数据 |
-| Figure 3 (E2) | 每种方法 Full − Endpoint 的 site 配对差与 CI；预注册选择的真实执行时间线 | Phase 5 主数据 |
-| Figure 4 (E3) | 固定 history 的 Reader 替换收益；固定 Reader 下不同来源 history 的效用 | Phase 6 |
-| 附录 A | 环境与假设：GreenLight 选择、几何/边界/价格假设、深土壤敏感性、算力 | `docs/greenlight_model_selection.md`、`docs/experimental_unit_scale.md`、`docs/deep_soil_boundary_audit.md` |
-| 附录 B | 外部效度：AGC 2019 观测动作 holdout **失败**（温度 RMSE 2.579 °C > 2.04；RH 9.983 pp > 8.5；CO₂ 通过） | `configs/agc/agc2019_holdout_result_v8.json`、`docs/agc2019_greenlight_feasibility.md` |
-| 附录 C | 数据来源与盲测：Cabauw 数据审计、天气年份分块、防火墙与噪声测试 | `docs/weather_lc1_audit.md`、`docs/historical_weather_boundary_protocol.md`、`docs/simulation_blinding_v2_2.md` |
-| 附录 D | 统计协议、全部失败 identity、敏感性 | 预注册文档 |
-| 相关工作 | v2.1 同步协议研究只作一段"先导研究"引用 | `legacy/v2.1/paper/` |
+| 标题 | SlowLab: A Benchmark for Agents Running Slow, Irreversible Experiments | 用户 2026-10-06 决定 |
+| §1 引言 + Figure 1 | 缺口：现有评测假设实验便宜、可重复、立即出结果。Figure 1：一场真实 campaign 的一年（种植、中途读数、决策点、收获、推荐、私有评测），角落小图为主要结果。贡献三条：基准、预注册评测协议与强基线、三个发现 | 正式运行 site 0 第 0 次重复（选取规则事先固定）；`results/repaired_formal_analysis_e1e2_20261006.json` |
+| §2 相关工作 + Table 1 | 与 7 项已有工作的 ✓/∼/× 对比：结果滞后、不可逆、设施有限且并行、中途过程信号、隐藏实例差异、私有样本外打分、非 LLM 强基线、预注册 | 各论文原文（逐格核对） |
+| §3 SlowLab 基准 | 3.1 六条设计原则；3.2 任务形式化；3.3 环境（Table 2：任务参数与假设）；3.4 智能体接口与框架（Figure 2：框架图）；3.5 打分与参照点；3.6 基准有效性（参照链、最小可检测差异、逐位可复现、评测误差、外部检验失败） | `configs/task_contract_v8.json`、`configs/site_distribution_v1.json`、`slowlab/llm_agent.py`、`results/evaluation_error_study_20260930.json`、复现检查结果、`configs/agc/agc2019_holdout_result_v8.json` |
+| §4 评测设置 | 参评方法与公平性（模型拿不到固定参照）；预注册的 RQ1–RQ3 与统计方法；偏离一句话 | 锁定 v1–v8、决定记录 |
+| §5 结果（标题写成结论，括号注 E1/E2/E3） | 5.1 RQ1，Figure 3，起点与一年内提升的拆分；5.2 RQ2，Figure 4，行为分析与轨迹片段；5.3 RQ3，Figure 5（E3 区间上限）；5.4 敏感性与提升空间；5.5 成本与失败模式 | `results/repaired_*_20261006.json`、`results/repaired_accounting_20261006.json`、`results/repaired_process_feedback_20261006.json` |
+| §6 讨论与局限、§7 结论 | 局限包括 E3 不按 site 配对的缺陷、只测了 3 个低成本模型 | — |
+| 附录 | 协议与锁定；两部分运行与修复（含修复前后对照表）；基线设计与半径选择；外部检验；提示词与工具说明；逐 site 结果；轨迹样例；datasheet 与 Croissant；社会影响；NeurIPS checklist | 同上 |
 
-写作原则：围绕已完成证据写，不预写结论；不混合其他任务的 regret；不保留与三个问题无关的主结果表。标题与摘要从"异步、不可撤销、占用设施的实验活动"切入，不再以四条件罗列开头。
+写作原则：围绕已完成的证据写，不预写结论；正文以基准为主角，三个研究问题作为基准的演示；结果小节标题写成结论句；流程细节（锁定、主机、哈希）放附录；每段先给结论，再给数字；篇幅紧张时 Figure 3、4 可合并为一张多面板图。原附录内容（环境假设、外部检验、数据来源与屏蔽、统计协议）并入新附录。
 
 ---
 
