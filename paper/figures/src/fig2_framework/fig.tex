@@ -1,13 +1,12 @@
 \begin{tikzpicture}[x=1cm,y=1cm]
-% ---------- role bar (agent / private) ----------
+\path (0.00,0.80) rectangle (14.00,6.95); % bounding box with a small margin
+% ---------- role bars (agent / private) ----------
 \fill[agentbar, rounded corners=1.5pt] (0.10,6.45) rectangle (4.15,6.83);
 \fill[privbar,  rounded corners=1.5pt] (4.50,6.45) rectangle (6.50,6.83);
-\fill[agentbar, rounded corners=1.5pt] (6.85,6.45) rectangle (11.50,6.83);
-\fill[privbar,  rounded corners=1.5pt] (11.85,6.45) rectangle (13.85,6.83);
-\node[bar] at (2.125,6.64) {\includegraphics[height=3mm]{icons/robot.png}\ agent};
-\node[bar] at (5.50,6.64)  {\textcolor{inkgrey}{\faLock}\ private};
-\node[bar] at (9.175,6.64) {\includegraphics[height=3mm]{icons/robot.png}\ agent};
-\node[bar] at (12.85,6.64) {\textcolor{inkgrey}{\faLock}\ private};
+\fill[agentbar, rounded corners=1.5pt] (6.85,6.45) rectangle (13.85,6.83);
+\node[bar] at (2.125,6.64) {\textcolor{dsblue}{\faRobot}\ agent};
+\node[bar] at (5.50,6.64)  {\textcolor{inkdark}{\faLock}\ private};
+\node[bar] at (10.35,6.64) {\textcolor{dsblue}{\faRobot}\ agent};
 % ---------- frames ----------
 \draw[frame, fill=agentfill, draw=agentline] (0.10,1.90) rectangle (1.80,6.25);   % F1
 \draw[frame, fill=agentfill, draw=agentline] (2.15,1.90) rectangle (4.15,6.25);   % F2
@@ -19,69 +18,72 @@
 \draw[frame, draw=facline] (4.50,1.90) rectangle (6.50,6.25);
 \draw[frame, fill=agentfill, draw=agentline] (6.85,1.90) rectangle (9.15,6.25);   % F4
 \draw[frame, fill=agentfill, draw=agentline] (9.50,1.90) rectangle (11.50,6.25);  % F5
-\draw[frame, fill=privfill,  draw=privline]  (11.85,1.90) rectangle (13.85,6.25); % F6
+\draw[frame, fill=agentfill, draw=agentline] (11.85,1.90) rectangle (13.85,6.25); % F6
 % ---------- gap arrows ----------
 \draw[gap] (1.85,4.40) -- (2.12,4.40);
 \draw[gap] (9.20,4.40) -- (9.47,4.40);
 \draw[gap] (11.55,4.40) -- (11.82,4.40);
 % ---------- F1 Plan ----------
 \node[badge, fill=dsblue] at (0.42,5.98) {1};\node[ttl, anchor=west] at (0.62,5.98) {Plan};
-\node[ico] at (0.95,4.40) {\includegraphics[height=12mm]{icons/robot.png}};
-\node[lbl] at (0.95,3.40) {LLM / BO};
-% ---------- F2 Start ----------
-\node[badge, fill=dsblue] at (2.62,5.98) {2};\node[ttl, anchor=west] at (2.82,5.98) {Start};
-\node[ico] at (3.15,4.75) {\includegraphics[height=9mm]{icons/seedling.png}};
-\node[lbl] at (3.15,3.92) {\textcolor{leaf}{\faPlay}\ 6-field policy};
-\node[sub] at (3.15,3.55) {start $\leq$ day 183};
-\node[lbl] at (2.72,2.90) {\textcolor{redink}{\large\faStop}};
-\node[lbl] at (2.72,2.42) {stop};
-\node[lbl] at (3.58,2.90) {\textcolor{dsblue}{\large\faForward}};
-\node[lbl] at (3.58,2.42) {advance};
-% ---------- shields on the two private borders ----------
-\fill[white] (4.325,4.40) circle (0.43);
-\node[ico] at (4.325,4.40) {\includegraphics[height=7mm]{icons/shield.png}};
-\node[lblw] at (4.325,3.78) {firewall};
-\fill[white] (6.675,4.40) circle (0.43);
-\node[ico] at (6.675,4.40) {\includegraphics[height=7mm]{icons/shield.png}};
-\node[lblw] at (6.675,3.78) {audit};
+\node[ico] at (0.95,4.45) {\includegraphics[height=10mm]{icons/robot.png}};
+\node[lbl] at (0.95,3.45) {LLM / BO};
+% ---------- F2 Act ----------
+\node[badge, fill=dsblue] at (2.62,5.98) {2};\node[ttl, anchor=west] at (2.82,5.98) {Act};
+\node[ico] at (3.15,4.85) {\includegraphics[height=8.5mm]{icons/seedling.png}};
+\node[lbl] at (3.15,3.98) {\textcolor{leaf}{\faPlay}\ start a crop};
+\node[lbl] at (3.15,3.64) {6-field policy};
+\node[lbl] at (3.15,3.32) {$\leq$ day 183};
+\node[lbl] at (2.72,2.78) {\textcolor{redink}{\large\faStop}};
+\node[lbl] at (2.72,2.30) {stop};
+\node[lbl] at (3.58,2.78) {\textcolor{dsblue}{\large\faForward}};
+\node[lbl] at (3.58,2.30) {advance};
+% ---------- shields: the same mechanism on both borders ----------
+\fill[white] (4.325,4.40) circle (0.34);
+\node[ico] at (4.325,4.40) {\includegraphics[height=5.5mm]{icons/shield.png}};
+\node[lblt] at (4.325,5.08) {firewall\\+ audit};
+\fill[white] (6.675,4.40) circle (0.34);
+\node[ico] at (6.675,4.40) {\includegraphics[height=5.5mm]{icons/shield.png}};
+\node[lblt] at (6.675,5.08) {firewall\\+ audit};
 % ---------- F3 Grow (private greenhouse) ----------
-\node[badge, fill=privline] at (4.92,5.98) {3};\node[ttl, anchor=west] at (5.12,5.98) {Grow\ \textcolor{inkgrey}{\faLock}};
-\foreach \px/\py in {5.10/5.25, 5.90/5.25, 5.10/4.55, 5.90/4.55}
+\node[badge, fill=inkdark] at (4.92,5.98) {3};\node[ttl, anchor=west] at (5.12,5.98) {Grow\ \textcolor{inkdark}{\faLock}};
+\foreach \px/\py in {5.15/5.30, 5.85/5.30, 5.15/4.62, 5.85/4.62}
   {\fill[white, rounded corners=1.5pt] (\px-0.33,\py-0.31) rectangle (\px+0.33,\py+0.31);
    \node[ico] at (\px,\py) {\includegraphics[height=5.6mm]{icons/greenhouse.png}};}
-\node[lblw] at (5.50,3.98) {C1--C4};
-\node[lblw] at (5.50,3.30) {\includegraphics[height=4mm]{icons/hourglass.png}\ 180 d + 2 d\\\textcolor{redink}{\faBan}\ no undo};
-\node[ico] at (5.00,2.62) {\includegraphics[height=4.5mm]{icons/dice.png}};
-\node[ico] at (5.50,2.62) {\includegraphics[height=4.5mm]{icons/server.png}};
-\node[ico] at (6.00,2.62) {\includegraphics[height=4.5mm]{icons/weather.png}};
-\node[lblw] at (5.50,2.12) {hidden: site,\\simulator, weather};
-% ---------- F4 Peek ----------
+\node[lblw] at (5.50,4.10) {C1--C4};
+\node[lblw] at (5.50,3.42) {\includegraphics[height=3.6mm]{icons/hourglass.png}\ 180 d grow\\+ 2 d clean\\\textcolor{redink}{\faBan}\ no undo};
+\node[ico] at (5.00,2.72) {\includegraphics[height=4.2mm]{icons/dice.png}};
+\node[ico] at (5.50,2.72) {\includegraphics[height=4.2mm]{icons/server.png}};
+\node[ico] at (6.00,2.72) {\includegraphics[height=4.2mm]{icons/weather.png}};
+\node[lblw] at (5.50,2.28) {hidden: site,\\sim., weather};
+% ---------- F4 Observe ----------
 \node[badge, fill=dsblue] at (7.30,5.98) {4};\node[ttl, anchor=west] at (7.50,5.98) {Observe};
-\draw[dashed, inkgrey, line width=0.4pt] (6.95,3.95) -- (9.05,3.95);
-\node[lbl] at (7.50,4.90) {\textcolor{amber}{\LARGE\faEye}};
+\draw[dashed, inkgrey, line width=0.4pt] (7.10,3.92) -- (9.00,3.92);
+\node[lbl] at (7.55,4.90) {\textcolor{amber}{\LARGE\faEye}};
 \node[ico] at (8.40,4.90) {\includegraphics[height=7mm]{icons/thermometer.png}};
-\node[lbl] at (8.00,4.28) {Full: any time};
-\node[lbl] at (7.50,3.30) {\textcolor{inkgrey}{\LARGE\faLowVision}};
+\node[lbl] at (8.00,4.30) {Full: any record,\\at any time};
+\node[lbl] at (7.55,3.30) {\textcolor{inkgrey}{\LARGE\faLowVision}};
 \node[ico] at (8.40,3.30) {\includegraphics[height=7mm]{icons/crop.png}};
-\node[lbl] at (8.00,2.45) {Endpoint: status only;\\totals at closure};
+\node[lbl] at (8.00,2.50) {Endpoint: status only;\\totals at closure};
 % ---------- F5 Analyse ----------
 \node[badge, fill=dsblue] at (9.80,5.98) {5};\node[ttl, anchor=west] at (10.00,5.98) {Analyse};
-\node[ico] at (10.50,4.40) {\includegraphics[height=12mm]{icons/toolbox.png}};
-\node[lbl] at (10.50,3.40) {\textcolor{dsblue}{\faClock}\ no time cost};
-% ---------- F6 Day 365 (private evaluator) ----------
-\node[badge, fill=privline] at (12.05,5.98) {6};\node[ttl, anchor=west] at (12.24,5.98) {Recommend};
-\node[lbl] at (12.85,5.40) {1 policy, day 365};
-\draw[-{Triangle[length=1.6mm,width=1.6mm]}, inkgrey, line width=0.7pt] (12.85,5.08) -- (12.85,4.80);
-\node[ico] at (12.38,4.50) {\includegraphics[height=4.5mm]{icons/weather.png}};
-\node[ico] at (12.85,4.50) {\includegraphics[height=4.5mm]{icons/weather.png}};
-\node[ico] at (13.32,4.50) {\includegraphics[height=4.5mm]{icons/weather.png}};
-\node[lbl] at (12.85,4.00) {2 crops $\times$\\3 unseen years};
-\node[ico] at (12.80,3.15) {\includegraphics[height=8.5mm]{icons/trophy.png}};
-\node[ico] at (13.20,2.85) {\includegraphics[height=4.2mm]{icons/padlock.png}};
-\node[lbl] at (12.85,2.32) {mean margin,\\private};
+\node[ico] at (10.50,4.55) {\includegraphics[height=10mm]{icons/toolbox.png}};
+\node[lbl] at (10.50,3.55) {received data only\\\textcolor{dsblue}{\faClock}\ no time cost};
+% ---------- F6 Recommend (agent) with the private evaluator inside ----------
+\node[badge, fill=dsblue] at (12.05,5.98) {6};\node[ttl, anchor=west] at (12.24,5.98) {Recommend};
+\node[lbl] at (12.85,5.42) {\textcolor{dsblue}{\faFlagCheckered}\ 1 policy, day 365};
+\draw[-{Triangle[length=1.6mm,width=1.6mm]}, inkgrey, line width=0.7pt] (12.85,5.15) -- (12.85,4.85);
+\draw[frame, fill=privfill, draw=privline] (11.97,2.00) rectangle (13.73,4.72);
+\node[lbl, font=\scriptsize\bfseries] at (12.85,4.52) {\textcolor{inkdark}{\faLock}\ private evaluator};
+\node[ico] at (12.38,4.08) {\includegraphics[height=4.2mm]{icons/weather.png}};
+\node[ico] at (12.85,4.08) {\includegraphics[height=4.2mm]{icons/weather.png}};
+\node[ico] at (13.32,4.08) {\includegraphics[height=4.2mm]{icons/weather.png}};
+\node[lbl] at (12.85,3.58) {2 crops $\times$\\3 unseen years};
+\node[ico] at (12.80,3.02) {\includegraphics[height=6.5mm]{icons/trophy.png}};
+\node[ico] at (13.14,2.80) {\includegraphics[height=3.6mm]{icons/padlock.png}};
+\node[lbl] at (12.85,2.32) {mean margin,\\kept private};
 % ---------- return loop (thickest stroke) ----------
 \draw[-{Triangle[length=3.4mm,width=3.2mm]}, dsblue, line width=2.4pt, rounded corners=5pt]
   (10.50,1.90) -- (10.50,1.05) -- (0.95,1.05) -- (0.95,1.85);
 \node[lblw, font=\scriptsize\bfseries, text=dsblue] at (5.70,1.05)
-  {\faSync\ repeat\ \textperiodcentered\ $\leq$16 starts};
+  {\faSync\ repeat\ \textperiodcentered\ $\leq$16 starts, $\leq$32 decisions};
 \end{tikzpicture}
