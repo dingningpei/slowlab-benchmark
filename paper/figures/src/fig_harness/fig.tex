@@ -1,0 +1,63 @@
+\begin{tikzpicture}[x=1cm,y=1cm]
+\path (0.00,0.35) rectangle (14.00,7.05);
+% ================= stage strip =================
+\tikzset{stage/.style={rounded corners=1.5pt, minimum height=0.50cm, font=\scriptsize, text=ink, align=center, inner sep=1pt}}
+\node[stage, fill=agentbar, minimum width=2.70cm] (s0) at (1.45,6.72) {\textbf{0} pre-experiment\\recommendation};
+\node[stage, fill=agentbar, minimum width=3.30cm] (s1) at (4.60,6.72) {\textbf{1} day-0 design, then\\branch: Full $|$ Endpoint};
+\node[stage, fill=dsblue!35, minimum width=3.60cm] (s2) at (8.25,6.72) {\textbf{2} main loop, one call\\at a time \textcolor{inkdark}{(below)}};
+\node[stage, fill=privbar, minimum width=3.60cm] (s3) at (12.10,6.72) {\textbf{3} budget nearly spent:\\advance to day 365, recommend};
+\foreach \a/\b in {s0/s1,s1/s2,s2/s3} \draw[-{Triangle[length=1.4mm,width=1.4mm]}, inkgrey, line width=0.6pt] (\a.east) -- (\b.west);
+\draw[inkgrey, line width=0.4pt, dashed] (6.45,6.38) -- (0.10,6.20) -- (0.10,6.12);
+\draw[inkgrey, line width=0.4pt, dashed] (10.05,6.38) -- (13.90,6.20) -- (13.90,6.12);
+% ================= 1 assemble prompt =================
+\draw[frame, fill=agentfill, draw=agentline] (0.10,1.25) rectangle (3.55,6.00);
+\node[badge, fill=dsblue] at (0.42,5.73) {1};\node[ttl, anchor=west] at (0.62,5.73) {Assemble prompt};
+\tikzset{chip/.style={rounded corners=2pt, fill=white, draw=agentline, line width=0.4pt, text width=2.85cm, minimum height=0.86cm, align=flush left, font=\scriptsize, text=ink, inner sep=3pt, anchor=west}}
+\node[chip] at (0.30,4.93) {\textcolor{dsblue}{\faFile*}\ \textbf{system message}\\task, tools, reply format};
+\node[chip] at (0.30,3.93) {\textcolor{dsblue}{\faClipboardList}\ \textbf{state digest}\\day, budgets, crops, margins};
+\node[chip] at (0.30,2.93) {\textcolor{dsblue}{\faHistory}\ \textbf{last 6 turns}\\older ones as one-line stubs};
+\node[chip] at (0.30,1.93) {\textcolor{dsblue}{\faStickyNote}\ \textbf{own notes}\\written by the model, $\leq$2{,}000 chars};
+% ================= 2 firewall =================
+\draw[gap] (3.60,3.90) -- (4.05,3.90);
+\fill[white] (4.55,3.90) circle (0.42);
+\node[ico] at (4.55,3.90) {\includegraphics[height=7.5mm]{icons/shield.png}};
+\node[badge, fill=dsblue] at (4.55,4.62) {2};
+\node[lbl] at (4.55,3.12) {firewall:\\no hidden\\site info};
+% ================= 3 model call =================
+\draw[gap] (5.02,3.90) -- (5.37,3.90);
+\draw[frame, fill=white, draw=agentline] (5.40,1.25) rectangle (7.55,6.00);
+\node[badge, fill=dsblue] at (5.72,5.73) {3};\node[ttl, anchor=west] at (5.92,5.73) {Model call};
+\node[ico] at (6.47,4.55) {\includegraphics[height=11mm]{icons/robot.png}};
+\node[lbl] at (6.47,3.55) {one reply =\\one JSON object};
+\node[lbl] at (6.47,2.62) {\textcolor{inkdark}{\faFingerprint}\ hash-audited};
+\node[sub, font=\scriptsize] at (6.47,1.85) {$\leq$200 calls;\\$\leq$80k chars\\per prompt};
+% ================= 4 parse =================
+\draw[gap] (7.60,3.90) -- (7.95,3.90);
+\draw[frame, fill=agentfill, draw=agentline] (8.00,1.25) rectangle (10.05,6.00);
+\node[badge, fill=dsblue] at (8.32,5.73) {4};\node[ttl, anchor=west] at (8.52,5.73) {Parse};
+\tikzset{json/.style={rounded corners=2pt, fill=white, draw=agentline, line width=0.4pt, font=\fontfamily{lmtt}\selectfont\tiny, text=ink, align=center, inner sep=2pt, text width=1.62cm}}
+\node[json] (ja) at (9.025,4.88) {\{"type":\\"campaign", ...\}\\\rmfamily\scriptsize action};
+\node[json] (jt) at (9.025,3.58) {\{"type": "tool",\\"name": ...\}\\\rmfamily\scriptsize tool call};
+\node[json, draw=redink, font=\scriptsize] (je) at (9.025,2.38) {malformed or\\invalid};
+\node[sub, font=\scriptsize] at (9.025,1.62) {+ optional notes};
+% ================= 5 execute =================
+\tikzset{dest/.style={frame, line width=0.5pt}}
+\draw[dest, fill=privfill, draw=privline] (10.55,4.30) rectangle (13.90,5.95);
+\node[badge, fill=inkdark] at (10.87,5.68) {5};\node[ttl, anchor=west] at (11.07,5.68) {Executor \textcolor{inkdark}{\faLock}};
+\node[ico] at (11.10,4.85) {\includegraphics[height=6.5mm]{icons/greenhouse.png}};
+\node[lbl, anchor=west] at (11.55,4.88) {start, stop, advance,\\observe, recommend};
+\draw[dest, fill=agentfill, draw=agentline] (10.55,2.90) rectangle (13.90,4.10);
+\node[ico] at (11.10,3.50) {\includegraphics[height=6.5mm]{icons/toolbox.png}};
+\node[lbl, anchor=west] at (11.55,3.50) {analysis tools:\\no time passes};
+\draw[dest, fill=white, draw=redink] (10.55,1.50) rectangle (13.90,2.70);
+\node[lbl] at (11.05,2.10) {\textcolor{redink}{\LARGE\faBan}};
+\node[lbl, anchor=west] at (11.55,2.10) {returned as feedback;\\the method's own error};
+\draw[gap] (ja.east) -- (10.52,4.95);
+\draw[gap] (jt.east) -- (10.52,3.50);
+\draw[-{Triangle[length=2mm,width=2mm]}, line width=1.1pt, redink] (je.east) -- (10.52,2.15);
+% ================= 6 record and loop =================
+\draw[-{Triangle[length=3.4mm,width=3.2mm]}, dsblue, line width=2.4pt, rounded corners=5pt]
+  (12.22,1.50) -- (12.22,0.75) -- (1.82,0.75) -- (1.82,1.20);
+\node[lblw, font=\scriptsize\bfseries, text=dsblue] at (7.00,0.75)
+  {\faSync\ \textcircled{\tiny 6} record reply + result in the history, next call};
+\end{tikzpicture}
