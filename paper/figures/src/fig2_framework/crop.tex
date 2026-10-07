@@ -1,0 +1,9 @@
+\documentclass{article}\usepackage{times}\usepackage{xcolor}\usepackage{fontawesome5}\usepackage{graphicx}\usepackage{tikz}\usetikzlibrary{arrows.meta,positioning,calc,fit,backgrounds,shapes.geometric,decorations.pathreplacing}
+\input{figpre.tex}\newsavebox\figbox
+\begin{document}
+\sbox\figbox{\input{fig.tex}}
+\typeout{FIGBOX wd=\the\wd\figbox\space ht=\the\ht\figbox\space dp=\the\dp\figbox}
+\pdfpagewidth=\wd\figbox \pdfpageheight=\dimexpr\ht\figbox+\dp\figbox\relax
+\hoffset=-1in \voffset=-1in
+\shipout\box\figbox
+\end{document}
