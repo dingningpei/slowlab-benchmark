@@ -2,7 +2,7 @@
 \label{sec:results}
 \begin{table}[t]
 \centering\small
-\caption{Mean score of the recommended policy over the \res{sites} test sites (\eur{}, three evaluation years each).}
+\caption{Mean score of the recommended policy over the \res{sites} test sites (\eur{}, three evaluation years each). The fixed reference runs no experiments, so its score is the same in every column.}
 \label{tab:means}
 \begin{tabular}{lccc}
 \toprule
@@ -12,7 +12,7 @@ Prior-informed local BO (baseline) & \res{mean.baseline.full} & \res{mean.baseli
 GLM-5.3 Flash & \res{mean.glm.full} & \res{mean.glm.endpoint} & \res{mean.glm.initial} \\
 MiMo V2.6 Flash & \res{mean.mimo.full} & \res{mean.mimo.endpoint} & \res{mean.mimo.initial} \\
 DeepSeek V4.1 Flash & \res{mean.deepseek.full} & \res{mean.deepseek.endpoint} & \res{mean.deepseek.initial} \\
-Fixed reference (no experiments) & \multicolumn{3}{c}{\res{mean.fixed.reference}} \\
+Fixed reference (no experiments) & \res{mean.fixed.reference} & \res{mean.fixed.reference} & \res{mean.fixed.reference} \\
 \bottomrule
 \end{tabular}
 \end{table}
