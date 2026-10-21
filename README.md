@@ -1,20 +1,22 @@
 # SlowLab
 
-**A benchmark for experimental-design agents when experiments are slow, noisy, costly and
-irreversible.**
+**A benchmark for autonomous AI agents that run a year of slow, irreversible experiments.**
 
-An agent runs a 365-day greenhouse campaign over four independently controlled 96 m²
-compartments: it starts crops under a management policy, inspects measurements as they
-arrive, stops or replants, and finally recommends a policy that is scored in an isolated
-evaluation the agent never sees. Ground truth is the pinned GreenLight climate–crop model
-forced by archived real weather. It is a reality-constrained simulation, not a validated
-digital twin; the failed external-validity audit is reported, not hidden.
+An agent system, a language model in a harness or a numerical optimiser, runs a 365-day
+greenhouse campaign over four 96 m² compartments on a site whose cultivar, facility and prices
+are hidden. It decides when to plant which climate policy, whether to stop crops and what to
+read while they grow, and at the end recommends one policy. A private evaluator scores that
+policy in three weather years the agent never saw. The compartments are simulated with the
+pinned GreenLight greenhouse model under archived Cabauw weather. SlowLab measures how agents
+run experiments; its scores are not predictions for a real greenhouse (paper Appendix D).
 
 This repository accompanies the paper *SlowLab: Benchmarking Autonomous AI Agents on a Year of
 Experiments They Cannot Undo* (Ningpei Ding and Zai Wen Feng, 2026; source in [`paper/`](paper/)).
 In a preregistered run on 48 unseen sites, three low-cost language models ended clearly below
-a prior-informed local Bayesian-optimisation baseline, and in-season process feedback did not
-improve the final policy of any method.
+a prior-informed local Bayesian-optimisation baseline. They ran the facility as two synchronous
+batches, so in-season readings never changed what they planted, and in-season feedback improved
+no method's final policy. Re-reading the final evidence did not change the recommendations
+significantly, which points to how the agents start and explore.
 
 The research plan is [`RESEARCH_PLAN.md`](RESEARCH_PLAN.md); the task list is
 [`TODO.md`](TODO.md). These two files are the only planning documents.
@@ -26,7 +28,7 @@ The research plan is [`RESEARCH_PLAN.md`](RESEARCH_PLAN.md); the task list is
 | Paper source (NeurIPS 2026 style, `preprint` option) | [`paper/main.tex`](paper/main.tex), sections in `paper/sections/` |
 | E1/E2 primary and secondary tests | [`results/repaired_formal_analysis_e1e2_20261006.json`](results/repaired_formal_analysis_e1e2_20261006.json) |
 | E3 Readers, boundary and dry-matter sensitivity, headroom | [`results/repaired_phase6_analysis_20261006.json`](results/repaired_phase6_analysis_20261006.json) |
-| How the run was completed in two parts (field-order error and correction) | [`results/repair_run_record_20261006.json`](results/repair_run_record_20261006.json), [`results/repaired_audit_20261006.json`](results/repaired_audit_20261006.json), paper Appendix D |
+| How the run was completed in two parts (field-order error and correction) | [`results/repair_run_record_20261006.json`](results/repair_run_record_20261006.json), [`results/repaired_audit_20261006.json`](results/repaired_audit_20261006.json), paper Appendix B |
 | Results of the original first part, for comparison | [`results/formal_analysis_e1e2_20261005.json`](results/formal_analysis_e1e2_20261005.json), [`results/phase6_analysis_original_server2_20261006.json`](results/phase6_analysis_original_server2_20261006.json) |
 | Locks (code, configuration, prompts, models, seed commitments, environment) | `configs/formal_lock_v1.json` … `configs/formal_lock_v8.json` (v5 superseded before use) |
 | Decisions and deviations, dated | the decision table in [`RESEARCH_PLAN.md`](RESEARCH_PLAN.md) |
@@ -39,8 +41,20 @@ python3 scripts/verify_results_claims.py     # no stale or hand-written result n
 cd paper && pdflatex main && bibtex main && pdflatex main && pdflatex main
 ```
 
-Figure 4 is drawn from the results file alone (`scripts/make_figure4.py`); Figures 1–3 also
-need the campaign and evaluation records of the data package below.
+Figures and the scripts that draw them (script names predate the current figure numbers):
+
+| Paper figure | Source | Needs |
+|---|---|---|
+| 1, one campaign and the E1 result | `scripts/make_figure_teaser.py` | campaign records, results file |
+| 2, one campaign through the agent's eyes | `paper/figures/src/fig2_framework/` (TikZ) | Flaticon icons, not redistributed |
+| 3 (E1) and 4 (E2) | `scripts/make_figures_e1e2.py` | campaign and evaluation records, results file |
+| 5 (E3) | `scripts/make_figure4.py` | results file only |
+| 6, the language-model harness | `paper/figures/src/fig_harness/` (TikZ) | Flaticon icons, not redistributed |
+| 7, four campaign timelines | `scripts/make_figure1.py` | campaign records |
+
+The campaign and evaluation records come with the data package below. The TikZ figures use
+Freepik icons from flaticon.com (attribution in the captions); each source folder's README says
+how to rebuild them. The compiled figures are in `paper/figures/`.
 
 ## Data
 
@@ -113,7 +127,7 @@ cd legacy/v2.1 && python3 -m pytest -q
 ```
 
 Its README, `RUNNING.md` and `ENVIRONMENT_v2.0.md` describe it. It is not imported by the
-live package and is cited in the new paper only as a pilot study.
+live package and is not part of the new paper's evidence.
 
 ## Citation and licence
 
