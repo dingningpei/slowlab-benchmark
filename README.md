@@ -18,9 +18,6 @@ batches, so in-season readings never changed what they planted, and in-season fe
 no method's final policy. Re-reading the final evidence did not change the recommendations
 significantly, which points to how the agents start and explore.
 
-The research plan is [`RESEARCH_PLAN.md`](RESEARCH_PLAN.md); the task list is
-[`TODO.md`](TODO.md). These two files are the only planning documents.
-
 ## Paper and results
 
 | What | Where |
@@ -31,7 +28,6 @@ The research plan is [`RESEARCH_PLAN.md`](RESEARCH_PLAN.md); the task list is
 | How the run was completed in two parts (field-order error and correction) | [`results/repair_run_record_20261006.json`](results/repair_run_record_20261006.json), [`results/repaired_audit_20261006.json`](results/repaired_audit_20261006.json), paper Appendix B |
 | Results of the original first part, for comparison | [`results/formal_analysis_e1e2_20261005.json`](results/formal_analysis_e1e2_20261005.json), [`results/phase6_analysis_original_server2_20261006.json`](results/phase6_analysis_original_server2_20261006.json) |
 | Locks (code, configuration, prompts, models, seed commitments, environment) | `configs/formal_lock_v1.json` … `configs/formal_lock_v8.json` (v5 superseded before use) |
-| Decisions and deviations, dated | the decision table in [`RESEARCH_PLAN.md`](RESEARCH_PLAN.md) |
 
 Every number in the paper is generated from these files and checked:
 
@@ -70,8 +66,6 @@ and are not redistributed here; `scripts/download_cabauw_weather.py` and
 ## Layout
 
 ```
-RESEARCH_PLAN.md   the single research plan (research question, three experiments, protocol, paper map, status)
-TODO.md            the single task list, by phase
 CLAUDE.md          rules for agents editing this repo
 slowlab/           the live package: task contract, campaign executor, controller, resources,
                    feedback views, causal observation stores, sensor bridge, GreenLight adapters,

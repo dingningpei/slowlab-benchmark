@@ -55,3 +55,7 @@ CHANGELOG_*.md
 
 # ── Local private material (seed openings, reviews, build outputs) ─────
 output/
+
+# ── The author's own planning notes, kept local ─────────────────────────
+/RESEARCH_PLAN.md
+/TODO.md

@@ -4,7 +4,7 @@ noisy, costly and irreversible.
 This package is the Version 2.3 campaign environment: an event-driven, multi-compartment
 greenhouse in which an agent starts, observes, stops and replants crops over a 365-day
 campaign and finally recommends a management policy. Ground truth is the pinned
-GreenLight model forced by archived real weather; see RESEARCH_PLAN.md.
+GreenLight model forced by archived real weather; see README.md.
 
 The frozen Version 2.1 environment (TOMGRO, synchronous rounds) and its paper live under
 ``legacy/v2.1`` and are not imported from here.
