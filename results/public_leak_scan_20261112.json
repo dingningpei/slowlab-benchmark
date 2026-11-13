@@ -1,0 +1,52 @@
+{
+ "format": "public-leak-scan-v2",
+ "date": "2026-11-12",
+ "purpose": "pre-release scan before merging v2.3 into main after the arXiv preprint (arXiv:2610.34644)",
+ "scope": {
+  "tracked_files_at": "v2.3 working tree with this record's commit (README and CITATION.cff with the arXiv citation)",
+  "also_scanned": [
+   "the arXiv source package as submitted (extracted)",
+   "text of every tracked PDF and of the preprint PDF",
+   "Git history: every patch since the test seed commit (2026-10-01) on all branches outside the never-modified results/ and configs/, which covers RESEARCH_PLAN.md, TODO.md and the paper sections deleted on 2026-10-06"
+  ],
+  "files": 835,
+  "files_not_text": 28,
+  "files_not_text_note": "PDFs (scanned through extracted text) and PNG renderings of the paper figures",
+  "file_types": "every non-binary file (code, LaTeX, JSON, Markdown, CFF), not only the suffixes scripts/check_public_leaks.py reads"
+ },
+ "private_material_checked": {
+  "test_sites": 48,
+  "per_site": "campaign executor spec (per-compartment parameters, side-wall exchange, deep-soil temperature, sensor-noise seed, campaign weather year, private paths) and the per-compartment parameters and noise seed of every evaluation year",
+  "sealed_values": "test and pilot master seeds, E3 sample seed, and the salts of the three seed openings",
+  "needles": 27210,
+  "matcher": "slowlab.leak_check needles; numeric needles screened by token lookup and confirmed with the original regex"
+ },
+ "findings_by_kind": {
+  "blinding_term/error": 989,
+  "data_source/error": 156,
+  "private_path/error": 384,
+  "site_value/warning": 247,
+  "weather_year/warning": 10
+ },
+ "classification": {
+  "blinding_term/error": "words hidden from agents (simulator, noise model, benchmark terms) in code, configs and paper; expected in the repository, not site information",
+  "data_source/error": "KNMI/Cabauw mentions; expected",
+  "private_path/error": "the weather audit file name and the scratch path of the public weather download scripts; not a private run directory",
+  "weather_year/warning": "public year lists and per-year summaries; see site_year_exposure",
+  "site_value/warning": "five-significant-digit coincidences with round or unrelated public numbers (distribution bounds and bases, development policies, run times, legacy parameters); no six-digit or full-precision match",
+  "noise_seed": "none",
+  "sealed_seed_or_salt": "none"
+ },
+ "site_year_exposure": "record names in results/formal_replay_check_20261005.json, results/repair_run_record_20261006.json and results/server2_parity_check_20261005.json (public since 2026-10-04/06) pair a test-site index with one of its evaluation weather years for 9 of 48 sites (10 site-year pairs; each site uses 3 evaluation years from the public pool of 11). The task view built for an agent (slowlab/agent_protocol.py) contains no site index. This corrects the statement in results/public_leak_scan_20261006.json that the years a test site uses are not published.",
+ "history_checks": {
+  "sealed_values_in_any_commit": 0,
+  "credential_patterns_in_any_commit": 0,
+  "sensitive_paths_ever_tracked": "none (.env, output/, reviews, seed files)",
+  "site_values_in_history_since_seed_commit": "none (only the weather audit file name and a year remark)",
+  "frozen_dirs_modified_after_creation_since_2026-10-01": 0
+ },
+ "credentials_in_tracked_files": "none; .env.example holds empty keys",
+ "emails_in_tracked_files": "the corresponding author's (paper) and the NeurIPS style file author's",
+ "conclusion": "no test-site parameter, noise seed, sealed seed or salt, credential or private file found in the public material or in the history since the seed commit; no site-to-campaign-year pairing; partial site-to-evaluation-year exposure for 9 sites, low risk, recorded above",
+ "site_campaign_year_pairing": "checked by searching every site token (siteNN, site_index) within 300 characters of that site's campaign year: three co-occurrences, all coincidental (token counts and another site's evaluation record); no site is paired with its campaign weather year"
+}

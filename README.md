@@ -11,7 +11,8 @@ pinned GreenLight greenhouse model under archived Cabauw weather. SlowLab measur
 run experiments; its scores are not predictions for a real greenhouse (paper Appendix D).
 
 This repository accompanies the paper *SlowLab: Benchmarking Autonomous AI Agents on a Year of
-Experiments They Cannot Undo* (Ningpei Ding and Zai Wen Feng, 2026; source in [`paper/`](paper/)).
+Experiments They Cannot Undo* (Ningpei Ding and Zai Wen Feng, 2026;
+[arXiv:2610.34644](https://arxiv.org/abs/2610.34644); source in [`paper/`](paper/)).
 In a preregistered run on 48 unseen sites, three low-cost language models ended clearly below
 a prior-informed local Bayesian-optimisation baseline. They ran the facility as two synchronous
 batches, so in-season readings never changed what they planted, and in-season feedback improved
@@ -126,4 +127,17 @@ live package and is not part of the new paper's evidence.
 ## Citation and licence
 
 Code: MIT ([`LICENSE`](LICENSE)). Data package: CC BY 4.0. Weather data: KNMI, CC BY 4.0.
-See [`CITATION.cff`](CITATION.cff).
+If you use SlowLab, please cite the paper (also in [`CITATION.cff`](CITATION.cff)):
+
+```bibtex
+@misc{ding2026slowlab,
+  title         = {SlowLab: Benchmarking Autonomous AI Agents on a Year of Experiments They Cannot Undo},
+  author        = {Ding, Ningpei and Feng, Zai Wen},
+  year          = {2026},
+  eprint        = {2610.34644},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.AI},
+  doi           = {10.48550/arXiv.2610.34644},
+  url           = {https://arxiv.org/abs/2610.34644}
+}
+```

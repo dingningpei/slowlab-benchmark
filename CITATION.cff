@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 title: "SlowLab: Benchmarking Autonomous AI Agents on a Year of Experiments They Cannot Undo"
-message: "If you use this software, please cite it as below."
+message: "If you use this software, please cite the paper below."
 type: software
 version: 2.3.0
 date-released: 2026-10-06
@@ -13,3 +13,18 @@ authors:
   - family-names: "Feng"
     given-names: "Zai Wen"
     affiliation: "College of Informatics, Huazhong Agricultural University"
+preferred-citation:
+  type: article
+  title: "SlowLab: Benchmarking Autonomous AI Agents on a Year of Experiments They Cannot Undo"
+  authors:
+    - family-names: "Ding"
+      given-names: "Ningpei"
+      affiliation: "College of Informatics, Huazhong Agricultural University"
+    - family-names: "Feng"
+      given-names: "Zai Wen"
+      affiliation: "College of Informatics, Huazhong Agricultural University"
+  journal: "arXiv preprint arXiv:2610.34644"
+  year: 2026
+  month: 10
+  doi: "10.48550/arXiv.2610.34644"
+  url: "https://arxiv.org/abs/2610.34644"
